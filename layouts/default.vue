@@ -1,0 +1,9 @@
+<template>
+<div>
+	<header>.header</header>
+	<div>
+		<nuxt/>
+	</div>
+	<footer>.footer</footer>
+</div>
+</template>

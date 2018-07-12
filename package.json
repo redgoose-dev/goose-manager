@@ -2,9 +2,18 @@
   "name": "goose-manager",
   "version": "0.0.1",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "dev": "./node_modules/.bin/nuxt",
+    "start": "./node_modules/.bin/nuxt start",
+    "build": "./node_modules/.bin/nuxt build",
+    "build-check": "./node_modules/.bin/nuxt build --analyze"
+  },
   "dependencies": {
+    "@nuxtjs/axios": "^5.3.1",
+    "nuxt": "^1.4.1"
   },
   "devDependencies": {
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.0.3"
   }
 }
