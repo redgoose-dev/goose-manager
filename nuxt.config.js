@@ -39,7 +39,7 @@ module.exports = {
 
 	router: {
 		base: '/',
-		middleware: [],
+		middleware: ['hook'],
 		linkActiveClass: 'nuxt-active',
 	},
 
