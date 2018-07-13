@@ -1,3 +1,5 @@
+// get .env
+require('dotenv').config();
 
 module.exports = {
 
@@ -23,6 +25,7 @@ module.exports = {
 
 	modules: [
 		'@nuxtjs/axios',
+		'@nuxtjs/dotenv'
 	],
 
 	plugins: [
@@ -30,7 +33,7 @@ module.exports = {
 	],
 
 	axios: {
-		baseURL: '',
+		baseURL: process.env.URL_API,
 	},
 
 	loading: {
@@ -39,7 +42,7 @@ module.exports = {
 
 	router: {
 		base: '/',
-		middleware: ['hook'],
+		middleware: [ 'hook' ],
 		linkActiveClass: 'nuxt-active',
 	},
 

@@ -1,16 +1,18 @@
 <template>
-	<div>
-		hello world
-	</div>
+	<article>
+		<h1>welcome page</h1>
+		<div>intro..</div>
+	</article>
 </template>
 
 <script>
 export default {
+	data() {
+		return {};
+	},
 	mounted()
 	{
 		const { $axios } = this;
-
-		console.log($axios);
 	}
 };
 </script>

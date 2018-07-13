@@ -1,9 +1,15 @@
 <template>
 <div>
-	<header>.header</header>
-	<div>
+	<header class="header">
+		.header
+	</header>
+	<div class="container">
+		<hr>
 		<nuxt/>
+		<hr>
 	</div>
-	<footer>.footer</footer>
+	<footer class="footer">
+		.footer
+	</footer>
 </div>
 </template>

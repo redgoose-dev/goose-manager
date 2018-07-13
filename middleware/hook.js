@@ -9,8 +9,7 @@ export default function(cox)
 	}
 
 	// check auth
-	// TODO: 로그인 검사
-	if (!!false)
+	if (!(store.state.user && store.state.user.srl))
 	{
 		redirect('/auth/login');
 	}
