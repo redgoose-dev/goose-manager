@@ -1,0 +1,19 @@
+@import "./variables";
+@import "./mixins";
+
+// section title
+.#{$prefix}-section-title {
+	margin: 0 0 1rem;
+	font-size: 1.125rem;
+	font-weight: 500;
+	line-height: 1;
+}
+
+// text body
+.#{$prefix}-text-body {
+	@include typo-text-body();
+}
+
+// list
+
+// description

@@ -1,0 +1,20 @@
+@import "./variables";
+@import "./mixins";
+
+// contents header
+.#{$prefix}-page-header {
+	margin: 0 0 2rem;
+	&-title {
+		margin: 0;
+		font-size: 1.875rem;
+		line-height: 1;
+		letter-spacing: .5px;
+		font-family: $font-eng;
+		font-weight: 600;
+	}
+	&-description {
+		margin: 5px 0 0;
+		font-size: .8125rem;
+		color: $color-blur;
+	}
+}

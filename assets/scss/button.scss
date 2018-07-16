@@ -1,0 +1,98 @@
+@import "./variables";
+@import "./mixins";
+
+// base
+.#{$prefix}-button {
+	$self: '.#{$prefix}-button';
+	display: block;
+	margin: 0;
+	border-radius: 2px;
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+
+	&[type='button'], &[type='submit'], &[type='reset'] {
+		width: 100%;
+		cursor: pointer;
+		-webkit-appearance: button;
+	}
+	&[disabled],
+	&-disabled {
+		opacity: .6;
+		cursor: not-allowed;
+	}
+	&-inline {
+		display: inline-block;
+		vertical-align: middle;
+		&[type] {
+			width: auto;
+		}
+	}
+
+	> * {
+		display: inline-block;
+	}
+}
+
+// size
+.#{$prefix}-button {
+	padding: .5rem 1.25rem;
+	font-size: .9375rem;
+	line-height: 1.5;
+	&-size {
+		&-small {
+			padding: .375rem 1.25rem;
+			font-size: .8125rem;
+		}
+		&-large {
+			padding: 0.875rem 1.25rem;
+			font-size: 1.125rem;
+		}
+	}
+}
+
+// color
+.#{$prefix}-button {
+	background: $color-light;
+	color: $color-base;
+	transition: box-shadow .1s ease-out;
+	&:focus {
+		outline: 0;
+		box-shadow: 0 0 0 3px rgba($color-key, 1);
+	}
+	&:hover:not([disabled]) {
+		background: mix(#000, $color-light, 5%);
+	}
+	&:active {
+		box-shadow: inset 0 2px 2px rgba(#000, .2);
+	}
+	&-color {
+		&-key {
+			background: $color-key;
+			color: #fff;
+			&:focus {
+				box-shadow: 0 0 0 3px rgba($color-key, .3);
+			}
+			&:hover:not([disabled]) {
+				background: mix(#000, $color-key, 5%);
+			}
+			&:active {
+				box-shadow: inset 0 2px 2px rgba(#000, .3);
+			}
+		}
+		&-gray {
+			background: $color-blur;
+			color: #fff;
+			&:focus {
+				box-shadow: 0 0 0 3px rgba($color-key, .25);
+			}
+			&:hover:not([disabled]) {
+				background: mix(#000, $color-blur, 5%);
+			}
+			&:active {
+				box-shadow: inset 0 2px 2px rgba(#000, .4);
+			}
+		}
+	}
+}
