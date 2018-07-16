@@ -39,15 +39,36 @@
 		<button-basic type="button" :inline="true" :disabled="true">disabled</button-basic>
 	</p>
 	<p><a href="/">link style</a></p>
+
+	<hr>
+
+	<form-text
+		label="dsngiosdmgps"
+		id="sdgip"
+		placeholder="placeholder value"
+		v-model="fooo"
+		:required="true"
+		:inline="false"
+		error="sdgmisd"
+	/>
+
 </article>
 </template>
 
 <script>
 import ButtonBasic from '~/components/button/basic';
+import FormText from '~/components/form/text';
 
 export default {
 	components: {
-		ButtonBasic
+		ButtonBasic,
+		FormText,
 	},
+	data()
+	{
+		return {
+			fooo: 'sdgmosdpg,sdg'
+		};
+	}
 }
 </script>
