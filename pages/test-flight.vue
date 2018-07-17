@@ -43,13 +43,37 @@
 	<hr>
 
 	<form-text
-		label="dsngiosdmgps"
-		id="sdgip"
 		placeholder="placeholder value"
 		v-model="fooo"
 		:required="true"
 		:inline="false"
-		error="sdgmisd"
+		:readonly="false"
+		:disabled="true"
+	/>
+
+	<hr>
+
+	<form-text
+		type="textarea"
+		label="label name"
+		id="fooo"
+		placeholder="placeholder value"
+		v-model="fooo"
+		:required="true"
+		:inline="false"
+
+		help="help message"
+	/>
+
+	<hr>
+
+	<form-field
+		label="field title"
+		element="textarea"
+		v-model="fooo"
+		placeholder="placeholder message"
+		help="help message"
+		error="error message"
 	/>
 
 </article>
@@ -58,11 +82,13 @@
 <script>
 import ButtonBasic from '~/components/button/basic';
 import FormText from '~/components/form/text';
+import FormField from '~/components/form/field';
 
 export default {
 	components: {
 		ButtonBasic,
 		FormText,
+		FormField,
 	},
 	data()
 	{

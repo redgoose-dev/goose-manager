@@ -4,3 +4,31 @@
 	margin: 0 0 1rem;
 	font-size: .875rem;
 }
+
+@mixin form-size($type) {
+	$size-horizontal: null;
+
+	@if $type == 'button'
+	{
+		$size-horizontal: 1.25rem;
+	}
+	@else
+	{
+		$size-horizontal: .625rem;
+	}
+
+	// small
+	&-size-small {
+		padding: .3125rem $size-horizontal;
+		font-size: .8125rem;
+	}
+	// medium
+	padding: .4375rem $size-horizontal;
+	font-size: .9375rem;
+	line-height: 1.5;
+	// large
+	&-size-large {
+		padding: .625rem $size-horizontal;
+		font-size: 1.125rem;
+	}
+}

@@ -1,0 +1,55 @@
+@import "./variables";
+@import "./mixins";
+
+// text
+.#{$prefix}-form-text {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid $color-form-line;
+	border-radius: $size-border-radius;
+	box-shadow: inset 0 2px 3px rgba(#000, .1);
+	&::-webkit-input-placeholder {
+		color: #999;
+	}
+	&:read-only {
+		background: mix($color-light, #fff, 80%);
+	}
+	&:disabled {
+		opacity: .6;
+		cursor: not-allowed;
+	}
+	&:focus {
+		box-shadow: 0 0 0 $size-focus rgba($color-key, 1), inset 0 2px 3px rgba(#000, .1);
+		border-color: transparent;
+		outline: 0;
+	}
+
+	&-error {
+		border-color: $color-error;
+	}
+
+	// size
+	@include form-size('input');
+}
+
+
+// field
+.#{$prefix}-form-field {
+	> label {
+		display: inline-block;
+		font-size: 1rem;
+		font-weight: bold;
+		margin: 0 0 3px;
+	}
+}
+
+// help
+.#{$prefix}-form-help {
+	margin: 3px 0;
+	font-size: 0.8125rem;
+	color: $color-blur;
+	&-error {
+		color: $color-error;
+	}
+}
