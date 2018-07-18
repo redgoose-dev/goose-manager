@@ -20,23 +20,27 @@
 	</p>
 
 	<p>
-		<button-basic type="button" size="small">Button: Button content</button-basic>
+		<button-basic type="button" label="Button: Button content" size="small" icon="fingerprint"/>
 	</p>
 	<p>
-		<button-basic type="button" color="key">Button: Button content</button-basic>
+		<button-basic type="button" label="Button: Button content" color="key" icon="fingerprint"/>
 	</p>
 	<p>
-		<button-basic type="button" size="large" color="gray">Button: Button content</button-basic>
+		<button-basic type="button" label="Button: Button content" size="large" color="gray" icon="fingerprint"/>
 	</p>
 	<p>
-		<button-basic href="/" size="">A: Button content</button-basic>
+		<button-basic href="/" label="A: Button content"/>
 	</p>
 	<p>
-		<button-basic type="button" :inline="true">Button: Button content</button-basic>
+		<button-basic
+			type="button"
+			label="Button: Button content"
+			icon="fingerprint"
+			:inline="true"/>
 		&nbsp;
-		<button-basic href="/" :inline="true">A: Button content</button-basic>
+		<button-basic href="/" label="WWWWWWW" :inline="true"/>
 		&nbsp;
-		<button-basic type="button" :inline="true" :disabled="true">disabled</button-basic>
+		<button-basic type="button" label="disabled" :inline="true" :disabled="true"/>
 	</p>
 	<p><a href="/">link style</a></p>
 
@@ -67,28 +71,17 @@
 
 	<hr>
 
-	<form-field
-		label="field title"
-		element="textarea"
-		v-model="fooo"
-		placeholder="placeholder message"
-		help="help message"
-		error="error message"
-	/>
-
 </article>
 </template>
 
 <script>
 import ButtonBasic from '~/components/button/basic';
 import FormText from '~/components/form/text';
-import FormField from '~/components/form/field';
 
 export default {
 	components: {
 		ButtonBasic,
 		FormText,
-		FormField,
 	},
 	data()
 	{

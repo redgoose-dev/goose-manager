@@ -6,7 +6,8 @@
 		@click="onClick"
 		:disabled="disabled"
 		:class="classNames">
-		<span><slot/></span>
+		<span>{{label}}</span>
+		<i v-if="icon" class="material-icons">{{icon}}</i>
 		<i v-if="loading">loading</i>
 	</button>
 	<nuxt-link
@@ -14,7 +15,8 @@
 		:to="link"
 		:title="title"
 		:class="classNames">
-		<span><slot/></span>
+		<span>{{label}}</span>
+		<i v-if="icon" class="material-icons">{{icon}}</i>
 	</nuxt-link>
 	<a
 		v-else
@@ -23,7 +25,8 @@
 		:title="title"
 		@onClick="onClick"
 		:class="classNames">
-		<span><slot/></span>
+		<span>{{label}}</span>
+		<i v-if="icon" class="material-icons">{{icon}}</i>
 	</a>
 </template>
 
@@ -31,6 +34,7 @@
 export default {
 	props: {
 		type: { type: String },
+		label: { type: String, default: 'Button' },
 		href: { type: String },
 		target: { type: String },
 		link: { type: String },
@@ -40,6 +44,7 @@ export default {
 		color: { type: String }, // `key`, `gray`
 		inline: { type: Boolean, default: false },
 		loading: { type: Boolean, default: false },
+		icon: { type: String },
 		className: { type: String },
 	},
 

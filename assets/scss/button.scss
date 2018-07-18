@@ -30,12 +30,21 @@
 		}
 	}
 
-	> * {
-		display: inline-block;
-	}
-
 	// size
 	@include form-size('button');
+
+	// with icon
+	> .material-icons {
+		font-size: 22px;
+		margin: -4px 0 -2px 5px;
+		vertical-align: middle;
+	}
+	&-size-small > .material-icons {
+		font-size: 16px;
+	}
+	&-size-large > .material-icons {
+		font-size: 28px;
+	}
 }
 
 // color
