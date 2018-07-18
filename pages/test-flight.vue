@@ -70,8 +70,7 @@
 		placeholder="placeholder value"
 		v-model="fooo"
 		:required="true"
-		:inline="false"
-
+		:inline="true"
 		help="help message"
 	/>
 
@@ -83,10 +82,19 @@
 	<button-circle-icon name="fingerprint" title="foo" size="" :inline="false" :center="true" color="key"/>
 	<hr>
 
+	<p>
 	<form-select
 		name="select_name"
 		id="select_id"
+		v-model="goo"
+		:options="[
+			{ label: 'Foo', value: 'foo' },
+			{ label: 'Bar', value: 'bar' }
+		]"
+		:inline="true"
 	/>
+	[{{goo}}]
+	</p>
 
 </article>
 </template>
@@ -107,7 +115,8 @@ export default {
 	data()
 	{
 		return {
-			fooo: 'sdgmosdpg,sdg'
+			fooo: 'sdgmosdpg,sdg',
+			goo: 'asd',
 		};
 	}
 }

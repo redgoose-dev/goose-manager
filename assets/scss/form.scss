@@ -25,12 +25,71 @@
 		outline: 0;
 	}
 
+	// size
+	@include form-size('input');
+
 	&-error {
 		border-color: $color-error;
 	}
+	&-inline {
+		display: inline-block;
+		width: auto;
+	}
+}
 
-	// size
-	@include form-size('input');
+
+// select box
+.#{$prefix}-form-select {
+	position: relative;
+	display: block;
+	width: 100%;
+	font-size: 0;
+	background: #eff0f2;
+	> select {
+		display: block;
+		margin: 0;
+		padding: 5px 0;
+		width: 100%;
+		background: none;
+		font-size: .875rem;
+		color: #222;
+		border-radius: $size-border-radius;
+		-webkit-appearance: none;
+		border: 1px solid $color-form-line;
+
+		&:disabled {
+			opacity: .6;
+			cursor: not-allowed;
+			& + i {
+				opacity: .6;
+			}
+		}
+		&:focus {
+			box-shadow: 0 0 0 $size-focus rgba($color-key, 1);
+			border-color: transparent;
+			outline: 0;
+		}
+
+		// size
+		@include form-size('select');
+	}
+	> i {
+		display: inline-block;
+		position: absolute;
+		right: 8px;
+		top: 50%;
+		margin-top: -10px;
+		font-size: 20px;
+		pointer-events: none;
+	}
+
+	&-inline {
+		display: inline-block;
+		width: auto;
+		> select {
+			padding-right: 2.5rem;
+		}
+	}
 }
 
 
