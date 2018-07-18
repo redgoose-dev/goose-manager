@@ -83,17 +83,21 @@
 	<hr>
 
 	<p>
-	<form-select
-		name="select_name"
-		id="select_id"
-		v-model="goo"
-		:options="[
-			{ label: 'Foo', value: 'foo' },
-			{ label: 'Bar', value: 'bar' }
-		]"
-		:inline="true"
-	/>
-	[{{goo}}]
+		<form-select
+			name="select_name"
+			id="select_id"
+			v-model="goo"
+			:options="[
+				{ label: 'Foo', value: 'foo' },
+				{ label: 'Bar', value: 'bar' }
+			]"
+			:inline="true"
+		/>
+		==={{goo}}===
+	</p>
+	<hr>
+	<p>
+		<form-check/>
 	</p>
 
 </article>
@@ -104,6 +108,7 @@ import ButtonBasic from '~/components/button/basic';
 import ButtonCircleIcon from '~/components/button/circle-icon';
 import FormText from '~/components/form/text';
 import FormSelect from '~/components/form/select';
+import FormCheck from '~/components/form/check'
 
 export default {
 	components: {
@@ -111,6 +116,7 @@ export default {
 		ButtonCircleIcon,
 		FormText,
 		FormSelect,
+		FormCheck,
 	},
 	data()
 	{
