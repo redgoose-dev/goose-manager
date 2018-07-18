@@ -83,6 +83,11 @@
 	<button-circle-icon name="fingerprint" title="foo" size="" :inline="false" :center="true" color="key"/>
 	<hr>
 
+	<form-select
+		name="select_name"
+		id="select_id"
+	/>
+
 </article>
 </template>
 
@@ -90,12 +95,14 @@
 import ButtonBasic from '~/components/button/basic';
 import ButtonCircleIcon from '~/components/button/circle-icon';
 import FormText from '~/components/form/text';
+import FormSelect from '~/components/form/select';
 
 export default {
 	components: {
 		ButtonBasic,
 		ButtonCircleIcon,
 		FormText,
+		FormSelect,
 	},
 	data()
 	{
