@@ -1,5 +1,5 @@
 <template>
-<article style="margin: 1rem;">
+<article>
 	<header class="rg-page-header">
 		<h1 class="rg-page-header-title">Test Flight</h1>
 		<p class="rg-page-header-description">분류를 관리하는 모듈입니다.</p>
@@ -32,17 +32,23 @@
 		<button-basic href="/" label="A: Button content"/>
 	</p>
 	<p>
+		<button-basic href="/" icon="fingerprint" :inline="true" size="large"/>
+	</p>
+	<p>
 		<button-basic
 			type="button"
 			label="Button: Button content"
 			icon="fingerprint"
 			:inline="true"/>
 		&nbsp;
-		<button-basic href="/" label="WWWWWWW" :inline="true"/>
+		<button-basic to="/" label="WWWWWWW" :inline="true"/>
 		&nbsp;
 		<button-basic type="button" label="disabled" :inline="true" :disabled="true"/>
 	</p>
-	<p><a href="/">link style</a></p>
+
+	<p>
+		<a href="/">link style</a>
+	</p>
 
 	<hr>
 
@@ -71,16 +77,24 @@
 
 	<hr>
 
+	<button-circle-icon name="fingerprint" title="foo" size="small" :inline="true" color=""/>
+	<button-circle-icon name="fingerprint" title="foo" size="" :inline="true" color="key"/>
+	<button-circle-icon name="fingerprint" title="foo" size="large" :inline="true" color="gray"/>
+	<button-circle-icon name="fingerprint" title="foo" size="" :inline="false" :center="true" color="key"/>
+	<hr>
+
 </article>
 </template>
 
 <script>
 import ButtonBasic from '~/components/button/basic';
+import ButtonCircleIcon from '~/components/button/circle-icon';
 import FormText from '~/components/form/text';
 
 export default {
 	components: {
 		ButtonBasic,
+		ButtonCircleIcon,
 		FormText,
 	},
 	data()

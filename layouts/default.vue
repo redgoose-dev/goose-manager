@@ -2,7 +2,46 @@
 <main>
 	<header class="header">
 		<div class="header__wrap">
-			<div>dfdgsdg</div>
+			<h1 class="logo">
+				<nuxt-link to="/">GOOSE</nuxt-link>
+			</h1>
+			<nav class="gnb">
+				<ul>
+					<li>
+						<nuxt-link to="/nest">Nests</nuxt-link>
+					</li>
+					<li>
+						<nuxt-link to="/user">User</nuxt-link>
+					</li>
+					<li>
+						<nuxt-link to="/json">JSON</nuxt-link>
+					</li>
+					<li>
+						<a href="#" target="_blank">Documentation</a>
+					</li>
+					<li>
+						<nuxt-link to="/test-flight">Test</nuxt-link>
+					</li>
+				</ul>
+			</nav>
+			<nav class="profile-nav">
+				<div class="dropdown">
+					<button type="button" class="dropdown__control" @click="toggleDropDown">
+						<span>scripter@me.com</span>
+						<i class="material-icons">arrow_drop_down</i>
+					</button>
+					<div class="dropdown__children">
+						<ul>
+							<li>
+								<nuxt-link to="/">Account</nuxt-link>
+							</li>
+							<li>
+								<nuxt-link to="/">Logout</nuxt-link>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 		</div>
 	</header>
 
@@ -14,47 +53,51 @@
 
 	<footer class="footer">
 		<div class="footer__wrap">
-			Copyright 2018 redgoose.me. All right reserved.
+			<address>Copyright 2018 redgoose.me. All right reserved.</address>
 		</div>
 	</footer>
 </main>
 </template>
 
-<style lang="scss" scoped>
-@import "../assets/scss/variables";
+<script>
+import ButtonBasic from '~/components/button/basic';
 
-$size-side-max-padding: 100px;
-$size-side-tablet-padding: 20px;
+export default {
+	components: {
+		ButtonBasic,
+	},
+	computed: {
 
-.header,
-.container,
-.footer {
-	&__wrap {
-		max-width: $size-container;
-		padding: 0 $size-side-max-padding;
-		margin: 0 auto;
-		@media (max-width: $size-desktop) {
-			max-width: none;
-			padding: 0 $size-side-tablet-padding;
+	},
+	methods: {
+		toggleDropDown: function(e)
+		{
+			e.stopPropagation();
+			const target = e.currentTarget;
+			const activeElement = document.querySelector('.dropdown__control-active');
+			if (activeElement && !target.classList.contains('dropdown__control-active'))
+			{
+				activeElement.classList.remove('dropdown__control-active');
+				activeElement.nextSibling.classList.remove('dropdown__children-active');
+			}
+			target.classList.toggle('dropdown__control-active');
+			target.nextSibling.classList.toggle('dropdown__children-active');
 		}
-	}
+	},
+	mounted()
+	{
+		window.addEventListener('click', function() {
+			const dropdowns = document.getElementsByClassName("dropdown__children");
+			for (let i = 0; i < dropdowns.length; i++) {
+				const openDropdown = dropdowns[i];
+				if (openDropdown.classList.contains('dropdown__children-active')) {
+					openDropdown.previousSibling.classList.remove('dropdown__control-active');
+					openDropdown.classList.remove('dropdown__children-active');
+				}
+			}
+		});
+	},
 }
+</script>
 
-.header {
-	background: $color-bar-background;
-	height: $size-header-height;
-	&__wrap {
-		display: flex;
-		margin: 0 auto;
-		align-items: center;
-		height: 100%;
-		color: #fff;
-	}
-}
-.container {
-
-}
-.footer {
-
-}
-</style>
+<style lang="scss" src="./default.scss" scoped></style>

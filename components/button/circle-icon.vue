@@ -7,9 +7,9 @@
 		:disabled="disabled"
 		:class="classNames"
 		:style="styles">
-		<span v-if="label">{{label}}</span>
-		<i v-if="icon" :class="['material-icons', !label && 'solo']">{{icon}}</i>
-		<i v-if="loading">loading</i>
+		<span>
+			<i class="material-icons">{{name}}</i>
+		</span>
 	</button>
 	<nuxt-link
 		v-else-if="to"
@@ -17,19 +17,20 @@
 		:title="title"
 		:class="classNames"
 		:style="styles">
-		<span v-if="label">{{label}}</span>
-		<i v-if="icon" :class="['material-icons', !label && 'solo']">{{icon}}</i>
+		<span>
+			<i class="material-icons">{{name}}</i>
+		</span>
 	</nuxt-link>
 	<a
 		v-else
 		:href="href"
 		:target="target"
 		:title="title"
-		@onClick="onClick"
 		:class="classNames"
 		:style="styles">
-		<span v-if="label">{{label}}</span>
-		<i v-if="icon" :class="['material-icons', !label && 'solo']">{{icon}}</i>
+		<span>
+			<i class="material-icons">{{name}}</i>
+		</span>
 	</a>
 </template>
 
@@ -37,17 +38,16 @@
 export default {
 	props: {
 		type: { type: String },
-		label: { type: String, default: '' },
-		href: { type: String },
 		to: { type: String },
+		href: { type: String },
 		target: { type: String },
 		title: { type: String },
+		name: { type: String, default: 'settings' },
 		disabled: { type: Boolean, default: false },
+		inline: { type: Boolean, default: false },
 		size: { type: String }, // `small`, `large`
 		color: { type: String }, // `key`, `gray`
-		inline: { type: Boolean, default: false },
-		loading: { type: Boolean, default: false },
-		icon: { type: String },
+		center: { type: Boolean, default: false },
 		className: { type: String },
 		styles: { type: [Object,Array] },
 	},
@@ -56,10 +56,11 @@ export default {
 		classNames: function()
 		{
 			return [
-				'rg-button',
-				this.size && `rg-button-size-${this.size}`,
-				this.color && `rg-button-color-${this.color}`,
-				this.inline && `rg-button-inline`,
+				'rg-button-circle-icon',
+				this.size && `rg-button-circle-icon-size-${this.size}`,
+				this.color && `rg-button-circle-icon-color-${this.color}`,
+				this.inline && `rg-button-circle-icon-inline`,
+				this.center && `rg-button-circle-icon-center`,
 				this.className,
 			];
 		}
@@ -71,5 +72,5 @@ export default {
 			this.$emit('onClick', e);
 		}
 	}
-};
+}
 </script>

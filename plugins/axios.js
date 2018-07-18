@@ -13,11 +13,11 @@ export default function(cox)
 		});
 	}
 
-	if (!process.env.URL_API)
+	if (!process.env.APP_API_URL)
 	{
 		return error({
 			statusCode: 500,
-			message: (cox.isDev) ? 'No URL_API in .env' : msg.service.error
+			message: (cox.isDev) ? 'No APP_API_URL in .env' : msg.service.error
 		});
 	}
 

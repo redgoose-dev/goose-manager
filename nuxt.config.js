@@ -33,7 +33,7 @@ module.exports = {
 	],
 
 	axios: {
-		baseURL: process.env.URL_API,
+		baseURL: process.env.APP_API_URL,
 	},
 
 	loading: {
