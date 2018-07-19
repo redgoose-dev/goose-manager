@@ -81,6 +81,7 @@ export default {
 			console.log(user);
 
 			// TODO: 내부 api를 통하여 세션에 토큰과 사용자 정보를 저장하기
+			// TODO: 참고 url (https://nuxtjs.org/examples/auth-routes)
 
 			// TODO: 여기서부터..
 			// TODO: 토큰을 쿠키에 담고 headers 에서 토큰 교체하기
