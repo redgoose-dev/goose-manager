@@ -1,3 +1,5 @@
+const bodyParser = require('body-parser');
+const session = require('express-session');
 // get .env
 require('dotenv').config();
 
@@ -46,4 +48,14 @@ module.exports = {
 		linkActiveClass: 'nuxt-active',
 	},
 
+	serverMiddleware: [
+		bodyParser.json(),
+		session({
+			secret: 'super-secret-key',
+			resave: false,
+			saveUninitialized: false,
+			cookie: { maxAge: 60000 }
+		}),
+		'~/api',
+	],
 };
