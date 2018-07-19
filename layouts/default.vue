@@ -8,10 +8,10 @@
 			<nav class="gnb">
 				<ul>
 					<li>
-						<nuxt-link to="/nest">Nests</nuxt-link>
+						<nuxt-link to="/nests">Nests</nuxt-link>
 					</li>
 					<li>
-						<nuxt-link to="/user">User</nuxt-link>
+						<nuxt-link to="/users">Users</nuxt-link>
 					</li>
 					<li>
 						<nuxt-link to="/json">JSON</nuxt-link>
@@ -20,7 +20,7 @@
 						<a href="#" target="_blank">Documentation</a>
 					</li>
 					<li>
-						<nuxt-link to="/test-flight">Test</nuxt-link>
+						<nuxt-link to="/test-flight">Test Flight</nuxt-link>
 					</li>
 				</ul>
 			</nav>

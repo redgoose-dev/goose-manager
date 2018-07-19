@@ -67,8 +67,10 @@ $size-side-tablet-padding: 20px;
 					&:hover {
 						background: rgba(#000, .3);
 					}
+					&.nuxt-active {
+						color: $color-key;
+					}
 				}
-				> div {}
 			}
 		}
 		ol {
@@ -80,6 +82,7 @@ $size-side-tablet-padding: 20px;
 	.profile-nav {
 		height: 100%;
 		margin: 0 -15px 0 0;
+
 		.dropdown {
 			height: 100%;
 			&__control {
@@ -112,13 +115,20 @@ $size-side-tablet-padding: 20px;
 				}
 			}
 			&__children {
-				ul {
+				position: relative;
+
+				> ul {
 					right: 0;
 					margin: 0;
 					padding: 0;
 					list-style: none;
 					background: mix(#000, #2D2929, 30%);
 					min-width: 140px;
+					position: absolute;
+					top: 0;
+					opacity: 0;
+					pointer-events: none;
+					transition: opacity .15s ease-out;
 					li {
 						border-top: 1px solid rgba(#fff, .1);
 						a {
@@ -133,24 +143,11 @@ $size-side-tablet-padding: 20px;
 						}
 					}
 				}
-			}
-		}
-	}
-	// dropdown
-	.dropdown {
-		&__children {
-			position: relative;
-			> * {
-				position: absolute;
-				top: 0;
-				opacity: 0;
-				pointer-events: none;
-				transition: opacity .15s ease-out;
-			}
-			&-active {
-				> * {
-					opacity: 1;
-					pointer-events: auto;
+				&-active {
+					> ul {
+						opacity: 1;
+						pointer-events: auto;
+					}
 				}
 			}
 		}
