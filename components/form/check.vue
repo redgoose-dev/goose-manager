@@ -1,30 +1,79 @@
 <template>
-	<label v-if="label" :class="classNames" :style="styles">
-		<input :type="type"/>
-		<i></i>
-	</label>
-	<label v-else :class="classNames" :style="styles">
-		<span>
-			<input :type="type"/>
+	<label
+		v-if="label"
+		:class="[
+			'rg-form-check-label',
+			disabled && 'rg-form-check-label-disabled',
+			className
+		]"
+		:style="styles">
+		<span
+			:class="[
+				'rg-form-check',
+				`rg-form-check-${this.typeName}`,
+			]">
+			<input
+				:type="typeName"
+				:name="name"
+				:id="id"
+				:value="value"
+				:checked="checked"
+				:disabled="disabled"
+				@change="onChange"/>
 			<i></i>
 		</span>
 		<em>{{label}}</em>
 	</label>
+	<label
+		v-else
+		:class="[
+			`rg-form-check`,
+			`rg-form-check-${this.typeName}`,
+			disabled && 'rg-form-check-disabled',
+			className
+		]"
+		:style="styles">
+		<input
+			:type="typeName"
+			:name="name"
+			:id="id"
+			:value="value"
+			:checked="checked"
+			:disabled="disabled"
+			@change="onChange"/>
+		<i></i>
+	</label>
 </template>
 
 <script>
-// TODO: 체크박스나 라디오의 유닛과 레이블의 컴포넌트
 export default {
 	props: {
-
+		label: { type: String },
+		type: { type: String, default: 'checkbox' },
+		name: { type: String },
+		id: { type: String },
+		value: { type: String },
+		checked: { type: Boolean, default: false },
+		disabled: { type: Boolean, default: false },
+		inline: { type: Boolean, default: false },
+		change: {},
+		className: { type: String },
+		styles: { type: [Object,Array] },
+	},
+	model: {
+		prop: 'checked',
+		event: 'change',
 	},
 	computed: {
-		classNames: function()
+		typeName: function()
 		{
-			return [
-				'rg-form-check',
-				this.className,
-			];
+			return this.type === 'radio' ? 'radio' : 'checkbox';
+		},
+	},
+	methods: {
+		onChange: function(e)
+		{
+			this.$emit('change', !!e.target.value ? e.target.value : e.target.checked, e);
 		}
 	},
 }

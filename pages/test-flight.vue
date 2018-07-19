@@ -52,15 +52,38 @@
 
 	<hr>
 
-	<form-text
-		placeholder="placeholder value"
-		v-model="fooo"
-		:required="true"
-		:inline="false"
-		:readonly="false"
-		:disabled="true"
-	/>
-
+	<p>
+		<form-text
+			placeholder="placeholder value"
+			v-model="fooo"
+			:required="true"
+			:inline="false"
+			:readonly="false"
+			:disabled="false"
+			size="small"
+		/>
+	</p>
+	<p>
+		<form-text
+			placeholder="placeholder value"
+			v-model="fooo"
+			:required="true"
+			:inline="false"
+			:readonly="false"
+			:disabled="false"
+		/>
+	</p>
+	<p>
+		<form-text
+			placeholder="placeholder value"
+			v-model="fooo"
+			:required="true"
+			:inline="false"
+			:readonly="false"
+			:disabled="true"
+			size="large"
+		/>
+	</p>
 	<hr>
 
 	<form-text
@@ -83,23 +106,102 @@
 	<hr>
 
 	<p>
+		<form-select :inline="true" size="small"/>
 		<form-select
 			name="select_name"
 			id="select_id"
-			v-model="goo"
+			v-model="select"
 			:options="[
 				{ label: 'Foo', value: 'foo' },
 				{ label: 'Bar', value: 'bar' }
 			]"
-			:inline="true"
-		/>
-		==={{goo}}===
+			:inline="true"/>
+		<form-select :inline="true" size="large"/>
+		==={{select}}===
 	</p>
 	<hr>
 	<p>
-		<form-check/>
+		<form-check
+			name="foo23123oo"
+			v-model="checkss"/>
+		<form-check
+			name="foooo"
+			label="checkbox name"
+			v-model="checkss"/>
+		===========
+		{{checkss}}
 	</p>
-
+	<p>
+		<form-check
+			type="radio"
+			name="fooo1"
+			label="radio name"
+			v-model="checkss"
+			:inline="true"/>
+	</p>
+	<hr>
+	<div>
+		<fieldset>
+			<legend>checkbox group</legend>
+			<form-checks
+				type="checkbox"
+				name="smdgpsd"
+				id="roooo"
+				:inline="true"
+				v-model="checkboxes"
+				:disabled="false"
+				:items="[
+					{ label: 'checks label#1', value: 'label-1' },
+					{ label: 'checks label#2', value: 'label-2' },
+					{ label: 'checks label#3', value: 'label-3' },
+					{ label: 'checks label#4', value: 'label-4' },
+					{ label: 'checks label#5', value: 'label-5' },
+					{ label: 'checks label#6', value: 'label-6' },
+					{ label: 'checks label#7', value: 'label-7' },
+					{ label: 'checks label#8', value: 'label-8' },
+				]"
+				@change="(value) => { this.checkboxes = value }"
+			/>
+			<hr>
+			{{checkboxes}}
+		</fieldset>
+		<fieldset>
+			<legend>radio group</legend>
+			<form-checks
+				type="radio"
+				name="rtjnfgh"
+				id="yoooo"
+				v-model="radios"
+				:inline="true"
+				:disabled="false"
+				:items="[
+					{ label: 'radio label#1', value: 'label-1' },
+					{ label: 'radio label#2', value: 'label-2' },
+					{ label: 'radio label#3', value: 'label-3' },
+					{ label: 'radio label#4', value: 'label-4' },
+					{ label: 'radio label#5', value: 'label-5' },
+					{ label: 'radio label#6', value: 'label-6' },
+					{ label: 'radio label#7', value: 'label-7' },
+					{ label: 'radio label#8', value: 'label-8' },
+				]"
+			/>
+			<hr>
+			{{radios}}
+		</fieldset>
+		<fieldset>
+			<legend>field style</legend>
+			<div class="rg-form-field">
+				<label for="sdmgmsdgp">label name</label>
+				<form-text
+					id="sdmgmsdgp"
+					placeholder="placeholder value"
+					:inline="true"
+				/>
+				<p class="rg-form-help rg-form-help-error">error message</p>
+				<p class="rg-form-help">help message</p>
+			</div>
+		</fieldset>
+	</div>
 </article>
 </template>
 
@@ -108,7 +210,8 @@ import ButtonBasic from '~/components/button/basic';
 import ButtonCircleIcon from '~/components/button/circle-icon';
 import FormText from '~/components/form/text';
 import FormSelect from '~/components/form/select';
-import FormCheck from '~/components/form/check'
+import FormCheck from '~/components/form/check';
+import FormChecks from '~/components/form/checks';
 
 export default {
 	components: {
@@ -117,12 +220,16 @@ export default {
 		FormText,
 		FormSelect,
 		FormCheck,
+		FormChecks,
 	},
 	data()
 	{
 		return {
 			fooo: 'sdgmosdpg,sdg',
-			goo: 'asd',
+			select: 'foo',
+			checkss: false,
+			checkboxes: ['label-1', 'label-3', 'label-5'],
+			radios: 'label-2',
 		};
 	}
 }

@@ -5,30 +5,35 @@
 	font-size: .875rem;
 }
 
-@mixin form-size($type) {
+@mixin form-size($size, $type) {
 	$size-horizontal: null;
 
-	@if $type == 'button'
-	{
+	@if $type == 'button' {
 		$size-horizontal: 1.25rem;
-	}
-	@else
-	{
+	} @else {
 		$size-horizontal: .75rem;
+	}
+
+	@if $size == 'small' {
+		padding: .3125rem $size-horizontal;
+		font-size: .8125rem;
+	} @else if $size == 'large' {
+		padding: .625rem $size-horizontal;
+		font-size: 1.125rem;
+	} @else {
+		padding: .4375rem $size-horizontal;
+		font-size: .9375rem;
+		line-height: 1.5;
 	}
 
 	// small
 	&-size-small {
-		padding: .3125rem $size-horizontal;
-		font-size: .8125rem;
+
 	}
 	// medium
-	padding: .4375rem $size-horizontal;
-	font-size: .9375rem;
-	line-height: 1.5;
+
 	// large
 	&-size-large {
-		padding: .625rem $size-horizontal;
-		font-size: 1.125rem;
+
 	}
 }

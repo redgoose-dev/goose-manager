@@ -31,7 +31,13 @@
 	}
 
 	// size
-	@include form-size('button');
+	@include form-size('normal', 'button');
+	&-size-small {
+		@include form-size('small', 'button');
+	}
+	&-size-large {
+		@include form-size('large', 'button');
+	}
 
 	// with icon
 	> .material-icons {

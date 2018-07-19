@@ -3,7 +3,8 @@
 		<select
 			:name="name"
 			:id="id"
-			:selected="selected"
+
+			:value="selected"
 			:required="required"
 			:disabled="disabled"
 			@input="onChange">
@@ -26,6 +27,7 @@ export default {
 		required: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
 		inline: { type: Boolean, default: false },
+		size: { type: String },
 		className: { type: String },
 		styles: { type: [Object,Array] },
 	},

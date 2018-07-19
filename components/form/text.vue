@@ -1,6 +1,6 @@
 <template>
 	<textarea
-		v-if="(element === 'textarea')"
+		v-if="(type === 'textarea')"
 		:name="name"
 		:id="id"
 		:placeholder="placeholder"
@@ -11,11 +11,13 @@
 		:rows="rows"
 		:class="[
 			'rg-form-text',
+			size && `rg-form-text-size-${size}`,
 			error && 'rg-form-text-error',
 			className
 		]"
 		:style="styles"
-		@input="onChange">{{value}}</textarea>
+		@input="onChange"
+	>{{value}}</textarea>
 	<input
 		v-else
 		:type="type"
@@ -30,6 +32,7 @@
 		:class="[
 			'rg-form-text',
 			inline && 'rg-form-text-inline',
+			size && `rg-form-text-size-${size}`,
 			error && 'rg-form-text-error',
 			className
 		]"
@@ -52,6 +55,7 @@ export default {
 		readonly: { type: Boolean, default: false },
 		inline: { type: Boolean, default: false },
 		rows: { type: Number, default: 8, },
+		size: { type: String },
 		error: { type: Boolean },
 		className: { type: String },
 		styles: { type: [Object,Array] },
