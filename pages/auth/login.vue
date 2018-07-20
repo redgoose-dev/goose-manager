@@ -34,6 +34,7 @@ import * as forms from '../../libs/forms';
 
 export default {
 	layout: 'blank',
+	middleware: 'login',
 	data()
 	{
 		return {
@@ -50,28 +51,34 @@ export default {
 		{
 			e.preventDefault();
 
-			const { $axios, $store } = this;
+			const { $axios, $store, $router } = this;
 			const form = e.target;
 
 			// off processing
 			this.processing = true;
 
 			// request api
-			let user = null;
 			try
 			{
-				const data = forms.formData({ email: form.email.value, pw: form.password.value });
+				const data = forms.formData({
+					email: form.email.value,
+					pw: form.password.value,
+					host: location.host,
+				});
 				const resultApi = await $axios.$post('/auth/login', data);
 				if (!(resultApi.success && resultApi.data && resultApi.data.email)) throw resultApi.message;
 				this.processing = false;
-				user = resultApi.data;
-				// TODO: test를 위하여..
-				// this.form.email = '';
-				// this.form.password = '';
+
+				// reset form
+				this.form.email = '';
+				this.form.password = '';
 
 				// save session
-				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, {});
-				console.log(resultSession);
+				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, resultApi.data);
+				if (!(resultSession && resultSession.success)) throw resultSession.message || 'Failed login';
+
+				// redirect home
+				location.href = '/';
 			}
 			catch(e)
 			{
@@ -79,15 +86,7 @@ export default {
 				console.error(e);
 				this.processing = false;
 				this.error = true;
-				return;
 			}
-
-			// TODO: 내부 api를 통하여 세션에 토큰과 사용자 정보를 저장하기
-			// TODO: 참고 url (https://nuxtjs.org/examples/auth-routes)
-
-			// TODO: 여기서부터..
-			// TODO: 토큰을 쿠키에 담고 headers 에서 토큰 교체하기
-			//$axios.setHeader('Authorization', process.env.TOKEN_PUBLIC);
 		}
 	},
 };

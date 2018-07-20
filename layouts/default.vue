@@ -36,7 +36,7 @@
 								<nuxt-link to="/">Account</nuxt-link>
 							</li>
 							<li>
-								<nuxt-link to="/">Logout</nuxt-link>
+								<nuxt-link to="/auth/logout">Logout</nuxt-link>
 							</li>
 						</ul>
 					</div>

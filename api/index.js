@@ -15,18 +15,16 @@ router.use((req, res, next) => {
 
 // Add POST - /session-save
 router.post('/session-save', (req, res) => {
-	if (!!true)
+	if (req.body && req.body.srl && req.body.email && req.body.token)
 	{
-		// req.session.authUser = {
-		// 	username: 'demo'
-		// };
+		req.session.authUser = req.body;
 		return res.json({ success: true });
 	}
 	res.status(401).json({ success: false, message: 'Bad credentials' })
 });
 
-// Add POST - /session-remove
-router.post('/session-remove', (req, res) => {
+// Add POST - /session-clear
+router.post('/session-clear', (req, res) => {
 	delete req.session.authUser;
 	res.json({ success: true });
 });
