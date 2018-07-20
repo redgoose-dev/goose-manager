@@ -1,9 +1,9 @@
 <template>
 <article>
-	<header class="rg-page-header">
-		<h1 class="rg-page-header-title">Test Flight</h1>
-		<p class="rg-page-header-description">분류를 관리하는 모듈입니다.</p>
-	</header>
+	<page-header
+		title="Test Flight"
+		description="컴포넌트 테스트 페이지입니다."
+	/>
 
 	<h2 class="rg-section-title">section title</h2>
 
@@ -206,6 +206,7 @@
 </template>
 
 <script>
+import PageHeader from '~/components/contents/page-header';
 import ButtonBasic from '~/components/button/basic';
 import ButtonCircleIcon from '~/components/button/circle-icon';
 import FormText from '~/components/form/text';
@@ -215,6 +216,7 @@ import FormChecks from '~/components/form/checks';
 
 export default {
 	components: {
+		PageHeader,
 		ButtonBasic,
 		ButtonCircleIcon,
 		FormText,
