@@ -9,7 +9,6 @@
 		:style="styles">
 		<span v-if="label">{{label}}</span>
 		<i v-if="icon" :class="['material-icons', !label && 'solo']">{{icon}}</i>
-		<i v-if="loading">loading</i>
 	</button>
 	<nuxt-link
 		v-else-if="to"
@@ -46,7 +45,7 @@ export default {
 		size: { type: String }, // `small`, `large`
 		color: { type: String }, // `key`, `gray`
 		inline: { type: Boolean, default: false },
-		loading: { type: Boolean, default: false },
+		rotateIcon: { type: Boolean, default: false },
 		icon: { type: String },
 		className: { type: String },
 		styles: { type: [Object,Array] },
@@ -60,6 +59,7 @@ export default {
 				this.size && `rg-button-size-${this.size}`,
 				this.color && `rg-button-color-${this.color}`,
 				this.inline && `rg-button-inline`,
+				this.rotateIcon && `rg-button-rotate-icon`,
 				this.className,
 			];
 		}
