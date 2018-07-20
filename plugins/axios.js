@@ -23,5 +23,6 @@ export default function(cox)
 
 	// TODO: 유저 토큰이 쿠키속에 들어있다면 그걸 사용하고 없으면 퍼블릭으로 사용함
 	// set token
-	$axios.setHeader('Authorization', process.env.TOKEN_PUBLIC);
+	// TODO: request 쪽 함수로 헤더를 붙이는것이 좋아보임
+	$axios.setHeader('Authorization', '' + process.env.TOKEN_PUBLIC);
 }

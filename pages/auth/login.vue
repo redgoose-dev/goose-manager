@@ -50,7 +50,7 @@ export default {
 		{
 			e.preventDefault();
 
-			const { $axios } = this;
+			const { $axios, $store } = this;
 			const form = e.target;
 
 			// off processing
@@ -61,13 +61,17 @@ export default {
 			try
 			{
 				const data = forms.formData({ email: form.email.value, pw: form.password.value });
-				const result = await $axios.$post('/auth/login', data);
-				if (!(result.success && result.data && result.data.email)) throw result.message;
+				const resultApi = await $axios.$post('/auth/login', data);
+				if (!(resultApi.success && resultApi.data && resultApi.data.email)) throw resultApi.message;
 				this.processing = false;
-				user = result.data
+				user = resultApi.data;
 				// TODO: test를 위하여..
 				// this.form.email = '';
 				// this.form.password = '';
+
+				// save session
+				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, {});
+				console.log(resultSession);
 			}
 			catch(e)
 			{
@@ -77,8 +81,6 @@ export default {
 				this.error = true;
 				return;
 			}
-
-			console.log(user);
 
 			// TODO: 내부 api를 통하여 세션에 토큰과 사용자 정보를 저장하기
 			// TODO: 참고 url (https://nuxtjs.org/examples/auth-routes)
