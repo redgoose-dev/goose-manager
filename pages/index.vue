@@ -15,8 +15,8 @@ export default {
 	{
 		const { $axios } = this;
 
-		let aa = await $axios.$get('/token/decode');
-		console.log(aa);
+		// let aa = await $axios.$get('/token/decode');
+		// console.log(aa);
 	}
 };
 </script>

@@ -1,0 +1,185 @@
+@import "./variables";
+@import "./mixins";
+
+
+// contents header
+.#{$prefix}-page-header {
+	margin: 0 0 2rem;
+	display: flex;
+	align-items: center;
+	&__body {
+		flex: 1;
+	}
+	&__title {
+		margin: 0;
+		padding-top: 1px;
+		font-size: 1.875rem;
+		line-height: 1;
+		letter-spacing: -.5px;
+		font-family: $font-eng;
+		font-weight: 600;
+	}
+	&__description {
+		margin: 5px 0 0;
+		font-size: .8125rem;
+		color: $color-blur;
+	}
+	&__nav {
+		display: flex;
+		align-items: center;
+		padding-left: 15px;
+		margin-right: -4px;
+		> a {
+			display: block;
+		}
+	}
+}
+
+
+// index
+.#{$prefix}-index {
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	&-card {
+		ul {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			margin: -10px;
+			&:after {
+				content: '';
+				display: table;
+				clear: both;
+			}
+		}
+		li {
+			width: 50%;
+			box-sizing: border-box;
+			padding: 10px;
+		}
+	}
+	&-thumbnail {}
+	&-list {}
+
+	@include responsive(desktop-large) {
+		&-card {
+			li {
+				width: 33.33333%;
+			}
+		}
+	}
+}
+
+// bottom navigation
+.#{$prefix}-nav {
+	margin: 40px 0 0;
+	text-align: right;
+	> .#{$prefix}-button {
+		margin-left: 10px;
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+}
+
+// item
+.#{$prefix}-item {
+	&__subject {
+		display: block;
+		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		a {
+			text-decoration: none;
+		}
+		strong {
+			font-size: .9375rem;
+			color: $color-key;
+			line-height: 1;
+		}
+	}
+	&__metas {
+		display: block;
+		margin: 5px 0 0;
+		font-size: 0;
+		> span {
+			font-size: 11px;
+			color: $color-blur;
+			line-height: 1;
+			&:after {
+				content: ', ';
+				padding-right: 3px;
+			}
+			&:last-child:after {
+				display: none;
+			}
+		}
+	}
+	&__nav {
+		margin: 5px 0 0;
+		font-size: 0;
+		> a {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 0 0 8px;
+			font-size: .75rem;
+			color: $color-base;
+			text-decoration: none;
+			font-weight: bold;
+			&:first-child {
+				margin-left: 0;
+			}
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&-card {
+		$size: 100px;
+		position: relative;
+		display: flex;
+		align-items: center;
+		box-shadow: 0 1px 12px rgba(#000, .1);
+		height: $size;
+		&:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			border: 0 solid $color-key;
+			pointer-events: none;
+			transition: box-shadow .15s ease-out;
+		}
+		> figure {
+			margin: 0;
+			height: 100%;
+			img {
+				display: block;
+				width: $size;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+		> div {
+			flex: 1;
+			padding: 10px 20px;
+			min-width: 0;
+		}
+		&:hover:after {
+			box-shadow: 0 0 0 3px $color-key;
+		}
+	}
+	&-thumbnail {
+		//
+	}
+	&-list {
+		//
+	}
+}

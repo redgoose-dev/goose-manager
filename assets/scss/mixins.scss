@@ -1,3 +1,4 @@
+@import "variables";
 
 // typo - description
 @mixin typo-text-body() {
@@ -5,6 +6,7 @@
 	font-size: .875rem;
 }
 
+// set form size
 @mixin form-size($size, $type) {
 	$size-horizontal: null;
 
@@ -25,15 +27,22 @@
 		font-size: .9375rem;
 		line-height: 1.5;
 	}
+}
 
-	// small
-	&-size-small {
-
+// responsive
+@mixin responsive($range)
+{
+	@if $range == desktop
+	{
+		@media (min-width: #{$size-desktop}) { @content; }
 	}
-	// medium
-
-	// large
-	&-size-large {
-
+	@else if $range == desktop-large
+	{
+		@media (min-width: #{$size-desktop-large}) { @content; }
 	}
+}
+// retina display
+@mixin retina()
+{
+	@media (-webkit-min-device-pixel-ratio: 2) { @content; }
 }

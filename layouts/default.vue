@@ -15,12 +15,12 @@
 					<li><nuxt-link to="/test-flight">Test Flight</nuxt-link></li>
 				</ul>
 			</nav>
-			<nav class="profile-nav">
+			<nav v-if="!!user" class="profile-nav">
 				<div class="dropdown">
-					<button type="button" class="dropdown__control" @click="toggleDropDown">
-						<span>scripter@me.com</span>
+					<span class="dropdown__control">
+						<em>{{user.email}}</em>
 						<i class="material-icons">arrow_drop_down</i>
-					</button>
+					</span>
 					<div class="dropdown__children">
 						<ul>
 							<li>
@@ -44,7 +44,9 @@
 
 	<footer class="footer">
 		<div class="footer__wrap">
-			<address>Copyright 2018 redgoose.me. All right reserved.</address>
+			<address>
+				Copyright © 2014-{{year}} <a href="https://redgoose.me" target="_blank">redgoose.me</a>
+			</address>
 		</div>
 	</footer>
 </main>
@@ -57,37 +59,16 @@ export default {
 	components: {
 		ButtonBasic,
 	},
-	computed: {
-
-	},
-	methods: {
-		toggleDropDown: function(e)
-		{
-			e.stopPropagation();
-			const target = e.currentTarget;
-			const activeElement = document.querySelector('.dropdown__control-active');
-			if (activeElement && !target.classList.contains('dropdown__control-active'))
-			{
-				activeElement.classList.remove('dropdown__control-active');
-				activeElement.nextSibling.classList.remove('dropdown__children-active');
-			}
-			target.classList.toggle('dropdown__control-active');
-			target.nextSibling.classList.toggle('dropdown__children-active');
-		}
-	},
-	mounted()
+	data()
 	{
-		window.addEventListener('click', function() {
-			const dropdowns = document.getElementsByClassName("dropdown__children");
-			for (let i = 0; i < dropdowns.length; i++) {
-				const openDropdown = dropdowns[i];
-				if (openDropdown.classList.contains('dropdown__children-active')) {
-					openDropdown.previousSibling.classList.remove('dropdown__control-active');
-					openDropdown.classList.remove('dropdown__children-active');
-				}
-			}
-		});
+		const { $store } = this;
+		return {
+			user: $store.state.authUser || null,
+			year: new Date().getFullYear()
+		};
 	},
+	computed: {},
+	methods: {},
 }
 </script>
 

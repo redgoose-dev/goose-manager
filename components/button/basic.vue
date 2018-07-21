@@ -36,7 +36,7 @@
 export default {
 	props: {
 		type: { type: String },
-		label: { type: String, default: '' },
+		label: { type: String, default: 'button' },
 		href: { type: String },
 		to: { type: String },
 		target: { type: String },

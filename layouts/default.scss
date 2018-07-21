@@ -1,6 +1,6 @@
 @import "../assets/scss/variables";
 
-$size-side-max-padding: 100px;
+$size-side-max-padding: 80px;
 $size-side-tablet-padding: 20px;
 
 // layout
@@ -86,7 +86,8 @@ $size-side-tablet-padding: 20px;
 		.dropdown {
 			height: 100%;
 			&__control {
-				display: block;
+				display: flex;
+				align-items: center;
 				margin: 0;
 				padding: 0 15px;
 				height: 100%;
@@ -100,18 +101,15 @@ $size-side-tablet-padding: 20px;
 					display: inline-block;
 					vertical-align: middle;
 				}
-				> span {
+				> em {
 					font-size: .8125rem;
 					font-weight: 200;
+					font-style: normal;
 					color: #ccc;
 				}
 				> i {
 					font-size: 18px;
 					color: #fff;
-				}
-				&:hover,
-				&-active {
-					background: rgba(#000, .3);
 				}
 			}
 			&__children {
@@ -143,7 +141,14 @@ $size-side-tablet-padding: 20px;
 						}
 					}
 				}
-				&-active {
+			}
+
+			&:hover,
+			&:focus-within {
+				> span {
+					background: rgba(#000, .3);
+				}
+				> div {
 					> ul {
 						opacity: 1;
 						pointer-events: auto;
