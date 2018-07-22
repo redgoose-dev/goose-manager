@@ -35,7 +35,6 @@
 	}
 }
 
-
 // index
 .#{$prefix}-index {
 	ul {
@@ -76,10 +75,11 @@
 
 // bottom navigation
 .#{$prefix}-nav {
-	margin: 40px 0 0;
+	margin: 30px 0 0;
 	text-align: right;
+	font-size: 0;
 	> .#{$prefix}-button {
-		margin-left: 10px;
+		margin-left: 6px;
 		&:first-child {
 			margin-left: 0;
 		}

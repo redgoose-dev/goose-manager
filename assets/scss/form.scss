@@ -107,21 +107,47 @@
 
 // field
 .#{$prefix}-form-field {
-	> label {
+	label {
 		display: inline-block;
-		font-size: 1rem;
+		font-size: .875rem;
 		font-weight: bold;
 		margin: 0 0 3px;
 	}
 	.rg-form-text-inline {
 		margin-left: 12px;
 	}
+	> dl {
+		display: flex;
+		margin: 0;
+		padding: 8px 0;
+		align-items: center;
+		> dt {
+			width: 150px;
+			label {
+				margin: 0 0 0 15px;
+			}
+		}
+		> dd {
+			margin: 0 0 0 20px;
+			flex: 1;
+			.rg-form-text-inline {
+				margin-left: 0;
+			}
+		}
+	}
+
+	&-line {
+		border-bottom: 1px solid $color-content-line;
+		&.first {
+			border-top: 1px solid $color-content-line;
+		}
+	}
 }
 
 // help
 .#{$prefix}-form-help {
-	margin: 3px 0;
-	font-size: 0.8125rem;
+	margin: 3px 0 0;
+	font-size: .75rem;
 	color: $color-blur;
 	&-error {
 		color: $color-error;
@@ -235,6 +261,46 @@
 			margin: 0;
 			.rg-form-check-label {
 				padding-right: 20px;
+			}
+		}
+	}
+}
+
+// fieldset
+.#{$prefix}-form-fieldset {
+	margin: 0;
+	padding: 0;
+	border: none;
+	> legend {
+		font-size: 0;
+		visibility: hidden;
+	}
+}
+
+// error
+.#{$prefix}-form-error {
+	margin: 10px 0 0;
+	text-align: right;
+	font-size: .8125rem;
+	font-weight: bold;
+	color: $color-error;
+}
+
+// delete
+.#{$prefix}-form-delete {
+	&__message {
+		margin: 0;
+		text-align: center;
+		padding: 8vh 0;
+		border-top: 1px solid $color-content-line;
+		border-bottom: 1px solid $color-content-line;
+		font-size: .9375rem;
+		strong {
+			&:before {
+				content: '"';
+			}
+			&:after {
+				content: '"';
 			}
 		}
 	}

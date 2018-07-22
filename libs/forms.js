@@ -14,3 +14,16 @@ export function formData(obj=null)
 	});
 	return data;
 }
+
+/**
+ * check id
+ * "숫자,영어,-_"만 서용할 수 있도록 검사한다.
+ *
+ * @param {String} str
+ * @return {Boolean}
+ */
+export function checkId(str)
+{
+	const reg = /^[A-Za-z0-9_-]*$/;
+	return reg.test(str);
+}
