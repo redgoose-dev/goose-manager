@@ -1,7 +1,7 @@
 <template>
 	<form @submit="onSubmit" ref="form">
 		<fieldset class="rg-form-fieldset">
-			<legend>create form</legend>
+			<legend>{{type}} form</legend>
 			<div class="rg-form-field rg-form-field-line first">
 				<dl class="rg-form-field__group">
 					<dt><label for="id">ID</label></dt>
@@ -12,6 +12,7 @@
 							v-model="id.value"
 							placeholder="app_name"
 							@change="onChange"
+							:maxlength="16"
 							:error="id.error"
 							:required="true"
 							:inline="true"/>
@@ -31,6 +32,7 @@
 							id="name"
 							v-model="name.value"
 							placeholder="App name"
+							:maxlength="50"
 							:error="name.error"
 							:required="true"
 							:inline="true"/>
@@ -41,11 +43,11 @@
 			<p v-if="error" class="rg-form-error">{{error}}</p>
 		</fieldset>
 		<nav class="rg-nav">
-			<button-basic label="Back" onClick="history.back()" :inline="true"/>
+			<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
 			<button-basic
 				type="submit"
 				color="key"
-				:label="!processing ? buttonLabel : null"
+				:label="!processing ? `${buttonLabel} app` : null"
 				:inline="true"
 				:icon="processing ? 'cached' : ''"
 				:rotateIcon="processing"
@@ -62,7 +64,7 @@ import * as messages from '../../../libs/messages';
 
 export default {
 	props: {
-		type: { type: String, default: 'create' },
+		type: { type: String, default: 'add' },
 		data: {
 			id: { type: String },
 			name: { type: String },
@@ -88,12 +90,12 @@ export default {
 			},
 			error: '',
 			processing: false,
-			buttonLabel: this.type === 'edit' ? 'Edit' : 'Create',
+			buttonLabel: this.type === 'edit' ? 'Edit' : 'Add',
 		};
 	},
 	mounted()
 	{
-		if (this.$refs.form && this.type === 'create')
+		if (this.$refs.form && this.type === 'add')
 		{
 			this.$refs.form.id.focus();
 		}

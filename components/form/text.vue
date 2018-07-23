@@ -9,6 +9,7 @@
 		:disabled="disabled"
 		:readonly="readonly"
 		:rows="rows"
+		:size="formSize"
 		:class="[
 			'rg-form-text',
 			size && `rg-form-text-size-${size}`,
@@ -29,6 +30,7 @@
 		:required="required"
 		:disabled="disabled"
 		:readonly="readonly"
+		:size="formSize"
 		:class="[
 			'rg-form-text',
 			inline && 'rg-form-text-inline',
@@ -57,6 +59,7 @@ export default {
 		rows: { type: Number, default: 8, },
 		size: { type: String },
 		error: { type: Boolean },
+		formSize: { type: [String,Number] },
 		className: { type: String },
 		styles: { type: [Object,Array] },
 	},

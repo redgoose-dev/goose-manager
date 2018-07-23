@@ -19,6 +19,10 @@ export const actions = {
 				url_app: box.env.APP_URL,
 				url_api: box.env.APP_API_URL,
 				authUser: (req.session && req.session.authUser) ? req.session.authUser : null,
+				level: {
+					public: box.env.APP_LEVEL_PUBLIC,
+					admin: box.env.APP_LEVEL_ADMIN,
+				}
 			});
 		}
 	}
@@ -32,6 +36,7 @@ export const mutations = {
 	{
 		state.url_app = value.url_app;
 		state.url_api = value.url_api;
+		state.level = value.level;
 		state.authUser = value.authUser;
 	},
 

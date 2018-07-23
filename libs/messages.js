@@ -24,5 +24,6 @@ export const service = {
 export const error = {
 	service: 'Service error',
 	id: 'Please enter only alphanumeric characters `-` and `_`.',
-	noValue: `There is no value for '{0}'.`
+	noValue: `There is no value for '{0}'.`,
+	confirmPassword: `확인용 비밀번호가 다릅니다.`,
 };

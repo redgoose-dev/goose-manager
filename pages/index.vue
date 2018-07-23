@@ -11,12 +11,12 @@ export default {
 	{
 		return {};
 	},
-	async mounted()
+	async asyncData(cox)
 	{
-		const { $axios } = this;
-
-		// let aa = await $axios.$get('/token/decode');
-		// console.log(aa);
-	}
+		let decode = await cox.$axios.$get('/token/decode');
+		console.log(decode);
+	},
+	async mounted()
+	{}
 };
 </script>

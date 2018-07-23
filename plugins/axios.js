@@ -22,9 +22,16 @@ export default function(cox)
 
 	// set token
 	let token = null;
-	if (cox.store.state.authUser)
+	let host = (process.server) ? cox.req.headers.host : location.host;
+	if (cox.req && cox.req.session && cox.req.session.authUser)
 	{
-		let host = (process.server) ? cox.req.headers.host : location.host;
+		if (host === cox.req.session.authUser.host)
+		{
+			token = cox.req.session.authUser.token;
+		}
+	}
+	else if (cox.store.state.authUser)
+	{
 		if (host === cox.store.state.authUser.host)
 		{
 			token = cox.store.state.authUser.token;

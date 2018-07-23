@@ -62,26 +62,27 @@
 		}
 	}
 	&-thumbnail {}
-	&-list {}
+	&-list {
+		li {
+			border-bottom: 1px solid $color-content-line;
+			&:first-child {
+				border-top: 1px solid $color-content-line;
+			}
+		}
+	}
+	&-error {
+		padding: 10vh 0;
+		text-align: center;
+		font-size: 1rem;
+		font-weight: bold;
+		background: $color-light;
+	}
 
 	@include responsive(desktop-large) {
 		&-card {
 			li {
 				width: 33.33333%;
 			}
-		}
-	}
-}
-
-// bottom navigation
-.#{$prefix}-nav {
-	margin: 30px 0 0;
-	text-align: right;
-	font-size: 0;
-	> .#{$prefix}-button {
-		margin-left: 6px;
-		&:first-child {
-			margin-left: 0;
 		}
 	}
 }
@@ -104,8 +105,8 @@
 	}
 	&__metas {
 		display: block;
-		margin: 5px 0 0;
-		font-size: 0;
+		margin: 1px 0 0;
+		line-height: 1;
 		> span {
 			font-size: 11px;
 			color: $color-blur;
@@ -116,25 +117,6 @@
 			}
 			&:last-child:after {
 				display: none;
-			}
-		}
-	}
-	&__nav {
-		margin: 5px 0 0;
-		font-size: 0;
-		> a {
-			display: inline-block;
-			vertical-align: middle;
-			margin: 0 0 0 8px;
-			font-size: .75rem;
-			color: $color-base;
-			text-decoration: none;
-			font-weight: bold;
-			&:first-child {
-				margin-left: 0;
-			}
-			&:hover {
-				text-decoration: underline;
 			}
 		}
 	}
@@ -171,6 +153,25 @@
 			flex: 1;
 			padding: 10px 20px;
 			min-width: 0;
+			> nav {
+				margin: 5px 0 0;
+				font-size: 0;
+				> a {
+					display: inline-block;
+					vertical-align: middle;
+					margin: 0 0 0 8px;
+					font-size: .75rem;
+					color: $color-base;
+					text-decoration: none;
+					font-weight: bold;
+					&:first-child {
+						margin-left: 0;
+					}
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
 		}
 		&:hover:after {
 			box-shadow: 0 0 0 3px $color-key;
@@ -180,6 +181,47 @@
 		//
 	}
 	&-list {
-		//
+		$self: '.#{$prefix}-item';
+		$size: 100px;
+		padding: 15px 10px;
+		> div {
+			display: flex;
+			align-items: center;
+			> figure {
+				margin: -5px 15px -5px 0;
+				height: 100%;
+				img {
+					display: block;
+					width: $size;
+					height: $size;
+					object-fit: cover;
+				}
+			}
+			> div {
+				flex: 1;
+				margin-top: -3px;
+			}
+			> nav {
+				> * {
+					margin-left: 4px;
+					&:first-child {
+						margin-left: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+// bottom navigation
+.#{$prefix}-nav {
+	margin: 30px 0 0;
+	text-align: right;
+	font-size: 0;
+	> .#{$prefix}-button {
+		margin-left: 6px;
+		&:first-child {
+			margin-left: 0;
+		}
 	}
 }

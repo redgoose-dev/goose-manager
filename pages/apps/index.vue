@@ -15,15 +15,14 @@
 			</li>
 		</ul>
 	</div>
-	<div v-else class="rg-index-empty">
+	<div v-else class="rg-index-error">
 		{{error}}
 	</div>
 
 	<nav class="rg-nav">
 		<button-basic label="List nests" to="/nests" :inline="true"/>
-		<button-basic label="Create App" to="/apps/create" :inline="true" color="key"/>
+		<button-basic label="Add app" to="/apps/add" :inline="true" color="key"/>
 	</nav>
-
 </article>
 </template>
 
@@ -31,7 +30,7 @@
 import PageHeader from '~/components/contents/page-header';
 import ItemIndexCard from '~/components/contents/item-index-card';
 import ButtonBasic from '~/components/button/basic';
-import * as message from '../../libs/messages';
+import * as messages from '../../libs/messages';
 import * as dates from '../../libs/dates';
 
 export default {
@@ -44,15 +43,15 @@ export default {
 	{
 		return {
 			index: null,
-			error: message.error.service
+			error: messages.error.service
 		};
 	},
 	async asyncData(cox)
 	{
 		try
 		{
-			let res = await cox.$axios.$get('/apps?order=srl&sort=desc');
-			if (!(res && res.success)) throw message.service.noItem;
+			let res = await cox.$axios.$get('/apps?order=srl&sort=desc&unlimit=1');
+			if (!(res && res.success && res.data.index && res.data.index.length)) throw messages.service.noItem;
 			return {
 				index: res.data.index.map((o) => {
 					o.regdate = dates.getFormatDate(o.regdate, false);
@@ -62,7 +61,7 @@ export default {
 		}
 		catch(e)
 		{
-			return { error: (typeof e === 'string') ? e : message.error.service };
+			return { error: (typeof e === 'string') ? e : messages.error.service };
 		}
 	}
 }

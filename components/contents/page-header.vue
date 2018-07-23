@@ -62,6 +62,16 @@ export default {
 							...this.links,
 						}
 					};
+				case 'users':
+					return {
+						title: this.title || 'Users',
+						description: this.description || '사용자 목록을 관리하는 모듈입니다.',
+						links: {
+							help: '/users/help',
+							setting: '/users/setting',
+							...this.links,
+						}
+					};
 				default:
 					return {
 						title: this.title,

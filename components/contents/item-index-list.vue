@@ -1,5 +1,6 @@
 <template>
-	<div class="rg-item rg-item-card">
+<div class="rg-item rg-item-list">
+	<div>
 		<figure v-if="!!image">
 			<nuxt-link v-if="!!link" :to="link">
 				<img :src="image" :alt="title"/>
@@ -16,17 +17,28 @@
 			<p v-if="!!metas" class="rg-item__metas">
 				<span v-for="(meta,key) in metas" :key="key">{{meta}}</span>
 			</p>
-			<nav>
-				<nuxt-link v-for="(nav,key) in navs" :key="key" :to="nav.link">
-					{{nav.label}}
-				</nuxt-link>
-			</nav>
 		</div>
+		<nav>
+			<button-basic
+				v-for="(nav,key) in navs"
+				:label="nav.label"
+				:key="key"
+				:to="nav.link"
+				:inline="true"
+				:color="nav.color"
+				size="small"/>
+		</nav>
 	</div>
+</div>
 </template>
 
 <script>
+import ButtonBasic from '~/components/button/basic';
+
 export default {
+	components: {
+		ButtonBasic,
+	},
 	props: {
 		link: { type: String },
 		image: { type: String },
