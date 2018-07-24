@@ -11,6 +11,5 @@
 <script>
 export default {
 	props: [ 'error' ],
-	layout: 'blank',
 }
 </script>

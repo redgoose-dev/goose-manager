@@ -13,9 +13,9 @@
 						`Level: ${item.level}`
 					]"
 					:navs="[
-						{ label: 'Edit', link: `/users/edit/${item.srl}` },
-						{ label: 'Change password', link: `/users/change-password/${item.srl}` },
-						{ label: 'Delete', link: `/users/delete/${item.srl}` }
+						{ label: 'Edit', link: `/users/${item.srl}/edit` },
+						{ label: 'Delete', link: `/users/${item.srl}/delete` },
+						{ label: 'Change password', link: `/users/${item.srl}/change-password` },
 					]"/>
 			</li>
 		</ul>
@@ -39,6 +39,7 @@ import * as messages from '../../libs/messages';
 import * as dates from '../../libs/dates';
 
 export default {
+	middleware: ['check-admin'],
 	components: {
 		PageHeader,
 		ItemIndexList,

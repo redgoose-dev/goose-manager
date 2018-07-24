@@ -17,8 +17,13 @@
 			<p v-if="!!metas" class="rg-item__metas">
 				<span v-for="(meta,key) in metas" :key="key">{{meta}}</span>
 			</p>
+			<nav v-if="navType==='text'">
+				<nuxt-link v-for="(nav,key) in navs" :key="key" :to="nav.link">
+					{{nav.label}}
+				</nuxt-link>
+			</nav>
 		</div>
-		<nav>
+		<nav v-if="navType==='button'">
 			<button-basic
 				v-for="(nav,key) in navs"
 				:label="nav.label"
@@ -46,6 +51,7 @@ export default {
 		subject: { type: String, default: 'item subject' },
 		metas: { type: Array },
 		navs: { type: Array },
+		navType: { type: String, default: 'text' },
 	},
 }
 </script>

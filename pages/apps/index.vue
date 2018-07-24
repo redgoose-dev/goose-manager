@@ -9,8 +9,8 @@
 					:subject="item.name"
 					:metas="[`ID: ${item.id}`, `Date: ${item.regdate}`]"
 					:navs="[
-						{ label: 'Edit', link: `/apps/edit/${item.srl}` },
-						{ label: 'Delete', link: `/apps/delete/${item.srl}` }
+						{ label: 'Edit', link: `/apps/${item.srl}/edit` },
+						{ label: 'Delete', link: `/apps/${item.srl}/delete` }
 					]"/>
 			</li>
 		</ul>

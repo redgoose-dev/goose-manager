@@ -7,7 +7,6 @@
 		<p class="rg-form-delete__message">
 			<strong>{{data.email}}({{data.name}})</strong> User를 삭제하시겠습니까?
 		</p>
-		<p v-if="error" class="rg-form-error">{{error}}</p>
 		<nav class="rg-nav rg-form-delete__nav">
 			<button-basic
 				type="button"
@@ -51,7 +50,6 @@ export default {
 			return {
 				data: res.data,
 				srl: cox.params.srl,
-				error: '',
 				processing: false,
 			};
 		}
@@ -87,8 +85,8 @@ export default {
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
-				this.error = (e && typeof e === 'string') ? e : `Failed delete user.`;
 				this.processing = false;
+				alert((e && typeof e === 'string') ? e : `Failed delete user.`);
 			}
 		}
 	}

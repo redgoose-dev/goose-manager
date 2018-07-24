@@ -131,15 +131,6 @@ export default {
 		FormText,
 		ButtonBasic,
 	},
-	props: {
-		data: {
-			email: { type: String },
-			name: { type: String },
-			password: { type: String },
-			password2: { type: String },
-			level: { type: Number, default: 100 },
-		},
-	},
 	data()
 	{
 		return {

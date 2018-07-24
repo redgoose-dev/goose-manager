@@ -20,8 +20,8 @@ export const actions = {
 				url_api: box.env.APP_API_URL,
 				authUser: (req.session && req.session.authUser) ? req.session.authUser : null,
 				level: {
-					public: box.env.APP_LEVEL_PUBLIC,
-					admin: box.env.APP_LEVEL_ADMIN,
+					public: parseInt(box.env.APP_LEVEL_PUBLIC),
+					admin: parseInt(box.env.APP_LEVEL_ADMIN),
 				}
 			});
 		}

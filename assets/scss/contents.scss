@@ -4,7 +4,7 @@
 
 // contents header
 .#{$prefix}-page-header {
-	margin: 0 0 2rem;
+	margin: 0 0 30px;
 	display: flex;
 	align-items: center;
 	&__body {
@@ -98,14 +98,14 @@
 			text-decoration: none;
 		}
 		strong {
-			font-size: .9375rem;
+			font-size: .875rem;
 			color: $color-key;
 			line-height: 1;
 		}
 	}
 	&__metas {
 		display: block;
-		margin: 1px 0 0;
+		margin: 0 0 0;
 		line-height: 1;
 		> span {
 			font-size: 11px;
@@ -126,7 +126,7 @@
 		position: relative;
 		display: flex;
 		align-items: center;
-		box-shadow: 0 1px 12px rgba(#000, .1);
+		box-shadow: 0 1px 12px rgba(#000, .12);
 		height: $size;
 		&:after {
 			content: '';
@@ -159,7 +159,7 @@
 				> a {
 					display: inline-block;
 					vertical-align: middle;
-					margin: 0 0 0 8px;
+					margin: 0 0 0 10px;
 					font-size: .75rem;
 					color: $color-base;
 					text-decoration: none;
@@ -200,6 +200,25 @@
 			> div {
 				flex: 1;
 				margin-top: -3px;
+				> nav {
+					margin: 5px 0 0;
+					font-size: 0;
+					> a {
+						display: inline-block;
+						vertical-align: middle;
+						font-size: .75rem;
+						font-weight: bold;
+						color: $color-base;
+						text-decoration: none;
+						margin: 0 0 0 10px;
+						&:hover {
+							text-decoration: underline;
+						}
+						&:first-child {
+							margin-left: 0;
+						}
+					}
+				}
 			}
 			> nav {
 				> * {

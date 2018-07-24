@@ -24,7 +24,7 @@
 					<div class="dropdown__children">
 						<ul>
 							<li>
-								<nuxt-link to="/">Account</nuxt-link>
+								<nuxt-link to="/account">Account</nuxt-link>
 							</li>
 							<li>
 								<nuxt-link to="/auth/logout">Logout</nuxt-link>
