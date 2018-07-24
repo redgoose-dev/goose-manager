@@ -82,7 +82,7 @@ export default {
 				let res = await this.$axios.$post(`/users/${this.srl}/delete`);
 				if (!res.success) throw res.message;
 				this.processing = false;
-				this.$router.replace('/apps');
+				this.$router.replace('/users');
 			}
 			catch(e)
 			{
