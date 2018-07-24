@@ -10,59 +10,63 @@
 						type="email"
 						name="email"
 						id="email"
-						v-model="email.value"
+						v-model="form.email.value"
 						placeholder="name@goose.com"
 						:maxlength="60"
 						formSize="35"
-						:error="email.error"
+						:error="form.email.error"
 						:required="true"
 						:inline="true"
-						@change="onChange('email')"/>
-					<p class="rg-form-help">이미 등록된 이메일은 등록할 수 없습니다.</p>
+						:readonly="true"/>
+					<p class="rg-form-help">이메일 주소는 수정할 수 없습니다.</p>
 				</dd>
 			</dl>
 		</div>
-		<!--<div class="rg-form-field rg-form-field-line">-->
-			<!--<dl class="rg-form-field__group">-->
-				<!--<dt><label for="name">Name</label></dt>-->
-				<!--<dd>-->
-					<!--<form-text-->
-						<!--type="text"-->
-						<!--name="name"-->
-						<!--id="name"-->
-						<!--v-model="name.value"-->
-						<!--placeholder="goose"-->
-						<!--:maxlength="30"-->
-						<!--formSize="24"-->
-						<!--:error="email.error"-->
-						<!--:required="true"-->
-						<!--:inline="true"/>-->
-				<!--</dd>-->
-			<!--</dl>-->
-		<!--</div>-->
-		<!--<div class="rg-form-field rg-form-field-line">-->
-			<!--<dl class="rg-form-field__group">-->
-				<!--<dt><label for="level">Level</label></dt>-->
-				<!--<dd>-->
-					<!--<form-text-->
-						<!--type="tel"-->
-						<!--name="level"-->
-						<!--id="level"-->
-						<!--v-model="level.value"-->
-						<!--:maxlength="24"-->
-						<!--formSize="5"-->
-						<!--:error="level.error"-->
-						<!--:required="true"-->
-						<!--:inline="true"/>-->
-					<!--<p class="rg-form-help">-->
-						<!--Public level: {{level_public}}, Admin level: {{level_admin}}-->
-					<!--</p>-->
-				<!--</dd>-->
-			<!--</dl>-->
-		<!--</div>-->
+		<div class="rg-form-field rg-form-field-line">
+			<dl class="rg-form-field__group">
+				<dt><label for="name">Name</label></dt>
+				<dd>
+					<form-text
+						type="text"
+						name="name"
+						id="name"
+						v-model="form.name.value"
+						placeholder="goose"
+						:maxlength="30"
+						formSize="24"
+						:error="form.name.error"
+						:required="true"
+						:inline="true"/>
+				</dd>
+			</dl>
+		</div>
+		<div v-if="isAdmin" class="rg-form-field rg-form-field-line">
+			<dl class="rg-form-field__group">
+				<dt><label for="level">Level</label></dt>
+				<dd>
+					<form-text
+						type="tel"
+						name="level"
+						id="level"
+						v-model="form.level.value"
+						:maxlength="24"
+						formSize="5"
+						:error="form.level.error"
+						:required="true"
+						:inline="true"/>
+					<p class="rg-form-help">
+						Public level: {{level_public}}, Admin level: {{level_admin}}
+					</p>
+				</dd>
+			</dl>
+		</div>
 	</fieldset>
 	<nav class="rg-nav">
-		<button-basic label="Index" to="/users" :inline="true"/>
+		<button-basic
+			v-if="type==='user'"
+			label="Index"
+			to="/users"
+			:inline="true"/>
 		<button-basic
 			type="submit"
 			color="key"
@@ -87,12 +91,13 @@ export default {
 		ButtonBasic,
 	},
 	props: {
+		type: { type: String },
 		data: {},
-		srl: { type: Number }
+		srl: { type: Number },
 	},
 	data()
 	{
-		// TODO: 여기서부터 조정하기. 오류 왕창남 ㅠㅠ
+		let isAdmin = this.$store.state.authUser.level >= this.$store.state.level.admin;
 		return {
 			form: {
 				email: {
@@ -105,7 +110,7 @@ export default {
 					error: false,
 					message: '',
 				},
-				level: {
+				level: isAdmin && {
 					value: parseInt(this.data.level),
 					error: false,
 					message: '',
@@ -114,38 +119,34 @@ export default {
 			processing: false,
 			level_public: this.$store.state.level.public,
 			level_admin: this.$store.state.level.admin,
+			isAdmin,
 		};
 	},
 	methods: {
 		async onSubmit(e)
 		{
 			e.preventDefault();
-			return;
 
 			try
 			{
 				this.processing = true;
 				const data = forms.formData({
-					email: this.email.value,
-					name: this.name.value,
-					level: this.level.value,
+					email: this.form.email && this.form.email.value,
+					name: this.form.name && this.form.name.value,
+					level: this.form.level && this.form.level.value,
 				});
 				let res = await this.$axios.$post(`/users/${this.srl}/edit`, data);
 				if (!res.success) throw res.message;
 				this.processing = false;
-				alert('Success edit');
+				alert('Success edit user');
 			}
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
 				this.processing = false;
-				let error = (e && typeof e === 'string') ? e : `Failed add user.`;
+				let error = (e && typeof e === 'string') ? e : `Failed edit user.`;
 				alert(error);
 			}
-		},
-		onChange(field)
-		{
-
 		}
 	}
 }

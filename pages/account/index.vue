@@ -1,13 +1,14 @@
 <template>
 <article>
 	<page-header module="users" title="Account"/>
-	<edit :srl="srl" :data="data"/>
+	<edit type="account" :srl="srl" :data="data"/>
 </article>
 </template>
 
 <script>
 import PageHeader from '~/components/contents/page-header';
 import Edit from '~/components/pages/users/edit';
+import * as messages from '../../libs/messages';
 
 export default {
 	components: {

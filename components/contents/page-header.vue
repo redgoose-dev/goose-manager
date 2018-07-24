@@ -72,6 +72,16 @@ export default {
 							...this.links,
 						}
 					};
+				case 'json':
+					return {
+						title: this.title || 'JSON',
+						description: this.description || '`JSON`데이터를 관리하는 모듈입니다.',
+						links: {
+							help: '/json/help',
+							setting: '/json/setting',
+							...this.links,
+						}
+					};
 				default:
 					return {
 						title: this.title,

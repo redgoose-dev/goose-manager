@@ -1,7 +1,7 @@
 <template>
 <article>
 	<page-header module="users" title="Edit user"/>
-	<edit :srl="srl" :data="data"/>
+	<edit type="user" :srl="srl" :data="data"/>
 </article>
 </template>
 
@@ -27,7 +27,7 @@ export default {
 			if (!res.success) throw res.message;
 
 			return {
-				srl: cox.params.srl,
+				srl: parseInt(cox.params.srl),
 				data: res.data,
 			};
 		}

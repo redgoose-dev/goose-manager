@@ -19,8 +19,7 @@
 							formSize="35"
 							:error="email.error"
 							:required="true"
-							:inline="true"
-							@change="onChange('email')"/>
+							:inline="true"/>
 						<p class="rg-form-help">이미 등록된 이메일은 등록할 수 없습니다.</p>
 					</dd>
 				</dl>
