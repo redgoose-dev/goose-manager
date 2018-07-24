@@ -1,11 +1,11 @@
 <template>
 <article>
-	<page-header module="apps" title="Delete app"/>
+	<page-header module="users" title="Delete user"/>
 
 	<form @submit="onSubmit" class="rg-form-delete">
 		<input type="hidden" name="srl" :value="srl"/>
 		<p class="rg-form-delete__message">
-			<strong>{{data.name}}({{data.id}})</strong> App을 삭제하시겠습니까?
+			<strong>{{data.email}}({{data.name}})</strong> User를 삭제하시겠습니까?
 		</p>
 		<p v-if="error" class="rg-form-error">{{error}}</p>
 		<nav class="rg-nav rg-form-delete__nav">
@@ -46,7 +46,7 @@ export default {
 	{
 		try
 		{
-			let res = await cox.$axios.$get(`/apps/${cox.params.srl}`);
+			let res = await cox.$axios.$get(`/users/${cox.params.srl}`);
 			if (!res.success) throw res.message;
 			return {
 				data: res.data,
@@ -79,7 +79,7 @@ export default {
 			{
 				this.processing = true;
 
-				let res = await this.$axios.$post(`/apps/${this.srl}/delete`);
+				let res = await this.$axios.$post(`/users/${this.srl}/delete`);
 				if (!res.success) throw res.message;
 				this.processing = false;
 				this.$router.replace('/apps');
@@ -87,7 +87,7 @@ export default {
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
-				this.error = (e && typeof e === 'string') ? e : `Failed delete app.`;
+				this.error = (e && typeof e === 'string') ? e : `Failed delete user.`;
 				this.processing = false;
 			}
 		}

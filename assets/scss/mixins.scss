@@ -8,22 +8,14 @@
 
 // set form size
 @mixin form-size($size, $type) {
-	$size-horizontal: null;
-
-	@if $type == 'button' {
-		$size-horizontal: 1.25rem;
-	} @else {
-		$size-horizontal: .75rem;
-	}
-
 	@if $size == 'small' {
-		padding: .3125rem $size-horizontal;
+		padding: .3125rem .75rem;
 		font-size: .8125rem;
 	} @else if $size == 'large' {
-		padding: .625rem $size-horizontal;
+		padding: .625rem 1rem;
 		font-size: 1.125rem;
 	} @else {
-		padding: .4375rem $size-horizontal;
+		padding: .4375rem 1.25rem;
 		font-size: .9375rem;
 		line-height: 1.5;
 	}

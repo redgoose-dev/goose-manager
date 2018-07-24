@@ -14,6 +14,7 @@
 					]"
 					:navs="[
 						{ label: 'Edit', link: `/users/edit/${item.srl}` },
+						{ label: 'Change password', link: `/users/change-password/${item.srl}` },
 						{ label: 'Delete', link: `/users/delete/${item.srl}` }
 					]"/>
 			</li>
@@ -24,7 +25,7 @@
 	</div>
 
 	<nav class="rg-nav">
-		<button-basic label="List users" to="/users" :inline="true"/>
+		<button-basic label="Index" to="/users" :inline="true"/>
 		<button-basic label="Add user" to="/users/add" :inline="true" color="key"/>
 	</nav>
 </article>

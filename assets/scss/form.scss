@@ -27,11 +27,17 @@
 
 	// size
 	@include form-size('normal', 'input');
+	padding-left: .75rem;
+	padding-right: .75rem;
 	&-size-small {
 		@include form-size('small', 'input');
+		padding-left: .75rem;
+		padding-right: .75rem;
 	}
 	&-size-large {
 		@include form-size('large', 'input');
+		padding-left: .75rem;
+		padding-right: .75rem;
 	}
 
 	&-error {
@@ -88,19 +94,22 @@
 	// size
 	> select {
 		@include form-size('normal', 'select');
+		padding-left: .75rem;
 	}
 	&-size-small > select {
 		@include form-size('small', 'select');
+		padding-left: .75rem;
 	}
 	&-size-large > select {
 		@include form-size('large', 'select');
+		padding-left: .75rem;
 	}
 
 	&-inline {
 		display: inline-block;
 		width: auto;
 		> select {
-			padding-right: 2.5rem;
+			padding-right: 2.25rem;
 		}
 	}
 }
@@ -156,7 +165,7 @@
 
 // checkbox & radio unit
 .#{$prefix}-form-check {
-	$size: 18px;
+	$size: 20px;
 
 	display: inline-block;
 	vertical-align: middle;

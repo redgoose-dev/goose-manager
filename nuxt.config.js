@@ -55,7 +55,7 @@ module.exports = {
 			resave: false,
 			saveUninitialized: false,
 			cookie: {
-				maxAge: 60000 * 60, // ms * m * h * d
+				maxAge: 60000 * 60 * 6, // ms * m * h * d
 			}
 		}),
 		'~/api',
