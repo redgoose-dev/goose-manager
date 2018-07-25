@@ -51,14 +51,13 @@ export default {
 				tree.push(res);
 			});
 			// get no app data
-			console.log(nests[nests.length-1].data)
 			if (nests[nests.length-1].data);
 			{
 				tree.push({
 					srl: null,
 					id: null,
 					name: 'no app',
-					nests: nests[nests.length-1].data.index
+					nests: nests[nests.length-1].data ? nests[nests.length-1].data.index : []
 				});
 			}
 			console.log('========');
