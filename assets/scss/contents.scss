@@ -46,7 +46,6 @@
 	&-card {
 		ul {
 			display: flex;
-			justify-content: space-between;
 			flex-wrap: wrap;
 			margin: -10px;
 			&:after {
@@ -64,18 +63,22 @@
 	&-thumbnail {}
 	&-list {
 		li {
-			border-bottom: 1px solid $color-content-line;
+			margin-top: 10px;
 			&:first-child {
-				border-top: 1px solid $color-content-line;
+				margin-top: 0;
 			}
 		}
 	}
 	&-error {
 		padding: 10vh 0;
 		text-align: center;
-		font-size: 1rem;
-		font-weight: bold;
-		background: $color-light;
+		font-size: .875rem;
+		font-weight: 600;
+		background: #fff;
+		box-shadow: $shadow-box;
+		&-small {
+			padding: 30px 0;
+		}
 	}
 
 	@include responsive(desktop-large) {
@@ -93,24 +96,42 @@
 		display: block;
 		margin: 0;
 		overflow: hidden;
-		text-overflow: ellipsis;
+		text-overflow:  ellipsis;
+		white-space: nowrap;
+		font-size: .875rem;
+		line-height: 1.5;
 		a {
 			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 		strong {
-			font-size: .875rem;
 			color: $color-key;
-			line-height: 1;
 		}
+	}
+	&__description {
+		margin: 0;
+		font-size: 10px;
+		line-height: 1.5;
+		color: mix($color-blur, #fff, 60%);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	&__metas {
 		display: block;
-		margin: 0 0 0;
-		line-height: 1;
+		margin: 4px 0 0;
+		line-height: 1.2;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: 11px;
+		font-family: $font-eng;
+		color: mix($color-blur, #fff, 100%);
 		> span {
-			font-size: 11px;
-			color: $color-blur;
-			line-height: 1;
+			display: inline-block;
+			vertical-align: middle;
 			&:after {
 				content: ', ';
 				padding-right: 3px;
@@ -126,8 +147,9 @@
 		position: relative;
 		display: flex;
 		align-items: center;
-		box-shadow: 0 1px 12px rgba(#000, .12);
+		box-shadow: $shadow-box;
 		height: $size;
+		background: #fff;
 		&:after {
 			content: '';
 			position: absolute;
@@ -135,7 +157,6 @@
 			right: 0;
 			top: 0;
 			bottom: 0;
-			border: 0 solid $color-key;
 			pointer-events: none;
 			transition: box-shadow .15s ease-out;
 		}
@@ -183,7 +204,20 @@
 	&-list {
 		$self: '.#{$prefix}-item';
 		$size: 100px;
-		padding: 15px 10px;
+		position: relative;
+		padding: 15px 15px;
+		background: #fff;
+		box-shadow: $shadow-box;
+		&:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			pointer-events: none;
+			transition: box-shadow .15s ease-out;
+		}
 		> div {
 			display: flex;
 			align-items: center;
@@ -228,6 +262,9 @@
 					}
 				}
 			}
+		}
+		&:hover:after {
+			box-shadow: 0 0 0 3px $color-key;
 		}
 	}
 }

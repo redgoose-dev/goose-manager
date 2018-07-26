@@ -7,6 +7,7 @@
 			<li v-for="(item,key) in index" :key="key">
 				<item-index-card
 					:subject="item.name"
+					:description="item.description"
 					:metas="[`ID: ${item.id}`, `Date: ${item.regdate}`]"
 					:navs="[
 						{ label: 'Edit', link: `/apps/${item.srl}/edit` },

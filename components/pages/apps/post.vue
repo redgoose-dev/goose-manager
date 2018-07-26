@@ -40,6 +40,22 @@
 					</dd>
 				</dl>
 			</div>
+			<div class="rg-form-field rg-form-field-line">
+				<dl class="rg-form-field__group">
+					<dt><label for="id">Description</label></dt>
+					<dd>
+						<form-text
+							name="description"
+							id="description"
+							v-model="description.value"
+							placeholder="message"
+							:maxlength="100"
+							:error="description.error"
+							:required="true"/>
+						<p class="rg-form-help">Description of the app</p>
+					</dd>
+				</dl>
+			</div>
 			<p v-if="error" class="rg-form-error">{{error}}</p>
 		</fieldset>
 		<nav class="rg-nav">
@@ -88,6 +104,11 @@ export default {
 				error: false,
 				message: '',
 			},
+			description: {
+				value: this.data ? this.data.description : '',
+				error: false,
+				message: '',
+			},
 			error: '',
 			processing: false,
 			buttonLabel: this.type === 'edit' ? 'Edit' : 'Add',
@@ -120,6 +141,7 @@ export default {
 				const data = forms.formData({
 					id: this.id.value,
 					name: this.name.value,
+					description: this.description.value,
 				});
 				let res = await this.$axios.$post(
 					this.type === 'edit' ? `/apps/${this.srl}/edit` : '/apps',
