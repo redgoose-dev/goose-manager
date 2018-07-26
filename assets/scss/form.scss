@@ -302,9 +302,9 @@
 		margin: 0;
 		text-align: center;
 		padding: 8vh 0;
-		border-top: 1px solid $color-content-line;
-		border-bottom: 1px solid $color-content-line;
 		font-size: .9375rem;
+		background: #fff;
+		box-shadow: $shadow-box;
 		strong {
 			&:before {
 				content: '"';
