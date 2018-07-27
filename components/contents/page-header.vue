@@ -52,6 +52,16 @@ export default {
 							...this.links,
 						}
 					};
+				case 'articles':
+					return {
+						title: this.title || 'Articles',
+						description: this.description || '글 목록을 관리하는 모듈입니다.',
+						links: {
+							help: '/articles/help',
+							setting: '/articles/setting',
+							...this.links,
+						}
+					};
 				case 'nests':
 					return {
 						title: this.title || 'Nests',

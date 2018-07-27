@@ -15,7 +15,7 @@
 				<ul>
 					<li v-for="(nest,nestKey) in app.children" :key="nestKey">
 						<item-index-card
-							:link="`/articles/${nest.srl}`"
+							:link="`/articles/index/${nest.srl}`"
 							:subject="nest.name"
 							:description="nest.description"
 							:metas="[
@@ -29,7 +29,6 @@
 					</li>
 				</ul>
 			</div>
-			<div v-else class="rg-index-error rg-index-error-small">no item</div>
 		</section>
 	</div>
 	<div v-else class="rg-index-error">
