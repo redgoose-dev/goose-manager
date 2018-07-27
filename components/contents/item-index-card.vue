@@ -17,10 +17,10 @@
 				{{description}}
 			</p>
 			<p v-if="!!metas" class="rg-item__metas">
-				<span v-for="(meta,key) in metas" :key="key">{{meta}}</span>
+				<span v-for="(meta,key) in metas" v-if="meta" :key="key">{{meta}}</span>
 			</p>
 			<nav>
-				<nuxt-link v-for="(nav,key) in navs" :key="key" :to="nav.link">
+				<nuxt-link v-for="(nav,key) in navs" v-if="nav" :key="key" :to="nav.link">
 					{{nav.label}}
 				</nuxt-link>
 			</nav>

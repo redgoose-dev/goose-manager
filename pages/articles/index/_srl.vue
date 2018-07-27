@@ -5,33 +5,38 @@
 	<nav v-if="categories && categories.length" class="rg-nav-bar">
 		<ul>
 			<li v-for="(item,key) in categories" :key="key">
-				<nuxt-link :to="`/article/${nest_srl}/${item.srl}`">
-					{{item.name}}
-				</nuxt-link>
+				<a
+					:href="`/articles/index/${nest_srl}${item.srl ? `?category=${item.srl}` : ''}`"
+					:data-srl="item.srl"
+					@click="onChangeCategory"
+					:class="[ (parseInt(item.srl) === category_srl) && 'active' ]">
+					<span>{{item.name}}</span>
+					<em>{{item.count_article}}</em>
+				</a>
 			</li>
 		</ul>
 	</nav>
 
-	<div v-if="!error && articles && articles.length" class="rg-index rg-index-card">
+	<div v-if="!!articles && articles.length" class="rg-index rg-index-card">
 		<ul>
 			<li v-for="(item,key) in articles" :key="key">
 				<item-index-card
 					:link="`/articles/read/${item.srl}`"
 					:subject="item.title"
 					:metas="[
-						`Category: xxx`,
+						item.category_name && `Category: ${item.category_name}`,
 						`Hit: ${item.hit}`,
 						`Date: ${getDate(item.regdate)}`
 					]"
 					:navs="[
-					{ label: 'Edit', link: `/apps/${item.srl}/edit` },
-					{ label: 'Delete', link: `/apps/${item.srl}/delete` }
-				]"/>
+						{ label: 'Edit', link: `/apps/${item.srl}/edit` },
+						{ label: 'Delete', link: `/apps/${item.srl}/delete` }
+					]"/>
 			</li>
 		</ul>
 	</div>
 	<div v-else class="rg-index-error">
-		{{error}}
+		no item
 	</div>
 </article>
 </template>
@@ -63,28 +68,36 @@ export default {
 	{
 		try
 		{
+			let category_srl = cox.query.category ? parseInt(cox.query.category) : 0;
 			const [ articles, categories ] = await Promise.all([
-				cox.$axios.$get(`/articles?nest=${cox.params.srl}`),
-				cox.$axios.$get(`/categories?nest=${cox.params.srl}`)
+				cox.$axios.$get(`/articles?nest=${cox.params.srl}${category_srl ? `&category=${category_srl}` : ''}&ext_field=category_name`),
+				cox.$axios.$get(`/categories?nest=${cox.params.srl}&ext_field=count_article,item_all`)
 			]);
-			if (!articles.success) throw 'Failed get data';
 
 			return {
-				total: articles.data.total,
-				articles: articles.data.index,
-				categories: categories.success ? categories.data.index : null,
+				total: articles.success ? articles.data.total : 0,
+				articles: articles.success ? articles.data.index : [],
+				categories: categories.success ? categories.data.index : [],
+				category_srl,
 				error: null,
 			};
 		}
 		catch(e)
 		{
+			console.error(e);
 			return { error: (typeof e === 'string') ? e : messages.error.service };
 		}
 	},
 	methods: {
-		getDate: function(date)
+		getDate(date)
 		{
 			return dates.getFormatDate(date, false);
+		},
+		onChangeCategory(e)
+		{
+			e.preventDefault();
+			console.log(e.currentTarget.dataset.srl);
+			// TODO: 카테고리가 변했을때 페이지 변경하기
 		}
 	}
 }

@@ -35,6 +35,6 @@ export function getObjectValueToArray(arr, key)
 	let result = [];
 	arr.forEach((o) => {
 		if (o[key]) result.push(o[key]);
-	})
+	});
 	return result;
 }
