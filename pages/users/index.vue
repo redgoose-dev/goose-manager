@@ -2,7 +2,8 @@
 <article>
 	<page-header module="users"/>
 
-	<div v-if="index && index.length" class="rg-index rg-index-list">
+	<error v-if="error" :message="error"/>
+	<div v-else-if="index && index.length" class="rg-index rg-index-list">
 		<ul>
 			<li v-for="(item,key) in index" :key="key">
 				<item-index-list
@@ -20,21 +21,21 @@
 			</li>
 		</ul>
 	</div>
-	<div v-else class="rg-index-error">
-		{{error}}
-	</div>
+	<error v-else type="empty"/>
 
 	<nav class="rg-nav">
-		<button-basic label="Index" to="/users" :inline="true"/>
-		<button-basic label="Add user" to="/users/add" :inline="true" color="key"/>
+		<button-basic label="Add User" to="/users/add" :inline="true" color="key"/>
 	</nav>
 </article>
 </template>
 
 <script>
+// components
 import PageHeader from '~/components/contents/page-header';
 import ItemIndexList from '~/components/contents/item-index-list';
 import ButtonBasic from '~/components/button/basic';
+import Error from '~/components/contents/error';
+// library
 import * as messages from '../../libs/messages';
 import * as dates from '../../libs/dates';
 
@@ -44,12 +45,13 @@ export default {
 		PageHeader,
 		ItemIndexList,
 		ButtonBasic,
+		Error,
 	},
 	data()
 	{
 		return {
 			index: null,
-			error: messages.error.service
+			error: null
 		};
 	},
 	async asyncData(cox)
@@ -64,7 +66,7 @@ export default {
 					o.regdate = dates.getFormatDate(o.regdate, false);
 					o.level = parseInt(o.level);
 					return o;
-				})
+				}),
 			};
 		}
 		catch(e)

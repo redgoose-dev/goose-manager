@@ -13,11 +13,11 @@
 							type="email"
 							name="email"
 							id="email"
-							v-model="email.value"
+							v-model="forms.email.value"
 							placeholder="name@goose.com"
 							:maxlength="60"
 							formSize="35"
-							:error="email.error"
+							:error="forms.email.error"
 							:required="true"
 							:inline="true"/>
 						<p class="rg-form-help">이미 등록된 이메일은 등록할 수 없습니다.</p>
@@ -32,11 +32,11 @@
 							type="text"
 							name="name"
 							id="name"
-							v-model="name.value"
+							v-model="forms.name.value"
 							placeholder="goose"
 							:maxlength="30"
 							formSize="24"
-							:error="email.error"
+							:error="forms.name.error"
 							:required="true"
 							:inline="true"/>
 					</dd>
@@ -50,10 +50,10 @@
 							type="password"
 							name="password"
 							id="password"
-							v-model="password.value"
+							v-model="forms.password.value"
 							:maxlength="24"
 							formSize="20"
-							:error="password.error"
+							:error="forms.password.error"
 							:required="true"
 							:inline="true"/>
 					</dd>
@@ -67,15 +67,15 @@
 							type="password"
 							name="password2"
 							id="password2"
-							v-model="password2.value"
+							v-model="forms.password2.value"
 							:maxlength="24"
 							formSize="20"
-							:error="password2.error"
+							:error="forms.password2.error"
 							:required="true"
 							:inline="true"
 							@change="onChange('password2')"/>
-						<p v-if="password2.message" class="rg-form-help rg-form-help-error">
-							{{password2.message}}
+						<p v-if="forms.password2.message" class="rg-form-help rg-form-help-error">
+							{{forms.password2.message}}
 						</p>
 					</dd>
 				</dl>
@@ -88,10 +88,10 @@
 							type="tel"
 							name="level"
 							id="level"
-							v-model="level.value"
+							v-model="forms.level.value"
 							:maxlength="24"
 							formSize="5"
-							:error="level.error"
+							:error="forms.level.error"
 							:required="true"
 							:inline="true"/>
 						<p class="rg-form-help">
@@ -107,7 +107,7 @@
 			<button-basic
 				type="submit"
 				color="key"
-				:label="!processing ? 'Add user' : null"
+				:label="!processing ? 'Add User' : null"
 				:inline="true"
 				:icon="processing ? 'cached' : ''"
 				:rotateIcon="processing"
@@ -118,9 +118,11 @@
 </template>
 
 <script>
+// components
 import PageHeader from '~/components/contents/page-header';
 import FormText from '~/components/form/text';
 import ButtonBasic from '~/components/button/basic';
+// library
 import * as forms from '../../libs/forms';
 import * as messages from '../../libs/messages';
 
@@ -133,30 +135,32 @@ export default {
 	data()
 	{
 		return {
-			email: {
-				value: this.data ? this.data.email : '',
-				error: false,
-				message: '',
-			},
-			name: {
-				value: this.data ? this.data.name : '',
-				error: false,
-				message: '',
-			},
-			password: {
-				value: '',
-				error: false,
-				message: '',
-			},
-			password2: {
-				value: '',
-				error: false,
-				message: '',
-			},
-			level: {
-				value: this.data ? this.data.level : this.$store.state.level.admin,
-				error: false,
-				message: '',
+			forms: {
+				email: {
+					value: this.data ? this.data.email : '',
+					error: false,
+					message: '',
+				},
+				name: {
+					value: this.data ? this.data.name : '',
+					error: false,
+					message: '',
+				},
+				password: {
+					value: '',
+					error: false,
+					message: '',
+				},
+				password2: {
+					value: '',
+					error: false,
+					message: '',
+				},
+				level: {
+					value: this.data ? this.data.level : this.$store.state.level.admin,
+					error: false,
+					message: '',
+				},
 			},
 			error: '',
 			processing: false,
@@ -174,24 +178,23 @@ export default {
 			e.preventDefault();
 
 			// check password
-			if (this.password.value !== this.password2.value)
+			if (this.forms.password.value !== this.forms.password2.value)
 			{
-				this.password2.error = true;
-				this.password2.message = messages.error.confirmPassword;
+				this.forms.password2.error = true;
+				this.forms.password2.message = messages.error.confirmPassword;
 				this.$refs.form.password2.focus();
 				return;
 			}
 
-			// post
 			try
 			{
 				this.processing = true;
 				const data = forms.formData({
-					email: this.email.value,
-					name: this.name.value,
-					pw: this.password.value,
-					pw2: this.password2.value,
-					level: this.level.value,
+					email: this.forms.email.value,
+					name: this.forms.name.value,
+					pw: this.forms.password.value,
+					pw2: this.forms.password2.value,
+					level: this.forms.level.value,
 				});
 				let res = await this.$axios.$post('/users', data);
 				if (!res.success) throw res.message;
@@ -210,15 +213,15 @@ export default {
 			switch (field)
 			{
 				case 'password2':
-					if (this.password.value !== this.password2.value)
+					if (this.forms.password.value !== this.forms.password2.value)
 					{
-						this.password2.error = true;
-						this.password2.message = messages.error.confirmPassword;
+						this.forms.password2.error = true;
+						this.forms.password2.message = messages.error.confirmPassword;
 					}
 					else
 					{
-						this.password2.error = false;
-						this.password2.message = '';
+						this.forms.password2.error = false;
+						this.forms.password2.message = '';
 					}
 					break;
 				default:

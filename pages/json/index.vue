@@ -13,8 +13,8 @@
 						`Date: ${item.regdate}`
 					]"
 					:navs="[
-						{ label: 'Edit', link: `/users/${item.srl}/edit` },
-						{ label: 'Delete', link: `/users/${item.srl}/delete` },
+						{ label: 'Edit', link: `/json/${item.srl}/edit` },
+						{ label: 'Delete', link: `/json/${item.srl}/delete` },
 					]"/>
 			</li>
 		</ul>
@@ -24,7 +24,6 @@
 	</div>
 
 	<nav class="rg-nav">
-		<button-basic label="Index" to="/json" :inline="true"/>
 		<button-basic label="Add JSON" to="/json/add" :inline="true" color="key"/>
 	</nav>
 </article>

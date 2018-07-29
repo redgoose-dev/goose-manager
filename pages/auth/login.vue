@@ -14,7 +14,7 @@
 								type="email"
 								name="email"
 								id="email"
-								:value="form.email"
+								v-model="forms.email"
 								maxlength="30"
 								placeholder="redgoose@me.com"
 								required/>
@@ -28,7 +28,7 @@
 								type="password"
 								name="password"
 								id="password"
-								:value="form.password"
+								v-model="forms.password"
 								maxlength="30"
 								placeholder=""
 								required/>
@@ -36,6 +36,9 @@
 						</div>
 					</div>
 				</fieldset>
+				<p v-if="error" class="login__error">
+					Failed login
+				</p>
 				<nav class="login__nav">
 					<button-basic
 						type="submit"
@@ -46,9 +49,6 @@
 						color="key"
 						:disabled="processing"/>
 				</nav>
-				<p v-if="error" class="login__error">
-					Failed login
-				</p>
 			</form>
 		</article>
 	</div>
@@ -57,8 +57,10 @@
 
 <style lang="scss" src="./login.scss" scoped></style>
 <script>
-import * as forms from '../../libs/forms';
+// components
 import ButtonBasic from '~/components/button/basic';
+// library
+import { formData } from '../../libs/forms';
 
 export default {
 	components: {
@@ -69,7 +71,7 @@ export default {
 	data()
 	{
 		return {
-			form: {
+			forms: {
 				email: '',
 				password: '',
 			},
@@ -88,8 +90,7 @@ export default {
 		{
 			e.preventDefault();
 
-			const { $axios, $store, $router } = this;
-			const form = e.target;
+			const { $axios, $store } = this;
 
 			// off processing
 			this.processing = true;
@@ -97,18 +98,18 @@ export default {
 			// request api
 			try
 			{
-				const data = forms.formData({
-					email: form.email.value,
-					pw: form.password.value,
+				const data = formData({
+					email: this.forms.email,
+					pw: this.forms.password,
 					host: location.host,
 				});
 				const resultApi = await $axios.$post('/auth/login', data);
 				if (!(resultApi.success && resultApi.data && resultApi.data.email)) throw resultApi.message;
-				this.processing = false;
 
 				// reset form
-				this.form.email = '';
-				this.form.password = '';
+				this.processing = false;
+				this.forms.email = '';
+				this.forms.password = '';
 
 				// save session
 				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, resultApi.data);
@@ -119,6 +120,7 @@ export default {
 			}
 			catch(e)
 			{
+				console.error(e);
 				// error api
 				this.processing = false;
 				this.error = true;

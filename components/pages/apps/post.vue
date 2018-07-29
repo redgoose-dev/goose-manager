@@ -63,7 +63,7 @@
 			<button-basic
 				type="submit"
 				color="key"
-				:label="!processing ? `${buttonLabel} app` : null"
+				:label="!processing ? `${buttonLabel} App` : null"
 				:inline="true"
 				:icon="processing ? 'cached' : ''"
 				:rotateIcon="processing"
@@ -80,7 +80,7 @@ import * as messages from '../../../libs/messages';
 
 export default {
 	props: {
-		type: { type: String, default: 'add' },
+		type: { type: String, default: 'post' },
 		data: {
 			id: { type: String },
 			name: { type: String },
@@ -111,12 +111,12 @@ export default {
 			},
 			error: '',
 			processing: false,
-			buttonLabel: this.type === 'edit' ? 'Edit' : 'Add',
+			buttonLabel: this.type === 'edit' ? 'Edit' : 'Post',
 		};
 	},
 	mounted()
 	{
-		if (this.$refs.form && this.type === 'add')
+		if (this.$refs.form && this.type === 'post')
 		{
 			this.$refs.form.id.focus();
 		}

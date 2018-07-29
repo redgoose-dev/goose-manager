@@ -24,7 +24,7 @@
 					<div class="dropdown__children">
 						<ul>
 							<li>
-								<nuxt-link to="/account">Account</nuxt-link>
+								<a href="/account" @click="onClickProfileItem">Account</a>
 							</li>
 							<li>
 								<nuxt-link to="/auth/logout">Logout</nuxt-link>
@@ -68,7 +68,17 @@ export default {
 		};
 	},
 	computed: {},
-	methods: {},
+	methods: {
+		onClickProfileItem(e)
+		{
+			e.preventDefault();
+			const $el = e.currentTarget;
+			// trigger blur
+			$el.blur();
+			// go to page
+			this.$router.push($el.getAttribute('href'));
+		}
+	},
 }
 </script>
 

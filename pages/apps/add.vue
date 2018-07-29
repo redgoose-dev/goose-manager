@@ -1,7 +1,7 @@
 <template>
 <article>
 	<page-header module="apps" title="Add app"/>
-	<post type="add"/>
+	<post type="post"/>
 </article>
 </template>
 

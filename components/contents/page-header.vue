@@ -62,6 +62,16 @@ export default {
 							...this.links,
 						}
 					};
+				case 'categories':
+					return {
+						title: this.title || 'Categories',
+						description: this.description || '`Articles`의 분류를 관리하는 모듈입니다.',
+						links: {
+							help: '/categories/help',
+							setting: '/categories/setting',
+							...this.links,
+						}
+					};
 				case 'nests':
 					return {
 						title: this.title || 'Nests',

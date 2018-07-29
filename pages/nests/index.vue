@@ -15,7 +15,7 @@
 				<ul>
 					<li v-for="(nest,nestKey) in app.children" :key="nestKey">
 						<item-index-card
-							:link="`/articles/index/${nest.srl}`"
+							:link="`/articles/${nest.srl}`"
 							:subject="nest.name"
 							:description="nest.description"
 							:metas="[
@@ -24,7 +24,8 @@
 							]"
 							:navs="[
 								{ label: 'Edit', link: `/nests/${nest.srl}/edit` },
-								{ label: 'Delete', link: `/nests/${nest.srl}/delete` }
+								{ label: 'Delete', link: `/nests/${nest.srl}/delete` },
+								{ label: 'Category', link: `/categories/${nest.srl}` },
 							]"/>
 					</li>
 				</ul>
@@ -36,8 +37,8 @@
 	</div>
 
 	<nav class="rg-nav">
-		<button-basic label="Apps list" to="/apps" :inline="true"/>
-		<button-basic label="Add nest" to="/nests/add" :inline="true" color="key"/>
+		<button-basic label="Apps" to="/apps" :inline="true"/>
+		<button-basic label="Add Nest" to="/nests/add" :inline="true" color="key"/>
 	</nav>
 </article>
 </template>

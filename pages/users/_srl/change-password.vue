@@ -13,10 +13,10 @@
 							type="password"
 							name="password"
 							id="password"
-							v-model="password.value"
+							v-model="forms.password.value"
 							:maxlength="24"
 							formSize="20"
-							:error="password.error"
+							:error="!!forms.password.error"
 							:required="true"
 							:inline="true"/>
 					</dd>
@@ -30,10 +30,10 @@
 							type="password"
 							name="password_new"
 							id="password_new"
-							v-model="password_new.value"
+							v-model="forms.password_new.value"
 							:maxlength="24"
 							formSize="20"
-							:error="password_new.error"
+							:error="!!forms.password_new.error"
 							:required="true"
 							:inline="true"
 							@change="checkPasswordConfirm"/>
@@ -48,15 +48,15 @@
 							type="password"
 							name="password_new2"
 							id="password_new2"
-							v-model="password_new2.value"
+							v-model="forms.password_new2.value"
 							:maxlength="24"
 							formSize="20"
-							:error="password_new2.error"
+							:error="!!forms.password_new2.error"
 							:required="true"
 							:inline="true"
 							@change="checkPasswordConfirm"/>
-						<p v-if="password_new2.message" class="rg-form-help rg-form-help-error">
-							{{password_new2.message}}
+						<p v-if="forms.password_new2.error" class="rg-form-help rg-form-help-error">
+							{{forms.password_new2.error}}
 						</p>
 						<p class="rg-form-help">
 							Please input a password such as "new password".
@@ -100,20 +100,19 @@ export default {
 	data()
 	{
 		return {
-			password: {
-				value: '',
-				error: false,
-				message: '',
-			},
-			password_new: {
-				value: '',
-				error: false,
-				message: '',
-			},
-			password_new2: {
-				value: '',
-				error: false,
-				message: '',
+			forms: {
+				password: {
+					value: '',
+					error: '',
+				},
+				password_new: {
+					value: '',
+					error: '',
+				},
+				password_new2: {
+					value: '',
+					error: '',
+				},
 			},
 			processing: false,
 			self: parseInt(this.$store.state.authUser.srl) === parseInt(this.$route.params.srl),
@@ -125,10 +124,9 @@ export default {
 			e.preventDefault();
 
 			// check password
-			if (this.password_new.value !== this.password_new2.value)
+			if (this.forms.password_new.value !== this.forms.password_new2.value)
 			{
-				this.password_new2.error = true;
-				this.password_new2.message = messages.error.confirmPassword;
+				this.forms.password_new2.error = messages.error.confirmPassword;
 				this.$refs.form.password_new2.focus();
 				return;
 			}
@@ -137,9 +135,9 @@ export default {
 			{
 				this.processing = true;
 				const data = forms.formData({
-					pw: this.password.value,
-					new_pw: this.password_new.value,
-					confirm_pw: this.password_new2.value,
+					pw: this.forms.password.value,
+					new_pw: this.forms.password_new.value,
+					confirm_pw: this.forms.password_new2.value,
 				});
 				let res = await this.$axios.$post(`/users/${this.$route.params.srl}/change-password`, data);
 				if (!res.success) throw res.message;
@@ -158,9 +156,9 @@ export default {
 					alert('Success change user password.');
 				}
 
-				this.password.value = '';
-				this.password_new.value = '';
-				this.password_new2.value = '';
+				this.forms.password.value = '';
+				this.forms.password_new.value = '';
+				this.forms.password_new2.value = '';
 			}
 			catch(e)
 			{
@@ -171,15 +169,13 @@ export default {
 		},
 		checkPasswordConfirm()
 		{
-			if (this.password_new.value !== this.password_new2.value)
+			if (this.forms.password_new.value !== this.forms.password_new2.value)
 			{
-				this.password_new2.error = true;
-				this.password_new2.message = messages.error.confirmPassword;
+				this.forms.password_new2.error = messages.error.confirmPassword;
 			}
 			else
 			{
-				this.password_new2.error = false;
-				this.password_new2.message = '';
+				this.forms.password_new2.error = '';
 			}
 		}
 	}
