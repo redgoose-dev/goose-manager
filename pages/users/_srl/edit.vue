@@ -63,6 +63,7 @@
 					</dd>
 				</dl>
 			</div>
+			<p v-if="error" class="rg-form-error">{{error}}</p>
 		</fieldset>
 		<nav class="rg-nav">
 			<button-basic
@@ -107,6 +108,7 @@ export default {
 		return {
 			srl: parseInt(this.$route.params.srl),
 			processing: false,
+			error: null,
 			level_public: this.$store.state.level.public,
 			level_admin: this.$store.state.level.admin,
 			isAdmin: this.$store.state.authUser.level >= this.$store.state.level.admin,
@@ -169,9 +171,8 @@ export default {
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
+				this.error = (e && typeof e === 'string') ? e : `Failed add user.`;
 				this.processing = false;
-				let error = (e && typeof e === 'string') ? e : `Failed edit user.`;
-				alert(error);
 			}
 		}
 	}

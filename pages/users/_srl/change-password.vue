@@ -35,8 +35,7 @@
 							formSize="20"
 							:error="!!forms.password_new.error"
 							:required="true"
-							:inline="true"
-							@change="checkPasswordConfirm"/>
+							:inline="true"/>
 					</dd>
 				</dl>
 			</div>
@@ -53,8 +52,7 @@
 							formSize="20"
 							:error="!!forms.password_new2.error"
 							:required="true"
-							:inline="true"
-							@change="checkPasswordConfirm"/>
+							:inline="true"/>
 						<p v-if="forms.password_new2.error" class="rg-form-help rg-form-help-error">
 							{{forms.password_new2.error}}
 						</p>
@@ -64,6 +62,7 @@
 					</dd>
 				</dl>
 			</div>
+			<p v-if="error" class="rg-form-error">{{error}}</p>
 		</fieldset>
 		<nav class="rg-nav">
 			<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
@@ -81,10 +80,12 @@
 </template>
 
 <script>
+// components
 import PageHeader from '~/components/contents/page-header';
 import FormText from '~/components/form/text';
 import ButtonBasic from '~/components/button/basic';
-import * as forms from '../../../libs/forms';
+// library
+import { formData } from '../../../libs/forms';
 import * as messages from '../../../libs/messages';
 
 export default {
@@ -115,6 +116,7 @@ export default {
 				},
 			},
 			processing: false,
+			error: null,
 			self: parseInt(this.$store.state.authUser.srl) === parseInt(this.$route.params.srl),
 		};
 	},
@@ -122,6 +124,11 @@ export default {
 		async onSubmit(e)
 		{
 			e.preventDefault();
+
+			// reset error
+			this.forms.password.error = '';
+			this.forms.password_new.error = '';
+			this.forms.password_new2.error = '';
 
 			// check password
 			if (this.forms.password_new.value !== this.forms.password_new2.value)
@@ -134,7 +141,7 @@ export default {
 			try
 			{
 				this.processing = true;
-				const data = forms.formData({
+				const data = formData({
 					pw: this.forms.password.value,
 					new_pw: this.forms.password_new.value,
 					confirm_pw: this.forms.password_new2.value,
@@ -145,7 +152,7 @@ export default {
 
 				if (this.self)
 				{
-					if (confirm('비밀번호가 변경되었으므로 로그아웃이 필요합니다. 로그아웃 하시겠습니까?'))
+					if (confirm(messages.msg.questionChangePassword))
 					{
 						this.$router.replace('/auth/logout');
 						return;
@@ -153,7 +160,7 @@ export default {
 				}
 				else
 				{
-					alert('Success change user password.');
+					alert(messages.msg.successChangePassword);
 				}
 
 				this.forms.password.value = '';
@@ -163,19 +170,8 @@ export default {
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
+				this.error = (e && typeof e === 'string') ? e : messages.msg.failedChangePassword;
 				this.processing = false;
-				alert((e && typeof e === 'string') ? e : `Failed change user password.`);
-			}
-		},
-		checkPasswordConfirm()
-		{
-			if (this.forms.password_new.value !== this.forms.password_new2.value)
-			{
-				this.forms.password_new2.error = messages.error.confirmPassword;
-			}
-			else
-			{
-				this.forms.password_new2.error = '';
 			}
 		}
 	}

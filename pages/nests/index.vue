@@ -2,7 +2,9 @@
 <article>
 	<page-header module="nests"/>
 
-	<div v-if="index && index.length && !error">
+	<error v-if="!!error" :message="error"/>
+	<error v-else-if="!(index && index.length)" type="empty"/>
+	<div v-else>
 		<section v-for="(app,appKey) in index" :key="appKey" class="nest">
 			<header>
 				<h1>
@@ -32,9 +34,6 @@
 			</div>
 		</section>
 	</div>
-	<div v-else class="rg-index-error">
-		{{error}}
-	</div>
 
 	<nav class="rg-nav">
 		<button-basic label="Apps" to="/apps" :inline="true"/>
@@ -44,9 +43,12 @@
 </template>
 
 <script>
+// components
 import PageHeader from '~/components/contents/page-header';
 import ItemIndexCard from '~/components/contents/item-index-card';
 import ButtonBasic from '~/components/button/basic';
+import Error from '~/components/contents/error';
+// library
 import * as messages from '../../libs/messages';
 import * as dates from '../../libs/dates';
 
@@ -55,6 +57,7 @@ export default {
 		PageHeader,
 		ItemIndexCard,
 		ButtonBasic,
+		Error,
 	},
 	async asyncData(cox)
 	{
@@ -66,7 +69,7 @@ export default {
 
 			return {
 				index: res.data,
-				error: null,
+				error: '',
 			};
 		}
 		catch(e)

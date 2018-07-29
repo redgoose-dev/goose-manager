@@ -2,8 +2,9 @@
 <article>
 	<page-header module="users"/>
 
-	<error v-if="error" :message="error"/>
-	<div v-else-if="index && index.length" class="rg-index rg-index-list">
+	<error v-if="!!error" :message="error"/>
+	<error v-else-if="!(index && index.length)" type="empty"/>
+	<div v-else class="rg-index rg-index-list">
 		<ul>
 			<li v-for="(item,key) in index" :key="key">
 				<item-index-list
@@ -21,7 +22,6 @@
 			</li>
 		</ul>
 	</div>
-	<error v-else type="empty"/>
 
 	<nav class="rg-nav">
 		<button-basic label="Add User" to="/users/add" :inline="true" color="key"/>
@@ -47,13 +47,6 @@ export default {
 		ButtonBasic,
 		Error,
 	},
-	data()
-	{
-		return {
-			index: null,
-			error: null
-		};
-	},
 	async asyncData(cox)
 	{
 		try
@@ -67,6 +60,7 @@ export default {
 					o.level = parseInt(o.level);
 					return o;
 				}),
+				error: '',
 			};
 		}
 		catch(e)

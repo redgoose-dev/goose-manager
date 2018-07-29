@@ -2,7 +2,8 @@
 <article>
 	<page-header module="categories"/>
 
-	<div v-if="!!categories && categories.length" class="rg-index rg-index-card">
+	<error v-if="!!error" :message="error"/>
+	<div v-else-if="!!categories && categories.length" class="rg-index rg-index-card">
 		<ul>
 			<li v-for="(item,key) in categories" :key="key">
 				<div class="rg-item rg-item-card">
@@ -29,6 +30,10 @@
 		<button-basic label="Nests" to="/nests" :inline="true"/>
 		<button-basic label="Articles" :to="`/articles/${nest_srl}`" :inline="true"/>
 		<button-basic label="Add Category" :to="`/categories/${nest_srl}/add`" :inline="true" color="key"/>
+	</nav>
+	<nav v-else class="rg-nav">
+		<button-basic label="Nests" to="/nests" :inline="true"/>
+		<button-basic label="Articles" to="/articles" :inline="true"/>
 	</nav>
 </article>
 </template>

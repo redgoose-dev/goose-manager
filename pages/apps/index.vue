@@ -2,7 +2,9 @@
 <article>
 	<page-header module="apps"/>
 
-	<div v-if="index && index.length" class="rg-index rg-index-card">
+	<error v-if="!!error" :message="error"/>
+	<error v-else-if="!(index && index.length)" type="empty"/>
+	<div v-else class="rg-index rg-index-card">
 		<ul>
 			<li v-for="(item,key) in index" :key="key">
 				<item-index-card
@@ -16,9 +18,6 @@
 			</li>
 		</ul>
 	</div>
-	<div v-else class="rg-index-error">
-		{{error}}
-	</div>
 
 	<nav class="rg-nav">
 		<button-basic label="Nests" to="/nests" :inline="true"/>
@@ -28,24 +27,21 @@
 </template>
 
 <script>
+// components
 import PageHeader from '~/components/contents/page-header';
 import ItemIndexCard from '~/components/contents/item-index-card';
 import ButtonBasic from '~/components/button/basic';
-import * as messages from '../../libs/messages';
-import * as dates from '../../libs/dates';
+import Error from '~/components/contents/error';
+// library
+import * as messages from '~/libs/messages';
+import * as dates from '~/libs/dates';
 
 export default {
 	components: {
 		PageHeader,
 		ItemIndexCard,
 		ButtonBasic,
-	},
-	data()
-	{
-		return {
-			index: null,
-			error: messages.error.service
-		};
+		Error,
 	},
 	async asyncData(cox)
 	{
@@ -57,7 +53,8 @@ export default {
 				index: res.data.index.map((o) => {
 					o.regdate = dates.getFormatDate(o.regdate, false);
 					return o;
-				})
+				}),
+				error: '',
 			};
 		}
 		catch(e)

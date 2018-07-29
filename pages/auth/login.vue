@@ -36,9 +36,9 @@
 						</div>
 					</div>
 				</fieldset>
-				<p v-if="error" class="login__error">
-					Failed login
-				</p>
+
+				<p v-if="!!error" class="login__error">{{error}}</p>
+
 				<nav class="login__nav">
 					<button-basic
 						type="submit"
@@ -60,7 +60,8 @@
 // components
 import ButtonBasic from '~/components/button/basic';
 // library
-import { formData } from '../../libs/forms';
+import { formData } from '~/libs/forms';
+import * as messages from '~/libs/messages';
 
 export default {
 	components: {
@@ -76,7 +77,7 @@ export default {
 				password: '',
 			},
 			processing: false,
-			error: false,
+			error: '',
 		};
 	},
 	computed: {
@@ -106,24 +107,25 @@ export default {
 				const resultApi = await $axios.$post('/auth/login', data);
 				if (!(resultApi.success && resultApi.data && resultApi.data.email)) throw resultApi.message;
 
+				// save session
+				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, resultApi.data);
+				if (!(resultSession && resultSession.success))
+				{
+					throw resultSession.message || messages.error.failedLogin;
+				}
+
 				// reset form
 				this.processing = false;
 				this.forms.email = '';
 				this.forms.password = '';
-
-				// save session
-				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, resultApi.data);
-				if (!(resultSession && resultSession.success)) throw resultSession.message || 'Failed login';
 
 				// redirect home
 				location.href = '/';
 			}
 			catch(e)
 			{
-				console.error(e);
-				// error api
 				this.processing = false;
-				this.error = true;
+				this.error = messages.error.failedLogin;
 			}
 		}
 	}

@@ -2,13 +2,8 @@
 <article>
 	<page-header module="articles"/>
 
-	<template v-if="!error">
-		<index-articles
-			:total="total"
-			:articles="articles"
-			:loading="loading"/>
-	</template>
-	<error v-else :message="error"/>
+	<error v-if="!!error" :message="error"/>
+	<index-articles v-else :total="total" :articles="articles"/>
 </article>
 </template>
 
@@ -26,13 +21,6 @@ export default {
 		IndexArticles,
 		Error,
 	},
-	data()
-	{
-		return {
-			error: null,
-			loading: false,
-		};
-	},
 	async asyncData(cox)
 	{
 		try
@@ -42,6 +30,7 @@ export default {
 			return {
 				total: articles.success ? articles.data.total : 0,
 				articles: articles.success ? articles.data.index : [],
+				error: null,
 			};
 		}
 		catch(e)

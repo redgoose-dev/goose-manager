@@ -120,11 +120,7 @@ export default {
 	mounted()
 	{
 		const { $refs } = this;
-
-		if ($refs.form)
-		{
-			$refs.form.id.focus();
-		}
+		if ($refs.form) $refs.form.id.focus();
 	},
 	methods: {
 		async onSubmit(e)

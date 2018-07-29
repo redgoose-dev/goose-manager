@@ -2,7 +2,8 @@
 <article>
 	<page-header module="articles"/>
 
-	<template v-if="!error">
+	<error v-if="!!error" :message="error"/>
+	<template v-else>
 		<index-categories
 			:nest_srl="nest_srl"
 			:categories="categories"
@@ -13,7 +14,6 @@
 			:articles="articles"
 			:loading="loading"/>
 	</template>
-	<error v-else :message="error"/>
 
 	<nav class="rg-nav">
 		<button-basic label="Nests" to="/nests" :inline="true"/>

@@ -28,8 +28,10 @@
 </template>
 
 <script>
+// components
 import PageHeader from '~/components/contents/page-header';
 import ButtonBasic from '~/components/button/basic';
+// library
 import * as messages from '../../../libs/messages';
 
 export default {
@@ -63,10 +65,8 @@ export default {
 	},
 	mounted()
 	{
-		if (this.$refs.button_submit)
-		{
-			this.$refs.button_submit.$el.focus();
-		}
+		const { $refs } = this;
+		if ($refs.button_submit) $refs.button_submit.$el.focus();
 	},
 	methods: {
 		async onSubmit(e)
@@ -76,7 +76,6 @@ export default {
 			try
 			{
 				this.processing = true;
-
 				let res = await this.$axios.$post(`/users/${this.srl}/delete`);
 				if (!res.success) throw res.message;
 				this.processing = false;
