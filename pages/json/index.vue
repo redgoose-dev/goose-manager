@@ -3,7 +3,8 @@
 	<page-header module="json"/>
 
 	<error v-if="!!error" :message="error"/>
-	<div v-else-if="index && index.length" class="rg-index rg-index-list">
+	<error v-else-if="!(index && index.length)" type="empty"/>
+	<div v-else class="rg-index-list">
 		<ul>
 			<li v-for="(item,key) in index" :key="key">
 				<item-index-list
@@ -11,7 +12,7 @@
 					:link="`/json/${item.srl}`"
 					:metas="[
 						`srl: ${item.srl}`,
-						`Date: ${item.regdate}`
+						`Regdate: ${item.regdate}`
 					]"
 					:navs="[
 						{ label: 'Edit', link: `/json/${item.srl}/edit` },
@@ -20,7 +21,6 @@
 			</li>
 		</ul>
 	</div>
-	<error v-else type="empty"/>
 
 	<nav class="rg-nav">
 		<button-basic label="Add JSON" to="/json/add" :inline="true" color="key"/>
@@ -45,12 +45,6 @@ export default {
 		ButtonBasic,
 		Error,
 	},
-	data()
-	{
-		return {
-			error: null
-		};
-	},
 	async asyncData(cox)
 	{
 		try
@@ -62,7 +56,8 @@ export default {
 					o.srl = parseInt(o.srl);
 					o.regdate = dates.getFormatDate(o.regdate, false);
 					return o;
-				})
+				}),
+				error: null,
 			};
 		}
 		catch(e)

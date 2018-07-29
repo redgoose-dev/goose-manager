@@ -19,6 +19,19 @@
 					</dd>
 				</dl>
 			</div>
+			<div class="rg-form-field rg-form-field-line first">
+				<dl class="rg-form-field__group">
+					<dt><label for="name">Description</label></dt>
+					<dd>
+						<form-text
+							name="description"
+							id="description"
+							v-model="forms.description.value"
+							:maxlength="100"
+							:error="!!forms.description.error"/>
+					</dd>
+				</dl>
+			</div>
 			<div class="rg-form-field rg-form-field-line">
 				<dl class="rg-form-field__group">
 					<dt><label for="name">JSON</label></dt>
@@ -82,6 +95,10 @@ export default {
 					value: '',
 					error: null,
 				},
+				description: {
+					value: '',
+					error: null,
+				},
 			},
 			error: '',
 			processing: false,
@@ -119,6 +136,7 @@ export default {
 				const data = formData({
 					name: this.forms.name.value,
 					json: this.forms.json.value,
+					description: this.forms.description.value,
 				});
 				let res = await this.$axios.$post('/json', data);
 				if (!res.success) throw res.message;

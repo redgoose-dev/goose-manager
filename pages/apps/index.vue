@@ -4,7 +4,7 @@
 
 	<error v-if="!!error" :message="error"/>
 	<error v-else-if="!(index && index.length)" type="empty"/>
-	<div v-else class="rg-index rg-index-card">
+	<div v-else class="rg-index-card">
 		<ul>
 			<li v-for="(item,key) in index" :key="key">
 				<item-index-card

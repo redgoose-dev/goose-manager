@@ -3,28 +3,23 @@
 	<page-header module="categories"/>
 
 	<error v-if="!!error" :message="error"/>
-	<div v-else-if="!!categories && categories.length" class="rg-index rg-index-card">
+	<error v-else-if="!(index && index.length)" type="empty"/>
+	<div v-else class="rg-index-card">
 		<ul>
-			<li v-for="(item,key) in categories" :key="key">
-				<div class="rg-item rg-item-card">
-					<div>
-						<p class="rg-item__subject">
-							<strong>[{{item.srl}}] {{item.name}}</strong>
-						</p>
-						<p class="rg-item__metas">
-							<span>Nest srl: {{item.nest_srl}}</span>
-							<span>Date: {{getDate(item.regdate)}}</span>
-						</p>
-						<nav>
-							<nuxt-link :to="`/categories/${item.srl}/edit`">Edit</nuxt-link>
-							<nuxt-link :to="`/categories/${item.srl}/delete`">Delete</nuxt-link>
-						</nav>
-					</div>
-				</div>
+			<li v-for="(item,key) in index" :key="key">
+				<item-index-card
+					:subject="`[${item.srl}] ${item.name}`"
+					:metas="[
+						`Nest srl: {{item.nest_srl}}`,
+						`Date: ${getDate(item.regdate)}`
+					]"
+					:navs="[
+						{ label: 'Edit', link: `/categories/${item.srl}/edit` },
+						{ label: 'Delete', link: `/categories/${item.srl}/delete` },
+					]"/>
 			</li>
 		</ul>
 	</div>
-	<error v-else type="empty"/>
 
 	<nav v-if="nest_srl" class="rg-nav">
 		<button-basic label="Nests" to="/nests" :inline="true"/>
@@ -74,9 +69,10 @@ export default {
 		{
 			let params = (nest_srl) ? `?nest=${nest_srl}&order=turn&sort=asc` : '';
 			let categories = await cox.$axios.$get(`/categories${params}`);
+			if (!categories.success) throw categories.message;
 			return {
 				total: categories.success ? categories.data.total : 0,
-				categories: categories.success ? categories.data.index : null,
+				index: categories.success ? categories.data.index : null,
 			};
 		}
 		catch(e)
@@ -88,7 +84,7 @@ export default {
 		getDate(date)
 		{
 			return dates.getFormatDate(date, false);
-		},
+		}
 	}
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
 <article>
-	<page-header module="users" title="Account"/>
+	<page-header module="users" :title="`User / ${data.name}`"/>
 
 	<div class="rg-index-items">
 		<dl>
@@ -26,6 +26,7 @@
 	</div>
 
 	<nav class="rg-nav">
+		<button-basic label="Users" to="/users" :inline="true"/>
 		<button-basic label="Edit" :to="`/users/${srl}/edit`" color="key" :inline="true"/>
 	</nav>
 </article>
@@ -44,14 +45,15 @@ export default {
 		PageHeader,
 		ButtonBasic,
 	},
+	validate(cox)
+	{
+		return cox.params.srl && /^\d+$/.test(cox.params.srl);
+	},
 	async asyncData(cox)
 	{
 		try
 		{
-			// check user srl
-			if (!cox.store.state.authUser.srl) throw messages.msg.notLogin;
-
-			const srl = parseInt(cox.store.state.authUser.srl);
+			const srl = parseInt(cox.params.srl);
 			let res = await cox.$axios.$get(`/users/${srl}`);
 			if (!res.success) throw res.message;
 

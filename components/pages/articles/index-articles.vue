@@ -1,7 +1,7 @@
 <template>
 <div class="articles-index">
 	<loading v-if="loading"/>
-	<div v-else-if="!!articles && articles.length" class="rg-index rg-index-card">
+	<div v-else-if="!!articles && articles.length" class="rg-index-card">
 		<ul>
 			<li v-for="(item,key) in articles" :key="key">
 				<item-index-card

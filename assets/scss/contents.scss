@@ -36,12 +36,15 @@
 }
 
 // index
-.#{$prefix}-index {
+[class^='#{$prefix}-index'] {
 	ul {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
+}
+.#{$prefix}-index {
+	$self: '.#{$prefix}-index';
 
 	&-card {
 		ul {
@@ -66,6 +69,28 @@
 			margin-top: 10px;
 			&:first-child {
 				margin-top: 0;
+			}
+		}
+	}
+	&-items {
+		border-top: 1px solid $color-content-line;
+		> dl {
+			margin: 0;
+			display: flex;
+			align-items: center;
+			min-height: 48px;
+			border-bottom: 1px solid $color-content-line;
+			> dt {
+				width: 150px;
+				padding: 12px 0 12px 15px;
+				font-size: .875rem;
+				font-weight: bold;
+			}
+			> dd {
+				margin: 0 0 0 20px;
+				padding: 12px 0;
+				flex: 1;
+				font-size: .875rem;
 			}
 		}
 	}
@@ -100,7 +125,7 @@
 		}
 	}
 	&__description {
-		margin: 0;
+		margin: 1px 0 0;
 		font-size: 10px;
 		line-height: 1.5;
 		color: mix($color-blur, #fff, 60%);
@@ -123,7 +148,7 @@
 			vertical-align: middle;
 			&:after {
 				content: ', ';
-				padding-right: 3px;
+				padding-right: 5px;
 			}
 			&:last-child:after {
 				display: none;
@@ -152,6 +177,7 @@
 		> figure {
 			margin: 0;
 			height: 100%;
+			background: mix($color-blur, #fff, 30%);
 			img {
 				display: block;
 				width: $size;
@@ -164,7 +190,7 @@
 			padding: 10px 20px;
 			min-width: 0;
 			> nav {
-				margin: 5px 0 0;
+				margin: 6px 0 0;
 				font-size: 0;
 				> a {
 					display: inline-block;
@@ -256,17 +282,25 @@
 			box-shadow: 0 0 0 3px $color-key;
 		}
 	}
+
 }
 
 // bottom navigation
 .#{$prefix}-nav {
-	margin: 30px 0 0;
+	margin: 30px -3px 0;
 	text-align: right;
 	font-size: 0;
-	> .#{$prefix}-button {
-		margin-left: 6px;
-		&:first-child {
-			margin-left: 0;
+	.#{$prefix}-button {
+		margin-left: 3px;
+		margin-right: 3px;
+	}
+	> dl {
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		> dd {
+			margin: 0;
 		}
 	}
 }

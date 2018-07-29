@@ -13,7 +13,7 @@
 				</h1>
 				<p v-if="!!app.description">{{app.description}}</p>
 			</header>
-			<div v-if="app.children && app.children.length" class="rg-index rg-index-card">
+			<div v-if="app.children && app.children.length" class="rg-index-card">
 				<ul>
 					<li v-for="(nest,nestKey) in app.children" :key="nestKey">
 						<item-index-card
@@ -112,14 +112,14 @@ export default {
 			}
 		}
 		p {
-			margin: 3px 0 0;
-			font-size: .6875rem;
+			margin: 5px 0 0;
+			font-size: .75rem;
 			color: $color-blur;
 			word-break:keep-all;
 			overflow-wrap:break-word;
 		}
 	}
-	.rg-index {
+	[class^='rg-index'] {
 		margin-top: 12px;
 	}
 	.rg-index-error {

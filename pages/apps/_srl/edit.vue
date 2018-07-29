@@ -136,7 +136,7 @@ export default {
 		{
 			cox.error({
 				statusCode: 500,
-				message: (typeof e === 'string') ? e : message.error.service,
+				message: (typeof e === 'string') ? e : messages.error.service,
 			});
 		}
 	},

@@ -1,8 +1,8 @@
 <template>
 	<header class="rg-page-header">
 		<div class="rg-page-header__body">
-			<h1 class="rg-page-header__title">{{messages.title}}</h1>
-			<p class="rg-page-header__description">{{messages.description}}</p>
+			<h1 class="rg-page-header__title">{{title || messages.title}}</h1>
+			<p class="rg-page-header__description">{{description || messages.description}}</p>
 		</div>
 		<nav v-if="messages.links" class="rg-page-header__nav">
 			<button-circle-icon
@@ -99,6 +99,16 @@ export default {
 						links: {
 							help: '/json/help',
 							setting: '/json/setting',
+							...this.links,
+						}
+					};
+				case 'files':
+					return {
+						title: this.title || 'Files',
+						description: this.description || '첨부된 파일들의 목록입니다.',
+						links: {
+							help: '/files/help',
+							setting: '/files/setting',
 							...this.links,
 						}
 					};
