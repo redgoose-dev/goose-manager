@@ -4,9 +4,12 @@
 
 	<form @submit="onSubmit" class="rg-form-delete">
 		<input type="hidden" name="srl" :value="srl"/>
-		<p class="rg-form-delete__message">
-			<strong>{{data.name}}({{data.id}})</strong> App을 삭제하시겠습니까?
-		</p>
+		<div class="rg-form-delete__message">
+			<p>다음 App을 삭제하시겠습니까?</p>
+			<p>
+				<strong>{{forms.name}} <em>{{forms.id}}</em></strong>
+			</p>
+		</div>
 		<p v-if="error" class="rg-form-error">{{error}}</p>
 		<nav class="rg-nav rg-form-delete__nav">
 			<button-basic
@@ -18,7 +21,7 @@
 				type="submit"
 				ref="button_submit"
 				color="key"
-				:label="!processing ? 'Delete' : null"
+				:label="!processing ? 'Delete App' : null"
 				:inline="true"
 				:icon="processing ? 'cached' : ''"
 				:rotateIcon="processing"
@@ -29,8 +32,10 @@
 </template>
 
 <script>
+// components
 import PageHeader from '~/components/contents/page-header';
 import ButtonBasic from '~/components/button/basic';
+// library
 import * as messages from '../../../libs/messages';
 
 export default {
@@ -42,17 +47,26 @@ export default {
 	{
 		return cox.params.srl && /^\d+$/.test(cox.params.srl);
 	},
+	data()
+	{
+		return {
+			srl: parseInt(this.$route.params.srl),
+			error: null,
+			processing: false,
+		};
+	},
 	async asyncData(cox)
 	{
 		try
 		{
-			let res = await cox.$axios.$get(`/apps/${cox.params.srl}`);
+			const srl = parseInt(cox.params.srl);
+			let res = await cox.$axios.$get(`/apps/${srl}`);
 			if (!res.success) throw res.message;
 			return {
-				data: res.data,
-				srl: cox.params.srl,
-				error: '',
-				processing: false,
+				forms: {
+					id: res.data.id,
+					name: res.data.name,
+				}
 			};
 		}
 		catch(e)
@@ -65,9 +79,10 @@ export default {
 	},
 	mounted()
 	{
-		if (this.$refs.button_submit)
+		const { $refs } = this;
+		if ($refs.button_submit)
 		{
-			this.$refs.button_submit.$el.focus();
+			$refs.button_submit.$el.focus();
 		}
 	},
 	methods: {

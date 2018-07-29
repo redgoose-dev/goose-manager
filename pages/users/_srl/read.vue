@@ -1,3 +1,3 @@
 <template>
-	<div>edit nest</div>
+	<div>read user</div>
 </template>

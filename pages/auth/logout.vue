@@ -12,7 +12,7 @@ export default {
 		if (!$store.state.authUser)
 		{
 			alert('You have already logged out.');
-			$router.go(-1);
+			location.href = '/';
 		}
 
 		try
