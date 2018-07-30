@@ -5,65 +5,58 @@
 	<form @submit="onSubmit" ref="form">
 		<fieldset class="rg-form-fieldset">
 			<legend>Edit app form</legend>
-			<div class="rg-form-field rg-form-field-line first">
-				<dl class="rg-form-field__group">
-					<dt><label for="id">ID</label></dt>
-					<dd>
-						<form-text
-							name="id"
-							id="id"
-							v-model="forms.id.value"
-							placeholder="app_name"
-							@change="onChange"
-							:maxlength="16"
-							:error="!!forms.id.error"
-							:required="true"
-							:inline="true"/>
-						<p v-if="!!forms.id.error" class="rg-form-help rg-form-help-error">
-							{{forms.id.error}}
-						</p>
-						<p class="rg-form-help">
-							Please enter only alphanumeric characters `-` and `_`.
-						</p>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="name">Name</label></dt>
-					<dd>
-						<form-text
-							name="name"
-							id="name"
-							v-model="forms.name.value"
-							placeholder="App name"
-							:maxlength="50"
-							formSize="30"
-							:error="!!forms.name.error"
-							:required="true"
-							:inline="true"/>
-						<p v-if="!!forms.name.error" class="rg-form-help rg-form-help-error">
-							{{forms.name.error}}
-						</p>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="description">Description</label></dt>
-					<dd>
-						<form-text
-							name="description"
-							id="description"
-							v-model="forms.description.value"
-							placeholder="message"
-							:maxlength="100"
-							:error="!!forms.description.error"
-							:required="true"/>
-						<p class="rg-form-help">Description of the app</p>
-					</dd>
-				</dl>
-			</div>
+			<dl class="rg-form-field">
+				<dt><label for="id">ID</label></dt>
+				<dd>
+					<form-text
+						name="id"
+						id="id"
+						v-model="forms.id.value"
+						placeholder="app_name"
+						:maxlength="16"
+						:error="!!forms.id.error"
+						:required="true"
+						:inline="true"/>
+					<p v-if="!!forms.id.error" class="rg-form-help rg-form-help-error">
+						{{forms.id.error}}
+					</p>
+					<p class="rg-form-help">
+						Please enter only alphanumeric characters `-` and `_`.
+					</p>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="name">Name</label></dt>
+				<dd>
+					<form-text
+						name="name"
+						id="name"
+						v-model="forms.name.value"
+						placeholder="App name"
+						:maxlength="50"
+						formSize="30"
+						:error="!!forms.name.error"
+						:required="true"
+						:inline="true"/>
+					<p v-if="!!forms.name.error" class="rg-form-help rg-form-help-error">
+						{{forms.name.error}}
+					</p>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="description">Description</label></dt>
+				<dd>
+					<form-text
+						name="description"
+						id="description"
+						v-model="forms.description.value"
+						placeholder="message"
+						:maxlength="100"
+						:error="!!forms.description.error"
+						:required="true"/>
+					<p class="rg-form-help">Description of the app</p>
+				</dd>
+			</dl>
 			<p v-if="error" class="rg-form-error">{{error}}</p>
 		</fieldset>
 		<nav class="rg-nav">

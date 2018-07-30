@@ -2,7 +2,7 @@
 @import "./mixins";
 
 // section title
-.#{$prefix}-section-title {
+.rg-section-title {
 	margin: 0 0 1rem;
 	font-size: 1.125rem;
 	font-weight: 500;
@@ -10,7 +10,7 @@
 }
 
 // text body
-.#{$prefix}-text-body {
+.rg-text-body {
 	@include typo-text-body();
 }
 

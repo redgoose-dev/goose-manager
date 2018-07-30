@@ -3,7 +3,7 @@
 
 
 // contents header
-.#{$prefix}-page-header {
+.rg-page-header {
 	margin: 0 0 30px;
 	display: flex;
 	align-items: center;
@@ -36,15 +36,15 @@
 }
 
 // index
-[class^='#{$prefix}-index'] {
+[class^='rg-index'] {
 	ul {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 }
-.#{$prefix}-index {
-	$self: '.#{$prefix}-index';
+.rg-index {
+	$self: '.rg-index';
 
 	&-card {
 		ul {
@@ -105,7 +105,7 @@
 }
 
 // item
-.#{$prefix}-item {
+.rg-item {
 	&__subject {
 		display: block;
 		margin: 0;
@@ -217,7 +217,7 @@
 		//
 	}
 	&-list {
-		$self: '.#{$prefix}-item';
+		$self: '.rg-item';
 		$size: 100px;
 		position: relative;
 		padding: 15px 15px;
@@ -286,11 +286,11 @@
 }
 
 // bottom navigation
-.#{$prefix}-nav {
+.rg-nav {
 	margin: 30px -3px 0;
 	text-align: right;
 	font-size: 0;
-	.#{$prefix}-button {
+	.rg-button {
 		margin-left: 3px;
 		margin-right: 3px;
 	}
@@ -306,7 +306,7 @@
 }
 
 // top navigation bar (category style)
-.#{$prefix}-nav-bar {
+.rg-nav-bar {
 	margin: 0 0 15px;
 	font-size: 0;
 	ul {

@@ -2,8 +2,8 @@
 @import "./mixins";
 
 // base
-.#{$prefix}-button {
-	$self: '.#{$prefix}-button';
+.rg-button {
+	$self: '.rg-button';
 	display: block;
 	margin: 0;
 	border-radius: 2px;
@@ -67,7 +67,7 @@
 }
 
 // color
-.#{$prefix}-button {
+.rg-button {
 	transition: box-shadow .1s ease-out;
 	background: $color-light;
 	color: $color-base;
@@ -113,7 +113,7 @@
 
 
 // circle icon
-.#{$prefix}-button-circle-icon {
+.rg-button-circle-icon {
 	display: block;
 	padding: 4px;
 	font-size: 0;

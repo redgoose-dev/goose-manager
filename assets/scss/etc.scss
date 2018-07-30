@@ -39,8 +39,8 @@ $dir: '/fonts/material-icons/';
 }
 
 // loading
-.#{$prefix}-loading {
-	$self: '.#{$prefix}-loading';
+.rg-loading {
+	$self: '.rg-loading';
 
 	position: relative;
 	height: 20vw;
@@ -107,8 +107,8 @@ $dir: '/fonts/material-icons/';
 }
 
 // error unit
-.#{$prefix}-error {
-	$self: '.#{$prefix}-error';
+.rg-error {
+	$self: '.rg-error';
 
 	padding: 10vh 0;
 	text-align: center;
