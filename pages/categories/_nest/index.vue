@@ -10,12 +10,18 @@
 				<item-index-card
 					:subject="`[${item.srl}] ${item.name}`"
 					:metas="[
-						`Nest srl: {{item.nest_srl}}`,
+						`Nest srl: ${item.nest_srl}`,
 						`Date: ${getDate(item.regdate)}`
 					]"
 					:navs="[
-						{ label: 'Edit', link: `/categories/${item.srl}/edit` },
-						{ label: 'Delete', link: `/categories/${item.srl}/delete` },
+						{
+							label: 'Edit',
+							link: `/categories/${item.srl}/edit${nest_srl ? `?nest=${nest_srl}` : ''}`
+						},
+						{
+							label: 'Delete',
+							link: `/categories/${item.srl}/delete${nest_srl ? `?nest=${nest_srl}` : ''}`
+						},
 					]"/>
 			</li>
 		</ul>

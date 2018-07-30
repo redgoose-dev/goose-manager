@@ -34,4 +34,5 @@ export const msg = {
 	failedChangePassword: 'Failed change user password.',
 	questionChangePassword: '비밀번호가 변경되었으므로 로그아웃이 필요합니다. 로그아웃 하시겠습니까?',
 	notLogin: 'You are not logged in.',
+	failedParsingJson: 'Failed parsing json data.',
 };

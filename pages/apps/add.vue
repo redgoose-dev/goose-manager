@@ -14,7 +14,6 @@
 							id="id"
 							v-model="forms.id.value"
 							placeholder="app_name"
-							@change="onChange"
 							:maxlength="16"
 							:error="!!forms.id.error"
 							:required="true"
@@ -42,15 +41,12 @@
 							:error="!!forms.name.error"
 							:required="true"
 							:inline="true"/>
-						<p v-if="!!forms.name.error" class="rg-form-help rg-form-help-error">
-							{{forms.name.error}}
-						</p>
 					</dd>
 				</dl>
 			</div>
 			<div class="rg-form-field rg-form-field-line">
 				<dl class="rg-form-field__group">
-					<dt><label for="id">Description</label></dt>
+					<dt><label for="description">Description</label></dt>
 					<dd>
 						<form-text
 							name="description"
@@ -102,15 +98,15 @@ export default {
 			forms: {
 				id: {
 					value: '',
-					error: '',
+					error: null,
 				},
 				name: {
 					value: '',
-					error: '',
+					error: null,
 				},
 				description: {
 					value: '',
-					error: '',
+					error: null,
 				}
 			},
 			error: '',
@@ -126,6 +122,9 @@ export default {
 		async onSubmit(e)
 		{
 			e.preventDefault();
+
+			// reset form
+			this.forms.id.error = null;
 
 			// check id
 			const check = checkId(this.forms.id.value);
@@ -151,13 +150,9 @@ export default {
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
-				this.error = (e && typeof e === 'string') ? e : `Failed add app.`;
+				this.error = (e && typeof e === 'string') ? e : `Failed add App.`;
 				this.processing = false;
 			}
-		},
-		onChange()
-		{
-			this.forms.id.error = '';
 		}
 	}
 }

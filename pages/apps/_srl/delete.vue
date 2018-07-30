@@ -5,12 +5,12 @@
 	<form @submit="onSubmit" class="rg-form-delete">
 		<input type="hidden" name="srl" :value="srl"/>
 		<div class="rg-form-delete__message">
-			<p>다음 App을 삭제하시겠습니까?</p>
+			<p>다음 `App`을 삭제하시겠습니까?</p>
 			<p>
 				<strong>{{forms.name}} <em>{{forms.id}}</em></strong>
 			</p>
 		</div>
-		<p v-if="error" class="rg-form-error">{{error}}</p>
+
 		<nav class="rg-nav rg-form-delete__nav">
 			<button-basic
 				type="button"
@@ -51,7 +51,6 @@ export default {
 	{
 		return {
 			srl: parseInt(this.$route.params.srl),
-			error: null,
 			processing: false,
 		};
 	},
@@ -93,7 +92,6 @@ export default {
 			try
 			{
 				this.processing = true;
-
 				let res = await this.$axios.$post(`/apps/${this.srl}/delete`);
 				if (!res.success) throw res.message;
 				this.processing = false;
@@ -101,9 +99,9 @@ export default {
 			}
 			catch(e)
 			{
-				if (e === messages.error.service) e = null;
-				this.error = (e && typeof e === 'string') ? e : `Failed delete app.`;
 				this.processing = false;
+				if (e === messages.error.service) e = null;
+				alert((e && typeof e === 'string') ? e : `Failed delete App.`);
 			}
 		}
 	}

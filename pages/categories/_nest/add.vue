@@ -1,6 +1,6 @@
 <template>
 <article>
-	<page-header module="categories"/>
+	<page-header module="categories" title="Add category"/>
 
 	<form @submit="onSubmit" ref="form">
 		<fieldset class="rg-form-fieldset">
@@ -13,14 +13,13 @@
 							type="text"
 							name="name"
 							id="name"
-							v-model="name.value"
+							v-model="forms.name.value"
 							placeholder="landscape"
 							:maxlength="40"
 							formSize="30"
-							:error="name.error"
+							:error="!!forms.name.error"
 							:required="true"
 							:inline="true"/>
-						<p class="rg-form-help">이미 등록된 이메일은 등록할 수 없습니다.</p>
 					</dd>
 				</dl>
 			</div>
@@ -47,7 +46,7 @@ import PageHeader from '~/components/contents/page-header';
 import FormText from '~/components/form/text';
 import ButtonBasic from '~/components/button/basic';
 // library
-import * as forms from '../../../libs/forms';
+import { formData } from '../../../libs/forms';
 import * as messages from '../../../libs/messages';
 
 export default {
@@ -64,12 +63,13 @@ export default {
 	{
 		return {
 			nest_srl: parseInt(this.$route.params.nest) || null,
-			name: {
-				value: '',
-				error: false,
-				message: '',
+			forms: {
+				name: {
+					value: '',
+					error: null,
+				},
 			},
-			error: '',
+			error: null,
 			processing: false,
 		};
 	},
@@ -78,17 +78,21 @@ export default {
 		{
 			e.preventDefault();
 
+			this.error = null;
+			this.forms.name.error = null;
+
 			try
 			{
 				this.processing = true;
-				const data = forms.formData({
+				const data = formData({
 					nest_srl: this.nest_srl,
-					name: this.name.value
+					name: this.forms.name.value
 				});
 				let res = await this.$axios.$post('/categories', data);
 				if (!res.success) throw res.message;
 				this.processing = false;
-				this.$router.push(`/categories/${this.nest_srl}`);
+				// TODO: 아무것도 없는 상태에서 추가하면 화면이 변하지 않는 현상이 나타나서 리프레시로 변경
+				location.href = `/categories/${this.nest_srl}`;
 			}
 			catch(e)
 			{

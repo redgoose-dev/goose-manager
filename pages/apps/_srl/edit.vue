@@ -50,7 +50,7 @@
 			</div>
 			<div class="rg-form-field rg-form-field-line">
 				<dl class="rg-form-field__group">
-					<dt><label for="id">Description</label></dt>
+					<dt><label for="description">Description</label></dt>
 					<dd>
 						<form-text
 							name="description"
@@ -104,7 +104,7 @@ export default {
 	{
 		return {
 			srl: parseInt(this.$route.params.srl),
-			error: '',
+			error: null,
 			processing: false,
 		};
 	},
@@ -145,6 +145,9 @@ export default {
 		{
 			e.preventDefault();
 
+			// reset form
+			this.forms.id.error = null;
+
 			// check id
 			const check = checkId(this.forms.id.value);
 			if (!check)
@@ -164,18 +167,14 @@ export default {
 				let res = await this.$axios.$post(`/apps/${this.srl}/edit`, data);
 				if (!res.success) throw res.message;
 				this.processing = false;
-				alert('Success edit app');
+				this.$router.push(`/apps`);
 			}
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
-				this.error = (e && typeof e === 'string') ? e : `Failed add app.`;
+				this.error = (e && typeof e === 'string') ? e : `Failed edit app.`;
 				this.processing = false;
 			}
-		},
-		onChange()
-		{
-			this.forms.id.error = '';
 		}
 	}
 }

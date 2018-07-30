@@ -13,20 +13,24 @@
 							name="name"
 							id="name"
 							v-model="forms.name.value"
+							placeholder="goose's navigation"
 							:maxlength="100"
+							:formSize="30"
 							:error="!!forms.name.error"
-							:required="true"/>
+							:required="true"
+							:inline="true"/>
 					</dd>
 				</dl>
 			</div>
-			<div class="rg-form-field rg-form-field-line first">
+			<div class="rg-form-field rg-form-field-line">
 				<dl class="rg-form-field__group">
-					<dt><label for="name">Description</label></dt>
+					<dt><label for="description">Description</label></dt>
 					<dd>
 						<form-text
 							name="description"
 							id="description"
 							v-model="forms.description.value"
+							placeholder="note comment.."
 							:maxlength="100"
 							:error="!!forms.description.error"/>
 					</dd>
@@ -34,7 +38,7 @@
 			</div>
 			<div class="rg-form-field rg-form-field-line">
 				<dl class="rg-form-field__group">
-					<dt><label for="name">JSON</label></dt>
+					<dt><label for="json">JSON</label></dt>
 					<dd>
 						<form-text
 							type="textarea"
@@ -121,14 +125,14 @@ export default {
 
 			try
 			{
-				// test json data
+				// check json data
 				try
 				{
 					JSON.parse(this.forms.json.value);
 				}
 				catch(e)
 				{
-					this.forms.json.error = 'Failed parsing json data.';
+					this.forms.json.error = messages.msg.failedParsingJson;
 					return;
 				}
 

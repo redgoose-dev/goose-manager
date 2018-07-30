@@ -12,7 +12,7 @@
 					:link="`/json/${item.srl}`"
 					:metas="[
 						`srl: ${item.srl}`,
-						`Regdate: ${item.regdate}`
+						`regdate: ${item.regdate}`
 					]"
 					:navs="[
 						{ label: 'Edit', link: `/json/${item.srl}/edit` },

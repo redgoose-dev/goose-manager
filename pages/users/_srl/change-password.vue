@@ -41,7 +41,7 @@
 			</div>
 			<div class="rg-form-field rg-form-field-line">
 				<dl class="rg-form-field__group">
-					<dt><label for="password_new">Confirm password</label></dt>
+					<dt><label for="password_new2">Confirm password</label></dt>
 					<dd>
 						<form-text
 							type="password"
