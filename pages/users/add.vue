@@ -5,101 +5,91 @@
 	<form @submit="onSubmit" ref="form">
 		<fieldset class="rg-form-fieldset">
 			<legend>add user form</legend>
-			<div class="rg-form-field rg-form-field-line first">
-				<dl class="rg-form-field__group">
-					<dt><label for="email">E-mail</label></dt>
-					<dd>
-						<form-text
-							type="email"
-							name="email"
-							id="email"
-							v-model="forms.email.value"
-							placeholder="name@goose.com"
-							:maxlength="60"
-							formSize="35"
-							:error="forms.email.error"
-							:required="true"
-							:inline="true"/>
-						<p class="rg-form-help">이미 등록된 이메일은 등록할 수 없습니다.</p>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="name">Name</label></dt>
-					<dd>
-						<form-text
-							type="text"
-							name="name"
-							id="name"
-							v-model="forms.name.value"
-							placeholder="goose"
-							:maxlength="30"
-							formSize="24"
-							:error="forms.name.error"
-							:required="true"
-							:inline="true"/>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="password">Password</label></dt>
-					<dd>
-						<form-text
-							type="password"
-							name="password"
-							id="password"
-							v-model="forms.password.value"
-							:maxlength="24"
-							formSize="20"
-							:error="forms.password.error"
-							:required="true"
-							:inline="true"/>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="password2">Confirm password</label></dt>
-					<dd>
-						<form-text
-							type="password"
-							name="password2"
-							id="password2"
-							v-model="forms.password2.value"
-							:maxlength="24"
-							formSize="20"
-							:error="forms.password2.error"
-							:required="true"
-							:inline="true"
-							@change="onChange('password2')"/>
-						<p v-if="forms.password2.message" class="rg-form-help rg-form-help-error">
-							{{forms.password2.message}}
-						</p>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="level">Level</label></dt>
-					<dd>
-						<form-text
-							type="tel"
-							name="level"
-							id="level"
-							v-model="forms.level.value"
-							:maxlength="24"
-							formSize="5"
-							:error="forms.level.error"
-							:required="true"
-							:inline="true"/>
-						<p class="rg-form-help">
-							Public level: {{level_public}}, Admin level: {{level_admin}}
-						</p>
-					</dd>
-				</dl>
-			</div>
+			<dl class="rg-form-field">
+				<dt><label for="email">E-mail</label></dt>
+				<dd>
+					<form-text
+						type="email"
+						name="email"
+						id="email"
+						v-model="forms.email.value"
+						placeholder="name@goose.com"
+						:maxlength="60"
+						formSize="35"
+						:error="forms.email.error"
+						:required="true"
+						:inline="true"/>
+					<p class="rg-form-help">이미 등록된 이메일은 등록할 수 없습니다.</p>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="name">Name</label></dt>
+				<dd>
+					<form-text
+						type="text"
+						name="name"
+						id="name"
+						v-model="forms.name.value"
+						placeholder="goose"
+						:maxlength="30"
+						formSize="24"
+						:error="forms.name.error"
+						:required="true"
+						:inline="true"/>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="password">Password</label></dt>
+				<dd>
+					<form-text
+						type="password"
+						name="password"
+						id="password"
+						v-model="forms.password.value"
+						:maxlength="24"
+						formSize="20"
+						:error="forms.password.error"
+						:required="true"
+						:inline="true"/>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="password2">Confirm password</label></dt>
+				<dd>
+					<form-text
+						type="password"
+						name="password2"
+						id="password2"
+						v-model="forms.password2.value"
+						:maxlength="24"
+						formSize="20"
+						:error="forms.password2.error"
+						:required="true"
+						:inline="true"
+						@change="onChange('password2')"/>
+					<p v-if="forms.password2.message" class="rg-form-help rg-form-help-error">
+						{{forms.password2.message}}
+					</p>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="level">Level</label></dt>
+				<dd>
+					<form-text
+						type="tel"
+						name="level"
+						id="level"
+						v-model="forms.level.value"
+						:maxlength="24"
+						formSize="5"
+						:error="forms.level.error"
+						:required="true"
+						:inline="true"/>
+					<p class="rg-form-help">
+						Public level: {{level_public}}, Admin level: {{level_admin}}
+					</p>
+				</dd>
+			</dl>
 			<p v-if="error" class="rg-form-error">{{error}}</p>
 		</fieldset>
 		<nav class="rg-nav">
@@ -123,7 +113,7 @@ import PageHeader from '~/components/contents/page-header';
 import FormText from '~/components/form/text';
 import ButtonBasic from '~/components/button/basic';
 // library
-import * as forms from '../../libs/forms';
+import { formData } from '../../libs/forms';
 import * as messages from '../../libs/messages';
 
 export default {
@@ -134,6 +124,9 @@ export default {
 	},
 	data()
 	{
+		let level_public = this.$store.state.level.public;
+		let level_admin = this.$store.state.level.admin;
+
 		return {
 			forms: {
 				email: {
@@ -157,15 +150,15 @@ export default {
 					message: '',
 				},
 				level: {
-					value: this.data ? this.data.level : this.$store.state.level.admin,
+					value: this.data ? this.data.level : level_admin,
 					error: false,
 					message: '',
 				},
 			},
 			error: '',
 			processing: false,
-			level_public: this.$store.state.level.public,
-			level_admin: this.$store.state.level.admin,
+			level_public,
+			level_admin,
 		};
 	},
 	mounted()
@@ -189,7 +182,7 @@ export default {
 			try
 			{
 				this.processing = true;
-				const data = forms.formData({
+				const data = formData({
 					email: this.forms.email.value,
 					name: this.forms.name.value,
 					pw: this.forms.password.value,
@@ -204,8 +197,8 @@ export default {
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
-				this.error = (e && typeof e === 'string') ? e : `Failed add user.`;
 				this.processing = false;
+				alert((e && typeof e === 'string') ? e : `Failed add user.`);
 			}
 		},
 		onChange(field)

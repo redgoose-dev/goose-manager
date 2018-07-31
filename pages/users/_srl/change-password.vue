@@ -5,64 +5,57 @@
 	<form @submit="onSubmit" ref="form">
 		<fieldset class="rg-form-fieldset">
 			<legend>change password form</legend>
-			<div class="rg-form-field rg-form-field-line first">
-				<dl class="rg-form-field__group">
-					<dt><label for="password">Current password</label></dt>
-					<dd>
-						<form-text
-							type="password"
-							name="password"
-							id="password"
-							v-model="forms.password.value"
-							:maxlength="24"
-							formSize="20"
-							:error="!!forms.password.error"
-							:required="true"
-							:inline="true"/>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="password_new">New password</label></dt>
-					<dd>
-						<form-text
-							type="password"
-							name="password_new"
-							id="password_new"
-							v-model="forms.password_new.value"
-							:maxlength="24"
-							formSize="20"
-							:error="!!forms.password_new.error"
-							:required="true"
-							:inline="true"/>
-					</dd>
-				</dl>
-			</div>
-			<div class="rg-form-field rg-form-field-line">
-				<dl class="rg-form-field__group">
-					<dt><label for="password_new2">Confirm password</label></dt>
-					<dd>
-						<form-text
-							type="password"
-							name="password_new2"
-							id="password_new2"
-							v-model="forms.password_new2.value"
-							:maxlength="24"
-							formSize="20"
-							:error="!!forms.password_new2.error"
-							:required="true"
-							:inline="true"/>
-						<p v-if="forms.password_new2.error" class="rg-form-help rg-form-help-error">
-							{{forms.password_new2.error}}
-						</p>
-						<p class="rg-form-help">
-							Please input a password such as "new password".
-						</p>
-					</dd>
-				</dl>
-			</div>
-			<p v-if="error" class="rg-form-error">{{error}}</p>
+			<dl class="rg-form-field">
+				<dt><label for="password">Current password</label></dt>
+				<dd>
+					<form-text
+						type="password"
+						name="password"
+						id="password"
+						v-model="forms.password.value"
+						:maxlength="24"
+						formSize="20"
+						:error="!!forms.password.error"
+						:required="true"
+						:inline="true"/>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="password_new">New password</label></dt>
+				<dd>
+					<form-text
+						type="password"
+						name="password_new"
+						id="password_new"
+						v-model="forms.password_new.value"
+						:maxlength="24"
+						formSize="20"
+						:error="!!forms.password_new.error"
+						:required="true"
+						:inline="true"/>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="password_new2">Confirm password</label></dt>
+				<dd>
+					<form-text
+						type="password"
+						name="password_new2"
+						id="password_new2"
+						v-model="forms.password_new2.value"
+						:maxlength="24"
+						formSize="20"
+						:error="!!forms.password_new2.error"
+						:required="true"
+						:inline="true"/>
+					<p v-if="!!forms.password_new2.error" class="rg-form-help rg-form-help-error">
+						{{forms.password_new2.error}}
+					</p>
+					<p class="rg-form-help">
+						Please input a password such as "new password".
+					</p>
+				</dd>
+			</dl>
 		</fieldset>
 		<nav class="rg-nav">
 			<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
@@ -104,19 +97,18 @@ export default {
 			forms: {
 				password: {
 					value: '',
-					error: '',
+					error: null,
 				},
 				password_new: {
 					value: '',
-					error: '',
+					error: null,
 				},
 				password_new2: {
 					value: '',
-					error: '',
+					error: null,
 				},
 			},
 			processing: false,
-			error: null,
 			self: parseInt(this.$store.state.authUser.srl) === parseInt(this.$route.params.srl),
 		};
 	},
@@ -126,9 +118,7 @@ export default {
 			e.preventDefault();
 
 			// reset error
-			this.forms.password.error = '';
-			this.forms.password_new.error = '';
-			this.forms.password_new2.error = '';
+			this.forms.password_new2.error = null;
 
 			// check password
 			if (this.forms.password_new.value !== this.forms.password_new2.value)
@@ -150,6 +140,12 @@ export default {
 				if (!res.success) throw res.message;
 				this.processing = false;
 
+				// reset form
+				this.forms.password.value = '';
+				this.forms.password_new.value = '';
+				this.forms.password_new2.value = '';
+
+				// 자신의 계정이면 로그아웃 할건지 물어보기
 				if (this.self)
 				{
 					if (confirm(messages.msg.questionChangePassword))
@@ -162,16 +158,12 @@ export default {
 				{
 					alert(messages.msg.successChangePassword);
 				}
-
-				this.forms.password.value = '';
-				this.forms.password_new.value = '';
-				this.forms.password_new2.value = '';
 			}
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
-				this.error = (e && typeof e === 'string') ? e : messages.msg.failedChangePassword;
 				this.processing = false;
+				alert((e && typeof e === 'string') ? e : messages.msg.failedChangePassword)
 			}
 		}
 	}

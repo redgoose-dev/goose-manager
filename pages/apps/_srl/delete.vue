@@ -89,6 +89,8 @@ export default {
 		{
 			e.preventDefault();
 
+			// TODO: 삭제하면 연결되어있는 nests, articles, files, categories 가 삭제되어야함.
+
 			try
 			{
 				this.processing = true;
