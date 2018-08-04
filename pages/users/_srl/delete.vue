@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import * as messages from '../../../libs/messages';
+import * as messages from '~/libs/messages';
 
 export default {
 	components: {

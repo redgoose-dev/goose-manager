@@ -29,9 +29,9 @@ import * as messages from '~/libs/messages';
 export default {
 	components: {
 		'PageHeader': () => import('~/components/contents/page-header'),
-		'IndexArticles': () => import('~/components/button/basic'),
-		'IndexCategories': () => import('~/components/pages/articles/index-articles'),
-		'ButtonBasic': () => import('~/components/pages/articles/index-categories'),
+		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
+		'IndexCategories': () => import('~/components/pages/articles/index-categories'),
+		'ButtonBasic': () => import('~/components/button/basic'),
 		'Error': () => import('~/components/contents/error'),
 	},
 	validate(cox)

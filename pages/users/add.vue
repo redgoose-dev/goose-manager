@@ -108,8 +108,8 @@
 </template>
 
 <script>
-import { formData } from '../../libs/forms';
-import * as messages from '../../libs/messages';
+import { formData } from '~/libs/forms';
+import * as messages from '~/libs/messages';
 
 export default {
 	components: {
