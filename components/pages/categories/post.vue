@@ -1,50 +1,46 @@
 <template>
-	<form @submit="onSubmit" ref="form">
-		<fieldset class="rg-form-fieldset">
-			<legend>{{type}} category form</legend>
-			<dl class="rg-form-field">
-				<dt><label for="name">Name</label></dt>
-				<dd>
-					<form-text
-						type="text"
-						name="name"
-						id="name"
-						v-model="forms.name.value"
-						placeholder="landscape"
-						:maxlength="40"
-						formSize="30"
-						:error="!!forms.name.error"
-						:required="true"
-						:inline="true"/>
-				</dd>
-			</dl>
-		</fieldset>
-		<nav class="rg-nav">
-			<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
-			<button-basic
-				type="submit"
-				color="key"
-				:label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'} Category` : null"
-				:inline="true"
-				:icon="processing ? 'cached' : ''"
-				:rotateIcon="processing"
-				:disabled="processing"/>
-		</nav>
-	</form>
+<form @submit="onSubmit" ref="form">
+	<fieldset class="rg-form-fieldset">
+		<legend>{{type}} category form</legend>
+		<dl class="rg-form-field">
+			<dt><label for="name">Name</label></dt>
+			<dd>
+				<form-text
+					type="text"
+					name="name"
+					id="name"
+					v-model="forms.name.value"
+					placeholder="landscape"
+					:maxlength="40"
+					formSize="30"
+					:error="!!forms.name.error"
+					:required="true"
+					:inline="true"/>
+			</dd>
+		</dl>
+	</fieldset>
+	<nav class="rg-nav">
+		<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
+		<button-basic
+			type="submit"
+			color="key"
+			:label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'} Category` : null"
+			:inline="true"
+			:icon="processing ? 'cached' : ''"
+			:rotateIcon="processing"
+			:disabled="processing"/>
+	</nav>
+</form>
 </template>
 
 <script>
-// components
-import FormText from '~/components/form/text';
-import ButtonBasic from '~/components/button/basic';
-// library
 import { formData } from '../../../libs/forms';
 import * as messages from '../../../libs/messages';
 
 export default {
 	components: {
-		FormText,
-		ButtonBasic,
+		'FormText': () => import('~/components/form/text'),
+		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	props: {
 		type: { type: String, default: 'add' }, // add,edit
@@ -68,9 +64,9 @@ export default {
 	},
 	mounted()
 	{
-		if (this.$refs.form && this.type === 'add')
+		if (this.type === 'add')
 		{
-			this.$refs.form.name.focus();
+			setTimeout(() => this.$refs.form.name.focus(), 200);
 		}
 	},
 	methods: {

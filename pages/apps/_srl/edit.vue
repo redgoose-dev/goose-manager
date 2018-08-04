@@ -6,16 +6,12 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import Post from '~/components/pages/apps/post';
-// library
 import * as messages from '~/libs/messages';
 
 export default {
 	components: {
-		PageHeader,
-		Post
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'Post': () => import('~/components/pages/apps/post'),
 	},
 	validate(cox)
 	{

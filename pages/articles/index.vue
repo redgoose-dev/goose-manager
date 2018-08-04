@@ -8,18 +8,13 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import IndexArticles from '~/components/pages/articles/index-articles';
-import Error from '~/components/contents/error';
-// library
 import * as messages from '~/libs/messages';
 
 export default {
 	components: {
-		PageHeader,
-		IndexArticles,
-		Error,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
+		'Error': () => import('~/components/contents/error'),
 	},
 	async asyncData(cox)
 	{

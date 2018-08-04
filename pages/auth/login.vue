@@ -57,15 +57,12 @@
 
 <style lang="scss" src="./login.scss" scoped></style>
 <script>
-// components
-import ButtonBasic from '~/components/button/basic';
-// library
 import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 
 export default {
 	components: {
-		ButtonBasic,
+		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	layout: 'blank',
 	middleware: 'login',

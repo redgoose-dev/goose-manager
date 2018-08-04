@@ -9,7 +9,7 @@
 				<ul>
 					<li><nuxt-link to="/apps">Apps</nuxt-link></li>
 					<li><nuxt-link to="/nests">Nests</nuxt-link></li>
-					<li><nuxt-link to="/users">Users</nuxt-link></li>
+					<li v-if="isAdmin"><nuxt-link to="/users">Users</nuxt-link></li>
 					<li><nuxt-link to="/json">JSON</nuxt-link></li>
 					<li><a href="https://github.com/redgoose-dev/goose-api/wiki" target="_blank">Documentation</a></li>
 					<li><nuxt-link to="/test-flight">Test Flight</nuxt-link></li>
@@ -67,7 +67,12 @@ export default {
 			year: new Date().getFullYear()
 		};
 	},
-	computed: {},
+	computed: {
+		isAdmin()
+		{
+			return !!this.$store.state.authUser.admin;
+		}
+	},
 	methods: {
 		onClickProfileItem(e)
 		{

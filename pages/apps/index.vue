@@ -30,21 +30,15 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import ItemIndexCard from '~/components/contents/item-index-card';
-import ButtonBasic from '~/components/button/basic';
-import Error from '~/components/contents/error';
-// library
 import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
 
 export default {
 	components: {
-		PageHeader,
-		ItemIndexCard,
-		ButtonBasic,
-		Error,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
+		'ButtonBasic': () => import('~/components/button/basic'),
+		'Error': () => import('~/components/contents/error'),
 	},
 	async asyncData(cox)
 	{

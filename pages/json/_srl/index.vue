@@ -27,17 +27,13 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import ButtonBasic from '~/components/button/basic';
-// library
 import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
 
 export default {
 	components: {
-		PageHeader,
-		ButtonBasic,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	validate(cox)
 	{

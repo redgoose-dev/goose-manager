@@ -9,10 +9,10 @@
 		:disabled="disabled"
 		:readonly="readonly"
 		:rows="rows"
-		:size="formSize"
+		:size="size"
 		:class="[
 			'rg-form-text',
-			size && `rg-form-text-size-${size}`,
+			formSize && `rg-form-text-size-${formSize}`,
 			error && 'rg-form-text-error',
 			className
 		]"
@@ -30,11 +30,11 @@
 		:required="required"
 		:disabled="disabled"
 		:readonly="readonly"
-		:size="formSize"
+		:size="size"
 		:class="[
 			'rg-form-text',
 			inline && 'rg-form-text-inline',
-			size && `rg-form-text-size-${size}`,
+			formSize && `rg-form-text-size-${formSize}`,
 			error && 'rg-form-text-error',
 			className
 		]"
@@ -57,9 +57,9 @@ export default {
 		readonly: { type: Boolean, default: false },
 		inline: { type: Boolean, default: false },
 		rows: { type: Number, default: 8, },
-		size: { type: String },
+		size: { type: [String,Number] },
 		error: { type: Boolean },
-		formSize: { type: [String,Number] },
+		formSize: { type: String },
 		className: { type: String },
 		styles: { type: [Object,Array] },
 	},

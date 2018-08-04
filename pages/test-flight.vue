@@ -20,19 +20,19 @@
 	</p>
 
 	<p>
-		<button-basic type="button" label="Button: Button content" size="small" icon="fingerprint"/>
+		<button-basic type="button" label="Button: Button content" formSize="small" icon="fingerprint"/>
 	</p>
 	<p>
 		<button-basic type="button" label="Button: Button content" color="key" icon="fingerprint"/>
 	</p>
 	<p>
-		<button-basic type="button" label="Button: Button content" size="large" color="gray" icon="fingerprint"/>
+		<button-basic type="button" label="Button: Button content" formSize="large" color="gray" icon="fingerprint"/>
 	</p>
 	<p>
 		<button-basic href="/" label="A: Button content"/>
 	</p>
 	<p>
-		<button-basic href="/" icon="fingerprint" :inline="true" size="large"/>
+		<button-basic href="/" icon="fingerprint" :inline="true" formSize="large"/>
 	</p>
 	<p>
 		<button-basic
@@ -60,7 +60,7 @@
 			:inline="false"
 			:readonly="false"
 			:disabled="false"
-			size="small"
+			formSize="small"
 		/>
 	</p>
 	<p>
@@ -81,7 +81,7 @@
 			:inline="false"
 			:readonly="false"
 			:disabled="true"
-			size="large"
+			formSize="large"
 		/>
 	</p>
 	<hr>
@@ -99,14 +99,14 @@
 
 	<hr>
 
-	<button-circle-icon name="fingerprint" title="foo" size="small" :inline="true" color=""/>
-	<button-circle-icon name="fingerprint" title="foo" size="" :inline="true" color="key"/>
-	<button-circle-icon name="fingerprint" title="foo" size="large" :inline="true" color="gray"/>
-	<button-circle-icon name="fingerprint" title="foo" size="" :inline="false" :center="true" color="key"/>
+	<button-circle-icon name="fingerprint" title="foo" formSize="small" :inline="true" color=""/>
+	<button-circle-icon name="fingerprint" title="foo" formSize="" :inline="true" color="key"/>
+	<button-circle-icon name="fingerprint" title="foo" formSize="large" :inline="true" color="gray"/>
+	<button-circle-icon name="fingerprint" title="foo" formSize="" :inline="false" :center="true" color="key"/>
 	<hr>
 
 	<p>
-		<form-select :inline="true" size="small"/>
+		<form-select :inline="true" formSize="small"/>
 		<form-select
 			name="select_name"
 			id="select_id"
@@ -116,7 +116,7 @@
 				{ label: 'Bar', value: 'bar' }
 			]"
 			:inline="true"/>
-		<form-select :inline="true" size="large"/>
+		<form-select :inline="true" formSize="large"/>
 		==={{select}}===
 	</p>
 	<hr>
@@ -206,23 +206,15 @@
 </template>
 
 <script>
-import PageHeader from '~/components/contents/page-header';
-import ButtonBasic from '~/components/button/basic';
-import ButtonCircleIcon from '~/components/button/circle-icon';
-import FormText from '~/components/form/text';
-import FormSelect from '~/components/form/select';
-import FormCheck from '~/components/form/check';
-import FormChecks from '~/components/form/checks';
-
 export default {
 	components: {
-		PageHeader,
-		ButtonBasic,
-		ButtonCircleIcon,
-		FormText,
-		FormSelect,
-		FormCheck,
-		FormChecks,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'ButtonBasic': () => import('~/components/button/basic'),
+		'ButtonCircleIcon': () => import('~/components/button/circle-icon'),
+		'FormText': () => import('~/components/form/text'),
+		'FormSelect': () => import('~/components/form/select'),
+		'FormCheck': () => import('~/components/form/check'),
+		'FormChecks': () => import('~/components/form/checks'),
 	},
 	data()
 	{

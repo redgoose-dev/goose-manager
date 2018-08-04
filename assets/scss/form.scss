@@ -287,12 +287,16 @@
 
 // section
 .rg-form-section {
+	margin: 20px 0 0;
 	background: #fff;
 	box-shadow: $shadow-box;
 	border-radius: 5px;
+	&:first-child {
+		margin-top: 0;
+	}
 	> h1 {
 		margin: 0;
-		padding: 1rem 1.25rem;
+		padding: 1rem;
 		font-size: 1.125rem;
 		line-height: 1;
 		border-bottom: 1px solid $color-content-line;

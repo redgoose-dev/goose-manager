@@ -73,19 +73,14 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import FormText from '~/components/form/text';
-import ButtonBasic from '~/components/button/basic';
-// library
 import { formData } from '../../../libs/forms';
 import * as messages from '../../../libs/messages';
 
 export default {
 	components: {
-		PageHeader,
-		FormText,
-		ButtonBasic,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'FormText': () => import('~/components/form/text'),
+		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	validate(cox)
 	{

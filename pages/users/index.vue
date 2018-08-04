@@ -31,22 +31,16 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import ItemIndexList from '~/components/contents/item-index-list';
-import ButtonBasic from '~/components/button/basic';
-import Error from '~/components/contents/error';
-// library
-import * as messages from '../../libs/messages';
-import * as dates from '../../libs/dates';
+import * as messages from '~/libs/messages';
+import * as dates from '~/libs/dates';
 
 export default {
 	middleware: ['check-admin'],
 	components: {
-		PageHeader,
-		ItemIndexList,
-		ButtonBasic,
-		Error,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'ItemIndexList': () => import('~/components/contents/item-index-list'),
+		'ButtonBasic': () => import('~/components/button/basic'),
+		'Error': () => import('~/components/contents/error'),
 	},
 	async asyncData(cox)
 	{

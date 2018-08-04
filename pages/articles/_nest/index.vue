@@ -24,22 +24,15 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import ButtonBasic from '~/components/button/basic';
-import IndexArticles from '~/components/pages/articles/index-articles';
-import IndexCategories from '~/components/pages/articles/index-categories';
-import Error from '~/components/contents/error';
-// library
 import * as messages from '~/libs/messages';
 
 export default {
 	components: {
-		PageHeader,
-		IndexArticles,
-		IndexCategories,
-		ButtonBasic,
-		Error,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'IndexArticles': () => import('~/components/button/basic'),
+		'IndexCategories': () => import('~/components/pages/articles/index-articles'),
+		'ButtonBasic': () => import('~/components/pages/articles/index-categories'),
+		'Error': () => import('~/components/contents/error'),
 	},
 	validate(cox)
 	{

@@ -40,33 +40,20 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import ItemIndexCard from '~/components/contents/item-index-card';
-import ButtonBasic from '~/components/button/basic';
-import Error from '~/components/contents/error';
-// library
 import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
 
 export default {
 	components: {
-		PageHeader,
-		ItemIndexCard,
-		ButtonBasic,
-		Error,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
+		'ButtonBasic': () => import('~/components/button/basic'),
+		'Error': () => import('~/components/contents/error'),
 	},
 	validate(cox)
 	{
 		if (!cox.params.nest) return true;
 		return /^\d+$/.test(cox.params.nest);
-	},
-	data()
-	{
-		return {
-			nest_srl: this.$route.params.nest ? parseInt(this.$route.params.nest) : null,
-			error: null,
-		};
 	},
 	async asyncData(cox)
 	{
@@ -77,8 +64,10 @@ export default {
 			let categories = await cox.$axios.$get(`/categories${params}`);
 			if (!categories.success) throw categories.message;
 			return {
+				nest_srl,
 				total: categories.success ? categories.data.total : 0,
 				index: categories.success ? categories.data.index : null,
+				error: null,
 			};
 		}
 		catch(e)

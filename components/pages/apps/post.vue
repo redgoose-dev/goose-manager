@@ -123,8 +123,8 @@ export default {
 			this.forms.id.error = null;
 
 			// check id
-			const check = checkId(this.forms.id.value);
-			if (!check)
+			const checked = checkId(this.forms.id.value);
+			if (!checked)
 			{
 				this.forms.id.error = 'Please check `id`';
 				return;

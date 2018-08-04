@@ -16,8 +16,8 @@
 			<dd>{{data.name}}</dd>
 		</dl>
 		<dl>
-			<dt>Level</dt>
-			<dd>{{data.level}}</dd>
+			<dt>Admin</dt>
+			<dd>{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</dd>
 		</dl>
 		<dl>
 			<dt>Register date</dt>
@@ -32,17 +32,13 @@
 </template>
 
 <script>
-// components
-import PageHeader from '~/components/contents/page-header';
-import ButtonBasic from '~/components/button/basic';
-// library
 import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
 
 export default {
 	components: {
-		PageHeader,
-		ButtonBasic,
+		'PageHeader': () => import('~/components/contents/page-header'),
+		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	async asyncData(cox)
 	{
@@ -73,6 +69,10 @@ export default {
 		{
 			return dates.getFormatDate(date, true);
 		}
+	},
+	mounted()
+	{
+		console.log(this.data);
 	}
 }
 </script>

@@ -2,7 +2,7 @@ export default function(cox)
 {
 	const { store, error } = cox;
 
-	if (store.state.level.admin > store.state.authUser.level)
+	if (!store.state.authUser.admin)
 	{
 		error({
 			message: 'You do not have permission to access.',
