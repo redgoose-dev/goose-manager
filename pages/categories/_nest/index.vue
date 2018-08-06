@@ -43,7 +43,6 @@
 	</nav>
 	<nav v-else class="rg-nav">
 		<button-basic label="Nests" to="/nests" :inline="true"/>
-		<button-basic label="Articles" to="/articles" :inline="true"/>
 	</nav>
 </article>
 </template>
@@ -75,8 +74,8 @@ export default {
 		let nest_srl = parseInt(cox.params.nest) || null;
 		try
 		{
-			let params = (nest_srl) ? `?nest=${nest_srl}&order=turn&sort=asc` : '';
-			let categories = await cox.$axios.$get(`/categories${params}`);
+			let url = (nest_srl) ? `/categories?nest=${nest_srl}&order=turn&sort=asc` : '/categories';
+			let categories = await cox.$axios.$get(url);
 			if (!categories.success) throw categories.message;
 			return {
 				nest_srl,
@@ -87,7 +86,10 @@ export default {
 		}
 		catch(e)
 		{
-			return { error: (typeof e === 'string') ? e : messages.error.service };
+			return {
+				nest_srl,
+				error: (typeof e === 'string') ? e : messages.error.service
+			};
 		}
 	},
 	methods: {

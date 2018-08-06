@@ -8,7 +8,6 @@
 			:nest_srl="nest_srl"
 			:categories="categories"
 			:category_srl="category_srl"
-			:type="category_type"
 			@change="onChangeCategory"/>
 		<index-articles
 			:total="total"
@@ -21,7 +20,7 @@
 		<button-basic label="Categories" :to="`/categories/${this.nest_srl}`" :inline="true"/>
 		<button-basic
 			label="Add Article"
-			:to="`/articles/${this.nest_srl}/add${category_srl ? `?category=${category_srl}` : ''}`"
+			:to="`/articles/${this.nest_srl}/add${!!parseInt(category_srl) ? `?category=${category_srl}` : ''}`"
 			:inline="true"
 			color="key"/>
 	</nav>
@@ -46,9 +45,7 @@ export default {
 	async asyncData(cox)
 	{
 		let nest_srl = parseInt(cox.params.nest) || null;
-		let category_srl = cox.query.category ? parseInt(cox.query.category) : 0;
-		let category_type = cox.query.category_type ? cox.query.category_type : null;
-		if (!category_type && !category_srl) category_type = 'all';
+		let category_srl = cox.query.category ? cox.query.category : '';
 
 		try
 		{
@@ -60,7 +57,6 @@ export default {
 			return {
 				nest_srl,
 				category_srl,
-				category_type,
 				error: null,
 				loading: false,
 				total: articles.success ? articles.data.total : 0,
@@ -75,21 +71,22 @@ export default {
 		}
 	},
 	methods: {
-		async onChangeCategory({ srl, type })
+		async onChangeCategory(srl)
 		{
-			if (this.category_srl === srl && this.category_type === type) return; // TODO: 여기 처리가 덜되었음..
-
 			// on loading
 			this.loading = true;
 			// change url
-			this.$router.replace(this.setCategoryUrl(srl, type));
+			this.$router.replace(this.setCategoryUrl(srl));
 			// change category_srl
 			this.category_srl = srl;
 
 			// get articles
 			try
 			{
-				const articles = await this.$axios.$get(`/articles?nest=${this.nest_srl}${this.category_srl ? `&category=${this.category_srl}` : ''}&ext_field=category_name`);
+				let url = `/articles?nest=${this.nest_srl}`;
+				if (this.category_srl) url += `&category=${this.category_srl}`;
+				url += '&ext_field=category_name';
+				const articles = await this.$axios.$get(url);
 				this.total = articles.success ? articles.data.total : 0;
 				this.articles = articles.success ? articles.data.index : null;
 				this.loading = false;
@@ -100,16 +97,16 @@ export default {
 				return { error: (typeof e === 'string') ? e : messages.error.service };
 			}
 		},
-		setCategoryUrl(srl, type)
+		setCategoryUrl(srl)
 		{
 			let params = '';
-			switch(type)
+			switch(srl)
 			{
-				case 'all':
+				case '':
 					params = '';
 					break;
 				case 'none':
-					params = '?category_type=none';
+					params = '?category=null';
 					break;
 				default:
 					params = srl ? `?category=${srl}` : '';

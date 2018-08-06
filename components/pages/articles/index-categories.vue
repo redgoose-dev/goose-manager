@@ -3,13 +3,11 @@
 	<ul>
 		<li v-for="(item,key) in categories" :key="key">
 			<a
-				:href="makeUrl(item.srl, item.type)"
+				:href="makeUrl(item.srl)"
 				:data-srl="item.srl"
-				:data-type="item.type"
 				@click="onChange"
 				:class="[
-					(parseInt(item.srl) === category_srl) && 'active',
-					item.type === type && 'active'
+					(item.srl === category_srl) && 'active',
 				]">
 				<span>{{item.name}}</span>
 				<em>{{item.count_article}}</em>
@@ -24,28 +22,26 @@ export default {
 	props: {
 		nest_srl: { type: Number, default: 0 },
 		categories: { type: Array },
-		category_srl: { type: Number, default: 0 },
-		type: { type: String, default: null }
+		category_srl: { type: String, default: '' },
 	},
 	methods: {
 		onChange(e)
 		{
 			e.preventDefault();
-			let srl = parseInt(e.currentTarget.dataset.srl) || 0;
-			let type = e.currentTarget.dataset.type || null;
+			let srl = e.currentTarget.dataset.srl || '';
 			if (this.category_srl === srl) return false;
-			this.$emit('change', {srl, type});
+			this.$emit('change', srl);
 		},
-		makeUrl(srl, type)
+		makeUrl(srl)
 		{
 			let params = '';
-			switch(type)
+			switch(srl)
 			{
-				case 'all':
+				case '':
 					params = '';
 					break;
-				case 'none':
-					params = '?category_type=none';
+				case 'null':
+					params = '?category=null';
 					break;
 				default:
 					params = srl ? `?category=${srl}` : '';

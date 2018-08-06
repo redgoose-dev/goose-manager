@@ -48,7 +48,6 @@ $dir: '/fonts/material-icons/';
 	width: 40%;
 	min-width: 300px;
 	margin: 0 auto;
-	display: none;
 
 	&__loader {
 		position: absolute;
@@ -92,9 +91,6 @@ $dir: '/fonts/material-icons/';
 		}
 	}
 
-	&-show {
-		display: block;
-	}
 	&-move {
 		#{$self}__loader {
 			animation: loader 3s linear infinite;

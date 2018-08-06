@@ -2,9 +2,8 @@
 	<div :class="[
 		'rg-loading',
 		move && 'rg-loading-move',
-		show && 'rg-loading-show',
 	]">
-		<div class="rg-loading__loader">
+		<div v-if="show" class="rg-loading__loader">
 			<div class="rg-loading__shadow"></div>
 			<div class="rg-loading__box"></div>
 		</div>
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-import * as util from '../../libs/util';
+import * as util from '~/libs/util';
 
 let mounted = false;
 
@@ -22,9 +21,7 @@ export default {
 	},
 	data()
 	{
-		return {
-			show: false,
-		};
+		return { show: false };
 	},
 	mounted()
 	{

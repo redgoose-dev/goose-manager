@@ -56,7 +56,7 @@
 			<button-basic
 				type="submit"
 				color="key"
-				:label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'} App` : null"
+				:label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'}` : null"
 				:inline="true"
 				:icon="processing ? 'cached' : ''"
 				:rotateIcon="processing"

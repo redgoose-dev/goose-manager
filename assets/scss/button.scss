@@ -79,7 +79,7 @@
 		background: mix(#000, $color-light, 5%);
 	}
 	&:not([disabled]):active {
-		box-shadow: inset 0 2px 2px rgba(#000, .15);
+		box-shadow: inset 0 2px 5px rgba(#000, .15);
 	}
 
 	&-color-key {
@@ -92,7 +92,7 @@
 			background: mix(#000, $color-key, 5%);
 		}
 		&:active:not([disabled]) {
-			box-shadow: inset 0 2px 2px rgba(#000, .1);
+			box-shadow: inset 0 2px 5px rgba(#000, .1);
 		}
 	}
 
@@ -106,7 +106,7 @@
 			background: mix(#000, $color-blur, 5%);
 		}
 		&:active:not([disabled]) {
-			box-shadow: inset 0 2px 2px rgba(#000, .15);
+			box-shadow: inset 0 2px 5px rgba(#000, .15);
 		}
 	}
 }

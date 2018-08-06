@@ -24,18 +24,13 @@
 </template>
 
 <script>
-// components
-import Loading from '~/components/etc/loading';
-import ItemIndexCard from '~/components/contents/item-index-card';
-import Error from '~/components/contents/error';
-// library
 import * as dates from '~/libs/dates';
 
 export default {
 	components: {
-		Loading,
-		ItemIndexCard,
-		Error,
+		'Loading': () => import('~/components/etc/loading'),
+		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
+		'Error': () => import('~/components/contents/error'),
 	},
 	props: {
 		total: { type: Number, default: 0 },

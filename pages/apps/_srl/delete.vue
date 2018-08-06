@@ -9,7 +9,7 @@
 				다음 `App`을 삭제하시겠습니까?<br/>
 				이것을 삭제하면 하위의 `Nest`, `Article`, `Category`, `File`의 데이터가 삭제됩니다.
 			</p>
-			<p><strong>{{forms.id}} / {{forms.name}}</strong></p>
+			<p><strong>[{{forms.id}}] {{forms.name}}</strong></p>
 		</div>
 
 		<nav class="rg-nav rg-form-delete__nav">

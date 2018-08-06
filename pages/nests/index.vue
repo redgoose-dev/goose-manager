@@ -37,7 +37,12 @@
 
 	<nav class="rg-nav">
 		<button-basic label="Apps" to="/apps" :inline="true"/>
-		<button-basic label="Add Nest" to="/nests/add" :inline="true" color="key"/>
+		<button-basic
+			v-if="!error && (index && index.length)"
+			label="Add Nest"
+			to="/nests/add"
+			:inline="true"
+			color="key"/>
 	</nav>
 </article>
 </template>
