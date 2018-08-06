@@ -3,7 +3,10 @@
 	<page-header module="articles"/>
 
 	<error v-if="!!error" :message="error"/>
-	<index-articles v-else :total="total" :articles="articles"/>
+	<index-articles
+		v-else
+		:total="total"
+		:articles="articles"/>
 </article>
 </template>
 

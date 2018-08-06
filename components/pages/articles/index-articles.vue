@@ -5,7 +5,7 @@
 		<ul>
 			<li v-for="(item,key) in articles" :key="key">
 				<item-index-card
-					:link="`/articles/${item.srl}/read`"
+					:link="getUrl(item.srl)"
 					:subject="item.title"
 					:metas="[
 						item.category_name && `Category: ${item.category_name}`,
@@ -25,6 +25,7 @@
 
 <script>
 import * as dates from '~/libs/dates';
+import * as text from '~/libs/text';
 
 export default {
 	components: {
@@ -33,6 +34,8 @@ export default {
 		'Error': () => import('~/components/contents/error'),
 	},
 	props: {
+		nest_srl: { type: [String,Number] },
+		category_srl: { type: [String,Number] },
 		total: { type: Number, default: 0 },
 		articles: { type: Array, default: null },
 		loading: { type: Boolean, default: false },
@@ -42,6 +45,16 @@ export default {
 		{
 			return dates.getFormatDate(date, false);
 		},
+		getUrl(srl)
+		{
+			let url = `/articles/${srl}/read`;
+			let params = {};
+			if (this.nest_srl) params.nest = this.nest_srl;
+			if (this.category_srl) params.category = this.category_srl;
+			params = text.serialize(params);
+			url = url + (params ? '?' + params : '');
+			return url;
+		}
 	}
 }
 </script>

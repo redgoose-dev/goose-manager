@@ -10,6 +10,8 @@
 			:category_srl="category_srl"
 			@change="onChangeCategory"/>
 		<index-articles
+			:nest_srl="nest_srl"
+			:category_srl="category_srl"
 			:total="total"
 			:articles="articles"
 			:loading="loading"/>
@@ -51,7 +53,7 @@ export default {
 		{
 			const [ categories, articles, nest ] = await Promise.all([
 				cox.$axios.$get(`/categories?nest=${nest_srl}&ext_field=count_article,item_all,none`),
-				cox.$axios.$get(`/articles?nest=${nest_srl}${category_srl ? `&category=${category_srl}` : ''}&ext_field=category_name`),
+				cox.$axios.$get(`/articles?nest=${nest_srl}${category_srl ? `&category=${category_srl}` : ''}&ext_field=category_name&order=srl&sort=desc`),
 				cox.$axios.$get(`/nests/${nest_srl}?field=name`)
 			]);
 			return {
