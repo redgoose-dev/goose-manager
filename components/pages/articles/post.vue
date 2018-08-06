@@ -47,7 +47,7 @@
 		<button-basic
 			type="submit"
 			color="key"
-			:label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'} Article` : null"
+			:label="!processing ? (this.type === 'edit' ? 'Edit' : 'Add') : null"
 			:inline="true"
 			:icon="processing ? 'cached' : ''"
 			:rotateIcon="processing"
@@ -69,16 +69,16 @@ export default {
 	},
 	props: {
 		type: { type: String, default: 'add' }, // add,edit
-		srl: { type: Number, default: null },
-		app_srl: { type: Number, required: true },
-		nest_srl: { type: Number, required: true },
-		category_srl: { type: Number },
+		srl: { type: [Number,String], default: null },
+		nest_srl: { type: [Number,String], required: true },
+		category_srl: { type: [Number,String] },
 		skin: { type: String, default: 'default' },
 		datas: {
 			type: Object,
 			required: true,
 			nest: { type: Object, required: true },
 			categories: { type: Array, default: [] },
+			article: { type: Object },
 		}
 	},
 	data()
@@ -86,18 +86,18 @@ export default {
 		return {
 			processing: false,
 			forms: {
-				app_srl: this.app_srl,
-				nest_srl: this.nest_srl,
-				category_srl: this.category_srl || '',
+				app_srl: this.datas.nest.app_srl,
+				nest_srl: this.datas.article ? this.datas.article.nest_srl : this.nest_srl,
+				category_srl: this.getCategoryInForm(),
 				title: {
-					value: '',
+					value: this.datas.article ? this.datas.article.title : '',
 					error: '',
 				},
 				content: {
-					value: '',
+					value: this.datas.article ? this.datas.article.content : '',
 					error: '',
 				},
-				json: {},
+				json: this.getJSON(),
 			}
 		};
 	},
@@ -131,16 +131,33 @@ export default {
 				let params = {};
 				params.nest = this.nest_srl;
 				if (this.category_srl) params.category = this.category_srl;
-				let url = `/articles/${res.srl}/read${text.serialize(params, true)}`;
+				let url = `/articles/${this.srl || res.srl}/read${text.serialize(params, true)}`;
 				this.$router.replace(url);
 			}
 			catch(e)
 			{
-				console.error(e);
 				if (e === messages.error.service) e = null;
 				this.processing = false;
 				alert((e && typeof e === 'string') ? e : `Failed ${this.type} nest.`);
 			}
+		},
+		getJSON()
+		{
+			if (!this.datas.article) return {};
+			try
+			{
+				return JSON.parse(decodeURIComponent(this.datas.article.json));
+			}
+			catch(e)
+			{
+				return {};
+			}
+		},
+		getCategoryInForm()
+		{
+			if (this.datas.article) return this.datas.article.category_srl;
+			if (this.category_srl === 'null') return '';
+			return this.category_srl || '';
 		}
 	}
 }

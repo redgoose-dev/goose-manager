@@ -4,7 +4,6 @@
 	<post
 		ref="post"
 		type="add"
-		:app_srl="app_srl"
 		:nest_srl="nest_srl"
 		:category_srl="category_srl"
 		:skin="skin"
@@ -28,8 +27,8 @@ export default {
 	{
 		try
 		{
-			const nest_srl = parseInt(cox.params.nest);
-			const category_srl = cox.query.category ? parseInt(cox.query.category) : null;
+			const nest_srl = cox.params.nest;
+			const category_srl = cox.query.category || null;
 			const [ nest, categories ] = await Promise.all([
 				cox.$axios.$get(`/nests/${nest_srl}`).then((res) => {
 					return res.success ? res.data : null;
@@ -42,7 +41,6 @@ export default {
 			if (!nest) throw 'No data for `Nest`.';
 
 			return {
-				app_srl: parseInt(nest.app_srl),
 				nest_srl,
 				category_srl,
 				skin: nest.json.articleSkin || 'default',

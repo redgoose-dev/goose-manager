@@ -5,7 +5,7 @@
 		<ul>
 			<li v-for="(item,key) in articles" :key="key">
 				<item-index-card
-					:link="getUrl(item.srl)"
+					:link="getUrl('read', item.srl)"
 					:subject="item.title"
 					:metas="[
 						item.category_name && `Category: ${item.category_name}`,
@@ -13,8 +13,8 @@
 						`Date: ${getDate(item.regdate)}`
 					]"
 					:navs="[
-						{ label: 'Edit', link: `/articles/${item.srl}/edit` },
-						{ label: 'Delete', link: `/articles/${item.srl}/delete` }
+						{ label: 'Edit', link: getUrl('edit', item.srl) },
+						{ label: 'Delete', link: getUrl('delete', item.srl) }
 					]"/>
 			</li>
 		</ul>
@@ -45,15 +45,13 @@ export default {
 		{
 			return dates.getFormatDate(date, false);
 		},
-		getUrl(srl)
+		getUrl(type, srl)
 		{
-			let url = `/articles/${srl}/read`;
 			let params = {};
 			if (this.nest_srl) params.nest = this.nest_srl;
 			if (this.category_srl) params.category = this.category_srl;
-			params = text.serialize(params);
-			url = url + (params ? '?' + params : '');
-			return url;
+			params = text.serialize(params, true);
+			return `/articles/${srl}/${type}${params}`;
 		}
 	}
 }

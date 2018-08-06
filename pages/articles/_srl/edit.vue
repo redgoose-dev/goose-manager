@@ -2,7 +2,13 @@
 <article>
 	<page-header module="articles" title="Edit article"/>
 
-	<div>s,dp]gsdgp</div>
+	<post
+		type="edit"
+		:srl="srl"
+		:nest_srl="nest_srl"
+		:category_srl="category_srl"
+		:skin="'default'"
+		:datas="datas"/>
 </article>
 </template>
 
@@ -20,13 +26,38 @@ export default {
 	},
 	async asyncData(cox)
 	{
-		const srl = parseInt(cox.params.srl);
-		const nest_srl = cox.query.nest;
-		console.log(nest_srl);
+		const srl = cox.params.srl;
+		const nest_srl = cox.query.nest || null;
+		const category_srl = cox.query.category || null;
 
 		try
 		{
-			console.log(srl);
+			// get article
+			let article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name`);
+			if (!article.success) throw article.message;
+			if (!article.data.nest_srl) throw 'Invalid article.';
+
+			// get nest, categories
+			const [ nest, categories ] = await Promise.all([
+				cox.$axios.$get(`/nests/${article.data.nest_srl}`).then((res) => {
+					return res.success ? res.data : null;
+				}),
+				cox.$axios.$get(`/categories?nest=${article.data.nest_srl}&field=srl,name,turn&order=turn&sort=asc`).then((res) => {
+					return res.success ? res.data.index : [];
+				}),
+			]);
+
+			return {
+				srl,
+				nest_srl,
+				category_srl,
+				skin: null,
+				datas: {
+					article: article.data,
+					nest,
+					categories: categories.map((o) => ({ label: o.name, value: o.srl }))
+				},
+			};
 		}
 		catch(e)
 		{
@@ -35,11 +66,6 @@ export default {
 				message: (typeof e === 'string') ? e : messages.error.service,
 			});
 		}
-
-		return {
-			srl,
-			nest_srl,
-		};
 	}
 }
 </script>

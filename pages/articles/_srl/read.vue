@@ -5,7 +5,7 @@
 		:title="`[${nest.name}] ${article.title}`"
 		:description="`${printDate(article.regdate)}, hit: ${article.hit}, like: ${article.json.like || 0}`"/>
 
-	<div v-html="article.content" class="body"></div>
+	<div v-html="article.content" class="rg-article-body"></div>
 
 	<article v-if="files && files.length" class="files">
 		<h1>Attachment files</h1>
@@ -133,12 +133,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../assets/scss/variables";
-
-.body {
-	margin: 30px 0 0;
-	font-size: .875rem;
-	line-height: 1.5;
-}
 .files {
 	margin: 40px 0 -10px;
 	padding: 20px;

@@ -22,7 +22,7 @@
 		<button-basic label="Categories" :to="`/categories/${this.nest_srl}`" :inline="true"/>
 		<button-basic
 			label="Add Article"
-			:to="`/articles/${this.nest_srl}/add${!!parseInt(category_srl) ? `?category=${category_srl}` : ''}`"
+			:to="`/articles/${this.nest_srl}/add${category_srl ? `?category=${category_srl}` : ''}`"
 			:inline="true"
 			color="key"/>
 	</nav>
