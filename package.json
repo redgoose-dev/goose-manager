@@ -14,7 +14,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "nuxt": "^1.4.1"
+    "nuxt": "^1.4.1",
+    "vuedraggable": "^2.16.0"
   },
   "devDependencies": {
     "node-sass": "^4.9.2",

@@ -12,10 +12,7 @@
 						type="email"
 						name="email"
 						id="email"
-						v-model="forms.email.value"
-						:maxlength="60"
-						formSize="35"
-						:required="true"
+						v-model="forms.email"
 						:inline="true"
 						:disabled="true"/>
 					<p class="rg-form-help rg-form-help-error">이메일 주소는 수정할 수 없습니다.</p>
@@ -31,28 +28,20 @@
 						v-model="forms.name.value"
 						placeholder="goose"
 						:maxlength="30"
-						formSize="24"
-						:error="forms.name.error"
+						:size="24"
+						:error="!!forms.name.error"
 						:required="true"
 						:inline="true"/>
 				</dd>
 			</dl>
-			<dl class="rg-form-field">
-				<dt><label for="level">Level</label></dt>
+			<dl v-if="isAdmin" class="rg-form-field">
+				<dt><label for="admin">Admin</label></dt>
 				<dd>
-					<form-text
-						type="tel"
-						name="level"
-						id="level"
-						v-model="forms.level.value"
-						:maxlength="24"
-						formSize="5"
-						:error="forms.level.error"
-						:required="true"
-						:inline="true"/>
-					<p class="rg-form-help">
-						Public level: {{level_public}}, Admin level: {{level_admin}}
-					</p>
+					<form-check
+						name="admin"
+						id="admin"
+						label="Check to use as administrator."
+						v-model="forms.admin"/>
 				</dd>
 			</dl>
 		</fieldset>
@@ -79,6 +68,7 @@ export default {
 	components: {
 		'PageHeader': () => import('~/components/contents/page-header'),
 		'FormText': () => import('~/components/form/text'),
+		'FormCheck': () => import('~/components/form/check'),
 		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	validate(cox)
@@ -90,9 +80,7 @@ export default {
 		return {
 			srl: parseInt(this.$route.params.srl),
 			processing: false,
-			level_public: this.$store.state.level.public,
-			level_admin: this.$store.state.level.admin,
-			isAdmin: this.$store.state.authUser.level >= this.$store.state.level.admin,
+			isAdmin: this.$store.state.authUser.admin,
 		}
 	},
 	async asyncData(cox)
@@ -105,15 +93,12 @@ export default {
 
 			return {
 				forms: {
-					email: { value: res.data.email },
+					email: res.data.email,
 					name: {
 						value: res.data.name,
 						error: null,
 					},
-					level: {
-						value: parseInt(res.data.level),
-						error: null,
-					}
+					admin: parseInt(res.data.admin) === 2,
 				}
 			};
 e		}
@@ -134,9 +119,8 @@ e		}
 			{
 				this.processing = true;
 				const data = formData({
-					email: this.forms.email && this.forms.email.value,
 					name: this.forms.name && this.forms.name.value,
-					level: (this.isAdmin && this.forms.level) ? this.forms.level.value : null,
+					admin: this.forms.admin ? 2 : 1,
 				});
 				let res = await this.$axios.$post(`/users/${this.srl}/edit`, data);
 				if (!res.success) throw res.message;

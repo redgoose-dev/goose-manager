@@ -6,9 +6,7 @@
 		<input type="hidden" name="srl" :value="srl"/>
 		<div class="rg-form-delete__message">
 			<p>다음 `Category`를 삭제하시겠습니까?</p>
-			<p>
-				<strong>{{forms.name}}</strong>
-			</p>
+			<p><strong>{{forms.name}}</strong></p>
 		</div>
 
 		<nav class="rg-nav rg-form-delete__nav">
@@ -74,11 +72,7 @@ export default {
 	},
 	mounted()
 	{
-		const { $refs } = this;
-		if ($refs.button_submit)
-		{
-			$refs.button_submit.$el.focus();
-		}
+		setTimeout(() => this.$refs.button_submit.$el.focus(), 100);
 	},
 	methods: {
 		async onSubmit(e)

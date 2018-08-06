@@ -16,8 +16,8 @@
 			<dd>{{data.name}}</dd>
 		</dl>
 		<dl>
-			<dt>Level</dt>
-			<dd>{{data.level}}</dd>
+			<dt>Admin</dt>
+			<dd>{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</dd>
 		</dl>
 		<dl>
 			<dt>Register date</dt>

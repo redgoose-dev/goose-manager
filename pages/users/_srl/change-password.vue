@@ -14,7 +14,7 @@
 						id="password"
 						v-model="forms.password.value"
 						:maxlength="24"
-						formSize="20"
+						:size="20"
 						:error="!!forms.password.error"
 						:required="true"
 						:inline="true"/>
@@ -29,7 +29,7 @@
 						id="password_new"
 						v-model="forms.password_new.value"
 						:maxlength="24"
-						formSize="20"
+						:size="20"
 						:error="!!forms.password_new.error"
 						:required="true"
 						:inline="true"/>
@@ -44,7 +44,7 @@
 						id="password_new2"
 						v-model="forms.password_new2.value"
 						:maxlength="24"
-						formSize="20"
+						:size="20"
 						:error="!!forms.password_new2.error"
 						:required="true"
 						:inline="true"/>

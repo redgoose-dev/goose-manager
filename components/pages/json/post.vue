@@ -11,7 +11,7 @@
 						v-model="forms.name.value"
 						placeholder="goose's navigation"
 						:maxlength="100"
-						:formSize="30"
+						:size="30"
 						:error="!!forms.name.error"
 						:required="true"
 						:inline="true"/>
@@ -102,13 +102,6 @@ export default {
 			},
 			processing: false,
 		};
-	},
-	mounted()
-	{
-		if (this.$refs.form && this.type === 'add')
-		{
-			this.$refs.form.name.focus();
-		}
 	},
 	methods: {
 		async onSubmit(e)

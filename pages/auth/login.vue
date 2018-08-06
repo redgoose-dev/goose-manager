@@ -4,7 +4,7 @@
 		<article class="login__body">
 			<h1 class="login__title">Goose Manager</h1>
 			<p class="login__app-name">{{appName}}</p>
-			<form @submit="onSubmitLogin" class="login__form">
+			<form ref="form" @submit="onSubmitLogin" class="login__form">
 				<fieldset class="login__fieldset">
 					<legend>login form</legend>
 					<div class="login__field">
@@ -82,6 +82,10 @@ export default {
 		{
 			return process.env.APP_NAME;
 		}
+	},
+	mounted()
+	{
+		this.$refs.form.email.focus();
 	},
 	methods: {
 		async onSubmitLogin(e)

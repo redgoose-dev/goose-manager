@@ -1,6 +1,6 @@
 <template>
 <article>
-	<page-header module="articles"/>
+	<page-header module="articles" :title="`${nestName ? `[${nestName}]` : ''} Articles`"/>
 
 	<error v-if="!!error" :message="error"/>
 	<template v-else>
@@ -8,6 +8,7 @@
 			:nest_srl="nest_srl"
 			:categories="categories"
 			:category_srl="category_srl"
+			:type="category_type"
 			@change="onChangeCategory"/>
 		<index-articles
 			:total="total"
@@ -18,7 +19,11 @@
 	<nav class="rg-nav">
 		<button-basic label="Nests" to="/nests" :inline="true"/>
 		<button-basic label="Categories" :to="`/categories/${this.nest_srl}`" :inline="true"/>
-		<button-basic label="Add Article" :to="`/articles/${this.nest_srl}/add`" :inline="true" color="key"/>
+		<button-basic
+			label="Add Article"
+			:to="`/articles/${this.nest_srl}/add${category_srl ? `?category=${category_srl}` : ''}`"
+			:inline="true"
+			color="key"/>
 	</nav>
 </article>
 </template>
@@ -38,30 +43,30 @@ export default {
 	{
 		return cox.params.nest && /^\d+$/.test(cox.params.nest);
 	},
-	data()
-	{
-		return {
-			nest_srl: parseInt(this.$route.params.nest),
-			category_srl: this.$route.query.category ? parseInt(this.$route.query.category) : 0,
-			error: null,
-			loading: false,
-		};
-	},
 	async asyncData(cox)
 	{
 		let nest_srl = parseInt(cox.params.nest) || null;
 		let category_srl = cox.query.category ? parseInt(cox.query.category) : 0;
+		let category_type = cox.query.category_type ? cox.query.category_type : null;
+		if (!category_type && !category_srl) category_type = 'all';
 
 		try
 		{
-			const [ categories, articles ] = await Promise.all([
-				cox.$axios.$get(`/categories?nest=${nest_srl}&ext_field=count_article,item_all`),
-				cox.$axios.$get(`/articles?nest=${nest_srl}${category_srl ? `&category=${category_srl}` : ''}&ext_field=category_name`)
+			const [ categories, articles, nest ] = await Promise.all([
+				cox.$axios.$get(`/categories?nest=${nest_srl}&ext_field=count_article,item_all,none`),
+				cox.$axios.$get(`/articles?nest=${nest_srl}${category_srl ? `&category=${category_srl}` : ''}&ext_field=category_name`),
+				cox.$axios.$get(`/nests/${nest_srl}?field=name`)
 			]);
 			return {
+				nest_srl,
+				category_srl,
+				category_type,
+				error: null,
+				loading: false,
 				total: articles.success ? articles.data.total : 0,
 				articles: articles.success ? articles.data.index : null,
 				categories: categories.success ? categories.data.index : null,
+				nestName: nest.success ? nest.data.name : null,
 			};
 		}
 		catch(e)
@@ -70,14 +75,14 @@ export default {
 		}
 	},
 	methods: {
-		async onChangeCategory(srl)
+		async onChangeCategory({ srl, type })
 		{
-			if (this.category_srl === srl) return;
+			if (this.category_srl === srl && this.category_type === type) return; // TODO: 여기 처리가 덜되었음..
 
 			// on loading
 			this.loading = true;
 			// change url
-			this.$router.replace(`/articles/${this.nest_srl}${srl ? `?category=${srl}` : ''}`);
+			this.$router.replace(this.setCategoryUrl(srl, type));
 			// change category_srl
 			this.category_srl = srl;
 
@@ -94,6 +99,23 @@ export default {
 				this.loading = false;
 				return { error: (typeof e === 'string') ? e : messages.error.service };
 			}
+		},
+		setCategoryUrl(srl, type)
+		{
+			let params = '';
+			switch(type)
+			{
+				case 'all':
+					params = '';
+					break;
+				case 'none':
+					params = '?category_type=none';
+					break;
+				default:
+					params = srl ? `?category=${srl}` : '';
+					break;
+			}
+			return `/articles/${this.nest_srl}${params}`;
 		}
 	}
 }

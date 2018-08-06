@@ -61,8 +61,7 @@ export default {
 	},
 	mounted()
 	{
-		const { $refs } = this;
-		if ($refs.button_submit) $refs.button_submit.$el.focus();
+		setTimeout(() => this.$refs.button_submit.$el.focus(), 100);
 	},
 	methods: {
 		async onSubmit(e)

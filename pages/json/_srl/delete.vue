@@ -6,9 +6,7 @@
 		<input type="hidden" name="srl" :value="srl"/>
 		<div class="rg-form-delete__message">
 			<p>다음 `JSON`을 삭제하시겠습니까?</p>
-			<p>
-				<strong>{{data.name}}</strong>
-			</p>
+			<p><strong>{{data.name}}</strong></p>
 		</div>
 
 		<nav class="rg-nav rg-form-delete__nav">
@@ -66,11 +64,7 @@ export default {
 	},
 	mounted()
 	{
-		const { $refs } = this;
-		if ($refs.button_submit)
-		{
-			$refs.button_submit.$el.focus();
-		}
+		setTimeout(() => this.$refs.button_submit.$el.focus(), 100);
 	},
 	methods: {
 		async onSubmit(e)

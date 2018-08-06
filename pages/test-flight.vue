@@ -88,13 +88,12 @@
 
 	<form-text
 		type="textarea"
-		label="label name"
+		name="fooo"
 		id="fooo"
 		placeholder="placeholder value"
 		v-model="fooo"
 		:required="true"
 		:inline="true"
-		help="help message"
 	/>
 
 	<hr>

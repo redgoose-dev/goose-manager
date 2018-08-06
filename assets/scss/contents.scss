@@ -47,7 +47,7 @@
 	$self: '.rg-index';
 
 	&-card {
-		ul {
+		ul, &__ul {
 			display: flex;
 			flex-wrap: wrap;
 			margin: -10px;
@@ -57,7 +57,7 @@
 				clear: both;
 			}
 		}
-		li {
+		li, &__li {
 			width: 50%;
 			box-sizing: border-box;
 			padding: 10px;
@@ -174,7 +174,7 @@
 			pointer-events: none;
 			transition: box-shadow .15s ease-out;
 		}
-		> figure {
+		&__image {
 			margin: 0;
 			height: 100%;
 			background: mix($color-blur, #fff, 30%);
@@ -185,7 +185,7 @@
 				object-fit: cover;
 			}
 		}
-		> div {
+		&__body {
 			flex: 1;
 			padding: 10px 20px;
 			min-width: 0;
@@ -233,45 +233,45 @@
 			pointer-events: none;
 			transition: box-shadow .15s ease-out;
 		}
-		> div {
+		&__wrap {
 			display: flex;
 			align-items: center;
-			> figure {
-				margin: -5px 15px -5px 0;
-				height: 100%;
-				img {
-					display: block;
-					width: $size;
-					height: $size;
-					object-fit: cover;
-				}
-			}
-			> div {
-				flex: 1;
-				margin-top: -3px;
-				> nav {
-					margin: 5px 0 0;
-					font-size: 0;
-					> a {
-						display: inline-block;
-						vertical-align: middle;
-						font-size: .75rem;
-						font-weight: bold;
-						color: $color-base;
-						text-decoration: none;
-						margin: 0 0 0 10px;
-						&:hover {
-							text-decoration: underline;
-						}
-						&:first-child {
-							margin-left: 0;
-						}
-					}
-				}
-			}
 			> nav {
 				> * {
 					margin-left: 4px;
+					&:first-child {
+						margin-left: 0;
+					}
+				}
+			}
+		}
+		&__image {
+			margin: -5px 15px -5px 0;
+			height: 100%;
+			img {
+				display: block;
+				width: $size;
+				height: $size;
+				object-fit: cover;
+			}
+		}
+		&__body {
+			flex: 1;
+			margin-top: -3px;
+			> nav {
+				margin: 5px 0 0;
+				font-size: 0;
+				> a {
+					display: inline-block;
+					vertical-align: middle;
+					font-size: .75rem;
+					font-weight: bold;
+					color: $color-base;
+					text-decoration: none;
+					margin: 0 0 0 10px;
+					&:hover {
+						text-decoration: underline;
+					}
 					&:first-child {
 						margin-left: 0;
 					}

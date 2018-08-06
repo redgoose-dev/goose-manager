@@ -1,13 +1,13 @@
 <template>
 <div class="rg-item rg-item-list">
-	<div>
-		<figure v-if="!!image">
+	<div class="rg-item-list__wrap">
+		<figure v-if="!!image" class="rg-item-list__image">
 			<nuxt-link v-if="!!link" :to="link">
 				<img :src="image" :alt="title"/>
 			</nuxt-link>
 			<img v-else :src="image" :alt="title"/>
 		</figure>
-		<div>
+		<div class="rg-item-list__body">
 			<p class="rg-item__subject">
 				<nuxt-link v-if="!!link" :to="link">
 					<strong>{{subject}}</strong>

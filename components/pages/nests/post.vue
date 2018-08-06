@@ -4,22 +4,22 @@
 		<h1>Basic forms</h1>
 		<div class="rg-form-section__body">
 			<dl class="rg-form-field">
-				<dt><label for="nest_apps">App</label></dt>
+				<dt><label for="apps">App</label></dt>
 				<dd>
 					<form-select
-						id="nest_apps"
-						name="nest_apps"
+						id="apps"
+						name="apps"
 						v-model="forms.app_srl.value"
 						:options="apps"
 						:required="true"/>
 				</dd>
 			</dl>
 			<dl class="rg-form-field">
-				<dt><label for="nest_id">ID</label></dt>
+				<dt><label for="id">ID</label></dt>
 				<dd>
 					<form-text
-						id="nest_id"
-						name="nest_id"
+						id="id"
+						name="id"
 						v-model="forms.id.value"
 						:error="!!forms.id.error"
 						placeholder="nest-id"
@@ -31,11 +31,11 @@
 				</dd>
 			</dl>
 			<dl class="rg-form-field">
-				<dt><label for="nest_name">Name</label></dt>
+				<dt><label for="name">Name</label></dt>
 				<dd>
 					<form-text
-						id="nest_name"
-						name="nest_name"
+						id="name"
+						name="name"
 						v-model="forms.name.value"
 						:maxlength="40"
 						:size="30"
@@ -45,11 +45,11 @@
 				</dd>
 			</dl>
 			<dl class="rg-form-field">
-				<dt><label for="nest_description">Description</label></dt>
+				<dt><label for="description">Description</label></dt>
 				<dd>
 					<form-text
-						id="nest_description"
-						name="nest_description"
+						id="description"
+						name="description"
 						v-model="forms.description.value"
 						:maxlength="100"
 						placeholder="Description word"/>
@@ -59,12 +59,12 @@
 				</dd>
 			</dl>
 			<dl class="rg-form-field">
-				<dt><label for="nest_skin">Skin</label></dt>
+				<dt><label for="skin">Skin</label></dt>
 				<dd>
 					<form-checks
 						type="radio"
-						name="nest_skin"
-						id="nest_skin"
+						name="skin"
+						id="skin"
 						v-model="skin"
 						:inline="true"
 						:disabled="false"
@@ -185,13 +185,12 @@ export default {
 					id: this.forms.id.value,
 					name: this.forms.name.value,
 					description: this.forms.description.value,
-					json: encodeURIComponent(JSON.stringify(json))
+					json: encodeURIComponent(JSON.stringify(json)),
 				});
 				let res = await this.$axios.$post(
 					this.type === 'edit' ? `/nests/${this.srl}/edit` : '/nests',
 					data
 				);
-				console.log(res);
 				if (!res.success) throw res.message;
 				this.processing = false;
 				this.$router.push('/nests');

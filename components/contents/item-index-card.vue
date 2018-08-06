@@ -1,6 +1,6 @@
 <template>
 	<div class="rg-item rg-item-card">
-		<figure v-if="!!image">
+		<figure v-if="!!image" class="rg-item-card__image">
 			<a v-if="!!href" :href="href" :target="target">
 				<img :src="image" :alt="title"/>
 			</a>
@@ -9,7 +9,8 @@
 			</nuxt-link>
 			<img v-else :src="image" :alt="title"/>
 		</figure>
-		<div>
+		<slot/>
+		<div class="rg-item-card__body">
 			<p class="rg-item__subject">
 				<a v-if="!!href" :href="href" :target="target">
 					<strong>{{subject}}</strong>

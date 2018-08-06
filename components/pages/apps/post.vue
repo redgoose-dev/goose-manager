@@ -66,17 +66,13 @@
 </template>
 
 <script>
-// components
-import FormText from '~/components/form/text';
-import ButtonBasic from '~/components/button/basic';
-// library
-import { checkId, formData } from '../../../libs/forms';
-import * as messages from '../../../libs/messages';
+import { checkId, formData } from '~/libs/forms';
+import * as messages from '~/libs/messages';
 
 export default {
 	components: {
-		FormText,
-		ButtonBasic,
+		'FormText': () => import('~/components/form/text'),
+		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	props: {
 		type: { type: String, default: 'add' }, // add,edit
@@ -106,13 +102,6 @@ export default {
 			},
 			processing: false,
 		};
-	},
-	mounted()
-	{
-		if (this.$refs.form && this.type === 'add')
-		{
-			this.$refs.form.id.focus();
-		}
 	},
 	methods: {
 		async onSubmit(e)

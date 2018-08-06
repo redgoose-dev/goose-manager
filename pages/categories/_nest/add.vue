@@ -1,7 +1,7 @@
 <template>
 <article>
 	<page-header module="categories" title="Add category"/>
-	<post type="add" :nest_srl="nest_srl"/>
+	<post ref="post" type="add" :nest_srl="nest_srl"/>
 </article>
 </template>
 
@@ -20,6 +20,10 @@ export default {
 		return {
 			nest_srl: parseInt(this.$route.params.nest)
 		};
+	},
+	mounted()
+	{
+		setTimeout(() => this.$refs.post.$refs.form.name.focus(), 200);
 	}
 }
 </script>

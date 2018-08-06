@@ -13,7 +13,7 @@
 					:metas="[
 						`Name: ${item.name}`,
 						`Date: ${item.regdate}`,
-						`Level: ${item.level}`
+						`Admin: ${item.admin ? 'Yes' : 'No'}`
 					]"
 					:navs="[
 						{ label: 'Edit', link: `/users/${item.srl}/edit` },
@@ -52,7 +52,7 @@ export default {
 				index: res.data.index.map((o) => {
 					o.srl = parseInt(o.srl);
 					o.regdate = dates.getFormatDate(o.regdate, false);
-					o.level = parseInt(o.level);
+					o.admin = parseInt(o.admin) === 2;
 					return o;
 				}),
 				error: '',

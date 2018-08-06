@@ -12,7 +12,7 @@
 					v-model="forms.name.value"
 					placeholder="landscape"
 					:maxlength="40"
-					formSize="30"
+					:size="30"
 					:error="!!forms.name.error"
 					:required="true"
 					:inline="true"/>
@@ -53,21 +53,14 @@ export default {
 	data()
 	{
 		return {
+			processing: false,
 			forms: {
 				name: {
 					value: this.data ? this.data.name : '',
 					error: null,
 				}
-			},
-			processing: false
+			}
 		};
-	},
-	mounted()
-	{
-		if (this.type === 'add')
-		{
-			setTimeout(() => this.$refs.form.name.focus(), 200);
-		}
 	},
 	methods: {
 		async onSubmit(e)

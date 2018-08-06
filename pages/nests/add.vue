@@ -1,7 +1,7 @@
 <template>
 <article>
 	<page-header module="nests" title="Add nest"/>
-	<post type="add" :datas="datas" />
+	<post ref="post" type="add" :datas="datas" />
 </article>
 </template>
 
@@ -36,5 +36,9 @@ export default {
 			});
 		}
 	},
+	mounted()
+	{
+		setTimeout(() => this.$refs.post.$refs.form.apps.focus(), 200);
+	}
 }
 </script>

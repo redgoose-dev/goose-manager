@@ -3,12 +3,11 @@
 		<select
 			:name="name"
 			:id="id"
-
 			:value="selected"
 			:required="required"
 			:disabled="disabled"
 			@input="onChange">
-			<option value="" selected>Please select</option>
+			<option value="">Please select</option>
 			<option v-for="item in options" :value="item.value">
 				{{item.label}}
 			</option>
@@ -22,7 +21,7 @@ export default {
 	props: {
 		name: { type: String },
 		id: { type: String },
-		selected: { type: String, default: '' },
+		selected: { type: [String,Number], default: '' },
 		options: { type: Array },
 		required: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },

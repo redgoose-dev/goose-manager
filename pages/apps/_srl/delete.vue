@@ -5,10 +5,11 @@
 	<form @submit="onSubmit" class="rg-form-delete">
 		<input type="hidden" name="srl" :value="srl"/>
 		<div class="rg-form-delete__message">
-			<p>다음 `App`을 삭제하시겠습니까?</p>
 			<p>
-				<strong>{{forms.name}} <em>{{forms.id}}</em></strong>
+				다음 `App`을 삭제하시겠습니까?<br/>
+				이것을 삭제하면 하위의 `Nest`, `Article`, `Category`, `File`의 데이터가 삭제됩니다.
 			</p>
+			<p><strong>{{forms.id}} / {{forms.name}}</strong></p>
 		</div>
 
 		<nav class="rg-nav rg-form-delete__nav">
@@ -32,7 +33,7 @@
 </template>
 
 <script>
-import * as messages from '../../../libs/messages';
+import * as messages from '~/libs/messages';
 
 export default {
 	components: {
@@ -74,18 +75,12 @@ export default {
 	},
 	mounted()
 	{
-		const { $refs } = this;
-		if ($refs.button_submit)
-		{
-			$refs.button_submit.$el.focus();
-		}
+		setTimeout(() => this.$refs.button_submit.$el.focus(), 100);
 	},
 	methods: {
 		async onSubmit(e)
 		{
 			e.preventDefault();
-
-			// TODO: 삭제하면 연결되어있는 nests, articles, files, categories 가 삭제되어야함.
 
 			try
 			{
