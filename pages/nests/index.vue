@@ -18,7 +18,7 @@
 					<li v-for="(nest,nestKey) in app.children" :key="nestKey">
 						<item-index-card
 							:link="`/articles/${nest.srl}`"
-							:subject="nest.name"
+							:subject="`${nest.name}(${nest.count_articles})`"
 							:description="nest.description"
 							:metas="[
 								`ID: ${nest.id}`,

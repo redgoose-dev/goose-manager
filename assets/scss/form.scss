@@ -284,6 +284,13 @@
 		}
 	}
 }
+.rg-form-body {
+	border-top: 1px solid $color-content-line;
+	padding: 10px 15px;
+	&:last-child {
+		border-bottom: 1px solid $color-content-line;
+	}
+}
 
 // section
 .rg-form-section {

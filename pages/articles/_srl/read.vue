@@ -3,7 +3,7 @@
 	<page-header
 		module="articles"
 		:title="`[${nest.name}] ${article.title}`"
-		:description="`${printDate(article.regdate)}, hit: ${article.hit}, like: ${article.json.like || 0}`"/>
+		:description="description"/>
 
 	<div v-html="article.content" class="rg-article-body"></div>
 
@@ -61,6 +61,17 @@ export default {
 	{
 		return cox.params.srl && /^\d+$/.test(cox.params.srl);
 	},
+	computed: {
+		description()
+		{
+			let str = '';
+			str += `${this.printDate(this.article.regdate)}`;
+			str += (this.article.category_name) ? `, category: ${this.article.category_name}` : '';
+			str += `, hit: ${this.article.hit}`;
+			str += `, like: ${this.article.json.like || 0}`;
+			return str;
+		}
+	},
 	async asyncData(cox)
 	{
 		try
@@ -68,7 +79,7 @@ export default {
 			let srl = parseInt(cox.params.srl);
 			let nest_srl = cox.query.nest || null;
 			let category_srl = cox.query.category || null;
-			const article = await cox.$axios.$get(`/articles/${srl}`);
+			const article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name`);
 			if (!article.success) throw article.message;
 
 			// get nest, category data

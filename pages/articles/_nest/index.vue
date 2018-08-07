@@ -32,6 +32,8 @@
 <script>
 import * as messages from '~/libs/messages';
 
+const api_articleEndfix = '&ext_field=category_name&order=srl&sort=desc';
+
 export default {
 	components: {
 		'PageHeader': () => import('~/components/contents/page-header'),
@@ -53,7 +55,7 @@ export default {
 		{
 			const [ categories, articles, nest ] = await Promise.all([
 				cox.$axios.$get(`/categories?nest=${nest_srl}&ext_field=count_article,item_all,none`),
-				cox.$axios.$get(`/articles?nest=${nest_srl}${category_srl ? `&category=${category_srl}` : ''}&ext_field=category_name&order=srl&sort=desc`),
+				cox.$axios.$get(`/articles?nest=${nest_srl}${category_srl ? `&category=${category_srl}` : ''}${api_articleEndfix}`),
 				cox.$axios.$get(`/nests/${nest_srl}?field=name`)
 			]);
 			return {
@@ -87,7 +89,7 @@ export default {
 			{
 				let url = `/articles?nest=${this.nest_srl}`;
 				if (this.category_srl) url += `&category=${this.category_srl}`;
-				url += '&ext_field=category_name';
+				url += api_articleEndfix;
 				const articles = await this.$axios.$get(url);
 				this.total = articles.success ? articles.data.total : 0;
 				this.articles = articles.success ? articles.data.index : null;

@@ -22,7 +22,7 @@
 				type="submit"
 				ref="button_submit"
 				color="key"
-				:label="!processing ? 'Delete App' : null"
+				:label="!processing ? 'Delete' : null"
 				:inline="true"
 				:icon="processing ? 'cached' : ''"
 				:rotateIcon="processing"
@@ -44,13 +44,6 @@ export default {
 	{
 		return cox.params.srl && /^\d+$/.test(cox.params.srl);
 	},
-	data()
-	{
-		return {
-			srl: parseInt(this.$route.params.srl),
-			processing: false,
-		};
-	},
 	async asyncData(cox)
 	{
 		try
@@ -59,6 +52,8 @@ export default {
 			let res = await cox.$axios.$get(`/apps/${srl}`);
 			if (!res.success) throw res.message;
 			return {
+				srl: parseInt(this.$route.params.srl),
+				processing: false,
 				forms: {
 					id: res.data.id,
 					name: res.data.name,
@@ -88,6 +83,8 @@ export default {
 				let res = await this.$axios.$post(`/apps/${this.srl}/delete`);
 				if (!res.success) throw res.message;
 				this.processing = false;
+
+				// redirect to index
 				this.$router.replace('/apps');
 			}
 			catch(e)

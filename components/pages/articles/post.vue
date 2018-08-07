@@ -28,19 +28,16 @@
 					:required="true"/>
 			</dd>
 		</dl>
-		<dl class="rg-form-field">
-			<dt><label for="content">Content</label></dt>
-			<dd>
-				<form-text
-					type="textarea"
-					name="content"
-					id="content"
-					placeholder="article content body"
-					v-model="forms.content.value"
-					:rows="15"
-					:required="true"/>
-			</dd>
-		</dl>
+		<div class="rg-form-body">
+			<form-text
+				type="textarea"
+				name="content"
+				id="content"
+				placeholder="article content body"
+				v-model="forms.content.value"
+				:rows="15"
+				:required="true"/>
+		</div>
 	</fieldset>
 	<nav class="rg-nav">
 		<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>

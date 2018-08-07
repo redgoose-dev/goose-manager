@@ -23,8 +23,7 @@ export default {
 	{
 		try
 		{
-			const articles = await cox.$axios.$get(`/articles?ext_field=category_name`);
-
+			const articles = await cox.$axios.$get(`/articles?ext_field=category_name&order=srl&sort=desc`);
 			return {
 				total: articles.success ? articles.data.total : 0,
 				articles: articles.success ? articles.data.index : [],

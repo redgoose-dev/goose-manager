@@ -47,12 +47,10 @@ export default {
 	async asyncData(cox)
 	{
 		const srl = parseInt(cox.params.srl);
-
 		try
 		{
 			let res = await cox.$axios.$get(`/nests/${srl}?field=id,name`);
 			if (!res.success) throw res.message;
-
 			return {
 				srl,
 				processing: false,
