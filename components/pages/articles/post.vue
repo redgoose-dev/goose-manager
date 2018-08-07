@@ -67,7 +67,7 @@ export default {
 	props: {
 		type: { type: String, default: 'add' }, // add,edit
 		srl: { type: [Number,String], default: null },
-		nest_srl: { type: [Number,String], required: true },
+		nest_srl: { type: [Number,String] },
 		category_srl: { type: [Number,String] },
 		skin: { type: String, default: 'default' },
 		datas: {

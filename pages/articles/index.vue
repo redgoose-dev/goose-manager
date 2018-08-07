@@ -6,15 +6,37 @@
 	<index-articles
 		v-else
 		:total="total"
-		:articles="articles"/>
+		:articles="articles"
+		:loading="processing"
+	/>
+
+	<paginate
+		v-model="page"
+		url="/articles"
+		:page-count="Math.ceil(total/size)"
+		:page-range="5"
+		prev-text="Prev"
+		next-text="Next"
+		@input="onChangePage"
+		container-class="rg-paginate">
+	</paginate>
 </article>
 </template>
 
 <script>
 import * as messages from '~/libs/messages';
+import * as text from '~/libs/text';
+
+const defaultParams = {
+	field: 'srl,title,hit,regdate,category_srl',
+	ext_field: 'category_name',
+	order: 'srl',
+	sort: 'desc',
+};
 
 export default {
 	components: {
+		'Paginate': () => import('~/components/etc/paginate'),
 		'PageHeader': () => import('~/components/contents/page-header'),
 		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
 		'Error': () => import('~/components/contents/error'),
@@ -23,16 +45,60 @@ export default {
 	{
 		try
 		{
-			const articles = await cox.$axios.$get(`/articles?ext_field=category_name&order=srl&sort=desc`);
+			const page = cox.query.page || 1;
+			const size = parseInt(cox.env.PAGE_PER_SIZE);
+			let params = {
+				...defaultParams,
+				size
+			};
+			if (parseInt(page) > 1) params.page = page;
+
+			// get articles
+			const articles = await cox.$axios.$get(`/articles${text.serialize(params, true)}`);
+			if (!articles.success) throw articles.message;
+
 			return {
 				total: articles.success ? articles.data.total : 0,
 				articles: articles.success ? articles.data.index : [],
+				page: parseInt(page),
+				size,
+				processing: false,
 				error: null,
 			};
 		}
 		catch(e)
 		{
 			return { error: (typeof e === 'string') ? e : messages.error.service };
+		}
+	},
+	methods: {
+		async onChangePage(page)
+		{
+			try
+			{
+				this.processing = true;
+
+				// get articles
+				let params = { ...defaultParams, size: this.size };
+				if (page > 1) params.page = page;
+				const articles = await this.$axios.$get(`/articles${text.serialize(params, true)}`);
+				if (!articles.success) throw articles.message;
+
+				// change data
+				this.page = page;
+				this.error = null;
+				this.total = articles.data.total;
+				this.articles = articles.data.index;
+				this.processing = false;
+
+				// change url
+				this.$router.replace(`/articles${page > 1 ? `?page=${page}` : ''}`);
+			}
+			catch(e)
+			{
+				this.processing = false;
+				this.error = (typeof e === 'string') ? e : messages.error.service;
+			}
 		}
 	}
 }
