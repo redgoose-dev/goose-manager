@@ -112,11 +112,11 @@ export default {
 				let data = {
 					app_srl: this.forms.app_srl,
 					nest_srl: this.forms.nest_srl,
+					category_srl: this.forms.category_srl || '',
 					title: this.forms.title.value,
 					content: this.forms.content.value,
 					json: encodeURIComponent(JSON.stringify(json)),
 				};
-				if (!!this.forms.category_srl) data.category_srl = parseInt(this.forms.category_srl);
 				data = formData(data);
 				let res = await this.$axios.$post(
 					this.type === 'edit' ? `/articles/${this.srl}/edit` : '/articles',

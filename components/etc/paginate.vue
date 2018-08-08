@@ -3,39 +3,43 @@
 		<a
 			v-if="firstLastButton"
 			@click="selectFirstPage()"
+			title="First"
 			:class="[ firstPageSelected() && 'disabled' ]">
-			First
+			<i class="material-icons">first_page</i>
 		</a>
 		<a
 			v-if="!(hidePrevNext && firstPageSelected())"
 			@click="prevPage()"
+			title="Prev"
 			:class="[ firstPageSelected() && 'disabled' ]">
-			Prev
+			<i class="material-icons">chevron_left</i>
 		</a>
 
 		<template v-for="page in pages">
-			<span v-if="page.breakView" :class="[ page.disabled && 'disabled' ]">
-				<slot name="breakViewContent">…</slot>
+			<span v-if="page.breakView" :class="[ 'dots' ]">
+				<em>…</em>
 			</span>
 			<span v-else-if="page.disabled" :class="[ page.selected && 'active', 'disabled' ]">
-				{{ page.content }}
+				<em>{{ page.content }}</em>
 			</span>
 			<a v-else @click="handlePageSelected(page.index + 1)" :class="[ page.selected && 'active' ]">
-				{{ page.content }}
+				<em>{{ page.content }}</em>
 			</a>
 		</template>
 
 		<a
 			v-if="!(hidePrevNext && lastPageSelected())"
 			@click="nextPage()"
+			title="Next"
 			:class="[ lastPageSelected() && 'disabled' ]">
-			Next
+			<i class="material-icons">chevron_right</i>
 		</a>
 		<a
 			v-if="firstLastButton"
 			@click="selectLastPage()"
+			title="Last"
 			:class="[ lastPageSelected() && 'disabled' ]">
-			Last
+			<i class="material-icons">last_page</i>
 		</a>
 	</nav>
 </template>
@@ -49,9 +53,9 @@ export default {
 		url: { type: String, required: true },
 		pageCount: { type: Number, required: true },
 		forcePage: { type: Number },
-		pageRange: { type: Number, default: 3 },
+		pageRange: { type: Number, default: 4 },
 		marginPages: { type: Number, default: 1 },
-		firstLastButton: { type: Boolean, default: false },
+		firstLastButton: { type: Boolean, default: true },
 		hidePrevNext: { type: Boolean, default: false },
 		className: { type: String, default: 'rg-paginate' },
 	},

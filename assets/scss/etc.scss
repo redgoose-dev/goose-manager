@@ -138,22 +138,54 @@ $dir: '/fonts/material-icons/';
 .rg-paginate {
 	margin: 30px 0 0;
 	text-align: center;
+	font-size: 0;
 	> * {
-		font-weight: bold;
-		font-size: .875rem;
-		font-family: $font-eng;
+		display: inline-block;
+		vertical-align: middle;
+		min-width: 30px;
 	}
 	a {
 		color: #222;
 		cursor: pointer;
+		transition: background .3s ease-out;
+		&:hover {
+			background: mix($color-light, #fff, 60%);
+		}
+	}
+	em {
+		display: inline-block;
+		vertical-align: middle;
+		padding: 4px 10px;
+		font-weight: bold;
+		font-size: .875rem;
+		font-family: $font-eng;
+		font-style: normal;
+		line-height: 24px;
+	}
+	i {
+		display: inline-block;
+		vertical-align: middle;
+		padding: 4px 4px;
+	}
+	.dots {
+		min-width: 20px;
+		em {
+			padding: 4px 0;
+			color: mix($color-light, #000, 80%);
+		}
 	}
 	.disabled {
-		opacity: .2;
+		opacity: .3;
 		cursor: auto;
+		&:hover {
+			background: none;
+		}
 	}
 	.active {
-		font-weight: bold;
 		color: $color-key;
 		cursor: auto;
+		&:hover {
+			background: none;
+		}
 	}
 }

@@ -2,8 +2,9 @@
 <article>
 	<page-header
 		module="articles"
-		:title="`[${nest.name}] ${article.title}`"
-		:description="description"/>
+		:title="article.title"
+		:description="description"
+		:prefix="prefix"/>
 
 	<div v-html="article.content" class="rg-article-body"></div>
 
@@ -21,23 +22,23 @@
 			<dt>
 				<button-basic
 					label="Index"
-					:to="makeButtonUrl('index', null, nest_srl, category_srl)"
+					:to="makeButtonUrl('index')"
 					:inline="true"/>
 			</dt>
 			<dd>
 				<button-basic
 					v-if="nest_srl"
 					label="Add"
-					:to="makeButtonUrl('add', null, nest_srl, category_srl)"
+					:to="makeButtonUrl('add')"
 					:inline="true"/>
 				<button-basic
 					label="Edit"
-					:to="makeButtonUrl('edit', srl, nest_srl, category_srl)"
+					:to="makeButtonUrl('edit', srl)"
 					:inline="true"
 					color="key"/>
 				<button-basic
 					label="Delete"
-					:to="makeButtonUrl('delete', srl, nest_srl, category_srl)"
+					:to="makeButtonUrl('delete', srl)"
 					:inline="true"
 					color="gray"/>
 			</dd>
@@ -66,9 +67,15 @@ export default {
 		{
 			let str = '';
 			str += `${this.printDate(this.article.regdate)}`;
-			str += (this.article.category_name) ? `, category: ${this.article.category_name}` : '';
 			str += `, hit: ${this.article.hit}`;
 			str += `, like: ${this.article.json.like || 0}`;
+			return str;
+		},
+		prefix()
+		{
+			let str = '';
+			str += this.nest.name;
+			str += (this.article.category_name) ? ` / ${this.article.category_name}` : '';
 			return str;
 		}
 	},
@@ -79,6 +86,7 @@ export default {
 			let srl = parseInt(cox.params.srl);
 			let nest_srl = cox.query.nest || null;
 			let category_srl = cox.query.category || null;
+			let page = cox.query.page || null;
 			const article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name`);
 			if (!article.success) throw article.message;
 
@@ -97,6 +105,7 @@ export default {
 				srl,
 				nest_srl,
 				category_srl,
+				page,
 				article: article.data,
 				nest: nest.data,
 				category: (category && category.success) ? category.data : null,
@@ -116,25 +125,26 @@ export default {
 		{
 			return dates.getFormatDate(date, true);
 		},
-		makeButtonUrl(type, srl, nest, category)
+		makeButtonUrl(type, srl=null)
 		{
-			let param_nest = nest ? `/${nest}` : '';
+			let params = '';
 			let query = {};
 			switch(type)
 			{
 				case 'index':
-					if (category) query.category = category;
-					return `/articles${param_nest}${text.serialize(query, true)}`;
+					params = (this.nest_srl) ? `/${this.nest_srl}` : '';
+					if (this.category_srl) query.category = this.category_srl;
+					return `/articles${params}${text.serialize(query, true)}`;
 				case 'add':
-					if (category) query.category = category;
-					return `/articles${param_nest}/add${text.serialize(query, true)}`;
+					if (this.category_srl) query.category = this.category_srl;
+					return `/articles/${this.nest_srl}/add${text.serialize(query, true)}`;
 				case 'edit':
-					if (nest) query.nest = nest;
-					if (category) query.category = category;
+					if (this.nest_srl) query.nest = this.nest_srl;
+					if (this.category_srl) query.category = this.category_srl;
 					return `/articles/${srl}/edit${text.serialize(query, true)}`;
 				case 'delete':
-					if (nest) query.nest = nest;
-					if (category) query.category = category;
+					if (this.nest_srl) query.nest = this.nest_srl;
+					if (this.category_srl) query.category = this.category_srl;
 					return `/articles/${srl}/delete${text.serialize(query, true)}`;
 			}
 		}

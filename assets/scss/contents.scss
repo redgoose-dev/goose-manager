@@ -14,7 +14,7 @@
 		margin: 0;
 		padding-top: 1px;
 		font-size: 1.875rem;
-		line-height: 1;
+		line-height: 1.15;
 		letter-spacing: -.5px;
 		font-family: $font-eng;
 		font-weight: 600;
@@ -23,6 +23,13 @@
 		margin: 5px 0 0;
 		font-size: .8125rem;
 		color: $color-blur;
+	}
+	&__prefix {
+		display: block;
+		margin: 0 0 -1px;
+		color: $color-key;
+		font-size: .75rem;
+		font-weight: 600;
 	}
 	&__nav {
 		display: flex;

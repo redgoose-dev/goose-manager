@@ -37,12 +37,22 @@
 	</div>
 
 	<nav v-if="nest_srl" class="rg-nav">
-		<button-basic label="Nests" to="/nests" :inline="true"/>
-		<button-basic label="Articles" :to="`/articles/${nest_srl}`" :inline="true"/>
-		<button-basic label="Add Category" :to="`/categories/${nest_srl}/add`" :inline="true" color="key"/>
+		<dl>
+			<dt>
+				<button-basic label="Nests" to="/nests" :inline="true"/>
+				<button-basic label="Articles" :to="`/articles/${nest_srl}`" :inline="true"/>
+			</dt>
+			<dd>
+				<button-basic label="Add Category" :to="`/categories/${nest_srl}/add`" :inline="true" color="key"/>
+			</dd>
+		</dl>
 	</nav>
 	<nav v-else class="rg-nav">
-		<button-basic label="Nests" to="/nests" :inline="true"/>
+		<dl>
+			<dt>
+				<button-basic label="Nests" to="/nests" :inline="true"/>
+			</dt>
+		</dl>
 	</nav>
 </article>
 </template>

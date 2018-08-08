@@ -1,6 +1,7 @@
 <template>
 	<header class="rg-page-header">
 		<div class="rg-page-header__body">
+			<small v-if="!!prefix" class="rg-page-header__prefix">{{prefix}}</small>
 			<h1 class="rg-page-header__title">{{title || messages.title}}</h1>
 			<p class="rg-page-header__description">{{description || messages.description}}</p>
 		</div>
@@ -32,6 +33,7 @@ export default {
 		module: { type: String },
 		title: { type: String },
 		description: { type: String },
+		prefix: { type: String },
 		links: {
 			help: { type: String },
 			setting: { type: String },

@@ -23,8 +23,14 @@
 	</div>
 
 	<nav class="rg-nav">
-		<button-basic label="Nests" to="/nests" :inline="true"/>
-		<button-basic label="Add App" to="/apps/add" :inline="true" color="key"/>
+		<dl>
+			<dt>
+				<button-basic label="Nests" to="/nests" :inline="true"/>
+			</dt>
+			<dd>
+				<button-basic label="Add App" to="/apps/add" :inline="true" color="key"/>
+			</dd>
+		</dl>
 	</nav>
 </article>
 </template>

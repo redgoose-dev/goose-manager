@@ -36,13 +36,19 @@
 	</div>
 
 	<nav class="rg-nav">
-		<button-basic label="Apps" to="/apps" :inline="true"/>
-		<button-basic
-			v-if="!error && (index && index.length)"
-			label="Add Nest"
-			to="/nests/add"
-			:inline="true"
-			color="key"/>
+		<dl>
+			<dt>
+				<button-basic label="Apps" to="/apps" :inline="true"/>
+			</dt>
+			<dd>
+				<button-basic
+					v-if="!error && (index && index.length)"
+					label="Add Nest"
+					to="/nests/add"
+					:inline="true"
+					color="key"/>
+			</dd>
+		</dl>
 	</nav>
 </article>
 </template>

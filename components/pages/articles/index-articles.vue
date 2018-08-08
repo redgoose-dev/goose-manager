@@ -36,6 +36,7 @@ export default {
 	props: {
 		nest_srl: { type: [String,Number] },
 		category_srl: { type: [String,Number] },
+		page: { type: Number },
 		total: { type: Number, default: 0 },
 		articles: { type: Array, default: null },
 		loading: { type: Boolean, default: false },
@@ -50,6 +51,7 @@ export default {
 			let params = {};
 			if (this.nest_srl) params.nest = this.nest_srl;
 			if (this.category_srl) params.category = this.category_srl;
+			if (this.page && this.page > 1) params.page = this.page;
 			params = text.serialize(params, true);
 			return `/articles/${srl}/${type}${params}`;
 		}

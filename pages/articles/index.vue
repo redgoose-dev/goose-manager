@@ -7,19 +7,14 @@
 		v-else
 		:total="total"
 		:articles="articles"
-		:loading="processing"
-	/>
+		:loading="processing"/>
 
 	<paginate
+		v-if="!!total"
 		v-model="page"
 		url="/articles"
 		:page-count="Math.ceil(total/size)"
-		:page-range="5"
-		prev-text="Prev"
-		next-text="Next"
-		@input="onChangePage"
-		container-class="rg-paginate">
-	</paginate>
+		@input="onChangePage"/>
 </article>
 </template>
 
@@ -36,22 +31,22 @@ const defaultParams = {
 
 export default {
 	components: {
-		'Paginate': () => import('~/components/etc/paginate'),
 		'PageHeader': () => import('~/components/contents/page-header'),
 		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
+		'Paginate': () => import('~/components/etc/paginate'),
 		'Error': () => import('~/components/contents/error'),
 	},
 	async asyncData(cox)
 	{
 		try
 		{
-			const page = cox.query.page || 1;
-			const size = parseInt(cox.env.PAGE_PER_SIZE);
+			const page = parseInt(cox.query.page || 1);
+			const size = parseInt(cox.env.PAGE_PER_SIZE) || 20;
 			let params = {
 				...defaultParams,
 				size
 			};
-			if (parseInt(page) > 1) params.page = page;
+			if (page > 1) params.page = page;
 
 			// get articles
 			const articles = await cox.$axios.$get(`/articles${text.serialize(params, true)}`);
@@ -60,7 +55,7 @@ export default {
 			return {
 				total: articles.success ? articles.data.total : 0,
 				articles: articles.success ? articles.data.index : [],
-				page: parseInt(page),
+				page,
 				size,
 				processing: false,
 				error: null,
@@ -76,6 +71,9 @@ export default {
 		{
 			try
 			{
+				// change url
+				this.$router.replace(`/articles${page > 1 ? `?page=${page}` : ''}`);
+
 				this.processing = true;
 
 				// get articles
@@ -90,9 +88,6 @@ export default {
 				this.total = articles.data.total;
 				this.articles = articles.data.index;
 				this.processing = false;
-
-				// change url
-				this.$router.replace(`/articles${page > 1 ? `?page=${page}` : ''}`);
 			}
 			catch(e)
 			{
