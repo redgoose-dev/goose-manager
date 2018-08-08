@@ -32,6 +32,7 @@ module.exports = {
 
 	plugins: [
 		'~/plugins/axios',
+		{ src: '~/plugins/toast', ssr: false },
 	],
 
 	axios: {

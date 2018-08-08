@@ -20,6 +20,7 @@ $size-side-tablet-padding: 20px;
 
 // header
 .header {
+	position: relative;
 	background: $color-bar-background;
 	height: $size-header-height;
 	&__wrap {

@@ -1,0 +1,18 @@
+.rg-toast {
+	position: fixed;
+	z-index: 100;
+	right: 20px;
+	top: 20px;
+	pointer-events: none;
+	border: 1px solid #000;
+	background: lime;
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		background: #eee;
+		pointer-events: auto;
+	}
+}

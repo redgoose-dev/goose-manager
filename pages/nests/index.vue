@@ -21,8 +21,8 @@
 							:subject="`${nest.name}(${nest.count_articles})`"
 							:description="nest.description"
 							:metas="[
+								getDate(nest.regdate),
 								`ID: ${nest.id}`,
-								`Date: ${getDate(nest.regdate)}`
 							]"
 							:navs="[
 								{ label: 'Edit', link: `/nests/${nest.srl}/edit` },

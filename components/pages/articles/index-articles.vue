@@ -1,10 +1,11 @@
 <template>
 <div class="articles-index">
 	<loading v-if="loading"/>
-	<div v-else-if="!!articles && articles.length" class="rg-index-card">
+	<div v-else-if="!!articles && articles.length" :class="`rg-index-${skin}`">
 		<ul>
 			<li v-for="(item,key) in articles" :key="key">
-				<item-index-card
+				<component
+					v-bind:is="`item-index-${skin}`"
 					:link="getUrl('read', item.srl)"
 					:subject="item.title"
 					:metas="[
@@ -30,7 +31,9 @@ import * as text from '~/libs/text';
 export default {
 	components: {
 		'Loading': () => import('~/components/etc/loading'),
+		'ItemIndexList': () => import('~/components/contents/item-index-list'),
 		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
+		'ItemIndexThumbnail': () => import('~/components/contents/item-index-thumbnail'),
 		'Error': () => import('~/components/contents/error'),
 	},
 	props: {
@@ -40,6 +43,12 @@ export default {
 		total: { type: Number, default: 0 },
 		articles: { type: Array, default: null },
 		loading: { type: Boolean, default: false },
+	},
+	computed: {
+		skin()
+		{
+			return 'card';
+		}
 	},
 	methods: {
 		getDate(date)

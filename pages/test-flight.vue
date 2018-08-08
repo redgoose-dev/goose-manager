@@ -200,6 +200,12 @@
 				<p class="rg-form-help">help message</p>
 			</div>
 		</fieldset>
+
+		<hr>
+
+		<nav>
+			<button type="button" @click="addToast">add toast</button>
+		</nav>
 	</div>
 </article>
 </template>
@@ -224,6 +230,16 @@ export default {
 			checkboxes: ['label-1', 'label-3', 'label-5'],
 			radios: 'label-2',
 		};
+	},
+	mounted()
+	{
+		//this.$toast.add('auto add');
+	},
+	methods: {
+		addToast()
+		{
+			this.$toast.add('add message')
+		}
 	}
 }
 </script>
