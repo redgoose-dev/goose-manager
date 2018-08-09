@@ -139,7 +139,10 @@ export default {
 			{
 				if (e === messages.error.service) e = null;
 				this.processing = false;
-				alert((e && typeof e === 'string') ? e : `Failed ${this.type} app.`);
+				this.$toast.add({
+					message: (e && typeof e === 'string') ? e : `Failed ${this.type} app.`,
+					color: 'error'
+				});
 			}
 		}
 	}

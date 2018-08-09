@@ -131,7 +131,10 @@ e		}
 			{
 				if (e === messages.error.service) e = null;
 				this.processing = false;
-				alert((e && typeof e === 'string') ? e : `Failed add user.`);
+				this.$toast.add({
+					message: (e && typeof e === 'string') ? e : `Failed add user.`,
+					color: 'error',
+				});
 			}
 		}
 	}

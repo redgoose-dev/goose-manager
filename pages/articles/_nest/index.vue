@@ -15,6 +15,7 @@
 			:page="page"
 			:total="total"
 			:articles="articles"
+			:skin="skin"
 			:loading="processing"/>
 		<paginate
 			v-if="!!total"
@@ -92,7 +93,7 @@ export default {
 			const [ categories, articles, nest ] = await Promise.all([
 				cox.$axios.$get(`/categories${text.serialize(paramsCategory, true)}`),
 				cox.$axios.$get(`/articles${text.serialize(paramsArticle, true)}`),
-				cox.$axios.$get(`/nests/${nest_srl}?field=name`)
+				cox.$axios.$get(`/nests/${nest_srl}?field=name,json`)
 			]);
 			return {
 				nest_srl,
@@ -105,6 +106,7 @@ export default {
 				articles: articles.success ? articles.data.index : null,
 				categories: categories.success ? categories.data.index : null,
 				nestName: nest.success ? nest.data.name : null,
+				skin: nest.success ? (nest.data.json.articleSkin || null ) : null,
 			};
 		}
 		catch(e)

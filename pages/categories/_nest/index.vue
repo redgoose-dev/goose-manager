@@ -130,12 +130,18 @@ export default {
 				});
 				let res = await this.$axios.$post('/categories/sort', data);
 				if (!res.success) throw res.message;
-				// TODO: 토스트 처리 필요함.
+				this.$toast.add({
+					message: 'Success change sort.',
+					color: 'success',
+				});
 			}
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
-				alert((e && typeof e === 'string') ? e : `Failed ${this.type} category.`);
+				this.$toast.add({
+					message: (e && typeof e === 'string') ? e : `Failed ${this.type} category.`,
+					color: 'error',
+				});
 			}
 		}
 	}

@@ -52,7 +52,7 @@ export default {
 			let res = await cox.$axios.$get(`/apps/${srl}`);
 			if (!res.success) throw res.message;
 			return {
-				srl: parseInt(this.$route.params.srl),
+				srl: parseInt(cox.params.srl),
 				processing: false,
 				forms: {
 					id: res.data.id,
@@ -91,7 +91,10 @@ export default {
 			{
 				this.processing = false;
 				if (e === messages.error.service) e = null;
-				alert((e && typeof e === 'string') ? e : `Failed delete App.`);
+				this.$toast.add({
+					message: (e && typeof e === 'string') ? e : `Failed delete App.`,
+					color: 'error',
+				});
 			}
 		}
 	}

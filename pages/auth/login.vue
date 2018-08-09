@@ -37,8 +37,6 @@
 					</div>
 				</fieldset>
 
-				<p v-if="!!error" class="login__error">{{error}}</p>
-
 				<nav class="login__nav">
 					<button-basic
 						type="submit"
@@ -74,7 +72,6 @@ export default {
 				password: '',
 			},
 			processing: false,
-			error: '',
 		};
 	},
 	computed: {
@@ -126,7 +123,10 @@ export default {
 			catch(e)
 			{
 				this.processing = false;
-				this.error = messages.error.failedLogin;
+				this.$toast.add({
+					message: messages.error.failedLogin,
+					color: 'error'
+				});
 			}
 		}
 	}

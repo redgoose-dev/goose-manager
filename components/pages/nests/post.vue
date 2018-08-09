@@ -65,7 +65,7 @@
 						type="radio"
 						name="skin"
 						id="skin"
-						v-model="skin"
+						v-model="json.skin"
 						:inline="true"
 						:disabled="false"
 						:items="[
@@ -77,14 +77,34 @@
 					</p>
 				</dd>
 			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="article_skin">Article skin</label></dt>
+				<dd>
+					<form-checks
+						type="radio"
+						name="article_skin"
+						id="article_skin"
+						v-model="json.articleSkin"
+						:inline="true"
+						:disabled="false"
+						:items="[
+							{ label: 'List', value: 'list' },
+							{ label: 'Card', value: 'card' },
+							{ label: 'Thumbnail', value: 'thumbnail' },
+						]"/>
+					<p class="rg-form-help">
+						`Articles` 목록의 스킨입니다.
+					</p>
+				</dd>
+			</dl>
 		</div>
 	</section>
 
 	<section class="rg-form-section">
 		<h1>Extra forms</h1>
-		<div v-if="skin === 'default'" class="rg-form-section__body">
-			작업예정..
-		</div>
+		<component
+			v-bind:is="`extra-${skin}`"
+			class="rg-form-section__body"/>
 	</section>
 
 	<nav class="rg-nav">
@@ -119,43 +139,64 @@ export default {
 	props: {
 		type: { type: String, default: 'add' },
 		srl: { type: Number },
-		datas: { type: Object },
+		datas: {
+			type: Object,
+			apps: { type: Array },
+			nest: { type: Object },
+		},
 	},
 	data()
 	{
+		const { nest, apps } = this.datas;
+
 		return {
-			skin: (this.datas.nest && this.datas.nest.json.skin) ? this.datas.nest.json.skin : 'default',
 			forms: {
 				app_srl: {
-					value: this.datas.nest ? this.datas.nest.app_srl : '',
+					value: nest ? nest.app_srl : '',
 					error: null,
 				},
 				id: {
-					value: this.datas.nest ? this.datas.nest.id : '',
+					value: nest ? nest.id : '',
 					error: null,
 				},
 				name: {
-					value: this.datas.nest ? this.datas.nest.name : '',
+					value: nest ? nest.name : '',
 					error: null,
 				},
 				description: {
-					value: this.datas.nest ? this.datas.nest.description : '',
+					value: nest ? nest.description : '',
 					error: null,
 				},
 			},
-			apps: this.datas.apps.map((o, k) => {
+			apps: apps.map((o, k) => {
 				return {
 					label: `[${o.id}] ${o.name}`,
 					value: o.srl,
 				};
 			}),
-			nest: this.datas.nest || {},
-			json: {},
+			nest: nest || {},
+			json: {
+				skin: (nest && nest.json.skin) ? nest.json.skin : 'default',
+				articleSkin: (nest && nest.json.articleSkin) ? nest.json.articleSkin : 'thumbnail',
+			},
 			processing: false,
 		};
 	},
 	computed: {
-		typeLabel() { return (this.type === 'edit') ? 'Edit' : 'Add' },
+		typeLabel() {
+			return (this.type === 'edit') ? 'Edit' : 'Add';
+		},
+		skin()
+		{
+			switch(this.json.skin)
+			{
+				case 'advanced':
+					return 'advanced';
+				case 'default':
+				default:
+					return 'default';
+			}
+		},
 	},
 	methods: {
 		async onSubmit(e)
@@ -175,7 +216,6 @@ export default {
 
 			// set json field
 			let json = Object.assign({}, this.json);
-			json.skin = this.skin;
 
 			try
 			{
@@ -199,7 +239,10 @@ export default {
 			{
 				if (e === messages.error.service) e = null;
 				this.processing = false;
-				alert((e && typeof e === 'string') ? e : `Failed ${this.type} nest.`);
+				this.$toast.add({
+					message: (e && typeof e === 'string') ? e : `Failed ${this.type} nest.`,
+					color: 'error',
+				});
 			}
 		}
 	}

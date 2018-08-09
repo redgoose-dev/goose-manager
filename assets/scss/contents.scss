@@ -70,13 +70,29 @@
 			padding: 10px;
 		}
 	}
-	&-thumbnail {}
 	&-list {
 		li {
 			margin-top: 10px;
 			&:first-child {
 				margin-top: 0;
 			}
+		}
+	}
+	&-thumbnail {
+		ul, &__ul {
+			display: flex;
+			flex-wrap: wrap;
+			margin: -10px;
+			&:after {
+				content: '';
+				display: table;
+				clear: both;
+			}
+		}
+		li, &__li {
+			width: 33.33333%;
+			box-sizing: border-box;
+			padding: 10px;
 		}
 	}
 	&-items {
@@ -106,6 +122,11 @@
 		&-card {
 			li {
 				width: 33.33333%;
+			}
+		}
+		&-thumbnail {
+			li {
+				width: 25%;
 			}
 		}
 	}
@@ -147,7 +168,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		font-size: 11px;
+		font-size: .6875rem;
 		font-family: $font-eng;
 		color: mix($color-blur, #fff, 100%);
 		> span {
@@ -222,9 +243,6 @@
 			box-shadow: 0 0 0 1px $color-key;
 		}
 	}
-	&-thumbnail {
-		//
-	}
 	&-list {
 		$self: '.rg-item';
 		$size: 100px;
@@ -293,7 +311,69 @@
 			box-shadow: 0 0 0 1px $color-key;
 		}
 	}
-
+	&-thumbnail {
+		$self: '.rg-item';
+		$size: 150px;
+		position: relative;
+		box-shadow: $shadow-box;
+		background: #fff;
+		border-radius: $size-border-radius;
+		&:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			pointer-events: none;
+			transition: box-shadow .15s ease-out;
+			border-radius: $size-border-radius;
+		}
+		&__image {
+			margin: 0;
+			height: $size;
+			background: mix($color-blur, #fff, 30%);
+			a {
+				text-decoration: none;
+			}
+			img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+			span {
+				display: flex;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+				i {
+					font-size: 4rem;
+					color: rgba(#fff, 1);
+				}
+			}
+		}
+		&__body {
+			padding: 15px;
+		}
+		#{$self}__metas {
+			min-height: .6875rem * 1.4 * 3;
+			> span {
+				display: block;
+				vertical-align: top;
+				line-height: 1.4;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				&:after {
+					display: none;
+				}
+			}
+		}
+		&:hover:after {
+			box-shadow: 0 0 0 1px $color-key;
+		}
+	}
 }
 
 // bottom navigation

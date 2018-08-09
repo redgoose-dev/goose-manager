@@ -83,7 +83,10 @@ export default {
 			{
 				this.processing = false;
 				if (e === messages.error.service) e = null;
-				alert((e && typeof e === 'string') ? e : `Failed delete JSON.`)
+				this.$toast.add({
+					message: (e && typeof e === 'string') ? e : `Failed delete JSON.`,
+					color: 'error',
+				});
 			}
 		}
 	}

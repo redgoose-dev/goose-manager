@@ -151,14 +151,20 @@ export default {
 				}
 				else
 				{
-					alert(messages.msg.successChangePassword);
+					this.$toast.add({
+						message: messages.msg.successChangePassword,
+						color: 'success',
+					});
 				}
 			}
 			catch(e)
 			{
 				if (e === messages.error.service) e = null;
 				this.processing = false;
-				alert((e && typeof e === 'string') ? e : messages.msg.failedChangePassword)
+				this.$toast.add({
+					message: (e && typeof e === 'string') ? e : messages.msg.failedChangePassword,
+					color: 'error',
+				});
 			}
 		}
 	}

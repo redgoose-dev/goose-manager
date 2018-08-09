@@ -1,12 +1,14 @@
 <template>
 <div class="articles-index">
 	<loading v-if="loading"/>
-	<div v-else-if="!!articles && articles.length" :class="`rg-index-${skin}`">
+	<div v-else-if="!!articles && articles.length" :class="`rg-index-${useSkin}`">
 		<ul>
 			<li v-for="(item,key) in articles" :key="key">
 				<component
-					v-bind:is="`item-index-${skin}`"
+					v-bind:is="`item-index-${useSkin}`"
+					:image="null"
 					:link="getUrl('read', item.srl)"
+					:title="item.title"
 					:subject="item.title"
 					:metas="[
 						item.category_name && `Category: ${item.category_name}`,
@@ -43,11 +45,21 @@ export default {
 		total: { type: Number, default: 0 },
 		articles: { type: Array, default: null },
 		loading: { type: Boolean, default: false },
+		skin: { type: String, default: 'thumbnail' }
 	},
 	computed: {
-		skin()
+		useSkin()
 		{
-			return 'card';
+			switch(this.skin)
+			{
+				case 'list':
+					return 'list';
+				case 'card':
+					return 'card';
+				case 'thumbnail':
+				default:
+					return 'thumbnail';
+			}
 		}
 	},
 	methods: {

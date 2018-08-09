@@ -1,3 +1,3 @@
 <template>
-	<div>default form</div>
+	<div>advanced form</div>
 </template>
