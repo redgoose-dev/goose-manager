@@ -1,18 +1,59 @@
+@import "./variables";
+@import "./mixins";
+
 .rg-toast {
 	position: fixed;
 	z-index: 100;
 	right: 20px;
 	top: 20px;
 	pointer-events: none;
-	border: 1px solid #000;
-	background: lime;
 	ul {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
-	li {
-		background: #eee;
+	&__item {
+		position: relative;
+		display: flex;
+		align-items: center;
+		margin: 8px 0;
+		padding: 12px 15px;
+		background: $color-blur;
 		pointer-events: auto;
+		transition-property: opacity, transform;
+		transition-timing-function: ease-out;
+		width: 220px;
+		cursor: pointer;
+		border-radius: $size-border-radius;
+		box-shadow: 0 1px 8px rgba(0,0,0,.5);
+		opacity: 0;
+		//transform: translateX(280px);
+
+		&:first-child {
+			margin-top: 0;
+		}
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&-show {
+			opacity: 1;
+			//transform: translateX(0);
+		}
+		&-success {
+			background: $color-success;
+		}
+		&-error {
+			background: $color-error;
+		}
+	}
+	span {
+		display: block;
+		flex: 1;
+		color: #fff;
+		font-size: .875rem;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 }

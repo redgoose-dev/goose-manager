@@ -238,7 +238,10 @@ export default {
 	methods: {
 		addToast()
 		{
-			this.$toast.add('add message')
+			this.$toast.add({
+				message: 'add message',
+				//color: 'success'
+			});
 		}
 	}
 }
