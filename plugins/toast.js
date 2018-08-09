@@ -3,7 +3,7 @@ import * as util from '~/libs/util';
 
 const defaultOptions = {
 	message: 'toast message',
-	speed: 500,
+	speed: 400,
 	delay: 3000,
 	color: null, // success,error
 	max: 5,
@@ -25,28 +25,34 @@ function htmlToElement(str)
 
 class Toast {
 
-	static async open(el, speed, delay)
+	static transitionEnd(dom, type)
 	{
-		await util.sleep(10);
-		el.style.transitionDuration = `${speed}ms`;
-		el.classList.add('rg-toast__item-show');
-		if (delay > 100)
-		{
-			await util.sleep(speed + delay);
-			return parseInt(el.dataset.key);
-		}
-		else
-		{
-			return null;
-		}
-	}
+		return new Promise(function(resolve) {
+			if (!dom) return;
+			let event = {};
 
-	static async close(el, speed)
-	{
-		el.style.transitionDuration = `${speed}ms`;
-		el.classList.remove('rg-toast__item-show');
-		await util.sleep(speed);
-		return el;
+			switch (type)
+			{
+				case 'animation':
+					event.base = 'animationend';
+					event.webkit = 'webkitAnimationEnd';
+					break;
+				default:
+					event.base = 'transitionend';
+					event.webkit = 'webkitTransitionEnd';
+					break;
+			}
+
+			function callback(e)
+			{
+				dom.removeEventListener(event.base, callback);
+				dom.removeEventListener(event.webkit, callback);
+				resolve(e);
+			}
+
+			dom.addEventListener(event.base, callback);
+			dom.addEventListener(event.webkit, callback);
+		});
 	}
 
 	constructor(options)
@@ -83,24 +89,32 @@ class Toast {
 	 */
 	add(op)
 	{
+		if (typeof op === 'string') op = { message: op };
+
 		// set values
 		op.message = op.message || this.options.message;
 		op.color = op.color || this.options.color;
-		op.speed = op.speed || this.options.speed;
-		op.delay = op.delay || this.options.delay;
+		op.speed = (op.speed === null || op.speed === undefined) ? this.options.speed : op.speed;
+		op.speed = (op.speed === 0) ? 100 : op.speed;
+		op.delay = (op.delay === null || op.delay === undefined) ? this.options.delay : op.delay;
 		op.icon = op.icon || null;
 
 		// set element
-		let $li = htmlToElement(`<li class="rg-toast__item" data-key="${this.key}">` +
+		let $li = htmlToElement(`<li class="rg-toast__item">` +
+			`<div class="rg-toast__item-body">` +
 			(op.icon ? `<i class="material-icons">${op.icon}</i>` : '') +
-			`<span>${op.message}</span>` +
+			`<span class="rg-toast__message">${op.message}</span>` +
+			`</div>` +
+			`<i class="rg-toast__progress"></i>` +
 			`</li>`);
 
+		// set data
+		$li.dataset.key = this.key;
+		$li.dataset.speed = op.speed;
+		$li.dataset.delay = op.delay;
+
 		// set color
-		if (op.color)
-		{
-			$li.classList.add(`rg-toast__item-${op.color}`);
-		}
+		if (op.color) $li.classList.add(op.color);
 
 		// set event
 		$li.addEventListener('click', (e) => {
@@ -130,9 +144,33 @@ class Toast {
 			removeItems.forEach((n) => this.remove(n));
 		}
 
-		// open item
-		this.constructor.open($li, op.speed, op.delay).then((k) => {
-			this.remove(k);
+		// animation play
+		util.sleep(20).then((param, timer) => {
+			//console.log(timer);
+			$li.style.transitionDuration = `${op.speed}ms`;
+			$li.classList.add('rg-toast__item-show');
+
+			// check delay (delay값이 20보다 작으면 항상 떠있도록..)
+			if (op.delay < 20) return null;
+
+			this.constructor.transitionEnd($li, null).then((e) => {
+				// 브라우저에 따라 대기방식이 달라진다.
+				if (util.browser() === 'chrome' || util.browser() === 'firefox')
+				{
+					let progress = e.target.querySelector('.rg-toast__progress');
+					progress.style.animationDuration = `${e.target.dataset.delay}ms`;
+					progress.classList.add('play');
+					this.constructor.transitionEnd(progress, 'animation').then((e) => {
+						this.remove(e.target.parentNode.dataset.key);
+					});
+				}
+				else
+				{
+					util.sleep(parseInt(e.target.dataset.delay), Number(e.target.dataset.key)).then((n) => {
+						this.remove(n);
+					});
+				}
+			});
 		});
 	}
 
@@ -153,7 +191,12 @@ class Toast {
 		delete this.index[key];
 
 		// close animation
-		this.constructor.close(el, speed).then((el) => this.$index.removeChild(el));
+		el.style.transitionDuration = `${speed}ms`;
+		el.classList.remove('rg-toast__item-show');
+
+		this.constructor.transitionEnd(el, null).then((e) => {
+			this.$index.removeChild(e.target); // remove item
+		});
 	}
 }
 

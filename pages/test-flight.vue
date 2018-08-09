@@ -189,22 +189,26 @@
 		</fieldset>
 		<fieldset>
 			<legend>field style</legend>
-			<div class="rg-form-field">
-				<label for="sdmgmsdgp">label name</label>
-				<form-text
-					id="sdmgmsdgp"
-					placeholder="placeholder value"
-					:inline="true"
-				/>
-				<p class="rg-form-help rg-form-help-error">error message</p>
-				<p class="rg-form-help">help message</p>
-			</div>
+			<dl class="rg-form-field">
+				<dt>
+					<label for="sdmgmsdgp">label name</label>
+				</dt>
+				<dd>
+					<form-text
+						id="sdmgmsdgp"
+						placeholder="placeholder value"
+						:inline="true"
+					/>
+					<p class="rg-form-help rg-form-help-error">error message</p>
+					<p class="rg-form-help">help message</p>
+				</dd>
+			</dl>
 		</fieldset>
 
 		<hr>
 
 		<nav>
-			<button type="button" @click="addToast">add toast</button>
+			<button-basic type="button" @onClick="addToast" label="add toast"/>
 		</nav>
 	</div>
 </article>
@@ -233,14 +237,16 @@ export default {
 	},
 	mounted()
 	{
-		//this.$toast.add('auto add');
+		this.$toast.add('auto add');
 	},
 	methods: {
 		addToast()
 		{
 			this.$toast.add({
 				message: 'add message',
-				//color: 'success'
+				speed: 200,
+				delay: 1000,
+				color: 'success'
 			});
 		}
 	}
