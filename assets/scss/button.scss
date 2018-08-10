@@ -41,8 +41,8 @@
 
 	// with icon
 	> .material-icons {
-		font-size: 22px;
-		margin: -4px 0 -2px 5px;
+		font-size: 20px;
+		margin: -4px 0 -2px 3px;
 		vertical-align: middle;
 		&.solo {
 			margin-left: 0;
@@ -129,6 +129,13 @@
 		span {
 			box-shadow: inset 0 1px 3px rgba(#000, .5);
 		}
+	}
+
+	&[type='button'], &[type='submit'], &[type='reset'] {
+		cursor: pointer;
+		-webkit-appearance: button;
+		background: none;
+		border: none;
 	}
 
 	&-inline {

@@ -2,6 +2,13 @@
 @import "./mixins";
 
 
+// popup mode
+html.rg-mode-popup {
+	&, body {
+		overflow: hidden;
+	}
+}
+
 // contents header
 .rg-page-header {
 	margin: 0 0 30px;

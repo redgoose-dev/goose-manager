@@ -28,27 +28,28 @@
 					:required="true"/>
 			</dd>
 		</dl>
-		<div class="rg-form-body">
-			<!--<editor-->
-				<!--:value="forms.content.value"-->
-				<!--@change="(e) => {this.forms.content.value = e}"-->
-			<!--/>-->
-			<form-text
-				type="textarea"
-				name="content"
-				id="content"
-				placeholder="article content body"
-				v-model="forms.content.value"
-				:rows="15"
-				:required="true"/>
-		</div>
 	</fieldset>
+
+	<editor
+		name="content"
+		id="content"
+		v-model="forms.content.value"
+		placeholder="article content body"
+		:rows="18"
+		:required="true"
+		className="editor"
+	/>
+
+	<div>
+		TODO: file uploader
+	</div>
+
 	<nav class="rg-nav">
 		<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
 		<button-basic
 			type="submit"
 			color="key"
-			:label="!processing ? (this.type === 'edit' ? 'Edit' : 'Add') : null"
+			:label="!processing ? (this.type === 'edit' ? 'Edit Article' : 'Write Article') : null"
 			:inline="true"
 			:icon="processing ? 'cached' : ''"
 			:rotateIcon="processing"

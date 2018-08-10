@@ -23,11 +23,9 @@
 </template>
 
 <script>
-import ButtonCircleIcon from '~/components/button/circle-icon';
-
 export default {
 	components: {
-		ButtonCircleIcon,
+		'ButtonCircleIcon': () => import('~/components/button/circle-icon'),
 	},
 	props: {
 		module: { type: String },

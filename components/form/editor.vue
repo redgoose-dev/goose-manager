@@ -1,34 +1,122 @@
 <template>
-	<div>
+<div class="rg-editor">
+	<nav class="rg-editor__toolbar">
+		<dl>
+			<dt></dt>
+			<dd>
+				<button-basic
+					type="button"
+					label="Preview"
+					size="small"
+					icon="visibility"
+					color="gray"
+					@onClick="onPreview"/>
+			</dd>
+		</dl>
+	</nav>
+	<div class="rg-editor__body">
 		<form-text
 			type="textarea"
-			name="content"
-			id="content"
-			placeholder="article content body"
-			v-model="value"
-			:rows="15"
-			:required="true"/>
+			:name="name"
+			:id="id"
+			:placeholder="placeholder"
+			:value="value"
+			:rows="rows"
+			:required="required"
+			@change="onChange"
+		/>
 	</div>
+	<div class="rg-editor__guide">
+		<ul>
+			<li>
+				<a href="https://nolboo.kim/blog/2013/09/07/john-gruber-markdown/" target="_blank">존 그루버 마크다운 페이지 번역</a>
+			</li>
+			<li>
+				<a href="https://gist.github.com/ihoneymon/652be052a0727ad59601" target="_blank">마크다운 사용법</a>
+			</li>
+		</ul>
+	</div>
+
+	<transition name="preview">
+		<div v-if="previewWindow" class="preview" @click="onClickPreview">
+			<article class="preview__wrap" @click="onClickPreviewWrap">
+				<header>
+					<h1>Content preview</h1>
+					<nav>
+						<button-circle-icon
+							type="button"
+							title="Setting"
+							name="close"
+							color="key"
+							@onClick="offPreview"/>
+					</nav>
+				</header>
+				<div ref="preview" v-html="preview" class="rg-article-body"></div>
+			</article>
+		</div>
+	</transition>
+</div>
 </template>
 
 <script>
+import marked from 'marked';
+
+let el_preview = null;
+
 export default {
 	components: {
 		'FormText': () => import('~/components/form/text'),
+		'ButtonBasic': () => import('~/components/button/basic'),
+		'ButtonCircleIcon': () => import('~/components/button/circle-icon'),
 	},
 	props: {
-		value: {},
+		label: { type: String, default: 'Editor' },
+		name: { type: String, default: 'editor' },
+		id: { type: String, default: 'editor' },
+		value: { type: [String,Number] },
+		placeholder: { type: String },
+		rows: { type: Number, default: 20 },
+		required: { type: Boolean, default: false },
 	},
-	model: {
-		prop: 'value',
-		event: 'change',
+	data()
+	{
+		return {
+			previewWindow: false,
+			preview: '',
+		};
+	},
+	mounted()
+	{
+		el_preview = this.$refs.preview;
+		console.log(el_preview);
 	},
 	methods: {
-		onChange(e)
+		onChange(text)
 		{
-			console.log(e);
-			this.$emit('change', e);
+			this.$emit('input', text);
+		},
+		onPreview(e)
+		{
+			document.querySelector('html').classList.add('rg-mode-popup');
+			this.previewWindow = true;
+			this.preview = marked(this.value);
+		},
+		offPreview()
+		{
+			document.querySelector('html').classList.remove('rg-mode-popup');
+			this.previewWindow = false;
+			this.preview = '';
+		},
+		onClickPreview(e)
+		{
+			this.offPreview();
+		},
+		onClickPreviewWrap(e)
+		{
+			e.stopPropagation();
 		}
-	},
+	}
 }
 </script>
+
+<style lang="scss" src="./editor.scss" scoped></style>
