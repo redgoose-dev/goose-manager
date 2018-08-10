@@ -29,6 +29,10 @@
 			</dd>
 		</dl>
 		<div class="rg-form-body">
+			<!--<editor-->
+				<!--:value="forms.content.value"-->
+				<!--@change="(e) => {this.forms.content.value = e}"-->
+			<!--/>-->
 			<form-text
 				type="textarea"
 				name="content"
@@ -63,6 +67,7 @@ export default {
 		'FormText': () => import('~/components/form/text'),
 		'FormSelect': () => import('~/components/form/select'),
 		'ButtonBasic': () => import('~/components/button/basic'),
+		'Editor': () => import('~/components/form/editor'),
 	},
 	props: {
 		type: { type: String, default: 'add' }, // add,edit
