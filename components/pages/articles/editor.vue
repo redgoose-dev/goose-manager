@@ -23,16 +23,21 @@
 			:value="value"
 			:rows="rows"
 			:required="required"
-			@change="onChange"
+			@position="onChangePosition"
+			@change="onChangeText"
 		/>
 	</div>
 	<div class="rg-editor__guide">
 		<ul>
 			<li>
-				<a href="https://nolboo.kim/blog/2013/09/07/john-gruber-markdown/" target="_blank">존 그루버 마크다운 페이지 번역</a>
+				<a href="https://nolboo.kim/blog/2013/09/07/john-gruber-markdown/" target="_blank">
+					존 그루버 마크다운 페이지 번역
+				</a>
 			</li>
 			<li>
-				<a href="https://gist.github.com/ihoneymon/652be052a0727ad59601" target="_blank">마크다운 사용법</a>
+				<a href="https://gist.github.com/ihoneymon/652be052a0727ad59601" target="_blank">
+					마크다운 사용법
+				</a>
 			</li>
 		</ul>
 	</div>
@@ -88,15 +93,26 @@ export default {
 	mounted()
 	{
 		el_preview = this.$refs.preview;
-		console.log(el_preview);
 	},
 	methods: {
-		onChange(text)
+		onChangeText(text)
 		{
 			this.$emit('input', text);
 		},
+		onChangePosition(op)
+		{
+			this.$emit('position', op);
+		},
 		onPreview(e)
 		{
+			if (!(this.value && this.value.length > 1))
+			{
+				this.$toast.add({
+					message: 'The content is empty.',
+					color: 'error',
+				});
+				return;
+			}
 			document.querySelector('html').classList.add('rg-mode-popup');
 			this.previewWindow = true;
 			this.preview = marked(this.value);

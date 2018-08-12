@@ -38,13 +38,14 @@ export default {
 			if (!article.data.nest_srl) throw 'Invalid article.';
 
 			// get nest, categories
-			const [ nest, categories ] = await Promise.all([
+			const [ nest, categories, files ] = await Promise.all([
 				cox.$axios.$get(`/nests/${article.data.nest_srl}`).then((res) => {
 					return res.success ? res.data : null;
 				}),
 				cox.$axios.$get(`/categories?nest=${article.data.nest_srl}&field=srl,name,turn&order=turn&sort=asc`).then((res) => {
 					return res.success ? res.data.index : [];
 				}),
+				cox.$axios.$get(`/files?article=${srl}&strict=1`)
 			]);
 
 			return {
@@ -55,7 +56,18 @@ export default {
 				datas: {
 					article: article.data,
 					nest,
-					categories: categories.map((o) => ({ label: o.name, value: o.srl }))
+					categories: categories.map((o) => ({ label: o.name, value: o.srl })),
+					files: (files.success && files.data.index.length) ? files.data.index.map((o) => {
+						return {
+							id: parseInt(o.srl),
+							srl: parseInt(o.srl),
+							name: o.name,
+							size: parseInt(o.size),
+							src: `${o.loc}`,
+							type: o.type,
+							ready: parseInt(o.ready),
+						};
+					}) : null
 				},
 			};
 		}

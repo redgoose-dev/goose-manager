@@ -26,7 +26,9 @@
 						:maxlength="20"
 						:inline="true"
 						:required="true"/>
-					<p v-if="!!forms.id.error" class="rg-form-help rg-form-help-error">{{forms.id.error}}</p>
+					<p v-if="!!forms.id.error" class="rg-form-help rg-form-help-error">
+						{{forms.id.error}}
+					</p>
 					<p class="rg-form-help">영문과 숫자 `-`, `_`만 입력 가능합니다.</p>
 				</dd>
 			</dl>
@@ -58,23 +60,27 @@
 					</p>
 				</dd>
 			</dl>
+		</div>
+	</section>
+
+	<section class="rg-form-section">
+		<h1>Extra forms</h1>
+		<div class="rg-form-section__body">
 			<dl class="rg-form-field">
-				<dt><label for="skin">Skin</label></dt>
+				<dt><label for="use_category">Using category</label></dt>
 				<dd>
 					<form-checks
 						type="radio"
-						name="skin"
-						id="skin"
-						v-model="json.skin"
+						name="use_category"
+						id="use_category"
+						v-model="json.useCategory"
 						:inline="true"
 						:disabled="false"
 						:items="[
-							{ label: 'Default', value: 'default' },
-							{ label: 'Advanced', value: 'advanced' },
+							{ label: 'Yes', value: 1 },
+							{ label: 'No', value: 0 },
 						]"/>
-					<p class="rg-form-help">
-						skin을 변경하면 `extra form`의 항목이 변하는것을 주의하세요.
-					</p>
+					<p class="rg-form-help">분류를 사용할지에 대하여 결정합니다.</p>
 				</dd>
 			</dl>
 			<dl class="rg-form-field">
@@ -92,19 +98,117 @@
 							{ label: 'Card', value: 'card' },
 							{ label: 'Thumbnail', value: 'thumbnail' },
 						]"/>
-					<p class="rg-form-help">
-						`Articles` 목록의 스킨입니다.
-					</p>
+					<p class="rg-form-help">`Articles` 목록의 스킨입니다.</p>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="thumbnail_width">Thumnail</label></dt>
+				<dd>
+					<div>
+						<label class="rg-form-field-inline">
+							<span>Width:</span>
+							<form-text
+								id="thumbnail_width"
+								name="thumbnail_width"
+								v-model="json.thumbnail.width"
+								placeholder="100"
+								:maxlength="3"
+								:size="5"
+								:inline="true"/>
+							<span>px</span>
+						</label>
+						<label class="rg-form-field-inline">
+							<span>Height:</span>
+							<form-text
+								id="thumbnail_height"
+								name="thumbnail_width"
+								v-model="json.thumbnail.height"
+								placeholder="100"
+								:maxlength="3"
+								:size="5"
+								:inline="true"/>
+							<span>px</span>
+						</label>
+					</div>
+					<div>
+						<form-checks
+							type="radio"
+							name="thumbnail_type"
+							id="thumbnail_type"
+							v-model="json.thumbnail.type"
+							:inline="true"
+							:disabled="false"
+							:items="[
+								{ label: 'crop', value: 'crop' },
+								{ label: 'resize', value: 'resize' },
+								{ label: 'resize(width)', value: 'resizeWidth' },
+								{ label: 'resize(height)', value: 'resizeHeight' },
+							]"/>
+					</div>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="thumbnail_size_tool">Thumbnail size tool</label></dt>
+				<dd>
+					<form-checks
+						type="radio"
+						name="thumbnail_size_tool"
+						id="thumbnail_size_tool"
+						v-model="json.useThumbnailSizeTool"
+						:inline="true"
+						:disabled="false"
+						:items="[
+							{ label: 'Yes', value: 1 },
+							{ label: 'No', value: 0 },
+						]"/>
+					<p class="rg-form-help">썸네일 사이즈 선택하는 툴을 사용합니다.</p>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="thumbnail_width">Files</label></dt>
+				<dd>
+					<div>
+						<label class="rg-form-field-inline">
+							<span>Count:</span>
+							<form-text
+								id="files_count"
+								name="files_count"
+								v-model="json.files.count"
+								placeholder="10"
+								:maxlength="2"
+								:size="3"
+								:inline="true"/>
+						</label>
+					</div>
+					<div>
+						<label class="rg-form-field-inline">
+							<span>Size(single):</span>
+							<form-text
+								id="files_size_limit_single"
+								name="files_size_limit_single"
+								v-model="json.files.sizeSingle"
+								placeholder="2000000"
+								:maxlength="9"
+								:size="15"
+								:inline="true"/>
+							<span>byte</span>
+						</label>
+						<label class="rg-form-field-inline">
+							<span>Size(total):</span>
+							<form-text
+								id="files_size_total"
+								name="files_size_total"
+								v-model="json.files.sizeTotal"
+								placeholder="15000000"
+								:maxlength="9"
+								:size="15"
+								:inline="true"/>
+							<span>byte</span>
+						</label>
+					</div>
 				</dd>
 			</dl>
 		</div>
-	</section>
-
-	<section class="rg-form-section">
-		<h1>Extra forms</h1>
-		<component
-			v-bind:is="`extra-${skin}`"
-			class="rg-form-section__body"/>
 	</section>
 
 	<nav class="rg-nav">
@@ -133,8 +237,6 @@ export default {
 		'FormChecks': () => import('~/components/form/checks'),
 		'FormSelect': () => import('~/components/form/select'),
 		'ButtonBasic': () => import('~/components/button/basic'),
-		'ExtraDefault': () => import('~/components/pages/nests/extra/default'),
-		'ExtraAdvanced': () => import('~/components/pages/nests/extra/advanced'),
 	},
 	props: {
 		type: { type: String, default: 'add' },
@@ -149,7 +251,7 @@ export default {
 	{
 		const { nest, apps } = this.datas;
 
-		return {
+		let result = {
 			forms: {
 				app_srl: {
 					value: nest ? nest.app_srl : '',
@@ -166,7 +268,7 @@ export default {
 				description: {
 					value: nest ? nest.description : '',
 					error: null,
-				},
+				}
 			},
 			apps: apps.map((o, k) => {
 				return {
@@ -174,28 +276,53 @@ export default {
 					value: o.srl,
 				};
 			}),
-			nest: nest || {},
-			json: {
-				skin: (nest && nest.json.skin) ? nest.json.skin : 'default',
-				articleSkin: (nest && nest.json.articleSkin) ? nest.json.articleSkin : 'thumbnail',
-			},
 			processing: false,
 		};
+
+		try
+		{
+			if (!nest) throw 'no nest';
+			result.nest = nest;
+			result.json = {
+				useCategory: parseInt(nest.json.useCategory) || 0,
+				articleSkin: nest.json.articleSkin,
+				thumbnail: {
+					width: nest.json.thumbnail.width,
+					height: nest.json.thumbnail.height,
+					type: nest.json.thumbnail.type,
+				},
+				useThumbnailSizeTool: parseInt(nest.json.useThumbnailSizeTool) || 0,
+				files: {
+					count: nest.json.files.count,
+					sizeSingle: nest.json.files.sizeSingle,
+					sizeTotal: nest.json.files.sizeTotal
+				}
+			};
+		}
+		catch(e)
+		{
+			result.nest = {};
+			result.json = {
+				useCategory: 0,
+				articleSkin: 'card',
+				thumbnail: {
+					width: 300,
+					height: 200,
+					type: 'crop',
+				},
+				files: {
+					count: 15,
+					sizeSingle: 3000000,
+					sizeTotal: 30000000
+				},
+			};
+		}
+
+		return result;
 	},
 	computed: {
 		typeLabel() {
 			return (this.type === 'edit') ? 'Edit' : 'Add';
-		},
-		skin()
-		{
-			switch(this.json.skin)
-			{
-				case 'advanced':
-					return 'advanced';
-				case 'default':
-				default:
-					return 'default';
-			}
 		},
 	},
 	methods: {

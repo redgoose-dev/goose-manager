@@ -32,7 +32,7 @@ export default {
 		name: { type: String },
 		id: { type: String },
 		inline: { type: Boolean, default: false },
-		value: { type: [Array,String] },
+		value: { type: [Array,String,Number,Boolean] },
 		change: {},
 		disabled: { type: Boolean, default: false },
 		className: { type: String },

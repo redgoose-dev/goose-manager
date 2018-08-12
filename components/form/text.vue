@@ -3,6 +3,7 @@
 		v-if="(type === 'textarea')"
 		:name="name"
 		:id="id"
+		:value="value"
 		:placeholder="placeholder"
 		:maxlength="maxlength"
 		:required="required"
@@ -10,15 +11,16 @@
 		:readonly="readonly"
 		:rows="rows"
 		:size="size"
+		@click="onChangePosition"
+		@keyup="onChangePosition"
+		@input="onChange"
 		:class="[
 			'rg-form-text',
 			formSize && `rg-form-text-size-${formSize}`,
 			error && 'rg-form-text-error',
 			className
 		]"
-		:style="styles"
-		@input="onChange"
-	>{{value}}</textarea>
+		:style="styles"></textarea>
 	<input
 		v-else
 		:type="type"
@@ -31,6 +33,9 @@
 		:disabled="disabled"
 		:readonly="readonly"
 		:size="size"
+		@click="onChangePosition"
+		@keyup="onChangePosition"
+		@input="onChange"
 		:class="[
 			'rg-form-text',
 			inline && 'rg-form-text-inline',
@@ -38,8 +43,7 @@
 			error && 'rg-form-text-error',
 			className
 		]"
-		:style="styles"
-		@input="onChange">
+		:style="styles"/>
 </template>
 
 <script>
@@ -71,6 +75,14 @@ export default {
 		onChange: function(e)
 		{
 			this.$emit('change', e.target.value);
+		},
+		onChangePosition: function(e)
+		{
+			if (!('selectionStart' in e.target)) return;
+			this.$emit('position', {
+				start: e.target.selectionStart,
+				end: e.target.selectionEnd
+			});
 		}
 	}
 }

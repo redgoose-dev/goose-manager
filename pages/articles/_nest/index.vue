@@ -106,7 +106,7 @@ export default {
 				articles: articles.success ? articles.data.index : null,
 				categories: categories.success ? categories.data.index : null,
 				nestName: nest.success ? nest.data.name : null,
-				skin: nest.success ? (nest.data.json.articleSkin || null ) : null,
+				skin: nest.success && nest.data.json.articleSkin ? nest.data.json.articleSkin : null,
 			};
 		}
 		catch(e)

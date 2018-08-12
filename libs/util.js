@@ -46,3 +46,77 @@ export function browser()
 		return 'unknown';
 	}
 }
+
+
+/**
+ * get thumbnail size
+ *
+ * @param {object} options
+ * @param {String} src
+ * @return {Promise}
+ */
+export function getThumbnailSize(options, src)
+{
+	/**
+	 * get size
+	 *
+	 * @param {String} type
+	 * @param {Number} set_w
+	 * @param {Number} set_h
+	 * @param {Number} img_w
+	 * @param {Number} img_h
+	 * @return {Number}
+	 */
+	function getSize(type, set_w, set_h, img_w, img_h)
+	{
+		let size = {};
+		switch(type)
+		{
+			case 'resize':
+				if (img_w < img_h)
+				{
+					size.width = Math.floor((img_w / img_h) * set_h);
+					size.height = set_h;
+				}
+				else
+				{
+					size.width = set_w;
+					size.height = Math.floor((img_h / img_w) * set_w);
+				}
+				break;
+			case 'resizeWidth':
+				size.width = set_w;
+				size.height = Math.floor((img_h / img_w) * set_w);
+				break;
+			case 'resizeHeight':
+				size.width = Math.floor((img_w / img_h) * set_h);
+				size.height = set_h;
+				break;
+			default:
+				size.width = set_w;
+				size.height = set_h;
+				break;
+		}
+		return size;
+	}
+
+	return new Promise(function(resolve, reject){
+		const image = new Image();
+		image.onload = function(e)
+		{
+			const size = getSize(
+				options.type,
+				Number(options.width),
+				Number(options.height),
+				Number(image.width),
+				Number(image.height)
+			);
+			resolve(size);
+		};
+		image.onerror = function(e)
+		{
+			reject(e);
+		};
+		image.src = src;
+	});
+}

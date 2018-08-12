@@ -279,8 +279,38 @@
 		margin: 0 0 0 20px;
 		padding: $padding-vertical 15px $padding-vertical 0;
 		flex: 1;
-		.rg-form-text-inline {
+		> .rg-form-text-inline {
 			margin-left: 0;
+		}
+		> div {
+			margin: 10px 0;
+			&:first-child {
+				margin-top: 0;
+			}
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		.rg-form-field-inline {
+			margin: 1px 30px 1px 0;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+.rg-form-field-inline {
+	display: inline-block;
+	> * {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0 3px;
+		font-size: .875rem;
+		&:first-child {
+			margin-left: 0;
+		}
+		&:last-child {
+			margin-right: 0;
 		}
 	}
 }

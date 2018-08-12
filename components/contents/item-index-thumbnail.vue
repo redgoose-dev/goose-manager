@@ -12,12 +12,12 @@
 			</template>
 			<template v-else>
 				<a v-if="!!href" :href="href" :title="title" :target="target">
-					<span><i class="material-icons">filter_drama</i></span>
+					<span><i class="material-icons">cloud_off</i></span>
 				</a>
 				<nuxt-link v-else-if="!!link" :to="link" :title="title">
-					<span><i class="material-icons">filter_drama</i></span>
+					<span><i class="material-icons">cloud_off</i></span>
 				</nuxt-link>
-				<span v-else><i class="material-icons">filter_drama</i></span>
+				<span v-else><i class="material-icons">cloud_off</i></span>
 			</template>
 		</figure>
 		<div class="rg-item-thumbnail__body">

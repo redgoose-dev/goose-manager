@@ -1,4 +1,4 @@
-@import "../../assets/scss/variables";
+@import "../../../assets/scss/variables";
 
 .rg-editor {
 	margin: 8px 0;
@@ -33,18 +33,13 @@
 			font-size: .75rem;
 		}
 	}
-	&__body {
-		> div {
-			border: 1px solid #000;
-			background: #fff;
-		}
-	}
 }
 
 .preview {
 	$size-width: 950px;
 
 	position: fixed;
+	z-index: 90;
 	left: 0;
 	right: 0;
 	top: 0;

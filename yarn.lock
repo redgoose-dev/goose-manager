@@ -5171,9 +5171,9 @@ ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
 
-rg-uploader@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/rg-uploader/-/rg-uploader-1.2.6.tgz#e033c42cae344308e0b995f40884c09aedeed9fb"
+rg-uploader@^1.2.11:
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/rg-uploader/-/rg-uploader-1.2.11.tgz#52d3737fe3f372aa55e0971191ff711e4f21d13e"
   dependencies:
     croppie "^2.6.2"
     detect-file-type "^0.1.4"

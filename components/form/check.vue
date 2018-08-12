@@ -52,7 +52,7 @@ export default {
 		type: { type: String, default: 'checkbox' },
 		name: { type: String },
 		id: { type: String },
-		value: { type: String },
+		value: { type: [String,Number,Boolean] },
 		checked: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
 		inline: { type: Boolean, default: false },

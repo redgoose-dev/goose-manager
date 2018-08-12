@@ -27,7 +27,7 @@
 							:navs="[
 								{ label: 'Edit', link: `/nests/${nest.srl}/edit` },
 								{ label: 'Delete', link: `/nests/${nest.srl}/delete` },
-								{ label: 'Category', link: `/categories/${nest.srl}` },
+								!!parseInt(nest.json.useCategory) && { label: 'Category', link: `/categories/${nest.srl}` },
 							]"/>
 					</li>
 				</ul>
