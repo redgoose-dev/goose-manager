@@ -310,6 +310,7 @@ export default {
 					height: 200,
 					type: 'crop',
 				},
+				useThumbnailSizeTool: 0,
 				files: {
 					count: 15,
 					sizeSingle: 3000000,

@@ -198,7 +198,14 @@ export default {
 	methods: {
 		init(app)
 		{
-			// TODO: 썸네일 이미지 정보가 있으면(수정) 목록에서 아이콘 표시하기
+			// active thumbnail queue
+			if (this.article && this.article.json.thumbnail && this.article.json.thumbnail.srl)
+			{
+				let $queue = app.queue.selectQueueElement(this.article.json.thumbnail.srl);
+				$queue
+					.addClass('is-thumbnail')
+					.find('.btn-make-thumbnail').addClass('on');
+			}
 		},
 		onAttachFiles()
 		{
@@ -319,8 +326,12 @@ export default {
 				output: {
 					type: 'base64',
 					format: 'jpeg',
-					quality : .85,
-					size: { width: resource.width * 2, height: resource.height * 2 }
+					quality : .80,
+					size: {
+						// 레티나를 위하여 사이즈 증가
+						width: resource.width * 2,
+						height: resource.height * 2
+					}
 				},
 				finalOutput : {
 					size: { width: resource.width, height: resource.height }
@@ -359,7 +370,6 @@ export default {
 	}
 };
 </script>
-
 <style lang="scss" scoped>
 .rg-uploader {
 	margin: 30px 0 0;

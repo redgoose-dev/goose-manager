@@ -6,7 +6,7 @@
 			<li v-for="(item,key) in articles" :key="key">
 				<component
 					v-bind:is="`item-index-${useSkin}`"
-					:image="null"
+					:image="item.json.thumbnail ? getImageUrl(item.json.thumbnail.path) : null"
 					:link="getUrl('read', item.srl)"
 					:title="item.title"
 					:subject="item.title"
@@ -75,6 +75,11 @@ export default {
 			if (this.page && this.page > 1) params.page = this.page;
 			params = text.serialize(params, true);
 			return `/articles/${srl}/${type}${params}`;
+		},
+		getImageUrl(path)
+		{
+			if (!path) return null;
+			return `${this.$store.state.url_api}/${path}`;
 		}
 	}
 }

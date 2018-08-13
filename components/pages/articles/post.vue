@@ -144,9 +144,6 @@ export default {
 			// on loading
 			this.processing = true;
 
-			console.log(data_article);
-			return;
-
 			// merge uploader data
 			// TODO: 수정모드에서 썸네일 이미지가 삭제되었을수도 있음.
 			if ($uploader.thumbnailOptions)
@@ -171,7 +168,6 @@ export default {
 						points: $uploader.thumbnailOptions.points,
 						zoom: $uploader.thumbnailOptions.zoom,
 						path: res_uploadSource.data.path,
-						fullPath: `${this.$store.state.url_api}/${res_uploadSource.data.path}`,
 					};
 				}
 				catch(e)
@@ -187,9 +183,6 @@ export default {
 				// TODO: 업로더에 들어있는 데이터 붙이기
 				// TODO: 썸네일 이미지 업로드
 			}
-
-			console.log(json);
-			return;
 
 			try
 			{
