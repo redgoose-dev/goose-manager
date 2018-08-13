@@ -68,22 +68,6 @@ import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 
-/**
- * json data tree
- * {
- *   thumbnail: {
- *     srl, // file srl
- *     sizeSet, // `1*1`
- *     points, // edit position
- *     zoom, // edit zoom
- *     url, // image url
- *   }
- * }
- */
-
-// TODO: 썸네일이 설정된 이미지가 삭제되었을때 업로드 컴포넌트에서의 옵션 데이터 비우기
-// TODO: 썸네일 이미지가 없을때도 있기 때문에 데이터가 없다고 오류나는 현상 안일어나게 검사하기
-
 export default {
 	components: {
 		'FormText': () => import('~/components/form/text'),
@@ -145,47 +129,65 @@ export default {
 			this.processing = true;
 
 			// merge uploader data
-			// TODO: 수정모드에서 썸네일 이미지가 삭제되었을수도 있음.
+			let thumbnail = null;
+			let updatedThumbnail = false;
 			if ($uploader.thumbnailOptions)
 			{
-				// TODO: 수정할때 썸네일 이미지를 건드리지 않을수도 있음.
-				try
+				// 이전 이미지는 삭제한다. 삭제 실패하더라도 넘어간다.
+				if (data_article && data_article.json.thumbnail)
 				{
-					// TODO: 기존 썸네일이 있다면 이미지 삭제
-					let res_uploadSource = await this.$axios.$post(
-						`/files/upload-file`,
+					await this.$axios.$post(
+						`/files/remove-file`,
 						formData({
-							sub_dir: 'thumbnail',
-							file: $uploader.thumbnailOptions.src,
+							path: data_article.json.thumbnail.path
 						})
 					);
-					if (!res_uploadSource.success) throw res_uploadSource.message;
-					if (!res_uploadSource.data.path) throw 'not found source path';
+				}
 
-					json.thumbnail = {
-						srl: $uploader.thumbnailOptions.srl,
-						sizeSet: $uploader.sizeSet,
-						points: $uploader.thumbnailOptions.points,
-						zoom: $uploader.thumbnailOptions.zoom,
-						path: res_uploadSource.data.path,
-					};
+				try
+				{
+					// 새로운 썸네일 이미지를 업로드한다.
+					if ($uploader.thumbnailOptions.src)
+					{
+						let res_uploadSource = await this.$axios.$post(
+							`/files/upload-file`,
+							formData({
+								sub_dir: 'thumbnail',
+								file: $uploader.thumbnailOptions.src,
+							})
+						);
+						if (!res_uploadSource.success) throw res_uploadSource.message;
+						if (!res_uploadSource.data.path) throw 'not found source path';
+
+						// make option
+						thumbnail = {
+							srl: $uploader.thumbnailOptions.srl,
+							sizeSet: $uploader.sizeSet,
+							points: $uploader.thumbnailOptions.points,
+							zoom: $uploader.thumbnailOptions.zoom,
+							path: res_uploadSource.data.path,
+						};
+					}
+					else
+					{
+						// `$uploader.thumbnailOptions` 객체는 있지만 src가 없으면 썸네일 이미지를 삭제한다고 인식하고 값을 비워야 한다.
+						thumbnail = null;
+					}
+					updatedThumbnail = true;
 				}
 				catch(e)
 				{
 					this.processing = false;
-					this.$toast.add({
-						message: 'Failed make thumbnail image',
-						color: 'error'
-					});
+					this.$toast.add({ message: e, color: 'error' });
 					return;
 				}
-				//console.log($uploader.thumbnailOptions);
-				// TODO: 업로더에 들어있는 데이터 붙이기
-				// TODO: 썸네일 이미지 업로드
 			}
 
 			try
 			{
+				// assign json
+				if (updatedThumbnail) json.thumbnail = thumbnail;
+
 				let data = {
 					app_srl: this.forms.app_srl,
 					nest_srl: this.forms.nest_srl,
@@ -247,14 +249,7 @@ export default {
 		getJSON()
 		{
 			if (!this.datas.article) return {};
-			try
-			{
-				return JSON.parse(decodeURIComponent(this.datas.article.json));
-			}
-			catch(e)
-			{
-				return {};
-			}
+			return Object.assign({}, this.datas.article.json);
 		},
 		getCategoryInForm()
 		{

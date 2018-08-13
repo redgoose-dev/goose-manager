@@ -220,6 +220,8 @@ html.rg-mode-popup {
 				width: $size;
 				height: 100%;
 				object-fit: cover;
+				border-top-left-radius: $size-border-radius;
+				border-bottom-left-radius: $size-border-radius;
 			}
 		}
 		&__body {
@@ -340,6 +342,9 @@ html.rg-mode-popup {
 			margin: 0;
 			height: $size;
 			background: mix($color-blur, #fff, 30%);
+			border-top-left-radius: $size-border-radius;
+			border-top-right-radius: $size-border-radius;
+			overflow: hidden;
 			a {
 				text-decoration: none;
 			}

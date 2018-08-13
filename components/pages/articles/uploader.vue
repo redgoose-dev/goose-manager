@@ -43,6 +43,10 @@
 					<i class="material-icons">zoom_in</i>
 					<span>Preview thumbnail</span>
 				</button>
+				<button type="button" @click="onClearThumbnail">
+					<i class="material-icons">delete</i>
+					<span>Empty thumbnail</span>
+				</button>
 			</nav>
 			<div class="size-info"></div>
 		</footer>
@@ -67,6 +71,8 @@ import RG_DragAndDrop from 'rg-uploader/resource/plugins/dnd.plugin';
 import RG_Thumbnail from 'rg-uploader/resource/plugins/thumbnail.plugin';
 import * as util from '~/libs/util';
 import { formData } from '~/libs/forms';
+
+const classBtnMakeThumbnail = '.btn-make-thumbnail';
 
 export default {
 	components: {
@@ -202,9 +208,7 @@ export default {
 			if (this.article && this.article.json.thumbnail && this.article.json.thumbnail.srl)
 			{
 				let $queue = app.queue.selectQueueElement(this.article.json.thumbnail.srl);
-				$queue
-					.addClass('is-thumbnail')
-					.find('.btn-make-thumbnail').addClass('on');
+				$queue.find('.btn-make-thumbnail').addClass('on');
 			}
 		},
 		onAttachFiles()
@@ -250,16 +254,30 @@ export default {
 		},
 		onOpenThumbnailPreviewImage()
 		{
-			if (!this.uploader) return;
-			if (!(this.thumbnailOptions && this.thumbnailOptions.src))
+			try
+			{
+				if (!this.uploader) throw 'error';
+
+				if (this.thumbnailOptions && this.thumbnailOptions.src)
+				{
+					this.thumbnailPreviewImage = this.thumbnailOptions.src;
+				}
+				else if (this.article && this.article.json.thumbnail && this.article.json.thumbnail.path)
+				{
+					this.thumbnailPreviewImage = `${this.$store.state.url_api}/${this.article.json.thumbnail.path}`;
+				}
+				else
+				{
+					throw 'error';
+				}
+			}
+			catch(e)
 			{
 				this.$toast.add({
 					message: 'Not found thumbnail source',
 					color: 'error',
 				});
-				return;
 			}
-			this.thumbnailPreviewImage = this.thumbnailOptions.src;
 		},
 		onCloseThumbnailPreviewImage(e)
 		{
@@ -275,11 +293,19 @@ export default {
 			const article = this.article ? this.article.json : null;
 			const plugin = app.plugin.child.thumbnail;
 
-			// for edit
-			if (article && article.thumbnail && parseInt(file.srl) === parseInt(article.thumbnail.srl))
+			// restore points and zoom
+			if (parseInt(file.srl) === app.queue.$queue.find('.btn-make-thumbnail.on').closest('li').data('id'))
 			{
-				option.points = article.thumbnail.points;
-				option.zoom = article.thumbnail.zoom;
+				if (this.thumbnailOptions && this.thumbnailOptions.points && this.thumbnailOptions.zoom)
+				{
+					option.points = this.thumbnailOptions.points;
+					option.zoom = this.thumbnailOptions.zoom;
+				}
+				else if (article && article.thumbnail && article.thumbnail.points && article.thumbnail.zoom)
+				{
+					option.points = article.thumbnail.points;
+					option.zoom = article.thumbnail.zoom;
+				}
 			}
 
 			try
@@ -344,8 +370,6 @@ export default {
 		},
 		async makeThumbnail(res, app, file)
 		{
-			const classBtnMakeThumbnail = '.btn-make-thumbnail';
-
 			// set thumbnail data
 			const croppie = app.plugin.child.thumbnail.croppie.get();
 			const options = app.plugin.child.thumbnail.options;
@@ -362,10 +386,10 @@ export default {
 				size: options.output.size,
 			};
 		},
-		emptyThumbnail()
+		onClearThumbnail()
 		{
-			// TODO: 썸네일 이미지 비우기
-			this.thumbnailOptions = null;
+			this.uploader.queue.$queue.find(classBtnMakeThumbnail).removeClass('on');
+			this.thumbnailOptions = {};
 		}
 	}
 };
