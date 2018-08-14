@@ -134,7 +134,7 @@ export default {
 			if ($uploader.thumbnailOptions)
 			{
 				// 이전 이미지는 삭제한다. 삭제 실패하더라도 넘어간다.
-				if (data_article && data_article.json.thumbnail)
+				if (!!(data_article && data_article.json.thumbnail))
 				{
 					await this.$axios.$post(
 						`/files/remove-file`,
@@ -254,7 +254,7 @@ export default {
 		getCategoryInForm()
 		{
 			if (this.datas.article) return this.datas.article.category_srl;
-			if (this.category_srl === 'null') return null
+			if (this.category_srl === 'null') return null;
 			return this.category_srl || null;
 		},
 		onChangePosition(op)
@@ -266,6 +266,8 @@ export default {
 		{
 			let content = this.forms.content.value + '';
 			let pos = this.editor.start;
+			// 시작글자에서 붙인다면 처음 `\n`가 삭제됨
+			if (pos === 0) res = res.replace(/^\n/g, '');
 			this.forms.content.value = content.substr(0, pos) + res + content.substr(pos);
 			this.editor.start += res.length;
 		}

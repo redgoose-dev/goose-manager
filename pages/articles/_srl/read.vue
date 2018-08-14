@@ -11,9 +11,12 @@
 	<article v-if="files && files.length" class="files">
 		<h1>Attachment files</h1>
 		<ul>
-			<li><a href="#">.attach files</a></li>
-			<li><a href="#">.attach files</a></li>
-			<li><a href="#">.attach files</a></li>
+			<li v-for="(file,key) in files" :key="file.srl">
+				<a :href="`${$store.state.url_api}/${file.loc}`" target="_blank">
+					<span>{{file.name}}</span>
+					<em>{{getFileSize(file.size)}}</em>
+				</a>
+			</li>
 		</ul>
 	</article>
 
@@ -147,6 +150,10 @@ export default {
 					if (this.category_srl) query.category = this.category_srl;
 					return `/articles/${srl}/delete${text.serialize(query, true)}`;
 			}
+		},
+		getFileSize(size)
+		{
+			return text.getFileSize(size);
 		}
 	}
 }
@@ -156,15 +163,15 @@ export default {
 @import "../../../assets/scss/variables";
 .files {
 	margin: 40px 0 -10px;
-	padding: 20px;
+	padding: 20px 20px;
 	background: #eff0f2;
 	h1 {
 		margin: 0;
-		font-size: 1rem;
+		font-size: .875rem;
 		font-weight: 600;
 	}
 	ul {
-		margin: 1px -10px 0;
+		margin: 2px -10px 0;
 		padding: 0;
 		list-style: none;
 		font-size: 0;
@@ -175,10 +182,18 @@ export default {
 	a {
 		display: inline-block;
 		vertical-align: middle;
-		padding: 4px 10px;
-		font-size: 0.8125rem;
+		padding: 1px 10px;
+		font-size: .6875rem;
 		color: $color-key;
-		text-decoration: none;
+		em {
+			font-style: normal;
+			&:before {
+				content: '(';
+			}
+			&:after {
+				content: ')';
+			}
+		}
 	}
 }
 .rg-nav {

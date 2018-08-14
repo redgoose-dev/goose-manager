@@ -1,6 +1,6 @@
 <template>
 <article>
-	<page-header module="articles" :title="`${nestName ? `[${nestName}]` : ''} Articles`"/>
+	<page-header module="articles" :title="`${nest ? `[${nest.name}]` : ''} Articles`"/>
 
 	<error v-if="!!error" :message="error"/>
 	<template v-else>
@@ -28,8 +28,15 @@
 	<nav class="rg-nav">
 		<dl>
 			<dt>
-				<button-basic label="Nests" to="/nests" :inline="true"/>
-				<button-basic label="Categories" :to="`/categories/${this.nest_srl}`" :inline="true"/>
+				<button-basic
+					label="Nests"
+					to="/nests"
+					:inline="true"/>
+				<button-basic
+					v-if="(nest && parseInt(nest.json.useCategory) === 1)"
+					label="Categories"
+					:to="`/categories/${this.nest_srl}`"
+					:inline="true"/>
 			</dt>
 			<dd>
 				<button-basic
@@ -105,7 +112,7 @@ export default {
 				total: articles.success ? articles.data.total : 0,
 				articles: articles.success ? articles.data.index : null,
 				categories: categories.success ? categories.data.index : null,
-				nestName: nest.success ? nest.data.name : null,
+				nest: nest.success ? nest.data : null,
 				skin: nest.success && nest.data.json.articleSkin ? nest.data.json.articleSkin : null,
 			};
 		}

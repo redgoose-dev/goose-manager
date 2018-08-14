@@ -50,7 +50,7 @@ export default {
 	{
 		try
 		{
-			let res = await cox.$axios.$get('/apps?order=srl&sort=desc&unlimit=1');
+			let res = await cox.$axios.$get('/apps?order=srl&sort=asc&unlimit=1');
 			if (!(res && res.success && res.data.index && res.data.index.length)) throw messages.service.noItem;
 			return {
 				index: res.data.index.map((o) => {

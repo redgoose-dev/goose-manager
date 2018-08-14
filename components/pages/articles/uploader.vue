@@ -140,7 +140,7 @@ export default {
 						name: 'insert editor',
 						iconName: 'center_focus_strong',
 						action: (app, file) => {
-							let str = `![${file.name}](${file.fullSrc})\n\n`;
+							let str = `\n![${file.name}](${file.fullSrc})\n`;
 							this.$emit('insertEditor', str);
 						}
 					},
@@ -241,8 +241,8 @@ export default {
 				const index = queue.findItem(parseInt(item.dataset.id));
 				const file = queue.items.files[index];
 				const prefix = /^image/.test(file.type) ? '!' : '';
-				return `${prefix}[${file.name}](${file.fullSrc})`;
-			}).join("\n\n");
+				return `\n${prefix}[${file.name}](${file.fullSrc})`;
+			}).join(`\n`);
 
 			// output
 			this.$emit('insertEditor', str);

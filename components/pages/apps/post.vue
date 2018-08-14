@@ -46,7 +46,7 @@
 						placeholder="message"
 						:maxlength="100"
 						:error="!!forms.description.error"
-						:required="true"/>
+						:required="false"/>
 					<p class="rg-form-help">Description of the app</p>
 				</dd>
 			</dl>
