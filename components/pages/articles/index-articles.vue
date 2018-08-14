@@ -6,7 +6,7 @@
 			<li v-for="(item,key) in articles" :key="key">
 				<component
 					v-bind:is="`item-index-${useSkin}`"
-					:image="item.json.thumbnail ? getImageUrl(item.json.thumbnail.path) : null"
+					:image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
 					:link="getUrl('read', item.srl)"
 					:title="item.title"
 					:subject="item.title"
@@ -42,7 +42,6 @@ export default {
 		nest_srl: { type: [String,Number] },
 		category_srl: { type: [String,Number] },
 		page: { type: Number },
-		total: { type: Number, default: 0 },
 		articles: { type: Array, default: null },
 		loading: { type: Boolean, default: false },
 		skin: { type: String, default: 'thumbnail' }
