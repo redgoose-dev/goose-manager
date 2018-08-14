@@ -11,9 +11,10 @@
 					:title="item.title"
 					:subject="item.title"
 					:metas="[
-						item.category_name && `Category: ${item.category_name}`,
+						getDate(item.regdate),
+						item.category_name,
 						`Hit: ${item.hit}`,
-						`Date: ${getDate(item.regdate)}`
+						`Like: ${item.star}`
 					]"
 					:navs="[
 						{ label: 'Edit', link: getUrl('edit', item.srl) },

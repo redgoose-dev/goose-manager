@@ -7,7 +7,8 @@
 		v-else
 		:total="total"
 		:articles="articles"
-		:loading="processing"/>
+		:loading="processing"
+		skin="card"/>
 
 	<paginate
 		v-if="!!total"
@@ -23,7 +24,7 @@ import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 
 const defaultParams = {
-	field: 'srl,title,hit,regdate,category_srl',
+	field: 'srl,title,hit,star,regdate,category_srl,json',
 	ext_field: 'category_name',
 	order: 'srl',
 	sort: 'desc',

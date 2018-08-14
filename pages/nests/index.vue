@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import * as messages from '../../libs/messages';
-import * as dates from '../../libs/dates';
+import * as messages from '~/libs/messages';
+import * as dates from '~/libs/dates';
 
 export default {
 	components: {

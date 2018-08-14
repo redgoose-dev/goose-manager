@@ -36,6 +36,11 @@
 			<p v-if="!!metas" class="rg-item__metas">
 				<span v-for="(meta,key) in metas" v-if="meta" :key="key">{{meta}}</span>
 			</p>
+			<nav v-if="navs && navs.length">
+				<nuxt-link v-for="(nav,key) in navs" v-if="nav" :key="key" :to="nav.link">
+					{{nav.label}}
+				</nuxt-link>
+			</nav>
 		</div>
 	</div>
 </template>

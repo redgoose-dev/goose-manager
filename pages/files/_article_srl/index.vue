@@ -4,10 +4,10 @@
 
 	<error v-if="!!error" :message="error"/>
 	<error v-else-if="!(index && index.length)" type="empty"/>
-	<div v-else class="rg-index-card">
+	<div v-else class="rg-index-thumbnail">
 		<ul>
 			<li v-for="(item,key) in index" :key="key">
-				<item-index-card
+				<item-index-thumbnail
 					:href="`${url_api}/${item.loc}`"
 					target="_blank"
 					:subject="item.name"
@@ -34,6 +34,7 @@ import * as text from '~/libs/text';
 export default {
 	components: {
 		'PageHeader': () => import('~/components/contents/page-header'),
+		'ItemIndexThumbnail': () => import('~/components/contents/item-index-thumbnail'),
 		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
 		'ButtonBasic': () => import('~/components/button/basic'),
 		'Error': () => import('~/components/contents/error'),

@@ -27,7 +27,7 @@ html.rg-mode-popup {
 		font-weight: 600;
 	}
 	&__description {
-		margin: 5px 0 0;
+		margin: 3px 0 0;
 		font-size: .8125rem;
 		color: $color-blur;
 	}
@@ -322,7 +322,7 @@ html.rg-mode-popup {
 	}
 	&-thumbnail {
 		$self: '.rg-item';
-		$size: 150px;
+		$size: 165px;
 		position: relative;
 		box-shadow: $shadow-box;
 		background: #fff;
@@ -362,25 +362,36 @@ html.rg-mode-popup {
 				i {
 					font-size: 4rem;
 					color: rgba(#fff, 1);
+					text-shadow: 0 1px 15px rgba(#000,.1)
 				}
 			}
 		}
 		&__body {
 			padding: 15px;
-		}
-		#{$self}__metas {
-			min-height: .6875rem * 1.4 * 3;
-			> span {
-				display: block;
-				vertical-align: top;
-				line-height: 1.4;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				&:after {
-					display: none;
+			> nav {
+				margin: 5px 0 0;
+				font-size: 0;
+				> a {
+					display: inline-block;
+					vertical-align: middle;
+					margin: 0 0 0 10px;
+					font-size: .6875rem;
+					color: $color-base;
+					text-decoration: none;
+					font-weight: bold;
+					&:first-child {
+						margin-left: 0;
+					}
+					&:hover {
+						text-decoration: underline;
+					}
 				}
 			}
+		}
+		#{$self}__metas {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		&:hover:after {
 			box-shadow: 0 0 0 1px $color-key;

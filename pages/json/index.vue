@@ -9,6 +9,7 @@
 			<li v-for="(item,key) in index" :key="key">
 				<item-index-list
 					:subject="item.name"
+					:description="item.description"
 					:link="`/json/${item.srl}`"
 					:metas="[
 						`srl: ${item.srl}`,

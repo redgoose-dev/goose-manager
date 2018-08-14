@@ -14,6 +14,9 @@
 				</nuxt-link>
 				<strong v-else>{{subject}}</strong>
 			</p>
+			<p v-if="!!description" class="rg-item__description">
+				{{description}}
+			</p>
 			<p v-if="!!metas" class="rg-item__metas">
 				<span v-for="(meta,key) in metas" v-if="meta" :key="key">{{meta}}</span>
 			</p>
@@ -49,6 +52,7 @@ export default {
 		image: { type: String },
 		title: { type: String, default: 'item title' },
 		subject: { type: String, default: 'item subject' },
+		description: { type: String },
 		metas: { type: Array },
 		navs: { type: Array },
 		navType: { type: String, default: 'text' },

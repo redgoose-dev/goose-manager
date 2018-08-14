@@ -71,7 +71,7 @@ export default {
 			let str = '';
 			str += `${this.printDate(this.article.regdate)}`;
 			str += `, hit: ${this.article.hit}`;
-			str += `, like: ${this.article.json.like || 0}`;
+			str += `, like: ${this.article.star}`;
 			return str;
 		},
 		prefix()
