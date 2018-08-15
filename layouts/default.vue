@@ -14,7 +14,6 @@
 					<li v-if="isAdmin"><nuxt-link to="/users">Users</nuxt-link></li>
 					<li><nuxt-link to="/json">JSON</nuxt-link></li>
 					<li><a href="https://github.com/redgoose-dev/goose-api/wiki" target="_blank">Documentation</a></li>
-					<li><nuxt-link to="/test-flight">Test Flight</nuxt-link></li>
 				</ul>
 			</nav>
 			<nav v-if="!!user" class="profile-nav">
