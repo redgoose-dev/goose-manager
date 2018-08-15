@@ -3,7 +3,9 @@
 	<header class="header">
 		<div class="header__wrap">
 			<h1 class="logo">
-				<nuxt-link to="/">GOOSE</nuxt-link>
+				<nuxt-link to="/">
+					<img src="/images/txt-logo.svg" alt="GOOSE"/>
+				</nuxt-link>
 			</h1>
 			<nav class="gnb">
 				<ul>
