@@ -161,7 +161,7 @@ export default {
 						width: 800,
 						height: 700,
 						mobileSize: 650,
-						finalOutput : { type: 'base64', quality: .85, format: 'jpeg' },
+						finalOutput : { type: 'base64', quality: .65, format: 'jpeg' },
 						doneCallback: (res, app, file) => this.makeThumbnail(res, app, file).then()
 					})
 				}
@@ -352,11 +352,11 @@ export default {
 				output: {
 					type: 'base64',
 					format: 'jpeg',
-					quality : .80,
+					quality : .65,
 					size: {
 						// 레티나를 위하여 사이즈 증가
-						width: resource.width * 2,
-						height: resource.height * 2
+						width: resource.width * 1.5,
+						height: resource.height * 1.5
 					}
 				},
 				finalOutput : {
