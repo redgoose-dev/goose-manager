@@ -15,6 +15,7 @@
 		v-model="page"
 		url="/articles"
 		:page-count="Math.ceil(total/size)"
+		:pageRange="8"
 		@input="onChangePage"/>
 </article>
 </template>

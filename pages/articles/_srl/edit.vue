@@ -7,6 +7,7 @@
 		:srl="srl"
 		:nest_srl="nest_srl"
 		:category_srl="category_srl"
+		:page="page"
 		:skin="'default'"
 		:datas="datas"/>
 </article>
@@ -29,6 +30,7 @@ export default {
 		const srl = cox.params.srl;
 		const nest_srl = cox.query.nest || null;
 		const category_srl = cox.query.category || null;
+		const page = cox.query.page || null;
 
 		try
 		{
@@ -52,6 +54,7 @@ export default {
 				srl,
 				nest_srl,
 				category_srl,
+				page,
 				skin: null,
 				datas: {
 					article: article.data,

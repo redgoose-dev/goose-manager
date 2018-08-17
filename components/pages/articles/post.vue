@@ -81,6 +81,7 @@ export default {
 		srl: { type: [Number,String], default: null },
 		nest_srl: { type: [Number,String] },
 		category_srl: { type: [Number,String] },
+		page: { type: [Number,String] },
 		skin: { type: String, default: 'default' },
 		datas: {
 			type: Object,
@@ -233,6 +234,7 @@ export default {
 				let params = {};
 				params.nest = this.nest_srl;
 				if (this.category_srl) params.category = this.category_srl;
+				if (this.page && this.page > 1) params.page = this.page;
 				let url = `/articles/${this.srl || res.srl}/read${text.serialize(params, true)}`;
 				this.$router.replace(url);
 			}

@@ -51,6 +51,7 @@ export default {
 			const srl = cox.params.srl;
 			const nest_srl = cox.query.nest || null;
 			const category_srl = cox.query.category || null;
+			const page = cox.query.page || null;
 
 			let res = await cox.$axios.$get(`/articles/${srl}`);
 			if (!res.success) throw res.message;
@@ -58,6 +59,7 @@ export default {
 				srl,
 				nest_srl,
 				category_srl,
+				page,
 				processing: false,
 				forms: {
 					title: res.data.title,
@@ -91,6 +93,7 @@ export default {
 				// redirect to index
 				let params = {};
 				if (this.category_srl) params.category = this.category_srl;
+				if (this.page && this.page > 1) params.page = this.page;
 				let url = `/articles${this.nest_srl ? `/${this.nest_srl}` : ''}`;
 				this.$router.replace(url + text.serialize(params, true));
 			}

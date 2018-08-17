@@ -287,15 +287,15 @@ export default {
 				useCategory: parseInt(nest.json.useCategory) || 0,
 				articleSkin: nest.json.articleSkin,
 				thumbnail: {
-					width: nest.json.thumbnail.width,
-					height: nest.json.thumbnail.height,
+					width: parseInt(nest.json.thumbnail.width),
+					height: parseInt(nest.json.thumbnail.height),
 					type: nest.json.thumbnail.type,
 				},
 				useThumbnailSizeTool: parseInt(nest.json.useThumbnailSizeTool) || 0,
 				files: {
-					count: nest.json.files.count,
-					sizeSingle: nest.json.files.sizeSingle,
-					sizeTotal: nest.json.files.sizeTotal
+					count: parseInt(nest.json.files.count),
+					sizeSingle: parseInt(nest.json.files.sizeSingle),
+					sizeTotal: parseInt(nest.json.files.sizeTotal)
 				}
 			};
 		}
@@ -319,6 +319,7 @@ export default {
 			};
 		}
 
+		console.log(result);
 		return result;
 	},
 	computed: {

@@ -31,7 +31,7 @@
 			<dd>
 				<button-basic
 					v-if="nest_srl"
-					label="Add"
+					label="Write"
 					:to="makeButtonUrl('add')"
 					:inline="true"/>
 				<button-basic
@@ -86,10 +86,10 @@ export default {
 	{
 		try
 		{
-			let srl = parseInt(cox.params.srl);
-			let nest_srl = cox.query.nest || null;
-			let category_srl = cox.query.category || null;
-			let page = cox.query.page || null;
+			const srl = parseInt(cox.params.srl);
+			const nest_srl = cox.query.nest || null;
+			const category_srl = cox.query.category || null;
+			const page = cox.query.page || null;
 			const article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name`);
 			if (!article.success) throw article.message;
 
@@ -137,17 +137,21 @@ export default {
 				case 'index':
 					params = (this.nest_srl) ? `/${this.nest_srl}` : '';
 					if (this.category_srl) query.category = this.category_srl;
+					if (this.page && this.page > 1) query.page = this.page;
 					return `/articles${params}${text.serialize(query, true)}`;
 				case 'add':
 					if (this.category_srl) query.category = this.category_srl;
+					if (this.page && this.page > 1) query.page = this.page;
 					return `/articles/${this.nest_srl}/add${text.serialize(query, true)}`;
 				case 'edit':
 					if (this.nest_srl) query.nest = this.nest_srl;
 					if (this.category_srl) query.category = this.category_srl;
+					if (this.page && this.page > 1) query.page = this.page;
 					return `/articles/${srl}/edit${text.serialize(query, true)}`;
 				case 'delete':
 					if (this.nest_srl) query.nest = this.nest_srl;
 					if (this.category_srl) query.category = this.category_srl;
+					if (this.page && this.page > 1) query.page = this.page;
 					return `/articles/${srl}/delete${text.serialize(query, true)}`;
 			}
 		},

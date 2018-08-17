@@ -6,6 +6,7 @@
 		type="add"
 		:nest_srl="nest_srl"
 		:category_srl="category_srl"
+		:page="page"
 		:skin="skin"
 		:datas="datas"/>
 </article>
@@ -29,6 +30,7 @@ export default {
 		{
 			const nest_srl = cox.params.nest;
 			const category_srl = cox.query.category || null;
+			const page = cox.query.page || null;
 			const [ nest, categories, files ] = await Promise.all([
 				cox.$axios.$get(`/nests/${nest_srl}`).then((res) => {
 					return res.success ? res.data : null;
@@ -44,6 +46,7 @@ export default {
 			return {
 				nest_srl,
 				category_srl,
+				page,
 				skin: nest.json.articleSkin || 'default',
 				datas: {
 					nest,
