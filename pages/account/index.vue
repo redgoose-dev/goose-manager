@@ -69,10 +69,6 @@ export default {
 		{
 			return dates.getFormatDate(date, true);
 		}
-	},
-	mounted()
-	{
-		console.log(this.data);
 	}
 }
 </script>

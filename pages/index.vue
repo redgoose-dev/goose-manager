@@ -75,7 +75,6 @@
 			<ul>
 				<li v-for="(app,appKey) in apps" :key="appKey">
 					<item-index-card
-						:link="`/apps/${app.srl}`"
 						:subject="app.name"
 						:description="app.description"
 						:metas="[
@@ -207,6 +206,7 @@ export default {
 			if (this.nest_srl) params.nest = this.nest_srl;
 			if (this.category_srl) params.category = this.category_srl;
 			if (this.page && this.page > 1) params.page = this.page;
+			params.home = 1;
 			params = text.serialize(params, true);
 			return `/articles/${srl}/${type}${params}`;
 		},

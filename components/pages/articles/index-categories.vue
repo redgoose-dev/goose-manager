@@ -49,10 +49,6 @@ export default {
 			}
 			return `/articles/index/${this.nest_srl}${params}`;
 		}
-	},
-	mounted()
-	{
-		//console.log(this.categories);
 	}
 }
 </script>

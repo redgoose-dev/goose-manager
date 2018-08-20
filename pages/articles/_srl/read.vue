@@ -109,6 +109,7 @@ export default {
 				nest_srl,
 				category_srl,
 				page,
+				atHome: cox.query.home === '1',
 				article: article.data,
 				nest: nest.data,
 				category: (category && category.success) ? category.data : null,
@@ -138,7 +139,7 @@ export default {
 					params = (this.nest_srl) ? `/${this.nest_srl}` : '';
 					if (this.category_srl) query.category = this.category_srl;
 					if (this.page && this.page > 1) query.page = this.page;
-					return `/articles${params}${text.serialize(query, true)}`;
+					return `${(this.atHome) ? '/' : '/articles'}${params}${text.serialize(query, true)}`;
 				case 'add':
 					if (this.category_srl) query.category = this.category_srl;
 					if (this.page && this.page > 1) query.page = this.page;
