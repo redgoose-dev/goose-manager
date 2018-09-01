@@ -5,7 +5,7 @@ export const state = () => ({
 });
 
 
-// actions
+// actions - 비동기가 가능한 상태관리 메서드라고 볼 수 있음
 export const actions = {
 	async nuxtServerInit(cox, box)
 	{
@@ -25,7 +25,7 @@ export const actions = {
 };
 
 
-// mutations
+// mutations - 단순히 상태값만 변경해주는 메서드
 export const mutations = {
 	// setup app
 	setup(state, value)
