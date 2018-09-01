@@ -85,7 +85,7 @@ export default {
 			// trigger blur
 			e.currentTarget.blur();
 			// go to page
-			this.$router.push($el.getAttribute('href'));
+			this.$router.push(e.currentTarget.getAttribute('href'));
 		},
 		async onClickClearTokens(e)
 		{
