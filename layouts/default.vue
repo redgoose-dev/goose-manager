@@ -28,6 +28,9 @@
 								<a href="/account" @click="onClickProfileItem">Account</a>
 							</li>
 							<li>
+								<a href="#" @click="onClickClearTokens">Clear tokens</a>
+							</li>
+							<li>
 								<nuxt-link to="/auth/logout">Logout</nuxt-link>
 							</li>
 						</ul>
@@ -53,6 +56,7 @@
 </main>
 </template>
 
+<style lang="scss" src="./default.scss" scoped></style>
 <script>
 import ButtonBasic from '~/components/button/basic';
 
@@ -78,14 +82,29 @@ export default {
 		onClickProfileItem(e)
 		{
 			e.preventDefault();
-			const $el = e.currentTarget;
 			// trigger blur
-			$el.blur();
+			e.currentTarget.blur();
 			// go to page
 			this.$router.push($el.getAttribute('href'));
+		},
+		async onClickClearTokens(e)
+		{
+			e.preventDefault();
+			try
+			{
+				e.currentTarget.blur();
+				const res = await this.$axios.$post('/token/clear');
+				if (!res.success) throw 'error';
+				alert('Success clear token');
+			}
+			catch (e)
+			{
+				this.$toast.add({
+					message: 'Error clear token',
+					color: 'error',
+				});
+			}
 		}
 	},
 }
 </script>
-
-<style lang="scss" src="./default.scss" scoped></style>

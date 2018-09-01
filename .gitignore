@@ -1,6 +1,7 @@
 .idea/
 node_modules/
 .nuxt/
+.AppleDouble/
 
 .env
 0
