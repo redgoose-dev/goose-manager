@@ -466,21 +466,27 @@ html.rg-mode-popup {
 // article body
 .rg-article-body {
 	margin: 30px 0 0;
-	font-size: .875rem;
+	font-size: .9375rem;
 	line-height: 1.5;
 
 	h1, h2, h3, h4, h5, h6 {
 		line-height: 1.25;
 		font-weight: 600;
 	}
-	h1, h2, h3 { margin: 0 0 1rem; }
-	h4, h5, h6 { margin: 0 0 1rem; }
-	h1 { font-size: 2rem; }
-	h2 { font-size: 1.75rem; }
-	h3 { font-size: 1.5rem; }
-	h4 { font-size: 1.25rem; }
-	h5 { font-size: 1rem; }
+	h1, h2, h3 { margin: 2rem 0 1rem; }
+	h4, h5, h6 { margin: 1.5rem 0 1rem; }
+	h1 { font-size: 1.75rem; }
+	h2 { font-size: 1.5rem; }
+	h3 { font-size: 1.25rem; }
+	h4 { font-size: 1rem; }
+	h5 { font-size: .9375rem; }
 	h6 { font-size: .875rem; }
+	h1, h2, h3 {
+		& + * > img:first-child,
+		& + img {
+			margin-top: 1rem;
+		}
+	}
 	p { margin: 1rem 0; }
 	ul, ol {
 		margin: 1rem 0;
@@ -489,7 +495,7 @@ html.rg-mode-popup {
 	img {
 		display: block;
 		max-width: 100%;
-		margin: 1.5rem auto;
+		margin: 2rem auto 1rem;
 	}
 	blockquote {
 		position: relative;
@@ -515,7 +521,7 @@ html.rg-mode-popup {
 		}
 	}
 	hr {
-		margin: 1rem 0;
+		margin: 2rem 0;
 		padding: 0;
 		border: none;
 		height: 1px;
@@ -533,9 +539,9 @@ html.rg-mode-popup {
 				border-bottom-width: 2px;
 			}
 		}
-		tbody {
-			th, td {}
-		}
+	}
+	a {
+		word-break: break-all;
 	}
 	code {
 		margin: 0 2px;
@@ -584,6 +590,12 @@ html.rg-mode-popup {
 			height: 100%;
 			margin: 0;
 		}
+	}
+	embed {
+		display: block;
+		max-width: 100%;
+		margin: 2rem auto 1rem;
+		background: #eee;
 	}
 
 	> * {
