@@ -236,7 +236,7 @@ export default {
 				if (this.category_srl) params.category = this.category_srl;
 				if (this.page && this.page > 1) params.page = this.page;
 				let url = `/articles/${this.srl || res.srl}/read${text.serialize(params, true)}`;
-				this.$router.replace(url);
+				this.$router.push(url);
 			}
 			catch(e)
 			{
