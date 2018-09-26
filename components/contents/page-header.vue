@@ -3,22 +3,22 @@
 		<div class="rg-page-header__body">
 			<small v-if="!!prefix" class="rg-page-header__prefix">{{prefix}}</small>
 			<h1 class="rg-page-header__title">{{title || messages.title}}</h1>
-			<p class="rg-page-header__description">{{description || messages.description}}</p>
+			<p class="rg-page-header__description">{{messages.description}}</p>
 		</div>
-		<nav v-if="messages.links" class="rg-page-header__nav">
-			<button-circle-icon
-				v-if="messages.links.help"
-				:to="messages.links.help"
-				title="Help"
-				name="help"
-				color="key"/>
-			<button-circle-icon
-				v-if="messages.links.setting"
-				:to="messages.links.setting"
-				title="Setting"
-				name="settings"
-				color="gray"/>
-		</nav>
+		<!--<nav v-if="messages.links" class="rg-page-header__nav">-->
+			<!--<button-circle-icon-->
+				<!--v-if="messages.links.help"-->
+				<!--:to="messages.links.help"-->
+				<!--title="Help"-->
+				<!--name="help"-->
+				<!--color="key"/>-->
+			<!--<button-circle-icon-->
+				<!--v-if="messages.links.setting"-->
+				<!--:to="messages.links.setting"-->
+				<!--title="Setting"-->
+				<!--name="settings"-->
+				<!--color="gray"/>-->
+		<!--</nav>-->
 	</header>
 </template>
 
