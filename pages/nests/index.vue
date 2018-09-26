@@ -102,11 +102,12 @@ export default {
 	> header {
 		h1 {
 			margin: 0;
-			font-size: 1rem;
+			font-family: $font-eng;
+			font-size: 1.125rem;
 			font-weight: 600;
 			line-height: 1;
 			em {
-				padding-left: 3px;
+				padding-left: 0;
 				font-style: normal;
 				&:before {
 					content: '(';

@@ -1,6 +1,9 @@
 <template>
 <article>
-	<page-header module="articles" :title="`${nest ? `[${nest.name}]` : ''} Articles`"/>
+	<page-header
+		module="articles"
+		:title="`${nest ? `[${nest.name}]` : ''} Articles`"
+		:description="description"/>
 
 	<error v-if="!!error" :message="error"/>
 	<template v-else>
@@ -66,6 +69,7 @@ const defaultParamsCategory = {
 };
 
 export default {
+	name: 'page-articles-index',
 	components: {
 		'PageHeader': () => import('~/components/contents/page-header'),
 		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
@@ -77,6 +81,12 @@ export default {
 	validate(cox)
 	{
 		return cox.params.nest && /^\d+$/.test(cox.params.nest);
+	},
+	computed: {
+		description: function()
+		{
+			return this.nest.description || null;
+		}
 	},
 	async asyncData(cox)
 	{
@@ -101,7 +111,7 @@ export default {
 			const [ categories, articles, nest ] = await Promise.all([
 				cox.$axios.$get(`/categories${text.serialize(paramsCategory, true)}`),
 				cox.$axios.$get(`/articles${text.serialize(paramsArticle, true)}`),
-				cox.$axios.$get(`/nests/${nest_srl}?field=name,json`)
+				cox.$axios.$get(`/nests/${nest_srl}?field=name,json,description`)
 			]);
 			return {
 				nest_srl,

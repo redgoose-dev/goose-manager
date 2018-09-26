@@ -1,5 +1,5 @@
 <template>
-	<div class="rg-item rg-item-card">
+	<div class="rg-item rg-item-card" :title="description">
 		<figure v-if="!!image" class="rg-item-card__image">
 			<a v-if="!!href" :href="href" :target="target">
 				<img :src="image" :alt="title"/>
@@ -19,9 +19,6 @@
 					<strong>{{subject}}</strong>
 				</nuxt-link>
 				<strong v-else>{{subject}}</strong>
-			</p>
-			<p v-if="!!description" class="rg-item__description">
-				{{description}}
 			</p>
 			<p v-if="!!metas" class="rg-item__metas">
 				<span v-for="(meta,key) in metas" v-if="meta" :key="key">{{meta}}</span>

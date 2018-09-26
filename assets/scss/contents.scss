@@ -11,7 +11,7 @@ html.rg-mode-popup {
 
 // contents header
 .rg-page-header {
-	margin: 0 0 30px;
+	margin: 0 0 40px;
 	display: flex;
 	align-items: center;
 	&__body {
@@ -28,8 +28,7 @@ html.rg-mode-popup {
 	}
 	&__description {
 		margin: 3px 0 0;
-		font-size: .8125rem;
-		color: $color-blur;
+		font-size: .75rem;
 	}
 	&__prefix {
 		display: block;
@@ -158,15 +157,6 @@ html.rg-mode-popup {
 		strong {
 			color: $color-key;
 		}
-	}
-	&__description {
-		margin: 0;
-		font-size: 10px;
-		line-height: 1.5;
-		color: mix($color-blur, #fff, 60%);
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
 	}
 	&__metas {
 		display: block;
