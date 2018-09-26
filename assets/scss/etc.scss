@@ -109,8 +109,6 @@ $dir: '/fonts/material-icons/';
 	padding: 10vh 0;
 	text-align: center;
 	font-weight: 600;
-	background: #fff;
-	box-shadow: $shadow-box;
 
 	&__body {
 		> i {
@@ -131,6 +129,10 @@ $dir: '/fonts/material-icons/';
 	}
 	&-large {
 		padding: 15vh 0;
+	}
+	&-frame {
+		background: #fff;
+		box-shadow: $shadow-box;
 	}
 }
 

@@ -4,13 +4,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<button-basic
-					type="button"
-					label="Preview"
-					size="small"
-					icon="visibility"
-					color="gray"
-					@onClick="onPreview"/>
+				<slot name="nav"/>
 			</dd>
 		</dl>
 	</nav>
@@ -63,6 +57,7 @@
 </div>
 </template>
 
+<style lang="scss" src="./editor.scss" scoped></style>
 <script>
 import marked from 'marked';
 
@@ -134,5 +129,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" src="./editor.scss" scoped></style>

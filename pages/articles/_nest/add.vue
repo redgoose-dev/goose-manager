@@ -16,6 +16,7 @@
 import * as messages from '~/libs/messages';
 
 export default {
+	name: 'page-add-article',
 	components: {
 		'PageHeader': () => import('~/components/contents/page-header'),
 		'Post': () => import('~/components/pages/articles/post'),

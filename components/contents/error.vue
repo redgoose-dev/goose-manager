@@ -1,5 +1,9 @@
 <template>
-<div :class="[ 'rg-error', size && `rg-error-${size}` ]">
+<div :class="[
+	'rg-error',
+	size && `rg-error-${size}`,
+	frame && `rg-error-frame`,
+]">
 	<div class="rg-error__body">
 		<i class="material-icons">{{iconName}}</i>
 		<span>{{text}}</span>
@@ -16,6 +20,7 @@ export default {
 		icon: { type: String, default: '' },
 		message: { type: String, default: null },
 		size: { type: String, default: '' },
+		frame: { type: Boolean, default: true },
 	},
 	computed: {
 		text()

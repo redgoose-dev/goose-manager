@@ -37,7 +37,7 @@
 				</button>
 				<button type="button" @click="onSelectAllToggleQueue">
 					<i class="material-icons">crop_free</i>
-					<span>Select queues</span>
+					<span>Select</span>
 				</button>
 				<button type="button" @click="onOpenThumbnailPreviewImage">
 					<i class="material-icons">zoom_in</i>

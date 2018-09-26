@@ -1,66 +1,98 @@
 <template>
-<form @submit="onSubmit" ref="form">
-	<fieldset class="rg-form-fieldset">
-		<legend>{{type}} article form</legend>
-		<dl v-if="datas.categories && datas.categories.length" class="rg-form-field">
-			<dt><label for="category">Category</label></dt>
-			<dd>
-				<form-select
-					name="category"
-					id="category"
-					v-model="forms.category_srl"
-					:options="datas.categories"
-					:required="false"
-					:inline="true"/>
-			</dd>
-		</dl>
-		<dl class="rg-form-field">
-			<dt><label for="title">Title</label></dt>
-			<dd>
-				<form-text
-					type="text"
-					name="title"
-					id="title"
-					v-model="forms.title.value"
-					placeholder="article title"
-					:maxlength="120"
-					:error="!!forms.title.error"
-					:required="true"/>
-			</dd>
-		</dl>
-	</fieldset>
+<div>
+	<form @submit="onSubmit" ref="form">
+		<fieldset class="rg-form-fieldset">
+			<legend>{{type}} article form</legend>
+			<dl v-if="datas.categories && datas.categories.length" class="rg-form-field">
+				<dt><label for="category">Category</label></dt>
+				<dd>
+					<form-select
+						name="category"
+						id="category"
+						v-model="forms.category_srl"
+						:options="datas.categories"
+						:required="false"
+						:inline="true"/>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="title">Title</label></dt>
+				<dd>
+					<form-text
+						type="text"
+						name="title"
+						id="title"
+						v-model="forms.title.value"
+						placeholder="article title"
+						:maxlength="120"
+						:error="!!forms.title.error"
+						:required="true"/>
+				</dd>
+			</dl>
+		</fieldset>
 
-	<editor
-		ref="editor"
-		name="content"
-		id="content"
-		v-model="forms.content.value"
-		placeholder="article content body"
-		:rows="18"
-		:required="true"
-		@position="onChangePosition"
-		className="editor"/>
+		<editor
+			ref="editor"
+			name="content"
+			id="content"
+			v-model="forms.content.value"
+			placeholder="article content body"
+			:rows="18"
+			:required="true"
+			@position="onChangePosition"
+			className="editor">
+			<template slot="nav">
+				<button-basic
+					type="button"
+					label="Preview"
+					size="small"
+					icon="visibility"
+					color="gray"
+					:inline="true"
+					@onClick="(e) => $refs.editor.onPreview(e)"/>
+			</template>
+		</editor>
 
-	<uploader
-		ref="$uploader"
-		:article="datas.article"
-		:files="datas.files"
-		:nest="datas.nest"
-		:options="{}"
-		@insertEditor="insertFileToEditor"/>
+		<uploader
+			ref="$uploader"
+			:article="datas.article"
+			:files="datas.files"
+			:nest="datas.nest"
+			:options="{}"
+			@insertEditor="insertFileToEditor"/>
 
-	<nav class="rg-nav">
-		<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
-		<button-basic
-			type="submit"
-			color="key"
-			:label="!processing ? (this.type === 'edit' ? 'Edit Article' : 'Write Article') : null"
-			:inline="true"
-			:icon="processing ? 'cached' : ''"
-			:rotateIcon="processing"
-			:disabled="processing"/>
-	</nav>
-</form>
+		<nav class="rg-nav">
+			<dl>
+				<dt>
+					<button-basic
+						type="button"
+						label="Drafts list"
+						color="gray"
+						:inline="true"
+						@onClick="onOpenDraftWindow"/>
+					<button-basic
+						type="button"
+						label="Save draft"
+						color="key"
+						:inline="true"
+						@onClick="onSaveDraft"/>
+				</dt>
+				<dd>
+					<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
+					<button-basic
+						type="submit"
+						color="key"
+						:label="!processing ? (this.type === 'edit' ? 'Edit Article' : 'Write Article') : null"
+						:inline="true"
+						:icon="processing ? 'cached' : ''"
+						:rotateIcon="processing"
+						:disabled="processing"/>
+				</dd>
+			</dl>
+		</nav>
+	</form>
+	<drafts ref="drafts" :open="openDraftWindow" @attach="onAttachDraft"/>
+</div>
 </template>
 
 <script>
@@ -69,12 +101,14 @@ import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 
 export default {
+	name: 'post-article',
 	components: {
 		'FormText': () => import('~/components/form/text'),
 		'FormSelect': () => import('~/components/form/select'),
 		'ButtonBasic': () => import('~/components/button/basic'),
 		'Editor': () => import('~/components/pages/articles/editor'),
 		'Uploader': () => import('~/components/pages/articles/uploader'),
+		'Drafts': () => import('~/components/pages/articles/drafts'),
 	},
 	props: {
 		type: { type: String, default: 'add' }, // add,edit
@@ -99,6 +133,7 @@ export default {
 			forms: {
 				app_srl: this.datas.nest.app_srl,
 				nest_srl: this.datas.article ? this.datas.article.nest_srl : this.nest_srl,
+				draft_srl: null,
 				category_srl: this.getCategoryInForm(),
 				title: {
 					value: this.datas.article ? this.datas.article.title : '',
@@ -114,6 +149,7 @@ export default {
 				start: 0,
 				end: 0,
 			},
+			openDraftWindow: false,
 		};
 	},
 	methods: {
@@ -215,6 +251,7 @@ export default {
 							`/files/${o.srl}/edit`,
 							formData({
 								article_srl: this.srl || res.srl,
+								//draft_srl: null, // TODO
 								ready: 0
 							})
 						));
@@ -272,6 +309,51 @@ export default {
 			if (pos === 0) res = res.replace(/^\n/g, '');
 			this.forms.content.value = content.substr(0, pos) + res + content.substr(pos);
 			this.editor.start += res.length;
+		},
+		onOpenDraftWindow()
+		{
+			this.$refs.drafts.open().then();
+		},
+		async onSaveDraft()
+		{
+			if (!this.forms.content.value)
+			{
+				this.$toast.add({
+					color: 'error',
+					message: `"content body" values are required.`,
+				});
+				return;
+			}
+
+			let description = prompt(messages.msg.inputDraftDescription);
+			if (description === null) return;
+
+			try
+			{
+				let res = await this.$axios.$post(`/drafts`, {
+					title: this.forms.title.value,
+					content: this.forms.content.value,
+					description,
+				});
+				if (!res.success) throw res.message;
+				let srl = res.srl;
+
+				console.log(res, srl);
+
+				// TODO: get files
+				// TODO: edit files list
+			}
+			catch(e)
+			{
+				this.$toast.add({ message: 'Failed save draft', color: 'error' });
+			}
+		},
+		async onAttachDraft(values)
+		{
+			if (values.srl) this.forms.draft_srl = values.srl;
+			if (values.title) this.forms.title.value = values.title;
+			if (values.content) this.forms.content.value = values.content;
+			// TODO: get files
 		}
 	}
 }

@@ -18,11 +18,16 @@
 			align-items: center;
 			justify-content: space-between;
 		}
-		dt {
-
-		}
+		dt {}
 		dd {
 			margin-left: 0;
+			display: flex;
+			> * {
+				margin-left: 5px;
+				&:first-child {
+					margin-left: 0;
+				}
+			}
 		}
 	}
 	&__guide {
