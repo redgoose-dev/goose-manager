@@ -158,6 +158,15 @@ html.rg-mode-popup {
 			color: $color-key;
 		}
 	}
+	&__description {
+		margin: 0;
+		font-size: 11px;
+		line-height: 1.5;
+		color: $color-blur;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 	&__metas {
 		display: block;
 		margin: 2px 0 0;

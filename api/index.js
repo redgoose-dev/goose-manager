@@ -17,7 +17,13 @@ router.use((req, res, next) => {
 router.post('/session-save', (req, res) => {
 	if (req.body && req.body.srl && req.body.email && req.body.token)
 	{
+		// set time
+		req.session.cookie.maxAge = req.body.save ? 60000 * 60 * 6 * 30 : 60000 * 60 * 6; // ms * m * h * d
+		// set data
 		req.session.authUser = req.body;
+		// save
+		req.session.save();
+		// result
 		return res.json({ success: true });
 	}
 	res.status(401).json({ success: false, message: 'Bad credentials' })

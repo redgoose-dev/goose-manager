@@ -35,12 +35,18 @@
 							<i></i>
 						</div>
 					</div>
+					<div class="login__field login__save-auth">
+						<form-check
+							name="save_auth"
+							label="Keep me signed in."
+							v-model="forms.save"/>
+					</div>
 				</fieldset>
 
 				<nav class="login__nav">
 					<button-basic
 						type="submit"
-						:label="!processing ? 'Login' : null"
+						:label="!processing ? 'Sign in' : null"
 						:icon="processing ? 'cached' : ''"
 						:rotateIcon="processing"
 						size="large"
@@ -59,7 +65,9 @@ import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 
 export default {
+	name: 'page-login',
 	components: {
+		'FormCheck': () => import('~/components/form/check'),
 		'ButtonBasic': () => import('~/components/button/basic'),
 	},
 	layout: 'blank',
@@ -70,6 +78,7 @@ export default {
 			forms: {
 				email: '',
 				password: '',
+				save: false,
 			},
 			processing: false,
 		};
@@ -106,7 +115,11 @@ export default {
 				if (!(resultApi.success && resultApi.data && resultApi.data.email)) throw resultApi.message;
 
 				// save session
-				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, resultApi.data);
+				const resultParams = {
+					...resultApi.data,
+					save: this.forms.save,
+				};
+				const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save`, resultParams);
 				if (!(resultSession && resultSession.success))
 				{
 					throw resultSession.message || messages.error.failedLogin;

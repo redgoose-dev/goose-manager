@@ -4,11 +4,11 @@
 		title="Dashboard"
 		description="welcome to goose manager"/>
 
-	<section v-if="articles && articles.length" class="section section-first">
+	<section class="section section-first">
 		<header>
 			<h1>Articles</h1>
 		</header>
-		<div :class="`rg-index-thumbnail`">
+		<div v-if="articles && articles.length" :class="`rg-index-thumbnail`">
 			<ul>
 				<li v-for="(item,key) in articles" :key="key">
 					<item-index-thumbnail
@@ -29,9 +29,10 @@
 				</li>
 			</ul>
 		</div>
+		<error v-else type="empty" class="error"/>
 	</section>
 
-	<section v-if="nests && nests.length" class="section">
+	<section class="section">
 		<header>
 			<h1>Nests</h1>
 			<nav>
@@ -60,6 +61,7 @@
 				</li>
 			</ul>
 		</div>
+		<error v-else type="empty" class="error"/>
 	</section>
 
 	<section class="section">
@@ -89,6 +91,7 @@
 				</li>
 			</ul>
 		</div>
+		<error v-else type="empty" class="error"/>
 	</section>
 
 	<section class="section">
@@ -118,6 +121,7 @@
 				</li>
 			</ul>
 		</div>
+		<error v-else type="empty" class="error"/>
 	</section>
 
 </article>
@@ -175,19 +179,21 @@ export default {
 				cox.$axios.$get(`/apps${text.serialize(params.apps, true)}`),
 				cox.$axios.$get(`/json${text.serialize(params.json, true)}`),
 			]);
-			if (articles.success) data.articles = articles.data.index;
-			if (nests.success) data.nests = nests.data.index;
-			if (apps.success) data.apps = apps.data.index;
-			if (json.success) data.json = json.data.index;
-
-			return data;
+			return {
+				articles: articles.success ? articles.data.index : null,
+				nests: nests.success ? nests.data.index : null,
+				apps: apps.success ? apps.data.index : null,
+				json: json.success ? json.data.index : null,
+			};
 		}
 		catch(e)
 		{
-			cox.error({
-				statusCode: 500,
-				message: (typeof e === 'string') ? e : messages.error.service,
-			});
+			return {
+				articles: null,
+				nests: null,
+				apps: null,
+				json: null,
+			};
 		}
 	},
 	methods: {
@@ -240,5 +246,8 @@ export default {
 			}
 		}
 	}
+}
+.error {
+	padding: 30px 0;
 }
 </style>

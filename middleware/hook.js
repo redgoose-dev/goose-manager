@@ -13,5 +13,4 @@ export default function(cox)
 	{
 		redirect('/auth/login');
 	}
-
 }

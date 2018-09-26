@@ -53,7 +53,7 @@
 		}
 	}
 	&__field {
-		margin: 20px 0;
+		margin: 15px 0;
 		&:first-child {
 			margin-top: 0;
 		}
@@ -118,5 +118,8 @@
 	}
 	&__nav {
 		margin: 30px 0 0;
+	}
+	&__save-auth {
+		margin-top: -5px;
 	}
 }

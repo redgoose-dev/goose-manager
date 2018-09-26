@@ -4,10 +4,10 @@
 
 	<error v-if="!!error" :message="error"/>
 	<error v-else-if="!(index && index.length)" type="empty"/>
-	<div v-else class="rg-index-card">
+	<div v-else class="rg-index-list">
 		<ul>
 			<li v-for="(item,key) in index" :key="key">
-				<item-index-card
+				<item-index-list
 					:subject="item.name"
 					:description="item.description"
 					:metas="[
@@ -42,7 +42,7 @@ import * as dates from '~/libs/dates';
 export default {
 	components: {
 		'PageHeader': () => import('~/components/contents/page-header'),
-		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
+		'ItemIndexList': () => import('~/components/contents/item-index-list'),
 		'ButtonBasic': () => import('~/components/button/basic'),
 		'Error': () => import('~/components/contents/error'),
 	},

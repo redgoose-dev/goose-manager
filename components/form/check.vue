@@ -73,7 +73,16 @@ export default {
 	methods: {
 		onChange: function(e)
 		{
-			this.$emit('change', !!e.target.value ? e.target.value : e.target.checked, e);
+			switch (this.type)
+			{
+				case 'checkbox':
+					this.$emit('change', e.target.checked, e);
+					break;
+				case 'radio':
+					this.$emit('change', !!e.target.value ? e.target.value : e.target.checked, e);
+					break;
+			}
+
 		}
 	},
 }
