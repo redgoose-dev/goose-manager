@@ -133,7 +133,6 @@ export default {
 			forms: {
 				app_srl: this.datas.nest.app_srl,
 				nest_srl: this.datas.article ? this.datas.article.nest_srl : this.nest_srl,
-				draft_srl: null,
 				category_srl: this.getCategoryInForm(),
 				title: {
 					value: this.datas.article ? this.datas.article.title : '',
@@ -251,7 +250,6 @@ export default {
 							`/files/${o.srl}/edit`,
 							formData({
 								article_srl: this.srl || res.srl,
-								//draft_srl: null, // TODO
 								ready: 0
 							})
 						));
@@ -336,12 +334,11 @@ export default {
 					description,
 				});
 				if (!res.success) throw res.message;
-				let srl = res.srl;
 
-				console.log(res, srl);
-
-				// TODO: get files
-				// TODO: edit files list
+				this.$toast.add({
+					color: 'success',
+					message: 'Success save draft',
+				});
 			}
 			catch(e)
 			{
@@ -350,7 +347,6 @@ export default {
 		},
 		async onAttachDraft(values)
 		{
-			if (values.srl) this.forms.draft_srl = values.srl;
 			if (values.title) this.forms.title.value = values.title;
 			if (values.content) this.forms.content.value = values.content;
 			// TODO: get files
