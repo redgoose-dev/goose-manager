@@ -349,7 +349,6 @@ export default {
 		{
 			if (values.title) this.forms.title.value = values.title;
 			if (values.content) this.forms.content.value = values.content;
-			// TODO: get files
 		}
 	}
 }
