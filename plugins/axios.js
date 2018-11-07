@@ -3,6 +3,7 @@ import * as msg from '../libs/messages';
 export default function(cox)
 {
 	const { $axios, error } = cox;
+	const debug = process.env.APP_DEBUG === 'true';
 
 	// check
 	if (!process.env.TOKEN_PUBLIC)
@@ -41,4 +42,17 @@ export default function(cox)
 
 	// set header
 	$axios.setHeader('Authorization', token);
+
+	if (debug)
+	{
+		// on request
+		$axios.onRequest(config => {
+			console.log('Request URL: ' + config.url);
+		});
+
+		// on error
+		$axios.onError(error => {
+			console.error(error.message);
+		});
+	}
 }
