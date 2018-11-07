@@ -52,7 +52,7 @@ export default function(cox)
 
 		// on error
 		$axios.onError(error => {
-			console.error(error.message);
+			console.error('ERROR: ', error.message);
 		});
 	}
 }
