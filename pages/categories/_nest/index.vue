@@ -21,7 +21,7 @@
 					:navs="[
 						{
 							label: 'Edit',
-							link: `/categories/${item.srl}/edit${nest_srl ? `?nest=${nest_srl}` : ''}`
+							link: `/categories/${item.srl}/edit${item.nest_srl ? `?nest=${item.nest_srl}` : ''}`
 						},
 						{
 							label: 'Delete',
@@ -90,7 +90,7 @@ export default {
 			return {
 				nest_srl,
 				total: categories.success ? categories.data.total : 0,
-				index: categories.success ? categories.data.index : null,
+				categories: categories.success ? categories.data.index : null,
 				error: null,
 			};
 		}
@@ -101,6 +101,12 @@ export default {
 				error: (typeof e === 'string') ? e : messages.error.service
 			};
 		}
+	},
+	computed: {
+		index()
+		{
+			return !!this.categories && this.categories.length ? this.categories : [];
+		},
 	},
 	methods: {
 		getDate(date)
