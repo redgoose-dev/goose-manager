@@ -1,8 +1,9 @@
 <template>
 <main class="login">
+	<h1>{{appName}}</h1>
 	<div>
 		<article class="login__body">
-			<h1 class="login__title">Goose Manager</h1>
+			<div class="login__title">Goose Manager</div>
 			<p class="login__app-name">{{appName}}</p>
 			<form ref="form" @submit="onSubmitLogin" class="login__form">
 				<fieldset class="login__fieldset">
@@ -86,7 +87,7 @@ export default {
 	computed: {
 		appName()
 		{
-			return process.env.APP_NAME;
+			return this.$store.state.appName;
 		}
 	},
 	mounted()

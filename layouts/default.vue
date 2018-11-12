@@ -1,12 +1,13 @@
 <template>
 <main>
+	<h1>{{appName}}</h1>
 	<header class="header">
 		<div class="header__wrap">
-			<h1 class="logo">
+			<div class="logo">
 				<nuxt-link to="/">
 					<img src="/images/txt-logo.svg" alt="GOOSE"/>
 				</nuxt-link>
-			</h1>
+			</div>
 			<nav class="gnb">
 				<ul>
 					<li><nuxt-link to="/apps">Apps</nuxt-link></li>
@@ -58,11 +59,10 @@
 
 <style lang="scss" src="./default.scss" scoped></style>
 <script>
-import ButtonBasic from '~/components/button/basic';
-
 export default {
+	name: 'layout',
 	components: {
-		ButtonBasic,
+		'button-basic': () => import('~/components/button/basic'),
 	},
 	data()
 	{
@@ -76,7 +76,11 @@ export default {
 		isAdmin()
 		{
 			return !!this.$store.state.authUser.admin;
-		}
+		},
+		appName()
+		{
+			return this.$store.state.appName;
+		},
 	},
 	methods: {
 		onClickProfileItem(e)

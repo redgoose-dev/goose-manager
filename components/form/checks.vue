@@ -1,9 +1,5 @@
 <template>
-	<div :class="[
-		'rg-form-checks',
-		inline && 'rg-form-checks-inline',
-		className
-	]">
+	<div :class="['rg-form-checks', inline && 'rg-form-checks-inline']">
 		<p v-for="(item,key) in items" :key="key">
 			<form-check
 				:type="typeName"
@@ -13,8 +9,7 @@
 				:value="item.value"
 				:disabled="disabled || item.disabled"
 				:checked="confirmCheck(item.value)"
-				@change="onChange"
-			/>
+				@change="onChange"/>
 		</p>
 	</div>
 </template>
@@ -35,8 +30,6 @@ export default {
 		value: { type: [Array,String,Number,Boolean] },
 		change: {},
 		disabled: { type: Boolean, default: false },
-		className: { type: String },
-		styles: { type: [Object,Array] },
 	},
 	model: {
 		prop: 'value',

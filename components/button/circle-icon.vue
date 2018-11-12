@@ -1,33 +1,15 @@
 <template>
-	<button
-		v-if="type"
-		:type="type"
-		:title="title"
-		@click="onClick"
-		:disabled="disabled"
-		:class="classNames"
-		:style="styles">
+	<button v-if="type" :type="type" :title="title" @click="onClick" :disabled="disabled" :class="classNames">
 		<span>
 			<i class="material-icons">{{name}}</i>
 		</span>
 	</button>
-	<nuxt-link
-		v-else-if="to"
-		:to="to"
-		:title="title"
-		:class="classNames"
-		:style="styles">
+	<nuxt-link v-else-if="to" :to="to" :title="title" :class="classNames">
 		<span>
 			<i class="material-icons">{{name}}</i>
 		</span>
 	</nuxt-link>
-	<a
-		v-else
-		:href="href"
-		:target="target"
-		:title="title"
-		:class="classNames"
-		:style="styles">
+	<a v-else :href="href" :target="target" :title="title" :class="classNames">
 		<span>
 			<i class="material-icons">{{name}}</i>
 		</span>
@@ -49,7 +31,6 @@ export default {
 		color: { type: String }, // `key`, `gray`
 		center: { type: Boolean, default: false },
 		className: { type: String },
-		styles: { type: [Object,Array] },
 	},
 
 	computed: {

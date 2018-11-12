@@ -1,47 +1,47 @@
 <template>
-	<nav :class="className">
-		<a
-			v-if="firstLastButton"
-			@click="selectFirstPage()"
-			title="First"
-			:class="[ firstPageSelected() && 'disabled' ]">
-			<i class="material-icons">first_page</i>
-		</a>
-		<a
-			v-if="!(hidePrevNext && firstPageSelected())"
-			@click="prevPage()"
-			title="Prev"
-			:class="[ firstPageSelected() && 'disabled' ]">
-			<i class="material-icons">chevron_left</i>
-		</a>
+<nav class="rg-paginate">
+	<a
+		v-if="firstLastButton"
+		@click="selectFirstPage()"
+		title="First"
+		:class="[ firstPageSelected() && 'disabled' ]">
+		<i class="material-icons">first_page</i>
+	</a>
+	<a
+		v-if="!(hidePrevNext && firstPageSelected())"
+		@click="prevPage()"
+		title="Prev"
+		:class="[ firstPageSelected() && 'disabled' ]">
+		<i class="material-icons">chevron_left</i>
+	</a>
 
-		<template v-for="page in pages">
-			<span v-if="page.breakView" :class="[ 'dots' ]">
-				<em>…</em>
-			</span>
-			<span v-else-if="page.disabled" :class="[ page.selected && 'active', 'disabled' ]">
-				<em>{{ page.content }}</em>
-			</span>
-			<a v-else @click="handlePageSelected(page.index + 1)" :class="[ page.selected && 'active' ]">
-				<em>{{ page.content }}</em>
-			</a>
-		</template>
+	<template v-for="page in pages">
+		<span v-if="page.breakView" :class="[ 'dots' ]">
+			<em>…</em>
+		</span>
+		<span v-else-if="page.disabled" :class="[ page.selected && 'active', 'disabled' ]">
+			<em>{{ page.content }}</em>
+		</span>
+		<a v-else @click="handlePageSelected(page.index + 1)" :class="[ page.selected && 'active' ]">
+			<em>{{ page.content }}</em>
+		</a>
+	</template>
 
-		<a
-			v-if="!(hidePrevNext && lastPageSelected())"
-			@click="nextPage()"
-			title="Next"
-			:class="[ lastPageSelected() && 'disabled' ]">
-			<i class="material-icons">chevron_right</i>
-		</a>
-		<a
-			v-if="firstLastButton"
-			@click="selectLastPage()"
-			title="Last"
-			:class="[ lastPageSelected() && 'disabled' ]">
-			<i class="material-icons">last_page</i>
-		</a>
-	</nav>
+	<a
+		v-if="!(hidePrevNext && lastPageSelected())"
+		@click="nextPage()"
+		title="Next"
+		:class="[ lastPageSelected() && 'disabled' ]">
+		<i class="material-icons">chevron_right</i>
+	</a>
+	<a
+		v-if="firstLastButton"
+		@click="selectLastPage()"
+		title="Last"
+		:class="[ lastPageSelected() && 'disabled' ]">
+		<i class="material-icons">last_page</i>
+	</a>
+</nav>
 </template>
 
 <script>
@@ -57,7 +57,6 @@ export default {
 		marginPages: { type: Number, default: 1 },
 		firstLastButton: { type: Boolean, default: true },
 		hidePrevNext: { type: Boolean, default: false },
-		className: { type: String, default: 'rg-paginate' },
 	},
 	beforeUpdate() {
 		if (this.forcePage === undefined) return;

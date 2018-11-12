@@ -2,6 +2,7 @@
 export const state = () => ({
 	url_api: '',
 	authUser: null,
+	appName: 'Goose manager',
 });
 
 
@@ -19,6 +20,7 @@ export const actions = {
 				url_app: box.env.APP_URL,
 				url_api: box.env.APP_API_URL,
 				authUser: (req.session && req.session.authUser) ? req.session.authUser : null,
+				appName: box.env.APP_NAME,
 			});
 		}
 	}
@@ -33,6 +35,7 @@ export const mutations = {
 		state.url_app = value.url_app;
 		state.url_api = value.url_api;
 		state.authUser = value.authUser;
+		state.appName = value.appName;
 	},
 
 	// update auth user

@@ -9,7 +9,7 @@
 	<div v-html="article.content" class="rg-article-body"></div>
 
 	<article v-if="files && files.length" class="files">
-		<h1>Attachment files</h1>
+		<h3>Attachment files</h3>
 		<ul>
 			<li v-for="(file,key) in files" :key="file.srl">
 				<a :href="`${$store.state.url_api}/${file.loc}`" target="_blank">
@@ -170,7 +170,7 @@ export default {
 	margin: 40px 0 -10px;
 	padding: 20px 20px;
 	background: #eff0f2;
-	h1 {
+	h3 {
 		margin: 0;
 		font-size: .875rem;
 		font-weight: 600;

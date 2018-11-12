@@ -1,19 +1,13 @@
 <template>
-	<span :class="classNames" :style="styles">
-		<select
-			:name="name"
-			:id="id"
-			:value="selected"
-			:required="required"
-			:disabled="disabled"
-			@input="onChange">
-			<option value="">Please select</option>
-			<option v-for="item in options" :value="item.value">
-				{{item.label}}
-			</option>
-		</select>
-		<i class="material-icons">unfold_more</i>
-	</span>
+<span :class="classNames">
+	<select :name="name" :id="id" :value="selected" :required="required" :disabled="disabled" @input="onChange">
+		<option value="">Please select</option>
+		<option v-for="item in options" :value="item.value">
+			{{item.label}}
+		</option>
+	</select>
+	<i class="material-icons">unfold_more</i>
+</span>
 </template>
 
 <script>
@@ -28,7 +22,6 @@ export default {
 		inline: { type: Boolean, default: false },
 		size: { type: String },
 		className: { type: String },
-		styles: { type: [Object,Array] },
 	},
 
 	model: {

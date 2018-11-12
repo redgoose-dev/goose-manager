@@ -2,7 +2,7 @@
 	<header class="rg-page-header">
 		<div class="rg-page-header__body">
 			<small v-if="!!prefix" class="rg-page-header__prefix">{{prefix}}</small>
-			<h1 class="rg-page-header__title">{{title || messages.title}}</h1>
+			<h2 class="rg-page-header__title">{{title || messages.title}}</h2>
 			<p class="rg-page-header__description">{{messages.description}}</p>
 		</div>
 		<!--<nav v-if="messages.links" class="rg-page-header__nav">-->

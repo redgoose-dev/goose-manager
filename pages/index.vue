@@ -6,7 +6,7 @@
 
 	<section class="section section-first">
 		<header>
-			<h1>Articles</h1>
+			<h3>Articles</h3>
 		</header>
 		<div v-if="articles && articles.length" :class="`rg-index-thumbnail`">
 			<ul>
@@ -34,7 +34,7 @@
 
 	<section class="section">
 		<header>
-			<h1>Nests</h1>
+			<h3>Nests</h3>
 			<nav>
 				<nuxt-link to="/nests">
 					<i class="material-icons">chevron_right</i>
@@ -66,7 +66,7 @@
 
 	<section class="section">
 		<header>
-			<h1>Apps</h1>
+			<h3>Apps</h3>
 			<nav>
 				<nuxt-link to="/apps">
 					<i class="material-icons">chevron_right</i>
@@ -96,7 +96,7 @@
 
 	<section class="section">
 		<header>
-			<h1>JSON</h1>
+			<h3>JSON</h3>
 			<nav>
 				<nuxt-link to="/json">
 					<i class="material-icons">chevron_right</i>
@@ -229,7 +229,7 @@ export default {
 		display: flex;
 		align-items: center;
 		margin: 0 0 15px;
-		h1 {
+		h3 {
 			flex: 1;
 			margin: 0;
 			padding: 0 0 0 2px;
@@ -238,7 +238,7 @@ export default {
 			line-height: 1;
 		}
 		nav {
-			margin-right: 0px;
+			margin-right: 0;
 			a {
 				display: block;
 				padding: 5px;

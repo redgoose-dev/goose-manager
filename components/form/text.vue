@@ -19,8 +19,7 @@
 			formSize && `rg-form-text-size-${formSize}`,
 			error && 'rg-form-text-error',
 			className
-		]"
-		:style="styles"></textarea>
+		]"></textarea>
 	<input
 		v-else
 		:type="type"
@@ -42,8 +41,7 @@
 			formSize && `rg-form-text-size-${formSize}`,
 			error && 'rg-form-text-error',
 			className
-		]"
-		:style="styles"/>
+		]"/>
 </template>
 
 <script>
@@ -65,7 +63,6 @@ export default {
 		error: { type: Boolean },
 		formSize: { type: String },
 		className: { type: String },
-		styles: { type: [Object,Array] },
 	},
 	model: {
 		prop: 'value',

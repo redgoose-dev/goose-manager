@@ -3,6 +3,16 @@
 $size-side-max-padding: 80px;
 $size-side-tablet-padding: 20px;
 
+// title
+main > h1 {
+	margin: 0;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	visibility: hidden;
+}
+
 // layout
 .header,
 .container,

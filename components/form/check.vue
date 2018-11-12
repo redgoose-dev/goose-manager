@@ -3,10 +3,8 @@
 		v-if="label"
 		:class="[
 			'rg-form-check-label',
-			disabled && 'rg-form-check-label-disabled',
-			className
-		]"
-		:style="styles">
+			disabled && 'rg-form-check-label-disabled'
+		]">
 		<span
 			:class="[
 				'rg-form-check',
@@ -29,10 +27,8 @@
 		:class="[
 			`rg-form-check`,
 			`rg-form-check-${this.typeName}`,
-			disabled && 'rg-form-check-disabled',
-			className
-		]"
-		:style="styles">
+			disabled && 'rg-form-check-disabled'
+		]">
 		<input
 			:type="typeName"
 			:name="name"
@@ -57,8 +53,6 @@ export default {
 		disabled: { type: Boolean, default: false },
 		inline: { type: Boolean, default: false },
 		change: {},
-		className: { type: String },
-		styles: { type: [Object,Array] },
 	},
 	model: {
 		prop: 'checked',

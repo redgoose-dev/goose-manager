@@ -6,7 +6,7 @@ require('dotenv').config();
 module.exports = {
 
 	head: {
-		title: 'Goose manager',
+		title: process.env.APP_NAME,
 		meta: [
 			{ charset: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },

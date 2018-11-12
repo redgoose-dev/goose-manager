@@ -7,10 +7,10 @@
 	<div v-else>
 		<section v-for="(app,appKey) in index" :key="appKey" class="nest">
 			<header>
-				<h1>
+				<h3>
 					<span>{{app.name || 'No an app'}}</span>
 					<em>{{app.count}}</em>
-				</h1>
+				</h3>
 				<p v-if="!!app.description">{{app.description}}</p>
 			</header>
 			<div v-if="app.children && app.children.length" class="rg-index-card">
@@ -100,7 +100,7 @@ export default {
 		margin-top: 0;
 	}
 	> header {
-		h1 {
+		h3 {
 			margin: 0;
 			font-family: $font-eng;
 			font-size: 1.125rem;
@@ -119,7 +119,7 @@ export default {
 		}
 		p {
 			margin: 5px 0 0;
-			font-size: .75rem;
+			font-size: .625rem;
 			color: $color-blur;
 			word-break:keep-all;
 			overflow-wrap:break-word;
