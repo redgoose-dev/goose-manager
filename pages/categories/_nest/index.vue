@@ -3,15 +3,15 @@
 	<page-header module="categories"/>
 
 	<error v-if="!!error" :message="error"/>
-	<error v-else-if="!(index && index.length)" type="empty"/>
+	<error v-else-if="!(computedIndex && computedIndex.length)" type="empty"/>
 	<div v-else class="rg-index-card">
 		<draggable
-			v-model="index"
+			v-model="categories"
 			element="ul"
 			@start="onStartSort"
 			@end="onEndSort"
 			:options="{ handle: '.move' }">
-			<li v-for="(item,key) in index" :key="item.srl">
+			<li v-for="(item,key) in computedIndex" :key="item.srl">
 				<item-index-card
 					:subject="`[${item.srl}] ${item.name}`"
 					:metas="[
@@ -59,7 +59,6 @@
 
 <script>
 import draggable from 'vuedraggable';
-// library
 import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
@@ -69,10 +68,10 @@ let srls = null;
 export default {
 	components: {
 		draggable,
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
-		'ButtonBasic': () => import('~/components/button/basic'),
-		'Error': () => import('~/components/contents/error'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'item-index-card': () => import('~/components/contents/item-index-card'),
+		'button-basic': () => import('~/components/button/basic'),
+		'error': () => import('~/components/contents/error'),
 	},
 	validate(cox)
 	{
@@ -103,7 +102,7 @@ export default {
 		}
 	},
 	computed: {
-		index()
+		computedIndex()
 		{
 			return !!this.categories && this.categories.length ? this.categories : [];
 		},
@@ -115,7 +114,7 @@ export default {
 		},
 		onStartSort()
 		{
-			srls = this.index.map((o, k) => (o.srl)).join(',');
+			srls = this.categories.map((o, k) => (o.srl)).join(',');
 		},
 		async onEndSort(e)
 		{
@@ -124,7 +123,7 @@ export default {
 			try
 			{
 				// make end srls
-				let endSrls = this.index.map((o, k) => (o.srl)).join(',');
+				let endSrls = this.categories.map((o, k) => (o.srl)).join(',');
 
 				// check srls
 				if (srls === endSrls) return;
@@ -153,26 +152,5 @@ export default {
 	}
 }
 </script>
-<style lang="scss" scoped>
-.move {
-	display: block;
-	margin: 0 -15px 0 0;
-	padding: 0 20px;
-	background: none;
-	border: none;
-	height: 100%;
-	cursor: move;
-	outline: none;
-	font-size: 0;
-}
-.sortable-ghost {
-	opacity: .1;
-}
-.rg-item-card {
-	&:hover {
-		&:after {
-			box-shadow: 0 0 0;
-		}
-	}
-}
-</style>
+
+<style src="./index.scss" lang="scss" scoped></style>

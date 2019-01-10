@@ -3,7 +3,7 @@
 	<page-header
 		module="articles"
 		:title="`${nest ? `[${nest.name}]` : ''} Articles`"
-		:description="description"/>
+		:description="computedDescription"/>
 
 	<error v-if="!!error" :message="error"/>
 	<template v-else>
@@ -11,7 +11,7 @@
 			:nest_srl="nest_srl"
 			:categories="categories"
 			:category_srl="category_srl"
-			@change="onChangeCategory"/>
+			@change="category_srl = $event"/>
 		<index-articles
 			:nest_srl="nest_srl"
 			:category_srl="category_srl"
@@ -82,12 +82,6 @@ export default {
 	{
 		return cox.params.nest && /^\d+$/.test(cox.params.nest);
 	},
-	computed: {
-		description: function()
-		{
-			return this.nest.description || null;
-		}
-	},
 	async asyncData(cox)
 	{
 		const page = parseInt(cox.query.page || 1);
@@ -132,17 +126,28 @@ export default {
 			return { error: (typeof e === 'string') ? e : messages.error.service };
 		}
 	},
+	computed: {
+		computedDescription: function()
+		{
+			return this.nest.description || null;
+		}
+	},
+	watch: {
+		category_srl()
+		{
+			this.onChangeCategory().then();
+		}
+	},
 	methods: {
-		async onChangeCategory(srl)
+		async onChangeCategory()
 		{
 			try
 			{
 				// change url
-				this.$router.replace(this.setCategoryUrl(srl));
+				this.$router.replace(this.setCategoryUrl(this.category_srl));
 
 				// update data
 				this.processing = true;
-				this.category_srl = srl;
 				this.page = 1;
 
 				// get articles
