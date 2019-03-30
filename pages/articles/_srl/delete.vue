@@ -37,8 +37,8 @@ import * as text from '~/libs/text';
 
 export default {
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'ButtonBasic': () => import('~/components/button/basic'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'button-basic': () => import('~/components/button/basic'),
 	},
 	validate(cox)
 	{
@@ -53,7 +53,7 @@ export default {
 			const category_srl = cox.query.category || null;
 			const page = cox.query.page || null;
 
-			let res = await cox.$axios.$get(`/articles/${srl}`);
+			let res = await cox.$axios.$get(`/articles/${srl}?visible_type=all`);
 			if (!res.success) throw res.message;
 			return {
 				srl,

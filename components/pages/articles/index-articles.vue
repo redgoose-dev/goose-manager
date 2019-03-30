@@ -11,10 +11,11 @@
 					:title="item.title"
 					:subject="item.title"
 					:metas="[
+						`${getType(item.type)}`,
 						getDate(item.regdate),
 						item.category_name,
 						`Hit: ${item.hit}`,
-						`Like: ${item.star}`
+						`Like: ${item.star}`,
 					]"
 					:navs="[
 						{ label: 'Edit', link: getUrl('edit', item.srl) },
@@ -33,11 +34,11 @@ import * as text from '~/libs/text';
 
 export default {
 	components: {
-		'Loading': () => import('~/components/etc/loading'),
-		'ItemIndexList': () => import('~/components/contents/item-index-list'),
-		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
-		'ItemIndexThumbnail': () => import('~/components/contents/item-index-thumbnail'),
-		'Error': () => import('~/components/contents/error'),
+		'loading': () => import('~/components/etc/loading'),
+		'item-index-list': () => import('~/components/contents/item-index-list'),
+		'item-index-card': () => import('~/components/contents/item-index-card'),
+		'item-index-thumbnail': () => import('~/components/contents/item-index-thumbnail'),
+		'error': () => import('~/components/contents/error'),
 	},
 	props: {
 		nest_srl: { type: [String,Number] },
@@ -60,7 +61,7 @@ export default {
 				default:
 					return 'thumbnail';
 			}
-		}
+		},
 	},
 	methods: {
 		getDate(date)
@@ -80,7 +81,11 @@ export default {
 		{
 			if (!path) return null;
 			return `${this.$store.state.url_api}/${path}`;
-		}
+		},
+		getType(type)
+		{
+			return text.getArticleType(type);
+		},
 	}
 }
 </script>

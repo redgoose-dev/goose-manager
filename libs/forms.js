@@ -2,7 +2,7 @@
  * make form data
  *
  * @param {Object} obj
- * @return FormData
+ * @return Object
  */
 export function formData(obj=null)
 {

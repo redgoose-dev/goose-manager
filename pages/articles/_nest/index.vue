@@ -59,10 +59,11 @@ import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 
 const defaultParamsArticle = {
-	field: 'srl,title,hit,star,regdate,category_srl,json',
+	field: 'srl,type,title,hit,star,regdate,category_srl,json',
 	ext_field: 'category_name',
 	order: 'srl',
 	sort: 'desc',
+	visible_type: 'all',
 };
 const defaultParamsCategory = {
 	ext_field: 'count_article,item_all,none',
@@ -71,12 +72,12 @@ const defaultParamsCategory = {
 export default {
 	name: 'page-articles-index',
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
-		'IndexCategories': () => import('~/components/pages/articles/index-categories'),
-		'Paginate': () => import('~/components/etc/paginate'),
-		'ButtonBasic': () => import('~/components/button/basic'),
-		'Error': () => import('~/components/contents/error'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'index-articles': () => import('~/components/pages/articles/index-articles'),
+		'index-categories': () => import('~/components/pages/articles/index-categories'),
+		'paginate': () => import('~/components/etc/paginate'),
+		'button-basic': () => import('~/components/button/basic'),
+		'error': () => import('~/components/contents/error'),
 	},
 	validate(cox)
 	{

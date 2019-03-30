@@ -18,8 +18,8 @@ import * as messages from '~/libs/messages';
 
 export default {
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'Post': () => import('~/components/pages/articles/post'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'post': () => import('~/components/pages/articles/post'),
 	},
 	validate(cox)
 	{
@@ -35,7 +35,7 @@ export default {
 		try
 		{
 			// get article
-			let article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name`);
+			let article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name&visible_type=all`);
 			if (!article.success) throw article.message;
 			if (!article.data.nest_srl) throw 'Invalid article.';
 

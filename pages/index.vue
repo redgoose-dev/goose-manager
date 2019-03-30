@@ -1,8 +1,6 @@
 <template>
 <article>
-	<page-header
-		title="Dashboard"
-		description="welcome to goose manager"/>
+	<page-header title="Dashboard" description="welcome to goose manager"/>
 
 	<section class="section section-first">
 		<header>
@@ -17,6 +15,7 @@
 						:title="item.title"
 						:subject="item.title"
 						:metas="[
+							getArticleType(item.type),
 							getDate(item.regdate),
 							item.category_name,
 							`Hit: ${item.hit}`,
@@ -123,7 +122,6 @@
 		</div>
 		<error v-else type="empty" class="error"/>
 	</section>
-
 </article>
 </template>
 
@@ -134,21 +132,22 @@ import * as dates from '~/libs/dates';
 
 export default {
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
-		'ItemIndexList': () => import('~/components/contents/item-index-list'),
-		'ItemIndexCard': () => import('~/components/contents/item-index-card'),
-		'ItemIndexThumbnail': () => import('~/components/contents/item-index-thumbnail'),
-		'Error': () => import('~/components/contents/error'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'index-articles': () => import('~/components/pages/articles/index-articles'),
+		'item-index-list': () => import('~/components/contents/item-index-list'),
+		'item-index-card': () => import('~/components/contents/item-index-card'),
+		'item-index-thumbnail': () => import('~/components/contents/item-index-thumbnail'),
+		'error': () => import('~/components/contents/error'),
 	},
 	async asyncData(cox)
 	{
 		const params = {
 			articles: {
-				field: 'srl,title,hit,star,regdate,category_srl,json',
+				field: 'srl,type,title,hit,star,regdate,category_srl,json',
 				order: 'srl',
 				sort: 'desc',
 				size: 8,
+				visible_type: 'all',
 			},
 			nests: {
 				field: 'srl,id,name,description,regdate,json',
@@ -167,12 +166,11 @@ export default {
 				order: 'srl',
 				sort: 'desc',
 				size: 3,
-			}
+			},
 		};
 
 		try
 		{
-			let data = {};
 			const [ articles, nests, apps, json ] = await Promise.all([
 				cox.$axios.$get(`/articles${text.serialize(params.articles, true)}`),
 				cox.$axios.$get(`/nests${text.serialize(params.nests, true)}`),
@@ -216,38 +214,12 @@ export default {
 			params = text.serialize(params, true);
 			return `/articles/${srl}/${type}${params}`;
 		},
+		getArticleType(type)
+		{
+			return text.getArticleType(type);
+		},
 	}
 };
 </script>
-<style lang="scss" scoped>
-.section {
-	margin: 50px 0 0;
-	&-first {
-		margin-top: 0;
-	}
-	header {
-		display: flex;
-		align-items: center;
-		margin: 0 0 15px;
-		h3 {
-			flex: 1;
-			margin: 0;
-			padding: 0 0 0 2px;
-			font-size: 1.5rem;
-			font-weight: 600;
-			line-height: 1;
-		}
-		nav {
-			margin-right: 0;
-			a {
-				display: block;
-				padding: 5px;
-				font-size: 0;
-			}
-		}
-	}
-}
-.error {
-	padding: 30px 0;
-}
-</style>
+
+<style src="./index.scss" lang="scss" scoped></style>

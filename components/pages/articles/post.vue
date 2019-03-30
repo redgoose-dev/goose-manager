@@ -3,6 +3,21 @@
 	<form @submit="onSubmit" ref="form">
 		<fieldset class="rg-form-fieldset">
 			<legend>{{type}} article form</legend>
+			<dl class="rg-form-field">
+				<dt><label for="type">Type</label></dt>
+				<dd>
+					<form-checks
+						v-model="forms.type"
+						type="radio"
+						name="type"
+						id="type"
+						:inline="true"
+						:items="[
+							{ label: 'Visible', value: '' },
+							{ label: 'Hidden', value: 'hidden' },
+						]"/>
+				</dd>
+			</dl>
 			<dl v-if="datas.categories && datas.categories.length" class="rg-form-field">
 				<dt><label for="category">Category</label></dt>
 				<dd>
@@ -64,21 +79,9 @@
 		<nav class="rg-nav">
 			<dl>
 				<dt>
-					<button-basic
-						type="button"
-						label="Drafts list"
-						color="gray"
-						:inline="true"
-						@onClick="onOpenDraftWindow"/>
-					<button-basic
-						type="button"
-						label="Save draft"
-						color="key"
-						:inline="true"
-						@onClick="onSaveDraft"/>
+					<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
 				</dt>
 				<dd>
-					<button-basic type="button" label="Back" onClick="history.back()" :inline="true"/>
 					<button-basic
 						type="submit"
 						color="key"
@@ -91,7 +94,6 @@
 			</dl>
 		</nav>
 	</form>
-	<drafts ref="drafts" :open="openDraftWindow" @attach="onAttachDraft"/>
 </div>
 </template>
 
@@ -103,12 +105,12 @@ import * as text from '~/libs/text';
 export default {
 	name: 'post-article',
 	components: {
-		'FormText': () => import('~/components/form/text'),
-		'FormSelect': () => import('~/components/form/select'),
-		'ButtonBasic': () => import('~/components/button/basic'),
-		'Editor': () => import('~/components/pages/articles/editor'),
-		'Uploader': () => import('~/components/pages/articles/uploader'),
-		'Drafts': () => import('~/components/pages/articles/drafts'),
+		'form-text': () => import('~/components/form/text'),
+		'form-select': () => import('~/components/form/select'),
+		'form-checks': () => import('~/components/form/checks'),
+		'button-basic': () => import('~/components/button/basic'),
+		'editor': () => import('~/components/pages/articles/editor'),
+		'uploader': () => import('~/components/pages/articles/uploader'),
 	},
 	props: {
 		type: { type: String, default: 'add' }, // add,edit
@@ -128,18 +130,20 @@ export default {
 	},
 	data()
 	{
+		const { datas, nest_srl } = this;
 		return {
 			processing: false,
 			forms: {
-				app_srl: this.datas.nest.app_srl,
-				nest_srl: this.datas.article ? this.datas.article.nest_srl : this.nest_srl,
+				app_srl: datas.nest.app_srl,
+				nest_srl: datas.article ? datas.article.nest_srl : nest_srl,
 				category_srl: this.getCategoryInForm(),
+				type: datas.article ? this.getTypeName(datas.article.type) : '',
 				title: {
-					value: this.datas.article ? this.datas.article.title : '',
+					value: datas.article ? datas.article.title : '',
 					error: '',
 				},
 				content: {
-					value: this.datas.article ? this.datas.article.content : '',
+					value: datas.article ? datas.article.content : '',
 					error: '',
 				},
 				json: this.getJSON(),
@@ -148,7 +152,6 @@ export default {
 				start: 0,
 				end: 0,
 			},
-			openDraftWindow: false,
 		};
 	},
 	methods: {
@@ -228,6 +231,7 @@ export default {
 					app_srl: this.forms.app_srl,
 					nest_srl: this.forms.nest_srl,
 					category_srl: this.forms.category_srl || '',
+					type: this.getTypeName(this.forms.type),
 					title: this.forms.title.value,
 					content: this.forms.content.value,
 					json: encodeURIComponent(JSON.stringify(json)),
@@ -294,6 +298,16 @@ export default {
 			if (this.category_srl === 'null') return null;
 			return this.category_srl || null;
 		},
+		getTypeName(type)
+		{
+			switch (type)
+			{
+				case 'hidden':
+					return 'hidden';
+				default:
+					return '';
+			}
+		},
 		onChangePosition(op)
 		{
 			this.editor.start = op.start;
@@ -308,48 +322,6 @@ export default {
 			this.forms.content.value = content.substr(0, pos) + res + content.substr(pos);
 			this.editor.start += res.length;
 		},
-		onOpenDraftWindow()
-		{
-			this.$refs.drafts.open().then();
-		},
-		async onSaveDraft()
-		{
-			if (!this.forms.content.value)
-			{
-				this.$toast.add({
-					color: 'error',
-					message: `"content body" values are required.`,
-				});
-				return;
-			}
-
-			let description = prompt(messages.msg.inputDraftDescription);
-			if (description === null) return;
-
-			try
-			{
-				let res = await this.$axios.$post(`/drafts`, {
-					title: this.forms.title.value,
-					content: this.forms.content.value,
-					description,
-				});
-				if (!res.success) throw res.message;
-
-				this.$toast.add({
-					color: 'success',
-					message: 'Success save draft',
-				});
-			}
-			catch(e)
-			{
-				this.$toast.add({ message: 'Failed save draft', color: 'error' });
-			}
-		},
-		async onAttachDraft(values)
-		{
-			if (values.title) this.forms.title.value = values.title;
-			if (values.content) this.forms.content.value = values.content;
-		}
-	}
+	},
 }
 </script>

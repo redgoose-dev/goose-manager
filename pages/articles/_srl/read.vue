@@ -58,8 +58,8 @@ import * as text from '~/libs/text';
 
 export default {
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'ButtonBasic': () => import('~/components/button/basic'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'button-basic': () => import('~/components/button/basic'),
 	},
 	validate(cox)
 	{
@@ -69,7 +69,8 @@ export default {
 		description()
 		{
 			let str = '';
-			str += `${this.printDate(this.article.regdate)}`;
+			str += `${text.getArticleType(this.article.type)}`;
+			str += `, ${this.printDate(this.article.regdate)}`;
 			str += `, hit: ${this.article.hit}`;
 			str += `, like: ${this.article.star}`;
 			return str;
@@ -90,7 +91,7 @@ export default {
 			const nest_srl = cox.query.nest || null;
 			const category_srl = cox.query.category || null;
 			const page = cox.query.page || null;
-			const article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name`);
+			const article = await cox.$axios.$get(`/articles/${srl}?ext_field=category_name&visible_type=all`);
 			if (!article.success) throw article.message;
 
 			// get nest, category data
