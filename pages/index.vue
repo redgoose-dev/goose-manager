@@ -1,133 +1,135 @@
 <template>
 <article>
-	<page-header title="Dashboard" description="welcome to goose manager"/>
+	<page-header title="Dashboard" description="welcome to goose manager" class="dashboard__header"/>
 
-	<!-- Articles -->
-	<section v-if="articles && articles.length" class="section section-first">
-		<header>
-			<h3>Articles</h3>
-		</header>
-		<div class="rg-index-thumbnail">
-			<ul>
-				<li v-for="(item,key) in articles" :key="key">
-					<item-index-thumbnail
-						:image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
-						:link="getUrlForArticles('read', item.srl)"
-						:title="item.title"
-						:subject="item.title"
-						:metas="[
-							getArticleType(item.type),
-							getDate(item.regdate),
-							item.category_name,
-							`Hit: ${item.hit}`,
-							`Like: ${item.star}`
-						]"
-						:navs="[
-							{ label: 'Edit', link: getUrlForArticles('edit', item.srl) },
-							{ label: 'Delete', link: getUrlForArticles('delete', item.srl) }
-						]"/>
-				</li>
-			</ul>
-		</div>
-	</section>
-	<!-- // Articles -->
+	<div class="dashboard__body">
+		<!-- Articles -->
+		<section v-if="articles && articles.length" class="dashboard__section">
+			<header>
+				<h3>Articles</h3>
+			</header>
+			<div class="rg-index-thumbnail">
+				<ul>
+					<li v-for="(item,key) in articles" :key="key">
+						<item-index-thumbnail
+							:image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
+							:link="getUrlForArticles('read', item.srl)"
+							:title="item.title"
+							:subject="item.title"
+							:metas="[
+								getArticleType(item.type),
+								getDate(item.regdate),
+								item.category_name,
+								`Hit: ${item.hit}`,
+								`Like: ${item.star}`
+							]"
+							:navs="[
+								{ label: 'Edit', link: getUrlForArticles('edit', item.srl) },
+								{ label: 'Delete', link: getUrlForArticles('delete', item.srl) }
+							]"/>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- // Articles -->
 
-	<!-- Nests -->
-	<section class="section">
-		<header>
-			<h3>Nests</h3>
-			<nav>
-				<nuxt-link to="/nests">
-					<i class="material-icons">chevron_right</i>
-				</nuxt-link>
-			</nav>
-		</header>
-		<div v-if="nests && nests.length" class="rg-index-card">
-			<ul>
-				<li v-for="(nest,nestKey) in nests" :key="nestKey">
-					<item-index-card
-						:link="`/articles/${nest.srl}`"
-						:subject="nest.name"
-						:description="nest.description"
-						:metas="[
-							`srl: ${nest.srl}`,
-							`id: ${nest.id}`,
-							getDate(nest.regdate),
-						]"
-						:navs="[
-							{ label: 'Edit', link: `/nests/${nest.srl}/edit` },
-							{ label: 'Delete', link: `/nests/${nest.srl}/delete` },
-							!!parseInt(nest.json.useCategory) && { label: 'Category', link: `/categories/${nest.srl}` },
-						]"/>
-				</li>
-			</ul>
-		</div>
-		<error v-else type="empty" class="error"/>
-	</section>
-	<!-- // Nests -->
+		<!-- Nests -->
+		<section class="dashboard__section">
+			<header>
+				<h3>Nests</h3>
+				<nav>
+					<nuxt-link to="/nests">
+						<i class="material-icons">chevron_right</i>
+					</nuxt-link>
+				</nav>
+			</header>
+			<div v-if="nests && nests.length" class="rg-index-card">
+				<ul>
+					<li v-for="(nest,nestKey) in nests" :key="nestKey">
+						<item-index-card
+							:link="`/articles/${nest.srl}`"
+							:subject="nest.name"
+							:description="nest.description"
+							:metas="[
+								`srl: ${nest.srl}`,
+								`id: ${nest.id}`,
+								getDate(nest.regdate),
+							]"
+							:navs="[
+								{ label: 'Edit', link: `/nests/${nest.srl}/edit` },
+								{ label: 'Delete', link: `/nests/${nest.srl}/delete` },
+								!!parseInt(nest.json.useCategory) && { label: 'Category', link: `/categories/${nest.srl}` },
+							]"/>
+					</li>
+				</ul>
+			</div>
+			<error v-else type="empty" class="dashboard__error"/>
+		</section>
+		<!-- // Nests -->
 
-	<!-- Apps -->
-	<section class="section">
-		<header>
-			<h3>Apps</h3>
-			<nav>
-				<nuxt-link to="/apps">
-					<i class="material-icons">chevron_right</i>
-				</nuxt-link>
-			</nav>
-		</header>
-		<div v-if="apps && apps.length" class="rg-index-card">
-			<ul>
-				<li v-for="(app,appKey) in apps" :key="appKey">
-					<item-index-card
-						:subject="app.name"
-						:description="app.description"
-						:metas="[
-							`srl: ${app.srl}`,
-							`id: ${app.id}`,
-							getDate(app.regdate),
-						]"
-						:navs="[
-							{ label: 'Edit', link: `/apps/${app.srl}/edit` },
-							{ label: 'Delete', link: `/apps/${app.srl}/delete` },
-						]"/>
-				</li>
-			</ul>
-		</div>
-		<error v-else type="empty" class="error"/>
-	</section>
-	<!-- // Apps -->
+		<!-- Apps -->
+		<section class="dashboard__section">
+			<header>
+				<h3>Apps</h3>
+				<nav>
+					<nuxt-link to="/apps">
+						<i class="material-icons">chevron_right</i>
+					</nuxt-link>
+				</nav>
+			</header>
+			<div v-if="apps && apps.length" class="rg-index-card">
+				<ul>
+					<li v-for="(app,appKey) in apps" :key="appKey">
+						<item-index-card
+							:subject="app.name"
+							:description="app.description"
+							:metas="[
+								`srl: ${app.srl}`,
+								`id: ${app.id}`,
+								getDate(app.regdate),
+							]"
+							:navs="[
+								{ label: 'Edit', link: `/apps/${app.srl}/edit` },
+								{ label: 'Delete', link: `/apps/${app.srl}/delete` },
+							]"/>
+					</li>
+				</ul>
+			</div>
+			<error v-else type="empty" class="dashboard__error"/>
+		</section>
+		<!-- // Apps -->
 
-	<!-- JSON -->
-	<section v-if="json && json.length" class="section">
-		<header>
-			<h3>JSON</h3>
-			<nav>
-				<nuxt-link to="/json">
-					<i class="material-icons">chevron_right</i>
-				</nuxt-link>
-			</nav>
-		</header>
-		<div class="rg-index-list">
-			<ul>
-				<li v-for="(jsonItem,jsonKey) in json" :key="jsonKey">
-					<item-index-list
-						:link="`/json/${jsonItem.srl}`"
-						:subject="jsonItem.name"
-						:description="jsonItem.description"
-						:metas="[
-							`srl: ${jsonItem.srl}`,
-							getDate(jsonItem.regdate),
-						]"
-						:navs="[
-							{ label: 'Edit', link: `/json/${jsonItem.srl}/edit` },
-							{ label: 'Delete', link: `/json/${jsonItem.srl}/delete` },
-						]"/>
-				</li>
-			</ul>
-		</div>
-	</section>
-	<!-- // JSON -->
+		<!-- JSON -->
+		<section v-if="json && json.length" class="dashboard__section">
+			<header>
+				<h3>JSON</h3>
+				<nav>
+					<nuxt-link to="/json">
+						<i class="material-icons">chevron_right</i>
+					</nuxt-link>
+				</nav>
+			</header>
+			<div class="rg-index-list">
+				<ul>
+					<li v-for="(jsonItem,jsonKey) in json" :key="jsonKey">
+						<item-index-list
+							:link="`/json/${jsonItem.srl}`"
+							:subject="jsonItem.name"
+							:description="jsonItem.description"
+							:metas="[
+								`srl: ${jsonItem.srl}`,
+								getDate(jsonItem.regdate),
+							]"
+							:navs="[
+								{ label: 'Edit', link: `/json/${jsonItem.srl}/edit` },
+								{ label: 'Delete', link: `/json/${jsonItem.srl}/delete` },
+							]"/>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- // JSON -->
+	</div>
 </article>
 </template>
 
