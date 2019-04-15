@@ -2,11 +2,12 @@
 <article>
 	<page-header title="Dashboard" description="welcome to goose manager"/>
 
-	<section class="section section-first">
+	<!-- Articles -->
+	<section v-if="articles && articles.length" class="section section-first">
 		<header>
 			<h3>Articles</h3>
 		</header>
-		<div v-if="articles && articles.length" :class="`rg-index-thumbnail`">
+		<div class="rg-index-thumbnail">
 			<ul>
 				<li v-for="(item,key) in articles" :key="key">
 					<item-index-thumbnail
@@ -28,9 +29,10 @@
 				</li>
 			</ul>
 		</div>
-		<error v-else type="empty" class="error"/>
 	</section>
+	<!-- // Articles -->
 
+	<!-- Nests -->
 	<section class="section">
 		<header>
 			<h3>Nests</h3>
@@ -62,7 +64,9 @@
 		</div>
 		<error v-else type="empty" class="error"/>
 	</section>
+	<!-- // Nests -->
 
+	<!-- Apps -->
 	<section class="section">
 		<header>
 			<h3>Apps</h3>
@@ -92,8 +96,10 @@
 		</div>
 		<error v-else type="empty" class="error"/>
 	</section>
+	<!-- // Apps -->
 
-	<section class="section">
+	<!-- JSON -->
+	<section v-if="json && json.length" class="section">
 		<header>
 			<h3>JSON</h3>
 			<nav>
@@ -102,7 +108,7 @@
 				</nuxt-link>
 			</nav>
 		</header>
-		<div v-if="json && json.length" class="rg-index-list">
+		<div class="rg-index-list">
 			<ul>
 				<li v-for="(jsonItem,jsonKey) in json" :key="jsonKey">
 					<item-index-list
@@ -120,8 +126,8 @@
 				</li>
 			</ul>
 		</div>
-		<error v-else type="empty" class="error"/>
 	</section>
+	<!-- // JSON -->
 </article>
 </template>
 
