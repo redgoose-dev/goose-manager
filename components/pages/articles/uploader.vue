@@ -106,23 +106,26 @@ export default {
 	},
 	mounted()
 	{
+		let { $store, nest, files } = this;
+		if (!nest.json.files) nest.json.files = {};
+
 		// make uploader instance
 		this.uploader = new RG_Uploader(this.$refs.uploader, {
 			autoUpload: true,
 			allowFileTypes : ['jpeg', 'png', 'gif', 'zip', 'pdf', 'txt'],
-			limitSize: this.nest.json.files.sizeSingle || 3000000,
-			limitSizeTotal: this.nest.json.files.sizeTotal || 10000000,
-			uploadScript: `${this.$store.state.url_api}/files`,
-			removeScript: `${this.$store.state.url_api}/files`,
+			limitSize: nest.json.files.sizeSingle || 3000000,
+			limitSizeTotal: nest.json.files.sizeTotal || 10000000,
+			uploadScript: `${$store.state.url_api}/files`,
+			removeScript: `${$store.state.url_api}/files`,
 			uploadHeaders: {
-				Authorization: this.$store.state.authUser.token,
+				Authorization: $store.state.authUser.token,
 			},
-			srcPrefixName: `${this.$store.state.url_api}/`,
+			srcPrefixName: `${$store.state.url_api}/`,
 			queue: {
 				style: 'list', // list,web,album
 				height: 200,
-				limit: this.nest.json.files.count || 30,
-				datas: this.files,
+				limit: nest.json.files.count || 30,
+				datas: files,
 				buttons: [
 					{
 						name: 'open file',

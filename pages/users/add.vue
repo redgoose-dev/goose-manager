@@ -158,8 +158,8 @@ export default {
 				const data = formData({
 					email: this.forms.email.value,
 					name: this.forms.name.value,
-					pw: this.forms.password.value,
-					pw2: this.forms.password2.value,
+					password: this.forms.password.value,
+					password2: this.forms.password2.value,
 					admin: !!this.forms.admin ? 2 : 1,
 				});
 				let res = await this.$axios.$post('/users', data);
