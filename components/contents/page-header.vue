@@ -25,7 +25,7 @@
 <script>
 export default {
 	components: {
-		'ButtonCircleIcon': () => import('~/components/button/circle-icon'),
+		'button-circle-icon': () => import('~/components/button/circle-icon'),
 	},
 	props: {
 		module: { type: String },

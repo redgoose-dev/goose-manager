@@ -109,7 +109,7 @@ export default {
 			{
 				const data = formData({
 					email: this.forms.email,
-					pw: this.forms.password,
+					password: this.forms.password,
 					host: location.host,
 				});
 				const resultApi = await $axios.$post('/auth/login', data);

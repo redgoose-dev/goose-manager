@@ -127,9 +127,9 @@ export default {
 			{
 				this.processing = true;
 				const data = formData({
-					pw: this.forms.password.value,
-					new_pw: this.forms.password_new.value,
-					confirm_pw: this.forms.password_new2.value,
+					password: this.forms.password.value,
+					new_password: this.forms.password_new.value,
+					confirm_password: this.forms.password_new2.value,
 				});
 				let res = await this.$axios.$post(`/users/${this.$route.params.srl}/change-password`, data);
 				if (!res.success) throw res.message;

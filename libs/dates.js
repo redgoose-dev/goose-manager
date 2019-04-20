@@ -7,18 +7,13 @@
  */
 export function getFormatDate(date=null, useTime=true)
 {
-	// set
-	let month = date.substring(4,6);
-	let day = date.substring(6,8);
-	let year = date.substring(0,4);
-
+	const dateSource = date.split(' ');
 	if (useTime)
 	{
-		let hour = date.substring(8,10);
-		let min = date.substring(10,12);
-		let sec = date.substring(12,14);
-		return `${year}-${month}-${day} ${hour}:${min}:${sec}`
+		return `${dateSource[0]} ${dateSource[1]}`;
 	}
-
-	return `${year}-${month}-${day}`;
+	else
+	{
+		return dateSource[0];
+	}
 }

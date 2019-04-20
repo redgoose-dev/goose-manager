@@ -73,6 +73,7 @@ export default {
 			str += `, ${this.printDate(this.article.regdate)}`;
 			str += `, hit: ${this.article.hit}`;
 			str += `, like: ${this.article.star}`;
+			str += `, order date: ${this.article.order}`;
 			return str;
 		},
 		prefix()
