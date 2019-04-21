@@ -44,7 +44,7 @@
 			</dt>
 			<dd>
 				<button-basic
-					label="Add Article"
+					label="Add article"
 					:to="`/articles/${this.nest_srl}/add${category_srl ? `?category=${category_srl}` : ''}`"
 					:inline="true"
 					color="key"/>

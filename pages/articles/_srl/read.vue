@@ -31,7 +31,7 @@
 			<dd>
 				<button-basic
 					v-if="nest_srl"
-					label="Write"
+					label="Add"
 					:to="makeButtonUrl('add')"
 					:inline="true"/>
 				<button-basic

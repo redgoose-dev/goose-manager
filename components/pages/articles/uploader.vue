@@ -15,10 +15,6 @@
 				`Nest`에서 정한 썸네일 이미지 사이즈에서의 비율을 정합니다. 기본 사이즈에서 2배수로 커지는 타입을 정합니다.
 			</p>
 		</header>
-		<header v-else>
-			<h1>File uploader</h1>
-			<p>아래 업로드 버튼을 눌러서 파일을 추가합니다.</p>
-		</header>
 		<div class="body" data-comp="queue">
 			<div class="col queue" data-element="queue">
 				<ul></ul>
@@ -123,7 +119,7 @@ export default {
 			srcPrefixName: `${$store.state.url_api}/`,
 			queue: {
 				style: 'list', // list,web,album
-				height: 200,
+				height: 180,
 				limit: nest.json.files.count || 30,
 				datas: files,
 				buttons: [

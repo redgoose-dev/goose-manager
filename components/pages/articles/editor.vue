@@ -1,13 +1,5 @@
 <template>
 <div class="rg-editor">
-	<nav class="rg-editor__toolbar">
-		<dl>
-			<dt></dt>
-			<dd>
-				<slot name="nav"/>
-			</dd>
-		</dl>
-	</nav>
 	<div class="rg-editor__body">
 		<form-text
 			type="textarea"
@@ -21,35 +13,29 @@
 			@change="onChangeText"
 		/>
 	</div>
-	<div class="rg-editor__guide">
-		<ul>
-			<li>
-				<a href="https://nolboo.kim/blog/2013/09/07/john-gruber-markdown/" target="_blank">
-					존 그루버 마크다운 페이지 번역
-				</a>
-			</li>
-			<li>
-				<a href="https://gist.github.com/ihoneymon/652be052a0727ad59601" target="_blank">
-					마크다운 사용법
-				</a>
-			</li>
-		</ul>
+	<div class="rg-editor__bottom">
+		<div class="rg-editor__guide">
+			<ul>
+				<li>
+					<a href="https://nolboo.kim/blog/2013/09/07/john-gruber-markdown/" target="_blank">
+						존 그루버 마크다운 페이지 번역
+					</a>
+				</li>
+				<li>
+					<a href="https://gist.github.com/ihoneymon/652be052a0727ad59601" target="_blank">
+						마크다운 사용법
+					</a>
+				</li>
+			</ul>
+		</div>
+		<nav class="rg-editor__toolbar">
+			<slot name="nav"/>
+		</nav>
 	</div>
 
 	<transition name="preview">
 		<div v-if="previewWindow" class="preview" @click="onClickPreview">
 			<article class="preview__wrap" @click="onClickPreviewWrap">
-				<header>
-					<h1>Content preview</h1>
-					<nav>
-						<button-circle-icon
-							type="button"
-							title="Setting"
-							name="close"
-							color="key"
-							@onClick="offPreview"/>
-					</nav>
-				</header>
 				<div ref="preview" v-html="preview" class="rg-article-body"></div>
 			</article>
 		</div>

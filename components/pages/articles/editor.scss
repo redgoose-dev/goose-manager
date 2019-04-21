@@ -2,33 +2,17 @@
 
 .rg-editor {
 	margin: 8px 0;
-	&__label {
-		margin: -4px 0 5px 0;
-		label {
-			display: inline-block;
-			font-size: .875rem;
-			font-weight: bold;
+	&__body {
+		textarea {
+			min-height: 200px;
+			max-height: 780px;
+			height: 450px;
+			resize: vertical;
 		}
 	}
-	&__toolbar {
-		margin: 0 0 5px;
-		dl {
-			margin: 0;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
-		dt {}
-		dd {
-			margin-left: 0;
-			display: flex;
-			> * {
-				margin-left: 5px;
-				&:first-child {
-					margin-left: 0;
-				}
-			}
-		}
+	&__bottom {
+		display: flex;
+		justify-content: space-between;
 	}
 	&__guide {
 		margin: 8px 0 0;
@@ -37,6 +21,9 @@
 			padding: 0 0 0 20px;
 			font-size: .75rem;
 		}
+	}
+	&__toolbar {
+		margin-top: 8px;
 	}
 }
 
@@ -65,26 +52,9 @@
 		overflow: hidden;
 		padding: 0;
 		box-shadow: 0 1px 10px rgba(#000, .3);
-		header {
-			display: flex;
-			padding: 1rem 2rem;
-			align-items: center;
-			border-bottom: 1px solid $color-content-line;
-			background: mix($color-light, #fff, 50%);
-			h1 {
-				flex: 1;
-				margin: 0;
-				font-size: 2rem;
-				font-weight: 200;
-				line-height: 1;
-			}
-			nav {
-				margin-right: -4px;
-			}
-		}
 		.rg-article-body {
 			margin: 0;
-			padding: 2rem 2rem 3rem;
+			padding: 1.5rem;
 		}
 	}
 

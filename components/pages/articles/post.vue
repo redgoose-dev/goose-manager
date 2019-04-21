@@ -3,21 +3,6 @@
 	<form @submit="onSubmit" ref="form">
 		<fieldset class="rg-form-fieldset">
 			<legend>{{type}} article form</legend>
-			<dl class="rg-form-field">
-				<dt><label for="type">Type</label></dt>
-				<dd>
-					<form-checks
-						v-model="forms.type"
-						type="radio"
-						name="type"
-						id="type"
-						:inline="true"
-						:items="[
-							{ label: 'Visible', value: '' },
-							{ label: 'Hidden', value: 'hidden' },
-						]"/>
-				</dd>
-			</dl>
 			<dl v-if="datas.categories && datas.categories.length" class="rg-form-field">
 				<dt><label for="category">Category</label></dt>
 				<dd>
@@ -42,6 +27,40 @@
 						:maxlength="120"
 						:error="!!forms.title.error"
 						:required="true"/>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="type">Type</label></dt>
+				<dd>
+					<form-checks
+						v-model="forms.type"
+						type="radio"
+						name="type"
+						id="type"
+						:inline="true"
+						:items="[
+							{ label: 'Visible', value: '' },
+							{ label: 'Hidden', value: 'hidden' },
+						]"/>
+				</dd>
+			</dl>
+			<dl class="rg-form-field">
+				<dt><label for="type">Order date</label></dt>
+				<dd>
+					<form-text
+						type="text"
+						name="order"
+						id="order"
+						v-model="forms.order.value"
+						placeholder="2019-05-05"
+						:maxlength="10"
+						:size="12"
+						:error="!!forms.order.error"
+						:required="true"
+						:inline="true"
+						@change="onChangeOrder"/>
+					<p class="rg-form-help">실제로 작업된 시기로 사용할 수 있습니다.</p>
+					<p v-if="!!forms.order.error" class="rg-form-help rg-form-help-error">{{forms.order.error}}</p>
 				</dd>
 			</dl>
 		</fieldset>
@@ -85,7 +104,7 @@
 					<button-basic
 						type="submit"
 						color="key"
-						:label="!processing ? (this.type === 'edit' ? 'Edit Article' : 'Write Article') : null"
+						:label="!processing ? (this.type === 'edit' ? 'Edit article' : 'Add article') : null"
 						:inline="true"
 						:icon="processing ? 'cached' : ''"
 						:rotateIcon="processing"
@@ -101,6 +120,10 @@
 import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
+
+const errorMessage = {
+	order: `Please type in '2019-12-25' format.`,
+};
 
 export default {
 	name: 'post-article',
@@ -147,6 +170,10 @@ export default {
 					error: '',
 				},
 				json: this.getJSON(),
+				order: {
+					value: datas.article ? datas.article.order : '',
+					error: '',
+				},
 			},
 			editor: {
 				start: 0,
@@ -158,6 +185,13 @@ export default {
 		async onSubmit(e)
 		{
 			e.preventDefault();
+
+			// check value
+			if (!/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.test(this.forms.order.value))
+			{
+				this.forms.order.error = errorMessage.order;
+				return;
+			}
 
 			// set values
 			const data_article = this.datas.article;
@@ -235,6 +269,7 @@ export default {
 					title: this.forms.title.value,
 					content: this.forms.content.value,
 					json: encodeURIComponent(JSON.stringify(json)),
+					order: this.forms.order.value,
 				};
 				data = formData(data);
 				let res = await this.$axios.$post(
@@ -322,6 +357,23 @@ export default {
 			this.forms.content.value = content.substr(0, pos) + res + content.substr(pos);
 			this.editor.start += res.length;
 		},
+		onChangeOrder(text)
+		{
+			// check value
+			if (this.forms.order.value.length === 10 && !/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.test(this.forms.order.value))
+			{
+				this.forms.order.error = errorMessage.order;
+			}
+			else if (this.forms.order.error)
+			{
+				this.forms.order.error = '';
+			}
+		},
 	},
 }
 </script>
+<style lang="scss" scoped>
+.sub-fields {
+	margin-top: 2rem;
+}
+</style>
