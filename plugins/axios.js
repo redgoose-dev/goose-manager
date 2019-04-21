@@ -41,6 +41,7 @@ export default function(cox)
 	token = token || process.env.TOKEN_PUBLIC;
 
 	// set header
+	$axios.setHeader('Accept', 'application/json;charset=UTF-8');
 	$axios.setHeader('Authorization', token);
 
 	if (debug)
