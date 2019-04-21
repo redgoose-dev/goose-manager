@@ -68,13 +68,14 @@ export default {
 	computed: {
 		description()
 		{
-			let str = '';
-			str += `${text.getArticleType(this.article.type)}`;
-			str += `, ${this.printDate(this.article.regdate)}`;
-			str += `, hit: ${this.article.hit}`;
-			str += `, like: ${this.article.star}`;
-			str += `, order date: ${this.article.order}`;
-			return str;
+			let src = [
+				`${text.getArticleType(this.article.type)}`,
+				`${dates.getFormatDate(this.article.regdate, false)}`,
+				`hit: ${this.article.hit}`,
+				`like: ${this.article.star}`,
+			];
+			if (this.article.order) src.push(`order date: ${this.article.order}`);
+			return src.join(', ');
 		},
 		prefix()
 		{
@@ -127,10 +128,6 @@ export default {
 		}
 	},
 	methods: {
-		printDate(date)
-		{
-			return dates.getFormatDate(date, true);
-		},
 		makeButtonUrl(type, srl=null)
 		{
 			let params = '';
