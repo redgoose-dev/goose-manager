@@ -59,7 +59,6 @@
 						:required="true"
 						:inline="true"
 						@change="onChangeOrder"/>
-					<p class="rg-form-help">실제로 작업된 시기로 사용할 수 있습니다.</p>
 					<p v-if="!!forms.order.error" class="rg-form-help rg-form-help-error">{{forms.order.error}}</p>
 				</dd>
 			</dl>
@@ -120,6 +119,7 @@
 import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
+import * as dates from '~/libs/dates';
 
 const errorMessage = {
 	order: `Please type in '2019-12-25' format.`,
@@ -171,7 +171,7 @@ export default {
 				},
 				json: this.getJSON(),
 				order: {
-					value: datas.article ? datas.article.order : '',
+					value: datas.article ? datas.article.order : dates.convertDateFormat(null, true),
 					error: '',
 				},
 			},
