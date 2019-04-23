@@ -74,7 +74,7 @@ export default {
 				`hit: ${this.article.hit}`,
 				`like: ${this.article.star}`,
 			];
-			if (this.article.order) src.push(`order date: ${this.article.order}`);
+			if (this.article.order) src.push(`order: ${this.article.order}`);
 			return src.join(', ');
 		},
 		prefix()

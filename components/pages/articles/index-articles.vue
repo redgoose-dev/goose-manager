@@ -14,8 +14,8 @@
 						`${getType(item.type)}`,
 						getDate(item.regdate),
 						item.category_name,
-						`Hit: ${item.hit}`,
-						`Like: ${item.star}`,
+						`hit: ${item.hit}`,
+						item.order && `order: ${item.order}`,
 					]"
 					:navs="[
 						{ label: 'Edit', link: getUrl('edit', item.srl) },

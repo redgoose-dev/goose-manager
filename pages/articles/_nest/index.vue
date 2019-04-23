@@ -59,7 +59,7 @@ import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 
 const defaultParamsArticle = {
-	field: 'srl,type,title,hit,star,regdate,category_srl,json',
+	field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
 	ext_field: 'category_name',
 	order: 'srl',
 	sort: 'desc',
@@ -128,16 +128,16 @@ export default {
 		}
 	},
 	computed: {
-		computedDescription: function()
+		computedDescription()
 		{
 			return this.nest.description || null;
-		}
+		},
 	},
 	watch: {
 		category_srl()
 		{
 			this.onChangeCategory().then();
-		}
+		},
 	},
 	methods: {
 		async onChangeCategory()
@@ -217,7 +217,7 @@ export default {
 					break;
 			}
 			return `/articles/${this.nest_srl}${params}`;
-		}
-	}
+		},
+	},
 }
 </script>

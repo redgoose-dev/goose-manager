@@ -23,7 +23,7 @@ export const actions = {
 				appName: box.env.APP_NAME,
 			});
 		}
-	}
+	},
 };
 
 

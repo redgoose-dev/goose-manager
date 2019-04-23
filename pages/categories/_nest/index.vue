@@ -7,10 +7,10 @@
 	<div v-else class="rg-index-card">
 		<draggable
 			v-model="categories"
-			element="ul"
+			tag="ul"
 			@start="onStartSort"
 			@end="onEndSort"
-			:options="{ handle: '.move' }">
+			handle=".move">
 			<li v-for="(item,key) in computedIndex" :key="item.srl">
 				<item-index-card
 					:subject="`[${item.srl}] ${item.name}`"
