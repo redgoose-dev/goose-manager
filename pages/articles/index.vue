@@ -43,7 +43,7 @@ export default {
 		try
 		{
 			const page = parseInt(cox.query.page || 1);
-			const size = parseInt(cox.env.PAGE_PER_SIZE) || 20;
+			const size = parseInt(cox.env.APP_PAGE_PER_SIZE) || 20;
 			let params = {
 				...defaultParams,
 				size

@@ -88,7 +88,7 @@ export default {
 	async asyncData(cox)
 	{
 		const page = parseInt(cox.query.page || 1);
-		const size = parseInt(cox.env.PAGE_PER_SIZE) || 20;
+		const size = parseInt(cox.env.APP_PAGE_PER_SIZE) || 20;
 		const nest_srl = parseInt(cox.params.nest) || null;
 		const category_srl = cox.query.category ? cox.query.category : '';
 

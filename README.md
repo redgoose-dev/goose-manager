@@ -19,8 +19,14 @@ $ cp .env.example .env
 - `APP_URL`: Manager url
 - `APP_API_URL`: API url
 - `APP_DEBUG`: Debug mode
-- `PAGE_PER_SIZE`: 페이지당 출력되는 아이템 수
+- `APP_SECRET_KEY`: secret key (영문, 숫자, 특수문자를 섞어서 랜덤값을 만드세요.)
+- `APP_PAGE_PER_SIZE`: 페이지당 출력되는 아이템 수
 - `TOKEN_PUBLIC`: API에서 사용하는 공개토큰. 자세한건 [goose-api install guide](https://github.com/redgoose-dev/goose-api/wiki/Install-guide)페이지를 참고해주세요.
+- `DB_HOST`: session db host
+- `DB_PORT`: session db port
+- `DB_DATABASE`: session db name
+- `DB_USERNAME`: session db user name
+- `DB_PASSWORD`: session db user password
 
 
 ## Usage
