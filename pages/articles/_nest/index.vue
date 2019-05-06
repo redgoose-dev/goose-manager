@@ -67,6 +67,8 @@ const defaultParamsArticle = {
 };
 const defaultParamsCategory = {
 	ext_field: 'count_article,item_all,none',
+	order: 'turn',
+	sort: 'asc',
 };
 
 export default {

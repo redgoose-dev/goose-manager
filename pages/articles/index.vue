@@ -33,10 +33,10 @@ const defaultParams = {
 
 export default {
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'IndexArticles': () => import('~/components/pages/articles/index-articles'),
-		'Paginate': () => import('~/components/etc/paginate'),
-		'Error': () => import('~/components/contents/error'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'index-articles': () => import('~/components/pages/articles/index-articles'),
+		'paginate': () => import('~/components/etc/paginate'),
+		'error': () => import('~/components/contents/error'),
 	},
 	async asyncData(cox)
 	{
