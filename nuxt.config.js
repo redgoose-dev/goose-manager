@@ -21,6 +21,7 @@ const sessionStore = (DB_HOST && DB_PORT && DB_USERNAME && DB_PASSWORD && DB_DAT
 	user: DB_USERNAME,
 	password: DB_PASSWORD,
 	database: DB_DATABASE,
+	clearExpired: false,
 }) : null;
 
 // nuxt config
