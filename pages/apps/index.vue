@@ -41,10 +41,10 @@ import * as dates from '~/libs/dates';
 
 export default {
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'ItemIndexList': () => import('~/components/contents/item-index-list'),
-		'ButtonBasic': () => import('~/components/button/basic'),
-		'Error': () => import('~/components/contents/error'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'item-index-list': () => import('~/components/contents/item-index-list'),
+		'button-basic': () => import('~/components/button/basic'),
+		'error': () => import('~/components/contents/error'),
 	},
 	async asyncData(cox)
 	{

@@ -66,13 +66,12 @@ import RG_SizeInfo from 'rg-uploader/resource/plugins/sizeinfo.plugin';
 import RG_DragAndDrop from 'rg-uploader/resource/plugins/dnd.plugin';
 import RG_Thumbnail from 'rg-uploader/resource/plugins/thumbnail.plugin';
 import * as util from '~/libs/util';
-import { formData } from '~/libs/forms';
 
 const classBtnMakeThumbnail = '.btn-make-thumbnail';
 
 export default {
 	components: {
-		'FormChecks': () => import('~/components/form/checks'),
+		'form-checks': () => import('~/components/form/checks'),
 	},
 	props: {
 		article: { type: Object },
@@ -103,10 +102,11 @@ export default {
 	mounted()
 	{
 		let { $store, nest, files } = this;
+		let uploader;
 		if (!nest.json.files) nest.json.files = {};
 
 		// make uploader instance
-		this.uploader = new RG_Uploader(this.$refs.uploader, {
+		uploader = this.uploader = new RG_Uploader(this.$refs.uploader, {
 			autoUpload: true,
 			allowFileTypes : ['jpeg', 'png', 'gif', 'zip', 'pdf', 'txt', 'swf'],
 			limitSize: nest.json.files.sizeSingle || 3000000,
@@ -171,6 +171,9 @@ export default {
 			},
 			uploadParamsFilter(res)
 			{
+				/**
+				 * 서버에 파라메터를 보낼때 ready 값을 보냅니다.
+				 */
 				return { ready: 1 };
 			},
 			uploadDataFilter(res)
@@ -193,6 +196,30 @@ export default {
 				return {
 					state: res.success ? 'success' : 'error',
 					message: res.success ? null : res.message
+				}
+			},
+			/**
+			 * 파일 업로드가 완전히 끝나는 시점
+			 *
+			 * @param {object} res queue data
+			 */
+			uploadComplete(res)
+			{
+				/**
+				 * 파일을 처음 올린다면 queue-id 값이 랜덤번호로 만들어져 있습니다.
+				 * 이미 업로드되어있는 id값이랑 만들어지는 모습이 달라서 여러가지 오류가 생깁니다.
+				 * 그래서 업로드가 끝나는 시점에서 수동으로 id 변경합니다.
+				 */
+				const { files, ids } = uploader.queue.items;
+				let id = uploader.queue.findItem(res.id);
+				let queue = uploader.queue.selectQueueElement(res.id)[0];
+				if (id !== undefined)
+				{
+					// edit id from queue element
+					if (queue) queue.setAttribute('data-id', res.srl);
+					// edit id from uploader object
+					ids[id] = res.srl;
+					files[id].id = res.srl;
 				}
 			},
 			init: (app) => this.init(app),
