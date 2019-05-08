@@ -1,7 +1,7 @@
 <template>
 <div>
 	<article ref="uploader" class="rg-uploader">
-		<header v-if="parseInt(this.nest.json.useThumbnailSizeTool) === 1">
+		<header v-if="parseInt(this.nest.json.useThumbnailSizeTool) === 1" class="rg-uploader-header">
 			<h1>File uploader</h1>
 			<form-checks
 				type="radio"
@@ -15,12 +15,12 @@
 				`Nest`에서 정한 썸네일 이미지 사이즈에서의 비율을 정합니다. 기본 사이즈에서 2배수로 커지는 타입을 정합니다.
 			</p>
 		</header>
-		<div class="body" data-comp="queue">
+		<div class="rg-uploader-body" data-comp="queue">
 			<div class="col queue" data-element="queue">
 				<ul></ul>
 			</div>
 		</div>
-		<footer>
+		<footer class="rg-uploader-footer">
 			<nav>
 				<label class="add-file">
 					<input type="file" data-element="addFiles" multiple>
@@ -60,12 +60,9 @@
 </template>
 
 <script>
-import RG_Uploader from 'rg-uploader';
-import RG_Preview from 'rg-uploader/resource/plugins/preview.plugin';
-import RG_SizeInfo from 'rg-uploader/resource/plugins/sizeinfo.plugin';
-import RG_DragAndDrop from 'rg-uploader/resource/plugins/dnd.plugin';
-import RG_Thumbnail from 'rg-uploader/resource/plugins/thumbnail.plugin';
+import $ from 'jquery';
 import * as util from '~/libs/util';
+import 'rg-uploader/src/scss/index.scss';
 
 const classBtnMakeThumbnail = '.btn-make-thumbnail';
 
@@ -101,12 +98,14 @@ export default {
 	},
 	mounted()
 	{
+		const RG_Uploader = require('rg-uploader/src/component');
+		const plugins = require('rg-uploader/src/plugins');
 		let { $store, nest, files } = this;
 		let uploader;
 		if (!nest.json.files) nest.json.files = {};
 
 		// make uploader instance
-		uploader = this.uploader = new RG_Uploader(this.$refs.uploader, {
+		uploader = this.uploader = new RG_Uploader.default(this.$refs.uploader, {
 			autoUpload: true,
 			allowFileTypes : ['jpeg', 'png', 'gif', 'zip', 'pdf', 'txt', 'swf'],
 			limitSize: nest.json.files.sizeSingle || 3000000,
@@ -151,18 +150,18 @@ export default {
 				]
 			},
 			plugin: [
-				{ name: 'preview', obj: new RG_Preview() },
-				{ name: 'sizeinfo', obj: new RG_SizeInfo() },
-				{ name: 'dnd', obj: new RG_DragAndDrop() },
+				{ name: 'preview', obj: new plugins.Preview($) },
+				{ name: 'sizeinfo', obj: new plugins.SizeInfo(undefined, $) },
+				{ name: 'dnd', obj: new plugins.DragAndDrop(undefined, $) },
 				{
 					name: 'thumbnail',
-					obj: new RG_Thumbnail({
+					obj: new plugins.Thumbnail({
 						width: 800,
 						height: 700,
 						mobileSize: 650,
 						finalOutput : { type: 'base64', quality: .65, format: 'jpeg' },
 						doneCallback: (res, app, file) => this.makeThumbnail(res, app, file).then()
-					})
+					}, $)
 				}
 			],
 			removeScriptFunc(url, file)
@@ -202,25 +201,16 @@ export default {
 			 * 파일 업로드가 완전히 끝나는 시점
 			 *
 			 * @param {object} res queue data
+			 * @param {RG_Uploader} app
 			 */
-			uploadComplete(res)
+			uploadComplete(res, app)
 			{
 				/**
 				 * 파일을 처음 올린다면 queue-id 값이 랜덤번호로 만들어져 있습니다.
 				 * 이미 업로드되어있는 id값이랑 만들어지는 모습이 달라서 여러가지 오류가 생깁니다.
 				 * 그래서 업로드가 끝나는 시점에서 수동으로 id 변경합니다.
 				 */
-				const { files, ids } = uploader.queue.items;
-				let id = uploader.queue.findItem(res.id);
-				let queue = uploader.queue.selectQueueElement(res.id)[0];
-				if (id !== undefined)
-				{
-					// edit id from queue element
-					if (queue) queue.setAttribute('data-id', res.srl);
-					// edit id from uploader object
-					ids[id] = res.srl;
-					files[id].id = res.srl;
-				}
+				app.queue.changeId(res.id, res.srl);
 			},
 			init: (app) => this.init(app),
 		});
@@ -420,27 +410,4 @@ export default {
 	}
 };
 </script>
-<style lang="scss" scoped>
-.rg-uploader {
-	margin: 30px 0 0;
-}
-.preview {
-	position: fixed;
-	z-index: 90;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	margin: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: rgba(#000, .75);
-	cursor: zoom-out;
-	img {
-		display: block;
-		cursor: auto;
-		max-width: 90%;
-	}
-}
-</style>
+<style src="./uploader.scss" lang="scss" scoped></style>
