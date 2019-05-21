@@ -107,7 +107,7 @@ export default {
 		// make uploader instance
 		uploader = this.uploader = new RG_Uploader.default(this.$refs.uploader, {
 			autoUpload: true,
-			allowFileTypes : ['jpeg', 'png', 'gif', 'zip', 'pdf', 'txt', 'swf'],
+			allowFileTypes : ['jpeg', 'png', 'gif', 'zip', 'pdf', 'txt', 'swf', 'c4d'],
 			limitSize: nest.json.files.sizeSingle || 3000000,
 			limitSizeTotal: nest.json.files.sizeTotal || 10000000,
 			uploadScript: `${$store.state.url_api}/files`,
