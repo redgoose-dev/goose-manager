@@ -138,9 +138,12 @@ export default {
 						name: 'insert editor',
 						iconName: 'center_focus_strong',
 						action: (app, file) => {
-							let str = `\n![${file.name}](${file.fullSrc})\n`;
+							let str = `\n`;
+							str += file.type && file.type.split('/')[0] === 'image' ? '!' : '';
+							str += `[${file.name}](${file.fullSrc})`;
+							str += `\n`;
 							this.$emit('insertEditor', str);
-						}
+						},
 					},
 					{
 						name: 'remove queue',
@@ -177,18 +180,29 @@ export default {
 			},
 			uploadDataFilter(res)
 			{
-				return res.success ? {
-					state: 'success',
-					response: {
-						src: `${res.data[0].loc}`,
-						srl: parseInt(res.data[0].srl),
-						name: res.data[0].name,
-						ready: parseInt(res.data[0].ready),
-					}
-				} : {
-					state: 'error',
-					message: res.message,
-				};
+				if (res.success)
+				{
+					return res.data[0].status === 'success' ? {
+						state: 'success',
+						response: {
+							src: `${res.data[0].loc}`,
+							srl: parseInt(res.data[0].srl),
+							name: res.data[0].name,
+							type: res.data[0].type,
+							ready: parseInt(res.data[0].ready),
+						}
+					} : {
+						state: 'error',
+						message: res.data[0].message,
+					};
+				}
+				else
+				{
+					return {
+						state: 'error',
+						message: res.message,
+					};
+				}
 			},
 			removeDataFilter(res)
 			{
@@ -406,7 +420,7 @@ export default {
 		{
 			this.uploader.queue.$queue.find(classBtnMakeThumbnail).removeClass('on');
 			this.thumbnailOptions = {};
-		}
+		},
 	}
 };
 </script>
