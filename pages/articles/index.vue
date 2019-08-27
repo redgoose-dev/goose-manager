@@ -29,6 +29,7 @@ const defaultParams = {
 	ext_field: 'category_name',
 	order: 'srl',
 	sort: 'desc',
+	visible_type: 'all',
 };
 
 export default {

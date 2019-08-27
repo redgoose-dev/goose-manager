@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "scripts": {
     "dev": "./node_modules/.bin/nuxt",
@@ -9,20 +9,20 @@
     "build-check": "./node_modules/.bin/nuxt build --analyze"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.4.1",
-    "@nuxtjs/dotenv": "^1.3.0",
+    "@nuxtjs/axios": "^5.6.0",
+    "@nuxtjs/dotenv": "^1.4.0",
     "body-parser": "^1.19.0",
-    "express": "^4.17.0",
+    "express": "^4.17.1",
     "express-mysql-session": "^2.1.0",
-    "express-session": "^1.16.1",
+    "express-session": "^1.16.2",
     "jquery": "^3.4.1",
-    "marked": "^0.6.2",
-    "nuxt": "^2.7.1",
+    "marked": "^0.7.0",
+    "nuxt": "^2.9.1",
     "rg-uploader": "^1.3.6",
-    "vuedraggable": "^2.21.0"
+    "vuedraggable": "^2.23.0"
   },
   "devDependencies": {
     "node-sass": "^4.12.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.3.1"
   }
 }
