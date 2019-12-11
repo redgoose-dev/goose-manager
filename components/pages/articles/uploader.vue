@@ -382,11 +382,11 @@ export default {
 				output: {
 					type: 'base64',
 					format: 'jpeg',
-					quality : .65,
+					quality : .60,
 					size: {
-						// 레티나를 위하여 사이즈 증가
-						width: resource.width * 1.5,
-						height: resource.height * 1.5
+						// 레티나를 위하여 조금더 사이즈 키우기
+						width: resource.width,
+						height: resource.height,
 					}
 				},
 				finalOutput : {
