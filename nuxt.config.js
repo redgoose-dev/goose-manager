@@ -4,16 +4,7 @@ const MYSQLStore = require('express-mysql-session')(session);
 // get .env
 require('dotenv').config();
 // set env values
-const {
-	DB_HOST,
-	DB_PORT,
-	DB_USERNAME,
-	DB_PASSWORD,
-	DB_DATABASE,
-	APP_NAME,
-	APP_API_URL,
-	APP_SECRET_KEY,
-} = process.env;
+const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, APP_NAME, APP_API_URL, APP_SECRET_KEY } = process.env;
 // set session store
 const sessionStore = (DB_HOST && DB_PORT && DB_USERNAME && DB_PASSWORD && DB_DATABASE) ? new MYSQLStore({
 	host: DB_HOST,
@@ -86,19 +77,4 @@ module.exports = {
 		'~/api',
 	],
 
-	hooks: {
-		build: {
-			done(builder) {
-				/**
-				 * TODO:
-				 * 빌드 끝나면 경고뜨는데 node를 종료함으로써 대처할 수 있습니다.
-				 * 다음 코드는 잠시 대처용이고, `nuxt`에서 해결할 수 있을것으로 보입니다.
-				 * https://github.com/nuxt/nuxt.js/issues/5067
-				 */
-				if (!builder.nuxt.options.dev) {
-					setTimeout(() => process.exit(0), 1000);
-				}
-			}
-		},
-	},
 };
