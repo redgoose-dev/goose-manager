@@ -94,10 +94,13 @@ export default {
     },
     async onClickClearTokens(e)
     {
+      // confirm
+      if (!confirm('Do you really want to reset the token?')) return;
+
       try
       {
         e.currentTarget.blur();
-        const res = await this.$axios.$post('/token/clear');
+        const res = await this.$axios.$post('/token/clear/');
         if (!res.success) throw 'error';
         alert('Success clear token');
       }
