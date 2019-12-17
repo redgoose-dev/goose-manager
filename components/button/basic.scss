@@ -1,0 +1,117 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+// base
+.button-basic {
+  $self: '.button-basic';
+
+  display: block;
+  margin: 0;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  transition: box-shadow .1s ease-out;
+  background: $color-light;
+  color: $color-base;
+  user-select: none;
+  white-space: nowrap;
+
+  &[type='button'], &[type='submit'], &[type='reset'] {
+    width: 100%;
+    cursor: pointer;
+    -webkit-appearance: button;
+  }
+  &[disabled] {
+    opacity: .6;
+    cursor: not-allowed;
+  }
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 $size-focus rgba($color-key, 1);
+  }
+  &:hover:not([disabled]) {
+    background: mix(#000, $color-light, 5%);
+  }
+  &:not([disabled]):active {
+    box-shadow: inset 0 2px 5px rgba(#000, .15);
+  }
+
+  // inline
+  &--inline {
+    display: inline-block;
+    vertical-align: middle;
+    &[type] {
+      width: auto;
+    }
+  }
+
+  // size
+  @include form-size('normal', 'button');
+  &--size {
+    &-small {
+      @include form-size('small', 'button');
+    }
+    &-large {
+      @include form-size('large', 'button');
+    }
+  }
+
+  // color
+  &--color {
+    &-key {
+      background: $color-key;
+      color: #fff;
+      &:focus {
+        box-shadow: 0 0 0 $size-focus+1 rgba($color-key, .3);
+      }
+      &:hover:not([disabled]) {
+        background: mix(#000, $color-key, 5%);
+      }
+      &:active:not([disabled]) {
+        box-shadow: inset 1px 2px 5px rgba(#000, .2);
+      }
+    }
+    &-gray {
+      background: $color-blur;
+      color: #fff;
+      &:focus {
+        box-shadow: 0 0 0 $size-focus+1 rgba($color-key, .25);
+      }
+      &:hover:not([disabled]) {
+        background: mix(#000, $color-blur, 5%);
+      }
+      &:active:not([disabled]) {
+        box-shadow: inset 0 2px 5px rgba(#000, .15);
+      }
+    }
+  }
+
+  // with icon
+  > .material-icons {
+    font-size: 20px;
+    margin: -4px 0 -2px 2px;
+    vertical-align: middle;
+    &.solo {
+      margin-left: 0;
+    }
+  }
+  &--size-small > .material-icons {
+    font-size: 16px;
+  }
+  &--size-large > .material-icons {
+    font-size: 28px;
+  }
+
+  // rotate icon
+  &--rotate-icon {
+    > .material-icons {
+      animation:spin 2s linear infinite;
+      @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+      @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+      @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+    }
+  }
+}

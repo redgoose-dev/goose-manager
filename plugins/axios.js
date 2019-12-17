@@ -2,8 +2,8 @@ import * as msg from '../libs/messages';
 
 export default function(cox)
 {
-	const { $axios, error } = cox;
-	const debug = process.env.APP_DEBUG === 'true';
+	const { $axios, store, error } = cox;
+	const debug = store.state.preference.debug.api;
 
 	// check
 	if (!process.env.TOKEN_PUBLIC)
@@ -43,6 +43,7 @@ export default function(cox)
 	// set header
 	$axios.setHeader('Accept', 'application/json;charset=UTF-8');
 	$axios.setHeader('Authorization', token);
+	//$axios.setHeader('Set-Cookie', 'HttpOnly;Secure;SameSite=Strict');
 
 	if (debug)
 	{
@@ -50,7 +51,6 @@ export default function(cox)
 		$axios.onRequest(config => {
 			console.log('Request URL: ' + config.url);
 		});
-
 		// on error
 		$axios.onError(error => {
 			console.error('ERROR: ', error.message);

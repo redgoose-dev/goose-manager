@@ -43,7 +43,6 @@
 </div>
 </template>
 
-<style lang="scss" src="./editor.scss" scoped></style>
 <script>
 import marked from 'marked';
 
@@ -51,9 +50,8 @@ let el_preview = null;
 
 export default {
 	components: {
-		'FormText': () => import('~/components/form/text'),
-		'ButtonBasic': () => import('~/components/button/basic'),
-		'ButtonCircleIcon': () => import('~/components/button/circle-icon'),
+		'form-text': () => import('~/components/form/text'),
+		'button-basic': () => import('~/components/button/basic'),
 	},
 	props: {
 		label: { type: String, default: 'Editor' },
@@ -115,3 +113,5 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss" src="./editor.scss" scoped/>

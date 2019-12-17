@@ -47,7 +47,7 @@ export default {
 					params = srl ? `?category=${srl}` : '';
 					break;
 			}
-			return `/articles/index/${this.nest_srl}${params}`;
+			return `/articles/index/${this.nest_srl}/${params}`;
 		}
 	}
 }

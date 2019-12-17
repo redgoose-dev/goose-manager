@@ -3,191 +3,192 @@
 // icon fonts
 $dir: '/fonts/material-icons/';
 @font-face {
-	font-family: 'Material Icons';
-	font-style: normal;
-	font-weight: 400;
-	src: url('#{$dir}/MaterialIcons-Regular.eot'); /* For IE6-8 */
-	src: local('Material Icons'),
-		local('MaterialIcons-Regular'),
-		url('#{$dir}MaterialIcons-Regular.woff2') format('woff2'),
-		url('#{$dir}MaterialIcons-Regular.woff') format('woff'),
-		url('#{$dir}MaterialIcons-Regular.ttf') format('truetype');
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('#{$dir}/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url('#{$dir}MaterialIcons-Regular.woff2') format('woff2'),
+    url('#{$dir}MaterialIcons-Regular.woff') format('woff'),
+    url('#{$dir}MaterialIcons-Regular.ttf') format('truetype');
 }
 .material-icons {
-	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;  /* Preferred icon size */
-	display: inline-block;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
 
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
 
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
 
-	/* Support for IE. */
-	font-feature-settings: 'liga';
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 
 // loading
 .rg-loading {
-	$self: '.rg-loading';
+  $self: '.rg-loading';
 
-	position: relative;
-	height: 20vw;
-	min-height: 250px;
-	width: 40%;
-	min-width: 300px;
-	margin: 0 auto;
+  position: relative;
+  height: 20vw;
+  min-height: 250px;
+  width: 40%;
+  min-width: 300px;
+  margin: 0 auto;
 
-	&__loader {
-		position: absolute;
-		top: calc(50% - 30px);
-		left: calc(50% - 30px);
-	}
-	&__box {
-		width: 50px;
-		height: 50px;
-		background: $color-key;
-		animation: animate .5s linear infinite;
-		position: absolute;
-		top: 0;
-		left: 0;
-		border-radius: 3px;
-		@keyframes animate {
-			17% { border-bottom-right-radius: 3px; }
-			25% { transform: translateY(9px) rotate(22.5deg); }
-			50% {
-				transform: translateY(18px) scale(1,.9) rotate(45deg) ;
-				border-bottom-right-radius: 40px;
-			}
-			75% { transform: translateY(9px) rotate(67.5deg); }
-			100% { transform: translateY(0) rotate(90deg); }
-		}
-	}
-	&__shadow {
-		width: 50px;
-		height: 5px;
-		background: #000;
-		opacity: 0.1;
-		position: absolute;
-		top: 59px;
-		left: 0;
-		border-radius: 50%;
-		animation: shadow .5s linear infinite;
-		@keyframes shadow {
-			50% {
-				transform: scale(1.2,1);
-			}
-		}
-	}
+  &__loader {
+    position: absolute;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+  }
+  &__box {
+    width: 50px;
+    height: 50px;
+    background: $color-key;
+    animation: animate .5s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 3px;
+    @keyframes animate {
+      17% { border-bottom-right-radius: 3px; }
+      25% { transform: translateY(9px) rotate(22.5deg); }
+      50% {
+        transform: translateY(18px) scale(1,.9) rotate(45deg) ;
+        border-bottom-right-radius: 40px;
+      }
+      75% { transform: translateY(9px) rotate(67.5deg); }
+      100% { transform: translateY(0) rotate(90deg); }
+    }
+  }
+  &__shadow {
+    width: 50px;
+    height: 5px;
+    background: #000;
+    opacity: 0.1;
+    position: absolute;
+    top: 59px;
+    left: 0;
+    border-radius: 50%;
+    animation: shadow .5s linear infinite;
+    @keyframes shadow {
+      50% {
+        transform: scale(1.2,1);
+      }
+    }
+  }
 
-	&-move {
-		#{$self}__loader {
-			animation: loader 3s linear infinite;
-			@keyframes loader {
-				0% { left: -20px }
-				100% { left: 90%; }
-			}
-		}
-	}
+  &-move {
+    #{$self}__loader {
+      animation: loader 3s linear infinite;
+      @keyframes loader {
+        0% { left: -20px }
+        100% { left: 90%; }
+      }
+    }
+  }
 }
 
 // error unit
 .rg-error {
-	$self: '.rg-error';
+  $self: '.rg-error';
 
-	padding: 10vh 0;
-	text-align: center;
-	font-weight: 600;
+  padding: 10vh 0;
+  text-align: center;
+  font-weight: 600;
 
-	&__body {
-		> i {
-			display: block;
-			margin: 0 auto;
-			font-size: 72px;
-			color: $color-key;
-		}
-		> span {
-			display: block;
-			margin: 8px 0 0;
-			font-size: 1rem;
-		}
-	}
+  &__body {
+    > i {
+      display: block;
+      margin: 0 auto;
+      font-size: 72px;
+      color: $color-key;
+    }
+    > span {
+      display: block;
+      margin: 8px 0 0;
+      font-size: 1rem;
+    }
+  }
 
-	&-small {
-		padding: 5vh 0;
-	}
-	&-large {
-		padding: 15vh 0;
-	}
-	&-frame {
-		background: #fff;
-		box-shadow: $shadow-box;
-	}
+  &-small {
+    padding: 5vh 0;
+  }
+  &-large {
+    padding: 15vh 0;
+  }
+  &-frame {
+    background: #fff;
+    box-shadow: $shadow-box;
+  }
 }
 
 // paginate
 .rg-paginate {
-	margin: 30px 0 0;
-	text-align: center;
-	font-size: 0;
-	> * {
-		display: inline-block;
-		vertical-align: middle;
-		min-width: 30px;
-	}
-	a {
-		color: #222;
-		cursor: pointer;
-		transition: background .3s ease-out;
-		&:hover {
-			background: mix($color-light, #fff, 60%);
-		}
-	}
-	em {
-		display: inline-block;
-		vertical-align: middle;
-		padding: 4px 10px;
-		font-weight: bold;
-		font-size: .875rem;
-		font-family: $font-eng;
-		font-style: normal;
-		line-height: 24px;
-	}
-	i {
-		display: inline-block;
-		vertical-align: middle;
-		padding: 4px 4px;
-	}
-	.dots {
-		min-width: 20px;
-		em {
-			padding: 4px 0;
-			color: mix($color-light, #000, 80%);
-		}
-	}
-	.disabled {
-		opacity: .3;
-		cursor: auto;
-		&:hover {
-			background: none;
-		}
-	}
-	.active {
-		color: $color-key;
-		cursor: auto;
-		&:hover {
-			background: none;
-		}
-	}
+  margin: 30px 0 0;
+  text-align: center;
+  font-size: 0;
+  user-select: none;
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 30px;
+  }
+  a {
+    color: #222;
+    cursor: pointer;
+    transition: background .3s ease-out;
+    &:hover {
+      background: mix($color-light, #fff, 60%);
+    }
+  }
+  em {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 4px 10px;
+    font-weight: bold;
+    font-size: .875rem;
+    font-family: $font-eng;
+    font-style: normal;
+    line-height: 24px;
+  }
+  i {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 4px 4px;
+  }
+  .dots {
+    min-width: 20px;
+    em {
+      padding: 4px 0;
+      color: mix($color-light, #000, 80%);
+    }
+  }
+  .disabled {
+    opacity: .3;
+    cursor: auto;
+    &:hover {
+      background: none;
+    }
+  }
+  .active {
+    color: $color-key;
+    cursor: auto;
+    &:hover {
+      background: none;
+    }
+  }
 }

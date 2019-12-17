@@ -1,0 +1,103 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+// circle icon
+.button-circle-icon {
+  display: block;
+  padding: 4px;
+  font-size: 0;
+  text-align: center;
+  cursor: pointer;
+  span {
+    display: block;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  &:active {
+    span {
+      box-shadow: inset 0 1px 3px rgba(#000, .5);
+    }
+  }
+
+  &[type='button'], &[type='submit'], &[type='reset'] {
+    cursor: pointer;
+    -webkit-appearance: button;
+    background: none;
+    border: none;
+  }
+
+  &--inline {
+    display: inline-block;
+    vertical-align: middle;
+    span {
+      display: inline-block;
+    }
+  }
+  &--center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  // size
+  span {
+    width: 32px;
+    height: 32px;
+  }
+  i {
+    line-height: 32px;
+    font-size: 18px;
+  }
+  &--size {
+    &-small {
+      span {
+        width: 24px;
+        height: 24px;
+      }
+      i {
+        line-height: 24px;
+        font-size: 14px;
+      }
+    }
+    &--large {
+      span {
+        width: 42px;
+        height: 42px;
+      }
+      i {
+        line-height: 42px;
+        font-size: 30px;
+      }
+    }
+  }
+
+  // color
+  span {
+    background: $color-light;
+    color: $color-base;
+  }
+  &--color {
+    &-key {
+      span {
+        background: $color-key;
+        color: #fff;
+      }
+      &:hover {
+        span {
+          background: mix(#000, $color-key, 10%);
+        }
+      }
+    }
+    &-gray {
+      span {
+        background: $color-blur;
+        color: #fff;
+      }
+      &:hover {
+        span {
+          background: mix(#000, $color-blur, 10%);
+        }
+      }
+    }
+  }
+}

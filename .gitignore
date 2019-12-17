@@ -3,5 +3,10 @@ node_modules/
 .nuxt/
 .AppleDouble/
 
-.env
 0
+.env
+package-lock.json
+preference.json
+yarn.lock
+!resource/.env
+!resource/preference.json

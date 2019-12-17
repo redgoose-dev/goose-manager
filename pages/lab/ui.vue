@@ -217,13 +217,13 @@
 <script>
 export default {
 	components: {
-		'PageHeader': () => import('~/components/contents/page-header'),
-		'ButtonBasic': () => import('~/components/button/basic'),
-		'ButtonCircleIcon': () => import('~/components/button/circle-icon'),
-		'FormText': () => import('~/components/form/text'),
-		'FormSelect': () => import('~/components/form/select'),
-		'FormCheck': () => import('~/components/form/check'),
-		'FormChecks': () => import('~/components/form/checks'),
+		'page-header': () => import('~/components/contents/page-header'),
+		'button-basic': () => import('~/components/button/basic'),
+		'button-circle-icon': () => import('~/components/button/circle-icon'),
+		'form-text': () => import('~/components/form/text'),
+		'form-select': () => import('~/components/form/select'),
+		'form-check': () => import('~/components/form/check'),
+		'form-checks': () => import('~/components/form/checks'),
 	},
 	data()
 	{

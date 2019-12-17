@@ -1,9 +1,10 @@
 {
   "name": "goose-manager",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "scripts": {
-    "dev": "./node_modules/.bin/nuxt --port",
+    "setup": "cp ./resource/.env ./ && cp ./resource/preference.json ./",
+    "dev": "./node_modules/.bin/nuxt --port 4000",
     "start": "./node_modules/.bin/nuxt start",
     "build": "./node_modules/.bin/nuxt build",
     "build-check": "./node_modules/.bin/nuxt build --analyze"
@@ -16,7 +17,7 @@
     "express-mysql-session": "^2.1.0",
     "express-session": "^1.17.0",
     "jquery": "^3.4.1",
-    "marked": "^0.7.0",
+    "marked": "^0.8.0",
     "nuxt": "^2.10.2",
     "rg-uploader": "^1.3.7",
     "vuedraggable": "^2.23.2"

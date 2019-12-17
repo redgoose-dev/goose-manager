@@ -17,7 +17,7 @@ $color-code: #e96900;
 
 
 // size
-$size-min: 768px;
+$size-min: 1000px;
 $size-desktop: 1024px;
 $size-desktop-large: 1280px;
 $size-container: 1200px;
@@ -26,11 +26,11 @@ $size-focus: 2px;
 $size-header-height: 50px;
 
 
-// shadow
-$shadow-box: 0 1px 20px rgba(#000, .06);
+// etc
+$shadow-box: 0 1px 20px rgba(#000, .1);
 
 
 // font-family
 $font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-$font-eng: Helvetica, Arial, sans-serif;
+$font-eng: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-console: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
