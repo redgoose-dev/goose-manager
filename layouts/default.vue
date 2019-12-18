@@ -24,13 +24,13 @@
           <div class="dropdown__children">
             <ul>
               <li>
-                <a href="/account" @click.prevent="onClickProfileItem">Account</a>
+                <a href="/account/" @click.prevent="onClickProfileItem">Account</a>
               </li>
               <li>
                 <a href="#" @click.prevent="onClickClearTokens">Clear tokens</a>
               </li>
               <li>
-                <nuxt-link to="/auth/logout">Logout</nuxt-link>
+                <nuxt-link to="/auth/logout/">Logout</nuxt-link>
               </li>
             </ul>
           </div>

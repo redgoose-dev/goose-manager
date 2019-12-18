@@ -15,14 +15,16 @@ export default function(cox)
     console.warn(`REDIRECT TO: ${route.name} :: ${route.path}`);
   }
 
-  // check ignore path on development
-  if (!isDev && route.name.indexOf(ignorePath))
-  {
-    redirect('/');
-  }
-
   // check auth
-  if (!store.state.authUser)
+  if (store.state.authUser)
+  {
+    // check ignore path on development
+    if (!isDev && route.name.indexOf(ignorePath))
+    {
+      redirect('/');
+    }
+  }
+  else
   {
     redirect('/auth/login');
   }
