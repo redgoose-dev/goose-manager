@@ -1,7 +1,8 @@
 // ignore path list
 const ignorePath = [
-  'labs-icons',
-  'labs-ui',
+  'labs',
+  'labs-index-ui',
+  'labs-index-icons',
 ];
 
 export default function(cox)
@@ -19,7 +20,7 @@ export default function(cox)
   if (store.state.authUser)
   {
     // check ignore path on development
-    if (!isDev && route.name.indexOf(ignorePath))
+    if (!isDev && ignorePath.indexOf(route.name) > -1)
     {
       redirect('/');
     }

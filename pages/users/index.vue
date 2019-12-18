@@ -38,7 +38,6 @@ import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
 
 export default {
-  middleware: ['check-admin'],
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'item-list': () => import('~/components/item/list'),
