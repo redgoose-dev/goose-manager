@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="dashboard">
   <page-header title="Dashboard" description="welcome to goose manager" class="dashboard__header"/>
 
   <div class="dashboard__body">
@@ -67,7 +67,7 @@
           </li>
         </ul>
       </div>
-      <error v-else type="empty" class="dashboard__error"/>
+      <error v-else type="empty" :frame="true" size="small" class="dashboard__error"/>
     </section>
     <!-- // nests -->
 
@@ -100,7 +100,7 @@
           </li>
         </ul>
       </div>
-      <error v-else type="empty" class="dashboard__error"/>
+      <error v-else type="empty" :frame="true" size="small" class="dashboard__error"/>
     </section>
     <!-- // apps -->
 

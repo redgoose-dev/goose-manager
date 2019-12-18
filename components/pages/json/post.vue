@@ -130,7 +130,7 @@ export default {
           json: this.forms.json.value,
           description: this.forms.description.value,
         });
-        let url = this.type === 'edit' ? `/json/${this.srl}/edit` : '/json';
+        let url = this.type === 'edit' ? `/json/${this.srl}/edit/` : '/json/';
         let res = await this.$axios.$post(url, data);
         if (!res.success) throw res.message;
         this.processing = false;

@@ -76,11 +76,11 @@ export default {
           nest_srl: this.nest_srl || null,
           name: this.forms.name.value
         });
-        let url = (this.type === 'edit' && this.srl) ? `/categories/${this.srl}/edit` : '/categories';
+        let url = (this.type === 'edit' && this.srl) ? `/categories/${this.srl}/edit/` : '/categories/';
         let res = await this.$axios.$post(url, data);
         if (!res.success) throw res.message;
         this.processing = false;
-        this.$router.push(`/categories/${this.nest_srl}`);
+        this.$router.push(`/categories/${this.nest_srl}/`);
       }
       catch(e)
       {

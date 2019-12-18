@@ -68,7 +68,7 @@ export default {
     height: 50px;
     border: 1px solid red;
     fill: red;
-    background: #eee;
+    background: #999;
     svg {
       width: 24px;
       height: 24px;
