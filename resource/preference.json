@@ -1,1 +1,32 @@
-{}
+{
+  "appName": "Management contents",
+  "debug": {
+    "route": false,
+    "api": false
+  },
+  "navigation": [
+    {
+      "name": "Apps",
+      "link": "/apps/"
+    },
+    {
+      "name": "Nests",
+      "link": "/nests/"
+    },
+    {
+      "name": "Users",
+      "link": "/users/",
+      "admin": true
+    },
+    {
+      "name": "JSON",
+      "link": "/json/"
+    },
+    {
+      "name": "Documentation",
+      "link": "https://github.com/redgoose-dev/goose-api/wiki",
+      "target": "_blank"
+    }
+  ],
+  "dashboard": {}
+}

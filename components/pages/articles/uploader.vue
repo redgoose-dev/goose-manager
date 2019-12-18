@@ -17,7 +17,7 @@
 		</header>
 		<div class="rg-uploader-body" data-comp="queue">
 			<div class="col queue" data-element="queue">
-				<ul></ul>
+				<ul/>
 			</div>
 		</div>
 		<footer class="rg-uploader-footer">
@@ -49,12 +49,12 @@
 	</article>
 	<figure
 		v-if="thumbnailPreviewImage"
-		@click="onCloseThumbnailPreviewImage"
-		class="preview">
+		class="preview"
+		@click="onCloseThumbnailPreviewImage">
 		<img
 			:src="`${thumbnailPreviewImage}`"
-			@click="(e) => { e.stopPropagation(); }"
-			alt="preview image"/>
+			alt="preview image"
+			@click="(e) => { e.stopPropagation(); }"/>
 	</figure>
 </div>
 </template>
@@ -142,7 +142,7 @@ export default {
 							str += file.type && file.type.split('/')[0] === 'image' ? '!' : '';
 							str += `[${file.name}](${file.fullSrc})`;
 							str += `\n`;
-							this.$emit('insertEditor', str);
+							this.$emit('insert-editor', str);
 						},
 					},
 					{
@@ -275,7 +275,7 @@ export default {
 			}).join(`\n`);
 
 			// output
-			this.$emit('insertEditor', str);
+			this.$emit('insert-editor', str);
 		},
 		onSelectAllToggleQueue()
 		{

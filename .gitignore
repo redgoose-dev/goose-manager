@@ -10,3 +10,5 @@ preference.json
 yarn.lock
 !resource/.env
 !resource/preference.json
+.DS_Store
+

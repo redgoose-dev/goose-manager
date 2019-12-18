@@ -4,7 +4,8 @@
     module="articles"
     :title="article.title"
     :description="description"
-    :prefix="prefix"/>
+    :prefix="prefix"
+    :eng="false"/>
 
   <div v-html="article.content" class="rg-article-body"/>
 

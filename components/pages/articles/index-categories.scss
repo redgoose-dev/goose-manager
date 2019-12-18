@@ -1,0 +1,52 @@
+@import "../../../assets/scss/variables";
+
+$item-padding-v: 3px;
+$item-padding-h: 8px;
+
+.categories {
+  margin: 0 0 20px;
+  user-select: none;
+
+  ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 -#{$item-padding-h};
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: block;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: $item-padding-v $item-padding-h;
+    color: $color-base;
+    text-decoration: none;
+    font-size: .75rem;
+    font-weight: 500;
+    line-height: 1.25;
+    em {
+      margin-left: 2px;
+      font-style: normal;
+      &:before {
+        content: '(';
+      }
+      &:after {
+        content: ')';
+      }
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+    &.active {
+      color: $color-key;
+      cursor: default;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

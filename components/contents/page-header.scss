@@ -1,0 +1,36 @@
+@import "../../assets/scss/variables";
+
+$self: '.page-header';
+
+.page-header {
+  margin: 0 0 30px;
+
+  &__prefix {
+    display: block;
+    margin: 0 0 -4px;
+    color: $color-key;
+    font-size: .75rem;
+    font-weight: 600;
+  }
+  &__title {
+    margin: 0;
+    padding-top: 2px;
+    font-size: 1.875rem;
+    line-height: 1.25;
+    letter-spacing: -.5px;
+    font-weight: 700;
+  }
+  &__description {
+    margin: 0;
+    font-size: .6875rem;
+    color: $color-blur;
+  }
+
+  &--eng {
+    #{$self} {
+      &__title {
+        font-family: $font-eng;
+      }
+    }
+  }
+}

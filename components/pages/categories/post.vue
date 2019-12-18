@@ -20,8 +20,10 @@
     </dl>
   </fieldset>
   <nav-bottom>
+    <template slot="left">
+      <button-basic type="button" label="Back" @click="$router.back()"/>
+    </template>
     <template slot="right">
-      <button-basic type="button" label="Back" onClick="history.back()"/>
       <button-basic
         type="submit"
         color="key"

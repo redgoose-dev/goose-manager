@@ -1,14 +1,9 @@
 <template>
-  <header class="rg-page-header">
-    <div class="rg-page-header__body">
-      <small v-if="!!prefix" class="rg-page-header__prefix">{{prefix}}</small>
-      <h2 class="rg-page-header__title">{{title || messages.title}}</h2>
-      <p class="rg-page-header__description">{{messages.description}}</p>
-    </div>
-    <div v-if="!!$slots.default" class="rg-page-header__side">
-      <slot/>
-    </div>
-  </header>
+<header :class="['page-header', eng && 'page-header--eng']">
+  <small v-if="!!prefix" class="page-header__prefix">{{prefix}}</small>
+  <h2 class="page-header__title">{{title || messages.title}}</h2>
+  <p class="page-header__description">{{messages.description}}</p>
+</header>
 </template>
 
 <script>
@@ -18,9 +13,10 @@ export default {
     title: { type: String, default: null },
     description: { type: String, default: null },
     prefix: { type: String, default: null },
+    eng: { type: Boolean, default: true },
   },
   computed: {
-    messages: function()
+    messages()
     {
       switch(this.module)
       {
@@ -65,7 +61,9 @@ export default {
             description: this.description,
           };
       }
-    }
-  }
+    },
+  },
 }
 </script>
+
+<style src="./page-header.scss" lang="scss" scoped/>

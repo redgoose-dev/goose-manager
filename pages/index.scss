@@ -1,10 +1,12 @@
+@import "../assets/scss/variables";
+
 .dashboard {
 	&__section {
 		margin: 50px 0 0;
 		&:first-child {
 			margin-top: 0;
 		}
-		header {
+		> header {
 			display: flex;
 			align-items: center;
 			margin: 0 0 15px;
@@ -12,16 +14,23 @@
 				flex: 1;
 				margin: 0;
 				padding: 0 0 0 2px;
-				font-size: 1.5rem;
+				font-family: $font-eng;
+				font-size: 1.375rem;
 				font-weight: 600;
-				line-height: 1;
+				line-height: 1.15;
+				letter-spacing: -.5px;
 			}
 			nav {
-				margin-right: 0;
+				box-sizing: border-box;
 				a {
 					display: block;
+					margin: -4px;
 					padding: 5px;
 					font-size: 0;
+					user-select: none;
+					&:active {
+						opacity: .5;
+					}
 				}
 			}
 		}

@@ -10,7 +10,7 @@
   <nav class="nav">
     <button-basic
       label="Go to back"
-      onClick="history.back()"
+      @click="$router.back()"
       color="key"
       :inline="true"/>
   </nav>

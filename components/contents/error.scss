@@ -1,0 +1,62 @@
+@import "../../assets/scss/variables";
+
+$self: '.error';
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+
+  &__body {}
+  &__icon {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    user-select: none;
+    box-sizing: border-box;
+    i {
+      display: block;
+      font-size: 72px;
+      color: $color-key;
+      box-sizing: border-box;
+    }
+  }
+  &__message {
+    display: block;
+    margin: 4px 0 0;
+    font-family: $font-eng;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  &--size {
+    &-small {
+      height: 200px;
+      #{$self}__icon {
+        i {
+          font-size: 56px;
+        }
+      }
+      #{$self}__message {
+        font-size: .875rem;
+      }
+    }
+    &-large {
+      height: 600px;
+      #{$self}__icon {
+        i {
+          font-size: 100px;
+        }
+      }
+      #{$self}__message {
+        font-size: 1.25rem;
+      }
+    }
+  }
+  &--frame {
+    background: #fff;
+    box-shadow: 0 1px 20px rgba(#000, .05);
+  }
+}

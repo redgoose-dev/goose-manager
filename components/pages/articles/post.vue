@@ -53,7 +53,7 @@
           v-model="forms.order.value"
           placeholder="2019-05-05"
           :maxlength="10"
-          :size="12"
+          :size="20"
           :error="!!forms.order.error"
           :required="true"
           :inline="true"
@@ -81,7 +81,7 @@
         icon="visibility"
         color="gray"
         :inline="true"
-        @onClick="(e) => $refs.editor.onPreview(e)"/>
+        @click="(e) => $refs.editor.onPreview(e)"/>
     </template>
   </editor>
 
@@ -95,7 +95,7 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" onClick="history.back()"/>
+      <button-basic type="button" label="Back" @click="$router.back()"/>
     </template>
     <template slot="right">
       <button-basic

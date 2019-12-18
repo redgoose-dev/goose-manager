@@ -1,12 +1,14 @@
 <template>
 <div :class="[
-	'rg-error',
-	size && `rg-error-${size}`,
-	frame && `rg-error-frame`,
+	'error',
+	size && `error--size-${size}`,
+	frame && `error--frame`,
 ]">
-	<div class="rg-error__body">
-		<i class="material-icons">{{iconName}}</i>
-		<span>{{text}}</span>
+	<div class="error__body">
+		<p class="error__icon">
+			<i class="material-icons">{{computedIconName}}</i>
+		</p>
+		<p class="error__message">{{computedText}}</p>
 	</div>
 </div>
 </template>
@@ -15,15 +17,16 @@
 import * as messages from '~/libs/messages';
 
 export default {
+	name: 'error',
 	props: {
-		type: { type: String, default: '' }, // {empty}
-		icon: { type: String, default: '' },
+		type: { type: String, default: '' }, // empty
+		icon: { type: String, default: '' }, // material design icon name
 		message: { type: String, default: null },
-		size: { type: String, default: '' },
-		frame: { type: Boolean, default: true },
+		size: { type: String, default: '' }, // small,large
+		frame: { type: Boolean, default: false },
 	},
 	computed: {
-		text()
+		computedText()
 		{
 			if (this.message) return this.message;
 
@@ -35,7 +38,7 @@ export default {
 					return messages.error.service;
 			}
 		},
-		iconName()
+		computedIconName()
 		{
 			if (this.icon) return this.icon;
 
@@ -50,3 +53,5 @@ export default {
 	}
 }
 </script>
+
+<style src="./error.scss" lang="scss" scoped/>

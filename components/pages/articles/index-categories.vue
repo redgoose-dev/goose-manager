@@ -1,5 +1,5 @@
 <template>
-<nav v-if="categories && categories.length" class="rg-nav-bar">
+<nav v-if="categories && categories.length" class="categories">
 	<ul>
 		<li v-for="(item,key) in categories" :key="key">
 			<a
@@ -52,3 +52,5 @@ export default {
 	}
 }
 </script>
+
+<style src="./index-categories.scss" lang="scss" scoped/>

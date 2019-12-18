@@ -31,3 +31,8 @@ pre,
 samp {
 	font-family: $font-console;
 }
+
+::selection {
+	background: $color-key;
+	color: #fff;
+}
