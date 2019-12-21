@@ -2,34 +2,29 @@
 <article>
   <page-header module="apps"/>
 
-  <error v-if="!!error" :message="error"/>
-  <error v-else-if="!(index && index.length)" type="empty"/>
-  <div v-else class="rg-index-list">
-    <ul>
-      <li v-for="(item,key) in index" :key="key">
-        <item-list
-          :title="item.name"
-          :alt="item.name"
-          :description="item.description"
-          :use-image="false"
-          :metas="[
-            `srl: ${item.srl}`,
-            `id: ${item.id}`,
-            `date: ${item.regdate}`]"
-          :navs="[
-            { label: 'Edit', link: `/apps/${item.srl}/edit/` },
-            { label: 'Delete', link: `/apps/${item.srl}/delete/` }
-          ]"/>
-      </li>
-    </ul>
-  </div>
+  <error v-if="!!error" :message="error" size="large"/>
+  <error v-else-if="!(index && index.length)" type="empty" size="large"/>
+  <index-wrap v-else :column="1">
+    <item-list
+      v-for="(item,key) in index" :key="key"
+      :title="item.name"
+      :alt="item.name"
+      :description="item.description"
+      :use-image="false"
+      :metas="[
+        `srl: ${item.srl}`,
+        `id: ${item.id}`,
+        `date: ${item.regdate}`
+      ]"
+      :navs="[
+        { label: 'Edit', link: `/apps/${item.srl}/edit/` },
+        { label: 'Delete', link: `/apps/${item.srl}/delete/` }
+      ]"/>
+  </index-wrap>
 
   <nav-bottom>
-    <template slot="left">
-      <button-basic label="Nests" to="/nests/"/>
-    </template>
     <template slot="right">
-      <button-basic label="Add App" to="/apps/add/" color="key"/>
+      <button-basic label="Add App" to="/apps/add/" color="key" icon-left="plus"/>
     </template>
   </nav-bottom>
 </article>
@@ -42,6 +37,7 @@ import * as dates from '~/libs/dates';
 export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
+    'index-wrap': () => import('~/components/contents/index-wrap'),
     'item-list': () => import('~/components/item/list'),
     'button-basic': () => import('~/components/button/basic'),
     'error': () => import('~/components/contents/error'),

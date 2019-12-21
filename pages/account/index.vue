@@ -1,31 +1,42 @@
 <template>
 <article>
   <page-header module="users" title="Account"/>
-  <div class="rg-index-items">
-    <dl>
-      <dt>srl number</dt>
-      <dd>{{data.srl}}</dd>
+
+  <div class="rg-form-fieldset">
+    <dl class="rg-form-field">
+      <dt><strong>srl</strong></dt>
+      <dd>
+        <p>{{data.srl}}</p>
+      </dd>
     </dl>
-    <dl>
-      <dt>E-mail</dt>
-      <dd>{{data.email}}</dd>
+    <dl class="rg-form-field">
+      <dt><strong>E-mail</strong></dt>
+      <dd>
+        <p>{{data.email}}</p>
+      </dd>
     </dl>
-    <dl>
-      <dt>Name</dt>
-      <dd>{{data.name}}</dd>
+    <dl class="rg-form-field">
+      <dt><strong>Name</strong></dt>
+      <dd>
+        <p>{{data.name}}</p>
+      </dd>
     </dl>
-    <dl>
-      <dt>Admin</dt>
-      <dd>{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</dd>
+    <dl class="rg-form-field">
+      <dt><strong>Admin</strong></dt>
+      <dd>
+        <p>{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</p>
+      </dd>
     </dl>
-    <dl>
-      <dt>Register date</dt>
-      <dd>{{getDate(data.regdate)}}</dd>
+    <dl class="rg-form-field">
+      <dt><strong>Register date</strong></dt>
+      <dd>
+        <p>{{getDate(data.regdate)}}</p>
+      </dd>
     </dl>
   </div>
   <nav-bottom>
     <template slot="right">
-      <button-basic label="Edit" :to="`/users/${srl}/edit/`" color="key"/>
+      <button-basic label="Edit" :to="`/users/${srl}/edit/`" color="key" icon-left="edit"/>
     </template>
   </nav-bottom>
 </article>

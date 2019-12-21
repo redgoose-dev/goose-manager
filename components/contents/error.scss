@@ -6,52 +6,59 @@ $self: '.error';
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 400px;
+  height: 340px;
 
-  &__body {}
   &__icon {
     display: flex;
     justify-content: center;
     margin: 0;
     user-select: none;
     box-sizing: border-box;
-    i {
+    svg {
       display: block;
-      font-size: 72px;
+      width: 64px;
+      height: 64px;
+      stroke-width: .5px;
       color: $color-key;
       box-sizing: border-box;
     }
   }
   &__message {
     display: block;
-    margin: 4px 0 0;
-    font-family: $font-eng;
-    font-size: 1rem;
-    font-weight: 600;
+    margin: 10px 0 0;
+    font-family: $font-eng-circular;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 1.25;
+    text-align: center;
   }
 
   &--size {
     &-small {
-      height: 200px;
+      height: 180px;
       #{$self}__icon {
-        i {
-          font-size: 56px;
+        svg {
+          width: 48px;
+          height: 48px;
+          stroke-width: 1.25px;
         }
       }
       #{$self}__message {
-        font-size: .875rem;
+        font-size: 14px;
       }
     }
     &-large {
-      height: 600px;
+      height: 480px;
       #{$self}__icon {
-        i {
-          font-size: 100px;
+        svg {
+          width: 78px;
+          height: 78px;
+          stroke-width: .5px;
         }
       }
       #{$self}__message {
-        font-size: 1.25rem;
+        font-size: 20px;
+        font-weight: 400;
       }
     }
   }

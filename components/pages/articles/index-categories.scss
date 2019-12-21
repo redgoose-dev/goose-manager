@@ -24,10 +24,11 @@ $item-padding-h: 8px;
     margin: 0;
     padding: $item-padding-v $item-padding-h;
     color: $color-base;
-    text-decoration: none;
+    font-family: $font-eng-circular;
     font-size: .75rem;
     font-weight: 500;
     line-height: 1.25;
+    text-decoration: none;
     em {
       margin-left: 2px;
       font-style: normal;

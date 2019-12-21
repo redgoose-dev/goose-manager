@@ -1,6 +1,6 @@
 <template>
 <article>
-  <page-header module="apps" title="Delete app"/>
+  <page-header module="apps" title="Apps / Delete"/>
 
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
@@ -14,16 +14,16 @@
 
     <nav-bottom>
       <template slot="left">
-        <button-basic type="button" label="Back" @click="$router.back()"/>
+        <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
       </template>
       <template slot="right">
         <button-basic
           type="submit"
           ref="button_submit"
           color="key"
-          :label="!processing ? 'Delete' : null"
-          :icon="processing ? 'cached' : ''"
-          :rotateIcon="processing"
+          label="Delete app"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
           :disabled="processing"/>
       </template>
     </nav-bottom>
@@ -68,10 +68,6 @@ export default {
       });
     }
   },
-  mounted()
-  {
-    setTimeout(() => this.$refs.button_submit.$el.focus(), 100);
-  },
   methods: {
     async onSubmit(e)
     {
@@ -83,7 +79,7 @@ export default {
         if (!res.success) throw res.message;
         this.processing = false;
         // redirect to index
-        this.$router.replace('/apps/');
+        this.$router.replace('../../');
       }
       catch(e)
       {

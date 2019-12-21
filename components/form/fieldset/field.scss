@@ -1,0 +1,28 @@
+@import "../../../assets/scss/variables";
+
+.fieldset-field {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
+  min-height: 56px;
+  box-sizing: border-box;
+  > dt {
+    margin: 0;
+    padding: 0 0 0 12px;
+    width: 180px;
+    box-sizing: border-box;
+    > label {
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-blur;
+    }
+  }
+  > dd {
+    position: relative;
+    box-sizing: border-box;
+    flex: 1;
+    margin: 0;
+    padding: 0 20px;
+  }
+}

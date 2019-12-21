@@ -35,7 +35,7 @@
   <transition name="preview">
     <div v-if="previewWindow" class="preview" @click="onClickPreview">
       <article class="preview__wrap" @click="(e) => e.stopPropagation()">
-        <div ref="preview" v-html="preview" class="rg-article-body"/>
+        <div ref="preview" v-html="preview" class="article-body article-body--popup"/>
       </article>
     </div>
   </transition>
@@ -109,4 +109,4 @@ export default {
 }
 </script>
 
-<style lang="scss" src="./editor.scss" scoped/>
+<style src="./editor.scss" lang="scss" scoped/>

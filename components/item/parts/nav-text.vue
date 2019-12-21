@@ -28,6 +28,7 @@ export default {
   user-select: none;
   > a {
     display: block;
+    font-family: $font-eng-circular;
     font-size: .75rem;
     font-weight: 600;
     color: $color-base;

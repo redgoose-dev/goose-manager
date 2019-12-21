@@ -1,5 +1,5 @@
 <template>
-	<div :class="['rg-form-checks', inline && 'rg-form-checks-inline']">
+	<div :class="['form-checks', inline && 'form-checks-inline']">
 		<p v-for="(item,key) in items" :key="key">
 			<form-check
 				:type="typeName"
@@ -36,13 +36,13 @@ export default {
 		event: 'change',
 	},
 	computed: {
-		typeName: function()
+		typeName()
 		{
 			return this.type === 'radio' ? 'radio' : 'checkbox';
 		},
 	},
 	methods: {
-		confirmCheck: function(currentValue)
+		confirmCheck(currentValue)
 		{
 			switch (this.typeName)
 			{
@@ -53,7 +53,7 @@ export default {
 			}
 			return false;
 		},
-		onChange: function(value)
+		onChange(value)
 		{
 			let newValue = null;
 
@@ -83,3 +83,5 @@ export default {
 	},
 }
 </script>
+
+<style src="./checks.scss" lang="scss" scoped/>

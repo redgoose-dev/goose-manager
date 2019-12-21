@@ -21,10 +21,10 @@ export default {
   flex-wrap: wrap;
   &__item {
     display: block;
-    font-size: .625rem;
     font-family: $font-eng;
-    color: mix($color-blur, #fff, 100%);
-    line-height: 1.2;
+    font-size: .625rem;
+    color: $color-base;
+    line-height: 1.25;
     &:after {
       content: ', ';
       padding-right: 3px;

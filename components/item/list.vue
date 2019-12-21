@@ -8,6 +8,7 @@
       :href="href"
       :target="target"
       :alt="alt"
+      :type="imageType"
       class="item-list__image"/>
     <div class="item-list__body">
       <text-title
@@ -15,7 +16,10 @@
         :link="link"
         :href="href"
         class="item-list__title"/>
-      <text-description v-if="!!description" :label="description"/>
+      <text-description
+        v-if="!!description"
+        :label="description"
+        class="item-list__description"/>
       <metas
         v-if="!!metas && metas.length"
         :items="metas"
@@ -48,6 +52,7 @@ export default {
     href: { type: String, default: null },
     target: { type: String, default: '' },
     image: { type: String, default: null },
+    imageType: { type: String, default: null }, // contain
     alt: { type: String, default: '' },
     metas: { type: Array, default: null },
     navs: { type: Array, default: null },
@@ -99,8 +104,11 @@ export default {
     flex: 1;
     margin-top: -3px;
   }
+  &__description {
+    margin: 1px 0 0;
+  }
   &__metas {
-    margin: 5px 0 0;
+    margin: 4px 0 0;
   }
   &__nav-text {
     margin: 5px 0 0;

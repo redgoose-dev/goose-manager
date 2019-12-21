@@ -2,13 +2,13 @@
 <main class="login">
   <div class="login__wrap">
     <article class="login__body">
-      <h1 class="login__title">Goose Manager</h1>
-      <h2 class="login__app-name">{{computedAppName}}</h2>
+      <h1 class="login__app-name">{{computedAppName}}</h1>
+      <h2 class="login__app-description">{{computedAppDescription}}</h2>
       <form ref="form" @submit.prevent="onSubmit" class="login__form">
         <fieldset class="login__fieldset">
           <legend>login form</legend>
           <div class="login__field">
-            <label for="email">E-Mail</label>
+            <label for="email" class="login__field-label">E-Mail</label>
             <div>
               <input
                 type="email"
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="login__field">
-            <label for="password">Password</label>
+            <label for="password" class="login__field-label">Password</label>
             <div>
               <input
                 type="password"
@@ -47,11 +47,12 @@
           <button-basic
             type="submit"
             :label="!processing ? 'Sign in' : null"
-            :icon="processing ? 'cached' : ''"
-            :rotateIcon="processing"
+            :icon-right="processing ? 'loader' : ''"
+            :rotate-icon="processing"
             size="large"
             color="key"
-            :disabled="processing"/>
+            :disabled="processing"
+            class="button"/>
         </nav>
       </form>
     </article>
@@ -87,6 +88,11 @@ export default {
     {
       const { preference } = this.$store.state;
       return preference.appName;
+    },
+    computedAppDescription()
+    {
+      const { preference } = this.$store.state;
+      return preference.appDescription;
     }
   },
   mounted()

@@ -15,21 +15,28 @@ $self: '.page-header';
   &__title {
     margin: 0;
     padding-top: 2px;
-    font-size: 1.875rem;
+    font-size: 2rem;
     line-height: 1.25;
-    letter-spacing: -.5px;
+    letter-spacing: -.75px;
     font-weight: 700;
   }
   &__description {
-    margin: 0;
+    margin: -2px 0 0;
     font-size: .6875rem;
     color: $color-blur;
+    letter-spacing: -.25px;
   }
 
   &--eng {
     #{$self} {
       &__title {
-        font-family: $font-eng;
+        padding-top: 0;
+        font-family: $font-eng-circular;
+        letter-spacing: -1px;
+        font-weight: 800;
+      }
+      &__description {
+        margin-top: -2px;
       }
     }
   }

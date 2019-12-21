@@ -17,7 +17,6 @@ export default {
 @import "../../../assets/scss/variables";
 
 .text-description {
-  margin: 0;
   font-size: 11px;
   line-height: 1.5;
   color: mix(#fff, $color-blur, 25%);

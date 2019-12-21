@@ -1,0 +1,33 @@
+@import "../../assets/scss/variables";
+
+.labs {
+  &__body {
+    margin: 30px 0 0;
+  }
+}
+
+.labs-tab {
+  display: flex;
+  align-items: center;
+  margin: -10px 0 0;
+  padding: 8px 15px;
+  background: rgba(#f1f1f1, .9);
+  border-radius: 4px;
+  user-select: none;
+  a {
+    display: block;
+    padding: 4px 10px;
+    text-decoration: none;
+    font-family: $font-eng;
+    font-weight: 500;
+    font-size: 14px;
+    &:active {
+      opacity: .5;
+    }
+    &.nuxt-link-exact-active {
+      color: $color-base;
+      cursor: default;
+      opacity: 1;
+    }
+  }
+}

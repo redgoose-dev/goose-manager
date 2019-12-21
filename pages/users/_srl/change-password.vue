@@ -1,6 +1,6 @@
 <template>
 <article>
-  <page-header module="users" title="Change user password"/>
+  <page-header module="users" title="Users / Change password"/>
 
   <form @submit.prevent="onSubmit" ref="form">
     <fieldset class="rg-form-fieldset">
@@ -16,8 +16,10 @@
             :maxlength="24"
             :size="32"
             :error="!!forms.password.error"
+            placeholder="Please input password"
             :required="true"
             :inline="true"/>
+          <p class="rg-form-help">{{message.currentPassword}}</p>
         </dd>
       </dl>
       <dl class="rg-form-field">
@@ -31,8 +33,10 @@
             :maxlength="24"
             :size="32"
             :error="!!forms.password_new.error"
+            placeholder="Please input password"
             :required="true"
             :inline="true"/>
+          <p class="rg-form-help">{{message.newPassword}}</p>
         </dd>
       </dl>
       <dl class="rg-form-field">
@@ -46,28 +50,27 @@
             :maxlength="24"
             :size="32"
             :error="!!forms.password_new2.error"
+            placeholder="Please input password"
             :required="true"
             :inline="true"/>
           <p v-if="!!forms.password_new2.error" class="rg-form-help rg-form-help-error">
             {{forms.password_new2.error}}
           </p>
-          <p class="rg-form-help">
-            Please input a password such as "new password".
-          </p>
+          <p class="rg-form-help">{{message.samePassword}}</p>
         </dd>
       </dl>
     </fieldset>
     <nav-bottom>
       <template slot="left">
-        <button-basic type="button" label="Back" @click="$router.back()"/>
+        <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
       </template>
       <template slot="right">
         <button-basic
           type="submit"
           color="key"
-          :label="!processing ? 'Change password' : null"
-          :icon="processing ? 'cached' : ''"
-          :rotateIcon="processing"
+          label="Change password"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
           :disabled="processing"/>
       </template>
     </nav-bottom>
@@ -111,12 +114,19 @@ export default {
       self: parseInt(this.$store.state.authUser.srl) === parseInt(this.$route.params.srl),
     };
   },
+  created()
+  {
+    this.message = {
+      currentPassword: messages.msg.currentPasswordGuide,
+      newPassword: messages.msg.newPasswordGuide,
+      samePassword: messages.msg.samePasswordGuide,
+    };
+  },
   methods: {
     async onSubmit(e)
     {
       // reset error
       this.forms.password_new2.error = null;
-
       // check password
       if (this.forms.password_new.value !== this.forms.password_new2.value)
       {
@@ -124,7 +134,6 @@ export default {
         this.$refs.form.password_new2.focus();
         return;
       }
-
       try
       {
         this.processing = true;

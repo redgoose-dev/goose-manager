@@ -6,7 +6,7 @@
 			{{item.label}}
 		</option>
 	</select>
-	<i class="material-icons">unfold_more</i>
+  <icon name="code"/>
 </span>
 </template>
 
@@ -23,29 +23,32 @@ export default {
 		size: { type: String },
 		className: { type: String },
 	},
-
+  components: {
+	  'icon': () => import('~/components/icon'),
+  },
 	model: {
 		prop: 'selected',
 		event: 'change',
 	},
-
 	computed: {
-		classNames: function()
+		classNames()
 		{
 			return [
-				'rg-form-select',
-				this.size && `rg-form-select-size-${this.size}`,
-				this.inline && `rg-form-select-inline`,
+				'form-select',
+				this.size && `form-select-size-${this.size}`,
+				this.inline && `form-select-inline`,
 				this.className,
 			];
 		}
 	},
 
 	methods: {
-		onChange: function(e)
+		onChange(e)
 		{
 			this.$emit('change', e.target.value);
 		}
 	}
 }
 </script>
+
+<style src="./select.scss" lang="scss" scoped/>

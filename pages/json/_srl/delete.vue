@@ -1,6 +1,6 @@
 <template>
 <article>
-  <page-header module="json" title="Delete JSON"/>
+  <page-header module="json" title="JSON / Delete"/>
 
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
@@ -11,17 +11,16 @@
 
     <nav-bottom>
       <template slot="left">
-        <button-basic type="button" label="Back" @click="$router.back()"/>
+        <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
       </template>
       <template slot="right">
         <button-basic
           type="submit"
           ref="button_submit"
           color="key"
-          :label="!processing ? 'Delete JSON' : null"
-          :inline="true"
-          :icon="processing ? 'cached' : ''"
-          :rotateIcon="processing"
+          label="Delete JSON"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
           :disabled="processing"/>
       </template>
     </nav-bottom>

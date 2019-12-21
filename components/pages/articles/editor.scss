@@ -37,7 +37,7 @@
 	top: 0;
 	bottom: 0;
 	overflow-y: scroll;
-	padding: 30px 40px;
+	padding: 50px 40px;
 	box-sizing: border-box;
 	background: rgba(#000, .75);
 	cursor: zoom-out;
@@ -50,12 +50,9 @@
 		background: #fff;
 		border-radius: $size-border-radius;
 		overflow: hidden;
-		padding: 0;
+		padding: 40px;
 		box-shadow: 0 1px 10px rgba(#000, .3);
-		.rg-article-body {
-			margin: 0;
-			padding: 1.5rem;
-		}
+    box-sizing: border-box;
 	}
 
 	&-enter-active,

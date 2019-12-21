@@ -1,6 +1,6 @@
 <template>
 <article>
-  <page-header module="apps" title="Add app"/>
+  <page-header module="apps" title="Apps / Add"/>
   <post ref="post" type="add"/>
 </article>
 </template>

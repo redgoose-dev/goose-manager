@@ -1,13 +1,16 @@
 <template>
-<article>
+<article class="labs">
   <page-header title="Labs" description="개발에 필요한 실험적인 공간"/>
 
-  <nav>
+  <nav class="labs-tab">
+    <nuxt-link to="/labs/">Home</nuxt-link>
     <nuxt-link to="/labs/ui/">UI</nuxt-link>
-    <nuxt-link to="/labs/icons/">icons</nuxt-link>
+    <nuxt-link to="/labs/button/">Button</nuxt-link>
+    <nuxt-link to="/labs/forms/">Forms</nuxt-link>
+    <nuxt-link to="/labs/icons/">Icons</nuxt-link>
   </nav>
 
-  <div>
+  <div class="labs__body">
     <nuxt-child/>
   </div>
 </article>
@@ -20,3 +23,5 @@ export default {
   },
 }
 </script>
+
+<style src="./index.scss" lang="scss" scoped/>

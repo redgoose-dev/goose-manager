@@ -1,42 +1,78 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
 
+// color
+$color-bg-base: mix(#000, #fff, 8%);
+$color-bg-base-hover: mix(#000, #fff, 12%);
+$color-bg-base-focus: rgba(#000, .15);
+$color-bg-base-active: rgba(#fff, .75);
+$color-bg-key: $color-key;
+$color-bg-key-hover: mix(#000, $color-key, 10%);
+$color-bg-key-focus: rgba($color-key, .25);
+$color-bg-key-active: rgba(#ff3026, .5);
+$color-bg-gray: mix(#000, #fff, 40%);
+$color-bg-gray-hover: mix(#000, $color-bg-gray, 8%);
+$color-bg-gray-focus: rgba(#000, .1);
+$color-bg-gray-active: rgba(#fff, .3);
+
+// size
+$size-height-small: 32px;
+$size-height-basic: 42px;
+$size-height-large: 52px;
+$size-text-small: 12px;
+$size-text-basic: 16px;
+$size-text-large: 20px;
+$size-icon-small: 12px;
+$size-icon-basic: 16px;
+$size-icon-large: 22px;
+
 // base
 .button-basic {
   $self: '.button-basic';
-
-  display: block;
-  margin: 0;
-  border-radius: 2px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  transition: box-shadow .1s ease-out;
-  background: $color-light;
-  color: $color-base;
-  user-select: none;
-  white-space: nowrap;
-
+  & {
+    display: block;
+    margin: 0;
+    border-radius: 2px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    transition: box-shadow 100ms ease-out, background-color 200ms ease-out;
+    user-select: none;
+    white-space: nowrap;
+  }
   &[type='button'], &[type='submit'], &[type='reset'] {
     width: 100%;
     cursor: pointer;
     -webkit-appearance: button;
   }
   &[disabled] {
-    opacity: .6;
+    opacity: .4;
     cursor: not-allowed;
   }
-  &:focus {
-    outline: 0;
-    box-shadow: 0 0 0 $size-focus rgba($color-key, 1);
-  }
   &:hover:not([disabled]) {
-    background: mix(#000, $color-light, 5%);
+    background-color: $color-bg-base-hover;
+  }
+  &:focus:not([disabled]) {
+    outline: 0;
+    box-shadow: 0 0 0 $size-focus+1 $color-bg-base-focus;
   }
   &:not([disabled]):active {
-    box-shadow: inset 0 2px 5px rgba(#000, .15);
+    box-shadow: inset 0 2px 30px $color-bg-base-active;
+  }
+
+  &__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 100%;
+  }
+  &__label {
+    display: block;
+    font-style: normal;
+    font-weight: 500;
   }
 
   // inline
@@ -49,65 +85,90 @@
   }
 
   // size
-  @include form-size('normal', 'button');
-  &--size {
-    &-small {
-      @include form-size('small', 'button');
+  & {
+    height: $size-height-basic;
+    padding: 0 20px;
+    &__label {
+      font-size: $size-text-basic;
+      line-height: 1.4;
     }
-    &-large {
-      @include form-size('large', 'button');
+    #{$self}__icon {
+      width: $size-icon-basic;
+      height: $size-icon-basic;
+    }
+    &--size-small {
+      height: $size-height-small;
+      padding: 0 12px;
+      #{$self}__label {
+        font-size: $size-text-small;
+      }
+      #{$self}__icon {
+        width: $size-icon-small;
+        height: $size-icon-small;
+      }
+    }
+    &--size-large {
+      height: $size-height-large;
+      padding: 0 30px;
+      #{$self}__label {
+        font-size: $size-text-large;
+      }
+      #{$self}__icon {
+        width: $size-icon-large;
+        height: $size-icon-large;
+      }
     }
   }
 
   // color
-  &--color {
-    &-key {
-      background: $color-key;
-      color: #fff;
-      &:focus {
-        box-shadow: 0 0 0 $size-focus+1 rgba($color-key, .3);
+  & {
+    background-color: $color-bg-base;
+    color: $color-base;
+    &--color {
+      &-key {
+        background-color: $color-bg-key;
+        color: #fff;
+        &:hover:not([disabled]) {
+          background-color: $color-bg-key-hover;
+        }
+        &:focus:not([disabled]) {
+          box-shadow: 0 0 0 $size-focus+1 $color-bg-key-focus;
+        }
+        &:active:not([disabled]) {
+          box-shadow: inset 0 2px 30px $color-bg-key-active;
+        }
       }
-      &:hover:not([disabled]) {
-        background: mix(#000, $color-key, 5%);
-      }
-      &:active:not([disabled]) {
-        box-shadow: inset 1px 2px 5px rgba(#000, .2);
-      }
-    }
-    &-gray {
-      background: $color-blur;
-      color: #fff;
-      &:focus {
-        box-shadow: 0 0 0 $size-focus+1 rgba($color-key, .25);
-      }
-      &:hover:not([disabled]) {
-        background: mix(#000, $color-blur, 5%);
-      }
-      &:active:not([disabled]) {
-        box-shadow: inset 0 2px 5px rgba(#000, .15);
+      &-gray {
+        background-color: $color-bg-gray;
+        color: #fff;
+        &:hover:not([disabled]) {
+          background-color: $color-bg-gray-hover;
+        }
+        &:focus:not([disabled]) {
+          box-shadow: 0 0 0 $size-focus+1 $color-bg-gray-focus;
+        }
+        &:active:not([disabled]) {
+          box-shadow: inset 0 2px 30px $color-bg-gray-active;
+        }
       }
     }
   }
 
   // with icon
-  > .material-icons {
-    font-size: 20px;
-    margin: -4px 0 -2px 2px;
-    vertical-align: middle;
-    &.solo {
-      margin-left: 0;
+  &__icon {
+    &.left {
+      margin-right: 6px;
+      margin-left: -2px;
+    }
+    &.right {
+      margin-left: 6px;
+      margin-right: -2px;
     }
   }
-  &--size-small > .material-icons {
-    font-size: 16px;
-  }
-  &--size-large > .material-icons {
-    font-size: 28px;
-  }
 
-  // rotate icon
-  &--rotate-icon {
-    > .material-icons {
+  // animation icon
+  &--animation {
+    #{$self}__icon {
       animation:spin 2s linear infinite;
       @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
       @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }

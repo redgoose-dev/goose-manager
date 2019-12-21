@@ -39,7 +39,9 @@ export const actions = {
         let pref = await app.$axios.$get(`${box.env.APP_URL}/api/preference-load/`);
         if (pref.success) setup.preference = pref.data;
       }
-      catch(e) {}
+      catch(e) {
+        console.error(e);
+      }
 
       commit('setup', setup);
     }

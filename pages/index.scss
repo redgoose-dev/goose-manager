@@ -15,7 +15,7 @@
 				margin: 0;
 				padding: 0 0 0 2px;
 				font-family: $font-eng;
-				font-size: 1.375rem;
+				font-size: 1.5rem;
 				font-weight: 600;
 				line-height: 1.15;
 				letter-spacing: -.5px;
@@ -24,13 +24,19 @@
 				box-sizing: border-box;
 				a {
 					display: block;
-					margin: -4px;
-					padding: 5px;
+					margin: -4px 0 -4px -4px;
+					padding: 6px;
 					font-size: 0;
 					user-select: none;
 					&:active {
 						opacity: .5;
 					}
+          svg {
+            display: block;
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+          }
 				}
 			}
 		}

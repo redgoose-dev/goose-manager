@@ -19,12 +19,12 @@
         <div class="dropdown">
           <span class="dropdown__control">
             <em>{{user.email}}</em>
-            <i class="material-icons">arrow_drop_down</i>
+            <icon name="chevron-down"/>
           </span>
           <div class="dropdown__children">
             <ul>
               <li>
-                <a href="/account/" @click.prevent="onClickProfileItem">Account</a>
+                <nuxt-link to="/account/" @click.native="onClickProfileItem">Account</nuxt-link>
               </li>
               <li>
                 <a href="#" @click.prevent="onClickClearTokens">Clear tokens</a>
@@ -58,6 +58,7 @@ export default {
   name: 'layout',
   components: {
     'button-basic': () => import('~/components/button/basic'),
+    'icon': () => import('~/components/icon'),
   },
   data()
   {
@@ -90,12 +91,15 @@ export default {
     onClickProfileItem(e)
     {
       e.currentTarget.blur();
-      this.$router.push(e.currentTarget.getAttribute('href'));
     },
     async onClickClearTokens(e)
     {
       // confirm
-      if (!confirm('Do you really want to reset the token?')) return;
+      if (!confirm('Do you really want to reset the token?'))
+      {
+        e.currentTarget.blur();
+        return;
+      }
 
       try
       {
@@ -115,4 +119,5 @@ export default {
   },
 }
 </script>
+
 <style lang="scss" src="./default.scss" scoped/>

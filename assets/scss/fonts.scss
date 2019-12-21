@@ -1,0 +1,61 @@
+@import "./variables";
+
+// icon fonts
+$dir: '/fonts/material-icons/';
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url('#{$dir}MaterialIcons-Regular.woff') format('woff');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+
+// circular-std
+$dir: '/fonts/circular/';
+@mixin font-loader-circular($weight-name, $weight)
+{
+  @font-face {
+    font-family: 'circular';
+    font-style: normal;
+    font-weight: $weight;
+    src: local('Circular'), local('Circular Std #{$weight-name}'),
+      url('#{$dir}/CircularStd-#{$weight-name}.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'circular';
+    font-style: italic;
+    font-weight: $weight;
+    src: local('Circular'), local('Circular Std #{$weight-name} Italic'),
+      url('#{$dir}/CircularStd-#{$weight-name}Italic.woff2') format('woff2');
+  }
+}
+@include font-loader-circular('Book', 400);
+@include font-loader-circular('Medium', 500);
+@include font-loader-circular('Bold', 600);
+@include font-loader-circular('Black', 700);

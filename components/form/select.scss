@@ -1,0 +1,70 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.form-select {
+  position: relative;
+  display: block;
+  width: 100%;
+  font-size: 0;
+  background: #eff0f2;
+  user-select: none;
+  > select {
+    display: block;
+    margin: 0;
+    padding: 5px 0;
+    width: 100%;
+    background: none;
+    font-size: .875rem;
+    color: #222;
+    border-radius: $size-border-radius;
+    -webkit-appearance: none;
+    border: 1px solid $color-form-line;
+
+    &:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      & + i {
+        opacity: .6;
+      }
+    }
+    &:focus {
+      box-shadow: 0 0 0 $size-focus rgba($color-key, 1);
+      border-color: transparent;
+      outline: 0;
+    }
+  }
+  > svg {
+    display: block;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    stroke-width: 2;
+    transform: translateY(-50%) rotate(90deg);
+    color: $color-base;
+  }
+
+  // size
+  > select {
+    @include form-size('normal', 'select');
+    padding-left: .75rem;
+  }
+  &-size-small > select {
+    @include form-size('small', 'select');
+    padding-left: .75rem;
+  }
+  &-size-large > select {
+    @include form-size('large', 'select');
+    padding-left: .75rem;
+  }
+
+  &-inline {
+    display: inline-block;
+    width: auto;
+    > select {
+      padding-right: 2rem;
+    }
+  }
+}

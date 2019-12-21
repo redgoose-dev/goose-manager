@@ -1,54 +1,67 @@
 <template>
-<button
-  v-if="type"
-  :type="type"
-  :title="title"
-  :disabled="disabled"
-  :class="classNames"
-  :style="styles"
-  @click="onClick">
-  <span v-if="label">{{label}}</span>
-  <i v-if="icon" :class="['material-icons', !label && 'solo']">{{icon}}</i>
-</button>
-<nuxt-link
-  v-else-if="to"
-  :to="to"
-  :title="title"
-  :class="classNames"
-  :style="styles">
-  <span v-if="label">{{label}}</span>
-  <i v-if="icon" :class="['material-icons', !label && 'solo']">{{icon}}</i>
-</nuxt-link>
 <a
-  v-else
+  v-if="href"
   :href="href"
   :target="target"
   :title="title"
   :class="classNames"
   :style="styles"
   @click.prevent="onClick">
-  <span v-if="label">{{label}}</span>
-  <i v-if="icon" :class="['material-icons', !label && 'solo']">{{icon}}</i>
+  <span class="button-basic__wrap">
+    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
+    <em v-if="label" class="button-basic__label">{{label}}</em>
+    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
+  </span>
 </a>
+<nuxt-link
+  v-else-if="to"
+  :to="to"
+  :title="title"
+  :class="classNames"
+  :style="styles">
+  <span class="button-basic__wrap">
+    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
+    <em v-if="label" class="button-basic__label">{{label}}</em>
+    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
+  </span>
+</nuxt-link>
+<button
+  v-else
+  :type="type"
+  :title="title"
+  :disabled="disabled"
+  :class="classNames"
+  :style="styles"
+  @click="onClick">
+  <span class="button-basic__wrap">
+    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
+    <em v-if="label" class="button-basic__label">{{label}}</em>
+    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
+  </span>
+</button>
 </template>
 
 <script>
 export default {
   props: {
-    type: { type: String },
-    label: { type: String, default: 'button' },
+    type: { type: String, default: null },
+    label: { type: String, default: null },
     href: { type: String },
     to: { type: String },
     target: { type: String },
     title: { type: String },
     disabled: { type: Boolean, default: false },
-    size: { type: String }, // `small`, `large`
-    color: { type: String }, // `key`, `gray`
+    size: { type: String, default: null }, // small,large
+    color: { type: String, default: null }, // key,gray
     inline: { type: Boolean, default: false },
     rotateIcon: { type: Boolean, default: false },
-    icon: { type: String },
+    iconLeft: { type: String, default: null },
+    iconRight: { type: String, default: null },
     className: { type: String },
     styles: { type: [Object,Array] },
+  },
+  components: {
+    'icon': () => import('~/components/icon'),
   },
   computed: {
     classNames()
@@ -58,7 +71,7 @@ export default {
         this.size && `button-basic--size-${this.size}`,
         this.color && `button-basic--color-${this.color}`,
         this.inline && `button-basic--inline`,
-        this.rotateIcon && `button-basic--rotate-icon`,
+        this.rotateIcon && `button-basic--animation`,
         this.className,
       ];
     },
@@ -71,4 +84,5 @@ export default {
   },
 };
 </script>
+
 <style src="./basic.scss" lang="scss" scoped/>

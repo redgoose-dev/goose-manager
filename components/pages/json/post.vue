@@ -50,15 +50,15 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" @click="$router.back()"/>
+      <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
     </template>
     <template slot="right">
 			<button-basic
 				type="submit"
 				color="key"
-				:label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'} JSON` : null"
-				:icon="processing ? 'cached' : ''"
-				:rotateIcon="processing"
+				:label="`${this.type === 'edit' ? 'Edit' : 'Add'} JSON`"
+				:icon-left="processing ? 'loader' : 'check'"
+				:rotate-icon="processing"
 				:disabled="processing"/>
     </template>
   </nav-bottom>
@@ -77,8 +77,7 @@ export default {
   },
   props: {
     type: { type: String, default: 'add' }, // add,edit
-    srl: { type: [Number,String] },
-    data: {
+    datas: {
       name: { type: String },
       description: { type: String },
       json: { type: String },
@@ -87,17 +86,18 @@ export default {
   data()
   {
     return {
+      srl: this.datas ? this.datas.srl : null,
       forms: {
         name: {
-          value: this.data ? this.data.name : '',
+          value: this.datas ? this.datas.name : '',
           error: null,
         },
         description: {
-          value: this.data ? this.data.description : '',
+          value: this.datas ? this.datas.description : '',
           error: null,
         },
         json: {
-          value: this.data ? this.data.json : '',
+          value: this.datas ? this.datas.json : '',
           error: null,
         },
       },
@@ -135,15 +135,7 @@ export default {
         if (!res.success) throw res.message;
         this.processing = false;
         // redirect
-        switch(this.type)
-        {
-          case 'edit':
-            this.$router.push(`/json/${this.srl}`);
-            break;
-          default:
-            this.$router.push('/json');
-            break;
-        }
+        this.$router.push('../');
       }
       catch(e)
       {

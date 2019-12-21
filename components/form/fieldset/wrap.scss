@@ -1,0 +1,27 @@
+@import "../../../assets/scss/variables";
+
+.fieldset-wrap {
+  margin: 0;
+  padding: 0;
+  border: none;
+  &__legend {
+    display: block;
+    margin: 0 0 5px;
+    > legend {
+      font-size: 20px;
+      font-family: $font-eng-circular;
+      line-height: 1.42;
+      font-weight: 500;
+    }
+  }
+  &__body {
+    $color: #ddd;
+    border-top: 1px solid $color;
+    border-bottom: 1px solid $color;
+    > * {
+      &:nth-child(n+2) {
+        border-top: 1px solid $color;
+      }
+    }
+  }
+}

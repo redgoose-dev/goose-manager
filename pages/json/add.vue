@@ -1,6 +1,6 @@
 <template>
 <article>
-  <page-header module="json" title="Add JSON"/>
+  <page-header module="json" title="JSON / Add"/>
   <post ref="post" type="add"/>
 </article>
 </template>

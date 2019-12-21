@@ -44,7 +44,7 @@
       </dd>
     </dl>
     <dl class="rg-form-field">
-      <dt><label for="type">Order date</label></dt>
+      <dt><label for="order">Order date</label></dt>
       <dd>
         <form-text
           type="text"
@@ -78,8 +78,8 @@
         type="button"
         label="Preview"
         size="small"
-        icon="visibility"
         color="gray"
+        icon-right="eye"
         :inline="true"
         @click="(e) => $refs.editor.onPreview(e)"/>
     </template>
@@ -95,15 +95,15 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" @click="$router.back()"/>
+      <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
     </template>
     <template slot="right">
       <button-basic
         type="submit"
         color="key"
-        :label="!processing ? (this.type === 'edit' ? 'Edit article' : 'Add article') : null"
-        :icon="processing ? 'cached' : ''"
-        :rotateIcon="processing"
+        :label="`${this.type === 'edit' ? 'Edit' : 'Add'} article`"
+        :icon-left="processing ? 'loader' : 'check'"
+        :rotate-icon="processing"
         :disabled="processing"/>
     </template>
   </nav-bottom>
@@ -298,13 +298,22 @@ export default {
         }
 
         this.processing = false;
+
         // redirect
-        let params = {};
-        if (this.nest_srl) params.nest = this.nest_srl;
-        if (this.category_srl) params.category = this.category_srl;
-        if (this.page && this.page > 1) params.page = this.page;
-        let url = `/articles/${this.srl || res.srl}/read/${text.serialize(params, true)}`;
-        this.$router.push(url);
+        switch (this.type)
+        {
+          case 'edit':
+          case 'add':
+            let params = {};
+            if (this.nest_srl) params.nest = this.nest_srl;
+            if (this.category_srl) params.category = this.category_srl;
+            if (this.page && this.page > 1) params.page = this.page;
+            this.$router.push(`../${text.serialize(params, true)}`);
+            break;
+          default:
+            this.$router.push('/articles/');
+            break;
+        }
       }
       catch(e)
       {

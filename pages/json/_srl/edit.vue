@@ -1,7 +1,7 @@
 <template>
 <article>
-  <page-header module="json" title="Edit JSON"/>
-  <post type="edit" :srl="srl" :data="forms"/>
+  <page-header module="json" title="JSON / Edit"/>
+  <post type="edit" :datas="datas"/>
 </article>
 </template>
 
@@ -25,8 +25,8 @@ export default {
       let res = await cox.$axios.$get(`/json/${srl}/`);
       if (!res.success) throw res.message;
       return {
-        srl,
-        forms: {
+        datas: {
+          srl: res.data.srl,
           name: res.data.name,
           description: res.data.description,
           json: JSON.stringify(res.data.json, null, 2),

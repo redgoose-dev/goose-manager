@@ -1,7 +1,7 @@
 @import "../assets/scss/variables";
+@import "../assets/scss/mixins";
 
-$size-side-max-padding: 80px;
-$size-side-tablet-padding: 20px;
+$size-side-max-padding: 50px;
 
 // title
 main > h1 {
@@ -15,19 +15,16 @@ main > h1 {
 
 // content area
 .content-area {
-  max-width: $size-container;
   padding: 0 $size-side-max-padding;
-  margin: 0 auto;
-  @media (max-width: $size-desktop) {
-    max-width: none;
-    padding: 0 $size-side-tablet-padding;
+  @include responsive(desktop-large) {
+    max-width: $size-container;
+    margin: 0 auto;
   }
 }
 
 // header
 .header {
-  //position: relative;
-  position: sticky;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -60,7 +57,7 @@ main > h1 {
       color: #fff;
       img {
         display: block;
-        width: 92px;
+        width: 78px;
       }
     }
   }
@@ -78,14 +75,16 @@ main > h1 {
         height: 100%;
         > a {
           display: flex;
-          padding: 0 12px;
+          padding: 0 15px;
           align-items: center;
           height: 100%;
           text-decoration: none;
           color: #eee;
-          font-size: .875rem;
-					box-sizing: border-box;
-					outline: none;
+          font-family: $font-eng-circular;
+          font-size: 14px;
+          font-weight: 400;
+          box-sizing: border-box;
+          outline: none;
           &:focus,
           &:hover {
             background: rgba(#000, .3);
@@ -102,7 +101,7 @@ main > h1 {
     height: 100%;
     margin: 0 -15px 0 0;
     .dropdown {
-			$self: '.dropdown';
+      $self: '.dropdown';
       height: 100%;
       &__control {
         display: flex;
@@ -115,31 +114,34 @@ main > h1 {
         border: none;
         border-radius: $size-border-radius;
         transition: background .2s ease-out;
-				cursor: default;
+        cursor: default;
         > em {
-					display: block;
-					padding-right: 10px;
+          display: block;
+          padding-right: 10px;
+          font-family: $font-eng-circular;
           font-size: .8125rem;
           font-weight: 200;
           font-style: normal;
           color: #ccc;
+          text-align: right;
         }
-        > i {
-					display: block;
-          font-size: 18px;
+        > svg {
+          display: block;
+          width: 16px;
+          height: 16px;
           color: #fff;
-					transition: transform 250ms ease-out;
+          transition: transform 250ms ease-out;
         }
       }
       &__children {
         position: relative;
         > ul {
-          left: 0;
+          right: 0;
           margin: 0;
           padding: 0;
           list-style: none;
           background: mix(#000, #2D2929, 30%);
-          min-width: 150px;
+          min-width: 160px;
           position: absolute;
           top: 0;
           opacity: 0;
@@ -147,29 +149,32 @@ main > h1 {
           transition: opacity .15s ease-out;
           li {
             border-top: 1px solid rgba(#fff, .1);
-            a {
-              display: block;
-              padding: 8px 15px;
-              text-decoration: none;
-              color: #ccc;
-              font-size: .8125rem;
-							outline: none;
-              &:focus,
-              &:hover {
-                background: rgba(#000, .5);
-              }
+          }
+          a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-family: $font-eng-circular;
+            color: #ccc;
+            font-size: .8125rem;
+            outline: none;
+            &:focus,
+            &:hover {
+              background: rgba(#000, .5);
+            }
+            &.nuxt-active {
+              color: $color-key;
             }
           }
         }
       }
-
       &:hover,
       &:focus-within {
         #{$self}__control {
           background: rgba(#000, .3);
-					> i {
-						transform: rotateX(180deg);
-					}
+          > svg {
+            transform: rotateX(180deg);
+          }
         }
         #{$self}__children {
           > ul {
@@ -193,6 +198,7 @@ main > h1 {
   user-select: none;
   address {
     text-align: right;
+    font-family: $font-eng-circular;
     font-size: .625rem;
     color: $color-blur;
   }

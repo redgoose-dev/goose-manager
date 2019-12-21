@@ -20,3 +20,12 @@
     max-width: 90%;
   }
 }
+
+.uploader-nav {
+  user-select: none;
+  svg {
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+  }
+}

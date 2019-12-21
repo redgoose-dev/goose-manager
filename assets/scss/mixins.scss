@@ -31,11 +31,12 @@
 // responsive
 @mixin responsive($range)
 {
-	@if $range == desktop
-	{
-		@media (min-width: #{$size-desktop}) { @content; }
-	}
-	@else if $range == desktop-large
+  @if $range == desktop
+  {
+    @media (min-width: #{$size-desktop}) { @content; }
+  }
+
+	@if $range == desktop-large
 	{
 		@media (min-width: #{$size-desktop-large}) { @content; }
 	}
@@ -45,4 +46,9 @@
 @mixin retina()
 {
 	@media (-webkit-min-device-pixel-ratio: 2) { @content; }
+}
+
+// dark mode
+@mixin dark-mode() {
+  @media (prefers-color-scheme: dark) { @content; }
 }

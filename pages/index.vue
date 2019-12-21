@@ -4,136 +4,121 @@
 
   <div class="dashboard__body">
     <!-- articles -->
-    <section v-if="articles && articles.length" class="dashboard__section">
+    <section v-if="computedShow.articles" class="dashboard__section">
       <header>
         <h3>Articles</h3>
         <nav>
-          <nuxt-link to="/articles/"><i class="material-icons">chevron_right</i></nuxt-link>
+          <nuxt-link to="/articles/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <div class="rg-index-thumbnail">
-        <ul>
-          <li v-for="(item,key) in articles" :key="key">
-            <item-thumbnail
-              :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
-              :link="getUrlForArticles('read/', item.srl)"
-              :title="item.title"
-              :alt="item.title"
-              :metas="[
-                getArticleType(item.type),
-                getDate(item.regdate),
-                item.category_name,
-                `Hit: ${item.hit}`,
-                `Like: ${item.star}`
-              ]"
-              :navs="[
-                { label: 'Edit', link: getUrlForArticles('edit/', item.srl) },
-                { label: 'Delete', link: getUrlForArticles('delete/', item.srl) }
-              ]"/>
-          </li>
-        </ul>
-      </div>
+      <index-wrap v-if="articles && articles.length" :column="4">
+        <item-thumbnail
+          v-for="(item,key) in articles"
+          :key="key"
+          :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
+          :link="`/articles/${item.srl}/`"
+          :title="item.title"
+          :alt="item.title"
+          :metas="[
+            getArticleType(item.type),
+            getDate(item.regdate),
+            item.category_name,
+            `Hit: ${item.hit}`,
+            `Like: ${item.star}`
+          ]"
+          :navs="[
+            { label: 'Edit', link: `/articles/${item.srl}/edit/` },
+            { label: 'Delete', link: `/articles/${item.srl}/delete/` }
+          ]"/>
+      </index-wrap>
+      <error v-else type="empty" :frame="true" size="small" class="dashboard__error"/>
     </section>
     <!-- // articles -->
 
     <!-- nests -->
-    <section class="dashboard__section">
+    <section v-if="computedShow.nests" class="dashboard__section">
       <header>
         <h3>Nests</h3>
         <nav>
-          <nuxt-link to="/nests/">
-            <i class="material-icons">chevron_right</i>
-          </nuxt-link>
+          <nuxt-link to="/nests/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <div v-if="nests && nests.length" class="rg-index-card">
-        <ul>
-          <li v-for="(nest,nestKey) in nests" :key="nestKey">
-            <item-card
-              :link="`/articles/${nest.srl}`"
-              :title="nest.name"
-              :alt="nest.description"
-              :use-image="false"
-              :metas="[
-                `srl: ${nest.srl}`,
-                `id: ${nest.id}`,
-                getDate(nest.regdate),
-              ]"
-              :navs="[
-                { label: 'Edit', link: `/nests/${nest.srl}/edit/` },
-                { label: 'Delete', link: `/nests/${nest.srl}/delete/` },
-                !!parseInt(nest.json.useCategory) && { label: 'Category', link: `/categories/${nest.srl}/` },
-              ]"/>
-          </li>
-        </ul>
-      </div>
+      <index-wrap v-if="nests && nests.length" :column="3">
+        <item-card
+          v-for="(nest,key) in nests" :key="key"
+          :link="`/nests/${nest.srl}/articles/`"
+          :title="nest.name"
+          :alt="nest.description"
+          :use-image="false"
+          :metas="[
+            `srl: ${nest.srl}`,
+            `id: ${nest.id}`,
+            getDate(nest.regdate),
+          ]"
+          :navs="[
+            { label: 'Edit', link: `/nests/${nest.srl}/edit/` },
+            { label: 'Delete', link: `/nests/${nest.srl}/delete/` },
+            !!parseInt(nest.json.useCategory) && { label: 'Category', link: `/categories/${nest.srl}/` },
+          ]"/>
+      </index-wrap>
       <error v-else type="empty" :frame="true" size="small" class="dashboard__error"/>
     </section>
     <!-- // nests -->
 
     <!-- apps -->
-    <section class="dashboard__section">
+    <section v-if="computedShow.apps" class="dashboard__section">
       <header>
         <h3>Apps</h3>
         <nav>
-          <nuxt-link to="/apps/">
-            <i class="material-icons">chevron_right</i>
-          </nuxt-link>
+          <nuxt-link to="/apps/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <div v-if="apps && apps.length" class="rg-index-card">
-        <ul>
-          <li v-for="(app,appKey) in apps" :key="appKey">
-            <item-card
-              :title="app.name"
-              :alt="app.description"
-              :use-image="false"
-              :metas="[
-                `srl: ${app.srl}`,
-                `id: ${app.id}`,
-                getDate(app.regdate),
-              ]"
-              :navs="[
-                { label: 'Edit', link: `/apps/${app.srl}/edit/` },
-                { label: 'Delete', link: `/apps/${app.srl}/delete/` },
-              ]"/>
-          </li>
-        </ul>
-      </div>
+      <index-wrap v-if="apps && apps.length" :column="3">
+        <item-card
+          v-for="(app,key) in apps" :key="key"
+          :title="app.name"
+          :alt="app.description"
+          :use-image="false"
+          :metas="[
+            `srl: ${app.srl}`,
+            `id: ${app.id}`,
+            getDate(app.regdate),
+          ]"
+          :navs="[
+            { label: 'Edit', link: `/apps/${app.srl}/edit/` },
+            { label: 'Delete', link: `/apps/${app.srl}/delete/` },
+          ]"/>
+      </index-wrap>
       <error v-else type="empty" :frame="true" size="small" class="dashboard__error"/>
     </section>
     <!-- // apps -->
 
     <!-- json -->
-    <section v-if="json && json.length" class="dashboard__section">
+    <section v-if="computedShow.json" class="dashboard__section">
       <header>
         <h3>JSON</h3>
         <nav>
-          <nuxt-link to="/json/">
-            <i class="material-icons">chevron_right</i>
-          </nuxt-link>
+          <nuxt-link to="/json/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <div class="rg-index-list">
-        <ul>
-          <li v-for="(jsonItem,jsonKey) in json" :key="jsonKey">
-            <item-list
-              :link="`/json/${jsonItem.srl}`"
-              :title="jsonItem.name"
-              :description="jsonItem.description"
-              :alt="jsonItem.name"
-              :use-image="false"
-              :metas="[
-               `srl: ${jsonItem.srl}`,
-                getDate(jsonItem.regdate),
-              ]"
-              :navs="[
-                { label: 'Edit', link: `/json/${jsonItem.srl}/edit/` },
-                { label: 'Delete', link: `/json/${jsonItem.srl}/delete/` },
-              ]"/>
-          </li>
-        </ul>
-      </div>
+      <index-wrap v-if="json && json.length" :column="2">
+        <item-list
+          v-for="(item,key) in json" :key="key"
+          :link="`/json/${item.srl}/`"
+          :title="item.name"
+          :description="item.description"
+          :alt="item.name"
+          :use-image="false"
+          :metas="[
+           `srl: ${item.srl}`,
+            getDate(item.regdate),
+          ]"
+          :navs="[
+            { label: 'Edit', link: `/json/${item.srl}/edit/` },
+            { label: 'Delete', link: `/json/${item.srl}/delete/` },
+          ]"/>
+      </index-wrap>
+      <error v-else type="empty" :frame="true" size="small" class="dashboard__error"/>
     </section>
     <!-- // json -->
   </div>
@@ -141,56 +126,57 @@
 </template>
 
 <script>
-import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 import * as dates from '~/libs/dates';
+import * as object from '~/libs/object';
 
 export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
-    'index-articles': () => import('~/components/pages/articles/index-articles'),
     'item-list': () => import('~/components/item/list'),
     'item-card': () => import('~/components/item/card'),
     'item-thumbnail': () => import('~/components/item/thumbnail'),
     'error': () => import('~/components/contents/error'),
+    'icon': () => import('~/components/icon'),
+    'index-wrap': () => import('~/components/contents/index-wrap'),
   },
-  async asyncData(cox)
+  async asyncData(context)
   {
+    const { preference } = context.store.state;
     const params = {
       articles: {
         field: 'srl,type,title,hit,star,regdate,category_srl,json',
         order: 'srl',
         sort: 'desc',
-        size: 8,
+        size: object.getValue(preference, 'dashboard', 'articles', 'count') || 8,
         visible_type: 'all',
       },
       nests: {
         field: 'srl,id,name,description,regdate,json',
         order: 'srl',
         sort: 'desc',
-        size: 6,
+        size: object.getValue(preference, 'dashboard', 'nests', 'count') || 6,
       },
       apps: {
         field: 'srl,id,name,description,regdate',
         order: 'srl',
         sort: 'desc',
-        size: 6,
+        size: object.getValue(preference, 'dashboard', 'apps', 'count') || 6,
       },
       json: {
         field: 'srl,name,description,regdate',
         order: 'srl',
         sort: 'desc',
-        size: 3,
+        size: object.getValue(preference, 'dashboard', 'json', 'count') || 3,
       },
     };
-
     try
     {
       const [ articles, nests, apps, json ] = await Promise.all([
-        cox.$axios.$get(`/articles/${text.serialize(params.articles, true)}`),
-        cox.$axios.$get(`/nests/${text.serialize(params.nests, true)}`),
-        cox.$axios.$get(`/apps/${text.serialize(params.apps, true)}`),
-        cox.$axios.$get(`/json/${text.serialize(params.json, true)}`),
+        context.$axios.$get(`/articles/${text.serialize(params.articles, true)}`),
+        context.$axios.$get(`/nests/${text.serialize(params.nests, true)}`),
+        context.$axios.$get(`/apps/${text.serialize(params.apps, true)}`),
+        context.$axios.$get(`/json/${text.serialize(params.json, true)}`),
       ]);
       return {
         articles: articles.success ? articles.data.index : null,
@@ -209,6 +195,19 @@ export default {
       };
     }
   },
+  computed: {
+    computedShow()
+    {
+      const { preference } = this.$store.state;
+      return {
+        articles: object.getValue(preference, 'dashboard', 'articles', 'show') || false,
+        nests: object.getValue(preference, 'dashboard', 'nests', 'show') || false,
+        apps: object.getValue(preference, 'dashboard', 'apps', 'show') || false,
+        json: object.getValue(preference, 'dashboard', 'json', 'show') || false,
+      };
+    },
+
+  },
   methods: {
     getDate(date)
     {
@@ -218,16 +217,6 @@ export default {
     {
       if (!path) return null;
       return `${this.$store.state.url_api}/${path}`;
-    },
-    getUrlForArticles(type, srl)
-    {
-      let params = {};
-      if (this.nest_srl) params.nest = this.nest_srl;
-      if (this.category_srl) params.category = this.category_srl;
-      if (this.page && this.page > 1) params.page = this.page;
-      params.home = 1;
-      params = text.serialize(params, true);
-      return `/articles/${srl}/${type}${params}`;
     },
     getArticleType(type)
     {

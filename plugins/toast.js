@@ -102,7 +102,6 @@ class Toast {
 		// set element
 		let $li = htmlToElement(`<li class="rg-toast__item">` +
 			`<div class="rg-toast__item-body">` +
-			(op.icon ? `<i class="material-icons">${op.icon}</i>` : '') +
 			`<span class="rg-toast__message">${op.message}</span>` +
 			`</div>` +
 			`<i class="rg-toast__progress"></i>` +

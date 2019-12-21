@@ -1,5 +1,5 @@
 <template>
-<figure class="image-thumbnail">
+<figure :class="['image-thumbnail', type && `image-thumbnail--${type}`]">
   <nuxt-link v-if="!!link" :to="link">
     <img v-if="!!src" :src="src" :alt="alt" class="image-thumbnail__image"/>
     <image-empty v-else class="image-thumbnail__empty"/>
@@ -25,15 +25,14 @@ export default {
     link: { type: String, default: null },
     href: { type: String, default: null },
     target: { type: String, default: null },
+    type: { type: String, default: '' }, // contain
   },
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../../../assets/scss/variables";
-@import "../../../assets/scss/mixins";
 .image-thumbnail {
-  background: rgba($color-blur, .25);
   user-select: none;
   a {
     display: block;
@@ -46,6 +45,11 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  &--contain {
+    img {
+      object-fit: contain;
+    }
   }
 }
 </style>

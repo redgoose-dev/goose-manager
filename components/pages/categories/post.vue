@@ -21,15 +21,15 @@
   </fieldset>
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" @click="$router.back()"/>
+      <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
     </template>
     <template slot="right">
       <button-basic
         type="submit"
         color="key"
         :label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'} Category` : null"
-        :icon="processing ? 'cached' : ''"
-        :rotateIcon="processing"
+        :icon-right="processing ? 'loader' : ''"
+        :rotate-icon="processing"
         :disabled="processing"/>
     </template>
   </nav-bottom>
@@ -80,7 +80,8 @@ export default {
         let res = await this.$axios.$post(url, data);
         if (!res.success) throw res.message;
         this.processing = false;
-        this.$router.push(`/categories/${this.nest_srl}/`);
+        if (this.type === 'edit') this.$router.push(`../../`);
+        else this.$router.replace('../');
       }
       catch(e)
       {

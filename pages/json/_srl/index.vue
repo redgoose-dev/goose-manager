@@ -1,22 +1,17 @@
 <template>
 <article>
-  <page-header
-    module="json"
-    :title="`JSON / ${data.name}`"
-    :description="`${description}`"/>
-
+  <page-header module="json" :title="data.name" :description="`${description}`" :eng="true"/>
+  <pre class="json"><code>{{json}}</code></pre>
   <div v-if="!!data.description" class="description">
     <p>{{data.description}}</p>
   </div>
-  <pre class="json"><code>{{json}}</code></pre>
-
   <nav-bottom>
     <template slot="left">
-      <button-basic label="Index" :to="`/json/`"/>
+      <button-basic label="Index" :to="`/json/`" icon-left="list"/>
     </template>
     <template slot="right">
-      <button-basic label="Edit" :to="`/json/${srl}/edit/`"/>
-      <button-basic label="Delete" :to="`/json/${srl}/delete/`" color="key"/>
+      <button-basic label="Edit" :to="`/json/${srl}/edit/`" icon-left="edit"/>
+      <button-basic label="Delete" :to="`/json/${srl}/delete/`" color="key" icon-left="trash"/>
     </template>
   </nav-bottom>
 </article>

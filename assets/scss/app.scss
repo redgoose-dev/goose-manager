@@ -1,8 +1,7 @@
 @import "./variables";
 @import "./normalize";
-@import "./typography";
+@import "./fonts";
 @import "./form";
-@import "./etc";
 @import "./contents";
 @import "./toast";
 
@@ -15,7 +14,7 @@ body {
 	font-size: 1rem;
 	line-height: 1.5;
 	text-size-adjust: 100%;
-	background: #fafbfc;
+	background: $color-bg;
 }
 body, button, input, textarea, select {
 	font-family: $font-system;

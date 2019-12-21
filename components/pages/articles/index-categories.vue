@@ -1,17 +1,11 @@
 <template>
 <nav v-if="categories && categories.length" class="categories">
 	<ul>
-		<li v-for="(item,key) in categories" :key="key">
-			<a
-				:href="makeUrl(item.srl)"
-				:data-srl="item.srl"
-				@click="onChange"
-				:class="[
-					(item.srl === category_srl) && 'active',
-				]">
+		<li v-for="(item,key) in categories">
+			<nuxt-link :to="makeUrl(item.srl)" :class="[checkActive(item.srl) && 'active']">
 				<span>{{item.name}}</span>
 				<em>{{item.count_article}}</em>
-			</a>
+			</nuxt-link>
 		</li>
 	</ul>
 </nav>
@@ -20,18 +14,11 @@
 <script>
 export default {
 	props: {
-		nest_srl: { type: Number, default: 0 },
+		nest_srl: { type: Number, default: null },
 		categories: { type: Array },
 		category_srl: { type: String, default: '' },
 	},
 	methods: {
-		onChange(e)
-		{
-			e.preventDefault();
-			let srl = e.currentTarget.dataset.srl || '';
-			if (this.category_srl === srl) return false;
-			this.$emit('change', srl);
-		},
 		makeUrl(srl)
 		{
 			let params = '';
@@ -47,9 +34,13 @@ export default {
 					params = srl ? `?category=${srl}` : '';
 					break;
 			}
-			return `/articles/index/${this.nest_srl}/${params}`;
-		}
-	}
+			return `./${params}`;
+		},
+    checkActive(srl)
+    {
+      return (srl && srl === this.category_srl ? true : (!srl && !this.category_srl));
+    },
+	},
 }
 </script>
 

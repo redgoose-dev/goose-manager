@@ -66,3 +66,8 @@ $ HOST=0.0.0.0 PORT=7000 /usr/bin/pm2 start -l 0 npm --name "goose-manager" -- s
 ```
 
 open in browser `http://0.0.0.0:7000`
+
+
+### Utility scripts
+
+프로젝트 내부에서 사용하는 툴들을 `scripts/`에 보관되어 있습니다.

@@ -37,7 +37,7 @@
       </dd>
     </dl>
     <dl class="rg-form-field">
-      <dt><label for="id">Description</label></dt>
+      <dt><label for="description">Description</label></dt>
       <dd>
         <form-text
           name="description"
@@ -53,15 +53,15 @@
   </fieldset>
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" @click="$router.back()"/>
+      <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
     </template>
     <template slot="right">
       <button-basic
         type="submit"
         color="key"
-        :label="!processing ? `${this.type === 'edit' ? 'Edit' : 'Add'}` : null"
-        :icon="processing ? 'cached' : ''"
-        :rotateIcon="processing"
+        :label="`${this.type === 'edit' ? 'Edit' : 'Add'} app`"
+        :icon-left="processing ? 'loader' : 'check'"
+        :rotate-icon="processing"
         :disabled="processing"/>
     </template>
   </nav-bottom>

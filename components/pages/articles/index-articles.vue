@@ -1,29 +1,26 @@
 <template>
 <div class="articles-index">
   <loading v-if="loading"/>
-  <div v-else-if="!!articles && articles.length" :class="`rg-index-${useSkin}`">
-    <ul>
-      <li v-for="(item,key) in articles" :key="key">
-        <component
-          v-bind:is="`item-${useSkin}`"
-          :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
-          :link="getUrl('read/', item.srl)"
-          :title="item.title"
-          :alt="item.title"
-          :metas="[
-            `${getType(item.type)}`,
-            getDate(item.regdate),
-            item.category_name,
-            `hit:${item.hit}`,
-          ]"
-          :navs="[
-            { label: 'Edit', link: getUrl('edit/', item.srl) },
-            { label: 'Delete', link: getUrl('delete/', item.srl) }
-          ]"/>
-      </li>
-    </ul>
-  </div>
-  <error v-else type="empty"/>
+  <index-wrap v-else-if="!!articles && articles.length" :column="computedColumn">
+    <component
+      v-for="(item,key) in articles" :key="key"
+      v-bind:is="`item-${useSkin}`"
+      :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
+      :link="`./${item.srl}/`"
+      :title="item.title"
+      :alt="item.title"
+      :metas="[
+        `${getType(item.type)}`,
+        getDate(item.regdate),
+        item.category_name,
+        `hit:${item.hit}`,
+      ]"
+      :navs="[
+        { label: 'Edit', link: `./${item.srl}/edit/` },
+        { label: 'Delete', link: `./${item.srl}/delete/` }
+      ]"/>
+  </index-wrap>
+  <error v-else type="empty" size="large"/>
 </div>
 </template>
 
@@ -38,11 +35,9 @@ export default {
     'item-card': () => import('~/components/item/card'),
     'item-thumbnail': () => import('~/components/item/thumbnail'),
     'error': () => import('~/components/contents/error'),
+    'index-wrap': () => import('~/components/contents/index-wrap'),
   },
   props: {
-    nest_srl: { type: [String,Number] },
-    category_srl: { type: [String,Number] },
-    page: { type: Number },
     articles: { type: Array, default: null },
     loading: { type: Boolean, default: false },
     skin: { type: String, default: 'thumbnail' }
@@ -61,20 +56,23 @@ export default {
           return 'thumbnail';
       }
     },
+    computedColumn()
+    {
+      switch (this.skin) {
+        case 'card':
+          return 3;
+        case 'thumbnail':
+          return 4;
+        case 'list':
+        default:
+          return 1;
+      }
+    },
   },
   methods: {
     getDate(date)
     {
       return dates.getFormatDate(date, false);
-    },
-    getUrl(type, srl)
-    {
-      let params = {};
-      if (this.nest_srl) params.nest = this.nest_srl;
-      if (this.category_srl) params.category = this.category_srl;
-      if (this.page && this.page > 1) params.page = this.page;
-      params = text.serialize(params, true);
-      return `/articles/${srl}/${type}${params}`;
     },
     getImageUrl(path)
     {

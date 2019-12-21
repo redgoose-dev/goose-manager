@@ -1,24 +1,24 @@
 <template>
 <article>
-  <page-header module="users" title="Delete user"/>
+  <page-header module="users" title="Users / Delete"/>
 
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
     <p class="rg-form-delete__message">
-      <strong>{{data.email}}({{data.name}})</strong> User를 삭제하시겠습니까?
+      <strong>{{data.email}}({{data.name}})</strong> 사용자를 삭제하시겠습니까?
     </p>
     <nav-bottom>
       <template slot="left">
-        <button-basic type="button" label="Back" @click="$router.back()"/>
+        <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
       </template>
       <template slot="right">
         <button-basic
           type="submit"
           ref="button_submit"
           color="key"
-          :label="!processing ? 'Delete' : null"
-          :icon="processing ? 'cached' : ''"
-          :rotateIcon="processing"
+          label="Delete user"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
           :disabled="processing"/>
       </template>
     </nav-bottom>
@@ -61,7 +61,7 @@ export default {
   },
   mounted()
   {
-    setTimeout(() => this.$refs.button_submit.$el.focus(), 100);
+    setTimeout(() => this.$refs.button_submit.$el.focus(), 200);
   },
   methods: {
     async onSubmit(e)
@@ -72,7 +72,7 @@ export default {
         let res = await this.$axios.$post(`/users/${this.srl}/delete/`);
         if (!res.success) throw res.message;
         this.processing = false;
-        this.$router.replace('/users/');
+        this.$router.replace('../../');
       }
       catch(e)
       {

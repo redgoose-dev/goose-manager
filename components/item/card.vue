@@ -8,6 +8,7 @@
     :href="href"
     :target="target"
     :alt="alt"
+    :type="imageType"
     class="item-card__image"/>
 	<div class="item-card__body">
     <text-title
@@ -42,6 +43,7 @@ export default {
     href: { type: String, default: null },
     target: { type: String, default: null },
     image: { type: String, default: null },
+    imageType: { type: String, default: null }, // contain
     title: { type: String, default: 'item title' },
     alt: { type: String, default: 'item description' },
     metas: { type: Array, default: null },
@@ -64,6 +66,7 @@ export default {
   height: $size;
   background: #fff;
   border-radius: $size-border-radius;
+  min-width: 0;
 
   &:after {
     content: '';

@@ -1,0 +1,73 @@
+@import "../../../assets/scss/variables";
+
+.article {
+  padding: 20px 0 0;
+  &__body {
+    max-width: 768px;
+    margin: 40px auto 80px;
+  }
+}
+
+// header
+.article-header {
+  text-align: center;
+  small {
+    display: block;
+    margin: 0 0 -2px;
+    font-family: $font-eng-circular;
+    font-size: 12px;
+    color: $color-key;
+    letter-spacing: -.25px;
+    font-weight: 600;
+  }
+  h2 {
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: -1.5px;
+    line-height: 1.15;
+    font-weight: 700;
+  }
+  p {
+    margin: 2px 0 0;
+    font-family: $font-eng;
+    font-size: 12px;
+    color: $color-blur;
+  }
+}
+
+// attachment files
+.files {
+  margin: 30px 0 0;
+  padding: 20px 20px;
+  background: #eff0f2;
+  h3 {
+    margin: 0;
+    font-size: .875rem;
+    font-weight: 600;
+  }
+  ul {
+    margin: 2px -10px 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0;
+  }
+  li {
+    display: inline-block;
+  }
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 1px 10px;
+    font-size: .6875rem;
+    color: $color-key;
+    em {
+      font-style: normal;
+      &:before {
+        content: '(';
+      }
+      &:after {
+        content: ')';
+      }
+    }
+  }
+}

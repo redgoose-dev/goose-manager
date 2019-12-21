@@ -1,26 +1,17 @@
 <template>
 <span class="image-empty">
-  <i class="material-icons">{{icon}}</i>
+  <icon :name="icon" class="image-empty__icon"/>
 </span>
 </template>
 
 <script>
-const icons = [
-  'cloud_off',
-  'donut_large',
-  'fingerprint',
-  'sync',
-  'cloud',
-  'wb_sunny',
-  'directions_run',
-  'map',
-  'extension',
-  'hearing',
-  'hotel',
-  'directions_bike',
-];
+import icons from '~/components/icon/svg-index';
+
 export default {
   name: 'image-empty',
+  components: {
+    'icon': () => import('~/components/icon'),
+  },
   data()
   {
     return {
@@ -31,15 +22,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../assets/scss/variables";
 .image-empty {
   display: flex;
   height: 100%;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  .material-icons {
+  background: mix($color-blur, #fff, 25%);
+  &__icon {
     display: block;
-    font-size: 40px;
+    width: 36px;
+    height: 36px;
+    stroke-width: 1.25;
     color: #fff;
   }
 }

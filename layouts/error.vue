@@ -6,7 +6,9 @@
   <h1 class="title">
     <img src="/images/txt-error.svg" :alt="`Service error / ${error.statusCode}`"/>
   </h1>
-  <p class="description">{{error.message}}</p>
+  <p class="description">
+    {{error.message}}
+  </p>
   <nav class="nav">
     <button-basic
       label="Go to back"

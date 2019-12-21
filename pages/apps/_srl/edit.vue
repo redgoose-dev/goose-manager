@@ -1,6 +1,6 @@
 <template>
 <article>
-  <page-header module="apps" title="Edit app"/>
+  <page-header module="apps" title="Apps / Edit"/>
   <post type="edit" :srl="srl" :data="forms"/>
 </article>
 </template>

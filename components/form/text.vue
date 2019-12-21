@@ -15,11 +15,11 @@
 		@keyup="onChangePosition"
 		@input="onChange"
 		:class="[
-			'rg-form-text',
-			formSize && `rg-form-text-size-${formSize}`,
-			error && 'rg-form-text-error',
+			'form-text',
+			formSize && `form-text-size-${formSize}`,
+			error && 'form-text-error',
 			className
-		]"></textarea>
+		]"/>
 	<input
 		v-else
 		:type="type"
@@ -36,10 +36,10 @@
 		@keyup="onChangePosition"
 		@input="onChange"
 		:class="[
-			'rg-form-text',
-			inline && 'rg-form-text-inline',
-			formSize && `rg-form-text-size-${formSize}`,
-			error && 'rg-form-text-error',
+			'form-text',
+			inline && 'form-text-inline',
+			formSize && `form-text-size-${formSize}`,
+			error && 'form-text-error',
 			className
 		]"/>
 </template>
@@ -84,3 +84,5 @@ export default {
 	}
 }
 </script>
+
+<style src="./text.scss" lang="scss" scoped/>
