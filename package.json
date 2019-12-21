@@ -5,7 +5,7 @@
   "scripts": {
     "setup": "cp ./resource/.env ./ && cp ./resource/preference.json ./",
     "dev": "./node_modules/.bin/nuxt --port 4000",
-    "start": "./node_modules/.bin/nuxt start --port 4000",
+    "start": "./node_modules/.bin/nuxt start",
     "build": "./node_modules/.bin/nuxt build",
     "build-check": "./node_modules/.bin/nuxt build --analyze"
   },
