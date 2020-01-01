@@ -1,5 +1,6 @@
 {
   "appName": "Management contents",
+  "appDescription": "management redgoose contents",
   "debug": {
     "route": false,
     "api": false
@@ -28,5 +29,33 @@
       "target": "_blank"
     }
   ],
-  "dashboard": {}
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Welcome to goose manager",
+    "contents": {
+      "articles": {
+        "show": true,
+        "count": 8
+      },
+      "nests": {
+        "show": true,
+        "count": 8
+      },
+      "apps": {
+        "show": true,
+        "count": 6
+      },
+      "json": {
+        "show": true,
+        "count": 4
+      }
+    }
+  },
+  "articles": {
+    "pageCount": 24,
+    "pageRange": 10
+  },
+  "files": {
+    "pageCount": 24
+  }
 }

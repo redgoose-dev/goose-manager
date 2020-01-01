@@ -1,19 +1,19 @@
 <template>
 <article class="dashboard">
-  <page-header title="Dashboard" description="welcome to goose manager" class="dashboard__header"/>
+  <page-header :title="title" :description="description" class="dashboard__header"/>
 
   <div class="dashboard__body">
     <!-- articles -->
-    <section v-if="computedShow.articles" class="dashboard__section">
+    <section v-if="contents && contents.articles" class="dashboard__section">
       <header>
         <h3>Articles</h3>
         <nav>
           <nuxt-link to="/articles/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="articles && articles.length" :column="4">
+      <index-wrap v-if="contents.articles.length" :column="4">
         <item-thumbnail
-          v-for="(item,key) in articles"
+          v-for="(item,key) in contents.articles"
           :key="key"
           :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
           :link="`/articles/${item.srl}/`"
@@ -36,16 +36,16 @@
     <!-- // articles -->
 
     <!-- nests -->
-    <section v-if="computedShow.nests" class="dashboard__section">
+    <section v-if="contents && contents.nests" class="dashboard__section">
       <header>
         <h3>Nests</h3>
         <nav>
           <nuxt-link to="/nests/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="nests && nests.length" :column="3">
+      <index-wrap v-if="contents.nests.length" :column="3">
         <item-card
-          v-for="(nest,key) in nests" :key="key"
+          v-for="(nest,key) in contents.nests" :key="key"
           :link="`/nests/${nest.srl}/articles/`"
           :title="nest.name"
           :alt="nest.description"
@@ -66,16 +66,16 @@
     <!-- // nests -->
 
     <!-- apps -->
-    <section v-if="computedShow.apps" class="dashboard__section">
+    <section v-if="contents && contents.apps" class="dashboard__section">
       <header>
         <h3>Apps</h3>
         <nav>
           <nuxt-link to="/apps/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="apps && apps.length" :column="3">
+      <index-wrap v-if="contents.apps.length" :column="3">
         <item-card
-          v-for="(app,key) in apps" :key="key"
+          v-for="(app,key) in contents.apps" :key="key"
           :title="app.name"
           :alt="app.description"
           :use-image="false"
@@ -94,16 +94,16 @@
     <!-- // apps -->
 
     <!-- json -->
-    <section v-if="computedShow.json" class="dashboard__section">
+    <section v-if="contents && contents.json" class="dashboard__section">
       <header>
         <h3>JSON</h3>
         <nav>
           <nuxt-link to="/json/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="json && json.length" :column="2">
+      <index-wrap v-if="contents.json.length" :column="2">
         <item-list
-          v-for="(item,key) in json" :key="key"
+          v-for="(item,key) in contents.json" :key="key"
           :link="`/json/${item.srl}/`"
           :title="item.name"
           :description="item.description"
@@ -128,7 +128,35 @@
 <script>
 import * as text from '~/libs/text';
 import * as dates from '~/libs/dates';
-import * as object from '~/libs/object';
+import * as localLibs from './local-libs';
+
+const baseParams = {
+  articles: {
+    field: 'srl,type,title,hit,star,regdate,category_srl,json',
+    order: 'srl',
+    sort: 'desc',
+    size: 8,
+    visible_type: 'all',
+  },
+  nests: {
+    field: 'srl,id,name,description,regdate,json',
+    order: 'srl',
+    sort: 'desc',
+    size: 6,
+  },
+  apps: {
+    field: 'srl,id,name,description,regdate',
+    order: 'srl',
+    sort: 'desc',
+    size: 6,
+  },
+  json: {
+    field: 'srl,name,description,regdate',
+    order: 'srl',
+    sort: 'desc',
+    size: 3,
+  },
+};
 
 export default {
   components: {
@@ -142,71 +170,44 @@ export default {
   },
   async asyncData(context)
   {
+    let result = {};
     const { preference } = context.store.state;
-    const params = {
-      articles: {
-        field: 'srl,type,title,hit,star,regdate,category_srl,json',
-        order: 'srl',
-        sort: 'desc',
-        size: object.getValue(preference, 'dashboard', 'articles', 'count') || 8,
-        visible_type: 'all',
-      },
-      nests: {
-        field: 'srl,id,name,description,regdate,json',
-        order: 'srl',
-        sort: 'desc',
-        size: object.getValue(preference, 'dashboard', 'nests', 'count') || 6,
-      },
-      apps: {
-        field: 'srl,id,name,description,regdate',
-        order: 'srl',
-        sort: 'desc',
-        size: object.getValue(preference, 'dashboard', 'apps', 'count') || 6,
-      },
-      json: {
-        field: 'srl,name,description,regdate',
-        order: 'srl',
-        sort: 'desc',
-        size: object.getValue(preference, 'dashboard', 'json', 'count') || 3,
-      },
-    };
+
     try
     {
+      const { dashboard } = preference;
+      // set params
+      const params = localLibs.withParamsForGetDatas(baseParams, dashboard.contents);
+
+      // result set in preference
+      result.title = dashboard.title || 'Dashboard';
+      result.description = dashboard.description || null;
+
+      // get datas
       const [ articles, nests, apps, json ] = await Promise.all([
-        context.$axios.$get(`/articles/${text.serialize(params.articles, true)}`),
-        context.$axios.$get(`/nests/${text.serialize(params.nests, true)}`),
-        context.$axios.$get(`/apps/${text.serialize(params.apps, true)}`),
-        context.$axios.$get(`/json/${text.serialize(params.json, true)}`),
+        !!params.articles && context.$axios.$get(`/articles/${text.serialize(params.articles, true)}`),
+        !!params.nests && context.$axios.$get(`/nests/${text.serialize(params.nests, true)}`),
+        !!params.apps && context.$axios.$get(`/apps/${text.serialize(params.apps, true)}`),
+        !!params.json && context.$axios.$get(`/json/${text.serialize(params.json, true)}`),
       ]);
+
       return {
-        articles: articles.success ? articles.data.index : null,
-        nests: nests.success ? nests.data.index : null,
-        apps: apps.success ? apps.data.index : null,
-        json: json.success ? json.data.index : null,
+        ...result,
+        contents: {
+          articles: !!articles ? (articles.success ? articles.data.index : []) : null,
+          nests: !!nests ? (nests.success ? nests.data.index : []) : null,
+          apps: !!apps ? (apps.success ? apps.data.index : []) : null,
+          json: !!json ? (json.success ? json.data.index : []) : null,
+        },
       };
     }
     catch(e)
     {
       return {
-        articles: null,
-        nests: null,
-        apps: null,
-        json: null,
+        ...result,
+        contents: null,
       };
     }
-  },
-  computed: {
-    computedShow()
-    {
-      const { preference } = this.$store.state;
-      return {
-        articles: object.getValue(preference, 'dashboard', 'articles', 'show') || false,
-        nests: object.getValue(preference, 'dashboard', 'nests', 'show') || false,
-        apps: object.getValue(preference, 'dashboard', 'apps', 'show') || false,
-        json: object.getValue(preference, 'dashboard', 'json', 'show') || false,
-      };
-    },
-
   },
   methods: {
     getDate(date)
@@ -222,7 +223,8 @@ export default {
     {
       return text.getArticleType(type);
     },
-  }
+  },
 };
 </script>
+
 <style src="./index.scss" lang="scss" scoped/>
