@@ -3,9 +3,7 @@
   <header class="header">
     <div class="header__wrap content-area">
       <h1 class="header-logo">
-        <nuxt-link to="/">
-          <img src="/images/txt-logo.svg" alt="GOOSE"/>
-        </nuxt-link>
+        <nuxt-link to="/">{{computedShortName}}</nuxt-link>
       </h1>
       <nav class="header-gnb">
         <ul v-if="computedNavigation.length > 0">
@@ -23,15 +21,9 @@
           </span>
           <div class="dropdown__children">
             <ul>
-              <li>
-                <nuxt-link to="/account/" @click.native="onClickProfileItem">Account</nuxt-link>
-              </li>
-              <li>
-                <a href="#" @click.prevent="onClickClearTokens">Clear tokens</a>
-              </li>
-              <li>
-                <nuxt-link to="/auth/logout/">Logout</nuxt-link>
-              </li>
+              <li><nuxt-link to="/account/" @click.native="onClickProfileItem">Account</nuxt-link></li>
+              <li><a href="#" @click.prevent="onClickClearTokens">Clear tokens</a></li>
+              <li><nuxt-link to="/auth/logout/">Logout</nuxt-link></li>
             </ul>
           </div>
         </div>
@@ -60,6 +52,12 @@ export default {
     'button-basic': () => import('~/components/button/basic'),
     'icon': () => import('~/components/icon'),
   },
+  head()
+  {
+    return {
+      htmlAttrs: { class: 'dark-mode' },
+    };
+  },
   data()
   {
     const { $store } = this;
@@ -69,10 +67,10 @@ export default {
     };
   },
   computed: {
-    computedAppName()
+    computedShortName()
     {
       const { preference } = this.$store.state;
-      return preference.appName;
+      return preference.shortName;
     },
     computedNavigation()
     {
@@ -115,6 +113,10 @@ export default {
           color: 'error',
         });
       }
+    },
+    onClickToggleTheme(e)
+    {
+
     },
   },
 }

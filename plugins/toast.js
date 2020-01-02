@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import * as util from '~/libs/util';
+import './toast.scss';
 
 const defaultOptions = {
 	message: 'toast message',

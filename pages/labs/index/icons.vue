@@ -141,6 +141,7 @@ export default {
 <style src="./pages.scss" lang="scss" scoped/>
 <style lang="scss" scoped>
 @import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
 
 .icons-index {
   margin: 0;
@@ -161,8 +162,11 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f4f4f4;
+      background-color: #f4f4f4;
       flex-direction: column;
+      svg {
+        color: var(--color-base);
+      }
     }
     em {
       display: block;
@@ -171,12 +175,19 @@ export default {
       font-style: normal;
       font-size: 11px;
       line-height: 1.15;
-      color: $color-blur;
+      color: var(--color-blur);
     }
   }
-
   &--col-4 {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include dark-mode() {
+    &__item {
+      div {
+        background-color: #333;
+      }
+    }
   }
 }
 </style>

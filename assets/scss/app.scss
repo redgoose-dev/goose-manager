@@ -3,35 +3,49 @@
 @import "./fonts";
 @import "./form";
 @import "./contents";
-@import "./toast";
+
+:root {
+  --color-white: #fff;
+  --color-bg: #{$color-bg};
+  --color-base: #{$color-base};
+  --color-blur: #{$color-blur};
+  --color-key: #{$color-key};
+  --color-primary: #{$color-primary};
+  --color-success: #{$color-success};
+  --color-error: #{$color-error};
+  --color-code: #{$color-code};
+
+  @include dark-mode() {
+    --color-bg: #{$color-dark-bg};
+    --color-base: #{$color-dark-base};
+    --color-blur: #{$color-dark-blur};
+    --color-key: #{$color-dark-key};
+    --color-primary: #{$color-dark-primary};
+  }
+}
 
 // global elements
 body {
 	margin: 0;
 	min-width: $size-min;
 	-webkit-text-size-adjust: 100%;
-	color: $color-base;
 	font-size: 1rem;
 	line-height: 1.5;
 	text-size-adjust: 100%;
-	background: $color-bg;
+	background: var(--color-bg);
+  color: var(--color-base);
 }
 body, button, input, textarea, select {
 	font-family: $font-system;
 	text-size-adjust: none;
 }
-
 a {
-	color: $color-key;
+	color: var(--color-key);
 }
-code,
-kbd,
-pre,
-samp {
+code, kbd, pre, samp {
 	font-family: $font-console;
 }
-
 ::selection {
-	background: $color-key;
+	background: var(--color-key);
 	color: #fff;
 }

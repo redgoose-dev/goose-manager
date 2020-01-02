@@ -1,4 +1,5 @@
 @import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
 
 .rg-editor {
 	margin: 8px 0;
@@ -50,7 +51,7 @@
 		background: #fff;
 		border-radius: $size-border-radius;
 		overflow: hidden;
-		padding: 40px;
+		padding: 40px 20px;
 		box-shadow: 0 1px 10px rgba(#000, .3);
     box-sizing: border-box;
 	}
@@ -63,4 +64,10 @@
 	&-leave-to {
 		opacity: 0;
 	}
+
+  @include responsive(desktop) {
+    &__wrap {
+      padding: 40px;
+    }
+  }
 }

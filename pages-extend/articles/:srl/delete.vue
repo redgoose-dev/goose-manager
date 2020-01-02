@@ -5,11 +5,13 @@
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
     <div class="rg-form-delete__message">
-      <p>
-        다음 `Article`을 삭제하시겠습니까?<br/>
-        이것을 삭제하면 하위의 `File`의 데이터가 삭제됩니다.
-      </p>
-      <p><strong>{{forms.title}}</strong></p>
+      <div>
+        <p>
+          다음 `Article`을 삭제하시겠습니까?<br/>
+          이것을 삭제하면 하위의 `File`의 데이터가 삭제됩니다.
+        </p>
+        <p><strong>{{forms.title}}</strong></p>
+      </div>
     </div>
 
     <nav-bottom>

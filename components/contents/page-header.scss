@@ -1,4 +1,5 @@
 @import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
 
 $self: '.page-header';
 
@@ -8,22 +9,23 @@ $self: '.page-header';
   &__prefix {
     display: block;
     margin: 0 0 -4px;
-    color: $color-key;
-    font-size: .75rem;
+    color: var(--color-key);
+    font-size: 12px;
     font-weight: 600;
   }
   &__title {
     margin: 0;
     padding-top: 2px;
-    font-size: 2rem;
+    font-size: 32px;
     line-height: 1.25;
     letter-spacing: -.75px;
     font-weight: 700;
+    color: $color-base;
   }
   &__description {
     margin: -2px 0 0;
-    font-size: .6875rem;
-    color: $color-blur;
+    font-size: 11px;
+    color: var(--color-blur);
     letter-spacing: -.25px;
   }
 
@@ -38,6 +40,15 @@ $self: '.page-header';
       &__description {
         margin-top: -2px;
       }
+    }
+  }
+
+  @include dark-mode() {
+    &__title {
+      color: #fff;
+    }
+    &__description {
+      color: mix(#fff, $color-dark-blur, 25%);
     }
   }
 }

@@ -36,7 +36,7 @@ html.rg-mode-popup {
   img {
     position: relative;
     display: block;
-    margin: 3.25rem 0 1.75rem;
+    margin: 3.25rem auto 1.75rem;
     max-width: calc(100% + 200px);
     left: 50%;
     transform: translateX(-50%);
@@ -186,6 +186,11 @@ html.rg-mode-popup {
   @include responsive(desktop) {
     img {
       max-width: 90vw;
+    }
+    &--popup {
+      img {
+        max-width: 100%;
+      }
     }
   }
 }

@@ -56,6 +56,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
+@import "./local";
 
 .item-card {
   $size: 100px;
@@ -64,7 +65,7 @@ export default {
   align-items: center;
   box-shadow: $shadow-box;
   height: $size;
-  background: #fff;
+  background-color: #fff;
   border-radius: $size-border-radius;
   min-width: 0;
 
@@ -80,7 +81,7 @@ export default {
     border-radius: $size-border-radius;
   }
   &:hover:after {
-    box-shadow: 0 0 0 1px $color-key;
+    box-shadow: 0 0 0 1px var(--color-key);
   }
 
 	&__image {
@@ -101,6 +102,10 @@ export default {
   }
   &__nav-text {
     margin: 5px 0 0;
+  }
+
+  @include dark-mode() {
+    background-color: $color-item-bg-dark;
   }
 }
 </style>

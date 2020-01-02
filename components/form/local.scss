@@ -1,0 +1,22 @@
+@import "../../assets/scss/variables";
+
+// color - light
+$local-color-bg: var(--color-white);
+$local-color-line: $color-form-line;
+$local-color-shadow: rgba(#000, .1);
+$local-color-text-placeholder: #999;
+$local-color-readonly-bg: mix($color-light, #fff, 80%);
+$local-color-shadow1: rgba($color-key, 1);
+$local-color-shadow2: rgba(#000, .1);
+$local-color-error: var(--color-error);
+$local-color-autofill-bg: rgba($color-key, .2);
+
+// color - dark
+$local-color-dark-bg: #393939;
+$local-color-dark-line: #727272;
+$local-color-dark-shadow: rgba(#000, .25);
+$local-color-dark-text-placeholder: #777;
+$local-color-dark-readonly-bg: #2b2b2b;
+$local-color-dark-shadow1: rgba($color-dark-key, 1);
+$local-color-dark-shadow2: rgba(#000, .25);
+$local-color-dark-autofill-bg: rgba($color-dark-key, .2);

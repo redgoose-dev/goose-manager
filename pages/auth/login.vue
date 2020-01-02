@@ -2,8 +2,8 @@
 <main class="login">
   <div class="login__wrap">
     <article class="login__body">
-      <h1 class="login__app-name">{{computedAppName}}</h1>
-      <h2 class="login__app-description">{{computedAppDescription}}</h2>
+      <h1 class="login__title">{{computedName}}</h1>
+      <h2 class="login__description">{{computedDescription}}</h2>
       <form ref="form" @submit.prevent="onSubmit" class="login__form">
         <fieldset class="login__fieldset">
           <legend>login form</legend>
@@ -16,7 +16,7 @@
                 id="email"
                 v-model="forms.email"
                 maxlength="30"
-                placeholder="redgoose@me.com"
+                placeholder="name@address.com"
                 required/>
               <i/>
             </div>
@@ -35,19 +35,19 @@
               <i/>
             </div>
           </div>
-          <div class="login__field login__save-auth">
-            <form-check
-              name="save_auth"
-              label="Keep me signed in."
-              v-model="forms.save"/>
+          <div class="login-save-auth">
+            <label>
+              <form-check name="save_auth" v-model="forms.save"/>
+              <span>Keep me signed in.</span>
+            </label>
           </div>
         </fieldset>
 
         <nav class="login__nav">
           <button-basic
             type="submit"
-            :label="!processing ? 'Sign in' : null"
-            :icon-right="processing ? 'loader' : ''"
+            label="Sign in"
+            :icon-right="processing ? 'loader' : 'power'"
             :rotate-icon="processing"
             size="large"
             color="key"
@@ -84,15 +84,15 @@ export default {
     };
   },
   computed: {
-    computedAppName()
+    computedName()
     {
       const { preference } = this.$store.state;
-      return preference.appName;
+      return preference.name;
     },
-    computedAppDescription()
+    computedDescription()
     {
       const { preference } = this.$store.state;
-      return preference.appDescription;
+      return preference.description;
     }
   },
   mounted()
@@ -103,7 +103,7 @@ export default {
     async onSubmit(e)
     {
       const { $axios, $store } = this;
-
+      const { preference } = $store.state;
       // off processing
       this.processing = true;
       // request api
@@ -115,7 +115,7 @@ export default {
           host: location.host,
         });
         const resultApi = await $axios.$post('/auth/login/', data);
-        if (!(resultApi.success && resultApi.data && resultApi.data.email)) throw resultApi.message;
+        if (!(resultApi.success && resultApi.data && resultApi.data.email)) throw new Error(resultApi.message);
 
         // save session
         const resultParams = {
@@ -125,7 +125,7 @@ export default {
         const resultSession = await $axios.$post(`${$store.state.url_app}/api/session-save/`, resultParams);
         if (!(resultSession && resultSession.success))
         {
-          throw resultSession.message || messages.error.failedLogin;
+          throw new Error(resultSession.message || messages.error.failedLogin);
         }
 
         // reset form
@@ -138,6 +138,7 @@ export default {
       }
       catch(e)
       {
+        if (preference.debug.service) console.error(e.message);
         this.processing = false;
         this.$toast.add({
           message: messages.error.failedLogin,

@@ -15,6 +15,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+@import "../local";
 .metas {
   display: flex;
   align-items: center;
@@ -22,8 +24,8 @@ export default {
   &__item {
     display: block;
     font-family: $font-eng;
-    font-size: .625rem;
-    color: $color-base;
+    font-size: 10px;
+    color: var(--color-base);
     line-height: 1.25;
     &:after {
       content: ', ';

@@ -9,6 +9,7 @@
     <header>
       <h3>Form text</h3>
     </header>
+    <p>size</p>
     <p>
       <form-text
         placeholder="placeholder value"
@@ -20,14 +21,22 @@
         form-size="small"/>
     </p>
     <p>
+      <form-text placeholder="placeholder value" v-model="fooo"/>
+    </p>
+    <p>
+      <form-text placeholder="placeholder value" v-model="fooo" form-size="large"/>
+    </p>
+    <p>readonly</p>
+    <p>
       <form-text
         placeholder="placeholder value"
         v-model="fooo"
         :required="true"
         :inline="false"
-        :readonly="false"
+        :readonly="true"
         :disabled="false"/>
     </p>
+    <p>disabled</p>
     <p>
       <form-text
         placeholder="placeholder value"
@@ -38,6 +47,7 @@
         :disabled="true"
         form-size="large"/>
     </p>
+    <p>multiple line</p>
     <p>
       <form-text
         type="textarea"

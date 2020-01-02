@@ -13,7 +13,7 @@ catch(e)
 export const state = () => ({
   url_api: '',
   authUser: null,
-  appName: 'Goose Manager',
+  name: 'Goose Manager',
   preference: defaultPreference,
 });
 

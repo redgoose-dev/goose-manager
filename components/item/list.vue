@@ -65,6 +65,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
+@import "./local";
 
 .item-list {
   $self: '.item-list';
@@ -72,7 +73,7 @@ export default {
 
   position: relative;
   padding: 20px;
-  background: #fff;
+  background-color: #fff;
   box-shadow: $shadow-box;
   border-radius: $size-border-radius;
 
@@ -88,7 +89,7 @@ export default {
     border-radius: $size-border-radius;
   }
   &:hover:after {
-    box-shadow: 0 0 0 1px $color-key;
+    box-shadow: 0 0 0 1px var(--color-key);
   }
 
   &__wrap {
@@ -112,6 +113,10 @@ export default {
   }
   &__nav-text {
     margin: 5px 0 0;
+  }
+
+  @include dark-mode() {
+    background-color: $color-item-bg-dark;
   }
 }
 </style>

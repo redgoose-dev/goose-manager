@@ -4,8 +4,10 @@
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
     <div class="rg-form-delete__message">
-      <p>다음 `Category`를 삭제하시겠습니까?</p>
-      <p><strong>{{forms.name}}</strong></p>
+      <div>
+        <p>다음 `Category`를 삭제하시겠습니까?</p>
+        <p><strong>{{forms.name}}</strong></p>
+      </div>
     </div>
     <nav-bottom>
       <template slot="left">

@@ -29,9 +29,9 @@ export default {
   > a {
     display: block;
     font-family: $font-eng-circular;
-    font-size: .75rem;
+    font-size: 12px;
     font-weight: 600;
-    color: $color-base;
+    color: var(--color-base);
     text-decoration: none;
     &:hover {
       text-decoration: underline;

@@ -1,4 +1,5 @@
 @import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
 
 $self: '.error';
 
@@ -19,7 +20,7 @@ $self: '.error';
       width: 64px;
       height: 64px;
       stroke-width: .5px;
-      color: $color-key;
+      color: var(--color-key);
       box-sizing: border-box;
     }
   }
@@ -65,5 +66,13 @@ $self: '.error';
   &--frame {
     background: #fff;
     box-shadow: 0 1px 20px rgba(#000, .05);
+  }
+
+  @include dark-mode() {
+    &__icon {
+      svg {
+
+      }
+    }
   }
 }

@@ -5,8 +5,10 @@
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
     <div class="rg-form-delete__message">
-      <p>다음 `JSON`을 삭제하시겠습니까?</p>
-      <p><strong>{{data.name}}</strong></p>
+      <div>
+        <p>다음 `JSON`을 삭제하시겠습니까?</p>
+        <p><strong>{{data.name}}</strong></p>
+      </div>
     </div>
 
     <nav-bottom>
@@ -29,7 +31,7 @@
 </template>
 
 <script>
-import * as messages from '../../../libs/messages';
+import * as messages from '~/libs/messages';
 
 export default {
   components: {

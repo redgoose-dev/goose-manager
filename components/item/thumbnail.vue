@@ -49,13 +49,14 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
+@import "./local";
 
 .item-thumbnail {
   $self: '.item-thumbnail';
   $size: 165px;
   position: relative;
   box-shadow: $shadow-box;
-  background: #fff;
+  background-color: #fff;
   border-radius: $size-border-radius;
   min-width: 0;
   &:after {
@@ -70,7 +71,7 @@ export default {
     border-radius: $size-border-radius;
   }
   &:hover:after {
-    box-shadow: inset 0 0 0 1px $color-key;
+    box-shadow: inset 0 0 0 1px var(--color-key);
   }
   &__image {
     position: relative;
@@ -100,6 +101,10 @@ export default {
   }
   &__nav-text {
     margin: 4px 0 0;
+  }
+
+  @include dark-mode() {
+    background-color: $color-item-bg-dark;
   }
 }
 </style>

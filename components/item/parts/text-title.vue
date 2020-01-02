@@ -24,6 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
 
 .text-title {
   display: block;
@@ -31,7 +32,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: .875rem;
+  font-size: 14px;
   line-height: 1.4;
   a {
     text-decoration: none;

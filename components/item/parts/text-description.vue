@@ -1,7 +1,5 @@
 <template>
-<p class="text-description">
-  {{label}}
-</p>
+<p class="text-description">{{label}}</p>
 </template>
 
 <script>
@@ -19,7 +17,7 @@ export default {
 .text-description {
   font-size: 11px;
   line-height: 1.5;
-  color: mix(#fff, $color-blur, 25%);
+  color: var(--color-blur);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

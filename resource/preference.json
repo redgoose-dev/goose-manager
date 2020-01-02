@@ -1,7 +1,9 @@
 {
-  "appName": "Management contents",
-  "appDescription": "management redgoose contents",
+  "name": "Management contents",
+  "shortName": "Manager",
+  "description": "management redgoose contents",
   "debug": {
+    "service": false,
     "route": false,
     "api": false
   },

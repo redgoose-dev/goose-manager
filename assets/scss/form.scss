@@ -8,9 +8,9 @@
 .rg-form-help {
   margin: 5px 0 0;
 	font-size: .75rem;
-	color: $color-blur;
+	color: var(--color-blur);
 	&-error {
-		color: $color-error;
+		color: var(--color-error);
 	}
 }
 
@@ -97,51 +97,6 @@
 			margin-right: 0;
 		}
 	}
-}
-.rg-form-body {
-	border-top: 1px solid $color-content-line;
-	padding: 10px 15px;
-	&:last-child {
-		border-bottom: 1px solid $color-content-line;
-	}
-}
-
-// section
-.rg-form-section {
-	margin: 20px 0 0;
-	background: #fff;
-	box-shadow: $shadow-box;
-	border-radius: 5px;
-	&:first-child {
-		margin-top: 0;
-	}
-	> h1 {
-		margin: 0;
-		padding: 1rem;
-		font-size: 1.125rem;
-		line-height: 1;
-		border-bottom: 1px solid $color-content-line;
-	}
-	&__body {
-		padding: 1rem 1rem;
-		> .rg-form-field {
-			&:first-child {
-				border-top: none;
-			}
-			&:last-child {
-				border-bottom: none;
-			}
-		}
-	}
-}
-
-// error
-.rg-form-error {
-	margin: 10px 0 0;
-	text-align: right;
-	font-size: .8125rem;
-	font-weight: bold;
-	color: $color-error;
 }
 
 // delete
