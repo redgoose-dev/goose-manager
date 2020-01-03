@@ -10,21 +10,21 @@
 // set form size
 @mixin form-size($size, $type)
 {
+  line-height: 1.5;
 	@if $size == 'small'
 	{
-		padding: .3125rem .75rem;
-		font-size: .8125rem;
+		padding: 5px 12px;
+		font-size: 13px;
 	}
 	@else if $size == 'large'
 	{
-		padding: .625rem 1rem;
-		font-size: 1.125rem;
+		padding: 10px 16px;
+		font-size: 18px;
 	}
 	@else
 	{
-		padding: .4375rem 1.25rem;
-		font-size: .9375rem;
-		line-height: 1.5;
+		padding: 7px 12px;
+		font-size: 16px;
 	}
 }
 

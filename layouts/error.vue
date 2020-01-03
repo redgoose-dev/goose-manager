@@ -12,9 +12,9 @@
   <nav class="nav">
     <button-basic
       label="Go to back"
-      @click="$router.back()"
       color="key"
-      :inline="true"/>
+      :inline="true"
+      @click="$router.back()"/>
   </nav>
 </article>
 </template>

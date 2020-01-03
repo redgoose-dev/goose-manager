@@ -1,13 +1,29 @@
 <template>
-<span :class="classNames">
-	<select :name="name" :id="id" :value="selected" :required="required" :disabled="disabled" @input="onChange">
-		<option value="">Please select</option>
-		<option v-for="item in options" :value="item.value">
-			{{item.label}}
-		</option>
-	</select>
-  <icon name="code"/>
-</span>
+  <div :class="[
+    'form-select',
+    this.size && `form-select--size-${this.size}`,
+    this.inline && `form-select--inline`,
+  ]">
+    <label class="form-select__body">
+      <select
+        :name="name"
+        :id="id"
+        :value="selected"
+        :required="required"
+        :disabled="disabled"
+        class="form-select__unit"
+        @input="onChange">
+        <template v-if="options && options.length">
+          <option v-if="placeholder" value="">{{placeholder}}</option>
+          <option v-for="item in options" :value="item.value">
+            {{item.label}}
+          </option>
+        </template>
+        <slot/>
+      </select>
+      <icon name="code" class="form-select__icon"/>
+    </label>
+  </div>
 </template>
 
 <script>
@@ -21,7 +37,7 @@ export default {
 		disabled: { type: Boolean, default: false },
 		inline: { type: Boolean, default: false },
 		size: { type: String },
-		className: { type: String },
+		placeholder: { type: String, default: 'Please select' },
 	},
   components: {
 	  'icon': () => import('~/components/icon'),
@@ -30,24 +46,12 @@ export default {
 		prop: 'selected',
 		event: 'change',
 	},
-	computed: {
-		classNames()
-		{
-			return [
-				'form-select',
-				this.size && `form-select-size-${this.size}`,
-				this.inline && `form-select-inline`,
-				this.className,
-			];
-		}
-	},
-
 	methods: {
 		onChange(e)
 		{
 			this.$emit('change', e.target.value);
-		}
-	}
+		},
+	},
 }
 </script>
 

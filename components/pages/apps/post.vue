@@ -53,16 +53,17 @@
   </fieldset>
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
+      <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
     </template>
     <template slot="right">
       <button-basic
         type="submit"
         color="key"
-        :label="`${this.type === 'edit' ? 'Edit' : 'Add'} app`"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing"
-        :disabled="processing"/>
+        :disabled="processing">
+        {{this.type === 'edit' ? 'Edit' : 'Add'}} app
+      </button-basic>
     </template>
   </nav-bottom>
 </form>

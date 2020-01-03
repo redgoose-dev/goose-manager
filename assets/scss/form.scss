@@ -122,3 +122,41 @@
 		}
 	}
 }
+
+
+// field (new)
+.form-fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  > legend {
+    font-size: 0;
+    visibility: hidden;
+  }
+  &--legend {
+    font-size: unset;
+    visibility: unset;
+  }
+}
+.form-field {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  margin-left: -3px;
+  margin-right: -3px;
+  > * {
+    margin: 0 3px;
+  }
+}
+.form-help {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: var(--color-blur);
+  &--error {
+    color: var(--color-error);
+  }
+  > .error {
+    color: var(--color-error);
+  }
+}

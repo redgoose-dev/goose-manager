@@ -1,174 +1,172 @@
 <template>
 <article>
   <header class="page-header">
-    <h2>Forms</h2>
+    <h2>Form components</h2>
     <p>입력폼에서 사용되는 컴포넌트들에 대한 예제입니다.</p>
   </header>
 
   <section class="page-section">
     <header>
-      <h3>Form text</h3>
+      <h3>text</h3>
+      <p>
+        <code>~/components/form/text</code>
+      </p>
     </header>
-    <p>size</p>
-    <p>
-      <form-text
-        placeholder="placeholder value"
-        v-model="fooo"
-        :required="true"
-        :inline="false"
-        :readonly="false"
-        :disabled="false"
-        form-size="small"/>
-    </p>
-    <p>
-      <form-text placeholder="placeholder value" v-model="fooo"/>
-    </p>
-    <p>
-      <form-text placeholder="placeholder value" v-model="fooo" form-size="large"/>
-    </p>
-    <p>readonly</p>
-    <p>
-      <form-text
-        placeholder="placeholder value"
-        v-model="fooo"
-        :required="true"
-        :inline="false"
-        :readonly="true"
-        :disabled="false"/>
-    </p>
-    <p>disabled</p>
-    <p>
-      <form-text
-        placeholder="placeholder value"
-        v-model="fooo"
-        :required="true"
-        :inline="false"
-        :readonly="false"
-        :disabled="true"
-        form-size="large"/>
-    </p>
-    <p>multiple line</p>
-    <p>
+    <div class="row row-gutter-h">
+      <p class="col">
+        <span>small</span>
+        <form-text
+          placeholder="placeholder value"
+          v-model="text"
+          :required="true"
+          :inline="false"
+          :readonly="false"
+          :disabled="false"
+          form-size="small"/>
+      </p>
+      <p class="col">
+        <span>normal</span>
+        <form-text placeholder="placeholder value" v-model="text"/>
+      </p>
+      <p class="col">
+        <span>large</span>
+        <form-text placeholder="placeholder value" v-model="text" form-size="large"/>
+      </p>
+    </div>
+    <div class="row row-gutter-h">
+      <p class="col">
+        <span>readonly</span>
+        <form-text
+          placeholder="placeholder value"
+          v-model="text"
+          :required="true"
+          :inline="false"
+          :readonly="true"
+          :disabled="false"/>
+      </p>
+      <p class="col">
+        <span>disabled</span>
+        <form-text
+          placeholder="placeholder value"
+          v-model="text"
+          :required="true"
+          :inline="false"
+          :readonly="false"
+          :disabled="true"/>
+      </p>
+    </div>
+    <div>
+      <span>multiple line</span>
       <form-text
         type="textarea"
-        name="fooo"
-        id="fooo"
+        name="text"
+        id="text"
         placeholder="placeholder value"
-        v-model="fooo"
+        v-model="text"
         :required="true"
         :inline="true"/>
-    </p>
+    </div>
+    <div>
+      <p>with button</p>
+      <div class="row row-gutter-h">
+        <div class="col">
+          <form-text placeholder="placeholder value"/>
+        </div>
+        <div class="col">
+          <button-basic type="button" label="label text" color="key"/>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="page-section">
     <header>
-      <h3>Form select-box</h3>
+      <h3>select</h3>
+      <p>
+        <code>~/components/form/select</code>
+      </p>
     </header>
-    <p>
-      <form-select :inline="true" form-size="small"/>
-      <form-select
-        name="select_name"
-        id="select_id"
-        v-model="select"
-        :options="[
-        { label: 'Foo', value: 'foo' },
-        { label: 'Bar', value: 'bar' }
-      ]"
-        :inline="true"/>
-      <form-select :inline="true" form-size="large"/>
-      ==={{select}}===
-    </p>
+    <div class="example">
+      <div class="row row-gutter-h">
+        <form-select v-model="select" :options="selectOptions" size="small" class="col"/>
+        <form-select v-model="select" :options="selectOptions" class="col"/>
+        <form-select v-model="select" :options="selectOptions" size="large" class="col"/>
+        <form-select v-model="select" :options="selectOptions" :disabled="true" class="col"/>
+      </div>
+      <p>
+        <span>[selected value: {{select}}]</span>
+      </p>
+      <div>
+        <form-select v-model="select" :inline="true">
+          <option value="apple">Apple</option>
+          <option value="banana">Banana</option>
+          <option value="mango">Mango</option>
+        </form-select>
+      </div>
+    </div>
   </section>
 
   <section class="page-section">
     <header>
-      <h3>Checkbox and Radio</h3>
+      <h3>checkbox</h3>
+      <p>
+        <code>~/components/form/checkbox</code>
+      </p>
     </header>
-    <p>
-      <form-check
-        name="foo23123oo"
-        v-model="checks"/>
-      <form-check
-        name="foooo"
-        label="checkbox name"
-        v-model="checks"/>
-      ===========
-      {{checks}}
-    </p>
-    <p>
-      <form-check
-        type="radio"
-        name="fooo1"
-        label="radio name"
-        v-model="checks"
-        :inline="true"/>
-    </p>
-    <fieldset>
-      <legend>checkbox group</legend>
-      <form-checks
-        type="checkbox"
-        name="smdgpsd"
-        id="roooo"
-        :inline="true"
-        v-model="checkboxes"
-        :disabled="false"
-        :items="[
-          { label: 'checks label#1', value: 'label-1' },
-          { label: 'checks label#2', value: 'label-2' },
-          { label: 'checks label#3', value: 'label-3' },
-          { label: 'checks label#4', value: 'label-4' },
-          { label: 'checks label#5', value: 'label-5' },
-          { label: 'checks label#6', value: 'label-6' },
-          { label: 'checks label#7', value: 'label-7' },
-          { label: 'checks label#8', value: 'label-8' },
-        ]"
-        @change="changeCheckbox"
-      />
-      <hr>
-      {{checkboxes}}
-    </fieldset>
-    <fieldset>
-      <legend>radio group</legend>
-      <form-checks
-        type="radio"
-        name="rtjnfgh"
-        id="yoooo"
-        v-model="radios"
-        :inline="true"
-        :disabled="false"
-        :items="[
-          { label: 'radio label#1', value: 'label-1' },
-          { label: 'radio label#2', value: 'label-2' },
-          { label: 'radio label#3', value: 'label-3' },
-          { label: 'radio label#4', value: 'label-4' },
-          { label: 'radio label#5', value: 'label-5' },
-          { label: 'radio label#6', value: 'label-6' },
-          { label: 'radio label#7', value: 'label-7' },
-          { label: 'radio label#8', value: 'label-8' },
-        ]"
-      />
-      <hr>
-      {{radios}}
-    </fieldset>
-    <fieldset>
-      <legend>field style</legend>
-      <dl class="rg-form-field">
-        <dt>
-          <label for="sdmgmsdgp">label name</label>
-        </dt>
-        <dd>
-          <form-text
-            id="sdmgmsdgp"
-            placeholder="placeholder value"
-            :inline="true"
-          />
-          <p class="rg-form-help rg-form-help-error">error message</p>
-          <p class="rg-form-help">help message</p>
-        </dd>
-      </dl>
-    </fieldset>
+    <div class="example">
+      <div class="row row-v-center row-gutter-h check-items">
+        <label class="col row row-v-center">
+          <form-checkbox v-model="checkbox" size="small"/>
+          <span>small</span>
+        </label>
+        <label class="col row row-v-center">
+          <form-checkbox v-model="checkbox"/>
+          <span>normal</span>
+        </label>
+        <label class="col row row-v-center">
+          <form-checkbox v-model="checkbox" size="large"/>
+          <span>large</span>
+        </label>
+        <label class="col row row-v-center">
+          <form-checkbox v-model="checkbox" :disabled="true"/>
+          <span>disabled</span>
+        </label>
+      </div>
+      <p>
+        <span>[checked value: {{checkbox}}]</span>
+      </p>
+    </div>
   </section>
 
+  <section class="page-section">
+    <header>
+      <h3>radio</h3>
+      <p>
+        <code>~/components/form/radio</code>
+      </p>
+    </header>
+    <div class="example">
+      <div class="row row-v-center row-gutter-h check-items">
+        <label class="col row row-v-center">
+          <form-radio name="radio" v-model="radio" value="radio1" size="small"/>
+          <span>radio1(small)</span>
+        </label>
+        <label class="col row row-v-center">
+          <form-radio name="radio" v-model="radio" value="radio2"/>
+          <span>radio2</span>
+        </label>
+        <label class="col row row-v-center">
+          <form-radio name="radio" v-model="radio" value="radio3" size="large"/>
+          <span>radio3(large)</span>
+        </label>
+        <label class="col row row-v-center">
+          <form-radio name="radio" v-model="radio" value="radio4" :disabled="true"/>
+          <span>disabled</span>
+        </label>
+      </div>
+      <p>[checked value: {{radio}}]</p>
+    </div>
+  </section>
 </article>
 </template>
 
@@ -177,27 +175,32 @@ export default {
   components: {
     'form-text': () => import('~/components/form/text'),
     'form-select': () => import('~/components/form/select'),
-    'form-check': () => import('~/components/form/check'),
-    'form-checks': () => import('~/components/form/checks'),
+    'form-checkbox': () => import('~/components/form/checkbox'),
+    'form-radio': () => import('~/components/form/radio'),
+    'button-basic': () => import('~/components/button/basic'),
   },
   data()
   {
     return {
-      fooo: 'sdgmosdpg,sdg',
-      select: 'foo',
-      checks: false,
-      checkboxes: [],
-      radios: 'label-2',
+      text: 'text value',
+      select: 'apple',
+      selectOptions: [
+        { label: 'Apple', value: 'apple' },
+        { label: 'Banana', value: 'banana' },
+        { label: 'Mango', value: 'mango' },
+      ],
+      checkbox: false,
+      radio: 'radio1',
     };
-  },
-  methods: {
-    changeCheckbox(value)
-    {
-      this.checkboxes = value;
-    },
   },
 }
 </script>
 
 <style src="./pages.scss" lang="scss" scoped/>
-<style lang="scss" scoped/>
+<style lang="scss" scoped>
+.check-items {
+  > label > span {
+    margin-left: 8px;
+  }
+}
+</style>

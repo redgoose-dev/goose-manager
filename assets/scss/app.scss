@@ -1,11 +1,12 @@
 @import "./variables";
 @import "./normalize";
 @import "./fonts";
+@import "./grid";
 @import "./form";
 @import "./contents";
 
 :root {
-  --color-white: #fff;
+  --color-edge: #fff;
   --color-bg: #{$color-bg};
   --color-base: #{$color-base};
   --color-blur: #{$color-blur};
@@ -16,6 +17,7 @@
   --color-code: #{$color-code};
 
   @include dark-mode() {
+    --color-edge: #000;
     --color-bg: #{$color-dark-bg};
     --color-base: #{$color-dark-base};
     --color-blur: #{$color-dark-blur};

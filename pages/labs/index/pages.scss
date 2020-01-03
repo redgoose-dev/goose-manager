@@ -19,6 +19,7 @@
 .page-section {
   margin: 3rem 0;
   > header {
+    margin: 0 0 1rem;
     h3 {
       margin: 0;
       font-size: 1.25rem;
@@ -38,4 +39,24 @@
 
 .page-header + .page-section {
   margin-top: 2rem;
+}
+
+.example {
+  padding: 20px;
+  background-color: var(--color-bg);
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,.05);
+  > * {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  @include dark-mode() {
+    border-color: #555;
+  }
 }

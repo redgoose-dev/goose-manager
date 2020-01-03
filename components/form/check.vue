@@ -42,6 +42,7 @@
 </template>
 
 <script>
+// TODO: 삭제예정
 export default {
   props: {
     label: { type: String },

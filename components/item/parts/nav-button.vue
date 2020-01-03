@@ -2,13 +2,14 @@
 <nav class="nav-button">
   <button-basic
     v-for="(item,key) in items"
-    :label="item.label"
     :key="key"
     :to="item.link"
     :inline="true"
     :color="item.color"
     size="small"
-    class="nav-button__item"/>
+    class="nav-button__item">
+    {{item.label}}
+  </button-basic>
 </nav>
 </template>
 

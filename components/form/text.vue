@@ -16,8 +16,9 @@
 		@input="onChange"
 		:class="[
 			'form-text',
-			formSize && `form-text-size-${formSize}`,
-			error && 'form-text-error',
+			'form-text--textarea',
+			formSize && `form-text--size-${formSize}`,
+			error && 'form-text--error',
 			className
 		]"/>
 	<input
@@ -37,9 +38,9 @@
 		@input="onChange"
 		:class="[
 			'form-text',
-			inline && 'form-text-inline',
-			formSize && `form-text-size-${formSize}`,
-			error && 'form-text-error',
+			inline && 'form-text--inline',
+			formSize && `form-text--size-${formSize}`,
+			error && 'form-text--error',
 			className
 		]"/>
 </template>

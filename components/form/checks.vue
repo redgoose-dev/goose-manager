@@ -15,6 +15,7 @@
 </template>
 
 <script>
+// TODO: 삭제예정
 import FormCheck from './check';
 
 export default {

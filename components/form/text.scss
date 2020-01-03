@@ -2,6 +2,8 @@
 @import "../../assets/scss/mixins";
 @import "./local";
 
+$self: '.form-text';
+
 .form-text {
   & {
     display: block;
@@ -20,7 +22,7 @@
     background-color: $local-color-readonly-bg;
   }
   &:disabled {
-    opacity: .5;
+    opacity: $local-disabled-opacity;
     cursor: not-allowed;
   }
   &:focus {
@@ -43,24 +45,34 @@
   }
 
   // size
-  @include form-size('normal', 'input');
-  padding-left: .75rem;
-  padding-right: .75rem;
-  &-size-small {
-    @include form-size('small', 'input');
-    padding-left: .75rem;
-    padding-right: .75rem;
+  & {
+    height: $form-text-height-basic;
+    padding-left: $form-text-side-padding;
+    padding-right: $form-text-side-padding;
+    font-size: $form-text-text-basic;
+    line-height: 1.5;
   }
-  &-size-large {
-    @include form-size('large', 'input');
-    padding-left: .75rem;
-    padding-right: .75rem;
+  &--size {
+    &-small {
+      height: $form-text-height-small;
+      font-size: $form-text-text-small;
+    }
+    &-large {
+      height: $form-text-height-large;
+      font-size: $form-text-text-large;
+    }
   }
 
-  &-error {
+  // etc
+  &--textarea {
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  &--error {
     border-color: var(--color-error);
   }
-  &-inline {
+  &--inline {
     display: inline-block;
     width: auto;
   }

@@ -29,9 +29,9 @@ $color-dark-bg-gray-focus: rgba(#fff, .25);
 $color-dark-bg-gray-active: rgba(#000, .3);
 
 // size
-$size-height-small: 32px;
+$size-height-small: 36px;
 $size-height-basic: 42px;
-$size-height-large: 52px;
+$size-height-large: 48px;
 $size-text-small: 12px;
 $size-text-basic: 16px;
 $size-text-large: 20px;
@@ -170,22 +170,26 @@ $size-icon-large: 22px;
   // with icon
   &__icon {
     &.left {
-      margin-right: 6px;
       margin-left: -2px;
+      & + em {
+        margin-left: 6px;
+      }
     }
     &.right {
-      margin-left: 6px;
       margin-right: -2px;
     }
+  }
+  &__label + &__icon {
+    margin-left: 6px;
   }
 
   // animation icon
   &--animation {
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
     #{$self}__icon {
       animation:spin 2s linear infinite;
-      @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-      @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-      @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
     }
   }
 

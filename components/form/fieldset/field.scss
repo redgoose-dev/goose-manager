@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   margin: 0;
-  padding: 10px 0;
+  padding: 15px 0;
   min-height: 56px;
   box-sizing: border-box;
   > dt {
@@ -24,5 +24,14 @@
     flex: 1;
     margin: 0;
     padding: 0 20px;
+    font-size: 15px;
+    > * {
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 }
