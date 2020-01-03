@@ -24,7 +24,7 @@
 
   <nav-bottom>
     <template slot="right">
-      <button-basic label="Add user" to="/users/add/" :inline="true" color="key" icon-left="plus"/>
+      <button-basic to="/users/add/" :inline="true" color="key" icon-left="plus">Add user</button-basic>
     </template>
   </nav-bottom>
 </article>

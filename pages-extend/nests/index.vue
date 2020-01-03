@@ -32,15 +32,12 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic label="Apps" to="/apps/" icon-left="grid"/>
+      <button-basic to="/apps/" icon-left="grid">Apps</button-basic>
     </template>
     <template slot="right">
-      <button-basic
-        v-if="!error && (index && index.length)"
-        label="Add Nest"
-        to="/nests/add/"
-        color="key"
-        icon-left="plus"/>
+      <button-basic v-if="!error && (index && index.length)" to="/nests/add/" color="key" icon-left="plus">
+        Add Nest
+      </button-basic>
     </template>
   </nav-bottom>
 </article>

@@ -24,7 +24,7 @@
 
   <nav-bottom>
     <template slot="right">
-      <button-basic label="Add App" to="/apps/add/" color="key" icon-left="plus"/>
+      <button-basic to="/apps/add/" color="key" icon-left="plus">Add App</button-basic>
     </template>
   </nav-bottom>
 </article>

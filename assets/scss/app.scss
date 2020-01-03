@@ -15,6 +15,8 @@
   --color-success: #{$color-success};
   --color-error: #{$color-error};
   --color-code: #{$color-code};
+  --color-content-bg: #{$color-content-bg};
+  --color-content-line: #{$color-content-line};
 
   @include dark-mode() {
     --color-edge: #000;
@@ -23,6 +25,8 @@
     --color-blur: #{$color-dark-blur};
     --color-key: #{$color-dark-key};
     --color-primary: #{$color-dark-primary};
+    --color-content-bg: #{$color-dark-content-bg};
+    --color-content-line: #{$color-dark-content-line};
   }
 }
 

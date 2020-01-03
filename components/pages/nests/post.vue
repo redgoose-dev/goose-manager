@@ -199,16 +199,17 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
+      <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
     </template>
     <template slot="right">
       <button-basic
         type="submit"
         color="key"
-        :label="`${computedTypeLabel} Nest`"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing"
-        :disabled="processing"/>
+        :disabled="processing">
+        {{computedTypeLabel}} Nest
+      </button-basic>
     </template>
   </nav-bottom>
 </form>

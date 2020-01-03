@@ -87,16 +87,17 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
+      <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
     </template>
     <template slot="right">
       <button-basic
         type="submit"
         color="key"
-        :label="`${type === 'edit' ? 'Edit' : 'Add'} user`"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing"
-        :disabled="processing"/>
+        :disabled="processing">
+        {{type === 'edit' ? 'Edit' : 'Add'}} user
+      </button-basic>
     </template>
   </nav-bottom>
 </form>

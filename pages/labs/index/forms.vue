@@ -73,7 +73,7 @@
           <form-text placeholder="placeholder value"/>
         </div>
         <div class="col">
-          <button-basic type="button" label="label text" color="key"/>
+          <button-basic type="button" color="key">label text</button-basic>
         </div>
       </div>
     </div>

@@ -7,11 +7,11 @@
   </div>
   <nav-bottom>
     <template slot="left">
-      <button-basic label="Index" :to="`/json/`" icon-left="list"/>
+      <button-basic :to="`/json/`" icon-left="list">Index</button-basic>
     </template>
     <template slot="right">
-      <button-basic label="Edit" :to="`/json/${srl}/edit/`" icon-left="edit"/>
-      <button-basic label="Delete" :to="`/json/${srl}/delete/`" color="key" icon-left="trash"/>
+      <button-basic :to="`/json/${srl}/edit/`" icon-left="edit">Edit</button-basic>
+      <button-basic :to="`/json/${srl}/delete/`" color="key" icon-left="trash">Delete</button-basic>
     </template>
   </nav-bottom>
 </article>

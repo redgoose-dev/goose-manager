@@ -23,7 +23,7 @@
 
   <nav-bottom>
     <template slot="right">
-      <button-basic label="Add JSON" to="./add/" color="key" icon-left="plus"/>
+      <button-basic to="./add/" color="key" icon-left="plus">Add JSON</button-basic>
     </template>
   </nav-bottom>
 </article>

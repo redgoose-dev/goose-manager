@@ -14,17 +14,18 @@
     </div>
     <nav-bottom>
       <template slot="left">
-        <button-basic type="button" label="Back" icon-left="arrow-left" @click="$router.back()"/>
+        <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
       </template>
       <template slot="right">
         <button-basic
           type="submit"
           ref="button_submit"
           color="key"
-          label="Delete Nest"
           :icon-left="processing ? 'loader' : 'check'"
           :rotate-icon="processing"
-          :disabled="processing"/>
+          :disabled="processing">
+          Delete Nest
+        </button-basic>
       </template>
     </nav-bottom>
   </form>

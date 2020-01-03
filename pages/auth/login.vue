@@ -46,13 +46,14 @@
         <nav class="login__nav">
           <button-basic
             type="submit"
-            label="Sign in"
             :icon-right="processing ? 'loader' : 'power'"
             :rotate-icon="processing"
             size="large"
             color="key"
             :disabled="processing"
-            class="button"/>
+            class="button">
+            Sign in
+          </button-basic>
         </nav>
       </form>
     </article>

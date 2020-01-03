@@ -31,19 +31,21 @@
   </template>
   <nav-bottom>
     <template slot="left">
-      <button-basic label="Nests" to="../../" icon-left="archive"/>
+      <button-basic to="../../" icon-left="archive">Nests</button-basic>
       <button-basic
         v-if="(nest && parseInt(nest.json.useCategory) === 1)"
-        label="Categories"
         :to="`../../${nest_srl}/categories/`"
-        icon-left="server"/>
+        icon-left="server">
+        Categories
+      </button-basic>
     </template>
     <template slot="right">
       <button-basic
-        label="Add article"
         :to="`./add/${category_srl ? `?category=${category_srl}` : ''}`"
         color="key"
-        icon-left="plus"/>
+        icon-left="plus">
+        Add article
+      </button-basic>
     </template>
   </nav-bottom>
 </article>

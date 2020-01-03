@@ -37,11 +37,11 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic label="Index" to="../" icon-left="list"/>
+      <button-basic to="../" icon-left="list">Index</button-basic>
     </template>
     <template slot="right">
-      <button-basic label="Edit" to="./edit/" color="gray" icon-left="edit"/>
-      <button-basic label="Delete" to="./delete/" color="key" icon-left="trash"/>
+      <button-basic to="./edit/" color="gray" icon-left="edit">Edit</button-basic>
+      <button-basic to="./delete/" color="key" icon-left="trash">Delete</button-basic>
     </template>
   </nav-bottom>
 </article>

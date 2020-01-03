@@ -10,11 +10,7 @@
     {{error.message}}
   </p>
   <nav class="nav">
-    <button-basic
-      label="Go to back"
-      color="key"
-      :inline="true"
-      @click="$router.back()"/>
+    <button-basic color="key" :inline="true" @click="$router.back()">Go to back</button-basic>
   </nav>
 </article>
 </template>

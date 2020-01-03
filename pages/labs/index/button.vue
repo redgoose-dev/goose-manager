@@ -6,15 +6,15 @@
   </header>
 
   <section class="page-section">
-    <p><button-basic type="button" label="Button" size="small" icon-right="power"/></p>
-    <p><button-basic type="button" label="Button" color="key" icon-left="power"/></p>
-    <p><button-basic type="button" label="Button" size="large" color="gray" icon-right="power"/></p>
-    <p><button-basic href="/" label="A: Button content"/></p>
+    <p><button-basic type="button" size="small" icon-right="power">Button</button-basic></p>
+    <p><button-basic type="button" color="key" icon-left="power">Button</button-basic></p>
+    <p><button-basic type="button" size="large" color="gray" icon-right="power">Button</button-basic></p>
+    <p><button-basic href="/">A: Button content</button-basic></p>
     <p><button-basic href="/" icon-right="power" :inline="true"/></p>
     <p>
-      <button-basic type="button" label="Power" icon-right="power" :inline="true" size="small"/>
-      <button-basic to="/" label="Power" icon-left="power" :inline="true"/>
-      <button-basic type="button" label="disabled" icon-right="power" :inline="true" :disabled="true" size="large"/>
+      <button-basic type="button" icon-right="power" :inline="true" size="small">Power</button-basic>
+      <button-basic to="/" icon-left="power" :inline="true">Power</button-basic>
+      <button-basic type="button" icon-right="power" :inline="true" :disabled="true" size="large">disabled</button-basic>
     </p>
     <p>
       <a href="/">link style</a>

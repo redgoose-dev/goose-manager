@@ -24,23 +24,12 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic
-        label="Index"
-        icon-left="list"
-        :to="makeButtonUrl('index')"/>
+      <button-basic icon-left="list" :to="makeButtonUrl('index')">Index</button-basic>
     </template>
     <template slot="right">
-      <button-basic v-if="nest_srl" label="Add" :to="makeButtonUrl('add')"/>
-      <button-basic
-        label="Edit"
-        :to="makeButtonUrl('edit', srl)"
-        icon-left="edit-3"
-        color="key"/>
-      <button-basic
-        label="Delete"
-        :to="makeButtonUrl('delete', srl)"
-        icon-left="trash"
-        color="gray"/>
+      <button-basic v-if="nest_srl" :to="makeButtonUrl('add')">Add</button-basic>
+      <button-basic :to="makeButtonUrl('edit', srl)" icon-left="edit-3" color="key">Edit</button-basic>
+      <button-basic :to="makeButtonUrl('delete', srl)" icon-left="trash" color="gray">Delete</button-basic>
     </template>
   </nav-bottom>
 </article>

@@ -10,7 +10,7 @@
       <h3>Toast</h3>
     </header>
     <nav>
-      <button-basic type="button" @click="addToast" label="add toast"/>
+      <button-basic type="button" @click="addToast">add toast</button-basic>
     </nav>
   </section>
 </article>
