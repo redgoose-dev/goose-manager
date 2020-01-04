@@ -1,10 +1,8 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form">
-  <fieldset class="rg-form-fieldset">
-    <legend>{{type}} category form</legend>
-    <dl class="rg-form-field">
-      <dt><label for="name">Name</label></dt>
-      <dd>
+  <field-wrap :legend="`${type} category form`" :hide-legend="true">
+    <field label="Name" for="name">
+      <template slot="body">
         <form-text
           type="text"
           name="name"
@@ -16,9 +14,9 @@
           :error="!!forms.name.error"
           :required="true"
           :inline="true"/>
-      </dd>
-    </dl>
-  </fieldset>
+      </template>
+    </field>
+  </field-wrap>
   <nav-bottom>
     <template slot="left">
       <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -27,7 +25,7 @@
       <button-basic
         type="submit"
         color="key"
-        :icon-right="processing ? 'loader' : ''"
+        :icon-right="processing ? 'loader' : 'check'"
         :rotate-icon="processing"
         :disabled="processing">
         {{this.type === 'edit' ? 'Edit' : 'Add'}} Category
@@ -40,12 +38,15 @@
 <script>
 import { formData } from '../../../libs/forms';
 import * as messages from '../../../libs/messages';
+import * as fieldset from '~/components/form/fieldset';
 
 export default {
   components: {
     'form-text': () => import('~/components/form/text'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'field-wrap': fieldset.wrap,
+    'field': fieldset.field,
   },
   props: {
     type: { type: String, default: 'add' }, // add,edit

@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "setup": "cp ./resource/.env ./ && cp ./resource/preference.json ./",
@@ -10,7 +10,7 @@
     "build-check": "./node_modules/.bin/nuxt build --analyze"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.9.0",
+    "@nuxtjs/axios": "^5.9.2",
     "@nuxtjs/dotenv": "^1.4.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",

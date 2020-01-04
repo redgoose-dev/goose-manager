@@ -4,7 +4,7 @@
     type="radio"
     :name="name"
     :id="id"
-    :checked="checked === value"
+    :checked="computedChecked"
     :value="value"
     :disabled="disabled"
     :required="required"
@@ -19,8 +19,8 @@ export default {
   props: {
     name: { type: String },
     id: { type: String },
-    value: { type: [String,Number,Boolean], default: null },
-    checked: { type: [Boolean,Number,String], default: false },
+    value: { type: [String,Number,Boolean], default: '' },
+    checked: { type: [Boolean,Number,String], default: '' },
     disabled: { type: Boolean, default: false },
     size: { type: String, default: null },
     required: { type: Boolean, default: false },
@@ -29,10 +29,22 @@ export default {
     prop: 'checked',
     event: 'change',
   },
+  computed: {
+    computedChecked: {
+      get()
+      {
+        return this.value === this.checked;
+      },
+      set(newValue)
+      {
+        this.$emit('change', this.value);
+      },
+    },
+  },
   methods: {
     onChange(e)
     {
-      this.$emit('change', e.target.value, e);
+      this.$emit('change', e.target.value);
     },
   },
 }

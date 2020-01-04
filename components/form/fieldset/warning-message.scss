@@ -1,0 +1,26 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.warning-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  height: 240px;
+  background: var(--color-content-bg);
+  box-shadow: $shadow-box;
+  &__body {
+    font-size: 15px;
+    strong {
+      color: var(--color-key);
+      &:before {
+        content: '"';
+      }
+      &:after {
+        content: '"';
+      }
+    }
+  }
+}

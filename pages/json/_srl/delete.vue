@@ -1,16 +1,12 @@
 <template>
 <article>
   <page-header module="json" title="JSON / Delete"/>
-
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
-    <div class="rg-form-delete__message">
-      <div>
-        <p>다음 `JSON`을 삭제하시겠습니까?</p>
-        <p><strong>{{data.name}}</strong></p>
-      </div>
-    </div>
-
+    <warning-message>
+      <p>다음 `JSON`을 삭제하시겠습니까?</p>
+      <p><strong>{{data.name}}</strong></p>
+    </warning-message>
     <nav-bottom>
       <template slot="left">
         <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -39,6 +35,7 @@ export default {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'warning-message': () => import('~/components/form/fieldset/warning-message'),
   },
   validate(cox)
   {

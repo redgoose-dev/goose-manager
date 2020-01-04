@@ -1,10 +1,8 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form">
-  <fieldset class="rg-form-fieldset">
-    <legend>{{type}} article form</legend>
-    <dl v-if="datas.categories && datas.categories.length" class="rg-form-field">
-      <dt><label for="category">Category</label></dt>
-      <dd>
+  <field-wrap :legend="`${type} article form`" :hide-legend="true">
+    <field v-if="datas.categories && datas.categories.length" label="Category" for="category">
+      <template slot="body">
         <form-select
           name="category"
           id="category"
@@ -12,11 +10,10 @@
           :options="datas.categories"
           :required="false"
           :inline="true"/>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="title">Title</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field label="Title" for="title">
+      <template slot="body">
         <form-text
           type="text"
           name="title"
@@ -26,42 +23,40 @@
           :maxlength="120"
           :error="!!forms.title.error"
           :required="true"/>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="type">Type</label></dt>
-      <dd>
-        <form-checks
-          v-model="forms.type"
-          type="radio"
-          name="type"
-          id="type"
-          :inline="true"
-          :items="[
-            { label: 'Visible', value: '' },
-            { label: 'Hidden', value: 'hidden' },
-          ]"/>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="order">Order date</label></dt>
-      <dd>
-        <form-text
-          type="text"
-          name="order"
-          id="order"
-          v-model="forms.order.value"
-          placeholder="2019-05-05"
-          :maxlength="10"
-          :size="20"
-          :error="!!forms.order.error"
-          :required="true"
-          :inline="true"
-          @change="onChangeOrder"/>
-        <p v-if="!!forms.order.error" class="rg-form-help rg-form-help-error">{{forms.order.error}}</p>
-      </dd>
-    </dl>
-  </fieldset>
+      </template>
+    </field>
+    <field label="Type" for="type">
+      <template slot="body">
+        <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <label class="form-field">
+            <form-radio name="type" id="type" v-model="forms.type" :value="null"/>
+            <span>Visible</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="type" v-model="forms.type" value="hidden"/>
+            <span>Hidden</span>
+          </label>
+        </div>
+      </template>
+    </field>
+    <field label="Order date" for="order">
+      <form-text
+        type="text"
+        name="order"
+        id="order"
+        v-model="forms.order.value"
+        placeholder="2019-05-05"
+        :maxlength="10"
+        :size="20"
+        :error="!!forms.order.error"
+        :required="true"
+        :inline="true"
+        @change="onChangeOrder"/>
+      <p v-if="!!forms.order.error" class="form-help form-help--error">
+        {{forms.order.error}}
+      </p>
+    </field>
+  </field-wrap>
 
   <editor
     ref="editor"
@@ -117,6 +112,7 @@ import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 import * as dates from '~/libs/dates';
+import * as fieldset from '~/components/form/fieldset';
 
 const errorMessage = {
   order: `Please type in '2019-12-25' format.`,
@@ -128,10 +124,13 @@ export default {
     'form-text': () => import('~/components/form/text'),
     'form-select': () => import('~/components/form/select'),
     'form-checks': () => import('~/components/form/checks'),
+    'form-radio': () => import('~/components/form/radio'),
     'button-basic': () => import('~/components/button/basic'),
     'editor': () => import('~/components/pages/articles/editor'),
     'uploader': () => import('~/components/pages/articles/uploader'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'field-wrap': fieldset.wrap,
+    'field': fieldset.field,
   },
   props: {
     type: { type: String, default: 'add' }, // add,edit
@@ -158,7 +157,7 @@ export default {
         app_srl: datas.nest ? datas.nest.app_srl : null,
         nest_srl: datas.article ? datas.article.nest_srl : nest_srl,
         category_srl: this.getCategoryInForm(),
-        type: datas.article ? this.getTypeName(datas.article.type) : '',
+        type: datas.article ? (this.getTypeName(datas.article.type) || null) : null,
         title: {
           value: datas.article ? datas.article.title : '',
           error: '',
@@ -377,9 +376,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.sub-fields {
-  margin-top: 2rem;
-}
-</style>

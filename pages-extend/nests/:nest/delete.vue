@@ -3,15 +3,13 @@
   <page-header module="nests" title="Nest / Delete"/>
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
-    <div class="rg-form-delete__message">
-      <div>
-        <p>
-          다음 `Nest`를 삭제하시겠습니까?<br/>
-          이것을 삭제하면 하위의 `Article`, `Category`, `File`의 데이터가 삭제됩니다.
-        </p>
-        <p><strong>[{{forms.id}}] {{forms.name}}</strong></p>
-      </div>
-    </div>
+    <warning-message>
+      <p>
+        다음 `Nest`를 삭제하시겠습니까?<br/>
+        이것을 삭제하면 하위의 `Article`, `Category`, `File`의 데이터가 삭제됩니다.
+      </p>
+      <p><strong>[{{forms.id}}] {{forms.name}}</strong></p>
+    </warning-message>
     <nav-bottom>
       <template slot="left">
         <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -40,6 +38,7 @@ export default {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'warning-message': () => import('~/components/form/fieldset/warning-message'),
   },
   validate(cox)
   {

@@ -1,10 +1,8 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form">
-  <fieldset class="rg-form-fieldset">
-    <legend>add user form</legend>
-    <dl class="rg-form-field">
-      <dt><label for="email">E-mail</label></dt>
-      <dd>
+  <field-wrap legend="add user form" :hide-legend="true">
+    <field label="E-mail" for="email">
+      <template slot="body">
         <form-text
           v-model="forms.email.value"
           :error="forms.email.error"
@@ -17,14 +15,13 @@
           :inline="true"
           :required="true"
           :disabled="type === 'edit'"/>
-        <p v-if="type === 'edit'" class="rg-form-help rg-form-help-error">
+        <p v-if="type === 'edit'" class="form-help form-help-error">
           이메일 주소는 수정할 수 없습니다.
         </p>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="name">Name</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field label="Name" for="name">
+      <template slot="body">
         <form-text
           type="text"
           name="name"
@@ -36,11 +33,10 @@
           :error="!!forms.name.error"
           :required="true"
           :inline="true"/>
-      </dd>
-    </dl>
-    <dl v-if="type === 'add'" class="rg-form-field">
-      <dt><label for="password">Password</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field v-if="type === 'add'" label="Password" for="password">
+      <template slot="body">
         <form-text
           type="password"
           name="password"
@@ -52,11 +48,10 @@
           :error="!!forms.password.error"
           :required="true"
           :inline="true"/>
-      </dd>
-    </dl>
-    <dl v-if="type === 'add'" class="rg-form-field">
-      <dt><label for="password2">Confirm password</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field v-if="type === 'add'" label="Confirm password" for="password2">
+      <template slot="body">
         <form-text
           type="password"
           name="password2"
@@ -71,20 +66,17 @@
         <p v-if="!!forms.password2.error" class="rg-form-help rg-form-help-error">
           {{forms.password2.error}}
         </p>
-      </dd>
-    </dl>
-    <dl v-if="isAdmin" class="rg-form-field">
-      <dt><label for="admin">Admin</label></dt>
-      <dd>
-        <form-check
-          name="admin"
-          id="admin"
-          label="체크하면 관리자 권한으로 사용합니다."
-          v-model="forms.admin.value"/>
-      </dd>
-    </dl>
-  </fieldset>
-
+      </template>
+    </field>
+    <field v-if="type === 'add'" label="Admin" for="admin">
+      <template slot="body">
+        <label class="form-field">
+          <span><form-checkbox name="admin" id="admin" v-model="forms.admin.value"/></span>
+          <span for="admin">체크하면 관리자 권한으로 사용합니다.</span>
+        </label>
+      </template>
+    </field>
+  </field-wrap>
   <nav-bottom>
     <template slot="left">
       <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -106,14 +98,18 @@
 <script>
 import { formData } from "~/libs/forms";
 import * as messages from "~/libs/messages";
+import * as fieldset from '~/components/form/fieldset';
 
 export default {
   name: 'post',
   components: {
     'form-text': () => import('~/components/form/text'),
     'form-check': () => import('~/components/form/check'),
+    'form-checkbox': () => import('~/components/form/checkbox'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'field-wrap': fieldset.wrap,
+    'field': fieldset.field,
   },
   props: {
     type: { type: String, default: 'add' }, // add,edit

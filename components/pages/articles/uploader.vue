@@ -426,4 +426,5 @@ export default {
   }
 };
 </script>
-<style src="./uploader.scss" lang="scss" scoped/>
+
+<style src="./uploader.scss" lang="scss"/>

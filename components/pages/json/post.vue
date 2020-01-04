@@ -1,10 +1,8 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form">
-  <fieldset class="rg-form-fieldset">
-    <legend>Add JSON form</legend>
-    <dl class="rg-form-field">
-      <dt><label for="name">Name</label></dt>
-      <dd>
+  <field-wrap legend="Add JSON form" :hide-legend="true">
+    <field label="Name" for="name">
+      <template slot="body">
         <form-text
           name="name"
           id="name"
@@ -15,11 +13,10 @@
           :error="!!forms.name.error"
           :required="true"
           :inline="true"/>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="description">Description</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field label="Description" for="description">
+      <template slot="body">
         <form-text
           name="description"
           id="description"
@@ -27,11 +24,10 @@
           placeholder="note comment.."
           :maxlength="100"
           :error="!!forms.description.error"/>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="json">JSON</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field label="JSON" for="json">
+      <template slot="body">
         <form-text
           type="textarea"
           name="json"
@@ -41,13 +37,12 @@
           :rows="15"
           :error="!!forms.json.error"
           :required="true"/>
-        <p v-if="!!forms.json.error" class="rg-form-help rg-form-help-error">
+        <p v-if="!!forms.json.error" class="form-help form-help-error">
           {{forms.json.error}}
         </p>
-      </dd>
-    </dl>
-  </fieldset>
-
+      </template>
+    </field>
+  </field-wrap>
   <nav-bottom>
     <template slot="left">
       <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -69,12 +64,15 @@
 <script>
 import { checkId, formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
+import * as fieldset from '~/components/form/fieldset';
 
 export default {
   components: {
     'form-text': () => import('~/components/form/text'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'field-wrap': fieldset.wrap,
+    'field': fieldset.field,
   },
   props: {
     type: { type: String, default: 'add' }, // add,edit

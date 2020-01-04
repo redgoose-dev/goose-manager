@@ -1,31 +1,96 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
 .rg-uploader {
   margin: 30px 0 0;
-}
-.preview {
-  position: fixed;
-  z-index: 90;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(#000, .75);
-  cursor: zoom-out;
-  img {
-    display: block;
-    cursor: auto;
-    max-width: 90%;
-  }
-}
+  background-color: #fff;
 
-.uploader-nav {
-  user-select: none;
-  svg {
-    margin-right: 5px;
-    width: 16px;
-    height: 16px;
+  .queue {
+    .style-list {
+      li {
+        background: #fff !important;
+        &.selected {
+          &:after {
+            border-color: var(--color-key) !important;
+          }
+        }
+        .bd {
+          color: var(--color-base) !important;
+        }
+      }
+    }
+    nav {
+      button {
+        i {
+          color: #57595B !important;
+        }
+        &.on {
+          i {
+            color: var(--color-key) !important;
+          }
+        }
+      }
+    }
+  }
+
+  &-footer {
+    .uploader-nav {
+      user-select: none;
+      span {
+        color: var(--color-base);
+      }
+      svg {
+        margin-right: 5px;
+        width: 16px;
+        height: 16px;
+        color: var(--color-blur);
+      }
+    }
+    .size-info {
+      > p {
+        color: var(--color-base);
+      }
+    }
+  }
+
+  @include dark-mode() {
+    background-color: $color-dark-content-bg;
+    border-color: $color-dark-content-line !important;
+
+    .queue {
+      background-color: rgba(#000, .4);
+      .style-list {
+        li {
+          background: #444 !important;
+          &.selected {
+            &:after {
+              //border-color: $color-dark-key !important;
+            }
+          }
+        }
+      }
+      nav {
+        button {
+          i {
+            color: #aaa !important;
+          }
+        }
+      }
+    }
+
+    & &-body .preview .not-image {
+      background: rgba(#000, .15) !important;
+    }
+    &-footer {
+      border-color: $color-dark-content-line !important;
+      nav {
+        > * {
+          border-right: 1px solid mix($color-dark-content-line, $color-dark-content-bg, 75%) !important;
+          &:hover {
+            background-color: rgba(#000, .1) !important;
+          }
+        }
+      }
+    }
   }
 }

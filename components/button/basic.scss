@@ -15,18 +15,18 @@ $color-bg-gray-hover: mix(#000, $color-bg-gray, 8%);
 $color-bg-gray-focus: rgba(#000, .1);
 $color-bg-gray-active: rgba(#fff, .3);
 
-$color-dark-bg-base: mix(#fff, #000, 10%);
-$color-dark-bg-base-hover: mix(#fff, #000, 8%);
-$color-dark-bg-base-focus: rgba(#fff, .1);
-$color-dark-bg-base-active: rgba(#000, .5);
+$color-dark-bg-base: mix(#fff, #000, 24%);
+$color-dark-bg-base-hover: mix(#fff, #000, 22%);
+$color-dark-bg-base-focus: rgba(#fff, .25);
+$color-dark-bg-base-active: rgba(#000, .25);
 $color-dark-bg-key: $color-dark-key;
 $color-dark-bg-key-hover: mix(#000, $color-dark-key, 10%);
 $color-dark-bg-key-focus: rgba($color-dark-key, .4);
 $color-dark-bg-key-active: rgba(mix($color-dark-key, #000, 50%), .5);
-$color-dark-bg-gray: mix(#fff, #000, 30%);
-$color-dark-bg-gray-hover: mix(#fff, #000, 25%);
-$color-dark-bg-gray-focus: rgba(#fff, .25);
-$color-dark-bg-gray-active: rgba(#000, .3);
+$color-dark-bg-gray: mix(#fff, #000, 40%);
+$color-dark-bg-gray-hover: mix(#fff, #000, 38%);
+$color-dark-bg-gray-focus: rgba(#fff, .5);
+$color-dark-bg-gray-active: rgba(#000, .25);
 
 // size
 $size-height-small: 36px;
@@ -51,7 +51,7 @@ $size-icon-large: 22px;
     cursor: pointer;
     box-sizing: border-box;
     border: 1px solid transparent;
-    transition: box-shadow 100ms ease-out, background-color 200ms ease-out;
+    transition: box-shadow 100ms ease-out, background-color 150ms ease-out;
     user-select: none;
     white-space: nowrap;
   }

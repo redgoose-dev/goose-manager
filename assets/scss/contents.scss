@@ -52,15 +52,15 @@ html.rg-mode-popup {
     position: relative;
     margin: 1rem 0;
     padding: 1rem 1rem 1rem calc(1rem + 4px);
-    background: mix(#e8e9eb, #fff, 75%);
+    background-color: $color-light;
     &:after {
       content: '';
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
-      width: 4px;
-      background: #1e65d7;
+      width: 5px;
+      background-color: var(--color-primary);
     }
     * {
       &:first-child {
@@ -88,7 +88,7 @@ html.rg-mode-popup {
       letter-spacing: 8px;
       font-weight: 800;
       line-height: 1;
-      color: $color-base;
+      color: var(--color-base);
     }
   }
   table {
@@ -96,7 +96,7 @@ html.rg-mode-popup {
     border-collapse: collapse;
     th, td {
       padding: .5rem 1rem;
-      border: 1px solid #ddd;
+      border: 1px solid var(--color-content-line);
     }
     thead {
       th, td {
@@ -110,12 +110,12 @@ html.rg-mode-popup {
   code {
     word-break: break-word;
     font-size: 87.5%;
-    color: #007bff;
+    color: var(--color-code);
   }
   pre {
     margin: 1rem 0;
     padding: 1rem;
-    background: mix(#e8e9eb, #fff, 75%);
+    background-color: $color-light;
     font-size: 0;
     line-height: 1.5;
     overflow: auto;
@@ -125,8 +125,8 @@ html.rg-mode-popup {
       background: none;
       white-space: pre;
       border-radius: 0;
-      color: #222;
-      font-size: .8125rem;
+      color: var(--color-base);
+      font-size: 13px;
     }
   }
   input[type=checkbox] {
@@ -156,7 +156,7 @@ html.rg-mode-popup {
     display: block;
     max-width: 100%;
     margin: 2rem auto 1rem;
-    background: #eee;
+    background: var(--color-content-bg);
   }
 
   > * {
@@ -191,6 +191,14 @@ html.rg-mode-popup {
       img {
         max-width: 100%;
       }
+    }
+  }
+  @include dark-mode() {
+    blockquote {
+      background-color: var(--color-content-bg);
+    }
+    pre {
+      background-color: var(--color-content-bg);
     }
   }
 }

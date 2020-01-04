@@ -48,7 +48,7 @@
 		z-index: 2;
 		max-width: $size-width;
 		margin: 0 auto;
-		background: #fff;
+		background: var(--color-bg);
 		border-radius: $size-border-radius;
 		overflow: hidden;
 		padding: 40px 20px;
@@ -69,5 +69,8 @@
     &__wrap {
       padding: 40px;
     }
+  }
+  @include dark-mode() {
+    &__wrap {}
   }
 }

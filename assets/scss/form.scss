@@ -1,130 +1,7 @@
 @import "./variables";
 @import "./mixins";
 
-
-// * assets
-
-// help
-.rg-form-help {
-  margin: 5px 0 0;
-	font-size: .75rem;
-	color: var(--color-blur);
-	&-error {
-		color: var(--color-error);
-	}
-}
-
-
-// * contents
-
-// fieldset
-.rg-form-fieldset {
-	margin: 0;
-	padding: 0;
-	border: none;
-	> legend {
-		font-size: 0;
-		visibility: hidden;
-	}
-}
-
 // field
-.rg-form-field {
-	$padding-vertical: 8px;
-	display: flex;
-	margin: 0;
-	min-height: 48px;
-	align-items: center;
-	border-top: 1px solid $color-content-line;
-	&:last-child {
-		border-bottom: 1px solid $color-content-line;
-	}
-	> dt {
-		width: 150px;
-		padding: $padding-vertical 0;
-		> label {
-			margin: 0 0 0 15px;
-			display: inline-block;
-			font-size: .875rem;
-			font-weight: bold;
-		}
-    > strong {
-      display: block;
-      padding: 0 0 0 15px;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
-	}
-	> dd {
-		margin: 0 0 0 20px;
-		padding: $padding-vertical 15px $padding-vertical 0;
-		flex: 1;
-		> .rg-form-text-inline {
-			margin-left: 0;
-		}
-		> div {
-			margin: 10px 0;
-			&:first-child {
-				margin-top: 0;
-			}
-			&:last-child {
-				margin-bottom: 0;
-			}
-		}
-		.rg-form-field-inline {
-			margin: 1px 30px 1px 0;
-			&:last-child {
-				margin-right: 0;
-			}
-		}
-    > p {
-      margin: 0;
-      font-size: 14px;
-    }
-	}
-}
-.rg-form-field-inline {
-	display: inline-block;
-	> * {
-		display: inline-block;
-		vertical-align: middle;
-		margin: 0 3px;
-		font-size: .875rem;
-		&:first-child {
-			margin-left: 0;
-		}
-		&:last-child {
-			margin-right: 0;
-		}
-	}
-}
-
-// delete
-.rg-form-delete {
-	&__message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-		margin: 0;
-    padding: 0;
-		text-align: center;
-    height: 240px;
-		font-size: .9375rem;
-		background: #fff;
-		box-shadow: $shadow-box;
-		strong {
-			&:before {
-				content: '"';
-			}
-			&:after {
-				content: '"';
-			}
-		}
-	}
-}
-
-
-// field (new)
 .form-fieldset {
   margin: 0;
   padding: 0;
@@ -141,13 +18,18 @@
 .form-field {
   display: flex;
   align-items: center;
-  cursor: pointer;
   user-select: none;
   margin-left: -3px;
   margin-right: -3px;
   > * {
     margin: 0 3px;
   }
+  > label {
+    cursor: pointer;
+  }
+}
+label.form-field {
+  cursor: pointer;
 }
 .form-help {
   margin: 5px 0 0;

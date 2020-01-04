@@ -106,7 +106,7 @@ export default {
     p {
       margin: 5px 0 0;
       font-size: 11px;
-      color: $color-blur;
+      color: var(--color-blur);
       word-break:keep-all;
       overflow-wrap:break-word;
     }

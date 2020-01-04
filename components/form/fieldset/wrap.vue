@@ -1,6 +1,11 @@
 <template>
 <fieldset class="fieldset-wrap">
-  <div v-if="legend" class="fieldset-wrap__legend">
+  <div
+    v-if="legend"
+    :class="[
+      `fieldset-wrap-legend`,
+      hideLegend && `fieldset-wrap-legend--hide`,
+    ]">
     <legend>{{legend}}</legend>
   </div>
   <div class="fieldset-wrap__body">
@@ -14,6 +19,7 @@ export default {
   name: 'fieldset-wrap',
   props: {
     legend: { type: String, default: null },
+    hideLegend: { type: Boolean, default: false },
   },
 }
 </script>

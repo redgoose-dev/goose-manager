@@ -7,6 +7,7 @@
 
   <section class="page-section">
     <p><button-basic type="button" size="small" icon-right="power">Button</button-basic></p>
+    <p><button-basic type="button" icon-right="power">Button</button-basic></p>
     <p><button-basic type="button" color="key" icon-left="power">Button</button-basic></p>
     <p><button-basic type="button" size="large" color="gray" icon-right="power">Button</button-basic></p>
     <p><button-basic href="/">A: Button content</button-basic></p>

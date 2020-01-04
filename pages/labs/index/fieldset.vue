@@ -40,7 +40,7 @@
           <template slot="body">
             <fieldset class="form-fieldset" :disabled="false">
               <legend>radio forms</legend>
-              <div class="row row-v-center row-gutter-h">
+              <div class="rg-row rg-row-v-center rg-row-gutter-h">
                 <label class="form-field">
                   <span><form-radio id="radios" name="radio" v-model="radio" value="apple"/></span>
                   <span>Apple</span>
@@ -61,7 +61,7 @@
         <field label="Checkbox buttons" for="checkboxes">
           <template slot="body">
             <fieldset class="form-fieldset">
-              <div class="row row-v-center row-gutter-h">
+              <div class="rg-row rg-row-v-center rg-row-gutter-h">
                 <label class="form-field">
                   <span>Apple</span>
                   <span>
@@ -100,7 +100,7 @@
         </field>
         <field label="Mix forms">
           <template slot="body">
-            <div class="row row-v-center row-gutter-h">
+            <div class="rg-row rg-row-v-center rg-row-gutter-h">
               <label class="form-field">
                 <span><form-radio name="radio#2"/></span>
                 <span>Radio#1</span>
@@ -110,7 +110,7 @@
                 <span>Radio#2</span>
               </label>
             </div>
-            <div class="row row-v-center row-gutter-h" style="margin-top:10px;">
+            <div class="rg-row rg-row-v-center rg-row-gutter-h" style="margin-top:10px;">
               <label class="form-field">
                 <span>Text-form</span>
                 <span>
@@ -147,7 +147,20 @@
       <p>삭제할때 쓰는 폼</p>
     </header>
     <div class="example">
-      .example
+      <form>
+        <warning-message>
+          <p>다음 데이터을 삭제하시겠습니까?</p>
+          <p><strong>foo</strong></p>
+        </warning-message>
+        <nav-bottom>
+          <template slot="left">
+            <button-basic type="button" icon-left="arrow-left">Back</button-basic>
+          </template>
+          <template slot="right">
+            <button-basic type="button" color="key" icon-left="check">Delete</button-basic>
+          </template>
+        </nav-bottom>
+      </form>
     </div>
   </section>
 </article>
@@ -164,6 +177,7 @@ export default {
     'form-radio': () => import('~/components/form/radio'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'warning-message': () => import('~/components/form/fieldset/warning-message'),
     'field-wrap': fieldset.wrap,
     'field': fieldset.field,
   },

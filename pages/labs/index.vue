@@ -9,6 +9,7 @@
     <nuxt-link to="/labs/forms/">Forms</nuxt-link>
     <nuxt-link to="/labs/fieldset/">Fieldset</nuxt-link>
     <nuxt-link to="/labs/icons/">Icons</nuxt-link>
+    <nuxt-link to="/labs/colors/">Colors</nuxt-link>
   </nav>
 
   <div class="labs__body">

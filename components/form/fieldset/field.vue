@@ -6,6 +6,7 @@
   </dt>
   <dd class="fieldset-field__body">
     <slot name="body"/>
+    <slot/>
   </dd>
 </dl>
 </template>

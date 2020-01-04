@@ -77,9 +77,9 @@ export default {
 }
 .json {
   padding: 1.5rem;
-  border: 1px solid $color-content-line;
-  background: #fff;
-  font-size: .875rem;
+  border: 1px solid var(--color-content-line);
+  background: var(--color-content-bg);
+  font-size: 14px;
   overflow: auto;
 }
 </style>

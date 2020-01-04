@@ -12,8 +12,8 @@
         <code>~/components/form/text</code>
       </p>
     </header>
-    <div class="row row-gutter-h">
-      <p class="col">
+    <div class="rg-row rg-row-gutter-h">
+      <p class="rg-col">
         <span>small</span>
         <form-text
           placeholder="placeholder value"
@@ -24,17 +24,17 @@
           :disabled="false"
           form-size="small"/>
       </p>
-      <p class="col">
+      <p class="rg-col">
         <span>normal</span>
         <form-text placeholder="placeholder value" v-model="text"/>
       </p>
-      <p class="col">
+      <p class="rg-col">
         <span>large</span>
         <form-text placeholder="placeholder value" v-model="text" form-size="large"/>
       </p>
     </div>
-    <div class="row row-gutter-h">
-      <p class="col">
+    <div class="rg-row rg-row-gutter-h">
+      <p class="rg-col">
         <span>readonly</span>
         <form-text
           placeholder="placeholder value"
@@ -44,7 +44,7 @@
           :readonly="true"
           :disabled="false"/>
       </p>
-      <p class="col">
+      <p class="rg-col">
         <span>disabled</span>
         <form-text
           placeholder="placeholder value"
@@ -68,11 +68,11 @@
     </div>
     <div>
       <p>with button</p>
-      <div class="row row-gutter-h">
-        <div class="col">
+      <div class="rg-row rg-row-gutter-h">
+        <div class="rg-col">
           <form-text placeholder="placeholder value"/>
         </div>
-        <div class="col">
+        <div class="rg-col">
           <button-basic type="button" color="key">label text</button-basic>
         </div>
       </div>
@@ -87,11 +87,11 @@
       </p>
     </header>
     <div class="example">
-      <div class="row row-gutter-h">
-        <form-select v-model="select" :options="selectOptions" size="small" class="col"/>
-        <form-select v-model="select" :options="selectOptions" class="col"/>
-        <form-select v-model="select" :options="selectOptions" size="large" class="col"/>
-        <form-select v-model="select" :options="selectOptions" :disabled="true" class="col"/>
+      <div class="rg-row rg-row-gutter-h">
+        <form-select v-model="select" :options="selectOptions" size="small" class="rg-col"/>
+        <form-select v-model="select" :options="selectOptions" class="rg-col"/>
+        <form-select v-model="select" :options="selectOptions" size="large" class="rg-col"/>
+        <form-select v-model="select" :options="selectOptions" :disabled="true" class="rg-col"/>
       </div>
       <p>
         <span>[selected value: {{select}}]</span>
@@ -114,20 +114,20 @@
       </p>
     </header>
     <div class="example">
-      <div class="row row-v-center row-gutter-h check-items">
-        <label class="col row row-v-center">
+      <div class="rg-row rg-row-v-center rg-row-gutter-h check-items">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-checkbox v-model="checkbox" size="small"/>
           <span>small</span>
         </label>
-        <label class="col row row-v-center">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-checkbox v-model="checkbox"/>
           <span>normal</span>
         </label>
-        <label class="col row row-v-center">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-checkbox v-model="checkbox" size="large"/>
           <span>large</span>
         </label>
-        <label class="col row row-v-center">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-checkbox v-model="checkbox" :disabled="true"/>
           <span>disabled</span>
         </label>
@@ -146,20 +146,20 @@
       </p>
     </header>
     <div class="example">
-      <div class="row row-v-center row-gutter-h check-items">
-        <label class="col row row-v-center">
+      <div class="rg-row rg-row-v-center rg-row-gutter-h check-items">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-radio name="radio" v-model="radio" value="radio1" size="small"/>
           <span>radio1(small)</span>
         </label>
-        <label class="col row row-v-center">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-radio name="radio" v-model="radio" value="radio2"/>
           <span>radio2</span>
         </label>
-        <label class="col row row-v-center">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-radio name="radio" v-model="radio" value="radio3" size="large"/>
           <span>radio3(large)</span>
         </label>
-        <label class="col row row-v-center">
+        <label class="rg-col rg-row rg-row-v-center">
           <form-radio name="radio" v-model="radio" value="radio4" :disabled="true"/>
           <span>disabled</span>
         </label>

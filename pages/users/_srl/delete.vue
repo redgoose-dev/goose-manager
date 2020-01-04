@@ -1,12 +1,13 @@
 <template>
 <article>
   <page-header module="users" title="Users / Delete"/>
-
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
-    <p class="rg-form-delete__message">
-      <strong>{{data.email}}({{data.name}})</strong> 사용자를 삭제하시겠습니까?
-    </p>
+    <warning-message>
+      <p>
+        <strong>{{data.email}}({{data.name}})</strong> 사용자를 삭제하시겠습니까?
+      </p>
+    </warning-message>
     <nav-bottom>
       <template slot="left">
         <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -35,6 +36,7 @@ export default {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'warning-message': () => import('~/components/form/fieldset/warning-message'),
   },
   validate(cox)
   {

@@ -26,30 +26,30 @@
   <section class="page-section">
     <header>
       <h3>color</h3>
-      <p>아이콘의 컬러의 예제입니다.</p>
+      <p>아이콘의 컬러 예제입니다.</p>
     </header>
     <ul class="icons-index icons-index--col-4">
       <li class="icons-index__item">
         <div>
-          <icon name="target" color="#ff235d" class="icon"/>
+          <icon name="target" color="#ff235d" class="icon color"/>
           <em>#ff235d</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <icon name="twitter" color="#b536ff" class="icon"/>
+          <icon name="twitter" color="#b536ff" class="icon color"/>
           <em>#b536ff</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <icon name="cloud-snow" color="#2ab5ff" class="icon"/>
+          <icon name="cloud-snow" color="#2ab5ff" class="icon color"/>
           <em>#2ab5ff</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <icon name="radio" color="#2acd4c" class="icon"/>
+          <icon name="radio" color="#2acd4c" class="icon color"/>
           <em>#2acd4c</em>
         </div>
       </li>
@@ -92,7 +92,7 @@
   <section class="page-section">
     <header>
       <h3>stroke-width</h3>
-      <p>아이콘의 사이즈 예제입니다.</p>
+      <p>아이콘의 선 두께 예제입니다.</p>
     </header>
     <ul class="icons-index icons-index--col-4">
       <li class="icons-index__item">
@@ -164,7 +164,7 @@ export default {
       justify-content: center;
       background-color: #f4f4f4;
       flex-direction: column;
-      svg {
+      svg:not(.color) {
         color: var(--color-base);
       }
     }

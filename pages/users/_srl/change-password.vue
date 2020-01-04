@@ -1,13 +1,10 @@
 <template>
 <article>
   <page-header module="users" title="Users / Change password"/>
-
   <form @submit.prevent="onSubmit" ref="form">
-    <fieldset class="rg-form-fieldset">
-      <legend>change password form</legend>
-      <dl class="rg-form-field">
-        <dt><label for="password">Current password</label></dt>
-        <dd>
+    <field-wrap legend="change password form" :hide-legend="true">
+      <field label="Current password" for="password">
+        <template slot="body">
           <form-text
             type="password"
             name="password"
@@ -19,12 +16,11 @@
             placeholder="Please input password"
             :required="true"
             :inline="true"/>
-          <p class="rg-form-help">{{message.currentPassword}}</p>
-        </dd>
-      </dl>
-      <dl class="rg-form-field">
-        <dt><label for="password_new">New password</label></dt>
-        <dd>
+          <p class="form-help">{{message.currentPassword}}</p>
+        </template>
+      </field>
+      <field label="New password" for="password_new">
+        <template slot="body">
           <form-text
             type="password"
             name="password_new"
@@ -36,12 +32,11 @@
             placeholder="Please input password"
             :required="true"
             :inline="true"/>
-          <p class="rg-form-help">{{message.newPassword}}</p>
-        </dd>
-      </dl>
-      <dl class="rg-form-field">
-        <dt><label for="password_new2">Confirm password</label></dt>
-        <dd>
+          <p class="form-help">{{message.newPassword}}</p>
+        </template>
+      </field>
+      <field label="Confirm password" for="password_new2">
+        <template slot="body">
           <form-text
             type="password"
             name="password_new2"
@@ -53,13 +48,13 @@
             placeholder="Please input password"
             :required="true"
             :inline="true"/>
-          <p v-if="!!forms.password_new2.error" class="rg-form-help rg-form-help-error">
+          <p v-if="!!forms.password_new2.error" class="form-help form-help-error">
             {{forms.password_new2.error}}
           </p>
-          <p class="rg-form-help">{{message.samePassword}}</p>
-        </dd>
-      </dl>
-    </fieldset>
+          <p class="form-help">{{message.samePassword}}</p>
+        </template>
+      </field>
+    </field-wrap>
     <nav-bottom>
       <template slot="left">
         <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -80,8 +75,9 @@
 </template>
 
 <script>
-import { formData } from '../../../libs/forms';
-import * as messages from '../../../libs/messages';
+import { formData } from '~/libs/forms';
+import * as messages from '~/libs/messages';
+import * as fieldset from '~/components/form/fieldset';
 
 export default {
   components: {
@@ -89,6 +85,8 @@ export default {
     'form-text': () => import('~/components/form/text'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'field-wrap': fieldset.wrap,
+    'field': fieldset.field,
   },
   validate(cox)
   {

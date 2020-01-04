@@ -1,8 +1,8 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form" class="post">
 
-  <wrap legend="Basic fields">
-    <field label="App" id="apps">
+  <field-wrap legend="Basic fields">
+    <field label="App" for="apps">
       <form-select
         slot="body"
         id="apps"
@@ -12,7 +12,7 @@
         :required="true"
         :inline="true"/>
     </field>
-    <field label="ID" id="id">
+    <field label="ID" for="id">
       <template slot="body">
         <form-text
           id="id"
@@ -23,13 +23,13 @@
           :maxlength="20"
           :inline="true"
           :required="true"/>
-        <p v-if="!!forms.id.error" class="rg-form-help rg-form-help-error">
+        <p v-if="!!forms.id.error" class="form-help form-help-error">
           {{forms.id.error}}
         </p>
-        <p class="rg-form-help">영문과 숫자 `-`, `_`만 입력 가능합니다.</p>
+        <p class="form-help">영문과 숫자 `-`, `_`만 입력 가능합니다.</p>
       </template>
     </field>
-    <field label="Name" id="name">
+    <field label="Name" for="name">
       <template slot="body">
         <form-text
           id="name"
@@ -42,7 +42,7 @@
           :required="true"/>
       </template>
     </field>
-    <field label="Description" id="description">
+    <field label="Description" for="description">
       <template slot="body">
         <form-text
           id="description"
@@ -50,50 +50,51 @@
           v-model="forms.description.value"
           :maxlength="100"
           placeholder="Description word"/>
-        <p class="rg-form-help">이 Nest에 대한 설명을 입력합니다.</p>
+        <p class="form-help">이 Nest에 대한 설명을 입력합니다.</p>
       </template>
     </field>
-  </wrap>
+  </field-wrap>
 
-  <wrap legend="Extra fields" class="extra-field">
-    <field label="Using category" id="use_category">
+  <field-wrap legend="Extra fields" class="extra-field">
+    <field label="Using category" for="use_category">
       <template slot="body">
-        <form-checks
-          type="radio"
-          name="use_category"
-          id="use_category"
-          v-model="json.useCategory"
-          :inline="true"
-          :disabled="false"
-          :items="[
-            { label: 'Yes', value: 1 },
-            { label: 'No', value: 0 },
-          ]"/>
-        <p class="rg-form-help">분류를 사용할지에 대하여 결정합니다.</p>
+        <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <label class="form-field">
+            <form-radio name="use_category" id="use_category" v-model="json.useCategory" :value="1"/>
+            <span>Yes</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="use_category" v-model="json.useCategory" :value="0"/>
+            <span>No</span>
+          </label>
+        </div>
+        <p class="form-help">분류를 사용할지에 대하여 결정합니다.</p>
       </template>
     </field>
-    <field label="Article skin" id="article_skin">
+    <field label="Article skin" for="article_skin">
       <template slot="body">
-        <form-checks
-          type="radio"
-          name="article_skin"
-          id="article_skin"
-          v-model="json.articleSkin"
-          :inline="true"
-          :disabled="false"
-          :items="[
-            { label: 'List', value: 'list' },
-            { label: 'Card', value: 'card' },
-            { label: 'Thumbnail', value: 'thumbnail' },
-          ]"/>
-        <p class="rg-form-help">`Articles` 목록의 스킨입니다.</p>
+        <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <label class="form-field">
+            <form-radio name="article_skin" id="article_skin" v-model="json.articleSkin" value="list"/>
+            <span>List</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="article_skin" v-model="json.articleSkin" value="card"/>
+            <span>Card</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="article_skin" v-model="json.articleSkin" value="thumbnail"/>
+            <span>Thumbnail</span>
+          </label>
+        </div>
+        <p class="form-help">`Articles` 목록의 스킨입니다.</p>
       </template>
     </field>
-    <field label="Thumnail" id="thumbnail_width">
+    <field label="Thumnail size" for="thumbnail_width">
       <template slot="body">
-        <div>
-          <label class="rg-form-field-inline">
-            <span>Width:</span>
+        <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <div class="form-field">
+            <label for="thumbnail_width">Width:</label>
             <form-text
               id="thumbnail_width"
               name="thumbnail_width"
@@ -103,10 +104,10 @@
               :size="5"
               :inline="true"/>
             <span>px</span>
-          </label>
-          <span style="margin-right:15px">,</span>
-          <label class="rg-form-field-inline">
-            <span>Height:</span>
+          </div>
+          <span></span>
+          <div class="form-field">
+            <label for="thumbnail_height">Height:</label>
             <form-text
               id="thumbnail_height"
               name="thumbnail_width"
@@ -116,86 +117,102 @@
               :size="5"
               :inline="true"/>
             <span>px</span>
+          </div>
+        </div>
+      </template>
+    </field>
+    <field label="Thumnail resize type" for="thumbnail_type">
+      <template slot="body">
+        <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <label class="form-field">
+            <form-radio name="thumbnail_type" id="thumbnail_type" v-model="json.thumbnail.type" value="crop"/>
+            <span>crop</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="thumbnail_type" v-model="json.thumbnail.type" value="resize"/>
+            <span>resize</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="thumbnail_type" v-model="json.thumbnail.type" value="resizeWidth"/>
+            <span>resize(width)</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="thumbnail_type" v-model="json.thumbnail.type" value="resizeHeight"/>
+            <span>resize(height)</span>
           </label>
         </div>
-        <div style="margin-top:6px">
-          <form-checks
-            type="radio"
-            name="thumbnail_type"
-            id="thumbnail_type"
-            v-model="json.thumbnail.type"
-            :inline="true"
-            :disabled="false"
-            :items="[
-              { label: 'crop', value: 'crop' },
-              { label: 'resize', value: 'resize' },
-              { label: 'resize(width)', value: 'resizeWidth' },
-              { label: 'resize(height)', value: 'resizeHeight' },
-            ]"/>
-        </div>
       </template>
     </field>
-    <field label="Thumbnail size tool" id="thumbnail_size_tool">
+    <field label="Thumbnail size tool" for="thumbnail_size_tool">
       <template slot="body">
-        <form-checks
-          type="radio"
-          name="thumbnail_size_tool"
-          id="thumbnail_size_tool"
-          v-model="json.useThumbnailSizeTool"
-          :inline="true"
-          :disabled="false"
-          :items="[
-            { label: 'Yes', value: 1 },
-            { label: 'No', value: 0 },
-          ]"/>
-        <p class="rg-form-help">썸네일 사이즈 선택하는 툴을 사용합니다.</p>
+        <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <label class="form-field">
+            <form-radio
+              name="thumbnail_size_tool"
+              id="thumbnail_size_tool"
+              v-model="json.useThumbnailSizeTool"
+              :value="1"/>
+            <span>Yes</span>
+          </label>
+          <label class="form-field">
+            <form-radio
+              name="thumbnail_size_tool"
+              v-model="json.useThumbnailSizeTool"
+              :value="0"/>
+            <span>No</span>
+          </label>
+        </div>
+        <p class="form-help">썸네일 사이즈 선택하는 툴을 사용합니다.</p>
       </template>
     </field>
-    <field label="Files" id="files_count">
+    <field label="Files count" for="files_count">
       <template slot="body">
         <div>
-          <label class="rg-form-field-inline">
-            <span>Count:</span>
-            <form-text
-              id="files_count"
-              name="files_count"
-              v-model="json.files.count"
-              placeholder="10"
-              :maxlength="2"
-              :size="3"
-              :inline="true"/>
-          </label>
+          <form-text
+            id="files_count"
+            name="files_count"
+            v-model="json.files.count"
+            placeholder="10"
+            :maxlength="2"
+            :size="3"
+            :inline="true"/>
         </div>
-        <div style="margin-top:6px">
-          <label class="rg-form-field-inline">
-            <span>Size(single):</span>
+        <p class="form-help">
+          업로드 할 수 있는 파일의 갯수를 설정합니다.
+        </p>
+      </template>
+    </field>
+
+    <field label="Files" for="files_size_limit_single">
+      <template slot="body">
+        <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <div class="form-field">
+            <label for="files_size_limit_single">Size(single):</label>
             <form-text
-              id="files_size_limit_single"
               name="files_size_limit_single"
+              id="files_size_limit_single"
               v-model="json.files.sizeSingle"
               placeholder="2000000"
               :maxlength="9"
-              :size="15"
-              :inline="true"/>
+              :size="12"/>
             <span>byte</span>
-          </label>
-          <span style="margin-right:15px">,</span>
-          <label class="rg-form-field-inline">
-            <span>Size(total):</span>
+          </div>
+          <span/>
+          <div class="form-field">
+            <label for="files_size_total">Size(total):</label>
             <form-text
-              id="files_size_total"
               name="files_size_total"
+              id="files_size_total"
               v-model="json.files.sizeTotal"
               placeholder="15000000"
               :maxlength="9"
-              :size="15"
-              :inline="true"/>
+              :size="12"/>
             <span>byte</span>
-          </label>
+          </div>
         </div>
       </template>
     </field>
-  </wrap>
+  </field-wrap>
 
   <nav-bottom>
     <template slot="left">
@@ -244,7 +261,8 @@ export default {
     'form-select': () => import('~/components/form/select'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
-    'wrap': fieldset.wrap,
+    'form-radio': () => import('~/components/form/radio'),
+    'field-wrap': fieldset.wrap,
     'field': fieldset.field,
   },
   props: {

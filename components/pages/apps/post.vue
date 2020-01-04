@@ -1,10 +1,8 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form">
-  <fieldset class="rg-form-fieldset">
-    <legend>{{type}} app form</legend>
-    <dl class="rg-form-field">
-      <dt><label for="id">ID</label></dt>
-      <dd>
+  <field-wrap :legend="`${type} app form`" :hide-legend="true">
+    <field label="ID" for="id">
+      <template slot="body">
         <form-text
           name="id"
           id="id"
@@ -14,17 +12,14 @@
           :error="!!forms.id.error"
           :required="true"
           :inline="true"/>
-        <p v-if="!!forms.id.error" class="rg-form-help rg-form-help-error">
-          {{forms.id.error}}
-        </p>
-        <p class="rg-form-help">
+        <p v-if="!!forms.id.error" class="form-help form-help-error">{{forms.id.error}}</p>
+        <p class="form-help">
           Please enter only alphanumeric characters `-` and `_`.
         </p>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="name">Name</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field label="Name" for="name">
+      <template slot="body">
         <form-text
           name="name"
           id="name"
@@ -34,11 +29,10 @@
           :error="!!forms.name.error"
           :required="true"
           :inline="true"/>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><label for="description">Description</label></dt>
-      <dd>
+      </template>
+    </field>
+    <field label="Description" for="description">
+      <template slot="body">
         <form-text
           name="description"
           id="description"
@@ -47,10 +41,10 @@
           :maxlength="100"
           :error="!!forms.description.error"
           :required="false"/>
-        <p class="rg-form-help">Description of the app</p>
-      </dd>
-    </dl>
-  </fieldset>
+        <p class="form-help">Description of the app</p>
+      </template>
+    </field>
+  </field-wrap>
   <nav-bottom>
     <template slot="left">
       <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -72,12 +66,15 @@
 <script>
 import { checkId, formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
+import * as fieldset from '~/components/form/fieldset';
 
 export default {
   components: {
     'form-text': () => import('~/components/form/text'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'field-wrap': fieldset.wrap,
+    'field': fieldset.field,
   },
   props: {
     type: { type: String, default: 'add' }, // add,edit

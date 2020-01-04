@@ -1,4 +1,5 @@
 @import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
 
 $size-item: 38px;
 $size-font: 14px;
@@ -21,7 +22,7 @@ $size-font: 14px;
     position: relative;
     font-family: $font-eng-circular;
     font-size: $size-font;
-    color: $color-base;
+    color: var(--color-base);
     letter-spacing: -.5px;
     overflow: hidden;
     &[disabled] {
@@ -43,7 +44,7 @@ $size-font: 14px;
       bottom: 0;
       pointer-events: none;
       z-index: -1;
-      background: $color-key;
+      background: var(--color-key);
       transform: translateY(100%);
       transition: transform 200ms ease-out;
     }
@@ -86,7 +87,7 @@ $size-font: 14px;
     font-family: $font-eng-circular;
     font-size: $size-font;
     color: #fff;
-    background: $color-key;
+    background: var(--color-key);
   }
   .dots {
     display: flex;
@@ -99,6 +100,14 @@ $size-font: 14px;
       height: 16px;
       color: rgba($color-base, .25);
       stroke-width: 2;
+    }
+  }
+
+  @include dark-mode() {
+    .dots {
+      > svg {
+        color: rgba($color-dark-base, .25);
+      }
     }
   }
 }

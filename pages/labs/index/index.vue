@@ -1,3 +1,3 @@
 <template>
-  <div>home page</div>
+  <div>labs introduce page</div>
 </template>

@@ -65,7 +65,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
-@import "./local";
 
 .item-list {
   $self: '.item-list';
@@ -116,7 +115,7 @@ export default {
   }
 
   @include dark-mode() {
-    background-color: $color-item-bg-dark;
+    background-color: $color-dark-content-bg;
   }
 }
 </style>

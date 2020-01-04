@@ -3,12 +3,10 @@
   <page-header module="categories" title="Categories / Delete"/>
   <form @submit.prevent="onSubmit" class="rg-form-delete">
     <input type="hidden" name="srl" :value="srl"/>
-    <div class="rg-form-delete__message">
-      <div>
+    <warning-message>
         <p>다음 `Category`를 삭제하시겠습니까?</p>
         <p><strong>{{forms.name}}</strong></p>
-      </div>
-    </div>
+    </warning-message>
     <nav-bottom>
       <template slot="left">
         <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -37,6 +35,7 @@ export default {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'warning-message': () => import('~/components/form/fieldset/warning-message'),
   },
   validate(cox)
   {

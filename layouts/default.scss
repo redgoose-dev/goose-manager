@@ -90,10 +90,10 @@ main > h1 {
       outline: none;
       &:focus,
       &:hover {
-        background: rgba(#000, .15);
+        background: rgba(#000, .25);
       }
       &.nuxt-active {
-        background-color: rgba($color-key, .5);
+        background-color: rgba($color-key, .75);
         cursor: default;
       }
     }
@@ -107,8 +107,12 @@ main > h1 {
     background-color: $color-header-bg-dark;
     &-gnb {
       a {
+        &:focus,
+        &:hover {
+          background: rgba(#000, .5);
+        }
         &.nuxt-active {
-          background-color: rgba($color-dark-key, .5);
+          background-color: rgba($color-dark-key, .75);
         }
       }
     }
@@ -171,14 +175,14 @@ main > h1 {
       text-decoration: none;
       font-family: $font-eng-circular;
       color: $color-header-menu-text;
-      font-size: .8125rem;
+      font-size: 14px;
       outline: none;
       &:focus,
       &:hover {
         background: rgba(#000, .15);
       }
       &.nuxt-active {
-        background-color: rgba($color-key, .5);
+        background-color: rgba($color-key, .75);
       }
     }
   }
@@ -208,7 +212,7 @@ main > h1 {
       }
       a {
         &.nuxt-active {
-          background-color: rgba($color-dark-key, .5);
+          background-color: rgba($color-dark-key, .75);
         }
       }
     }

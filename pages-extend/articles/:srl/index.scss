@@ -13,10 +13,10 @@
   text-align: center;
   small {
     display: block;
-    margin: 0 0 -2px;
+    margin: 0;
     font-family: $font-eng-circular;
     font-size: 12px;
-    color: $color-key;
+    color: var(--color-key);
     letter-spacing: -.25px;
     font-weight: 600;
   }
@@ -28,21 +28,21 @@
     font-weight: 700;
   }
   p {
-    margin: 2px 0 0;
+    margin: 3px 0 0;
     font-family: $font-eng;
     font-size: 12px;
-    color: $color-blur;
+    color: var(--color-blur);
   }
 }
 
 // attachment files
 .files {
   margin: 30px 0 0;
-  padding: 20px 20px;
-  background: #eff0f2;
+  padding: 20px;
+  background: var(--color-content-bg);
   h3 {
     margin: 0;
-    font-size: .875rem;
+    font-size: 14px;
     font-weight: 600;
   }
   ul {
@@ -59,7 +59,7 @@
     vertical-align: middle;
     padding: 1px 10px;
     font-size: .6875rem;
-    color: $color-key;
+    color: var(--color-key);
     em {
       font-style: normal;
       &:before {
