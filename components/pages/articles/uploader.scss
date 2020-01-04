@@ -33,7 +33,27 @@
     }
   }
 
+  &-header {
+    border-bottom-width: 1px !important;
+    h1 {
+      font-family: $font-eng-circular !important;
+      color: var(--color-base) !important;
+    }
+    p {
+      font-size: 13px !important;
+      color: var(--color-blur) !important;
+    }
+    .select-size-tool {
+      margin-top: 4px;
+      span {
+        font-size: 13px;
+        font-family: $font-eng-circular;
+        color: var(--color-base);
+      }
+    }
+  }
   &-footer {
+    border-top-width: 1px !important;
     .uploader-nav {
       user-select: none;
       span {
@@ -81,6 +101,9 @@
     & &-body .preview .not-image {
       background: rgba(#000, .15) !important;
     }
+    &-header {
+      border-color: $color-dark-content-line !important;
+    }
     &-footer {
       border-color: $color-dark-content-line !important;
       nav {
@@ -92,5 +115,11 @@
         }
       }
     }
+  }
+}
+
+.croppie-container {
+  @include dark-mode() {
+    background-color: #666 !important;
   }
 }

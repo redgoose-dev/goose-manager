@@ -123,7 +123,6 @@ export default {
   components: {
     'form-text': () => import('~/components/form/text'),
     'form-select': () => import('~/components/form/select'),
-    'form-checks': () => import('~/components/form/checks'),
     'form-radio': () => import('~/components/form/radio'),
     'button-basic': () => import('~/components/button/basic'),
     'editor': () => import('~/components/pages/articles/editor'),

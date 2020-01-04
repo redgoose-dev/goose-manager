@@ -37,7 +37,7 @@
           </div>
           <div class="login-save-auth">
             <label>
-              <form-check name="save_auth" v-model="forms.save"/>
+              <form-checkbox name="save_auth" v-model="forms.save"/>
               <span>Keep me signed in.</span>
             </label>
           </div>
@@ -68,7 +68,7 @@ import * as messages from '~/libs/messages';
 export default {
   name: 'page-login',
   components: {
-    'form-check': () => import('~/components/form/check'),
+    'form-checkbox': () => import('~/components/form/checkbox'),
     'button-basic': () => import('~/components/button/basic'),
   },
   layout: 'blank',

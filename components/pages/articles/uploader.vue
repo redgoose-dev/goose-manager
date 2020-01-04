@@ -3,15 +3,18 @@
   <article ref="uploader" class="rg-uploader">
     <header v-if="parseInt(this.nest.json.useThumbnailSizeTool) === 1" class="rg-uploader-header">
       <h1>File uploader</h1>
-      <form-checks
-        type="radio"
-        name="select_size_tool"
-        id="select_size_tool"
-        v-model="sizeSet"
-        :inline="true"
-        :disabled="false"
-        :items="sizeToolItems"/>
-      <p class="rg-form-help">
+      <div class="rg-row rg-row-v-center rg-row-gutter-h select-size-tool">
+        <label v-for="item in sizeToolItems" class="form-field">
+          <form-radio
+            name="select_size_tool"
+            id="select_size_tool"
+            size="small"
+            v-model="sizeSet"
+            :value="item.value"/>
+          <span>{{item.label}}</span>
+        </label>
+      </div>
+      <p class="form-help">
         `Nest`에서 정한 썸네일 이미지 사이즈에서의 비율을 정합니다. 기본 사이즈에서 2배수로 커지는 타입을 정합니다.
       </p>
     </header>
@@ -70,7 +73,7 @@ export default {
   name: 'uploader',
   components: {
     'icon': () => import('~/components/icon'),
-    'form-checks': () => import('~/components/form/checks'),
+    'form-radio': () => import('~/components/form/radio'),
   },
   props: {
     article: { type: Object },
@@ -161,8 +164,8 @@ export default {
         {
           name: 'thumbnail',
           obj: new plugins.Thumbnail({
-            width: 800,
-            height: 700,
+            width: 980,
+            height: 720,
             mobileSize: 650,
             finalOutput : { type: 'base64', quality: .65, format: 'jpeg' },
             doneCallback: (res, app, file) => this.makeThumbnail(res, app, file).then()

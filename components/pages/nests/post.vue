@@ -257,7 +257,6 @@ const defaultJson = {
 export default {
   components: {
     'form-text': () => import('~/components/form/text'),
-    'form-checks': () => import('~/components/form/checks'),
     'form-select': () => import('~/components/form/select'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),

@@ -104,7 +104,6 @@ export default {
   name: 'post',
   components: {
     'form-text': () => import('~/components/form/text'),
-    'form-check': () => import('~/components/form/check'),
     'form-checkbox': () => import('~/components/form/checkbox'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
@@ -143,12 +142,6 @@ export default {
       },
       processing: false,
     };
-  },
-  computed: {
-    isAdmin()
-    {
-      return this.$store.state.authUser.admin;
-    },
   },
   methods: {
     async onSubmit(e)

@@ -39,9 +39,9 @@ $self: '.error';
       height: 180px;
       #{$self}__icon {
         svg {
-          width: 48px;
-          height: 48px;
-          stroke-width: 1.25px;
+          width: 44px;
+          height: 44px;
+          stroke-width: 1px;
         }
       }
       #{$self}__message {
@@ -64,15 +64,7 @@ $self: '.error';
     }
   }
   &--frame {
-    background: #fff;
+    background-color: var(--color-content-bg);
     box-shadow: 0 1px 20px rgba(#000, .05);
-  }
-
-  @include dark-mode() {
-    &__icon {
-      svg {
-
-      }
-    }
   }
 }
