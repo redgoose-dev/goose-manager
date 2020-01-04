@@ -70,7 +70,7 @@ export default {
     computedShortName()
     {
       const { preference } = this.$store.state;
-      return preference.shortName;
+      return preference.shortName || 'GOOSE';
     },
     computedNavigation()
     {
