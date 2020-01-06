@@ -21,7 +21,7 @@
           :alt="item.title"
           :metas="[
             getArticleType(item.type),
-            getDate(item.regdate),
+            getDate(item, 'articles'),
             item.category_name,
             `Hit: ${item.hit}`,
             `Like: ${item.star}`
@@ -53,7 +53,7 @@
           :metas="[
             `srl: ${nest.srl}`,
             `id: ${nest.id}`,
-            getDate(nest.regdate),
+            getDate(nest, 'nests'),
           ]"
           :navs="[
             { label: 'Edit', link: `/nests/${nest.srl}/edit/` },
@@ -82,7 +82,7 @@
           :metas="[
             `srl: ${app.srl}`,
             `id: ${app.id}`,
-            getDate(app.regdate),
+            getDate(app, 'apps'),
           ]"
           :navs="[
             { label: 'Edit', link: `/apps/${app.srl}/edit/` },
@@ -111,7 +111,7 @@
           :use-image="false"
           :metas="[
            `srl: ${item.srl}`,
-            getDate(item.regdate),
+            getDate(item, 'json'),
           ]"
           :navs="[
             { label: 'Edit', link: `/json/${item.srl}/edit/` },
@@ -132,7 +132,7 @@ import * as localLibs from './local-libs';
 
 const baseParams = {
   articles: {
-    field: 'srl,type,title,hit,star,regdate,category_srl,json',
+    field: 'srl,type,title,hit,star,regdate,modate,category_srl,json,`order`',
     order: 'srl',
     sort: 'desc',
     size: 8,
@@ -210,9 +210,28 @@ export default {
     }
   },
   methods: {
-    getDate(date)
+    getDate(item, type)
     {
-      return dates.getFormatDate(date, false);
+      function convertDate(item, field)
+      {
+        switch (field)
+        {
+          case 'order':
+            return dates.getFormatDate(item.order, false);
+          case 'regdate':
+          default:
+            return dates.getFormatDate(item.regdate, false);
+        }
+      }
+
+      const { preference } = this.$store.state;
+      switch (type)
+      {
+        case 'articles':
+          return convertDate(item, preference.articles.displayDateField);
+        default:
+          return convertDate(item);
+      }
     },
     getImageUrl(path)
     {

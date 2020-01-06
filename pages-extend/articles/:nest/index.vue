@@ -57,7 +57,7 @@ import * as text from '~/libs/text';
 import * as object from '~/libs/object';
 
 const defaultParamsArticle = {
-  field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
+  field: 'srl,type,title,hit,regdate,modate,category_srl,json,`order`',
   ext_field: 'category_name',
   order: 'srl',
   sort: 'desc',

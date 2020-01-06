@@ -29,7 +29,7 @@ import * as text from '~/libs/text';
 import * as object from '~/libs/object';
 
 const defaultParams = {
-  field: 'srl,title,hit,star,regdate,category_srl,json',
+  field: 'srl,title,hit,star,regdate,modate,category_srl,json,`order`',
   ext_field: 'category_name',
   order: 'srl',
   sort: 'desc',

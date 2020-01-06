@@ -97,11 +97,11 @@ export default {
     {
       let src = [
         `${text.getArticleType(this.article.type)}`,
-        `${dates.getFormatDate(this.article.regdate, false)}`,
-        `hit: ${this.article.hit}`,
-        `like: ${this.article.star}`,
+        `regdate: ${dates.getFormatDate(this.article.regdate, false)}`,
       ];
       if (this.article.order) src.push(`order: ${this.article.order}`);
+      src.push(`hit: ${this.article.hit}`);
+      src.push(`like: ${this.article.star}`);
       return src.join(', ');
     },
     computedPrefix()

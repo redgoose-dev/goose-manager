@@ -11,7 +11,7 @@
       :alt="item.title"
       :metas="[
         `${getType(item.type)}`,
-        getDate(item.regdate),
+        getDate(item),
         item.category_name,
         `hit:${item.hit}`,
       ]"
@@ -70,9 +70,17 @@ export default {
     },
   },
   methods: {
-    getDate(date)
+    getDate(item)
     {
-      return dates.getFormatDate(date, false);
+      const { preference } = this.$store.state;
+      switch (preference.articles.displayDateField)
+      {
+        case 'order':
+          return dates.getFormatDate(item.order, false);
+        case 'regdate':
+        default:
+          return dates.getFormatDate(item.regdate, false);
+      }
     },
     getImageUrl(path)
     {

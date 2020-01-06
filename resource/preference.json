@@ -55,7 +55,8 @@
   },
   "articles": {
     "pageCount": 24,
-    "pageRange": 10
+    "pageRange": 10,
+    "displayDateField": "regdate"
   },
   "files": {
     "pageCount": 24
