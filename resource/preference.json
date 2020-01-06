@@ -56,7 +56,10 @@
   "articles": {
     "pageCount": 24,
     "pageRange": 10,
-    "displayDateField": "regdate"
+    "displayDateField": "regdate",
+    "filter": {
+      "order": "srl"
+    }
   },
   "files": {
     "pageCount": 24

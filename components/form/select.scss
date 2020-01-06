@@ -66,6 +66,18 @@ $self: '.form-select';
       right: 12px;
     }
     &--size {
+      &-mini {
+        #{$self}__unit {
+          height: 26px;
+          font-size: 12px;
+          padding-right: 22px;
+        }
+        #{$self}__icon {
+          width: 10px;
+          height: 10px;
+          right: 6px;
+        }
+      }
       &-small {
         #{$self}__unit {
           height: $form-text-height-small;

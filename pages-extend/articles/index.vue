@@ -3,6 +3,12 @@
   <page-header module="articles"/>
   <error v-if="!!error" :message="error" size="large"/>
   <template v-else>
+    <div class="rg-row rg-row-v-center index-header">
+      <div class="rg-col"/>
+      <div class="index-filter">
+        <index-filter @change="onChangeFilter"/>
+      </div>
+    </div>
     <index-articles
       :articles="articles"
       :loading="processing"
@@ -31,7 +37,6 @@ import * as object from '~/libs/object';
 const defaultParams = {
   field: 'srl,title,hit,star,regdate,modate,category_srl,json,`order`',
   ext_field: 'category_name',
-  order: 'srl',
   sort: 'desc',
   visible_type: 'all',
 };
@@ -40,6 +45,7 @@ export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'index-articles': () => import('~/components/pages/articles/index-articles'),
+    'index-filter': () => import('~/components/pages/articles/index-filter'),
     'paginate': () => import('~/components/etc/paginate'),
     'error': () => import('~/components/contents/error'),
   },
@@ -50,8 +56,10 @@ export default {
       const { preference } = context.store.state;
       const page = parseInt(context.query.page || 1);
       const size = object.getValue(preference, 'articles', 'pageCount') || 20;
+      const order = preference.articles.filter.order;
       let params = {
         ...defaultParams,
+        order,
         size
       };
       if (page > 1) params.page = page;
@@ -65,6 +73,7 @@ export default {
         articles: articles.success ? articles.data.index : [],
         page,
         size,
+        order,
         processing: false,
         error: null,
         pageRange: object.getValue(preference, 'articles', 'pageRange') || 10,
@@ -80,6 +89,12 @@ export default {
   watch: {
     '$route': async function()
     {
+      this.update().then();
+    },
+  },
+  methods: {
+    async update()
+    {
       this.page = parseInt(this.$route.query.page) || 1;
       this.processing = true;
       try
@@ -88,6 +103,7 @@ export default {
         let params = {
           ...defaultParams,
           size: this.size,
+          order: this.order,
           page: this.page,
         };
         const articles = await this.$axios.$get(`/articles/${text.serialize(params, true)}`);
@@ -104,6 +120,24 @@ export default {
       }
       this.processing = false;
     },
+    async onChangeFilter(filter)
+    {
+      this.order = filter.order;
+      // update preference
+      let params = [{ key: 'articles.filter', value: filter }];
+      this.$store.dispatch('updatePreference', params).then();
+      // update articles data
+      this.update().then();
+    },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.index-header {
+  margin-bottom: 12px;
+}
+.index-filter {
+  padding-left: 24px;
+}
+</style>

@@ -1,3 +1,5 @@
+import * as object from '~/libs/object';
+
 // get default preference
 let defaultPreference = {};
 try {
@@ -13,7 +15,6 @@ catch(e)
 export const state = () => ({
   url_api: '',
   authUser: null,
-  name: 'Goose Manager',
   preference: defaultPreference,
 });
 
@@ -46,6 +47,36 @@ export const actions = {
       commit('setup', setup);
     }
   },
+  /**
+   * update preference
+   *
+   * @param {object} context
+   * @param {array|object} value
+   */
+  updatePreference(context, value)
+  {
+    const { preference, url_app } = context.state;
+    let pref = object.convertRaw(preference);
+    let arr = Array.isArray(value) ? value : [value];
+
+    // set value in preference
+    arr.forEach((o) => {
+      pref = object.set(pref, o.key, o.value);
+    });
+
+    // update store
+    context.commit('updatePreference', pref);
+
+    try
+    {
+      // write preference
+      this.$axios.$post(`${url_app}/api/preference-save/`, pref).then();
+    }
+    catch(e)
+    {
+      if (preference.debug.service) console.error(e);
+    }
+  },
 };
 
 
@@ -64,5 +95,11 @@ export const mutations = {
   updateAuthUser(state, value)
   {
     state.authUser = value;
+  },
+
+  // update preference
+  updatePreference(state, value)
+  {
+    state.preference = value;
   },
 };

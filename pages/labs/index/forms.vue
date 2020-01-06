@@ -88,6 +88,7 @@
     </header>
     <div class="example">
       <div class="rg-row rg-row-gutter-h">
+        <form-select v-model="select" :options="selectOptions" size="mini" class="rg-col"/>
         <form-select v-model="select" :options="selectOptions" size="small" class="rg-col"/>
         <form-select v-model="select" :options="selectOptions" class="rg-col"/>
         <form-select v-model="select" :options="selectOptions" size="large" class="rg-col"/>

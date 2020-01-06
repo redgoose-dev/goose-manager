@@ -15,9 +15,7 @@
         @input="onChange">
         <template v-if="options && options.length">
           <option v-if="placeholder" value="">{{placeholder}}</option>
-          <option v-for="item in options" :value="item.value">
-            {{item.label}}
-          </option>
+          <option v-for="item in options" :value="item.value">{{item.label}}</option>
         </template>
         <slot/>
       </select>
@@ -36,7 +34,7 @@ export default {
 		required: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
 		inline: { type: Boolean, default: false },
-		size: { type: String },
+		size: { type: String }, // mini,small,large
 		placeholder: { type: String, default: 'Please select' },
 	},
   components: {

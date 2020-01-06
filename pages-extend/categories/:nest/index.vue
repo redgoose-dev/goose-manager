@@ -145,6 +145,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../assets/scss/mixins";
 .index {
   display: grid;
   grid-template-columns: repeat(3,1fr);
@@ -167,6 +168,7 @@ export default {
     width: 18px;
     height: 18px;
     stroke-width: 1.5;
+    color: var(--color-blur);
   }
 }
 .sortable-ghost {

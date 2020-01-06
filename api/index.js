@@ -49,12 +49,7 @@ router.post('/session-clear/', (req, res) => {
 router.post('/preference-save/', (req, res) => {
   try
   {
-    let src = {
-      foo: 'bar',
-      age: 24,
-      gender: 'smdgi sdgmkps gd',
-    };
-    let data = JSON.stringify(src, null, 2);
+    let data = JSON.stringify(req.body, null, 2);
     fs.writeFileSync(path_preference, data);
     res.json({ success: true });
   }
