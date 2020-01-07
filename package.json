@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": true,
   "scripts": {
     "setup": "cp ./resource/.env ./ && cp ./resource/preference.json ./",
