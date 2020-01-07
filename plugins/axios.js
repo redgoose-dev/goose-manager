@@ -56,4 +56,13 @@ export default function(cox)
 			console.error('ERROR: ', error.message);
 		});
 	}
+	$axios.onResponse(res => {
+    switch (res.data.code)
+    {
+      case 401:
+        // 로그인된 상태라면 로그아웃 리다이렉트 시키기
+        if (location && store.state.authUser) location.href = '/auth/logout/';
+        break;
+    }
+  });
 }

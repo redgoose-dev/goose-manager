@@ -145,11 +145,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../assets/scss/variables";
 @import "../../../assets/scss/mixins";
 .index {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  grid-gap: 16px;
+  grid-gap: $size-grid-col-gap;
 }
 .move {
   position: relative;

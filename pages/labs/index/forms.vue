@@ -12,51 +12,57 @@
         <code>~/components/form/text</code>
       </p>
     </header>
-    <div class="rg-row rg-row-gutter-h">
-      <p class="rg-col">
-        <span>small</span>
-        <form-text
-          placeholder="placeholder value"
-          v-model="text"
-          :required="true"
-          :inline="false"
-          :readonly="false"
-          :disabled="false"
-          form-size="small"/>
-      </p>
-      <p class="rg-col">
-        <span>normal</span>
-        <form-text placeholder="placeholder value" v-model="text"/>
-      </p>
-      <p class="rg-col">
-        <span>large</span>
-        <form-text placeholder="placeholder value" v-model="text" form-size="large"/>
-      </p>
+    <p>폼 사이즈</p>
+    <div class="example">
+      <div class="rg-row rg-row-gutter-h">
+        <div class="rg-col">
+          <span>small</span>
+          <form-text
+            placeholder="placeholder value"
+            v-model="text"
+            :required="true"
+            :inline="false"
+            :readonly="false"
+            :disabled="false"
+            form-size="small"/>
+        </div>
+        <div class="rg-col">
+          <span>normal</span>
+          <form-text placeholder="placeholder value" v-model="text"/>
+        </div>
+        <div class="rg-col">
+          <span>large</span>
+          <form-text placeholder="placeholder value" v-model="text" form-size="large"/>
+        </div>
+      </div>
     </div>
-    <div class="rg-row rg-row-gutter-h">
-      <p class="rg-col">
-        <span>readonly</span>
-        <form-text
-          placeholder="placeholder value"
-          v-model="text"
-          :required="true"
-          :inline="false"
-          :readonly="true"
-          :disabled="false"/>
-      </p>
-      <p class="rg-col">
-        <span>disabled</span>
-        <form-text
-          placeholder="placeholder value"
-          v-model="text"
-          :required="true"
-          :inline="false"
-          :readonly="false"
-          :disabled="true"/>
-      </p>
+    <p>`readonly`와 `disabled` 속성</p>
+    <div class="example">
+      <div class="rg-row rg-row-gutter-h">
+        <div class="rg-col">
+          <span>readonly</span>
+          <form-text
+            placeholder="placeholder value"
+            v-model="text"
+            :required="true"
+            :inline="false"
+            :readonly="true"
+            :disabled="false"/>
+        </div>
+        <div class="rg-col">
+          <span>disabled</span>
+          <form-text
+            placeholder="placeholder value"
+            v-model="text"
+            :required="true"
+            :inline="false"
+            :readonly="false"
+            :disabled="true"/>
+        </div>
+      </div>
     </div>
-    <div>
-      <span>multiple line</span>
+    <p>멀티라인 입력폼</p>
+    <div class="example">
       <form-text
         type="textarea"
         name="text"
@@ -66,8 +72,8 @@
         :required="true"
         :inline="true"/>
     </div>
-    <div>
-      <p>with button</p>
+    <p>버튼과 함께 사용하기</p>
+    <div class="example">
       <div class="rg-row rg-row-gutter-h">
         <div class="rg-col">
           <form-text placeholder="placeholder value"/>

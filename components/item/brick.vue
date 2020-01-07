@@ -1,44 +1,36 @@
 <template>
-<div class="item-card" :title="alt">
-  <slot name="before"/>
+<div class="item-brick" :title="alt">
   <image-thumbnail
-    v-if="useImage"
     :src="image"
     :link="link"
     :href="href"
     :target="target"
     :alt="alt"
-    mode="full"
+    mode="limit"
     type="cover"
-    class="item-card__image"/>
-	<div class="item-card__body">
-    <text-title
-      :label="title"
-      :link="link"
-      :href="href"
-      :target="target"
-      class="item-card__title"/>
+    class="item-brick__image"/>
+  <div class="item-brick__body">
+    <text-title :label="title" :link="link" :href="href" :target="target"/>
     <metas
       v-if="!!metas && metas.length"
       :items="metas"
-      class="item-card__metas"/>
+      class="item-brick__metas"/>
     <nav-text
       v-if="navs && navs.length"
       :items="navs"
-      class="item-card__nav-text"/>
-	</div>
-  <slot name="after"/>
+      class="item-brick__nav-text"/>
+  </div>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'item-card',
+  name: 'item-brick',
   components: {
-    'text-title': () => import('./parts/text-title'),
-    'nav-text': () => import('./parts/nav-text'),
-    'metas': () => import('./parts/metas'),
     'image-thumbnail': () => import('./parts/image-thumbnail'),
+    'text-title': () => import('./parts/text-title'),
+    'metas': () => import('./parts/metas'),
+    'nav-text': () => import('./parts/nav-text'),
   },
   props: {
     link: { type: String, default: null },
@@ -58,18 +50,14 @@ export default {
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
 
-.item-card {
-  $size: 100px;
+.item-brick {
+  $self: '.item-brick';
   position: relative;
-  display: flex;
-  align-items: center;
-  box-shadow: $shadow-box;
-  height: $size;
   background-color: #fff;
   border-radius: $size-border-radius;
+  overflow: hidden;
   min-width: 0;
   box-sizing: border-box;
-
   &:after {
     content: '';
     position: absolute;
@@ -78,33 +66,25 @@ export default {
     top: 0;
     bottom: 0;
     pointer-events: none;
-    transition: box-shadow .15s ease-out;
+    transition: box-shadow 100ms ease-out;
     border-radius: $size-border-radius;
   }
   &:hover:after {
     box-shadow: inset 0 0 0 1px var(--color-key);
   }
 
-	&__image {
+  &__image {
     margin: 0;
-    width: $size;
-    height: 100px;
-    border-top-left-radius: $size-border-radius;
-    border-bottom-left-radius: $size-border-radius;
-    overflow: hidden;
   }
-	&__body {
-		flex: 1;
-		padding: 10px 20px;
-		min-width: 0;
-	}
+  &__body {
+    padding: 10px;
+  }
   &__metas {
     margin: 2px 0 0;
   }
   &__nav-text {
-    margin: 5px 0 0;
+    margin: 4px 0 0;
   }
-
   @include dark-mode() {
     background-color: $color-dark-content-bg;
   }

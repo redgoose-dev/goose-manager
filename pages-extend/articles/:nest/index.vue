@@ -66,7 +66,6 @@ import * as object from '~/libs/object';
 const defaultParamsArticle = {
   field: 'srl,type,title,hit,regdate,modate,category_srl,json,`order`',
   ext_field: 'category_name',
-  sort: 'desc',
   visible_type: 'all',
 };
 const defaultParamsCategory = {
@@ -100,10 +99,13 @@ export default {
     const category_srl = context.query.category || null;
 
     // set params for articles
-    let paramsArticle = Object.assign({}, defaultParamsArticle);
-    paramsArticle.nest = nest_srl;
-    paramsArticle.size = size;
-    paramsArticle.order = preference.articles.filter.order;
+    let paramsArticle = {
+      ...defaultParamsArticle,
+      nest: nest_srl,
+      size,
+      order: preference.articles.filter.order,
+      sort: preference.articles.filter.sort,
+    };
     if (page > 1) paramsArticle.page = page;
     if (category_srl) paramsArticle.category = category_srl;
     // set params for category
@@ -123,6 +125,7 @@ export default {
         page,
         size,
         order: paramsArticle.order,
+        sort: paramsArticle.sort,
         error: null,
         processing: false,
         total: articles.success ? articles.data.total : 0,
@@ -143,6 +146,20 @@ export default {
     {
       return object.getValue(this.nest, 'description') || null;
     },
+    computedIndexType()
+    {
+      switch (this.skin)
+      {
+        case 'list':
+          return {};
+        case 'card':
+          return {};
+        case 'thumbnail':
+          return {};
+        case 'brick':
+          return {};
+      }
+    },
   },
   watch: {
     '$route': function()
@@ -151,15 +168,6 @@ export default {
     },
   },
   methods: {
-    onChangeFilter(filter)
-    {
-      this.order = filter.order;
-      // update preference
-      let params = [{ key: 'articles.filter', value: filter }];
-      this.$store.dispatch('updatePreference', params).then();
-      // update articles data
-      this.update().then();
-    },
     async update()
     {
       this.page = parseInt(this.$route.query.page) || 1;
@@ -169,11 +177,14 @@ export default {
       // get articles
       try
       {
-        let paramsArticle = Object.assign({}, defaultParamsArticle);
-        paramsArticle.nest = this.nest_srl;
-        paramsArticle.size = this.size;
-        paramsArticle.page = this.page;
-        paramsArticle.order = this.order;
+        let paramsArticle = {
+          ...defaultParamsArticle,
+          nest: this.nest_srl,
+          size: this.size,
+          page: this.page,
+          order: this.order,
+          sort: this.sort,
+        };
         if (this.category_srl) paramsArticle.category = this.category_srl;
         const res = await this.$axios.$get(`/articles/${text.serialize(paramsArticle, true)}`);
         if (res.success && res.data)
@@ -194,13 +205,29 @@ export default {
         return { error: (typeof e === 'string') ? e : messages.error.service };
       }
     },
+    onChangeFilter(filter)
+    {
+      this.order = filter.order;
+      this.sort = filter.sort;
+      // update preference
+      let params = [{ key: 'articles.filter', value: filter }];
+      this.$store.dispatch('updatePreference', params).then();
+      // update articles data
+      this.update().then();
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .index-header {
-  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  padding: 12px 5px;
+  z-index: 2;
+  background-color: var(--color-bg);
+  margin: -16px -5px 0;
+  box-sizing: border-box;
 }
 .index-filter {
   padding-left: 24px;

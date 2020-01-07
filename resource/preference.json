@@ -58,7 +58,8 @@
     "pageRange": 10,
     "displayDateField": "regdate",
     "filter": {
-      "order": "srl"
+      "order": "srl",
+      "sort": "desc"
     }
   },
   "files": {

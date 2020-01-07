@@ -1,31 +1,41 @@
 @import "../assets/scss/variables";
+@import "../assets/scss/mixins";
 
 .error {
-  padding: 0 0 50px;
-  figure {
+  padding: 80px 0;
+  .image {
     margin: 0;
-    padding: 30px 0 0;
-    img {
+    svg {
       display: block;
-      width: 363px;
       margin: 0 auto;
+      width: 128px;
+      height: 128px;
+      stroke-width: .25px;
     }
   }
-}
-.title {
-  margin: 40px 0 0;
-  img {
-    display: block;
-    margin: 0 auto;
+  .title {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: $font-eng-circular;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 42px;
+    color: var(--color-key);
+    letter-spacing: -1px;
+    line-height: 1.15;
   }
-}
-.description {
-  margin: 10px 0 0;
-  text-align: center;
-  font-size: 1.25rem;
-  color: $color-blur;
-}
-.nav {
-  margin: 30px 0 0;
-  text-align: center;
+  .description {
+    margin: 2px 0 0;
+    text-align: center;
+    font-size: 18px;
+    color: var(--color-blur);
+    font-family: $font-eng;
+    letter-spacing: -.25px;
+    font-weight: 200;
+  }
+  .nav {
+    margin: 40px 0 0;
+    text-align: center;
+  }
+
 }

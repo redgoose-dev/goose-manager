@@ -52,3 +52,12 @@
 @mixin dark-mode() {
   @media (prefers-color-scheme: dark) { @content; }
 }
+
+// background blur
+@mixin background-blur($size)
+{
+  @supports (backdrop-filter: blur($size)) {
+    backdrop-filter: blur($size);
+    @content;
+  }
+}

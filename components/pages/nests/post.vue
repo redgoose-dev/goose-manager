@@ -86,6 +86,10 @@
             <form-radio name="article_skin" v-model="json.articleSkin" value="thumbnail"/>
             <span>Thumbnail</span>
           </label>
+          <label class="form-field">
+            <form-radio name="article_skin" v-model="json.articleSkin" value="brick"/>
+            <span>Brick</span>
+          </label>
         </div>
         <p class="form-help">`Articles` 목록의 스킨입니다.</p>
       </template>

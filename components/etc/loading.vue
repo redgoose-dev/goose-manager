@@ -25,7 +25,7 @@ export default {
   mounted()
   {
     mounted = true;
-    util.sleep(200).then(() => {
+    util.sleep(50).then(() => {
       if (mounted) this.show = true;
     });
   },

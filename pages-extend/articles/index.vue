@@ -12,7 +12,8 @@
     <index-articles
       :articles="articles"
       :loading="processing"
-      skin="card"/>
+      :column="5"
+      skin="brick"/>
     <paginate
       v-if="!!total"
       type="nuxt-link"
@@ -57,10 +58,12 @@ export default {
       const page = parseInt(context.query.page || 1);
       const size = object.getValue(preference, 'articles', 'pageCount') || 20;
       const order = preference.articles.filter.order;
+      const sort = preference.articles.filter.sort;
       let params = {
         ...defaultParams,
         order,
-        size
+        size,
+        sort,
       };
       if (page > 1) params.page = page;
 
@@ -74,6 +77,7 @@ export default {
         page,
         size,
         order,
+        sort,
         processing: false,
         error: null,
         pageRange: object.getValue(preference, 'articles', 'pageRange') || 10,
@@ -104,6 +108,7 @@ export default {
           ...defaultParams,
           size: this.size,
           order: this.order,
+          sort: this.sort,
           page: this.page,
         };
         const articles = await this.$axios.$get(`/articles/${text.serialize(params, true)}`);
@@ -123,6 +128,7 @@ export default {
     async onChangeFilter(filter)
     {
       this.order = filter.order;
+      this.sort = filter.sort;
       // update preference
       let params = [{ key: 'articles.filter', value: filter }];
       this.$store.dispatch('updatePreference', params).then();
@@ -135,7 +141,13 @@ export default {
 
 <style lang="scss" scoped>
 .index-header {
-  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  padding: 12px 5px;
+  z-index: 2;
+  background-color: var(--color-bg);
+  margin: -16px -5px 0;
+  box-sizing: border-box;
 }
 .index-filter {
   padding-left: 24px;

@@ -1,7 +1,10 @@
 <template>
 <div class="articles-index">
   <loading v-if="loading"/>
-  <index-wrap v-else-if="!!articles && articles.length" :column="computedColumn">
+  <index-wrap
+    v-else-if="!!articles && articles.length"
+    :type="computedIndexType"
+    :column="computedColumn">
     <component
       v-for="(item,key) in articles" :key="key"
       v-bind:is="`item-${useSkin}`"
@@ -34,13 +37,15 @@ export default {
     'item-list': () => import('~/components/item/list'),
     'item-card': () => import('~/components/item/card'),
     'item-thumbnail': () => import('~/components/item/thumbnail'),
+    'item-brick': () => import('~/components/item/brick'),
     'error': () => import('~/components/contents/error'),
     'index-wrap': () => import('~/components/contents/index-wrap'),
   },
   props: {
     articles: { type: Array, default: null },
     loading: { type: Boolean, default: false },
-    skin: { type: String, default: 'thumbnail' }
+    skin: { type: String, default: 'thumbnail' }, // list,card,thumbnail,brick
+    column: { type: Number, default: undefined },
   },
   computed: {
     useSkin()
@@ -51,6 +56,8 @@ export default {
           return 'list';
         case 'card':
           return 'card';
+        case 'brick':
+          return 'brick';
         case 'thumbnail':
         default:
           return 'thumbnail';
@@ -58,14 +65,33 @@ export default {
     },
     computedColumn()
     {
-      switch (this.skin) {
+      if (this.column)
+      {
+        return this.column;
+      }
+
+      switch (this.useSkin) {
         case 'card':
           return 3;
         case 'thumbnail':
           return 4;
+        case 'brick':
+          return 5;
         case 'list':
         default:
           return 1;
+      }
+    },
+    computedIndexType()
+    {
+      switch (this.useSkin)
+      {
+        case 'card':
+        case 'thumbnail':
+        default:
+          return 'grid';
+        case 'brick':
+          return 'brick';
       }
     },
   },

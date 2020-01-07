@@ -4,12 +4,12 @@
 
   <nav class="labs-tab">
     <nuxt-link to="/labs/">Home</nuxt-link>
-    <nuxt-link to="/labs/ui/">UI</nuxt-link>
     <nuxt-link to="/labs/button/">Button</nuxt-link>
     <nuxt-link to="/labs/forms/">Forms</nuxt-link>
     <nuxt-link to="/labs/fieldset/">Fieldset</nuxt-link>
     <nuxt-link to="/labs/icons/">Icons</nuxt-link>
     <nuxt-link to="/labs/colors/">Colors</nuxt-link>
+    <nuxt-link to="/labs/etc/">etc</nuxt-link>
   </nav>
 
   <div class="labs__body">

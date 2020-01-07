@@ -6,8 +6,8 @@
   <loading v-else-if="processing"/>
   <error v-else-if="!(index && index.length)" type="empty" size="large"/>
   <template v-else>
-    <index-wrap :column="4">
-      <item-thumbnail
+    <index-wrap type="brick" :column="5">
+      <item-brick
         v-for="(item,key) in index"
         :key="key"
         :href="`${url_api}/${item.loc}`"
@@ -50,7 +50,7 @@ const defaultParams = {
 export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
-    'item-thumbnail': () => import('~/components/item/thumbnail'),
+    'item-brick': () => import('~/components/item/brick'),
     'button-basic': () => import('~/components/button/basic'),
     'error': () => import('~/components/contents/error'),
     'index-wrap': () => import('~/components/contents/index-wrap'),

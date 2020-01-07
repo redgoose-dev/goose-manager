@@ -5,8 +5,7 @@
   :target="target"
   :title="title"
   :class="classNames"
-  :style="styles"
-  @click.prevent="onClick">
+  :style="styles">
   <span class="button-basic__wrap">
     <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
     <em v-if="$slots.default" class="button-basic__label"><slot/></em>

@@ -72,7 +72,7 @@ export default {
   > p {
     margin: 2px 0 0;
     font-size: .875rem;
-    color: $color-blur;
+    color: var(--color-blur);
   }
 }
 .json {

@@ -8,7 +8,8 @@
       :href="href"
       :target="target"
       :alt="alt"
-      :type="imageType"
+      mode="full"
+      type="cover"
       class="item-list__image"/>
     <div class="item-list__body">
       <text-title
@@ -36,6 +37,7 @@
 
 <script>
 export default {
+  name: 'item-list',
   components: {
     'button-basic': () => import('~/components/button/basic'),
     'nav-text': () => import('./parts/nav-text'),
@@ -52,7 +54,6 @@ export default {
     href: { type: String, default: null },
     target: { type: String, default: '' },
     image: { type: String, default: null },
-    imageType: { type: String, default: null }, // contain
     alt: { type: String, default: '' },
     metas: { type: Array, default: null },
     navs: { type: Array, default: null },
@@ -88,7 +89,7 @@ export default {
     border-radius: $size-border-radius;
   }
   &:hover:after {
-    box-shadow: 0 0 0 1px var(--color-key);
+    box-shadow: inset 0 0 0 1px var(--color-key);
   }
 
   &__wrap {

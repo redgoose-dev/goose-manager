@@ -4,7 +4,7 @@
 
   <error v-if="!!error" :message="error" size="large"/>
   <error v-else-if="!(index && index.length)" type="empty" size="large"/>
-  <index-wrap v-else :column="1">
+  <index-wrap v-else :column="1" type="grid">
     <item-list
       v-for="(item,key) in index" :key="key"
       :title="item.name"

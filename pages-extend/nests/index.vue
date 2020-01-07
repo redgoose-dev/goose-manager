@@ -13,7 +13,7 @@
         </h3>
         <p v-if="!!app.description">{{app.description}}</p>
       </header>
-      <index-wrap v-if="app.children && app.children.length" :column="3" class="nests__index">
+      <index-wrap v-if="app.children && app.children.length" :column="3" type="grid" class="nests__index">
         <item-card
           v-for="(nest,key) in app.children" :key="key"
           :link="`/nests/${nest.srl}/articles/`"

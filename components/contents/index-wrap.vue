@@ -1,5 +1,5 @@
 <template>
-<div class="index" :style="computedStyle">
+<div :class="['index', type && `index--${type}`]" :style="computedStyle">
   <slot/>
 </div>
 </template>
@@ -8,34 +8,28 @@
 export default {
   name: 'index-wrap',
   props: {
-    column: { type: Number, default: undefined }, // 1~8
-    gap: { type: Number, default: undefined }, // 1~8
+    column: { type: Number, default: 4 },
+    type: { type: String, default: null }, // grid,brick
   },
   computed: {
     computedStyle()
     {
       let style = {};
-      if (this.column !== undefined)
+      switch (this.type)
       {
-        style['grid-template-columns'] = `repeat(${this.column},1fr)`;
-      }
-      if (this.gap !== undefined)
-      {
-        style['grid-gap'] = `${this.gap}px`;
+        case 'grid':
+          style['grid-template-columns'] = `repeat(${this.column},1fr)`;
+          break;
+        case 'brick':
+          style['column-count'] = `${this.column}`;
+          break;
+        default:
+          break;
       }
       return style;
-    }
+    },
   },
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../../assets/scss/variables";
-@import "../../assets/scss/mixins";
-
-.index {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  grid-gap: 16px;
-}
-</style>
+<style src="./index-wrap.scss" lang="scss" scoped/>

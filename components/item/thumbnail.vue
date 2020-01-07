@@ -6,7 +6,8 @@
     :href="href"
     :target="target"
     :alt="alt"
-    :type="imageType"
+    mode="full"
+    type="cover"
     class="item-thumbnail__image"/>
   <div class="item-thumbnail__body">
     <text-title :label="title" :link="link" :href="href" :target="target"/>
@@ -24,6 +25,7 @@
 
 <script>
 export default {
+  name: 'item-thumbnail',
   components: {
     'text-title': () => import('./parts/text-title'),
     'nav-text': () => import('./parts/nav-text'),
@@ -36,7 +38,6 @@ export default {
     href: { type: String, default: null },
     target: { type: String, default: null },
     image: { type: String, default: null },
-    imageType: { type: String, default: null }, // contain
     title: { type: String, default: 'item title' },
     description: { type: String, default: null },
     alt: { type: String, default: 'item description' },
