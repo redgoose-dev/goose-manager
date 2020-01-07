@@ -2,38 +2,28 @@
 <article>
   <page-header module="users" title="Users / Detail"/>
 
-  <div class="rg-form-fieldset">
-    <dl class="rg-form-field">
-      <dt><strong>srl</strong></dt>
-      <dd>
-        <p><strong>{{data.srl}}</strong></p>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><strong>E-mail</strong></dt>
-      <dd>
-        <p>{{data.email}}</p>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><strong>Name</strong></dt>
-      <dd>
-        <p>{{data.name}}</p>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><strong>Admin</strong></dt>
-      <dd>
-        <p>{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</p>
-      </dd>
-    </dl>
-    <dl class="rg-form-field">
-      <dt><strong>Register date</strong></dt>
-      <dd>
-        <p>{{getDate(data.regdate)}}</p>
-      </dd>
-    </dl>
-  </div>
+  <field-wrap legend="Basic field" tag="div" :hide-legend="true">
+    <field>
+      <strong slot="label">srl</strong>
+      <div><strong>{{data.srl}}</strong></div>
+    </field>
+    <field>
+      <strong slot="label">E-mail</strong>
+      <div>{{data.email}}</div>
+    </field>
+    <field>
+      <strong slot="label">Name</strong>
+      <div>{{data.name}}</div>
+    </field>
+    <field>
+      <strong slot="label">Admin</strong>
+      <div>{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</div>
+    </field>
+    <field>
+      <strong slot="label">Register date</strong>
+      <div>{{getDate(data.regdate)}}</div>
+    </field>
+  </field-wrap>
 
   <nav-bottom>
     <template slot="left">
@@ -50,12 +40,15 @@
 <script>
 import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
+import * as fieldset from '~/components/form/fieldset';
 
 export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'field-wrap': fieldset.wrap,
+    'field': fieldset.field,
   },
   validate(cox)
   {

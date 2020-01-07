@@ -1,5 +1,5 @@
 <template>
-<fieldset class="fieldset-wrap">
+<component v-bind:is="tag" class="fieldset-wrap">
   <div
     v-if="legend"
     :class="[
@@ -11,13 +11,14 @@
   <div class="fieldset-wrap__body">
     <slot/>
   </div>
-</fieldset>
+</component>
 </template>
 
 <script>
 export default {
   name: 'fieldset-wrap',
   props: {
+    tag: { type: String, default: 'fieldset' },
     legend: { type: String, default: null },
     hideLegend: { type: Boolean, default: false },
   },
