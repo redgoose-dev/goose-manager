@@ -68,10 +68,10 @@ export default {
     pointer-events: none;
     transition: box-shadow 100ms ease-out;
     border-radius: $size-border-radius;
-    box-shadow: inset 0 0 0 .5px #ccc;
+    box-shadow: inset 0 0 0 1px #e8e8e8;
   }
   &:hover:after {
-    box-shadow: inset 0 0 0 .5px var(--color-key);
+    box-shadow: inset 0 0 0 1px var(--color-key);
   }
 
   &__image {
@@ -89,7 +89,7 @@ export default {
   @include dark-mode() {
     background-color: $color-dark-content-bg;
     &:after {
-      box-shadow: inset 0 0 0 .5px rgba(0,0,0,0);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0);
     }
   }
 }
