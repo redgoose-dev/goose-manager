@@ -13,6 +13,16 @@
       <button-basic type="button" @click="addToast">add toast</button-basic>
     </nav>
   </section>
+
+  <section class="page-section">
+    <header>
+      <h3>Loading</h3>
+      <p>데이터를 로딩하고있을때 사용하는 컴포넌트 입니다.</p>
+    </header>
+    <div class="example">
+      <loading :move="false"/>
+    </div>
+  </section>
 </article>
 </template>
 
@@ -21,6 +31,7 @@ export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
+    'loading': () => import('~/components/etc/loading'),
   },
   mounted()
   {

@@ -18,6 +18,10 @@
       { label: 'Z to A', value: 'desc' },
     ]"
     @change="update"/>
+  <form-search
+    :processing="processing"
+    :init="init"
+    @submit="onSubmitSearch"/>
 </form>
 </template>
 
@@ -26,6 +30,11 @@ export default {
   name: 'index-filter',
   components: {
     'form-select': () => import('~/components/form/select'),
+    'form-search': () => import('./form-search'),
+  },
+  props: {
+    processing: { type: Boolean, default: false },
+    init: { type: Object },
   },
   data()
   {
@@ -42,6 +51,10 @@ export default {
         order: this.order,
         sort: this.sort,
       })
+    },
+    onSubmitSearch(o)
+    {
+      this.$emit('change-keyword', o);
     },
   },
 }

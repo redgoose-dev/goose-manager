@@ -1,14 +1,19 @@
 <template>
 <article>
   <page-header module="articles"/>
+  <div class="rg-row rg-row-v-center index-header">
+    <div class="rg-col"/>
+    <div class="index-filter">
+      <index-filter
+        v-if="!processing"
+        :init="{keyword: filter.keyword}"
+        :processing="processing"
+        @change="onChangeFilter"
+        @change-keyword="onChangeKeyword"/>
+    </div>
+  </div>
   <error v-if="!!error" :message="error" size="large"/>
   <template v-else>
-    <div class="rg-row rg-row-v-center index-header">
-      <div class="rg-col"/>
-      <div class="index-filter">
-        <index-filter @change="onChangeFilter"/>
-      </div>
-    </div>
     <index-articles
       :articles="articles"
       :loading="processing"
@@ -21,6 +26,7 @@
       url="./"
       :total="total"
       :size="size"
+      :params="filter.keyword ? {q: filter.keyword} : null"
       :page-range="pageRange"
       :show-direction="false"
       :show-range-direction="true"
@@ -49,46 +55,50 @@ export default {
     'index-filter': () => import('~/components/pages/articles/index-filter'),
     'paginate': () => import('~/components/etc/paginate'),
     'error': () => import('~/components/contents/error'),
+    'loading': () => import('~/components/etc/loading'),
   },
   async asyncData(context)
   {
+    const { query, store } = context;
+    const { preference } = store.state;
+    let result = {
+      page: parseInt(query.page || 1),
+      size: object.getValue(preference, 'articles', 'pageCount') || 20,
+      filter: {
+        order: preference.articles.filter.order,
+        sort: preference.articles.filter.sort,
+        keyword: query.q || '',
+      },
+      processing: false,
+      error: null,
+      pageRange: object.getValue(preference, 'articles', 'pageRange') || 10,
+    };
+
     try
     {
-      const { preference } = context.store.state;
-      const page = parseInt(context.query.page || 1);
-      const size = object.getValue(preference, 'articles', 'pageCount') || 20;
-      const order = preference.articles.filter.order;
-      const sort = preference.articles.filter.sort;
+      // set params
       let params = {
         ...defaultParams,
-        order,
-        size,
-        sort,
+        size: result.size,
+        order: result.filter.order,
+        sort: result.filter.sort,
       };
-      if (page > 1) params.page = page;
+      if (result.page > 1) params.page = result.page;
+      if (result.filter.keyword) params.q = result.filter.keyword;
 
       // get articles
       const articles = await context.$axios.$get(`/articles/${text.serialize(params, true)}`);
       if (!articles.success) throw articles.message;
 
-      return {
-        total: articles.success ? articles.data.total : 0,
-        articles: articles.success ? articles.data.index : [],
-        page,
-        size,
-        order,
-        sort,
-        processing: false,
-        error: null,
-        pageRange: object.getValue(preference, 'articles', 'pageRange') || 10,
-      };
+      result.total = articles.success ? articles.data.total : 0;
+      result.articles = articles.success ? articles.data.index : [];
     }
     catch(e)
     {
-      return {
-        error: (typeof e === 'string') ? e : messages.error.service,
-      };
+      result.error = (typeof e === 'string') ? e : messages.error.service;
     }
+
+    return result;
   },
   watch: {
     '$route': async function()
@@ -100,6 +110,7 @@ export default {
     async update()
     {
       this.page = parseInt(this.$route.query.page) || 1;
+      this.filter.keyword = this.$route.query.q || '';
       this.processing = true;
       try
       {
@@ -107,33 +118,40 @@ export default {
         let params = {
           ...defaultParams,
           size: this.size,
-          order: this.order,
-          sort: this.sort,
+          order: this.filter.order,
+          sort: this.filter.sort,
           page: this.page,
         };
+        if (this.filter.keyword) params.q = this.filter.keyword;
         const articles = await this.$axios.$get(`/articles/${text.serialize(params, true)}`);
         if (!articles.success) throw articles.message;
         // update data
-        this.error = null;
         this.total = articles.data.total;
         this.articles = articles.data.index;
+        this.error = null;
       }
       catch(e)
       {
-        this.processing = false;
         this.error = (typeof e === 'string') ? e : messages.error.service;
       }
       this.processing = false;
     },
     async onChangeFilter(filter)
     {
-      this.order = filter.order;
-      this.sort = filter.sort;
+      this.filter.order = filter.order;
+      this.filter.sort = filter.sort;
       // update preference
       let params = [{ key: 'articles.filter', value: filter }];
       this.$store.dispatch('updatePreference', params).then();
       // update articles data
       this.update().then();
+    },
+    onChangeKeyword(keyword)
+    {
+      if (keyword.length < 2 && keyword.length > 0) return;
+      let params = {};
+      if (keyword) params.q = keyword;
+      this.$router.push(`./${text.serialize(params, true)}`);
     },
   },
 }

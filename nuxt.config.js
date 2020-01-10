@@ -49,7 +49,7 @@ module.exports = {
     baseURL: APP_API_URL,
   },
   loading: {
-    color: '#3cbfae',
+    color: '#1ccd5c',
     height: '2px',
   },
   router: {
