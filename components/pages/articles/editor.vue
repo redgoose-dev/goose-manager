@@ -35,7 +35,7 @@
   <transition name="preview">
     <div v-if="previewWindow" class="preview" @click="onClickPreview">
       <article class="preview__wrap" @click="(e) => e.stopPropagation()">
-        <div ref="preview" v-html="preview" class="article-body article-body--popup"/>
+        <div ref="preview" v-html="preview" class="redgoose-body redgoose-body--popup"/>
       </article>
     </div>
   </transition>
