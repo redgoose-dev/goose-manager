@@ -6,7 +6,7 @@
     :placeholder="null"
     :options="[
       { label: 'srl', value: 'srl' },
-      { label: 'order', value: '`order`' },
+      { label: 'order', value: 'order' },
     ]"
     @change="update"/>
   <form-select

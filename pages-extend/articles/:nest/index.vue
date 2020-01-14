@@ -67,17 +67,7 @@
 import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 import * as object from '~/libs/object';
-
-const defaultParamsArticle = {
-  field: 'srl,type,title,hit,regdate,modate,category_srl,json,`order`',
-  ext_field: 'category_name',
-  visible_type: 'all',
-};
-const defaultParamsCategory = {
-  ext_field: 'count_article,item_all,none',
-  order: 'turn',
-  sort: 'asc',
-};
+import * as src from '~/components/pages/articles/src';
 
 export default {
   name: 'page-articles-index',
@@ -116,18 +106,17 @@ export default {
 
     // set params for articles
     let paramsArticle = {
-      ...defaultParamsArticle,
+      ...src.defaultParamsArticle,
       nest: result.nest_srl,
       size: result.size,
-      order: result.filter.order,
-      sort: result.filter.sort,
+      order: src.setOrder(result.filter.order, result.filter.sort),
     };
     if (result.page > 1) paramsArticle.page = result.page;
     if (result.category_srl) paramsArticle.category = result.category_srl;
     if (result.filter.keyword) paramsArticle.q = result.filter.keyword;
 
     // set params for category
-    let paramsCategory = Object.assign({}, defaultParamsCategory);
+    let paramsCategory = Object.assign({}, src.defaultParamsCategory);
     paramsCategory.nest = result.nest_srl;
 
     try
@@ -180,12 +169,11 @@ export default {
       try
       {
         let params = {
-          ...defaultParamsArticle,
+          ...src.defaultParamsArticle,
           nest: this.nest_srl,
           size: this.size,
           page: this.page,
-          order: this.filter.order,
-          sort: this.filter.sort,
+          order: src.setOrder(this.filter.order, this.filter.sort),
         };
         if (this.category_srl) params.category = this.category_srl;
         if (this.filter.keyword) params.q = this.filter.keyword;

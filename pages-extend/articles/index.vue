@@ -40,13 +40,7 @@
 import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 import * as object from '~/libs/object';
-
-const defaultParams = {
-  field: 'srl,title,hit,star,regdate,modate,category_srl,json,`order`',
-  ext_field: 'category_name',
-  sort: 'desc',
-  visible_type: 'all',
-};
+import * as src from '~/components/pages/articles/src';
 
 export default {
   components: {
@@ -78,10 +72,9 @@ export default {
     {
       // set params
       let params = {
-        ...defaultParams,
+        ...src.defaultParamsArticle,
         size: result.size,
-        order: result.filter.order,
-        sort: result.filter.sort,
+        order: src.setOrder(result.filter.order, result.filter.sort),
       };
       if (result.page > 1) params.page = result.page;
       if (result.filter.keyword) params.q = result.filter.keyword;
@@ -116,10 +109,9 @@ export default {
       {
         // get articles
         let params = {
-          ...defaultParams,
+          ...src.defaultParamsArticle,
           size: this.size,
-          order: this.filter.order,
-          sort: this.filter.sort,
+          order: src.setOrder(this.filter.order, this.filter.sort),
           page: this.page,
         };
         if (this.filter.keyword) params.q = this.filter.keyword;
