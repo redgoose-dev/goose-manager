@@ -52,12 +52,9 @@
   </article>
   <figure
     v-if="thumbnailPreviewImage"
-    class="preview"
+    class="thumbnail-preview"
     @click="onCloseThumbnailPreviewImage">
-    <img
-      :src="`${thumbnailPreviewImage}`"
-      alt="preview image"
-      @click="(e) => { e.stopPropagation(); }"/>
+    <img :src="`${thumbnailPreviewImage}`" alt="preview image" @click.stop=""/>
   </figure>
 </div>
 </template>
@@ -431,3 +428,4 @@ export default {
 </script>
 
 <style src="./uploader.scss" lang="scss"/>
+<style src="./uploader-scoped.scss" lang="scss" scoped/>

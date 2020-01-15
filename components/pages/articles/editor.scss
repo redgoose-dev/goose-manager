@@ -2,68 +2,69 @@
 @import "../../../assets/scss/mixins";
 
 .rg-editor {
-	margin: 8px 0;
-	&__body {
-		textarea {
-			min-height: 200px;
-			max-height: 780px;
-			height: 450px;
-			resize: vertical;
-		}
-	}
-	&__bottom {
-		display: flex;
-		justify-content: space-between;
-	}
-	&__guide {
-		margin: 8px 0 0;
-		ul {
-			margin: 0;
-			padding: 0 0 0 20px;
-			font-size: .75rem;
-		}
-	}
-	&__toolbar {
-		margin-top: 8px;
-	}
+  margin: 8px 0;
+  &__body {
+    textarea {
+      min-height: 200px;
+      max-height: 780px;
+      height: 450px;
+      resize: vertical;
+    }
+  }
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__guide {
+    margin: 8px 0 0;
+    ul {
+      margin: 0;
+      padding: 0 0 0 20px;
+      font-size: .75rem;
+    }
+  }
+  &__toolbar {
+    margin-top: 8px;
+  }
 }
 
 .preview {
-	$size-width: 950px;
+  $size-width: 950px;
 
-	position: fixed;
-	z-index: 90;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	overflow-y: scroll;
-	padding: 50px 40px;
-	box-sizing: border-box;
-	background: rgba(#000, .75);
-	cursor: zoom-out;
-	&__wrap {
-		cursor: auto;
-		position: relative;
-		z-index: 2;
-		max-width: $size-width;
-		margin: 0 auto;
-		background: var(--color-bg);
-		border-radius: $size-border-radius;
-		overflow: hidden;
-		padding: 40px 20px;
-		box-shadow: 0 1px 10px rgba(#000, .3);
+  position: fixed;
+  z-index: 90;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  padding: 50px 40px;
+  box-sizing: border-box;
+  background: rgba(#000, .75);
+  cursor: zoom-out;
+  margin: 0;
+  &__wrap {
+    cursor: auto;
+    position: relative;
+    z-index: 2;
+    max-width: $size-width;
+    margin: 0 auto;
+    background: var(--color-bg);
+    border-radius: $size-border-radius;
+    overflow: hidden;
+    padding: 40px 20px;
+    box-shadow: 0 1px 10px rgba(#000, .3);
     box-sizing: border-box;
-	}
+  }
 
-	&-enter-active,
-	&-leave-active {
-		transition: opacity .2s;
-	}
-	&-enter,
-	&-leave-to {
-		opacity: 0;
-	}
+  &-enter-active,
+  &-leave-active {
+    transition: opacity .2s;
+  }
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
 
   @include responsive(desktop) {
     &__wrap {
