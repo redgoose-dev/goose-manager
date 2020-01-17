@@ -34,10 +34,10 @@ main > h1 {
   --color-header-active-menu: #{rgba($color-key, .75)};
   @include dark-mode() {
     --color-header-bg: #{rgba(#000, .5)};
-    --color-header-menu-bg-depth-2: #{rgba(mix(#161619, #fff, 70%), .95)};
-    --color-header-menu-bg-depth-3: #{rgba(mix(#161619, #fff, 65%), .95)};
-    --color-header-menu-line: #{rgba(#fff, .2)};
-    --color-header-menu-hover: #{rgba(#fff, .1)};
+    --color-header-menu-bg-depth-2: #{rgba(mix(#161619, #fff, 75%), .95)};
+    --color-header-menu-bg-depth-3: #{rgba(mix(#161619, #fff, 70%), .95)};
+    --color-header-menu-line: #{rgba(#000, .25)};
+    --color-header-menu-hover: #{rgba(#000, .15)};
     --color-header-menu-shadow: inset 0 0 30px rgba(0,0,0,.15), 0 0 20px rgba(0,0,0,.25);
     --color-header-active-menu: #{rgba($color-dark-key, .75)};
   }
