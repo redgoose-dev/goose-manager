@@ -58,9 +58,24 @@
             </span>
             <div>
               <ul>
-                <li><nuxt-link to="/account/" @click.native="onClickProfileItem">Account</nuxt-link></li>
-                <li><span @click.prevent="onClickClearTokens">Clear tokens</span></li>
-                <li><nuxt-link to="/auth/logout/">Logout</nuxt-link></li>
+                <li>
+                  <nuxt-link to="/account/" @click.native="onClickProfileItem">
+                    <em>Account</em>
+                    <icon name="user" class="end"/>
+                  </nuxt-link>
+                </li>
+                <li>
+                  <a href="#" @click.prevent="onClickClearTokens">
+                    <em>Clear tokens</em>
+                    <icon name="trash" class="end"/>
+                  </a>
+                </li>
+                <li>
+                  <nuxt-link to="/auth/logout/">
+                    <em>Logout</em>
+                    <icon name="log-out" class="end"/>
+                  </nuxt-link>
+                </li>
               </ul>
             </div>
           </li>

@@ -119,6 +119,9 @@ main > h1 {
       order: 5;
       margin: 0 0 0 2px;
     }
+    &.end {
+      order: 5;
+    }
   }
   a, span {
     display: flex;
@@ -255,14 +258,16 @@ main > h1 {
   }
 
   &--side {
-    svg {
-      margin: 0 0 0 3px;
-      width: 16px;
-      height: 16px;
-      stroke-width: 2;
-      order: 1;
-    }
     > li {
+      > span, > a {
+        > svg {
+          margin: 0 0 0 3px;
+          width: 16px;
+          height: 16px;
+          stroke-width: 2;
+          order: 1;
+        }
+      }
       > span {
         font-size: 13px;
         font-weight: 200;
