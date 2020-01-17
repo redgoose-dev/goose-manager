@@ -24,7 +24,7 @@ main > h1 {
 
 // header
 .header {
-  --color-header-bg: #{rgba(#000, .3)};
+  --color-header-bg: #{rgba(#888, .95)};
   --color-header-text: #fff;
   --color-header-menu-bg-depth-2: #{rgba(mix(#45464b, #fff, 70%), .9)};
   --color-header-menu-bg-depth-3: #{rgba(mix(#45464b, #fff, 80%), .9)};
@@ -33,7 +33,7 @@ main > h1 {
   --color-header-menu-shadow: inset 0 0 30px rgba(0,0,0,.15);
   --color-header-active-menu: #{rgba($color-key, .75)};
   @include dark-mode() {
-    --color-header-bg: #{rgba(#000, .5)};
+    --color-header-bg: #{rgba(#191919, .95)};
     --color-header-menu-bg-depth-2: #{rgba(mix(#161619, #fff, 75%), .95)};
     --color-header-menu-bg-depth-3: #{rgba(mix(#161619, #fff, 70%), .95)};
     --color-header-menu-line: #{rgba(#000, .25)};
@@ -53,7 +53,6 @@ main > h1 {
     height: $size-header-height;
     user-select: none;
     box-shadow: 0 0 10px rgba(#000, .25);
-    @include background-blur(10px);
   }
   &__wrap {
     display: flex;
@@ -139,6 +138,9 @@ main > h1 {
         color: var(--color-key);
       }
     }
+  }
+  span {
+    cursor: default;
   }
   li {
     position: relative;
