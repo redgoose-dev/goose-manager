@@ -106,7 +106,7 @@ main > h1 {
   }
   svg {
     display: block;
-    margin: 0 3px 0 0;
+    margin: 0 4px 0 0;
     width: 14px;
     height: 14px;
     stroke-width: 2.4;
@@ -115,6 +115,10 @@ main > h1 {
     &.flip-y {
       transition: transform 250ms ease-out;
       transform-origin: 50% 50%;
+    }
+    &.dropdown {
+      order: 5;
+      margin: 0 0 0 2px;
     }
   }
   a, span {
@@ -148,15 +152,17 @@ main > h1 {
         position: absolute;
         opacity: 0;
         pointer-events: none;
-        min-width: 160px;
+        min-width: 150px;
         box-sizing: border-box;
         transition: opacity 200ms ease-out;
       }
     }
     &:focus-within, &:hover {
-      svg {
-        &.flip-y {
-          transform: rotateX(180deg);
+      > a, > span {
+        > svg {
+          &.flip-y {
+            transform: rotateX(180deg);
+          }
         }
       }
       > div {
@@ -174,6 +180,11 @@ main > h1 {
       font-weight: 400;
       padding: 0 15px;
       letter-spacing: -.25px;
+      > svg {
+        &.dropdown {
+          margin-right: -7px;
+        }
+      }
     }
     &:focus-within, &:hover {
       background-color: var(--color-header-menu-hover);
@@ -193,9 +204,18 @@ main > h1 {
           transform: scaleY(.5);
         }
       }
-      > a, > span {
+      a, span {
         font-size: 13px;
-        padding: 8px 15px;
+        padding: 8px 10px 8px 15px;
+      }
+      em {
+        flex: 1;
+      }
+      svg {
+        &.dropdown {
+          margin-left: 10px;
+          opacity: .5;
+        }
       }
       &:focus,
       &:hover {

@@ -15,6 +15,7 @@
               :target="item.target">
               <em>{{item.name}}</em>
               <icon v-if="item.icon" :name="item.icon"/>
+              <icon v-if="item.children && item.children.length" name="chevron-down" class="flip-y dropdown"/>
             </component>
             <div v-if="item.children && item.children.length">
               <ul>
@@ -26,6 +27,7 @@
                     :target="item2.target">
                     <em>{{item2.name}}</em>
                     <icon v-if="item2.icon" :name="item2.icon"/>
+                    <icon v-if="item2.children && item2.children.length" name="chevron-right" class="dropdown"/>
                   </component>
                   <div v-if="item2.children">
                     <ul>
@@ -52,7 +54,7 @@
           <li>
             <span>
               <em>{{user.email}}</em>
-              <icon name="chevron-down" class="after flip-y"/>
+              <icon name="chevron-down" class="flip-y"/>
             </span>
             <div>
               <ul>
