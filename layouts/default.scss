@@ -123,12 +123,12 @@ main > h1 {
     height: 100%;
     font-family: $font-eng-circular;
     box-sizing: border-box;
-    cursor: pointer;
     color: var(--color-header-text);
   }
   a {
     text-decoration: none;
     outline: none;
+    cursor: pointer;
     &.nuxt-active {
       color: var(--color-key);
       svg {
