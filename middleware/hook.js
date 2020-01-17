@@ -1,9 +1,5 @@
 // ignore path list
-const ignorePath = [
-  'labs',
-  'labs-index-ui',
-  'labs-index-icons',
-];
+const ignorePath = [];
 
 export default function(cox)
 {
