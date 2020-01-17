@@ -93,9 +93,10 @@ export default {
   head()
   {
     const { preference } = this.$store.state;
-    console.log(preference);
     return {
-      htmlAttrs: { lang: 'ko' },
+      htmlAttrs: {
+        lang: preference.lang,
+      },
     };
   },
   data()

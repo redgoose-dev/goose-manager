@@ -2,6 +2,7 @@
   "name": "Management contents",
   "shortName": "Manager",
   "description": "management redgoose contents",
+  "lang": "ko",
   "debug": {
     "service": false,
     "route": false,
