@@ -32,7 +32,7 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic to="/apps/" icon-left="grid">Apps</button-basic>
+      <button-basic to="/apps/" icon-left="package">Apps</button-basic>
     </template>
     <template slot="right">
       <button-basic v-if="!error && (index && index.length)" to="/nests/add/" color="key" icon-left="plus">

@@ -39,4 +39,7 @@ export const msg = {
   currentPasswordGuide: '사용하고 있는 비밀번호를 입력해주세요.',
   newPasswordGuide: '새로운 비밀번호를 입력해주세요.',
   samePasswordGuide: '새로운 비밀번호와 같은 비밀번호를 입력해주세요.',
+  confirmResetToken: 'Do you really want to reset the token?',
+  successClearToken: 'Success clear token',
+  errorClearToken: 'Error clear token',
 };

@@ -6,27 +6,63 @@
         <nuxt-link to="/">{{computedShortName}}</nuxt-link>
       </h1>
       <nav class="header-gnb">
-        <ul v-if="computedNavigation.length > 0">
-          <li v-for="(item,k) in computedNavigation" v-if="item.show">
-            <nuxt-link v-if="!item.target" :to="item.link">{{item.name}}</nuxt-link>
-            <a v-else v-bind:href="item.link" :target="item.target">{{item.name}}</a>
+        <ul v-if="computedNavigation.length > 0" class="navigation">
+          <li v-for="item in computedNavigation" v-if="item.show">
+            <component
+              :is="getNavigationElementName(item)"
+              :to="item.link"
+              :href="item.href"
+              :target="item.target">
+              <em>{{item.name}}</em>
+              <icon v-if="item.icon" :name="item.icon"/>
+            </component>
+            <div v-if="item.children && item.children.length">
+              <ul>
+                <li v-for="item2 in item.children">
+                  <component
+                    :is="getNavigationElementName(item2)"
+                    :to="item2.link"
+                    :href="item2.href"
+                    :target="item2.target">
+                    <em>{{item2.name}}</em>
+                    <icon v-if="item2.icon" :name="item2.icon"/>
+                  </component>
+                  <div v-if="item2.children">
+                    <ul>
+                      <li v-for="item3 in item2.children">
+                        <component
+                          :is="getNavigationElementName(item3)"
+                          :to="item3.link"
+                          :href="item3.href"
+                          :target="item3.target">
+                          <em>{{item3.name}}</em>
+                          <icon v-if="item3.icon" :name="item3.icon"/>
+                        </component>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
       </nav>
       <nav v-if="!!user" class="header-nav">
-        <div class="dropdown">
-          <span class="dropdown__control">
-            <em>{{user.email}}</em>
-            <icon name="chevron-down"/>
-          </span>
-          <div class="dropdown__children">
-            <ul>
-              <li><nuxt-link to="/account/" @click.native="onClickProfileItem">Account</nuxt-link></li>
-              <li><a href="#" @click.prevent="onClickClearTokens">Clear tokens</a></li>
-              <li><nuxt-link to="/auth/logout/">Logout</nuxt-link></li>
-            </ul>
-          </div>
-        </div>
+        <ul class="navigation navigation--side">
+          <li>
+            <span>
+              <em>{{user.email}}</em>
+              <icon name="chevron-down" class="after flip-y"/>
+            </span>
+            <div>
+              <ul>
+                <li><nuxt-link to="/account/" @click.native="onClickProfileItem">Account</nuxt-link></li>
+                <li><span @click.prevent="onClickClearTokens">Clear tokens</span></li>
+                <li><nuxt-link to="/auth/logout/">Logout</nuxt-link></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
       </nav>
     </div>
   </header>
@@ -46,6 +82,8 @@
 </template>
 
 <script>
+import * as messages from '~/libs/messages';
+
 export default {
   name: 'layout',
   components: {
@@ -54,8 +92,10 @@ export default {
   },
   head()
   {
+    const { preference } = this.$store.state;
+    console.log(preference);
     return {
-      htmlAttrs: { class: 'dark-mode' },
+      htmlAttrs: { lang: 'ko' },
     };
   },
   data()
@@ -93,7 +133,7 @@ export default {
     async onClickClearTokens(e)
     {
       // confirm
-      if (!confirm('Do you really want to reset the token?'))
+      if (!confirm(messages.msg.confirmResetToken))
       {
         e.currentTarget.blur();
         return;
@@ -104,19 +144,37 @@ export default {
         e.currentTarget.blur();
         const res = await this.$axios.$post('/token/clear/');
         if (!res.success) throw 'error';
-        alert('Success clear token');
+        alert(messages.msg.successClearToken);
       }
       catch (e)
       {
         this.$toast.add({
-          message: 'Error clear token',
+          message: messages.msg.errorClearToken,
           color: 'error',
         });
       }
     },
-    onClickToggleTheme(e)
+    /**
+     * get navigation element name
+     * 메뉴 상태에 따라 링크 엘리먼트 이름 설정하기
+     *
+     * @param {object} item
+     * @return {string}
+     */
+    getNavigationElementName(item)
     {
-
+      if (item.link)
+      {
+        return 'nuxt-link';
+      }
+      else if (item.href)
+      {
+        return 'a';
+      }
+      else
+      {
+        return 'span';
+      }
     },
   },
 }

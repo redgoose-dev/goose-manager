@@ -37,7 +37,7 @@
 
   <nav-bottom>
     <template v-if="nest_srl" slot="left">
-      <button-basic to="/nests/" icon-left="archive">Nests</button-basic>
+      <button-basic to="/nests/" icon-left="cloud">Nests</button-basic>
       <button-basic :to="`/nests/${nest_srl}/articles/`" icon-left="droplet">Articles</button-basic>
     </template>
     <template v-else slot="left">

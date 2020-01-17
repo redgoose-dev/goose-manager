@@ -62,3 +62,18 @@
     @content;
   }
 }
+
+// gradient
+@mixin color-linear-gradient($matt-color, $start, $end, $direction:'vertical')
+{
+  background: $matt-color;
+
+  @if $direction == 'horizontal'
+  {
+    background: linear-gradient(to right, $start, $end);
+  }
+  @else
+  {
+    background: linear-gradient(to bottom, $start, $end);
+  }
+}

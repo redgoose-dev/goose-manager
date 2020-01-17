@@ -43,7 +43,7 @@
   </template>
   <nav-bottom>
     <template slot="left">
-      <button-basic to="../../" icon-left="archive">Nests</button-basic>
+      <button-basic to="../../" icon-left="cloud">Nests</button-basic>
       <button-basic
         v-if="(nest && parseInt(nest.json.useCategory) === 1)"
         :to="`../../${nest_srl}/categories/`"
@@ -211,8 +211,7 @@ export default {
 
 <style lang="scss" scoped>
 .index-header {
-  position: sticky;
-  top: 0;
+  position: relative;
   padding: 12px 5px;
   z-index: 2;
   background-color: var(--color-bg);

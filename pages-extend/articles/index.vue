@@ -151,8 +151,7 @@ export default {
 
 <style lang="scss" scoped>
 .index-header {
-  position: sticky;
-  top: 0;
+  position: relative;
   padding: 12px 5px;
   z-index: 2;
   background-color: var(--color-bg);

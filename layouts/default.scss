@@ -2,9 +2,6 @@
 @import "../assets/scss/mixins";
 
 $size-side-max-padding: 50px;
-$color-header-bg: #48494b;
-$color-header-bg-dark: #151515;
-$color-header-menu-text: #eee;
 
 // title
 main > h1 {
@@ -27,16 +24,36 @@ main > h1 {
 
 // header
 .header {
+  --color-header-bg: #{rgba(#000, .3)};
+  --color-header-text: #fff;
+  --color-header-menu-bg-depth-2: #{rgba(mix(#45464b, #fff, 70%), .9)};
+  --color-header-menu-bg-depth-3: #{rgba(mix(#45464b, #fff, 80%), .9)};
+  --color-header-menu-line: #{rgba(#fff, .2)};
+  --color-header-menu-hover: #{rgba(#000, .1)};
+  --color-header-menu-shadow: inset 0 0 30px rgba(0,0,0,.15);
+  --color-header-active-menu: #{rgba($color-key, .75)};
+  @include dark-mode() {
+    --color-header-bg: #{rgba(#000, .5)};
+    --color-header-menu-bg-depth-2: #{rgba(mix(#161619, #fff, 70%), .95)};
+    --color-header-menu-bg-depth-3: #{rgba(mix(#161619, #fff, 65%), .95)};
+    --color-header-menu-line: #{rgba(#fff, .2)};
+    --color-header-menu-hover: #{rgba(#fff, .1)};
+    --color-header-menu-shadow: inset 0 0 30px rgba(0,0,0,.15), 0 0 20px rgba(0,0,0,.25);
+    --color-header-active-menu: #{rgba($color-dark-key, .75)};
+  }
+
   & {
-    position: relative;
-    //z-index: 1;
+    position: sticky;
+    z-index: 5;
     top: 0;
     left: 0;
     right: 0;
     margin: 0;
-    background-color: $color-header-bg;
+    background-color: var(--color-header-bg);
     height: $size-header-height;
     user-select: none;
+    box-shadow: 0 0 10px rgba(#000, .25);
+    @include background-blur(10px);
   }
   &__wrap {
     display: flex;
@@ -44,7 +61,6 @@ main > h1 {
     align-items: center;
     height: 100%;
   }
-
   &-logo {
     margin: 0 5px 0 -10px;
     height: 100%;
@@ -59,162 +75,177 @@ main > h1 {
       line-height: 1.4;
       letter-spacing: -.5px;
       font-size: 22px;
-      color: #fff;
+      color: var(--color-header-text);
     }
   }
   &-gnb {
     flex: 1;
     height: 100%;
     padding: 0 0 0 5px;
-    ul {
-      display: flex;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      height: 100%;
-    }
-    li {
-      height: 100%;
-    }
-    a {
-      display: flex;
-      padding: 0 15px;
-      align-items: center;
-      height: 100%;
-      text-decoration: none;
-      color: $color-header-menu-text;
-      font-family: $font-eng-circular;
-      font-size: 14px;
-      font-weight: 400;
-      box-sizing: border-box;
-      outline: none;
-      &:focus,
-      &:hover {
-        background: rgba(#000, .25);
-      }
-      &.nuxt-active {
-        background-color: rgba($color-key, .75);
-        cursor: default;
-      }
-    }
+    box-sizing: border-box;
   }
   &-nav {
     height: 100%;
-    margin: 0 -15px 0 0;
-  }
-
-  @include dark-mode() {
-    background-color: $color-header-bg-dark;
-    &-gnb {
-      a {
-        &:focus,
-        &:hover {
-          background: rgba(#000, .5);
-        }
-        &.nuxt-active {
-          background-color: rgba($color-dark-key, .75);
-        }
-      }
-    }
+    margin: 0 -20px 0 0;
   }
 }
-.dropdown {
-  $self: '.dropdown';
-  height: 100%;
-  &__control {
+
+// navigation
+.navigation {
+  & {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  em {
+    display: block;
+    font-style: normal;
+  }
+  svg {
+    display: block;
+    margin: 0 3px 0 0;
+    width: 14px;
+    height: 14px;
+    stroke-width: 2.4;
+    color: var(--color-header-text);
+    order: -1;
+    &.flip-y {
+      transition: transform 250ms ease-out;
+      transform-origin: 50% 50%;
+    }
+  }
+  a, span {
     display: flex;
     align-items: center;
-    margin: 0;
-    padding: 0 15px 0 20px;
     height: 100%;
-    font-size: 0;
-    background: none;
-    border: none;
-    border-radius: $size-border-radius;
-    transition: background .2s ease-out;
-    cursor: default;
-    > em {
-      display: block;
-      padding-right: 10px;
-      font-family: $font-eng-circular;
-      font-size: 13px;
-      font-weight: 200;
-      font-style: normal;
-      color: $color-header-menu-text;
-      text-align: right;
-    }
-    > svg {
-      display: block;
-      width: 16px;
-      height: 16px;
-      color: #fff;
-      transition: transform 250ms ease-out;
+    font-family: $font-eng-circular;
+    box-sizing: border-box;
+    cursor: pointer;
+    color: var(--color-header-text);
+  }
+  a {
+    text-decoration: none;
+    outline: none;
+    &.nuxt-active {
+      color: var(--color-key);
+      svg {
+        color: var(--color-key);
+      }
     }
   }
-  &__children {
+  li {
     position: relative;
-    ul {
-      right: 0;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      background-color: $color-header-bg;
-      min-width: 160px;
-      position: absolute;
-      z-index: 3;
-      top: 0;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .15s ease-out;
+    transition: background-color 200ms ease-out;
+    > div {
+      position: relative;
+      > ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+        min-width: 160px;
+        box-sizing: border-box;
+        transition: opacity 200ms ease-out;
+      }
     }
-    li {
-      border-top: 1px solid rgba(#fff, .15);
+    &:focus-within, &:hover {
+      svg {
+        &.flip-y {
+          transform: rotateX(180deg);
+        }
+      }
+      > div {
+        > ul {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
     }
-    a {
-      display: block;
-      padding: 8px 20px;
-      text-decoration: none;
-      font-family: $font-eng-circular;
-      color: $color-header-menu-text;
+  }
+  // 1depth
+  > li {
+    > a, > span {
       font-size: 14px;
-      outline: none;
+      font-weight: 400;
+      padding: 0 15px;
+      letter-spacing: -.25px;
+    }
+    &:focus-within, &:hover {
+      background-color: var(--color-header-menu-hover);
+    }
+    // sub menus
+    li {
+      &:nth-child(n+2) {
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          height: 1px;
+          background-color: var(--color-header-menu-line);
+          transform: scaleY(.5);
+        }
+      }
+      > a, > span {
+        font-size: 13px;
+        padding: 8px 15px;
+      }
       &:focus,
       &:hover {
-        background: rgba(#000, .15);
-      }
-      &.nuxt-active {
-        background-color: rgba($color-key, .75);
+        background-color: var(--color-header-menu-hover);
       }
     }
-  }
-  &:hover,
-  &:focus-within {
-    #{$self}__control {
-      background: rgba(#000, .15);
-      > svg {
-        transform: rotateX(180deg);
-      }
+    ul {
+      box-shadow: var(--color-header-menu-shadow);
     }
-    #{$self}__children {
+    > div {
+      // 2depth
       > ul {
-        opacity: 1;
-        pointer-events: auto;
+        top: 0;
+        background-color: var(--color-header-menu-bg-depth-2);
+        > li {
+          > div {
+            position: absolute;
+            right: 0;
+            top: 0;
+            // 3depth
+            > ul {
+              background-color: var(--color-header-menu-bg-depth-3);
+            }
+          }
+          &:nth-child(n+2) {
+            > div {
+              > ul {
+                top: -15px;
+              }
+            }
+          }
+        }
       }
     }
   }
 
-  @include dark-mode() {
-    &__children {
-      ul {
-        background-color: $color-header-bg-dark;
-      }
-      li {
-        border-color: rgba(#fff, .05);
-      }
-      a {
-        &.nuxt-active {
-          background-color: rgba($color-dark-key, .75);
-        }
+  &--side {
+    svg {
+      margin: 0 0 0 3px;
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+      order: 1;
+    }
+    > li {
+      > span {
+        font-size: 13px;
+        font-weight: 200;
+        padding-left: 20px;
+        padding-right: 20px;
       }
     }
   }

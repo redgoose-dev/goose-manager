@@ -26,9 +26,19 @@
       "link": "/json/"
     },
     {
-      "name": "Documentation",
-      "link": "https://github.com/redgoose-dev/goose-api/wiki",
-      "target": "_blank"
+      "name": "Resource",
+      "children": [
+        {
+          "name": "GitHub",
+          "href": "https://github.com/redgoose-dev/goose-manager",
+          "target": "_blank"
+        },
+        {
+          "name": "API Documentation",
+          "href": "https://github.com/redgoose-dev/goose-api/wiki",
+          "target": "_blank"
+        }
+      ]
     }
   ],
   "dashboard": {
