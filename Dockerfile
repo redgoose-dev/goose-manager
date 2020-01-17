@@ -10,7 +10,7 @@ RUN npm install
 
 ENV NODE_ENV=production
 
-COPY manager/.env .
+RUN npm run setup
 RUN npm run build
 
 ENV HOST 0.0.0.0

@@ -46,4 +46,5 @@ export const msg = {
 
 export const keyword = {
   goBack: 'Go to back',
+  serviceError: 'Service error',
 };

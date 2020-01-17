@@ -4,13 +4,13 @@
     <icon :name="icon"/>
   </figure>
   <h1 class="title">
-    Service error / {{error.statusCode}}
+    {{message.title}} / {{error.statusCode}}
   </h1>
   <p class="description">
     {{error.message}}
   </p>
   <nav class="nav">
-    <button-basic type="button" :inline="true" size="large" @click="$router.back()">
+    <button-basic type="button" :inline="true" @click="$router.back()">
       {{message.back}}
     </button-basic>
   </nav>
@@ -32,6 +32,7 @@ export default {
     this.icon = icons[Math.floor(Math.random() * icons.length)];
     this.message = {
       back: messages.keyword.goBack,
+      title: messages.keyword.serviceError,
     };
   },
 }
