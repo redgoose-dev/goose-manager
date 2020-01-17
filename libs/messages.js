@@ -27,7 +27,7 @@ export const error = {
 	noValue: `There is no value for '{0}'.`,
 	confirmPassword: `확인용 비밀번호가 다릅니다.`,
 	failedLogin: 'Failed login',
-	noItem: 'No item',
+  noKeywords: `No {0} in {1}`,
 };
 
 export const msg = {
@@ -42,4 +42,8 @@ export const msg = {
   confirmResetToken: 'Do you really want to reset the token?',
   successClearToken: 'Success clear token',
   errorClearToken: 'Error clear token',
+};
+
+export const keyword = {
+  goBack: 'Go to back',
 };

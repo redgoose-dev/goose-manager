@@ -11,7 +11,7 @@
   </p>
   <nav class="nav">
     <button-basic type="button" :inline="true" size="large" @click="$router.back()">
-      Go to back
+      {{message.back}}
     </button-basic>
   </nav>
 </article>
@@ -19,6 +19,7 @@
 
 <script>
 import icons from '~/components/icon/svg-index';
+import * as messages from '~/libs/messages';
 
 export default {
   components: {
@@ -29,6 +30,9 @@ export default {
   created()
   {
     this.icon = icons[Math.floor(Math.random() * icons.length)];
+    this.message = {
+      back: messages.keyword.goBack,
+    };
   },
 }
 </script>

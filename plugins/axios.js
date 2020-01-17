@@ -1,4 +1,4 @@
-import * as msg from '../libs/messages';
+import * as messages from '../libs/messages';
 
 export default function(cox)
 {
@@ -10,14 +10,14 @@ export default function(cox)
 	{
 		return error({
 			statusCode: 500,
-			message: (cox.isDev) ? 'No TOKEN_PUBLIC in .env' : msg.service.error
+			message: (cox.isDev) ?  messages.printf(messages.error.noKeywords, 'TOKEN_PUBLIC', '.env') : messages.service.error
 		});
 	}
 	if (!process.env.APP_API_URL)
 	{
 		return error({
 			statusCode: 500,
-			message: (cox.isDev) ? 'No APP_API_URL in .env' : msg.service.error
+			message: (cox.isDev) ? messages.printf(messages.error.noKeywords, 'APP_API_URL', '.env') : messages.service.error
 		});
 	}
 
