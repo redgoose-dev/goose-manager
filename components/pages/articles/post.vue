@@ -1,5 +1,6 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form">
+  <!-- basic fields -->
   <field-wrap :legend="`${type} article form`" :hide-legend="true">
     <field v-if="datas.categories && datas.categories.length" label="Category" for="category">
       <template slot="body">
@@ -25,8 +26,25 @@
           :required="true"/>
       </template>
     </field>
-    <field label="Type" for="type">
+    <field label="Order date" label2="Article type" for="order" for2="type">
       <template slot="body">
+        <form-text
+          type="text"
+          name="order"
+          id="order"
+          v-model="forms.order.value"
+          placeholder="2019-05-05"
+          :maxlength="10"
+          :size="15"
+          :error="!!forms.order.error"
+          :required="true"
+          :inline="true"
+          @change="onChangeOrder"/>
+        <p v-if="!!forms.order.error" class="form-help form-help--error">
+          {{forms.order.error}}
+        </p>
+      </template>
+      <template slot="body2">
         <div class="rg-row rg-row-v-center rg-row-gutter-h">
           <label class="form-field">
             <form-radio name="type" id="type" v-model="forms.type" :value="null"/>
@@ -39,56 +57,30 @@
         </div>
       </template>
     </field>
-    <field label="Order date" for="order">
-      <form-text
-        type="text"
-        name="order"
-        id="order"
-        v-model="forms.order.value"
-        placeholder="2019-05-05"
-        :maxlength="10"
-        :size="20"
-        :error="!!forms.order.error"
-        :required="true"
-        :inline="true"
-        @change="onChangeOrder"/>
-      <p v-if="!!forms.order.error" class="form-help form-help--error">
-        {{forms.order.error}}
-      </p>
-    </field>
   </field-wrap>
-
+  <!-- // basic fields -->
+  <!-- editor -->
   <editor
     ref="editor"
     name="content"
     id="content"
     v-model="forms.content.value"
     placeholder="article content body"
-    :rows="18"
     :required="true"
-    @position="onChangePosition"
-    className="editor">
-    <template slot="nav">
-      <button-basic
-        type="button"
-        size="small"
-        color="gray"
-        icon-right="eye"
-        :inline="true"
-        @click="(e) => $refs.editor.onPreview(e)">
-        Preview
-      </button-basic>
-    </template>
-  </editor>
-
+    @change-position="onChangePositionEditor"
+    @insert-text="insertTextToEditor"
+    @submit="nativeSubmit"/>
+  <!-- // editor -->
+  <!-- uploader -->
   <uploader
     ref="$uploader"
     :article="datas.article"
     :files="datas.files"
     :nest="datas.nest"
     :options="{}"
-    @insert-editor="insertFileToEditor"/>
-
+    @insert-editor="insertTextToEditor"/>
+  <!-- // uploader -->
+  <!-- bottom buttons -->
   <nav-bottom>
     <template slot="left">
       <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
@@ -104,6 +96,7 @@
       </button-basic>
     </template>
   </nav-bottom>
+  <!-- // bottom buttons -->
 </form>
 </template>
 
@@ -178,10 +171,17 @@ export default {
     };
   },
   methods: {
+    /**
+     * on submit
+     *
+     * @return {Promise}
+     */
     async onSubmit(e)
     {
+      if (this.processing) return;
+
       // check value
-      if (!/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.test(this.forms.order.value))
+      if (!dates.checkOrderDate(this.forms.order.value))
       {
         this.forms.order.error = errorMessage.order;
         return;
@@ -205,12 +205,9 @@ export default {
         {
           await this.$axios.$post(
             `/files/remove-file/`,
-            formData({
-              path: data_article.json.thumbnail.path
-            })
+            formData({ path: data_article.json.thumbnail.path })
           );
         }
-
         try
         {
           // 새로운 썸네일 이미지를 업로드한다.
@@ -254,7 +251,7 @@ export default {
       {
         // assign json
         if (updatedThumbnail) json.thumbnail = thumbnail;
-
+        // request article
         let data = {
           app_srl: this.forms.app_srl,
           nest_srl: this.forms.nest_srl,
@@ -325,10 +322,18 @@ export default {
         });
       }
     },
+    nativeSubmit()
+    {
+      this.onSubmit();
+    },
+    /**
+     * get json
+     *
+     * @return {object}
+     */
     getJSON()
     {
-      if (!this.datas.article) return {};
-      return Object.assign({}, this.datas.article.json);
+      return !!this.datas.article ? Object.assign({}, this.datas.article.json) : {};
     },
     getCategoryInForm()
     {
@@ -336,34 +341,54 @@ export default {
       if (this.category_srl === 'null') return null;
       return this.category_srl || null;
     },
+    /**
+     * get type name
+     *
+     * @param {string} type
+     * @return {string}
+     */
     getTypeName(type)
     {
-      switch (type)
-      {
-        case 'hidden':
-          return 'hidden';
-        default:
-          return '';
-      }
+      return type === 'hidden' ? 'hidden' : '';
     },
-    onChangePosition(op)
+    /**
+     * on change position in editor
+     * 에디터의 선택영역이 변했을때 선택영역의 시작과 끝의 위치값을 업데이트한다.
+     *
+     * @param {Object} op
+     */
+    onChangePositionEditor(op)
     {
       this.editor.start = op.start;
       this.editor.end = op.end;
     },
-    insertFileToEditor(res)
+    /**
+     * insert keyword in editor
+     * 에디터 입력창에 문자를 집어넣는다.
+     *
+     * @param {string} keyword
+     * @param {number} selection
+     */
+    async insertTextToEditor(keyword, selection)
     {
       let content = this.forms.content.value + '';
       let pos = this.editor.start;
-      // 시작글자에서 붙인다면 처음 `\n`가 삭제됨
-      if (pos === 0) res = res.replace(/^\n/g, '');
-      this.forms.content.value = content.substr(0, pos) + res + content.substr(pos);
-      this.editor.start += res.length;
+      if (pos === 0) keyword = keyword.replace(/^\n/g, '');
+      this.forms.content.value = content.substr(0, pos) + keyword + content.substr(pos);
+      let lastPosition = this.editor.start + (selection ? selection : keyword.length);
+      this.editor.start = lastPosition;
+      this.editor.end = lastPosition;
+      this.$nextTick((e) => {
+        this.$refs.editor.changeCursor(lastPosition, lastPosition);
+      });
     },
-    onChangeOrder(text)
+    /**
+     * on change order
+     * `order`값을 검사한다.
+     */
+    onChangeOrder()
     {
-      // check value
-      if (this.forms.order.value.length === 10 && !/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.test(this.forms.order.value))
+      if (!dates.checkOrderDate(this.forms.order.value))
       {
         this.forms.order.error = errorMessage.order;
       }

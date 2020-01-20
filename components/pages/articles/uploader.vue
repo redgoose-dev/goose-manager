@@ -4,10 +4,10 @@
     <header v-if="parseInt(this.nest.json.useThumbnailSizeTool) === 1" class="rg-uploader-header">
       <h1>File uploader</h1>
       <div class="rg-row rg-row-v-center rg-row-gutter-h select-size-tool">
-        <label v-for="item in sizeToolItems" class="form-field">
+        <label v-for="(item,key) in sizeToolItems" class="form-field">
           <form-radio
             name="select_size_tool"
-            id="select_size_tool"
+            :id="`select_size_tool${key > 0 ? key : ''}`"
             size="small"
             v-model="sizeSet"
             :value="item.value"/>

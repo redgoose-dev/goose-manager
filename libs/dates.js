@@ -40,3 +40,17 @@ export function convertDateFormat(date=null, time=true)
 		return `${src[0]} ${src[1]}`;
 	}
 }
+
+/**
+ * check order date
+ * `0000-00-00`형식이거나 올바른 날짜인지 검사한다.
+ *
+ * @param {string} str
+ * @return {boolean}
+ */
+export function checkOrderDate(str='')
+{
+  if (str.length !== 10) return false;
+  if (!/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.test(str)) return false;
+  return !isNaN(new Date(str).getTime());
+}

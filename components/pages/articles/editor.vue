@@ -1,56 +1,46 @@
 <template>
-<div class="rg-editor">
-  <div class="rg-editor__body">
-    <form-text
-      type="textarea"
+<div class="editor">
+  <toolbar
+    :active="{
+      preview: showPreview,
+    }"
+    @click-item="onClickToolbarItem"/>
+  <div class="editor__body">
+    <textarea
+      ref="textarea"
       :name="name"
       :id="id"
       :placeholder="placeholder"
       :value="value"
-      :rows="rows"
       :required="required"
-      @position="onChangePosition"
-      @change="onChangeText"/>
+      @click="onClickTextarea"
+      @keyup="onKeyupTextarea"
+      @input="onInputTextarea"
+      @keyup.ctrl.enter="submit"/>
   </div>
-  <div class="rg-editor__bottom">
-    <div class="rg-editor__guide">
-      <ul>
-        <li>
-          <a href="https://nolboo.kim/blog/2013/09/07/john-gruber-markdown/" target="_blank">
-            존 그루버 마크다운 페이지 번역
-          </a>
-        </li>
-        <li>
-          <a href="https://gist.github.com/ihoneymon/652be052a0727ad59601" target="_blank">
-            마크다운 사용법
-          </a>
-        </li>
-      </ul>
-    </div>
-    <nav class="rg-editor__toolbar">
-      <slot name="nav"/>
-    </nav>
+  <div
+    v-if="showPreview"
+    class="preview"
+    @click="showPreviewControl(false)">
+    <article class="preview__wrap" @click.stop="">
+      <div
+        ref="preview"
+        v-html="preview"
+        class="redgoose-body redgoose-body--popup"/>
+    </article>
   </div>
-
-  <transition name="preview">
-    <div v-if="previewWindow" class="preview" @click="onClickPreview">
-      <article class="preview__wrap" @click="(e) => e.stopPropagation()">
-        <div ref="preview" v-html="preview" class="redgoose-body redgoose-body--popup"/>
-      </article>
-    </div>
-  </transition>
 </div>
 </template>
 
 <script>
 import marked from 'marked';
 
-let el_preview = null;
-
 export default {
   components: {
     'form-text': () => import('~/components/form/text'),
     'button-basic': () => import('~/components/button/basic'),
+    'icon': () => import('~/components/icon'),
+    'toolbar': () => import('~/components/pages/articles/editor-toolbar'),
   },
   props: {
     label: { type: String, default: 'Editor' },
@@ -58,52 +48,111 @@ export default {
     id: { type: String, default: 'editor' },
     value: { type: [String,Number] },
     placeholder: { type: String, default: '' },
-    rows: { type: Number, default: 20 },
     required: { type: Boolean, default: false },
   },
   data()
   {
     return {
-      previewWindow: false,
+      showPreview: false,
       preview: '',
+      start: 0,
+      end: 0,
     };
   },
   mounted()
   {
-    el_preview = this.$refs.preview;
+    this.$nextTick(() => {
+      this.$textarea = this.$refs.textarea;
+      this.setSize();
+    });
   },
   methods: {
-    onChangeText(text)
+    onClickTextarea(e)
     {
-      this.$emit('input', text);
+      this.onChangePosition(e.target);
     },
-    onChangePosition(op)
+    onKeyupTextarea(e)
     {
-      this.$emit('position', op);
+      this.onChangePosition(e.target);
     },
-    onPreview(e)
+    onInputTextarea(e)
     {
-      if (!(this.value && this.value.length > 1))
+      this.$emit('input', e.target.value);
+      this.resize();
+    },
+    onChangePosition(el)
+    {
+      if (!('selectionStart' in el)) return;
+      this.$emit('change-position', {
+        start: el.selectionStart,
+        end: el.selectionEnd,
+      });
+    },
+    showPreviewControl(sw)
+    {
+      // undefined sw
+      if (sw === undefined) sw = !this.showPreview;
+
+      if (sw)
       {
-        this.$toast.add({
-          message: 'The content is empty.',
-          color: 'error',
-        });
-        return;
+        if (!(this.value && this.value.length > 1))
+        {
+          this.$toast.add({
+            message: 'The content is empty.',
+            color: 'error',
+          });
+          return;
+        }
+        document.querySelector('html').classList.add('rg-mode-popup');
+        this.showPreview = true;
+        this.preview = marked(this.value);
       }
-      document.querySelector('html').classList.add('rg-mode-popup');
-      this.previewWindow = true;
-      this.preview = marked(this.value);
+      else
+      {
+        document.querySelector('html').classList.remove('rg-mode-popup');
+        this.showPreview = false;
+        this.preview = '';
+      }
     },
-    offPreview()
+    /**
+     * on click toolbar item
+     * 툴바 버튼 클릭
+     *
+     * @param {string} key
+     */
+    onClickToolbarItem(key)
     {
-      document.querySelector('html').classList.remove('rg-mode-popup');
-      this.previewWindow = false;
-      this.preview = '';
+      switch (key)
+      {
+        case 'preview':
+          this.showPreviewControl(true);
+          break;
+        case 'insert-space':
+          this.$emit('insert-text', `\n<p><br/></p>\n`);
+          break;
+        case 'insert-iframe':
+          this.$emit('insert-text', `\n<div class="iframe"></div>\n`, 21);
+          break;
+      }
     },
-    onClickPreview(e)
+    resize()
     {
-      this.offPreview();
+      this.$textarea.style.height = `auto`;
+      this.setSize(this.$textarea.scrollHeight);
+    },
+    setSize()
+    {
+      this.$textarea.style.height = `${this.$textarea.scrollHeight}px`;
+    },
+    changeCursor(start, end)
+    {
+      this.$refs.textarea.setSelectionRange(start, end);
+      this.$refs.textarea.focus();
+      this.resize();
+    },
+    submit()
+    {
+      this.$emit('submit');
     },
   }
 }

@@ -6,8 +6,15 @@
   </dt>
   <dd class="fieldset-field__body">
     <slot name="body"/>
-    <slot/>
   </dd>
+  <template v-if="label2">
+    <dt class="fieldset-field__label">
+      <label :for="computedFor2">{{label2}}</label>
+    </dt>
+    <dd class="fieldset-field__body">
+      <slot name="body2"/>
+    </dd>
+  </template>
 </dl>
 </template>
 
@@ -17,11 +24,17 @@ export default {
   props: {
     label: { type: String, default: null },
     for: { type: String, default: null },
+    label2: { type: String, default: null },
+    for2: { type: String, default: null },
   },
   computed: {
     computedFor()
     {
       return this.for;
+    },
+    computedFor2()
+    {
+      return this.for2;
     },
   },
 }

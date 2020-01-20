@@ -1,0 +1,192 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+@import "../../form/local";
+
+.toolbar {
+  $self: '.toolbar';
+  $border-button-radius: 3px;
+
+  --color-button-hover: #{mix(#000, $color-content-bg, 5%)};
+  --color-dropdown-item-hover: rgba(0,0,0,.05);
+  @include dark-mode() {
+    --color-button-hover: #555;
+    --color-dropdown-item-hover: rgba(255,255,255,.1);
+  }
+
+  position: sticky;
+  top: $size-header-height;
+  background-color: var(--color-bg);
+  padding: 0 2px;
+  margin: 0 -2px 2px;
+  box-sizing: border-box;
+
+  &__wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+  &__side {
+    display: flex;
+    align-items: center;
+  }
+  &__button {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    height: 34px;
+    margin: 0;
+    padding: 0 15px;
+    background-color: var(--color-content-bg);
+    border: none;
+    font-size: 0;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    transition: background-color 150ms ease-out;
+    svg {
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin: 0 auto;
+      color: var(--color-base);
+      stroke-width: 2.4px;
+    }
+    > span {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--color-base);
+      > em {
+        display: block;
+        margin: 0 0 0 4px;
+        font-style: normal;
+      }
+    }
+    &:active,
+    &:focus {
+      background: var(--color-button-hover);
+    }
+    &:hover {
+      background-color: var(--color-button-hover);
+    }
+    &[disabled] {
+      background: var(--color-key);
+      cursor: default;
+      svg {
+        color: #fff;
+      }
+      > span {
+        > em {
+          color: #fff;
+        }
+      }
+    }
+  }
+  &__group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-content-line);
+    border-radius: $border-button-radius;
+    box-sizing: border-box;
+    &-item {
+      position: relative;
+      &:nth-child(n+2) {
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          background-color: var(--color-content-line);
+          width: 1px;
+          z-index: 2;
+          pointer-events: none;
+          transform: scaleX(.5);
+          transform-origin: 0 0;
+        }
+      }
+      &:first-child {
+        > button,
+        > div {
+          border-top-left-radius: $border-button-radius - 1px;
+          border-bottom-left-radius: $border-button-radius - 1px;
+        }
+      }
+      &:last-child {
+        > button,
+        > div {
+          border-top-right-radius: $border-button-radius - 1px;
+          border-bottom-right-radius: $border-button-radius - 1px;
+        }
+      }
+    }
+  }
+
+  .dropdown {
+    position: relative;
+    &__children {
+      > ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        min-width: 150px;
+        border: 1px solid var(--color-content-line);
+        left: -30px;
+        background: var(--color-content-bg);
+        box-shadow: 0 2px 8px rgba(0,0,0,.25);
+        border-radius: 2px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+        > li {
+          font-size: 12px;
+          white-space: nowrap;
+          letter-spacing: -.25px;
+          &:nth-child(n+2) {
+            border-top: 1px solid var(--color-content-line);
+          }
+          a {
+            display: block;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: var(--color-base);
+            outline: none;
+            user-select: none;
+            transition: background-color 200ms ease-out;
+            &:hover,
+            &:focus {
+              background-color: var(--color-dropdown-item-hover);
+            }
+          }
+        }
+      }
+    }
+    &:focus-within,
+    &:hover {
+      .toolbar__button {
+        background-color: var(--color-button-hover);
+      }
+      .dropdown__children {
+        > ul {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+    }
+  }
+
+  @include dark-mode() {
+    //
+  }
+}
+div.toolbar__button {
+  display: flex;
+  align-items: center;
+  cursor: default;
+}

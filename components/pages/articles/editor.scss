@@ -1,30 +1,39 @@
 @import "../../../assets/scss/variables";
 @import "../../../assets/scss/mixins";
+@import "../../form/local";
 
-.rg-editor {
-  margin: 8px 0;
+.editor {
+  margin: -20px 0 0;
   &__body {
     textarea {
-      min-height: 200px;
-      max-height: 780px;
-      height: 450px;
+      display: block;
+      min-height: 240px;
+      max-height: 480px;
+      width: 100%;
       resize: vertical;
+      border: none;
+      outline: none;
+      background-color: var(--color-content-bg);
+      box-sizing: border-box;
+      padding: 20px;
+      font-size: 16px;
+      line-height: 1.48;
+      color: var(--color-base);
+      box-shadow: inset 0 2px 20px rgba(0,0,0,.075);
+      border-radius: $size-border-radius;
+      &::-webkit-input-placeholder {
+        color: $local-color-text-placeholder;
+      }
+      &:focus {
+        box-shadow:
+          0 0 0 $size-focus var(--color-key),
+          inset 0 2px 3px $local-color-shadow2;
+        border-color: transparent;
+      }
     }
-  }
-  &__bottom {
-    display: flex;
-    justify-content: space-between;
-  }
-  &__guide {
-    margin: 8px 0 0;
-    ul {
-      margin: 0;
-      padding: 0 0 0 20px;
-      font-size: .75rem;
+    > div {
+      white-space: pre;
     }
-  }
-  &__toolbar {
-    margin-top: 8px;
   }
 }
 
@@ -55,15 +64,6 @@
     padding: 40px 20px;
     box-shadow: 0 1px 10px rgba(#000, .3);
     box-sizing: border-box;
-  }
-
-  &-enter-active,
-  &-leave-active {
-    transition: opacity .2s;
-  }
-  &-enter,
-  &-leave-to {
-    opacity: 0;
   }
 
   @include responsive(desktop) {
