@@ -5,23 +5,23 @@
   <field-wrap legend="Basic field" tag="div" :hide-legend="true">
     <field>
       <strong slot="label">srl</strong>
-      <div><strong>{{data.srl}}</strong></div>
+      <template slot="body"><strong>{{user.srl}}</strong></template>
     </field>
     <field>
       <strong slot="label">E-mail</strong>
-      <div>{{data.email}}</div>
+      <template slot="body">{{user.email}}</template>
     </field>
     <field>
       <strong slot="label">Name</strong>
-      <div>{{data.name}}</div>
+      <template slot="body">{{user.name}}</template>
     </field>
     <field>
       <strong slot="label">Admin</strong>
-      <div>{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</div>
+      <template slot="body">{{parseInt(user.admin) === 2 ? 'Yes' : 'No'}}</template>
     </field>
     <field>
       <strong slot="label">Register date</strong>
-      <div>{{getDate(data.regdate)}}</div>
+      <template slot="body">{{getDate(user.regdate)}}</template>
     </field>
   </field-wrap>
 
@@ -63,7 +63,7 @@ export default {
       if (!res.success) throw res.message;
       return {
         srl,
-        data: res.data,
+        user: res.data,
       };
     }
     catch(e)

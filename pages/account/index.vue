@@ -3,20 +3,25 @@
   <page-header module="users" title="Account"/>
 
   <field-wrap legend="Basic fields" :hide-legend="true">
-    <field label="srl">
-      {{data.srl}}
+    <field>
+      <strong slot="label">srl</strong>
+      <template slot="body">{{data.srl}}</template>
     </field>
-    <field label="E-mail">
-      {{data.email}}
+    <field>
+      <strong slot="label">E-mail</strong>
+      <template slot="body">{{data.email}}</template>
     </field>
-    <field label="Name">
-      {{data.name}}
+    <field>
+      <strong slot="label">Name</strong>
+      <template slot="body">{{data.name}}</template>
     </field>
-    <field label="Admin">
-      {{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}
+    <field>
+      <strong slot="label">Admin</strong>
+      <template slot="body">{{parseInt(data.admin) === 2 ? 'Yes' : 'No'}}</template>
     </field>
-    <field label="Register date">
-      {{getDate(data.regdate)}}
+    <field>
+      <strong slot="label">Register date</strong>
+      <template slot="body">{{getDate(data.regdate)}}</template>
     </field>
   </field-wrap>
   <nav-bottom>
