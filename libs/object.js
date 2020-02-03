@@ -45,3 +45,20 @@ export function set(obj, path, value)
   pointer[key] = value;
   return obj;
 }
+
+/**
+ * get values in object
+ *
+ * @param {array} src
+ * @param {string} key
+ * @param {string|number} value
+ * @return {array}
+ */
+export function getValues(src, key, value)
+{
+  let arr = [];
+  src.forEach((o,k) => {
+    if (o[key] === value) arr.push(o);
+  });
+  return arr;
+}

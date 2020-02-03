@@ -21,9 +21,14 @@ export function sleep(delay=1000, params=null, timer=null)
   });
 }
 
+/**
+ * get browser name
+ *
+ * @return string
+ */
 export function browser()
 {
-  if (!navigator) return null;
+  if (!navigator) return '';
 
   if (/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor))
   {
@@ -46,7 +51,6 @@ export function browser()
     return 'unknown';
   }
 }
-
 
 /**
  * get thumbnail size

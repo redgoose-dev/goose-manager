@@ -19,7 +19,7 @@
       </p>
     </header>
     <div class="rg-uploader-body" data-comp="queue">
-      <div class="col queue" data-element="queue">
+      <div class="queues is-large-size" data-element="queue">
         <ul/>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import * as articlePreference from './articles/preference';
 
-
 /**
  * get file size
  *

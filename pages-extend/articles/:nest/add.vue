@@ -36,10 +36,12 @@ export default {
         cox.$axios.$get(`/nests/${nest_srl}/`).then((res) => {
           return res.success ? res.data : null;
         }),
-        cox.$axios.$get(`/categories/?nest=${nest_srl}&field=srl,name,turn&order=turn&sort=asc&strict=1`).then((res) => {
-          return res.success ? res.data.index : [];
-        }),
-        cox.$axios.$get(`/files/?ready=true&strict=1`)
+        cox.$axios
+          .$get(`/categories/?nest=${nest_srl}&field=srl,name,turn&order=turn&sort=asc&strict=1`)
+          .then((res) => {
+            return res.success ? res.data.index : [];
+          }),
+        cox.$axios.$get(`/files/?ready=true&strict=1`),
       ]);
 
       if (!nest) throw 'No data for `Nest`.';
@@ -83,6 +85,6 @@ export default {
   mounted()
   {
     setTimeout(() => this.$refs.post.$refs.form.title.focus(), 300);
-  }
+  },
 }
 </script>

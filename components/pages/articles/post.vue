@@ -217,10 +217,10 @@ export default {
               `/files/upload-file/`,
               formData({
                 sub_dir: 'thumbnail',
-                file: $uploader.thumbnailOptions.src,
+                base64: $uploader.thumbnailOptions.src,
               })
             );
-            if (!res_uploadSource.success) throw res_uploadSource.message;
+            if (!res_uploadSource.success) throw res_uploadSource.message || 'Failed file upload.';
             if (!res_uploadSource.data.path) throw 'not found source path';
 
             // make option
@@ -234,7 +234,7 @@ export default {
           }
           else
           {
-            // `$uploader.thumbnailOptions` 객체는 있지만 src가 없으면 썸네일 이미지를 삭제한다고 인식하고 값을 비워야 한다.
+            // `$uploader.thumbnailOptions` 객체는 있지만 `src`가 없으면 썸네일 이미지를 삭제한다고 인식하고 값을 비워야 한다.
             thumbnail = null;
           }
           updatedThumbnail = true;
@@ -280,7 +280,7 @@ export default {
               `/files/${o.srl}/edit/`,
               formData({
                 article_srl: this.srl || res.srl,
-                ready: 0
+                ready: 0,
               })
             ));
           });

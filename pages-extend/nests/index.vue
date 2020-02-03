@@ -17,7 +17,7 @@
         <item-card
           v-for="(nest,key) in app.children" :key="key"
           :link="`/nests/${nest.srl}/articles/`"
-          :title="`${nest.name}(${nest.count_articles})`"
+          :title="`${nest.name}(${nest.count})`"
           :alt="nest.description"
           :metas="[getDate(nest.regdate), `id: ${nest.id}`]"
           :use-image="false"
@@ -46,6 +46,8 @@
 <script>
 import * as messages from '~/libs/messages';
 import * as dates from '~/libs/dates';
+import * as text from '~/libs/text';
+import * as object from '~/libs/object';
 
 export default {
   components: {
@@ -58,12 +60,44 @@ export default {
   },
   async asyncData(cox)
   {
+    const { store, $axios } = cox;
+    let params = {};
     try
     {
-      let res = await cox.$axios.$get('/manager/nests/');
-      if (!res.success) throw 'Failed get nests';
+      // get apps
+      params = { unlimit: 1, ext_field: 'count_nests' };
+      if (!store.state.authUser.admin) params.user = store.state.authUser.srl;
+      let apps = await $axios.$get(`/apps/${text.serialize(params, true)}`);
+
+      // get nests
+      params = { unlimit: 1, ext_field: 'count_articles' };
+      if (!store.state.authUser.admin) params.user = store.state.authUser.srl;
+      let nests = await $axios.$get(`/nests/${text.serialize(params, true)}`);
+
+      // combine response data
+      let index = apps.data ? apps.data.index : [];
+      index = index.map((app,key) => {
+        let result = {
+          ...app,
+          count: app.count_nest,
+        };
+        delete result.count_nest;
+        if (nests.data && nests.data.total > 0)
+        {
+          let children = object.getValues(nests.data.index, 'app_srl', app.srl);
+          result.children = children.map((nest,key) => {
+            let result = {
+              ...nest,
+              count: nest.count_article,
+            };
+            delete result.count_article;
+            return result;
+          });
+        }
+        return result;
+      });
       return {
-        index: res.data,
+        index,
         error: '',
       };
     }
@@ -77,7 +111,7 @@ export default {
     {
       return dates.getFormatDate(date, false);
     },
-  }
+  },
 }
 </script>
 
