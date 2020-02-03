@@ -1,4 +1,5 @@
 @import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
 
 .article {
   padding: 20px 0 0;
@@ -28,10 +29,16 @@
     font-weight: 700;
   }
   p {
-    margin: 3px 0 0;
+    margin: 2px 0 0;
     font-family: $font-eng;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--color-blur);
+  }
+
+  @include dark-mode() {
+    h2 {
+      color: #fff;
+    }
   }
 }
 
