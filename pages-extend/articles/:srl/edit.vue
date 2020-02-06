@@ -47,7 +47,7 @@ export default {
         cox.$axios.$get(`/categories/?nest=${article.nest_srl}&field=srl,name,turn&order=turn&sort=asc`).then((res) => {
           return res.success ? res.data.index : [];
         }),
-        cox.$axios.$get(`/files/?article=${srl}&strict=1`)
+        cox.$axios.$get(`/files/?target=${srl}&module=articles&strict=1`),
       ]);
 
       return {

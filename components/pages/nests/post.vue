@@ -1,6 +1,5 @@
 <template>
 <form @submit.prevent="onSubmit" ref="form" class="post">
-
   <field-wrap legend="Basic fields">
     <field label="App" for="apps">
       <form-select
@@ -186,34 +185,49 @@
         </p>
       </template>
     </field>
-
-    <field label="Files" for="files_size_limit_single">
+    <field
+      label="File size(single)"
+      label2="File size(total)"
+      for="files_size_single"
+      for2="files_size_total">
+      <div slot="body" class="form-field">
+        <div>
+          <form-text
+            name="files_size_single"
+            id="files_size_single"
+            v-model="json.files.sizeSingle"
+            placeholder="2000000"
+            :maxlength="9"
+            :size="12"/>
+        </div>
+        <span>({{json.files.sizeSingle | fileSize}})</span>
+      </div>
+      <div slot="body2" class="form-field">
+        <div>
+          <form-text
+            name="files_size_total"
+            id="files_size_total"
+            v-model="json.files.sizeTotal"
+            placeholder="15000000"
+            :maxlength="9"
+            :size="12"/>
+        </div>
+        <span>({{json.files.sizeTotal | fileSize}})</span>
+      </div>
+    </field>
+    <field label="Using comment" for="use_comment">
       <template slot="body">
         <div class="rg-row rg-row-v-center rg-row-gutter-h">
-          <div class="form-field">
-            <label for="files_size_limit_single">Size(single):</label>
-            <form-text
-              name="files_size_limit_single"
-              id="files_size_limit_single"
-              v-model="json.files.sizeSingle"
-              placeholder="2000000"
-              :maxlength="9"
-              :size="12"/>
-            <span>byte</span>
-          </div>
-          <span/>
-          <div class="form-field">
-            <label for="files_size_total">Size(total):</label>
-            <form-text
-              name="files_size_total"
-              id="files_size_total"
-              v-model="json.files.sizeTotal"
-              placeholder="15000000"
-              :maxlength="9"
-              :size="12"/>
-            <span>byte</span>
-          </div>
+          <label class="form-field">
+            <form-radio name="use_comment" id="use_comment" v-model="json.useComment" :value="1"/>
+            <span>Yes</span>
+          </label>
+          <label class="form-field">
+            <form-radio name="use_comment" v-model="json.useComment" :value="0"/>
+            <span>No</span>
+          </label>
         </div>
+        <p class="form-help">댓글을 사용할지에 대하여 선택합니다.</p>
       </template>
     </field>
   </field-wrap>
@@ -240,22 +254,24 @@
 import { checkId, formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 import * as articlePreference from '~/libs/articles/preference';
+import * as text from '~/libs/text';
 import * as fieldset from '~/components/form/fieldset';
 
 const defaultJson = {
   useCategory: 0,
   articleSkin: 'card',
   thumbnail: {
-    width: 300,
-    height: 200,
+    width: 400,
+    height: 300,
     type: 'crop',
   },
   useThumbnailSizeTool: 0,
   files: {
     count: 15,
-    sizeSingle: 3000000,
-    sizeTotal: 30000000
+    sizeSingle: 5242880,
+    sizeTotal: 20971520,
   },
+  useComment: 0,
 };
 
 export default {
@@ -328,7 +344,8 @@ export default {
           count: parseInt(nest.json.files.count),
           sizeSingle: parseInt(nest.json.files.sizeSingle),
           sizeTotal: parseInt(nest.json.files.sizeTotal)
-        }
+        },
+        useComment: parseInt(nest.json.useComment) || 0,
       };
     }
     catch(e)
@@ -387,6 +404,13 @@ export default {
           color: 'error',
         });
       }
+    },
+  },
+  filters: {
+    fileSize(value)
+    {
+      if (!value) return '';
+      return text.getFileSize(value);
     },
   },
 }

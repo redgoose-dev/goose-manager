@@ -26,30 +26,30 @@
 
 <script>
 export default {
-	props: {
-		name: { type: String },
-		id: { type: String },
-		selected: { type: [String,Number], default: '' },
-		options: { type: Array },
-		required: { type: Boolean, default: false },
-		disabled: { type: Boolean, default: false },
-		inline: { type: Boolean, default: false },
-		size: { type: String }, // mini,small,large
-		placeholder: { type: String, default: 'Please select' },
-	},
-  components: {
-	  'icon': () => import('~/components/icon'),
+  props: {
+    name: { type: String },
+    id: { type: String },
+    selected: { type: [String,Number], default: '' },
+    options: { type: Array },
+    required: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    inline: { type: Boolean, default: false },
+    size: { type: String }, // mini,small,large
+    placeholder: { type: String, default: 'Please select' },
   },
-	model: {
-		prop: 'selected',
-		event: 'change',
-	},
-	methods: {
-		onChange(e)
-		{
-			this.$emit('change', e.target.value);
-		},
-	},
+  components: {
+    'icon': () => import('~/components/icon'),
+  },
+  model: {
+    prop: 'selected',
+    event: 'change',
+  },
+  methods: {
+    onChange(e)
+    {
+      this.$emit('change', e.target.value);
+    },
+  },
 }
 </script>
 

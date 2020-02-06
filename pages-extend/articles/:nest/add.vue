@@ -39,9 +39,26 @@ export default {
         cox.$axios
           .$get(`/categories/?nest=${nest_srl}&field=srl,name,turn&order=turn&sort=asc&strict=1`)
           .then((res) => {
-            return res.success ? res.data.index : [];
+            return res.success ? res.data.index.map((o) => {
+              return {
+                label: o.name,
+                value: o.srl,
+              };
+            }) : [];
           }),
-        cox.$axios.$get(`/files/?ready=true&strict=1`),
+        cox.$axios.$get(`/files/?ready=true&strict=1`).then((res) => {
+          return (res.success && res.data.index.length) ? res.data.index.map((o) => {
+            return {
+              id: parseInt(o.srl),
+              srl: parseInt(o.srl),
+              name: o.name,
+              size: parseInt(o.size),
+              src: `${o.loc}`,
+              type: o.type,
+              ready: parseInt(o.ready),
+            };
+          }) : null;
+        }),
       ]);
 
       if (!nest) throw 'No data for `Nest`.';
@@ -53,24 +70,9 @@ export default {
         skin: nest.json.articleSkin || 'default',
         datas: {
           nest,
-          categories: categories.map((o) => {
-            return {
-              label: o.name,
-              value: o.srl
-            };
-          }),
-          files: (files.success && files.data.index.length) ? files.data.index.map((o) => {
-            return {
-              id: parseInt(o.srl),
-              srl: parseInt(o.srl),
-              name: o.name,
-              size: parseInt(o.size),
-              src: `${o.loc}`,
-              type: o.type,
-              ready: parseInt(o.ready),
-            };
-          }) : null
-        }
+          categories,
+          files,
+        },
       };
     }
     catch(e)

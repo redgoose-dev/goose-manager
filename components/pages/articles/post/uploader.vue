@@ -178,7 +178,7 @@ export default {
         /**
          * 서버에 파라메터를 보낼때 ready 값을 보냅니다.
          */
-        return { ready: 1 };
+        return { ready: 1, module: 'articles' };
       },
       uploadDataFilter(res)
       {

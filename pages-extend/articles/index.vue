@@ -45,8 +45,8 @@ import * as src from '~/components/pages/articles/src';
 export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
-    'index-articles': () => import('~/components/pages/articles/index-articles'),
-    'index-filter': () => import('~/components/pages/articles/index-filter'),
+    'index-articles': () => import('~/components/pages/articles/index/index-articles'),
+    'index-filter': () => import('~/components/pages/articles/index/filter'),
     'paginate': () => import('~/components/etc/paginate'),
     'error': () => import('~/components/contents/error'),
     'loading': () => import('~/components/etc/loading'),

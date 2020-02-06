@@ -24,6 +24,17 @@
     <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
   </span>
 </nuxt-link>
+<label
+  v-else-if="type === 'label'"
+  :title="title"
+  :class="classNames"
+  :style="styles">
+  <span class="button-basic__wrap">
+    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
+    <em v-if="$slots.default" class="button-basic__label"><slot/></em>
+    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
+  </span>
+</label>
 <button
   v-else
   :type="type"
@@ -43,7 +54,7 @@
 <script>
 export default {
   props: {
-    type: { type: String, default: null },
+    type: { type: String, default: 'button' }, // button,submit,reset,label
     label: { type: String, default: null },
     href: { type: String },
     to: { type: String },

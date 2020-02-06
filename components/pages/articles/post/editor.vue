@@ -40,7 +40,7 @@ export default {
     'form-text': () => import('~/components/form/text'),
     'button-basic': () => import('~/components/button/basic'),
     'icon': () => import('~/components/icon'),
-    'toolbar': () => import('~/components/pages/articles/editor-toolbar'),
+    'toolbar': () => import('~/components/pages/articles/post/editor-toolbar'),
   },
   props: {
     label: { type: String, default: 'Editor' },
@@ -138,7 +138,7 @@ export default {
     resize()
     {
       this.$textarea.style.height = `auto`;
-      this.setSize(this.$textarea.scrollHeight);
+      this.setSize();
     },
     setSize()
     {

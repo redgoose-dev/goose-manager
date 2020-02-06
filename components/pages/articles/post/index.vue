@@ -118,8 +118,8 @@ export default {
     'form-select': () => import('~/components/form/select'),
     'form-radio': () => import('~/components/form/radio'),
     'button-basic': () => import('~/components/button/basic'),
-    'editor': () => import('~/components/pages/articles/editor'),
-    'uploader': () => import('~/components/pages/articles/uploader'),
+    'editor': () => import('~/components/pages/articles/post/editor'),
+    'uploader': () => import('~/components/pages/articles/post/uploader'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
     'field-wrap': fieldset.wrap,
     'field': fieldset.field,
@@ -279,7 +279,8 @@ export default {
             srls.push(this.$axios.$post(
               `/files/${o.srl}/edit/`,
               formData({
-                article_srl: this.srl || res.srl,
+                target_srl: this.srl || res.srl,
+                module: 'articles',
                 ready: 0,
               })
             ));

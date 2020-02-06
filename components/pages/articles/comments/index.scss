@@ -1,0 +1,54 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+
+.comments {
+  position: relative;
+  margin: 40px 0 0;
+
+  &__title {
+    margin: 0;
+    font-size: 0;
+    position: absolute;
+  }
+  &__index {
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+    li {
+      &:nth-child(n+2) {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  @include dark-mode() {
+    &:before {
+      background-color: #fff;
+    }
+  }
+}
+
+.form {
+  margin: 0;
+  border: 1px solid var(--color-content-line);
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: var(--color-content-bg);
+  &__body {
+    textarea {
+      max-height: 180px;
+    }
+  }
+  &__nav {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0 0;
+  }
+
+  @include dark-mode() {
+    background-color: #242424;
+    border-color: rgba(#fff, .1);
+    //border-color: rgba($color-dark-content-line, .5);
+  }
+}

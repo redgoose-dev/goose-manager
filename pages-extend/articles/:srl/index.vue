@@ -10,7 +10,7 @@
     <div v-html="article.content" class="redgoose-body"/>
   </div>
 
-  <article v-if="files && files.length" class="files">
+  <article v-if="files && files.length" class="files article__files">
     <h3>Attachment files</h3>
     <ul>
       <li v-for="(file,key) in files" :key="file.srl">
@@ -32,6 +32,8 @@
       <button-basic :to="makeButtonUrl('delete', srl)" icon-left="trash" color="gray">Delete</button-basic>
     </template>
   </nav-bottom>
+
+  <comments v-if="useComment" :article_srl="srl"/>
 </article>
 </template>
 
@@ -42,10 +44,12 @@ import * as dates from '~/libs/dates';
 import * as text from '~/libs/text';
 
 export default {
+  name: 'page-article',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'comments': () => import('~/components/pages/articles/comments')
   },
   validate(context)
   {
@@ -53,20 +57,21 @@ export default {
   },
   async asyncData(context)
   {
+    const { params, query, $axios, error } = context;
     try
     {
-      const srl = parseInt(context.params.article);
-      const nest_srl = context.query.nest || null;
-      const category_srl = context.query.category || null;
-      const page = context.query.page || null;
-      const article = await context.$axios.$get(`/articles/${srl}/?ext_field=category_name&visible_type=all`);
+      const srl = parseInt(params.article);
+      const nest_srl = query.nest || null;
+      const category_srl = query.category || null;
+      const page = query.page || null;
+      const article = await $axios.$get(`/articles/${srl}/?ext_field=category_name&visible_type=all`);
       if (!article.success) throw article.message;
 
       // get nest, category data
       const [ nest, category, files ] = await Promise.all([
-        context.$axios.$get(`/nests/${article.data.nest_srl}/`),
-        article.data.category_srl && context.$axios.$get(`/categories/${article.data.category_srl}/`),
-        context.$axios.$get(`/files/?article=${srl}`)
+        $axios.$get(`/nests/${article.data.nest_srl}/`),
+        article.data.category_srl && $axios.$get(`/categories/${article.data.category_srl}/`),
+        $axios.$get(`/files/?target=${srl}&module=articles`),
       ]);
       if (!nest.success) throw nest.message;
 
@@ -82,11 +87,12 @@ export default {
         nest: nest.data,
         category: (category && category.success) ? category.data : null,
         files: (files && files.success) ? files.data.index : null,
+        useComment: (nest.data && nest.data.json && parseInt(nest.data.json.useComment) === 1)
       };
     }
     catch(e)
     {
-      context.error({
+      error({
         statusCode: 500,
         message: (typeof e === 'string') ? e : messages.error.service,
       });
@@ -135,9 +141,19 @@ export default {
     getFileSize(size)
     {
       return text.getFileSize(size);
-    }
+    },
   },
 }
 </script>
 
 <style src="./index.scss" lang="scss" scoped/>
+<style lang="scss">
+@import "../../../assets/scss/variables";
+.redgoose-body {
+  @media (max-width: $size-tablet) {
+    img {
+      max-width: 100%;
+    }
+  }
+}
+</style>

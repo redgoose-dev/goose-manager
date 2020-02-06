@@ -73,13 +73,13 @@ export default {
   name: 'page-articles-index',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
-    'index-articles': () => import('~/components/pages/articles/index-articles'),
-    'index-categories': () => import('~/components/pages/articles/index-categories'),
+    'index-articles': () => import('~/components/pages/articles/index/index-articles'),
+    'index-categories': () => import('~/components/pages/articles/index/index-categories'),
     'paginate': () => import('~/components/etc/paginate'),
     'button-basic': () => import('~/components/button/basic'),
     'error': () => import('~/components/contents/error'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
-    'index-filter': () => import('~/components/pages/articles/index-filter'),
+    'index-filter': () => import('~/components/pages/articles/index/filter'),
   },
   validate(cox)
   {
