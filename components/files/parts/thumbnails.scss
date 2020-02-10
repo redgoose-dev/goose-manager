@@ -1,0 +1,53 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.thumbnails {
+  &__wrap {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(5, 1fr);
+    li {
+      position: relative;
+      padding-top: 100%;
+      > div {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+    }
+  }
+  &__empty {
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      display: block;
+      margin: 0 auto;
+      width: 48px;
+      height: 48px;
+      stroke-width: .5px;
+      color: var(--color-blur);
+    }
+    p {
+      margin: 12px 0 0;
+      font-size: 14px;
+    }
+  }
+
+  @include responsive(desktop) {
+    &__wrap {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  @include responsive(desktop-large) {
+    &__wrap {
+      grid-template-columns: repeat(7, 1fr);
+    }
+  }
+}

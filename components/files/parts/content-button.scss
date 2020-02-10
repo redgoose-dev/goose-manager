@@ -1,0 +1,128 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+$self: '.files-content-button';
+
+.files-content-button {
+  display: block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: none;
+  box-sizing: border-box;
+  height: 34px;
+  user-select: none;
+  &__wrap {
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 100%;
+    border: 1px solid #c8c8c8;
+    background-color: #fff;
+    box-shadow: 0 1px 0 1px rgba(#000, .075);
+  }
+  &__icon {
+    display: block;
+    color: $color-base;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+  &__label {
+    display: block;
+    font-style: normal;
+    font-size: 13px;
+    letter-spacing: -.05px;
+    font-weight: 500;
+    color: $color-base;
+  }
+  &__input {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0;
+    cursor:pointer;
+    &::-webkit-file-upload-button {
+      cursor:pointer;
+    }
+  }
+  &:active {
+    #{$self}__wrap {
+      box-shadow: inset 0 1px 5px 1px rgba(#000, .1);
+    }
+  }
+
+  &--color {
+    &-red {
+      #{$self} {
+        &__wrap {
+          background-color: $color-error;
+          border-color: transparent;
+        }
+        &__label {
+          color: #fff;
+        }
+        &__icon {
+          color: #fff;
+        }
+      }
+      &:active {
+        #{$self} {
+          &__wrap {
+            box-shadow: inset 0 2px 10px 1px rgba(#000, .2);
+          }
+        }
+      }
+    }
+    &-green {
+      #{$self} {
+        &__wrap {
+          background-color: $color-success;
+          border-color: transparent;
+        }
+        &__label {
+          color: #fff;
+        }
+        &__icon {
+          color: #fff;
+        }
+      }
+    }
+  }
+  &--disabled {
+    opacity: .3;
+    cursor: not-allowed;
+    &:active {
+      #{$self}__wrap {
+        box-shadow: 0 0 0 !important;
+      }
+    }
+  }
+
+  @include dark-mode() {
+    &__wrap {
+      background-color: $color-dark-content-bg;
+      border-color: $color-dark-content-line;
+    }
+    &__label {
+      color: $color-dark-base;
+    }
+    &__icon {
+      color: $color-dark-base;
+    }
+    &:active {
+      #{$self}__wrap {
+        box-shadow: inset 0 1px 5px 1px rgba(#000, .3);
+      }
+    }
+  }
+}

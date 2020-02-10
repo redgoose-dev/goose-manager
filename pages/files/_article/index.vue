@@ -10,11 +10,11 @@
       <item-brick
         v-for="(item,key) in index"
         :key="key"
-        :href="`${url_api}/${item.loc}`"
+        :href="`${url_api}/${item.path}`"
         target="_blank"
         :title="item.name"
         :alt="item.name"
-        :image="`${url_api}/${item.loc}`"
+        :image="`${url_api}/${item.path}`"
         :metas="[
           `${item.type}`,
           `Size: ${getFileSize(item.size)}`,

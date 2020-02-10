@@ -66,7 +66,7 @@ export default {
               srl: parseInt(o.srl),
               name: o.name,
               size: parseInt(o.size),
-              src: `${o.loc}`,
+              src: `${o.path}`,
               type: o.type,
               ready: parseInt(o.ready),
             };

@@ -187,7 +187,7 @@ export default {
           return res.data[0].status === 'success' ? {
             state: 'success',
             response: {
-              src: `${res.data[0].loc}`,
+              src: `${res.data[0].path}`,
               srl: parseInt(res.data[0].srl),
               name: res.data[0].name,
               type: res.data[0].type,

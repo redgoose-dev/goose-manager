@@ -100,6 +100,7 @@
 
 <script>
 import * as messages from '~/libs/messages';
+import * as util from '~/libs/util';
 
 export default {
   name: 'layout',
@@ -142,6 +143,11 @@ export default {
       });
       return nav;
     },
+  },
+  mounted()
+  {
+    // initial window custom event
+    util.initCustomEvent();
   },
   methods: {
     onClickProfileItem(e)

@@ -1,0 +1,28 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.files-content {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    > div {
+      display: flex;
+      align-items: center;
+      > * {
+        &:nth-child(n+2) {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+  &__index {
+    margin: 16px 0 0;
+  }
+  &__pending {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 240px;
+  }
+}

@@ -1,0 +1,112 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.files-tab {
+  border-bottom: 1px solid var(--color-content-line);
+
+  &__wrap {
+    display: flex;
+  }
+  &__item {
+    border-right: 1px solid var(--color-content-line);
+  }
+  &__button {
+    display: block;
+    height: 40px;
+    margin: 0;
+    padding: 0 20px;
+    background: none;
+    border: none;
+    box-sizing: border-box;
+    user-select: none;
+    outline: none;
+    color: var(--color-base);
+    &[type] {
+      cursor: pointer;
+    }
+    &:hover {
+      background-color: var(--color-content-bg);
+    }
+    &[disabled] {
+      cursor: default;
+      background-color: var(--color-key);
+      color: #fff;
+    }
+    em {
+      font-style: normal;
+      font-family: $font-eng;
+      font-size: 14px;
+    }
+  }
+}
+
+$self: '.dropdown';
+.dropdown {
+  &__button {
+    display: flex;
+    align-items: center;
+    > svg {
+      display: block;
+      margin: 0 -4px 0 4px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &__context {
+    position: relative;
+    > ul {
+      z-index: 2;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: none;
+      background-color: var(--color-bg);
+      border: 1px solid var(--color-content-line);
+      min-width: 140px;
+      > li {
+        button {
+          display: block;
+          width: 100%;
+          margin: 0;
+          padding: 12px 12px;
+          box-sizing: border-box;
+          text-align: left;
+          background: none;
+          border: none;
+          cursor: pointer;
+          white-space: nowrap;
+          font-size: 13px;
+          font-family: $font-eng;
+          outline: none;
+          user-select: none;
+          color: var(--color-base);
+          &[disabled] {
+            cursor: default;
+            color: var(--color-key);
+          }
+          &:hover {
+            background-color: var(--color-content-bg);
+          }
+        }
+        &:nth-child(n+2) {
+          border-top: 1px solid var(--color-content-line);
+        }
+      }
+    }
+  }
+  &:hover {
+    .dropdown {
+      &__button {
+
+      }
+      &__context {
+        > ul {
+          display: block;
+        }
+      }
+    }
+  }
+}

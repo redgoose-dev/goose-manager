@@ -14,7 +14,7 @@
     <h3>Attachment files</h3>
     <ul>
       <li v-for="(file,key) in files" :key="file.srl">
-        <a :href="`${$store.state.url_api}/${file.loc}`" target="_blank">
+        <a :href="`${$store.state.url_api}/${file.path}`" target="_blank">
           <span>{{file.name}}</span>
           <em>{{getFileSize(file.size)}}</em>
         </a>
@@ -49,7 +49,7 @@ export default {
     'page-header': () => import('~/components/contents/page-header'),
     'button-basic': () => import('~/components/button/basic'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
-    'comments': () => import('~/components/pages/articles/comments')
+    'comments': () => import('~/components/pages/articles/comments'),
   },
   validate(context)
   {
