@@ -23,9 +23,7 @@
       <button-basic
         type="button"
         color="key"
-        :disabled="processing"
-        :icon-left="processing ? 'loader' : 'check'"
-        :rotate-icon="processing"
+        icon-left="check"
         @click.stop="onClickSubmit">
         Set thumbnail
       </button-basic>
@@ -51,12 +49,6 @@ export default {
     croppie: {},
     thumbnail: {},
     full: { type: Boolean, default: false },
-  },
-  data()
-  {
-    return {
-      processing: false,
-    };
   },
   computed: {
     computedCroppieBoundary()
@@ -105,7 +97,6 @@ export default {
       const { croppie } = this.$refs;
       let pref = croppie.get();
 
-      this.processing = true;
       let output = await croppie.result({
         type: 'base64',
         format: 'png',
@@ -119,66 +110,26 @@ export default {
       let resizeImage = new ResizeImage({
         format: 'jpg',
         outputType: 'base64',
-        quality: .7,
+        quality: .6,
         width: this.computedCroppieViewport.width,
         height: this.computedCroppieViewport.height,
         reSample: 4,
       });
       output = await resizeImage.play(output);
 
-      // get article
-      let article = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
-      if (!article.success) throw new Error(article.message);
-      article = article.data;
+      // update article
+      let newThumbnail = {
+        ...this.thumbnail,
+        srl: this.item.srl,
+        path: this.item.path,
+        points: pref.points,
+        zoom: pref.zoom,
+      };
 
-      try
-      {
-        // remove current thumbnail image
-        if (article.json && article.json.thumbnail.path)
-        {
-          await this.$axios.$post(
-            `/files/remove-file/`,
-            forms.formData({ path: article.json.thumbnail.path })
-          );
-        }
-
-        // upload new thumbnail image
-        let res_uploadFile = await this.$axios.$post(
-          `/files/upload-file/`,
-          formData({
-            sub_dir: 'thumbnail',
-            base64: output,
-          })
-        );
-        if (!res_uploadFile.success) throw new Error(res_uploadFile.message || 'Failed file upload.');
-        if (!res_uploadFile.data.path) throw new Error('not found source path');
-
-        // update article
-        let newThumbnail = {
-          ...((article.json && article.json.thumbnail) ? article.json.thumbnail : {}),
-          srl: this.item.srl,
-          path: res_uploadFile.data.path,
-          points: pref.points,
-          zoom: pref.zoom,
-        };
-        let res_edit = await this.$axios.$post(
-          `/${this.module}/${this.target_srl}/edit/`,
-          forms.formData({
-            json: encodeURIComponent(JSON.stringify({ thumbnail: newThumbnail })),
-          })
-        );
-        if (!res_edit.success) throw new Error(res_edit.message);
-        this.processing = false;
-        this.$emit('submit', newThumbnail, true);
-      }
-      catch(e)
-      {
-        this.$toast.add({
-          message: (e && typeof e === 'string') ? e : `Failed submit thumbnail editor.`,
-          color: 'error',
-        });
-        this.processing = false;
-      }
+      this.$emit('submit', {
+        thumbnail: newThumbnail,
+        output,
+      });
     },
   },
 }

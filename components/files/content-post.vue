@@ -380,22 +380,24 @@ export default {
       this.activeItemForThumbnailEditor = null;
       this.showThumbnailEditor = false;
     },
-    onSubmitThumbnailEditor(set, update=false)
+    // 썸네일 에디터 submit
+    onSubmitThumbnailEditor(set)
     {
+      // set.output
+      // set.thumbnail
       this.activeItemForThumbnailEditor = null;
       this.showThumbnailEditor = false;
-      this.thumbnailSetting = set;
-      if (update)
-      {
-        let index = Object.assign([], this.index);
-        index = index.map((o) => {
-          let result = Object.assign({}, o);
-          let idx = o.badge.indexOf('image');
-          if (idx > -1) result.badge.splice(idx, 1);
-          if (o.srl === this.thumbnailSetting.srl) result.badge.push('image');
-          return result;
-        });
-      }
+      this.thumbnailSetting = set.thumbnail;
+      let index = Object.assign([], this.index);
+      index = index.map((o) => {
+        let result = Object.assign({}, o);
+        let idx = o.badge.indexOf('image');
+        if (idx > -1) result.badge.splice(idx, 1);
+        if (o.srl === this.thumbnailSetting.srl) result.badge.push('image');
+        return result;
+      });
+      this.index = index;
+      this.$emit('custom-event', 'update-thumbnail-editor', set);
     },
   },
 }

@@ -49,4 +49,10 @@ $size-nav: 68px;
       }
     }
   }
+
+  @include dark-mode() {
+    &__nav {
+      border-color: rgba($color-dark-content-line, .5);
+    }
+  }
 }

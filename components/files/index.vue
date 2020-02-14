@@ -117,6 +117,9 @@ export default {
             }
           }));
           break;
+        case 'update-thumbnail-editor':
+          this.$emit('update-thumbnail', value);
+          break;
       }
     },
   },

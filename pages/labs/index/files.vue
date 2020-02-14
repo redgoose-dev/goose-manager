@@ -15,13 +15,14 @@
         init-tab="post"
         init-external=""
         :post="{
-          module, // articles,comments
-          target_srl,
+          module: module, // articles,comments
+          target_srl: target_srl,
         }"
         :local="{ dir: 'dev' }"
         :external="{}"
         accept-file-type="image/*,.pdf"
-        @insert="onInsert"/>
+        @insert="onInsert"
+        @update-thumbnail="onUpdateThumbnail"/>
     </div>
   </section>
 
@@ -35,13 +36,14 @@
           <files
             init-tab="post"
             :post="{
-              module, // articles,comments
-              target_srl,
+              module: module, // articles,comments
+              target_srl: target_srl,
             }"
             :local="{ dir: 'dev' }"
             :full="true"
             @insert="onInsert"
-            @close="visibleFiles = false"/>
+            @close="visibleFiles = false"
+            @update-thumbnail="onUpdateThumbnail"/>
         </files-wrap>
       </div>
     </header>
@@ -50,6 +52,9 @@
 </template>
 
 <script>
+import * as forms from "@/libs/forms";
+import {formData} from "@/libs/forms";
+
 export default {
   name: 'labs-page-files',
   components: {
@@ -70,6 +75,62 @@ export default {
     {
       console.log('onInsert', paths);
       this.visibleFiles = false;
+    },
+    async onUpdateThumbnail(set)
+    {
+      const { thumbnail, output } = set;
+
+      // get article
+      let article = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
+      if (!article.success) throw new Error(article.message);
+      article = article.data;
+
+      try
+      {
+        // remove current thumbnail image
+        if (article.json && article.json.thumbnail.path)
+        {
+          await this.$axios.$post(
+            `/files/remove-file/`,
+            forms.formData({ path: article.json.thumbnail.path })
+          );
+        }
+
+        // upload new thumbnail image
+        let res_uploadFile = await this.$axios.$post(
+          `/files/upload-file/`,
+          formData({
+            sub_dir: 'thumbnail',
+            base64: output,
+          })
+        );
+        if (!res_uploadFile.success) throw new Error(res_uploadFile.message || 'Failed file upload.');
+        if (!res_uploadFile.data.path) throw new Error('not found source path');
+
+        // update article
+        let newThumbnail = {
+          ...((article.json && article.json.thumbnail) ? article.json.thumbnail : {}),
+          srl: thumbnail.srl,
+          path: res_uploadFile.data.path,
+          points: thumbnail.points,
+          zoom: thumbnail.zoom,
+        };
+        let res_edit = await this.$axios.$post(
+          `/${this.module}/${this.target_srl}/edit/`,
+          forms.formData({
+            json: encodeURIComponent(JSON.stringify({ thumbnail: newThumbnail })),
+          })
+        );
+        if (!res_edit.success) throw new Error(res_edit.message);
+      }
+      catch(e)
+      {
+        console.error(e);
+        this.$toast.add({
+          message: (e && typeof e === 'string') ? e : `Failed submit thumbnail editor.`,
+          color: 'error',
+        });
+      }
     },
   },
 }
