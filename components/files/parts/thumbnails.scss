@@ -1,13 +1,15 @@
 @import "../../../assets/scss/variables";
 @import "../../../assets/scss/mixins";
 
+$self: '.thumbnails';
+
 .thumbnails {
   &__wrap {
     margin: 0;
     padding: 0;
     list-style: none;
     display: grid;
-    gap: 16px;
+    gap: 8px;
     grid-template-columns: repeat(5, 1fr);
     li {
       position: relative;
@@ -40,14 +42,46 @@
     }
   }
 
+  &--full {
+    #{$self} {
+      &__wrap {
+        gap: 4px;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      &__empty {
+        height: 100%;
+      }
+    }
+    &#{$self}--empty {
+      height: 100%;
+    }
+  }
+
+  @include responsive(tablet) {
+    &--full {
+      #{$self}__wrap {
+        gap: 8px;
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
   @include responsive(desktop) {
     &__wrap {
+      gap: 16px;
       grid-template-columns: repeat(6, 1fr);
+    }
+    &--full {
+      #{$self}__wrap {
+        grid-template-columns: repeat(6, 1fr);
+      }
     }
   }
   @include responsive(desktop-large) {
-    &__wrap {
-      grid-template-columns: repeat(7, 1fr);
+    &--full {
+      #{$self}__wrap {
+        gap: 16px;
+        grid-template-columns: repeat(8, 1fr);
+      }
     }
   }
 }

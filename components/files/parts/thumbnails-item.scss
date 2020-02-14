@@ -84,97 +84,14 @@ $size-border-radius: 2px;
       }
     }
   }
-  &-context {
-    position: absolute;
-    z-index: 3;
-    right: 8px;
-    top: 8px;
-    opacity: 0;
-    transition: opacity 200ms ease-out, transform 250ms ease-out;
-    transform: translateY(5px);
-    &__button {
-      display: block;
-      width: 30px;
-      height: 30px;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      border: none;
-      outline: none;
-      border-radius: 2px;
-      cursor: pointer;
-      font-size: 0;
-      box-shadow: 0 0 8px rgba(#000, .15);
-      &:active {
-        opacity: .85;
-      }
-      svg {
-        display: block;
-        margin: 0 auto;
-        width: 18px;
-        height: 18px;
-        stroke-width: 2.4px;
-      }
-    }
-    &__menu {
-      position: absolute;
-      right: -16px;
-      top: calc(100% + 2px);
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      background: #fff;
-      box-sizing: border-box;
-      min-width: 130px;
-      box-shadow: 0 2px 10px rgba(#000,.4);
-      border-radius: 4px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 200ms ease-out;
-      li {
-        &:nth-child(n+2) {
-          border-top: 1px solid #e6e6e6;
-        }
-      }
-      button {
-        width: 100%;
-        white-space: nowrap;
-        text-align: left;
-        margin: 0;
-        padding: 10px 12px;
-        background: none;
-        border: none;
-        outline: none;
-        font-size: 12px;
-        cursor: pointer;
-        color: var(--color-base);
-        &:active {
-          background-color: rgba(#999, .15);
-        }
-      }
-    }
-    &:focus-within {
-      #{$self}-context__button {
-        opacity: .5;
-        cursor: default;
-        pointer-events: none;
-      }
-      #{$self}-context__menu {
-        opacity: 1;
-        pointer-events: auto;
-      }
-    }
-  }
 
   &:hover {
     &:before {
       opacity: 1;
     }
-    #{$self} {
-      &-context {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .context {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   &--selected {
@@ -194,29 +111,144 @@ $size-border-radius: 2px;
         svg {
           //color: #fff;
         }
-        em {}
       }
     }
-    &-context {
-      &__button {
-        background-color: $color-base;
-        svg {
-          color: #fff;
+  }
+}
+
+.context {
+  position: absolute;
+  z-index: 3;
+  right: 8px;
+  top: 8px;
+  opacity: 0;
+  transition: opacity 200ms ease-out, transform 250ms ease-out;
+  transform: translateY(5px);
+  &__button {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0;
+    box-shadow: 0 0 8px rgba(#000, .15);
+    &:active {
+      opacity: .85;
+    }
+    svg {
+      display: block;
+      margin: 0 auto;
+      width: 18px;
+      height: 18px;
+      stroke-width: 2.4px;
+    }
+  }
+  &__menu {
+    position: absolute;
+    right: -16px;
+    top: calc(100% + 2px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    box-sizing: border-box;
+    min-width: 130px;
+    box-shadow: 0 2px 10px rgba(#000,.4);
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+    li {
+      &:nth-child(n+2) {
+        border-top: 1px solid #e6e6e6;
+      }
+    }
+    button {
+      width: 100%;
+      white-space: nowrap;
+      text-align: left;
+      margin: 0;
+      padding: 10px 12px;
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--color-base);
+      &:active {
+        background-color: rgba(#999, .15);
+      }
+      &.color {
+        &--red {
+          color: $color-error;
         }
       }
-      &__menu {
-        background-color: $color-dark-content-bg;
-        li {
-          &:nth-child(n+2) {
-            border-color: $color-dark-content-line;
-          }
-        }
-        button {
-          &:active {
-            background-color: rgba(#000, .15);
-          }
+    }
+  }
+  &:focus-within {
+    .context__button {
+      opacity: .5;
+      cursor: default;
+      pointer-events: none;
+    }
+    .context__menu {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  @include dark-mode() {
+    &__button {
+      background-color: $color-base;
+      svg {
+        color: #fff;
+      }
+    }
+    &__menu {
+      background-color: $color-dark-content-bg;
+      li {
+        &:nth-child(n+2) {
+          border-color: $color-dark-content-line;
         }
       }
+      button {
+        &:active {
+          background-color: rgba(#000, .15);
+        }
+      }
+    }
+  }
+}
+
+.badge {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  li {
+    background-color: rgba(#000, .5);
+    box-sizing: border-box;
+    padding: 6px;
+    border-radius: 1px;
+    &:nth-child(n+2) {
+      margin-left: 2px;
+    }
+    svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+      stroke-width: 2px;
+      color: #fff;
     }
   }
 }

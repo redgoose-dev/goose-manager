@@ -10,22 +10,27 @@
       <em>{{filename}}</em>
     </span>
   </button>
-  <div class="thumbnail-context">
-    <button type="button" class="thumbnail-context__button">
+  <div v-if="context && context.length" ref="context" class="context">
+    <button type="button" class="context__button">
       <icon name="menu"/>
     </button>
-    <ul class="thumbnail-context__menu">
+    <ul class="context__menu">
       <li v-for="(o,k) in context">
         <button
           type="button"
           :data-key="componentKey"
-          :data-srl="srl"
+          :class="[`color--${o.color}`]"
           @click="o.click">
           {{o.label}}
         </button>
       </li>
     </ul>
   </div>
+  <ul v-if="badge && badge.length" class="badge">
+    <li v-for="o in badge">
+      <icon :name="o"/>
+    </li>
+  </ul>
 </div>
 </template>
 
@@ -37,11 +42,11 @@ export default {
   },
   props: {
     componentKey: { type: Number, default: null },
-    srl: { type: Number, default: null },
     img: { type: String, default: null },
     filename: { type: String, default: null },
     type: { type: String, default: null },
     selected: { type: Boolean, default: false },
+    badge: { type: Array, default: [] },
     context: { type: Array, default: [] },
   },
   computed: {

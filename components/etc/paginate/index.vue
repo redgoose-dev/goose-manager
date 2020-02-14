@@ -137,10 +137,13 @@ export default {
           };
         };
         let setBreakView = index => {
-          items[index] = {
-            disabled: true,
-            breakView: true
-          };
+          if (this.marginPages)
+          {
+            items[index] = {
+              disabled: true,
+              breakView: true,
+            };
+          }
         };
         // 1st - loop thru low end of margin pages
         for (let i = 0; i < this.marginPages; i++)

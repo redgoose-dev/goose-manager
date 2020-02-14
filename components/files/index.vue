@@ -1,34 +1,27 @@
 <template>
-<article class="files-libs">
+<article
+  :class="['files-libs', full && 'files-libs--full']">
   <tab
     :tab="tab"
-    :external="external"
-    :use-post="computedUsePost"
-    @click="onChangeTab"/>
-  <div class="files-libs__body">
+    :external="externalName"
+    :show="{ post: !!post, local: !!local }"
+    :full="full"
+    class="files-libs__header"
+    @click="onChangeTab"
+    @close="$emit('close')"/>
+  <div v-if="computedProps" class="files-libs__body">
     <component
-      v-bind:is="computedContentComponentName"
-      :content-props="computedContentProps"
-      @update-selected="updateSelected"/>
+      :is="computedContentComponentName"
+      v-bind="computedProps"
+      :full="full"
+      @custom-event="customEvent"/>
   </div>
-  <nav class="files-libs__bottom">
+  <div v-else class="files-libs__empty">
     <div>
-      <button-basic
-        type="button"
-        @click="onClickCancel">
-        Cancel
-      </button-basic>
+      <icon name="alert-circle"/>
+      <p>no data</p>
     </div>
-    <div>
-      <button-basic
-        type="button"
-        color="key"
-        :disabled="imagePaths.length <= 0"
-        @click.stop="onClickInsert">
-        Insert
-      </button-basic>
-    </div>
-  </nav>
+  </div>
 </article>
 </template>
 
@@ -40,23 +33,35 @@ export default {
     'content-post': () => import('./content-post'),
     'content-local': () => import('./content-local'),
     'content-external': () => import('./content-external'),
-    'button-basic': () => import('~/components/button/basic'),
+    'icon': () => import('~/components/icon'),
   },
   props: {
-    initTab: { type: String, default: 'local' }, // post,local,external
-    target_srl: { type: Number, default: null },
-    module: { type: String, default: null }, // articles,comments
+    initTab: { type: String, default: '' }, // post,local,external
+    initExternal: { type: String, default: '' },
+    post: {
+      module: { type: String, default: 'articles' }, // articles,comments
+      target_srl: { type: Number, default: null },
+      croppie: {},
+      thumbnail: {},
+    },
+    local: {
+      dir: { type: String, default: 'assets' },
+    },
+    external: {},
     acceptFileType: { type: String, default: 'image/*' },
+    full: { type: Boolean, default: false },
   },
   data()
   {
     let tab = this.initTab;
-    const isPost = this.target_srl && (this.module === 'articles' || this.module === 'comments');
-    if (this.initTab === 'post') tab = isPost ? this.initTab : 'local';
+    if (this.post)
+    {
+      const isPost = this.post.target_srl && (this.post.module === 'articles' || this.post.module === 'comments');
+      if (this.initTab === 'post') tab = isPost ? this.initTab : 'local';
+    }
     return {
       tab,
-      external: '', // external service name
-      imagePaths: [],
+      externalName: this.initExternal, // external service name
     };
   },
   computed: {
@@ -64,58 +69,55 @@ export default {
     {
       return `content-${this.tab}`;
     },
-    computedContentProps()
+    computedProps()
     {
       switch (this.tab)
       {
         case 'post':
           return {
-            target_srl: this.target_srl,
-            module: this.module,
+            ...this.post,
             acceptFileType: this.acceptFileType,
           };
         case 'local':
-        default:
-          // TODO: 필요한 값을 더 넣기
           return {
+            ...this.local,
             acceptFileType: this.acceptFileType,
           };
         case 'external':
           return {
-            mode: this.external,
+            ...this.external,
           };
+        default:
+          return null;
       }
-    },
-    computedUsePost()
-    {
-      return this.target_srl && (this.module === 'articles' || this.module === 'comments');
     },
   },
   methods: {
     onChangeTab(tab, external)
     {
       this.tab = tab;
-      this.external = (tab === 'external') ? external : '';
+      this.externalName = (tab === 'external') ? external : '';
     },
-    onClickCancel()
+    customEvent(code, value)
     {
-      this.$emit('cancel');
-    },
-    onClickInsert()
-    {
-      this.$emit('insert', this.imagePaths.map((o) => {
-        switch (o.type.split('/')[0])
-        {
-          case 'image':
-            return `![${o.name}](${this.$store.state.url_api}/${o.path})`;
-          default:
-            return `<a href="${this.$store.state.url_api}/${o.path}" target="_blank">${o.name}</a>`;
-        }
-      }));
-    },
-    updateSelected(srls, paths)
-    {
-      this.imagePaths = paths;
+      switch (code)
+      {
+        case 'close':
+          this.$emit('close');
+          break;
+        case 'insert-text':
+          this.$emit('insert', value.map((o) => {
+            if (/^image/.test(o.type))
+            {
+              return `![${o.name}](${this.$store.state.url_api}/${o.path})`;
+            }
+            else
+            {
+              return `<a href="${this.$store.state.url_api}/${o.path}" target="_blank">${o.name}</a>`;
+            }
+          }));
+          break;
+      }
     },
   },
 }

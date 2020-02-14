@@ -1,11 +1,16 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
 
+$self: '.files-content';
+$size-bottom: 68px;
+
 .files-content {
+  box-sizing: border-box;
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 30px;
     > div {
       display: flex;
       align-items: center;
@@ -17,12 +22,91 @@
     }
   }
   &__index {
-    margin: 16px 0 0;
+    margin: -10px 30px 30px;
+    box-sizing: border-box;
   }
   &__pending {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 240px;
+  }
+  &__footer {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid rgba($color-content-line, .5);
+    box-sizing: border-box;
+    padding: 12px;
+    height: $size-bottom;
+    background-color: var(--color-bg);
+    > div {
+      margin-left: 8px;
+    }
+  }
+  &__meta {
+    margin: 0;
+    font-family: $font-eng;
+    color: var(--color-blur);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  &--full {
+    $size-header: 54px;
+    $size-footer: 68px;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    padding: $size-header 0 $size-footer;
+    #{$self} {
+      &__header {
+        margin: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: $size-header;
+        padding: 0 20px;
+        background-color: #eee;
+      }
+      &__index {
+        margin: 0;
+        height: 100%;
+        box-sizing: border-box;
+        overflow: auto;
+        padding: 20px;
+      }
+      &__footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+      }
+      &__pending {
+        height: 100%;
+      }
+    }
+    &#{$self}--pending {
+      padding: 0;
+    }
+  }
+  &--thumbnail-editor {
+    padding: 0;
+  }
+
+  @include dark-mode() {
+    &__footer {
+      margin: 0;
+      border-color: rgba($color-dark-content-line, .5);
+    }
+
+    &--full {
+      #{$self} {
+        &__header {
+          background-color: $color-base;
+        }
+      }
+    }
   }
 }

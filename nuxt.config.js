@@ -44,6 +44,7 @@ module.exports = {
   plugins: [
     '~/plugins/axios',
     { src: '~/plugins/toast', ssr: false },
+    { src: '~/plugins/croppie.js', ssr: false },
   ],
   axios: {
     baseURL: APP_API_URL,

@@ -1,0 +1,52 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+$self: '.thumbnail-editor';
+$size-nav: 68px;
+
+.thumbnail-editor {
+  position: relative;
+  padding: 30px;
+  box-sizing: border-box;
+  &__body {}
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px -30px -30px;
+    box-sizing: border-box;
+    height: $size-nav;
+    border-top: 1px solid rgba($color-content-line, .5);
+    > div {
+      &:nth-child(n+2) {
+        padding-left: 8px;
+      }
+    }
+  }
+
+  &--full {
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+    #{$self} {
+      &__body {
+        height: calc(100% - #{$size-nav});
+        overflow: auto;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      &__nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        z-index: 2;
+      }
+      &__croppie {
+        padding: 30px;
+        box-sizing: border-box;
+      }
+    }
+  }
+}

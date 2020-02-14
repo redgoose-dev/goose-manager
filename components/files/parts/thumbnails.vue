@@ -1,17 +1,22 @@
 <template>
-<div class="thumbnails">
+<div
+  :class="[
+    'thumbnails',
+    full && 'thumbnails--full',
+    !(index && index.length) && 'thumbnails--empty',
+  ]">
   <ul v-if="index && index.length" class="thumbnails__wrap">
     <li v-for="(item,key) in index" @click.stop="">
       <div>
         <thumbnail-item
           v-if="item.complete"
           :component-key="key"
-          :srl="parseInt(item.srl)"
           :img="item.path"
           :filename="item.name"
           :type="item.type"
+          :badge="item.badge"
           :selected="selected[key]"
-          :context="context"
+          :context="item.context"
           @click="(e) => onClickItem(key, e)"/>
         <thumbnail-loading v-else :percent="item.percent"/>
       </div>
@@ -36,7 +41,7 @@ export default {
   },
   props: {
     index: { type: Array, default: [] },
-    context: { type: Array, default: [] },
+    full: { type: Boolean, default: false },
   },
   created()
   {
@@ -103,22 +108,14 @@ export default {
      */
     changeSelected()
     {
-      let srls = [];
-      let paths = [];
+      let result = [];
       this.selected.forEach((o,k) => {
         if (o && this.index[k])
         {
-          // `path`값 추가
-          paths.push({
-            name: this.index[k].name,
-            path: this.index[k].path,
-            type: this.index[k].type,
-          });
-          // `srl`값 추가
-          srls.push(this.index[k].srl);
+          result.push(this.index[k]);
         }
       });
-      this.$emit('change-selected', srls, paths);
+      this.$emit('change-selected', result);
     },
     selectAll(sw)
     {

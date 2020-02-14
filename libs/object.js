@@ -57,7 +57,6 @@ export function set(obj, path, value)
 export function getValues(src, key, value)
 {
   let arr = [];
-  console.log(src);
   src.forEach((o,k) => {
     if (o[key] === value) arr.push(o);
   });

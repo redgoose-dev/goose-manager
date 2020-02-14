@@ -13,12 +13,38 @@
     <div class="example">
       <files
         init-tab="post"
-        module="articles"
-        :target_srl="9"
+        init-external=""
+        :post="{
+          module, // articles,comments
+          target_srl,
+        }"
+        :local="{ dir: 'dev' }"
+        :external="{}"
         accept-file-type="image/*,.pdf"
-        local-dir="assets"
         @insert="onInsert"/>
     </div>
+  </section>
+
+  <section class="page-section">
+    <header>
+      <h3>modal</h3>
+      <p>버튼을 눌러 팝업 형태로 띄우는 방식</p>
+      <div class="example">
+        <button-basic :inline="true" color="key" @click="visibleFiles = true">Open files</button-basic>
+        <files-wrap v-if="visibleFiles" @close="visibleFiles = false">
+          <files
+            init-tab="post"
+            :post="{
+              module, // articles,comments
+              target_srl,
+            }"
+            :local="{ dir: 'dev' }"
+            :full="true"
+            @insert="onInsert"
+            @close="visibleFiles = false"/>
+        </files-wrap>
+      </div>
+    </header>
   </section>
 </article>
 </template>
@@ -28,15 +54,22 @@ export default {
   name: 'labs-page-files',
   components: {
     'files': () => import('~/components/files'),
+    'files-wrap': () => import('~/components/files/wrap'),
+    'button-basic': () => import('~/components/button/basic'),
   },
   data()
   {
-    return {};
+    return {
+      target_srl: 9,
+      module: 'articles', // articles,comments
+      visibleFiles: false,
+    };
   },
   methods: {
     onInsert(paths)
     {
       console.log('onInsert', paths);
+      this.visibleFiles = false;
     },
   },
 }

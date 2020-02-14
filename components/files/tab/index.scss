@@ -1,18 +1,23 @@
 @import "../../../assets/scss/variables";
 @import "../../../assets/scss/mixins";
 
+$self: '.files-tab';
 .files-tab {
-  border-bottom: 1px solid var(--color-content-line);
-
   &__wrap {
     display: flex;
-  }
-  &__item {
-    border-right: 1px solid var(--color-content-line);
+    justify-content: space-between;
+    height: 100%;
+    padding: 0;
+    > div {
+      height: 100%;
+      display: flex;
+      box-sizing: border-box;
+    }
   }
   &__button {
-    display: block;
-    height: 40px;
+    display: flex;
+    align-items: center;
+    height: 100%;
     margin: 0;
     padding: 0 20px;
     background: none;
@@ -33,9 +38,37 @@
       color: #fff;
     }
     em {
+      display: block;
       font-style: normal;
       font-family: $font-eng;
       font-size: 14px;
+      font-weight: 600;
+    }
+    svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+      stroke-width: 2.8px;
+    }
+    svg:nth-child(1) {
+      margin: 0 8px 0 -2px;
+    }
+    svg:nth-child(2) {
+      margin: 0 -4px 0 8px;
+    }
+    &.only-icon {
+      padding: 0 16px;
+      svg:nth-child(1) {
+        margin: 0;
+      }
+    }
+  }
+
+  &--full {
+    #{$self} {
+      &__wrap {
+        padding: 0;
+      }
     }
   }
 }
@@ -45,12 +78,6 @@ $self: '.dropdown';
   &__button {
     display: flex;
     align-items: center;
-    > svg {
-      display: block;
-      margin: 0 -4px 0 4px;
-      width: 16px;
-      height: 16px;
-    }
   }
   &__context {
     position: relative;
@@ -99,9 +126,7 @@ $self: '.dropdown';
   }
   &:hover {
     .dropdown {
-      &__button {
-
-      }
+      &__button {}
       &__context {
         > ul {
           display: block;

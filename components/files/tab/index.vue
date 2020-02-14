@@ -1,52 +1,67 @@
 <template>
-<nav class="files-tab">
+<nav :class="['files-tab', full && 'files-tab--full']">
   <div class="files-tab__wrap">
-    <div v-if="usePost" class="files-tab__item">
-      <button
-        type="button"
-        :disabled="tab === 'post'"
-        class="files-tab__button"
-        @click="$emit('click', 'post')">
-        <em>Post</em>
-      </button>
-    </div>
-    <div class="files-tab__item">
-      <button
-        type="button"
-        :disabled="tab === 'local'"
-        class="files-tab__button"
-        @click="$emit('click', 'local')">
-        <em>Local</em>
-      </button>
-    </div>
-    <div class="files-tab__item">
-      <div class="dropdown">
+    <div>
+      <div v-if="show.post" class="files-tab__item">
         <button
-          :disabled="tab === 'external'"
-          class="files-tab__button dropdown__button">
-          <em>External service</em>
-          <icon name="chevron-down"/>
+          type="button"
+          :disabled="tab === 'post'"
+          class="files-tab__button"
+          @click="$emit('click', 'post')">
+          <icon name="archive"/>
+          <em>Post</em>
         </button>
-        <div class="dropdown__context">
-          <ul>
-            <li>
-              <button
-                type="button"
-                :disabled="external === '#1'"
-                @click="$emit('click', 'external', '#1')">
-                external service #1
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                :disabled="external === '#2'"
-                @click="$emit('click', 'external', '#2')">
-                external service #2
-              </button>
-            </li>
-          </ul>
+      </div>
+      <div v-if="show.local" class="files-tab__item">
+        <button
+          type="button"
+          :disabled="tab === 'local'"
+          class="files-tab__button"
+          @click="$emit('click', 'local')">
+          <icon name="folder"/>
+          <em>Local</em>
+        </button>
+      </div>
+      <div v-if="false" class="files-tab__item">
+        <div class="dropdown">
+          <button
+            :disabled="tab === 'external'"
+            class="files-tab__button dropdown__button">
+            <icon name="cloud"/>
+            <em>External service</em>
+            <icon name="chevron-down"/>
+          </button>
+          <div class="dropdown__context">
+            <ul>
+              <li>
+                <button
+                  type="button"
+                  :disabled="external === '#1'"
+                  @click="$emit('click', 'external', '#1')">
+                  external service #1
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  :disabled="external === '#2'"
+                  @click="$emit('click', 'external', '#2')">
+                  external service #2
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </div>
+    <div>
+      <div v-if="full" class="files-tab__item">
+        <button
+          type="button"
+          class="files-tab__button only-icon"
+          @click="$emit('close')">
+          <icon name="x"/>
+        </button>
       </div>
     </div>
   </div>
@@ -61,11 +76,8 @@ export default {
   props: {
     tab: { type: String, default: 'article' }, // post,local,external
     external: { type: String, default: null },
-    usePost: { type: Boolean, default: false },
-  },
-  data()
-  {
-    return {};
+    show: { type: Object },
+    full: { type: Boolean, default: false },
   },
 }
 </script>

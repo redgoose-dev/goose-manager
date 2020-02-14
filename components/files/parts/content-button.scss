@@ -106,6 +106,12 @@ $self: '.files-content-button';
         box-shadow: 0 0 0 !important;
       }
     }
+    #{$self}__input {
+      cursor: not-allowed;
+      &::-webkit-file-upload-button {
+        cursor: not-allowed;
+      }
+    }
   }
 
   @include dark-mode() {

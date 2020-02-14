@@ -1,0 +1,36 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.files-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: block;
+  box-sizing: border-box;
+  padding: 0;
+  background-color: rgba(255,255,255,.85);
+  cursor: zoom-out;
+  //transition: opacity 200ms ease-out;
+
+  &__wrap {
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: var(--color-bg);
+    box-shadow: 0 2px 30px rgba(0,0,0,.2);
+    cursor: auto;
+  }
+  &-enter-active, &-leave-active {
+    opacity: 0;
+  }
+
+  @include dark-mode() {
+    background: rgba(0,0,0,.9);
+    &__wrap {
+      box-shadow: 0 2px 30px rgba(0,0,0,.5);
+    }
+  }
+}
