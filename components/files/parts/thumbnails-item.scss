@@ -136,7 +136,7 @@ $size-border-radius: 2px;
     border-radius: 2px;
     cursor: pointer;
     font-size: 0;
-    box-shadow: 0 0 8px rgba(#000, .15);
+    box-shadow: 0 0 5px 2px rgba(#000, .3);
     &:active {
       opacity: .85;
     }
@@ -150,8 +150,8 @@ $size-border-radius: 2px;
   }
   &__menu {
     position: absolute;
-    right: -16px;
-    top: calc(100% + 2px);
+    right: -24px;
+    top: calc(100% + -1px);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -180,7 +180,8 @@ $size-border-radius: 2px;
       font-size: 12px;
       cursor: pointer;
       color: var(--color-base);
-      &:active {
+      &:active,
+      &:hover {
         background-color: rgba(#999, .15);
       }
       &.color {
@@ -190,7 +191,7 @@ $size-border-radius: 2px;
       }
     }
   }
-  &:focus-within {
+  &:hover {
     .context__button {
       opacity: .5;
       cursor: default;
@@ -217,6 +218,7 @@ $size-border-radius: 2px;
         }
       }
       button {
+        &:hover,
         &:active {
           background-color: rgba(#000, .15);
         }

@@ -85,9 +85,13 @@
         }
       }
     }
-    &.color {
-      &--key {
-        background-color: var(--color-key);
+    &.color--key {
+      background-color: var(--color-key);
+      svg {
+        color: #fff;
+      }
+      > span {
+        color: #fff;
       }
     }
   }
@@ -188,15 +192,11 @@
 
   @include dark-mode() {
     &__button {
-      &.color {
-        &--key {
-          svg {
-            color: #fff;
-          }
-          > span {
-            color: #fff;
-          }
-        }
+      svg {
+        color: #fff;
+      }
+      > span {
+        color: #fff;
       }
     }
   }
