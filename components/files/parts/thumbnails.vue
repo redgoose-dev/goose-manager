@@ -96,7 +96,6 @@ export default {
     },
     onClickBackground()
     {
-      console.log('onClickBackground');
       let newSelected = Object.assign([], this.selected);
       newSelected = Array(this.index.length).fill(false);
       this.selected = newSelected;
