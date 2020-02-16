@@ -17,6 +17,9 @@
         :post="{
           module: module, // articles,comments
           target_srl: target_srl,
+          ready: false,
+          thumbnail: thumbnailSetting,
+          thumbnailImage: thumbnailImage,
         }"
         :local="{ dir: 'dev' }"
         :external="{}"
@@ -38,6 +41,9 @@
             :post="{
               module: module, // articles,comments
               target_srl: target_srl,
+              ready: false,
+              thumbnail: thumbnailSetting,
+              thumbnailImage: thumbnailImage,
             }"
             :local="{ dir: 'dev' }"
             :full="true"
@@ -53,7 +59,7 @@
 
 <script>
 import * as forms from "@/libs/forms";
-import {formData} from "@/libs/forms";
+import { formData } from "@/libs/forms";
 
 export default {
   name: 'labs-page-files',
@@ -68,7 +74,28 @@ export default {
       target_srl: 9,
       module: 'articles', // articles,comments
       visibleFiles: false,
+      article: {},
+      thumbnailPath: null,
+      thumbnailImage: null,
+      thumbnailSetting: {
+        zoom: .25,
+      },
     };
+  },
+  async mounted()
+  {
+    try
+    {
+      let article = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
+      if (!article.success) throw new Error(article.message);
+      this.article = article.data;
+      this.thumbnailSetting = this.article.json.thumbnail;
+      this.thumbnailPath = this.article.json.thumbnail.path;
+    }
+    catch(e)
+    {
+      console.error(e.message);
+    }
   },
   methods: {
     onInsert(paths)
@@ -76,44 +103,44 @@ export default {
       console.log('onInsert', paths);
       this.visibleFiles = false;
     },
-    async onUpdateThumbnail(set)
+    async onUpdateThumbnail(set, image)
     {
-      const { thumbnail, output } = set;
-
-      // get article
-      let article = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
-      if (!article.success) throw new Error(article.message);
-      article = article.data;
-
+      this.thumbnailSetting = set;
       try
       {
         // remove current thumbnail image
-        if (article.json && article.json.thumbnail.path)
+        if (this.thumbnailPath)
         {
           await this.$axios.$post(
             `/files/remove-file/`,
-            forms.formData({ path: article.json.thumbnail.path })
+            forms.formData({ path: this.thumbnailPath })
           );
         }
 
         // upload new thumbnail image
-        let res_uploadFile = await this.$axios.$post(
-          `/files/upload-file/`,
-          formData({
-            sub_dir: 'thumbnail',
-            base64: output,
-          })
-        );
-        if (!res_uploadFile.success) throw new Error(res_uploadFile.message || 'Failed file upload.');
-        if (!res_uploadFile.data.path) throw new Error('not found source path');
+        let res_uploadFile = null;
+        if (image)
+        {
+          res_uploadFile = await this.$axios.$post(
+            `/files/upload-file/`,
+            formData({
+              sub_dir: 'thumbnail',
+              base64: image,
+            })
+          );
+          if (!res_uploadFile.success) throw new Error(res_uploadFile.message || 'Failed file upload.');
+          if (!res_uploadFile.data.path) throw new Error('not found source path');
+          this.thumbnailSetting.path = res_uploadFile.data.path;
+          this.thumbnailPath = res_uploadFile.data.path;
+        }
 
         // update article
         let newThumbnail = {
-          ...((article.json && article.json.thumbnail) ? article.json.thumbnail : {}),
-          srl: thumbnail.srl,
-          path: res_uploadFile.data.path,
-          points: thumbnail.points,
-          zoom: thumbnail.zoom,
+          ...((this.article.json && this.article.json.thumbnail) ? this.article.json.thumbnail : {}),
+          srl: set.srl,
+          path: res_uploadFile ? res_uploadFile.data.path : null,
+          points: set.points,
+          zoom: set.zoom,
         };
         let res_edit = await this.$axios.$post(
           `/${this.module}/${this.target_srl}/edit/`,

@@ -4,7 +4,7 @@
     'files-content',
     'files-content--post',
     full && 'files-content--full',
-    showThumbnailEditor && 'files-content--thumbnail-editor',
+    (showThumbnailEditor || showPreviewThumbnail) && 'files-content--zero-padding',
     pending && 'files-content--pending',
   ]">
   <thumbnail-editor
@@ -12,10 +12,18 @@
     :item="activeItemForThumbnailEditor"
     :target_srl="target_srl"
     :croppie="croppie"
-    :thumbnail="thumbnailSetting"
+    :thumbnail="thumbnail"
     :full="full"
     @close="onCloseThumbnailEditor"
+    @control-window="$emit('custom-event', 'window', $event)"
     @submit="onSubmitThumbnailEditor"/>
+  <preview-thumbnail
+    v-else-if="showPreviewThumbnail"
+    :path="thumbnail.path"
+    :output="thumbnailImage"
+    :full="full"
+    @control-window="$emit('custom-event', 'window', $event)"
+    @close="showPreviewThumbnail = false"/>
   <template v-else>
     <header v-if="!pending" class="files-content__header">
       <div @click.stop="">
@@ -40,15 +48,27 @@
             icon="trash-2"
             :disabled="selected.length <= 0"
             @click="remove(selected)"/>
-          <content-button
-            v-if="module === 'articles'"
-            type="button"
-            label="Preview thumbnail"
-            icon="zoom-in"
-            @click="onClickPreviewThumbnail"/>
         </template>
       </div>
       <div>
+        <div v-if="computedUseSizeTool" class="files-content__select-size">
+          <label>
+            <form-radio v-model="sizeSet" name="sizeSet" value="1*1" size="small" @change="onChangeSizeSet"/>
+            <span>1X1</span>
+          </label>
+          <label>
+            <form-radio v-model="sizeSet" name="sizeSet" value="2*1" size="small" @change="onChangeSizeSet"/>
+            <span>2X1</span>
+          </label>
+          <label>
+            <form-radio v-model="sizeSet" name="sizeSet" value="1*2" size="small" @change="onChangeSizeSet"/>
+            <span>1X2</span>
+          </label>
+          <label>
+            <form-radio v-model="sizeSet" name="sizeSet" value="2*2" size="small" @change="onChangeSizeSet"/>
+            <span>2X2</span>
+          </label>
+        </div>
         <p class="files-content__meta">Count: {{index.length}}/{{limit.count}}</p>
       </div>
     </header>
@@ -63,17 +83,50 @@
         :full="full"
         @change-selected="onChangeSelected"/>
     </div>
-    <nav v-if="!pending" class="files-content__footer">
-      <div>
-        <button-basic
-          type="button"
-          color="key"
-          :disabled="selected.length <= 0"
-          @click.stop="onClickInsertText">
-          Insert
-        </button-basic>
-      </div>
-    </nav>
+    <dl v-if="!pending" class="files-content__footer">
+      <dt>
+        <template v-if="module === 'articles' && index.length">
+          <div>
+            <button-basic
+              type="button"
+              :disabled="!thumbnail.srl"
+              icon-left="corner-up-left"
+              @click.stop="onClickResetThumbnail">
+              Reset thumbnail
+            </button-basic>
+          </div>
+          <div>
+            <button-basic
+              type="button"
+              :disabled="!thumbnail.srl"
+              icon-left="zoom-in"
+              @click.stop="showPreviewThumbnail = true">
+              Preview thumbnail
+            </button-basic>
+          </div>
+        </template>
+      </dt>
+      <dd>
+        <div v-if="full">
+          <button-basic
+            type="button"
+            icon-left="x"
+            @click.stop="$emit('custom-event', 'close')">
+            Close
+          </button-basic>
+        </div>
+        <div>
+          <button-basic
+            type="button"
+            color="key"
+            :disabled="selected.length <= 0"
+            icon-left="download"
+            @click.stop="onClickInsertText">
+            Insert
+          </button-basic>
+        </div>
+      </dd>
+    </dl>
   </template>
 </article>
 </template>
@@ -91,12 +144,20 @@ export default {
     'content-button': () => import('./parts/content-button'),
     'thumbnails': () => import('./parts/thumbnails'),
     'thumbnail-editor': () => import('./post/thumbnail-editor'),
+    'preview-thumbnail': () => import('./post/preview-thumbnail'),
+    'form-radio': () => import('~/components/form/radio'),
   },
   props: {
+    ready: { type: Boolean, default: false },
     target_srl: { type: Number },
     module: { type: String, default: 'articles' }, // articles,comments
     acceptFileType: { type: String },
     full: { type: Boolean, default: false },
+    nest: { type: Object, default: null },
+    article: { type: Object, default: null },
+    comment: { type: Object, default: null },
+    thumbnail: { type: Object },
+    thumbnailImage: { type: String, default: null },
   },
   data()
   {
@@ -106,17 +167,25 @@ export default {
       selected: [],
       pending: true,
       activeItemForThumbnailEditor: null,
-      thumbnailSetting: Object.assign({}, { zoom: .25 }),
       showThumbnailEditor: false,
+      showPreviewThumbnail: false,
       limit: {
         count: 10,
         sizeSingle: 5000000,
       },
       croppie: {
-        boundary: { width: 800, height: 600 },
+        boundary: { width: '100%', height: 750, },
         viewport: { width: 320, height: 240, type: 'square' },
       },
+      sizeSet: this.thumbnail.sizeSet || '1*1',
     };
+  },
+  computed: {
+    computedUseSizeTool()
+    {
+      if (!(this.nest && this.nest.json)) return false;
+      return parseInt(this.nest.json.useThumbnailSizeTool) === 1;
+    },
   },
   async mounted()
   {
@@ -266,12 +335,6 @@ export default {
     {
       this.$refs.thumbnails.selectAll();
     },
-    // 썸네일 이미지 프리뷰
-    onClickPreviewThumbnail()
-    {
-      const { url_api } = this.$store.state;
-      window.open(`${url_api}/${this.thumbnailSetting.path}`);
-    },
     // article,nest 가져오기
     async getPref()
     {
@@ -282,19 +345,29 @@ export default {
       {
         case 'articles':
           // get article
-          article = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
-          if (!article.success) return;
-          article = article.data;
-          // get nest
-          nest = await this.$axios.$get(`/nests/${article.nest_srl}/`);
-          if (!nest.success) return;
-          nest = nest.data;
+          if (!(this.article && this.nest))
+          {
+            let params = this.ready ? '?visible_type=ready' : '';
+            article = await this.$axios.$get(`/${this.module}/${this.target_srl}/${params}`);
+            if (!article.success) return;
+            this.article = article.data;
+            // get nest
+            nest = await this.$axios.$get(`/nests/${this.article.nest_srl}/`);
+            if (!nest.success) return;
+            this.nest = nest.data;
+          }
           // get values
-          this.limit.count = nest.json.files.count;
-          this.limit.sizeSingle = nest.json.files.sizeSingle;
-          this.thumbnailSetting = article.json.thumbnail;
-          this.croppie.viewport.width = nest.json.thumbnail.width;
-          this.croppie.viewport.height = nest.json.thumbnail.height;
+          this.limit.count = this.nest.json.files.count;
+          this.limit.sizeSingle = this.nest.json.files.sizeSingle;
+          if (this.nest.json.useThumbnailSizeTool === '1')
+          {
+            this.onChangeSizeSet(this.sizeSet);
+          }
+          else
+          {
+            this.croppie.viewport.width = this.nest.json.thumbnail.width;
+            this.croppie.viewport.height = this.nest.json.thumbnail.height;
+          }
           break;
         case 'comments':
           // get comment
@@ -323,7 +396,7 @@ export default {
         order: 'srl',
         sort: 'desc',
         unlimit: 1,
-        target_srl: this.target_srl,
+        target: this.target_srl,
         module: this.module,
       };
       try
@@ -334,7 +407,7 @@ export default {
           files = files.data.index;
           this.index = files.map((o) => {
             let badge = [];
-            if (this.thumbnailSetting.srl === parseInt(o.srl)) badge.push('image');
+            if (this.thumbnail.srl === parseInt(o.srl)) badge.push('image');
             return {
               ...o,
               complete: true,
@@ -381,23 +454,62 @@ export default {
       this.showThumbnailEditor = false;
     },
     // 썸네일 에디터 submit
-    onSubmitThumbnailEditor(set)
+    onSubmitThumbnailEditor(set, image)
     {
-      // set.output
-      // set.thumbnail
+      this.$emit('custom-event', 'update-thumbnail-editor', {
+        ...set,
+        sizeSet: this.sizeSet,
+      }, image);
       this.activeItemForThumbnailEditor = null;
       this.showThumbnailEditor = false;
-      this.thumbnailSetting = set.thumbnail;
       let index = Object.assign([], this.index);
-      index = index.map((o) => {
+      this.index = index.map((o) => {
         let result = Object.assign({}, o);
         let idx = o.badge.indexOf('image');
         if (idx > -1) result.badge.splice(idx, 1);
-        if (o.srl === this.thumbnailSetting.srl) result.badge.push('image');
+        if (o.srl === set.srl) result.badge.push('image');
         return result;
       });
-      this.index = index;
-      this.$emit('custom-event', 'update-thumbnail-editor', set);
+      this.$nextTick(() => {
+        this.$refs.thumbnails.onClickBackground();
+      });
+    },
+    // 썸네일 이미지 리셋
+    onClickResetThumbnail()
+    {
+      this.$emit(
+        'custom-event',
+        'update-thumbnail-editor',
+        { zoom: .25, path: null, srl: null, points: null, sizeSet: null },
+        null);
+      let index = Object.assign([], this.index);
+      this.index = index.map((o) => {
+        let result = Object.assign({}, o);
+        let idx = o.badge.indexOf('image');
+        if (idx > -1) result.badge.splice(idx, 1);
+        return result;
+      });
+    },
+    closeSubWindow(code)
+    {
+      switch (code)
+      {
+        case 'preview-thumbnail':
+          this.showPreviewThumbnail = false;
+          break;
+        case 'thumbnail-editor':
+          this.showThumbnailEditor = false;
+          break;
+      }
+    },
+    onChangeSizeSet(size)
+    {
+      if (!size) size = '1*1';
+      size = size.split('*');
+      let width = this.nest.json.thumbnail.width || 320;
+      let height = this.nest.json.thumbnail.height || 240;
+      this.croppie.viewport.width = width * parseInt(size[0]);
+      this.croppie.viewport.height = height * parseInt(size[1]);
     },
   },
 }

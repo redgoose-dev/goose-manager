@@ -21,7 +21,6 @@
     "marked": "^0.8.0",
     "nuxt": "^2.11.0",
     "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
-    "rg-uploader": "^1.4.1",
     "vue-croppie": "^2.0.1",
     "vuedraggable": "^2.23.2"
   },

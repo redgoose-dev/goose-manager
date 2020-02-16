@@ -15,6 +15,7 @@
     @click="onChangePosition"
     @keyup="onChangePosition"
     @keyup.ctrl.enter="onSubmit"
+    @keydown.meta.enter="onSubmit"
     @input="onChange"
     :class="[
       'form-text',
@@ -38,6 +39,8 @@
     :size="size"
     @click="onChangePosition"
     @keyup="onChangePosition"
+    @keyup.ctrl.enter="onSubmit"
+    @keydown.meta.enter="onSubmit"
     @input="onChange"
     :class="[
       'form-text',

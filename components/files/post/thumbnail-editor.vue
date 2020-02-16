@@ -76,13 +76,11 @@ export default {
       points: checkSrl ? (this.thumbnail.points || []) : [],
       zoom: checkSrl ? (this.thumbnail.zoom || .25) : .25,
     });
-    window.on('keyup.thumbnail-editor', (e) => {
-      if (e.key === 'Escape') this.onClickCancel();
-    });
+    this.$emit('control-window', { action: 'open', code: 'thumbnail-editor' });
   },
   destroyed()
   {
-    window.off('keyup.thumbnail-editor');
+    this.$emit('control-window', { action: 'close' });
   },
   methods: {
     // 크롭 에디터 닫기
@@ -121,15 +119,11 @@ export default {
       let newThumbnail = {
         ...this.thumbnail,
         srl: this.item.srl,
-        path: this.item.path,
         points: pref.points,
         zoom: pref.zoom,
       };
 
-      this.$emit('submit', {
-        thumbnail: newThumbnail,
-        output,
-      });
+      this.$emit('submit', newThumbnail, output);
     },
   },
 }

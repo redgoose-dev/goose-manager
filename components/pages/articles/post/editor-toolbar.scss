@@ -85,6 +85,11 @@
         }
       }
     }
+    &.color {
+      &--key {
+        background-color: var(--color-key);
+      }
+    }
   }
   &__group {
     display: flex;
@@ -182,7 +187,18 @@
   }
 
   @include dark-mode() {
-    //
+    &__button {
+      &.color {
+        &--key {
+          svg {
+            color: #fff;
+          }
+          > span {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 }
 div.toolbar__button {

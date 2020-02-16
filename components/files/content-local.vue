@@ -47,17 +47,28 @@
       :full="full"
       @change-selected="onChangeSelected"/>
   </div>
-  <nav class="files-content__footer">
-    <div>
-      <button-basic
-        type="button"
-        color="key"
-        :disabled="selected.length <= 0"
-        @click.stop="onClickInsertText">
-        Insert
-      </button-basic>
-    </div>
-  </nav>
+  <dl class="files-content__footer">
+    <dt></dt>
+    <dd>
+      <div v-if="full">
+        <button-basic
+          type="button"
+          icon-left="x"
+          @click.stop="$emit('custom-event', 'close')">
+          Close
+        </button-basic>
+      </div>
+      <div>
+        <button-basic
+          type="button"
+          color="key"
+          :disabled="selected.length <= 0"
+          @click.stop="onClickInsertText">
+          Insert
+        </button-basic>
+      </div>
+    </dd>
+  </dl>
 </article>
 </template>
 

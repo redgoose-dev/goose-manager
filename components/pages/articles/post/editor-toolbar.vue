@@ -49,6 +49,19 @@
         <div class="toolbar__group-item">
           <button
             type="button"
+            title="open file manager"
+            data-key="open-file-manager"
+            class="toolbar__button color--key"
+            @click="onClickItem">
+            <span>
+              <icon name="archive"/>
+              <em>Files</em>
+            </span>
+          </button>
+        </div>
+        <div class="toolbar__group-item">
+          <button
+            type="button"
             title="preview"
             data-key="preview"
             class="toolbar__button"
@@ -68,12 +81,7 @@
 <script>
 export default {
   name: 'editor-toolbar',
-  props: {
-    active: {
-      type: Object,
-      preview: { type: Boolean, default: false },
-    },
-  },
+  props: {},
   components: {
     'icon': () => import('~/components/icon'),
   },

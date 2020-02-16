@@ -1,6 +1,6 @@
 <template>
-<div class="files-wrap" @click="$emit('close')">
-  <div class="files-wrap__wrap" @click.stop="">
+<div class="files-wrap">
+  <div class="files-wrap__wrap">
     <slot/>
   </div>
 </div>

@@ -11,6 +11,7 @@
     @close="$emit('close')"/>
   <div v-if="computedProps" class="files-libs__body">
     <component
+      ref="body"
       :is="computedContentComponentName"
       v-bind="computedProps"
       :full="full"
@@ -62,6 +63,7 @@ export default {
     return {
       tab,
       externalName: this.initExternal, // external service name
+      window: [],
     };
   },
   computed: {
@@ -92,13 +94,23 @@ export default {
       }
     },
   },
+  mounted()
+  {
+    window.on('keyup.files-libs', (e) => {
+      if (e.key === 'Escape') this.onPushKeyEsc();
+    });
+  },
+  destroyed()
+  {
+    window.off('keyup.files-libs');
+  },
   methods: {
     onChangeTab(tab, external)
     {
       this.tab = tab;
       this.externalName = (tab === 'external') ? external : '';
     },
-    customEvent(code, value)
+    customEvent(code, value, value2)
     {
       switch (code)
       {
@@ -118,7 +130,34 @@ export default {
           }));
           break;
         case 'update-thumbnail-editor':
-          this.$emit('update-thumbnail', value);
+          this.$emit('update-thumbnail', value, value2);
+          break;
+        case 'window':
+          switch (value.action)
+          {
+            case "open":
+              this.window.push(value.code);
+              break;
+            case "close":
+              this.window.pop();
+              break;
+          }
+          break;
+      }
+    },
+    onPushKeyEsc()
+    {
+      const $body = this.$refs.body;
+      switch (this.window[this.window.length-1])
+      {
+        case 'preview-thumbnail':
+          $body.closeSubWindow('preview-thumbnail');
+          break;
+        case 'thumbnail-editor':
+          $body.closeSubWindow('thumbnail-editor');
+          break;
+        default:
+          this.$emit('close');
           break;
       }
     },

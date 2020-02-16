@@ -1,10 +1,6 @@
 <template>
 <div class="editor">
-  <toolbar
-    :active="{
-      preview: showPreview,
-    }"
-    @click-item="onClickToolbarItem"/>
+  <toolbar @click-item="onClickToolbarItem"/>
   <div class="editor__body">
     <textarea
       ref="textarea"
@@ -16,7 +12,8 @@
       @click="onClickTextarea"
       @keyup="onKeyupTextarea"
       @input="onInputTextarea"
-      @keyup.ctrl.enter="submit"/>
+      @keyup.ctrl.enter="submit"
+      @keydown.meta.enter="submit"/>
   </div>
   <div
     v-if="showPreview"
@@ -106,12 +103,16 @@ export default {
         document.querySelector('html').classList.add('rg-mode-popup');
         this.showPreview = true;
         this.preview = marked(this.value);
+        window.on('keyup.article-body-preview', (e) => {
+          if (e.key === 'Escape') this.showPreviewControl(false);
+        });
       }
       else
       {
         document.querySelector('html').classList.remove('rg-mode-popup');
         this.showPreview = false;
         this.preview = '';
+        window.off('keyup.article-body-preview');
       }
     },
     /**
@@ -132,6 +133,9 @@ export default {
           break;
         case 'insert-iframe':
           this.$emit('insert-text', `\n<div class="iframe"></div>\n`, 21);
+          break;
+        case 'open-file-manager':
+          this.$emit('open-files');
           break;
       }
     },

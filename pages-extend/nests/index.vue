@@ -70,7 +70,7 @@ export default {
       let apps = await $axios.$get(`/apps/${text.serialize(params, true)}`);
 
       // get nests
-      params = { unlimit: 1, ext_field: 'count_articles' };
+      params = { unlimit: 1, ext_field: 'count_articles', visible_type: 'all' };
       if (!store.state.authUser.admin) params.user = store.state.authUser.srl;
       let nests = await $axios.$get(`/nests/${text.serialize(params, true)}`);
 

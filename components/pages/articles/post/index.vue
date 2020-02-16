@@ -1,5 +1,5 @@
 <template>
-<form @submit.prevent="onSubmit" ref="form">
+<form @submit.prevent="submit" ref="form">
   <!-- basic fields -->
   <field-wrap :legend="`${type} article form`" :hide-legend="true">
     <field v-if="datas.categories && datas.categories.length" label="Category" for="category">
@@ -23,7 +23,9 @@
           placeholder="article title"
           :maxlength="120"
           :error="!!forms.title.error"
-          :required="true"/>
+          :required="true"
+          :submit-event="true"
+          @submit="saveDraft"/>
       </template>
     </field>
     <field label="Order date" label2="Article type" for="order" for2="type">
@@ -59,6 +61,7 @@
     </field>
   </field-wrap>
   <!-- // basic fields -->
+
   <!-- editor -->
   <editor
     ref="editor"
@@ -69,34 +72,68 @@
     :required="true"
     @change-position="onChangePositionEditor"
     @insert-text="insertTextToEditor"
-    @submit="nativeSubmit"/>
+    @submit="saveDraft"
+    @open-files="showFiles = true"/>
   <!-- // editor -->
-  <!-- uploader -->
-  <uploader
-    ref="$uploader"
-    :article="datas.article"
-    :files="datas.files"
-    :nest="datas.nest"
-    :options="{}"
-    @insert-editor="insertTextToEditor"/>
-  <!-- // uploader -->
+
   <!-- bottom buttons -->
   <nav-bottom>
     <template slot="left">
       <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
     </template>
     <template slot="right">
-      <button-basic
-        type="submit"
-        color="key"
-        :icon-left="processing ? 'loader' : 'check'"
-        :rotate-icon="processing"
-        :disabled="processing">
-        {{this.type === 'edit' ? 'Edit' : 'Add'}} article
-      </button-basic>
+      <template v-if="type === 'edit'">
+        <button-basic
+          type="submit"
+          color="key"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
+          :disabled="processing">
+          Update Article
+        </button-basic>
+      </template>
+      <template v-else>
+        <button-basic
+          type="button"
+          color="gray"
+          :icon-left="processing ? 'loader' : 'save'"
+          :rotate-icon="processing"
+          :disabled="processing"
+          @click="saveDraft">
+          Save draft
+        </button-basic>
+        <button-basic
+          type="submit"
+          color="key"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
+          :disabled="processing">
+          Publishing
+        </button-basic>
+      </template>
     </template>
   </nav-bottom>
   <!-- // bottom buttons -->
+
+  <files-wrap v-if="showFiles" @close="showFiles = false">
+    <files
+      init-tab="post"
+      :post="{
+        module: 'articles',
+        target_srl: srl,
+        ready: type === 'add',
+        thumbnail: thumbnailSetting,
+        thumbnailImage: thumbnailImage,
+        useThumbnailSizeTool: useThumbnailSizeTool === 1,
+        nest: datas.nest,
+        article: datas.article,
+      }"
+      :local="{ dir: 'articles' }"
+      :full="true"
+      @close="showFiles = false"
+      @insert="onInsertFromFiles"
+      @update-thumbnail="onUpdateThumbnailFromFiles"/>
+  </files-wrap>
 </form>
 </template>
 
@@ -119,17 +156,18 @@ export default {
     'form-radio': () => import('~/components/form/radio'),
     'button-basic': () => import('~/components/button/basic'),
     'editor': () => import('~/components/pages/articles/post/editor'),
-    'uploader': () => import('~/components/pages/articles/post/uploader'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
     'field-wrap': fieldset.wrap,
     'field': fieldset.field,
+    'files': () => import('~/components/files'),
+    'files-wrap': () => import('~/components/files/wrap'),
   },
   props: {
     type: { type: String, default: 'add' }, // add,edit
-    srl: { type: [Number,String], default: null },
-    nest_srl: { type: [Number,String] },
+    srl: { type: Number, default: null },
+    nest_srl: { type: Number },
     category_srl: { type: [Number,String] },
-    page: { type: [Number,String] },
+    page: { type: Number },
     skin: { type: String, default: 'default' },
     datas: {
       type: Object,
@@ -137,30 +175,30 @@ export default {
       nest: { type: Object, required: true },
       categories: { type: Array, default: [] },
       article: { type: Object },
-      files: { type: Array, default: [] },
-    }
+    },
   },
   data()
   {
     const { datas, nest_srl } = this;
+    const { nest, article } = datas;
     return {
       processing: false,
       forms: {
-        app_srl: datas.nest ? datas.nest.app_srl : null,
-        nest_srl: datas.article ? datas.article.nest_srl : nest_srl,
+        app_srl: nest ? parseInt(nest.app_srl) : null,
+        nest_srl: article ? parseInt(article.nest_srl) : nest_srl,
         category_srl: this.getCategoryInForm(),
-        type: datas.article ? (this.getTypeName(datas.article.type) || null) : null,
+        type: article ? (this.getTypeName(article.type) || null) : null,
         title: {
-          value: datas.article ? datas.article.title : '',
+          value: article ? article.title : '',
           error: '',
         },
         content: {
-          value: datas.article ? datas.article.content : '',
+          value: article ? article.content : '',
           error: '',
         },
         json: this.getJSON(),
         order: {
-          value: datas.article ? datas.article.order : dates.convertDateFormat(null, true),
+          value: article ? article.order : dates.convertDateFormat(null, true),
           error: '',
         },
       },
@@ -168,165 +206,15 @@ export default {
         start: 0,
         end: 0,
       },
+      useThumbnailSizeTool: parseInt(nest.json.useThumbnailSizeTool),
+      showFiles: false,
+      thumbnailUpdated: false,
+      thumbnailImage: null,
+      thumbnailPath: (article && article.json.thumbnail) ? article.json.thumbnail.path : '',
+      thumbnailSetting: article ? article.json.thumbnail : { zoom: .25 },
     };
   },
   methods: {
-    /**
-     * on submit
-     *
-     * @return {Promise}
-     */
-    async onSubmit(e)
-    {
-      if (this.processing) return;
-
-      // check value
-      if (!dates.checkOrderDate(this.forms.order.value))
-      {
-        this.forms.order.error = errorMessage.order;
-        return;
-      }
-
-      // set values
-      const data_article = this.datas.article;
-      const { $uploader } = this.$refs;
-      let json = Object.assign({}, this.forms.json);
-
-      // on loading
-      this.processing = true;
-
-      // merge uploader data
-      let thumbnail = null;
-      let updatedThumbnail = false;
-      if ($uploader.thumbnailOptions)
-      {
-        // 이전 이미지는 삭제한다. 삭제 실패하더라도 넘어간다.
-        if (!!(data_article && data_article.json.thumbnail))
-        {
-          await this.$axios.$post(
-            `/files/remove-file/`,
-            formData({ path: data_article.json.thumbnail.path })
-          );
-        }
-        try
-        {
-          // 새로운 썸네일 이미지를 업로드한다.
-          if ($uploader.thumbnailOptions.src)
-          {
-            let res_uploadSource = await this.$axios.$post(
-              `/files/upload-file/`,
-              formData({
-                sub_dir: 'thumbnail',
-                base64: $uploader.thumbnailOptions.src,
-              })
-            );
-            if (!res_uploadSource.success) throw res_uploadSource.message || 'Failed file upload.';
-            if (!res_uploadSource.data.path) throw 'not found source path';
-
-            // make option
-            thumbnail = {
-              srl: $uploader.thumbnailOptions.srl,
-              sizeSet: $uploader.sizeSet,
-              points: $uploader.thumbnailOptions.points,
-              zoom: $uploader.thumbnailOptions.zoom,
-              path: res_uploadSource.data.path,
-            };
-          }
-          else
-          {
-            // `$uploader.thumbnailOptions` 객체는 있지만 `src`가 없으면 썸네일 이미지를 삭제한다고 인식하고 값을 비워야 한다.
-            thumbnail = null;
-          }
-          updatedThumbnail = true;
-        }
-        catch(e)
-        {
-          this.processing = false;
-          this.$toast.add({ message: e, color: 'error' });
-          return;
-        }
-      }
-
-      try
-      {
-        // assign json
-        if (updatedThumbnail) json.thumbnail = thumbnail;
-        // request article
-        let data = {
-          app_srl: this.forms.app_srl,
-          nest_srl: this.forms.nest_srl,
-          category_srl: this.forms.category_srl || '',
-          type: this.getTypeName(this.forms.type),
-          title: this.forms.title.value,
-          content: this.forms.content.value,
-          json: encodeURIComponent(JSON.stringify(json)),
-          order: this.forms.order.value,
-        };
-        data = formData(data);
-        let res = await this.$axios.$post(
-          this.type === 'edit' ? `/articles/${this.srl}/edit/` : '/articles/',
-          data
-        );
-        if (!res.success) throw res.message;
-
-        // update files
-        const files = this.$refs.$uploader.uploader.queue.items.files;
-        if (files && files.length)
-        {
-          let srls = [];
-          files.forEach((o) => {
-            if (o.ready !== 1) return;
-            srls.push(this.$axios.$post(
-              `/files/${o.srl}/edit/`,
-              formData({
-                target_srl: this.srl || res.srl,
-                module: 'articles',
-                ready: 0,
-              })
-            ));
-          });
-          if (srls.length)
-          {
-            let res_file = await Promise.all(srls);
-            for (let i=0; i<res_file.length; i++)
-            {
-              if (!res_file[i].success) throw res_file[i].message;
-            }
-          }
-        }
-
-        this.processing = false;
-
-        // redirect
-        switch (this.type)
-        {
-          case 'edit':
-          case 'add':
-            let params = {};
-            if (this.nest_srl) params.nest = this.nest_srl;
-            if (this.category_srl) params.category = this.category_srl;
-            if (this.page && this.page > 1) params.page = this.page;
-            this.$router.push(`../${text.serialize(params, true)}`);
-            break;
-          default:
-            this.$router.push('/articles/');
-            break;
-        }
-      }
-      catch(e)
-      {
-        if (e === messages.error.service) e = null;
-        this.processing = false;
-        this.$toast.add({
-          message: (e && typeof e === 'string') ? e : `Failed ${this.type} nest.`,
-          color: 'error',
-        });
-      }
-    },
-    nativeSubmit()
-    {
-      this.onSubmit();
-    },
     /**
      * get json
      *
@@ -370,8 +258,9 @@ export default {
      * @param {string} keyword
      * @param {number} selection
      */
-    async insertTextToEditor(keyword, selection)
+    insertTextToEditor(keyword, selection=undefined)
     {
+      if (!keyword) return;
       let content = this.forms.content.value + '';
       let pos = this.editor.start;
       if (pos === 0) keyword = keyword.replace(/^\n/g, '');
@@ -396,6 +285,175 @@ export default {
       else if (this.forms.order.error)
       {
         this.forms.order.error = '';
+      }
+    },
+    /**
+     * on insert from files
+     *
+     * @param {array} paths
+     */
+    onInsertFromFiles(paths)
+    {
+      this.insertTextToEditor(paths.join('\n\n') + `\n`);
+      this.showFiles = false;
+    },
+    /**
+     * on update thumbnail from files
+     *
+     * @param {object} set
+     * @param {string} image base64
+     */
+    onUpdateThumbnailFromFiles(set, image)
+    {
+      this.thumbnailUpdated = true;
+      this.thumbnailImage = image;
+      this.thumbnailSetting = set;
+    },
+    /**
+     * save
+     * 글을 저장하는 역할을 한다.
+     *
+     * @param {string} type (ready|publishing)
+     * @return {Promise}
+     * @throws {Error}
+     */
+    async save(type)
+    {
+      let json = Object.assign({}, this.forms.json);
+
+      // check order
+      if (!dates.checkOrderDate(this.forms.order.value))
+      {
+        this.forms.order.error = errorMessage.order;
+        throw new Error('Error check order date');
+      }
+
+      // update thumbnail image
+      if (this.thumbnailUpdated)
+      {
+        // 이전 이미지는 삭제한다. 삭제 실패하더라도 넘어간다.
+        if (this.thumbnailPath)
+        {
+          await this.$axios.$post(
+            `/files/remove-file/`,
+            formData({ path: this.thumbnailPath })
+          );
+        }
+        // 새로운 썸네일 이미지를 업로드한다.
+        if (this.thumbnailImage)
+        {
+          let res_uploadSource = await this.$axios.$post(
+            `/files/upload-file/`,
+            formData({ sub_dir: 'thumbnail', base64: this.thumbnailImage })
+          );
+          if (!res_uploadSource.success) throw new Error(res_uploadSource.message || 'Failed file upload.');
+          if (!res_uploadSource.data.path) throw new Error('Not found source path');
+          // make option
+          json.thumbnail = {
+            ...this.thumbnailSetting,
+            path: res_uploadSource.data.path,
+          };
+          this.thumbnailSetting = json.thumbnail;
+          this.thumbnailUpdated = false;
+          this.thumbnailImage = null;
+          this.thumbnailPath = res_uploadSource.data.path;
+        }
+        else
+        {
+          // 업로드된 이미지가 없으면 값을 비워준다.
+          json.thumbnail = {
+            zoom: .25,
+          };
+        }
+      }
+
+      // save article
+      let res = await this.$axios.$post(
+        `/articles/${this.srl}/edit/`,
+        formData({
+          app_srl: this.forms.app_srl,
+          nest_srl: this.forms.nest_srl,
+          category_srl: this.forms.category_srl || '',
+          type: type === 'publishing' ? this.getTypeName(this.forms.type) : 'ready',
+          title: this.forms.title.value,
+          content: this.forms.content.value,
+          json: encodeURIComponent(JSON.stringify(json)),
+          order: this.forms.order.value,
+        })
+      );
+      if (!res.success) throw new Error(res.message);
+    },
+    /**
+     * 임시 글 저장하기
+     */
+    async saveDraft()
+    {
+      if (this.processing) return;
+      this.processing = true;
+      try
+      {
+        await this.save('draft');
+        this.processing = false;
+        this.$toast.add({
+          message: `Success save draft article.`,
+          color: 'success',
+        });
+      }
+      catch(e)
+      {
+        this.processing = false;
+        if (e.message === messages.error.service) e = null;
+        this.$toast.add({
+          message: (e.message && typeof e.message === 'string') ? e : `Failed save article.`,
+          color: 'error',
+        });
+      }
+    },
+    /**
+     * 실질적인 글 저장하기
+     */
+    async publishing()
+    {
+      const { preference } = this.$store.state;
+      try
+      {
+        this.processing = true;
+        await this.save('publishing');
+        // redirect
+        switch (this.type)
+        {
+          case 'edit':
+          case 'add':
+            let params = {};
+            if (this.nest_srl) params.nest = this.nest_srl;
+            if (this.category_srl) params.category = this.category_srl;
+            if (this.page && this.page > 1) params.page = this.page;
+            this.$router.push(`../${text.serialize(params, true)}`);
+            break;
+          default:
+            this.$router.push('/articles/');
+            break;
+        }
+      }
+      catch(e)
+      {
+        if (preference.debug.service) console.error(e);
+        this.processing = false;
+        this.$toast.add({
+          message: `Failed ${this.type} article.`,
+          color: 'error',
+        });
+      }
+    },
+    submit()
+    {
+      if (this.type === 'edit')
+      {
+        this.publishing().then();
+      }
+      else
+      {
+        this.publishing().then();
       }
     },
   },

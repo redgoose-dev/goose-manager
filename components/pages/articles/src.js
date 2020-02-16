@@ -1,13 +1,14 @@
 export const defaultParamsArticle = {
   field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
-  visible_type: 'all',
   ext_field: 'category_name',
+  visible_type: 'all',
 };
 
 export const defaultParamsCategory = {
   order: 'turn',
   sort: 'asc',
   ext_field: 'count_article,item_all,none',
+  visible_type: 'all',
 };
 
 /**

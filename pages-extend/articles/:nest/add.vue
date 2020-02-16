@@ -4,6 +4,7 @@
   <post
     ref="post"
     type="add"
+    :srl="srl"
     :nest_srl="nest_srl"
     :category_srl="category_srl"
     :page="page"
@@ -25,14 +26,22 @@ export default {
   {
     return cox.params.nest && /^\d+$/.test(cox.params.nest);
   },
+  /**
+   * async data
+   *
+   * @param {object} cox
+   * @return {Promise}
+   * @throw {Error}
+   */
   async asyncData(cox)
   {
     try
     {
-      const nest_srl = cox.params.nest;
+      let article = {};
+      const nest_srl = parseInt(cox.params.nest);
       const category_srl = cox.query.category || null;
-      const page = cox.query.page || null;
-      const [ nest, categories, files ] = await Promise.all([
+      const page = parseInt(cox.query.page) || null;
+      const [ nest, categories ] = await Promise.all([
         cox.$axios.$get(`/nests/${nest_srl}/`).then((res) => {
           return res.success ? res.data : null;
         }),
@@ -46,47 +55,61 @@ export default {
               };
             }) : [];
           }),
-        cox.$axios.$get(`/files/?ready=true&strict=1`).then((res) => {
-          return (res.success && res.data.index.length) ? res.data.index.map((o) => {
-            return {
-              id: parseInt(o.srl),
-              srl: parseInt(o.srl),
-              name: o.name,
-              size: parseInt(o.size),
-              src: `${o.path}`,
-              type: o.type,
-              ready: parseInt(o.ready),
-            };
-          }) : null;
-        }),
       ]);
 
-      if (!nest) throw 'No data for `Nest`.';
+      if (!nest) throw new Error('No data for `Nest`.');
+
+      // get article
+      let res_article = await cox.$axios.$get('/articles/?visible_type=ready');
+      if (res_article.success && res_article.data.total > 0)
+      {
+        article = res_article.data.index[0];
+        article.nest_srl = nest_srl;
+        article.app_srl = parseInt(nest.app_srl);
+        article.user_srl = parseInt(nest.user_srl);
+      }
+      else
+      {
+        let json = {
+          thumbnail: { zoom: .25 },
+        };
+        res_article = await cox.$axios.$post('/articles/', {
+          app_srl: nest.app_srl,
+          nest_srl: nest.srl,
+          type: 'ready',
+          json: encodeURIComponent(JSON.stringify(json)),
+        });
+        if (res_article.success)
+        {
+          article = await cox.$axios.$get(`/articles/${res_article.srl}/?visible_type=ready`);
+          if (article.success) article = article.data;
+        }
+        else
+        {
+          throw new Error(res_article.message);
+        }
+      }
 
       return {
-        nest_srl,
-        category_srl,
-        page,
+        srl: parseInt(article.srl),
+        nest_srl: nest_srl,
+        category_srl: category_srl,
+        page: page,
         skin: nest.json.articleSkin || 'default',
         datas: {
           nest,
           categories,
-          files,
+          article,
         },
       };
     }
     catch(e)
     {
-      console.error(e);
       cox.error({
         statusCode: 500,
-        message: (typeof e === 'string') ? e : messages.error.service,
+        message: (typeof e === 'string') ? e.message : messages.error.service,
       });
     }
-  },
-  mounted()
-  {
-    setTimeout(() => this.$refs.post.$refs.form.title.focus(), 300);
   },
 }
 </script>
