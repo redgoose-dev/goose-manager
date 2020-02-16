@@ -124,9 +124,10 @@
         ready: type === 'add',
         thumbnail: thumbnailSetting,
         thumbnailImage: thumbnailImage,
-        useThumbnailSizeTool: useThumbnailSizeTool === 1,
-        nest: datas.nest,
-        article: datas.article,
+        data: {
+          nest: datas.nest,
+          article: datas.article,
+        },
       }"
       :local="{ dir: 'articles' }"
       :full="true"

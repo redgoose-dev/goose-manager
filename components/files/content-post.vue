@@ -72,16 +72,18 @@
         <p class="files-content__meta">Count: {{index.length}}/{{limit.count}}</p>
       </div>
     </header>
-    <div class="files-content__index">
+    <div ref="thumbnailsWrap" :class="['files-content__index', dragOver && 'over']">
       <div v-if="pending" class="files-content__pending">
         <loading/>
       </div>
-      <thumbnails
-        v-else
-        ref="thumbnails"
-        :index="index"
-        :full="full"
-        @change-selected="onChangeSelected"/>
+      <div v-else class="files-content__thumbnails">
+        <thumbnails
+          ref="thumbnails"
+          :index="index"
+          :full="full"
+          @change-selected="onChangeSelected"
+          @mounted="initDragAndDropEvent"/>
+      </div>
     </div>
     <dl v-if="!pending" class="files-content__footer">
       <dt>
@@ -153,9 +155,7 @@ export default {
     module: { type: String, default: 'articles' }, // articles,comments
     acceptFileType: { type: String },
     full: { type: Boolean, default: false },
-    nest: { type: Object, default: null },
-    article: { type: Object, default: null },
-    comment: { type: Object, default: null },
+    data: { type: Object, default: null },
     thumbnail: { type: Object },
     thumbnailImage: { type: String, default: null },
   },
@@ -178,6 +178,10 @@ export default {
         viewport: { width: 320, height: 240, type: 'square' },
       },
       sizeSet: this.thumbnail.sizeSet || '1*1',
+      dragOver: false,
+      article: null,
+      comment: null,
+      nest: null,
     };
   },
   computed: {
@@ -187,10 +191,18 @@ export default {
       return parseInt(this.nest.json.useThumbnailSizeTool) === 1;
     },
   },
+  created()
+  {
+    this.$thumbnailsWrap = null;
+  },
   async mounted()
   {
     await this.getPref();
     await this.getItems();
+  },
+  destroyed()
+  {
+    this.initDragAndDropEvent(true);
   },
   methods: {
     // 업로드 시작
@@ -344,9 +356,14 @@ export default {
       switch (this.module)
       {
         case 'articles':
-          // get article
-          if (!(this.article && this.nest))
+          if (this.data && this.data.article && this.data.nest)
           {
+            this.article = this.data.article;
+            this.nest = this.data.nest;
+          }
+          else
+          {
+            // get article
             let params = this.ready ? '?visible_type=ready' : '';
             article = await this.$axios.$get(`/${this.module}/${this.target_srl}/${params}`);
             if (!article.success) return;
@@ -370,21 +387,30 @@ export default {
           }
           break;
         case 'comments':
-          // get comment
-          comment = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
-          if (!comment.success) return;
-          comment = comment.data;
-          // get article
-          article = await this.$axios.$get(`/articles/${comment.article_srl}/`);
-          if (!article.success) return;
-          article = article.data;
-          // get nest
-          nest = await this.$axios.$get(`/nests/${article.nest_srl}/`);
-          if (!nest.success) return;
-          nest = nest.data;
+          if (this.data && this.data.article && this.data.comment && this.data.nest)
+          {
+            this.comment = this.data.comment;
+            this.article = this.data.article;
+            this.nest = this.data.nest;
+          }
+          else
+          {
+            // get comment
+            comment = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
+            if (!comment.success) return;
+            this.comment = comment.data;
+            // get article
+            article = await this.$axios.$get(`/articles/${comment.article_srl}/`);
+            if (!article.success) return;
+            this.article = article.data;
+            // get nest
+            nest = await this.$axios.$get(`/nests/${article.nest_srl}/`);
+            if (!nest.success) return;
+            this.nest = nest.data;
+          }
           // set values
-          this.limit.count = nest.json.files.count;
-          this.limit.sizeSingle = nest.json.files.sizeSingle;
+          this.limit.count = this.nest.json.files.count;
+          this.limit.sizeSingle = this.nest.json.files.sizeSingle;
           break;
       }
     },
@@ -510,6 +536,42 @@ export default {
       let height = this.nest.json.thumbnail.height || 240;
       this.croppie.viewport.width = width * parseInt(size[0]);
       this.croppie.viewport.height = height * parseInt(size[1]);
+    },
+    initDragAndDropEvent(remove)
+    {
+      const onOverFiles = (e) => {
+        e.preventDefault();
+        if (this.dragOver) return;
+        this.dragOver = true;
+      };
+      const onLeaveFiles = (e) => {
+        e.preventDefault();
+        this.dragOver = false;
+      };
+      const onDropFiles = (e) => {
+        e.preventDefault();
+        this.dragOver = false;
+        const files = (e.dataTransfer) ? e.dataTransfer.files : null;
+        if (files && files.length)
+        {
+          this.uploadStart(files).then();
+        }
+      };
+
+      if (remove)
+      {
+        this.$thumbnailsWrap.removeEventListener('dragover', onOverFiles, false);
+        this.$thumbnailsWrap.removeEventListener('dragleave', onLeaveFiles, false);
+        this.$thumbnailsWrap.removeEventListener('drop', onDropFiles, false);
+      }
+      else
+      {
+        if (!window.File || !window.FileList || !window.FileReader || !window.Blob) return;
+        this.$thumbnailsWrap = this.$refs.thumbnailsWrap;
+        this.$thumbnailsWrap.addEventListener('dragover', onOverFiles, false);
+        this.$thumbnailsWrap.addEventListener('dragleave', onLeaveFiles, false);
+        this.$thumbnailsWrap.addEventListener('drop', onDropFiles, false);
+      }
     },
   },
 }

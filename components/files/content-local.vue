@@ -36,16 +36,18 @@
       </p>
     </div>
   </header>
-  <div class="files-content__index">
+  <div ref="thumbnailsWrap" :class="['files-content__index', dragOver && 'over']">
     <div v-if="pending" class="files-content__pending">
       <loading/>
     </div>
-    <thumbnails
-      v-else
-      ref="thumbnails"
-      :index="index"
-      :full="full"
-      @change-selected="onChangeSelected"/>
+    <div v-else class="files-content__thumbnails">
+      <thumbnails
+        ref="thumbnails"
+        :index="index"
+        :full="full"
+        @change-selected="onChangeSelected"
+        @mounted="initDragAndDropEvent"/>
+    </div>
   </div>
   <dl class="files-content__footer">
     <dt></dt>
@@ -98,7 +100,12 @@ export default {
       selected: [],
       pending: true,
       count_srl: 0,
+      dragOver: false,
     };
+  },
+  created()
+  {
+    this.$thumbnailsWrap = null;
   },
   async mounted()
   {
@@ -125,6 +132,10 @@ export default {
     {
       this.pending = false;
     }
+  },
+  destroyed()
+  {
+    this.initDragAndDropEvent(true);
   },
   methods: {
     async uploadStart(files)
@@ -251,6 +262,42 @@ export default {
     onClickInsertText()
     {
       this.$emit('custom-event', 'insert-text', Object.assign([], this.selected));
+    },
+    initDragAndDropEvent(remove)
+    {
+      const onOverFiles = (e) => {
+        e.preventDefault();
+        if (this.dragOver) return;
+        this.dragOver = true;
+      };
+      const onLeaveFiles = (e) => {
+        e.preventDefault();
+        this.dragOver = false;
+      };
+      const onDropFiles = (e) => {
+        e.preventDefault();
+        this.dragOver = false;
+        const files = (e.dataTransfer) ? e.dataTransfer.files : null;
+        if (files && files.length)
+        {
+          this.uploadStart(files).then();
+        }
+      };
+
+      if (remove)
+      {
+        this.$thumbnailsWrap.removeEventListener('dragover', onOverFiles, false);
+        this.$thumbnailsWrap.removeEventListener('dragleave', onLeaveFiles, false);
+        this.$thumbnailsWrap.removeEventListener('drop', onDropFiles, false);
+      }
+      else
+      {
+        if (!window.File || !window.FileList || !window.FileReader || !window.Blob) return;
+        this.$thumbnailsWrap = this.$refs.thumbnailsWrap;
+        this.$thumbnailsWrap.addEventListener('dragover', onOverFiles, false);
+        this.$thumbnailsWrap.addEventListener('dragleave', onLeaveFiles, false);
+        this.$thumbnailsWrap.addEventListener('drop', onDropFiles, false);
+      }
     },
   },
 }

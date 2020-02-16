@@ -1,10 +1,9 @@
 <template>
-<article
-  :class="['files-libs', full && 'files-libs--full']">
+<article :class="['files-libs', full && 'files-libs--full']">
   <tab
     :tab="tab"
     :external="externalName"
-    :show="{ post: !!post, local: !!local }"
+    :show="computedShowTab"
     :full="full"
     class="files-libs__header"
     @click="onChangeTab"
@@ -92,6 +91,22 @@ export default {
         default:
           return null;
       }
+    },
+    computedShowTab()
+    {
+      let showPost = false;
+      if (this.post && this.post.module && this.post.target_srl)
+      {
+        if (this.post.module === 'articles' || this.post.module === 'comments')
+        {
+          showPost = true;
+        }
+      }
+      return {
+        post: showPost,
+        local: !!this.local,
+        external: false,
+      };
     },
   },
   mounted()

@@ -22,8 +22,34 @@ $size-bottom: 68px;
     }
   }
   &__index {
+    position: relative;
     margin: -10px 30px 30px;
     box-sizing: border-box;
+    &:before {
+      content: 'Drop files here.';
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba($color-key, .9);
+      z-index: 5;
+      box-sizing: border-box;
+      font-family: $font-eng;
+      font-size: 24px;
+      font-weight: 200;
+      color: #fff;
+      opacity: 0;
+      display: flex;
+      pointer-events: none;
+    }
+    &.over {
+      &:before {
+        opacity: 1;
+      }
+    }
   }
   &__pending {
     display: flex;
@@ -139,6 +165,11 @@ $size-bottom: 68px;
   }
 
   @include dark-mode() {
+    &__index {
+      &:before {
+        background-color: rgba($color-dark-key, .9);
+      }
+    }
     &__footer {
       margin: 0;
       border-color: rgba($color-dark-content-line, .5);

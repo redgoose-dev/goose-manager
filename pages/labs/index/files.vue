@@ -20,6 +20,10 @@
           ready: false,
           thumbnail: thumbnailSetting,
           thumbnailImage: thumbnailImage,
+          data: {
+            nest: null,
+            article: null,
+          },
         }"
         :local="{ dir: 'dev' }"
         :external="{}"
@@ -44,6 +48,11 @@
               ready: false,
               thumbnail: thumbnailSetting,
               thumbnailImage: thumbnailImage,
+              data: {
+                nest: null,
+                article: null,
+                comment: null,
+              },
             }"
             :local="{ dir: 'dev' }"
             :full="true"
@@ -71,10 +80,10 @@ export default {
   data()
   {
     return {
-      target_srl: 9,
+      target_srl: 33,
       module: 'articles', // articles,comments
       visibleFiles: false,
-      article: {},
+      article: null,
       thumbnailPath: null,
       thumbnailImage: null,
       thumbnailSetting: {
@@ -86,6 +95,7 @@ export default {
   {
     try
     {
+      if (!this.target_srl) throw new Error('no target_srl');
       let article = await this.$axios.$get(`/${this.module}/${this.target_srl}/`);
       if (!article.success) throw new Error(article.message);
       this.article = article.data;
@@ -105,6 +115,14 @@ export default {
     },
     async onUpdateThumbnail(set, image)
     {
+      if (!this.article)
+      {
+        this.$toast.add({
+          message: 'Not found article',
+          color: 'error',
+        });
+        return;
+      }
       this.thumbnailSetting = set;
       try
       {

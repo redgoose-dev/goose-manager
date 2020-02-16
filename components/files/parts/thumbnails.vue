@@ -57,6 +57,7 @@ export default {
   mounted()
   {
     window.on(`click.${this.eventName}`, () => this.onClickBackground());
+    this.$emit('mounted');
   },
   beforeDestroy()
   {
