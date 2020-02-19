@@ -126,8 +126,8 @@
         thumbnailImage: thumbnailImage,
         data: {
           nest: datas.nest,
-          article: datas.article,
-        },
+          article: datas.article
+        }
       }"
       :local="{ dir: 'articles' }"
       :full="true"
@@ -212,7 +212,7 @@ export default {
       thumbnailUpdated: false,
       thumbnailImage: null,
       thumbnailPath: (article && article.json.thumbnail) ? article.json.thumbnail.path : '',
-      thumbnailSetting: article ? article.json.thumbnail : { zoom: .25 },
+      thumbnailSetting: (article && article.json.thumbnail) ? article.json.thumbnail : { zoom: .25 },
     };
   },
   methods: {
@@ -269,7 +269,7 @@ export default {
       let lastPosition = this.editor.start + (selection ? selection : keyword.length);
       this.editor.start = lastPosition;
       this.editor.end = lastPosition;
-      this.$nextTick((e) => {
+      this.$nextTick(() => {
         this.$refs.editor.changeCursor(lastPosition, lastPosition);
       });
     },
