@@ -92,9 +92,9 @@ export default {
 
       return {
         srl: parseInt(article.srl),
-        nest_srl: nest_srl,
-        category_srl: category_srl,
-        page: page,
+        nest_srl,
+        category_srl,
+        page,
         skin: nest.json.articleSkin || 'default',
         datas: {
           nest,

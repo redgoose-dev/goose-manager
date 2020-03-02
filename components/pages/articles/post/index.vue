@@ -108,7 +108,7 @@
           :icon-left="processing ? 'loader' : 'check'"
           :rotate-icon="processing"
           :disabled="processing">
-          Publishing
+          Publishing Article
         </button-basic>
       </template>
     </template>
@@ -126,10 +126,12 @@
         thumbnailImage: thumbnailImage,
         data: {
           nest: datas.nest,
-          article: datas.article
-        }
+          article: datas.article,
+        },
       }"
-      :local="{ dir: 'articles' }"
+      :local="{
+        dir: 'articles'
+      }"
       :full="true"
       @close="showFiles = false"
       @insert="onInsertFromFiles"
@@ -144,10 +146,6 @@ import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
 import * as dates from '~/libs/dates';
 import * as fieldset from '~/components/form/fieldset';
-
-const errorMessage = {
-  order: `Please type in '2019-12-25' format.`,
-};
 
 export default {
   name: 'post-article',
@@ -227,7 +225,10 @@ export default {
     },
     getCategoryInForm()
     {
-      if (this.datas.article) return this.datas.article.category_srl;
+      if (this.type === 'edit' && this.datas.article)
+      {
+        return this.datas.article.category_srl;
+      }
       if (this.category_srl === 'null') return null;
       return this.category_srl || null;
     },
@@ -281,7 +282,7 @@ export default {
     {
       if (!dates.checkOrderDate(this.forms.order.value))
       {
-        this.forms.order.error = errorMessage.order;
+        this.forms.order.error = messages.msg.errorOrderFormat;
       }
       else if (this.forms.order.error)
       {
@@ -325,7 +326,7 @@ export default {
       // check order
       if (!dates.checkOrderDate(this.forms.order.value))
       {
-        this.forms.order.error = errorMessage.order;
+        this.forms.order.error = messages.msg.errorOrderFormat;
         throw new Error('Error check order date');
       }
 

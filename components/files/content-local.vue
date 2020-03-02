@@ -163,9 +163,11 @@ export default {
     async uploadFile(files, n)
     {
       const self = this;
+      let idx = null;
       try
       {
-        this.index.unshift({ complete: false, percent: 0 });
+        idx = this.index.push({ complete: false, percent: 0 });
+        idx = idx - 1;
         let res = await this.$axios.$post(
           `/files/upload-file/`,
           formData({ sub_dir: this.dir, file: files[n] }),
@@ -173,12 +175,12 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
             onUploadProgress(progressEvent)
             {
-              self.index[0].percent = Math.round((progressEvent.loaded/progressEvent.total) * 100);
+              self.index[idx].percent = Math.round((progressEvent.loaded/progressEvent.total) * 100);
             },
           });
         if (!res.success) throw new Error(res.message);
         let index = Object.assign([], this.index);
-        index[0] = {
+        index[idx] = {
           complete: true,
           srl: this.count_srl,
           name: res.data.name,
@@ -196,7 +198,7 @@ export default {
       }
       catch(err)
       {
-        if (!this.index[0].complete) this.index.shift();
+        if (!this.index[idx].complete) this.index.pop();
         throw new Error(err.message);
       }
     },
@@ -278,10 +280,7 @@ export default {
         e.preventDefault();
         this.dragOver = false;
         const files = (e.dataTransfer) ? e.dataTransfer.files : null;
-        if (files && files.length)
-        {
-          this.uploadStart(files).then();
-        }
+        if (files && files.length) this.uploadStart(files).then();
       };
 
       if (remove)

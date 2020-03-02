@@ -34,8 +34,6 @@
 
 <script>
 import ResizeImage from 'image-resize';
-import * as forms from "~/libs/forms";
-import {formData} from "~/libs/forms";
 
 export default {
   name: 'thumbnail-editor',

@@ -55,6 +55,14 @@
       </div>
     </div>
     <div>
+      <div class="files-tab__item">
+        <button
+          type="button"
+          class="files-tab__button only-icon"
+          @click="$emit('open-command-guide')">
+          <icon name="command"/>
+        </button>
+      </div>
       <div v-if="full" class="files-tab__item">
         <button
           type="button"
@@ -78,6 +86,12 @@ export default {
     external: { type: String, default: null },
     show: { type: Object },
     full: { type: Boolean, default: false },
+  },
+  data()
+  {
+    return {
+      showCommandGuide: false,
+    };
   },
 }
 </script>

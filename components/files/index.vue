@@ -7,6 +7,7 @@
     :full="full"
     class="files-libs__header"
     @click="onChangeTab"
+    @open-command-guide="controlCommandGuide(true)"
     @close="$emit('close')"/>
   <div v-if="computedProps" class="files-libs__body">
     <component
@@ -22,10 +23,13 @@
       <p>no data</p>
     </div>
   </div>
+  <command-guide v-if="showCommandGuide" @close="controlCommandGuide(false)"/>
 </article>
 </template>
 
 <script>
+const tab = [ 'post', 'local' ];
+
 export default {
   name: 'files-libs',
   components: {
@@ -34,6 +38,7 @@ export default {
     'content-local': () => import('./content-local'),
     'content-external': () => import('./content-external'),
     'icon': () => import('~/components/icon'),
+    'command-guide': () => import('~/components/files/parts/command-guide'),
   },
   props: {
     initTab: { type: String, default: '' }, // post,local,external
@@ -63,6 +68,7 @@ export default {
       tab,
       externalName: this.initExternal, // external service name
       window: [],
+      showCommandGuide: false,
     };
   },
   computed: {
@@ -111,13 +117,13 @@ export default {
   },
   mounted()
   {
-    window.on('keyup.files-libs', (e) => {
-      if (e.key === 'Escape') this.onPushKeyEsc();
-    });
+    window.on('keyup.files-libs', (e) => this.initialShortCut(e, 'keyup'));
+    window.on('keydown.files-libs', (e) => this.initialShortCut(e, 'keydown'));
   },
   destroyed()
   {
     window.off('keyup.files-libs');
+    window.off('keydown.files-libs');
   },
   methods: {
     onChangeTab(tab, external)
@@ -171,8 +177,63 @@ export default {
         case 'thumbnail-editor':
           $body.closeSubWindow('thumbnail-editor');
           break;
+        case 'command-guide':
+          this.controlCommandGuide(false);
+          break;
         default:
           this.$emit('close');
+          break;
+      }
+    },
+    insertSelectedItems()
+    {
+      if (!(this.$refs.body && this.$refs.body.selected)) return;
+      if (this.$refs.body.selected.length <= 0) return;
+      this.customEvent('insert-text', this.$refs.body.selected);
+    },
+    controlCommandGuide(sw)
+    {
+      if (sw)
+      {
+        this.customEvent('window', { action: 'open', code: 'command-guide' });
+        this.showCommandGuide = true;
+      }
+      else
+      {
+        this.customEvent('window', { action: 'close' });
+        this.showCommandGuide = false;
+      }
+    },
+    initialShortCut(e, type)
+    {
+      switch (type)
+      {
+        case 'keyup':
+          if (e.key === 'Escape') this.onPushKeyEsc();
+          if (e.key === 'Tab')
+          {
+            let idx = tab.indexOf(this.tab);
+            idx = idx + 1;
+            if (idx >= tab.length) idx = 0;
+            this.tab = tab[idx];
+          }
+          break;
+        case 'keydown':
+          if (e.metaKey || e.ctrlKey)
+          {
+            switch (e.key)
+            {
+              case 'Enter':
+                this.insertSelectedItems();
+                break;
+              case 'a':
+                if (this.$refs.body && this.$refs.body.onClickSelectAll)
+                {
+                  this.$refs.body.onClickSelectAll();
+                }
+                break;
+            }
+          }
           break;
       }
     },

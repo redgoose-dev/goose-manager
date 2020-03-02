@@ -232,6 +232,7 @@ export default {
     async uploadFile(files, n)
     {
       const self = this;
+      let idx = null;
       try
       {
         if (this.limit.sizeSingle < files[n].size)
@@ -242,7 +243,8 @@ export default {
         {
           throw new Error('파일 업로드 갯수를 초과했습니다.');
         }
-        this.index.unshift({ complete: false, percent: 0 });
+        idx = this.index.push({ complete: false, percent: 0 });
+        idx = idx - 1;
         let res = await this.$axios.$post(
           '/files/',
           formData({
@@ -255,7 +257,7 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
             onUploadProgress(progressEvent)
             {
-              self.index[0].percent = Math.round((progressEvent.loaded/progressEvent.total) * 100);
+              self.index[idx].percent = Math.round((progressEvent.loaded/progressEvent.total) * 100);
             },
           });
         if (!res.success) throw new Error(res.message);
@@ -264,7 +266,7 @@ export default {
           throw new Error(res.data[0].message);
         }
         let index = Object.assign([], this.index);
-        index[0] = {
+        index[idx] = {
           complete: true,
           module: this.module,
           target_srl: this.target_srl,
@@ -284,7 +286,7 @@ export default {
       }
       catch(err)
       {
-        if (!this.index[0].complete) this.index.shift();
+        if (!this.index[idx].complete) this.index.pop();
         throw new Error(err.message);
       }
     },
@@ -321,18 +323,24 @@ export default {
     onClickContextMenu(type, e)
     {
       const { url_api } = this.$store.state;
-      const key = parseInt(e.currentTarget.dataset.key);
+      let key = null;
       switch (type)
       {
         case 'open-window':
+          key = parseInt(e.currentTarget.dataset.key);
           window.open(`${url_api}/${this.index[key].path}`);
           break;
         case 'make-thumbnail':
+          key = parseInt(e.currentTarget.dataset.key);
           this.activeItemForThumbnailEditor = this.index[key];
           this.showThumbnailEditor = true;
           break;
         case 'remove':
+          key = parseInt(e.currentTarget.dataset.key);
           this.remove([this.index[key]]).then();
+          break;
+        case 'insert-item':
+          this.$emit('custom-event', 'insert-text', [e]);
           break;
       }
     },
@@ -420,7 +428,7 @@ export default {
       this.pending = true;
       let params = {
         order: 'srl',
-        sort: 'desc',
+        sort: 'asc',
         unlimit: 1,
         target: this.target_srl,
         module: this.module,
@@ -461,6 +469,7 @@ export default {
     {
       let items = [];
       items.push({ label: '새창으로 열기', click: (e) => this.onClickContextMenu('open-window', e) });
+      items.push({ label: '에디터로 삽입하기', click: (e) => this.onClickContextMenu('insert-item', item) });
       if (this.module === 'articles' && /^image/.test(item.type))
       {
         items.push({ label: '썸네일 이미지로 설정', click: (e) => this.onClickContextMenu('make-thumbnail', e) });

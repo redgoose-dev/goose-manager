@@ -42,6 +42,7 @@ export const msg = {
   confirmResetToken: 'Do you really want to reset the token?',
   successClearToken: 'Success clear token',
   errorClearToken: 'Error clear token',
+  errorOrderFormat: `Please type in '0000-00-00' format.`,
 };
 
 export const keyword = {
