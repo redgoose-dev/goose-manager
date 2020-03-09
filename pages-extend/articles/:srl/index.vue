@@ -7,7 +7,7 @@
   </header>
 
   <div class="article__body">
-    <div v-html="article.content" class="redgoose-body"/>
+    <div v-html="article.content" class="redgoose-body redgoose-body--dark"/>
   </div>
 
   <article v-if="files && files.length" class="files article__files">

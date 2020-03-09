@@ -30,7 +30,7 @@
     </form>
   </div>
   <div v-else class="comment__body">
-    <article v-html="computedContent" class="redgoose-body"/>
+    <article v-html="computedContent" class="redgoose-body redgoose-body--dark"/>
   </div>
   <div class="comment__bottom">
     <p><strong>{{userName}}</strong> commented <em>{{regdate}}</em></p>

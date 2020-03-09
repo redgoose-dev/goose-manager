@@ -23,7 +23,7 @@
       <div
         ref="preview"
         v-html="preview"
-        class="redgoose-body redgoose-body--popup"/>
+        class="redgoose-body redgoose-body--dark redgoose-body--popup"/>
     </article>
   </div>
 </div>

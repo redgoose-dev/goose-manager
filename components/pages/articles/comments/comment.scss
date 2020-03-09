@@ -50,6 +50,7 @@
         outline: none;
         color: var(--color-base);
         font-family: $font-eng-circular;
+        user-select: none;
         &:active {
           opacity: .75;
         }
