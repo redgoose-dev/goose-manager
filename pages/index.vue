@@ -128,7 +128,6 @@
 <script>
 import * as text from '~/libs/text';
 import * as dates from '~/libs/dates';
-import * as localLibs from './local-libs';
 
 const baseParams = {
   articles: {
@@ -158,7 +157,27 @@ const baseParams = {
   },
 };
 
+/**
+ * with params form get datas
+ *
+ * @param {object} baseParams
+ * @param {object} contents
+ * @return {object}
+ */
+export function withParamsForGetDatas(baseParams, contents)
+{
+  let result = {};
+  Object.keys(contents).filter((o) => contents[o].show).forEach((key) => {
+    result[key] = {
+      ...(baseParams[key] ? baseParams[key] : null),
+      ...(contents[key].count ? { size: contents[key].count } : null),
+    };
+  });
+  return result;
+}
+
 export default {
+  name: 'page-dashboard',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'item-list': () => import('~/components/item/list'),
@@ -177,7 +196,7 @@ export default {
     {
       const { dashboard } = preference;
       // set params
-      const params = localLibs.withParamsForGetDatas(baseParams, dashboard.contents);
+      const params = withParamsForGetDatas(baseParams, dashboard.contents);
 
       // result set in preference
       result.title = dashboard.title || 'Dashboard';
