@@ -38,7 +38,7 @@ $ yarn install
 $ yarn run dev
 ```
 
-Open in browser `http://localhost:3000`
+Open in browser `http://localhost:4000`
 
 
 ### Production
