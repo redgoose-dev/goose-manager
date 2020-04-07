@@ -1,4 +1,4 @@
-FROM node:11.1-alpine
+FROM node:13.12-alpine
 
 RUN apk update && apk upgrade && apk add git && apk add nano
 
