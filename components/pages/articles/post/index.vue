@@ -449,14 +449,7 @@ export default {
     },
     submit()
     {
-      if (this.type === 'edit')
-      {
-        this.publishing().then();
-      }
-      else
-      {
-        this.publishing().then();
-      }
+      this.publishing().then();
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-<div class="item-list" :title="alt">
+<div :class="['item-list', link && 'item-list--link']" :title="alt">
   <div class="item-list__wrap">
     <image-thumbnail
       v-if="useImage"
@@ -66,32 +66,14 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
-
 .item-list {
   $self: '.item-list';
   $size: 100px;
-
   position: relative;
   padding: 20px;
   background-color: #fff;
   box-shadow: $shadow-box;
   border-radius: $size-border-radius;
-
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    pointer-events: none;
-    transition: box-shadow .15s ease-out;
-    border-radius: $size-border-radius;
-  }
-  &:hover:after {
-    box-shadow: inset 0 0 0 1px var(--color-key);
-  }
-
   &__wrap {
     display: flex;
     align-items: center;
@@ -102,11 +84,13 @@ export default {
     height: $size;
   }
   &__body {
+    min-width: 0;
     flex: 1;
     margin-top: -3px;
   }
   &__description {
     margin: 1px 0 0;
+    @include text-single-line();
   }
   &__metas {
     margin: 4px 0 0;
@@ -114,7 +98,22 @@ export default {
   &__nav-text {
     margin: 5px 0 0;
   }
-
+  &--link {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: box-shadow .15s ease-out;
+      border-radius: $size-border-radius;
+    }
+    &:hover:after {
+      box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
   @include dark-mode() {
     background-color: $color-dark-content-bg;
   }

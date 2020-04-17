@@ -34,6 +34,13 @@
     h3 + p {
       margin-top: .5rem;
     }
+    pre {
+      background-color: var(--color-content-bg);
+      padding: 10px;
+      code {
+        font-size: 14px;
+      }
+    }
   }
 }
 

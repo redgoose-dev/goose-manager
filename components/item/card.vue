@@ -1,5 +1,5 @@
 <template>
-<div class="item-card" :title="alt">
+<div :class="['item-card', link && 'item-card--link']" :title="alt">
   <slot name="before"/>
   <image-thumbnail
     v-if="useImage"
@@ -57,7 +57,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
-
 .item-card {
   $size: 100px;
   position: relative;
@@ -69,22 +68,6 @@ export default {
   border-radius: $size-border-radius;
   min-width: 0;
   box-sizing: border-box;
-
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    pointer-events: none;
-    transition: box-shadow .15s ease-out;
-    border-radius: $size-border-radius;
-  }
-  &:hover:after {
-    box-shadow: inset 0 0 0 1px var(--color-key);
-  }
-
 	&__image {
     margin: 0;
     width: $size;
@@ -104,7 +87,22 @@ export default {
   &__nav-text {
     margin: 5px 0 0;
   }
-
+  &--link {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: box-shadow .15s ease-out;
+      border-radius: $size-border-radius;
+    }
+    &:hover:after {
+      box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
   @include dark-mode() {
     background-color: $color-dark-content-bg;
   }

@@ -1,5 +1,5 @@
 <template>
-<div class="item-brick" :title="alt">
+<div :class="['item-brick', link && 'item-brick--link']" :title="alt">
   <image-thumbnail
     :src="image"
     :link="link"
@@ -49,7 +49,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
-
 .item-brick {
   $self: '.item-brick';
   position: relative;
@@ -58,22 +57,6 @@ export default {
   overflow: hidden;
   min-width: 0;
   box-sizing: border-box;
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    pointer-events: none;
-    transition: box-shadow 100ms ease-out;
-    border-radius: $size-border-radius;
-    box-shadow: inset 0 0 0 1px #e8e8e8;
-  }
-  &:hover:after {
-    box-shadow: inset 0 0 0 1px var(--color-key);
-  }
-
   &__image {
     margin: 0;
   }
@@ -85,6 +68,23 @@ export default {
   }
   &__nav-text {
     margin: 4px 0 0;
+  }
+  &--link {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: box-shadow 100ms ease-out;
+      border-radius: $size-border-radius;
+      box-shadow: inset 0 0 0 1px #e8e8e8;
+    }
+    &:hover:after {
+      box-shadow: inset 0 0 0 1px var(--color-key);
+    }
   }
   @include dark-mode() {
     background-color: $color-dark-content-bg;

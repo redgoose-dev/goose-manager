@@ -50,7 +50,7 @@ export default {
     try
     {
       const srl = cox.params.article;
-      const nest_srl = cox.query.nest || null;
+      const nest_srl = cox.params.nest || null;
       const category_srl = cox.query.category || null;
       const page = cox.query.page || null;
 

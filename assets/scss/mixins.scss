@@ -80,3 +80,23 @@
     background: linear-gradient(to bottom, $start, $end);
   }
 }
+
+// single line text
+@mixin text-single-line()
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// multi line text
+@mixin text-multi-line($height: 1rem, $row: 3)
+{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: $height;
+  max-height: $height * $row;
+  display: -webkit-box;
+  -webkit-line-clamp: $row;
+  -webkit-box-orient: vertical;
+}

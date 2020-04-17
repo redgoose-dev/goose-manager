@@ -16,6 +16,11 @@ export default [
     "component": "pages-extend/articles/:srl/edit.vue"
   },
   {
+    "name": "articles-change-nest",
+    "path": "/articles/:article/change-nest/",
+    "component": "pages-extend/articles/:srl/change-nest.vue"
+  },
+  {
     "name": "articles-delete",
     "path": "/articles/:article/delete/",
     "component": "pages-extend/articles/:srl/delete.vue"
@@ -62,6 +67,11 @@ export default [
     "name": "nests-articles-edit",
     "path": "/nests/:nest/articles/:article/edit/",
     "component": "pages-extend/articles/:srl/edit.vue"
+  },
+  {
+    "name": "nests-articles-change-nest",
+    "path": "/nests/:nest/articles/:article/change-nest/",
+    "component": "pages-extend/articles/:srl/change-nest.vue"
   },
   {
     "name": "nests-articles-delete",

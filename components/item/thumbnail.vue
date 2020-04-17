@@ -1,5 +1,5 @@
 <template>
-<div class="item-thumbnail" :title="alt">
+<div :class="['item-thumbnail', link && 'item-thumbnail--link']" :title="alt">
   <image-thumbnail
     :src="image"
     :link="link"
@@ -50,7 +50,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
-
 .item-thumbnail {
   $self: '.item-thumbnail';
   $size: 165px;
@@ -59,20 +58,6 @@ export default {
   background-color: #fff;
   border-radius: $size-border-radius;
   min-width: 0;
-  &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    pointer-events: none;
-    transition: box-shadow .15s ease-out;
-    border-radius: $size-border-radius;
-  }
-  &:hover:after {
-    box-shadow: inset 0 0 0 1px var(--color-key);
-  }
   &__image {
     position: relative;
     margin: 0;
@@ -102,7 +87,22 @@ export default {
   &__nav-text {
     margin: 4px 0 0;
   }
-
+  &--link {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: box-shadow .15s ease-out;
+      border-radius: $size-border-radius;
+    }
+    &:hover:after {
+      box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
   @include dark-mode() {
     background-color: $color-dark-content-bg;
   }

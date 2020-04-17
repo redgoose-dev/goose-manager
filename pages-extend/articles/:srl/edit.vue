@@ -27,7 +27,7 @@ export default {
   async asyncData(cox)
   {
     const srl = parseInt(cox.params.article);
-    const nest_srl = parseInt(cox.query.nest) || null;
+    const nest_srl = parseInt(cox.params.nest) || null;
     const category_srl = parseInt(cox.query.category) || null;
     const page = parseInt(cox.query.page) || null;
 

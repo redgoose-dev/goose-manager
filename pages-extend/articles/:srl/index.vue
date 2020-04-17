@@ -28,8 +28,9 @@
     </template>
     <template slot="right">
       <button-basic v-if="nest_srl" :to="makeButtonUrl('add')">Add</button-basic>
-      <button-basic :to="makeButtonUrl('edit', srl)" icon-left="edit-3" color="key">Edit</button-basic>
-      <button-basic :to="makeButtonUrl('delete', srl)" icon-left="trash" color="gray">Delete</button-basic>
+      <button-basic :to="makeButtonUrl('change-nest')">Change nest</button-basic>
+      <button-basic :to="makeButtonUrl('edit')" icon-left="edit-3" color="key">Edit</button-basic>
+      <button-basic :to="makeButtonUrl('delete')" icon-left="trash" color="gray">Delete</button-basic>
     </template>
   </nav-bottom>
 
@@ -61,7 +62,7 @@ export default {
     try
     {
       const srl = parseInt(params.article);
-      const nest_srl = query.nest || null;
+      const nest_srl = params.nest || null;
       const category_srl = query.category || null;
       const page = query.page || null;
       const article = await $axios.$get(`/articles/${srl}/?ext_field=category_name&visible_type=all`);
@@ -112,14 +113,13 @@ export default {
     },
     computedPrefix()
     {
-      let str = '';
-      str += this.nest.name;
+      let str = this.nest.name;
       str += (this.article.category_name) ? ` / ${this.article.category_name}` : '';
       return str;
     }
   },
   methods: {
-    makeButtonUrl(type, srl=null)
+    makeButtonUrl(type)
     {
       let query = {};
       if (this.category_srl) query.category = this.category_srl;
@@ -129,13 +129,13 @@ export default {
         case 'index':
           return `../${text.serialize(query, true)}`;
         case 'add':
-          return `../${this.nest_srl}/add/${text.serialize(query, true)}`;
+          return `../add/${text.serialize(query, true)}`;
         case 'edit':
-          if (this.nest_srl) query.nest = this.nest_srl;
-          return `../${srl}/edit/${text.serialize(query, true)}`;
+          return `./edit/${text.serialize(query, true)}`;
+        case 'change-nest':
+          return `./change-nest/${text.serialize(query, true)}`;
         case 'delete':
-          if (this.nest_srl) query.nest = this.nest_srl;
-          return `../${srl}/delete/${text.serialize(query, true)}`;
+          return `./delete/${text.serialize(query, true)}`;
       }
     },
     getFileSize(size)

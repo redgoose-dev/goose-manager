@@ -85,6 +85,7 @@ $size-bottom: 68px;
     color: var(--color-blur);
     font-size: 13px;
     font-weight: 600;
+    user-select: none;
   }
   &__select-size {
     position: relative;

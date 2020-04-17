@@ -35,7 +35,7 @@ module.exports = {
     '~assets/scss/app.scss'
   ],
   build: {
-    extractCSS: true,
+    extractCSS: process.env.NODE_ENV === 'production',
   },
   modules: [
     '@nuxtjs/axios',
