@@ -390,6 +390,7 @@ export default {
      */
     async saveDraft()
     {
+      if (this.type !== 'add') return;
       if (this.processing) return;
       this.processing = true;
       try

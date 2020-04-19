@@ -53,13 +53,6 @@
     </template>
     <template slot="right">
       <button-basic
-        type="button"
-        icon-left="copy"
-        color="gray"
-        @click="visibleChangeNest = true">
-        Edit nest
-      </button-basic>
-      <button-basic
         :to="`./add/${category_srl ? `?category=${category_srl}` : ''}`"
         color="key"
         icon-left="plus">
