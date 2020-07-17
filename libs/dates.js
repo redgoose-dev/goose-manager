@@ -28,17 +28,10 @@ export function getFormatDate(date=null, useTime=true)
  */
 export function convertDateFormat(date=null, time=true)
 {
-	date = date || new Date();
-	const src = date.toISOString().substr(0, 19).split('T');
-
-	if (time)
-	{
-		return src[0];
-	}
-	else
-	{
-		return `${src[0]} ${src[1]}`;
-	}
+  date = date || new Date();
+  let str = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+  str = str.substr(0, 19).split('T');
+  return time ? `${str[0]} ${str[1]}` : str[0];
 }
 
 /**
