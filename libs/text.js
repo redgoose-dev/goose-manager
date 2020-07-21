@@ -41,8 +41,8 @@ export function serialize(obj, usePrefix=false)
  * get article type label
  * 타입을 검사하면서 레이블을 가져옵니다.
  *
- * @param {string} type
- * @return {string}
+ * @param {String} type
+ * @return {String}
  */
 export function getArticleType(type)
 {
@@ -52,9 +52,9 @@ export function getArticleType(type)
 	}
 	switch (type)
 	{
-		case articlePreference.TYPE_HIDDEN:
+		case articlePreference.TYPE_PRIVATE:
 			return articlePreference.typeLabels[type];
 		default:
-			return '';
+			return articlePreference.typeLabels['public'];
 	}
 }

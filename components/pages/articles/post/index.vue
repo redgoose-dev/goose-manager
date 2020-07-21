@@ -49,12 +49,12 @@
       <template slot="body2">
         <div class="rg-row rg-row-v-center rg-row-gutter-h">
           <label class="form-field">
-            <form-radio name="type" id="type" v-model="forms.type" :value="null"/>
-            <span>Visible</span>
+            <form-radio name="type" id="type" v-model="forms.type" value="public"/>
+            <span>Public</span>
           </label>
           <label class="form-field">
-            <form-radio name="type" v-model="forms.type" value="hidden"/>
-            <span>Hidden</span>
+            <form-radio name="type" v-model="forms.type" value="private"/>
+            <span>Private</span>
           </label>
         </div>
       </template>
@@ -186,7 +186,7 @@ export default {
         app_srl: nest ? parseInt(nest.app_srl) : null,
         nest_srl: article ? parseInt(article.nest_srl) : nest_srl,
         category_srl: this.getCategoryInForm(),
-        type: article ? (this.getTypeName(article.type) || null) : null,
+        type: article ? (this.getTypeName(article.type) || null) : 'public',
         title: {
           value: article ? article.title : '',
           error: '',
@@ -240,7 +240,7 @@ export default {
      */
     getTypeName(type)
     {
-      return type === 'hidden' ? 'hidden' : '';
+      return type === 'private' ? 'private' : 'public';
     },
     /**
      * on change position in editor
@@ -428,7 +428,6 @@ export default {
           case 'edit':
           case 'add':
             let params = {};
-            if (this.nest_srl) params.nest = this.nest_srl;
             if (this.category_srl) params.category = this.category_srl;
             if (this.page && this.page > 1) params.page = this.page;
             this.$router.push(`../${text.serialize(params, true)}`);
