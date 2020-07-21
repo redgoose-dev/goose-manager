@@ -373,6 +373,7 @@ export default {
       let res = await this.$axios.$post(
         `/articles/${this.srl}/edit/`,
         formData({
+          mode: this.type,
           app_srl: this.forms.app_srl,
           nest_srl: this.forms.nest_srl,
           category_srl: this.forms.category_srl || '',

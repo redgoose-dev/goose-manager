@@ -1,6 +1,16 @@
 <template>
 <form @submit.prevent="" class="index-filter">
   <form-select
+    v-model="type"
+    size="mini"
+    :placeholder="null"
+    :options="[
+      { label: 'all', value: 'all' },
+      { label: 'public', value: 'public' },
+      { label: 'private', value: 'private' },
+    ]"
+    @change="update"/>
+  <form-select
     v-model="order"
     size="mini"
     :placeholder="null"
@@ -40,6 +50,7 @@ export default {
   {
     const { preference } = this.$store.state;
     return {
+      type: preference.articles.filter.type,
       order: preference.articles.filter.order,
       sort: preference.articles.filter.sort,
     };
@@ -48,6 +59,7 @@ export default {
     update()
     {
       this.$emit('change', {
+        type: this.type,
         order: this.order,
         sort: this.sort,
       })

@@ -61,6 +61,7 @@ export default {
       filter: {
         order: preference.articles.filter.order,
         sort: preference.articles.filter.sort,
+        type: preference.articles.filter.type,
         keyword: query.q || '',
       },
       processing: false,
@@ -75,6 +76,7 @@ export default {
         ...src.defaultParamsArticle,
         size: result.size,
         order: src.setOrder(result.filter.order, result.filter.sort),
+        visible_type: result.filter.type,
       };
       if (result.page > 1) params.page = result.page;
       if (result.filter.keyword) params.q = result.filter.keyword;
@@ -102,8 +104,9 @@ export default {
   methods: {
     async update()
     {
-      this.page = parseInt(this.$route.query.page) || 1;
-      this.filter.keyword = this.$route.query.q || '';
+      const { $route, $axios } = this;
+      this.page = parseInt($route.query.page) || 1;
+      this.filter.keyword = $route.query.q || '';
       this.processing = true;
       try
       {
@@ -111,11 +114,12 @@ export default {
         let params = {
           ...src.defaultParamsArticle,
           size: this.size,
-          order: src.setOrder(this.filter.order, this.filter.sort),
           page: this.page,
+          order: src.setOrder(this.filter.order, this.filter.sort),
+          visible_type: this.filter.type,
         };
         if (this.filter.keyword) params.q = this.filter.keyword;
-        const articles = await this.$axios.$get(`/articles/${text.serialize(params, true)}`);
+        const articles = await $axios.$get(`/articles/${text.serialize(params, true)}`);
         if (!articles.success) throw articles.message;
         // update data
         this.total = articles.data.total;
@@ -130,6 +134,7 @@ export default {
     },
     async onChangeFilter(filter)
     {
+      this.filter.type = filter.type;
       this.filter.order = filter.order;
       this.filter.sort = filter.sort;
       // update preference

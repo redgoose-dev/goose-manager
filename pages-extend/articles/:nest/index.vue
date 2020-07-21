@@ -100,6 +100,7 @@ export default {
       filter: {
         order: preference.articles.filter.order,
         sort: preference.articles.filter.sort,
+        type: preference.articles.filter.type,
         keyword: query.q || '',
       },
     };
@@ -110,6 +111,7 @@ export default {
       nest: result.nest_srl,
       size: result.size,
       order: src.setOrder(result.filter.order, result.filter.sort),
+      visible_type: result.filter.type,
     };
     if (result.page > 1) paramsArticle.page = result.page;
     if (result.category_srl) paramsArticle.category = result.category_srl;
@@ -161,9 +163,10 @@ export default {
   methods: {
     async update()
     {
-      this.page = parseInt(this.$route.query.page) || 1;
-      this.category_srl = this.$route.query.category || null;
-      this.filter.keyword = this.$route.query.q || '';
+      const { $route, $axios } = this;
+      this.page = parseInt($route.query.page) || 1;
+      this.category_srl = $route.query.category || null;
+      this.filter.keyword = $route.query.q || '';
       this.processing = true;
       try
       {
@@ -173,10 +176,11 @@ export default {
           size: this.size,
           page: this.page,
           order: src.setOrder(this.filter.order, this.filter.sort),
+          visible_type: this.filter.type,
         };
         if (this.category_srl) params.category = this.category_srl;
         if (this.filter.keyword) params.q = this.filter.keyword;
-        const res = await this.$axios.$get(`/articles/${text.serialize(params, true)}`);
+        const res = await $axios.$get(`/articles/${text.serialize(params, true)}`);
         this.total = (res.success && res.data) ? res.data.total : 0;
         this.articles = (res.success && res.data) ? res.data.index : null;
         this.error = null;
@@ -189,6 +193,7 @@ export default {
     },
     onChangeFilter(filter)
     {
+      this.filter.type = filter.type;
       this.filter.order = filter.order;
       this.filter.sort = filter.sort;
       // update preference
