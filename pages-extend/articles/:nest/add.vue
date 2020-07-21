@@ -64,7 +64,7 @@ export default {
       if (res_article.success && res_article.data.total > 0)
       {
         article = res_article.data.index[0];
-        article.nest_srl = nest_srl;
+        article.nest_srl = parseInt(nest.srl);
         article.app_srl = parseInt(nest.app_srl);
         article.user_srl = parseInt(nest.user_srl);
       }
@@ -74,8 +74,8 @@ export default {
           thumbnail: { zoom: .25 },
         };
         res_article = await cox.$axios.$post('/articles/', {
-          app_srl: nest.app_srl,
-          nest_srl: nest.srl,
+          app_srl: parseInt(nest.app_srl),
+          nest_srl: parseInt(nest.srl),
           type: 'ready',
           json: encodeURIComponent(JSON.stringify(json)),
         });

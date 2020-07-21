@@ -430,10 +430,10 @@ export default {
             let params = {};
             if (this.category_srl) params.category = this.category_srl;
             if (this.page && this.page > 1) params.page = this.page;
-            this.$router.push(`../${text.serialize(params, true)}`);
+            await this.$router.push(`../${text.serialize(params, true)}`);
             break;
           default:
-            this.$router.push('/articles/');
+            await this.$router.push('/articles/');
             break;
         }
       }
