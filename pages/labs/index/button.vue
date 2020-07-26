@@ -52,7 +52,7 @@
           <button-basic href="https://google.com" target="_blank">a:href</button-basic>
         </div>
         <div class="rg-col">
-          <button-basic to="#">nuxt-link</button-basic>
+          <button-basic href="#">nuxt-link</button-basic>
         </div>
         <div class="rg-col">
           <button-basic type="button">type=button</button-basic>

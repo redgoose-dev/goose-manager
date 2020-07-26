@@ -6,7 +6,7 @@
       v-for="(item,key) in articles" :key="key"
       v-bind:is="`item-${useSkin}`"
       :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
-      :link="`./${item.srl}/`"
+      :href="`./${item.srl}/`"
       :title="item.title"
       :alt="item.title"
       :metas="[

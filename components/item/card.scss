@@ -1,0 +1,52 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.item-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-shadow: $shadow-box;
+  height: var(--size, 100px);
+  background-color: #fff;
+  border-radius: $size-border-radius;
+  min-width: 0;
+  box-sizing: border-box;
+  &__image {
+    margin: 0;
+    width: var(--size, 100px);
+    height: var(--size, 100px);
+    border-top-left-radius: $size-border-radius;
+    border-bottom-left-radius: $size-border-radius;
+    overflow: hidden;
+  }
+  &__body {
+    flex: 1;
+    padding: 10px 20px;
+    min-width: 0;
+  }
+  &__metas {
+    margin: 2px 0 0;
+  }
+  &__nav-text {
+    margin: 5px 0 0;
+  }
+  &--link {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: box-shadow .15s ease-out;
+      border-radius: $size-border-radius;
+    }
+    &:hover:after {
+      box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
+  @include dark-mode() {
+    background-color: $color-dark-content-bg;
+  }
+}

@@ -7,7 +7,7 @@
   <index-wrap v-else type="grid">
     <item-list
       v-for="(item,key) in index" :key="key"
-      :link="`/users/${item.srl}/`"
+      :href="`/users/${item.srl}/`"
       :title="item.email"
       :use-image="false"
       :metas="[
@@ -24,7 +24,13 @@
 
   <nav-bottom>
     <template slot="right">
-      <button-basic to="/users/add/" :inline="true" color="key" icon-left="plus">Add user</button-basic>
+      <button-basic
+        href="/users/add/"
+        :inline="true"
+        color="key"
+        icon-left="plus">
+        Add user
+      </button-basic>
     </template>
   </nav-bottom>
 </article>

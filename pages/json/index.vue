@@ -9,7 +9,7 @@
       v-for="(item,key) in index" :key="key"
       :title="item.name"
       :description="item.description"
-      :link="`/json/${item.srl}/`"
+      :href="`/json/${item.srl}/`"
       :use-image="false"
       :metas="[
         `srl: ${item.srl}`,
@@ -23,7 +23,7 @@
 
   <nav-bottom>
     <template slot="right">
-      <button-basic to="./add/" color="key" icon-left="plus">Add JSON</button-basic>
+      <button-basic href="./add/" color="key" icon-left="plus">Add JSON</button-basic>
     </template>
   </nav-bottom>
 </article>

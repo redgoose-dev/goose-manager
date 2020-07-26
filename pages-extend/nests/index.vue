@@ -16,7 +16,7 @@
       <index-wrap v-if="app.children && app.children.length" type="grid" class="nests__index">
         <item-card
           v-for="(nest,key) in app.children" :key="key"
-          :link="`/nests/${nest.srl}/articles/`"
+          :href="`/nests/${nest.srl}/articles/`"
           :title="`${nest.name}(${nest.count})`"
           :alt="nest.description"
           :metas="[getDate(nest.regdate), `id: ${nest.id}`]"
@@ -32,12 +32,12 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic to="/apps/" icon-left="package">Apps</button-basic>
+      <button-basic href="/apps/" icon-left="package">Apps</button-basic>
     </template>
     <template slot="right">
       <button-basic
         v-if="!error && (index && index.length)"
-        to="/nests/add/"
+        href="/nests/add/"
         color="key"
         icon-left="plus">
         Add Nest

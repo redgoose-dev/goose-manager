@@ -27,11 +27,11 @@
 
   <nav-bottom>
     <template slot="left">
-      <button-basic to="../" icon-left="list">Index</button-basic>
+      <button-basic href="../" icon-left="list">Index</button-basic>
     </template>
     <template slot="right">
-      <button-basic to="./edit/" color="gray" icon-left="edit">Edit</button-basic>
-      <button-basic to="./delete/" color="key" icon-left="trash">Delete</button-basic>
+      <button-basic href="./edit/" color="gray" icon-left="edit">Edit</button-basic>
+      <button-basic href="./delete/" color="key" icon-left="trash">Delete</button-basic>
     </template>
   </nav-bottom>
 </article>

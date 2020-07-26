@@ -17,7 +17,12 @@
   </div>
   <nav class="thumbnail-editor__nav">
     <div>
-      <button-basic type="button" icon-left="x" @click="onClickCancel">Cancel</button-basic>
+      <button-basic
+        type="button"
+        icon-left="x"
+        @click="onClickCancel">
+        Cancel
+      </button-basic>
     </div>
     <div>
       <button-basic

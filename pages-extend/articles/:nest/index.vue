@@ -39,17 +39,17 @@
       <error v-else :message="error" size="large"/>
       <nav-bottom>
         <template slot="left">
-          <button-basic to="../../" icon-left="cloud">Nests</button-basic>
+          <button-basic href="../../" icon-left="cloud">Nests</button-basic>
           <button-basic
             v-if="(nest && parseInt(nest.json.useCategory) === 1)"
-            :to="`../../${nest_srl}/categories/`"
+            :href="`../../${nest_srl}/categories/`"
             icon-left="server">
             Categories
           </button-basic>
         </template>
         <template slot="right">
           <button-basic
-            :to="`./add/${category_srl ? `?category=${category_srl}` : ''}`"
+            :href="`./add/${category_srl ? `?category=${category_srl}` : ''}`"
             color="key"
             icon-left="plus">
             Add article

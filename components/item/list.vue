@@ -1,10 +1,9 @@
 <template>
-<div :class="['item-list', link && 'item-list--link']" :title="alt">
+<div :class="['item-list', href && 'item-list--link']" :title="alt">
   <div class="item-list__wrap">
     <image-thumbnail
       v-if="useImage"
       :src="image"
-      :link="link"
       :href="href"
       :target="target"
       :alt="alt"
@@ -12,23 +11,10 @@
       type="cover"
       class="item-list__image"/>
     <div class="item-list__body">
-      <text-title
-        :label="title"
-        :link="link"
-        :href="href"
-        class="item-list__title"/>
-      <text-description
-        v-if="!!description"
-        :label="description"
-        class="item-list__description"/>
-      <metas
-        v-if="!!metas && metas.length"
-        :items="metas"
-        class="item-list__metas"/>
-      <nav-text
-        v-if="navs && navs.length && navType==='text'"
-        :items="navs"
-        class="item-list__nav-text"/>
+      <text-title :label="title" :href="href" class="item-list__title"/>
+      <text-description v-if="!!description" :label="description" class="item-list__description"/>
+      <metas v-if="!!metas && metas.length" :items="metas" class="item-list__metas"/>
+      <nav-text v-if="navs && navs.length && navType==='text'" :items="navs" class="item-list__nav-text"/>
     </div>
     <nav-button v-if="navs && navs.length && navType==='button'" :items="navs"/>
   </div>
@@ -50,7 +36,6 @@ export default {
   props: {
     title: { type: String, default: '' },
     description: { type: String, default: '' },
-    link: { type: String, default: null },
     href: { type: String, default: null },
     target: { type: String, default: '' },
     image: { type: String, default: null },
@@ -63,61 +48,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../../assets/scss/variables";
-@import "../../assets/scss/mixins";
-.item-list {
-  $self: '.item-list';
-  $size: 100px;
-  position: relative;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: $shadow-box;
-  border-radius: $size-border-radius;
-  box-sizing: border-box;
-  min-width: 0;
-  &__wrap {
-    display: flex;
-    align-items: center;
-  }
-  &__image {
-    margin: -10px 15px -10px -10px;
-    width: $size;
-    height: $size;
-  }
-  &__body {
-    min-width: 0;
-    flex: 1;
-    margin-top: -3px;
-  }
-  &__description {
-    margin: 1px 0 0;
-    @include text-single-line();
-  }
-  &__metas {
-    margin: 4px 0 0;
-  }
-  &__nav-text {
-    margin: 5px 0 0;
-  }
-  &--link {
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      pointer-events: none;
-      transition: box-shadow .15s ease-out;
-      border-radius: $size-border-radius;
-    }
-    &:hover:after {
-      box-shadow: inset 0 0 0 1px var(--color-key);
-    }
-  }
-  @include dark-mode() {
-    background-color: $color-dark-content-bg;
-  }
-}
-</style>
+<style src="./list.scss" lang="scss" scoped/>

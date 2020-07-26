@@ -13,28 +13,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../../../assets/scss/variables";
-@import "../../../assets/scss/mixins";
-.metas {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  &__item {
-    display: block;
-    font-family: $font-eng;
-    font-size: 10px;
-    color: var(--color-base);
-    line-height: 1.25;
-    &:after {
-      content: ', ';
-      padding-right: 3px;
-    }
-    &:last-child {
-      &:after {
-        content: '';
-      }
-    }
-  }
-}
-</style>
+<style src="./metas.scss" lang="scss" scoped/>

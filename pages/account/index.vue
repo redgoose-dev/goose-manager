@@ -26,7 +26,7 @@
   </field-wrap>
   <nav-bottom>
     <template slot="right">
-      <button-basic :to="`/users/${srl}/edit/`" color="key" icon-left="edit">Edit</button-basic>
+      <button-basic :href="`/users/${srl}/edit/`" color="key" icon-left="edit">Edit</button-basic>
     </template>
   </nav-bottom>
 </article>

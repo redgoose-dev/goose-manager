@@ -1,8 +1,7 @@
 <template>
-<div :class="['item-brick', link && 'item-brick--link']" :title="alt">
+<div :class="['item-brick', href && 'item-brick--link']" :title="alt">
   <image-thumbnail
     :src="image"
-    :link="link"
     :href="href"
     :target="target"
     :alt="alt"
@@ -10,7 +9,7 @@
     type="cover"
     class="item-brick__image"/>
   <div class="item-brick__body">
-    <text-title :label="title" :link="link" :href="href" :target="target"/>
+    <text-title :label="title" :href="href" :target="target"/>
     <metas
       v-if="!!metas && metas.length"
       :items="metas"
@@ -33,7 +32,6 @@ export default {
     'nav-text': () => import('./parts/nav-text'),
   },
   props: {
-    link: { type: String, default: null },
     href: { type: String, default: null },
     target: { type: String, default: null },
     image: { type: String, default: null },

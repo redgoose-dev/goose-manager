@@ -1,63 +1,55 @@
 <template>
 <a
-  v-if="href"
+  v-if="computedType === 'a'"
   :href="href"
   :target="target"
   :title="title"
-  :class="classNames"
+  :class="computedClass"
   :style="styles">
-  <span class="button-basic__wrap">
-    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
-    <em v-if="$slots.default" class="button-basic__label"><slot/></em>
-    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
-  </span>
+  <button-body :icon-left="iconLeft" :icon-right="iconRight">
+    <slot/>
+  </button-body>
 </a>
 <nuxt-link
-  v-else-if="to"
-  :to="to"
+  v-else-if="computedType === 'router'"
+  :to="href"
   :title="title"
-  :class="classNames"
+  :class="computedClass"
   :style="styles">
-  <span class="button-basic__wrap">
-    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
-    <em v-if="$slots.default" class="button-basic__label"><slot/></em>
-    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
-  </span>
+  <button-body :icon-left="iconLeft" :icon-right="iconRight">
+    <slot/>
+  </button-body>
 </nuxt-link>
 <label
-  v-else-if="type === 'label'"
+  v-else-if="computedType === 'label'"
   :title="title"
-  :class="classNames"
+  :class="computedClass"
   :style="styles">
-  <span class="button-basic__wrap">
-    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
-    <em v-if="$slots.default" class="button-basic__label"><slot/></em>
-    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
-  </span>
+  <button-body :icon-left="iconLeft" :icon-right="iconRight">
+    <slot/>
+  </button-body>
 </label>
 <button
   v-else
   :type="type"
   :title="title"
   :disabled="disabled"
-  :class="classNames"
+  :class="computedClass"
   :style="styles"
-  @click="onClick">
-  <span class="button-basic__wrap">
-    <icon v-if="iconLeft" :name="iconLeft" class="button-basic__icon left"/>
-    <em v-if="$slots.default" class="button-basic__label"><slot/></em>
-    <icon v-if="iconRight" :name="iconRight" class="button-basic__icon right"/>
-  </span>
+  @click="$emit('click', $event)">
+  <button-body :icon-left="iconLeft" :icon-right="iconRight">
+    <slot/>
+  </button-body>
 </button>
 </template>
 
 <script>
 export default {
+  name: 'button-basic',
   props: {
-    type: { type: String, default: 'button' }, // button,submit,reset,label
+    type: { type: String, default: 'button' }, // label,button,submit,reset
     label: { type: String, default: null },
     href: { type: String },
-    to: { type: String },
     target: { type: String },
     title: { type: String },
     disabled: { type: Boolean, default: false },
@@ -71,10 +63,10 @@ export default {
     styles: { type: [Object,Array] },
   },
   components: {
-    'icon': () => import('~/components/icon'),
+    'button-body': () => import('./body'),
   },
   computed: {
-    classNames()
+    computedClass()
     {
       return [
         'button-basic',
@@ -85,11 +77,16 @@ export default {
         this.className,
       ];
     },
-  },
-  methods: {
-    onClick(e)
+    computedType()
     {
-      this.$emit('click', e);
+      if (this.href)
+      {
+        return /^http/.test(this.href) ? 'a' : 'router';
+      }
+      else
+      {
+        return this.type || null;
+      }
     },
   },
 };

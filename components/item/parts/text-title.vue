@@ -1,9 +1,9 @@
 <template>
-<p class="text-title">
-  <nuxt-link v-if="!!link" :to="link">
+<p :class="['text-title', href && 'text-title--link']">
+  <nuxt-link v-if="computedLinkType === 'router'" :to="href">
     <strong>{{label}}</strong>
   </nuxt-link>
-  <a v-else-if="href" :href="href" :target="target">
+  <a v-else-if="computedLinkType === 'a'" :href="href" :target="target">
     <strong>{{label}}</strong>
   </a>
   <strong v-else>{{label}}</strong>
@@ -15,9 +15,14 @@ export default {
   name: 'text-title',
   props: {
     label: { props: String, default: '' },
-    link: { props: String, default: null },
     href: { props: String, default: null },
     target: { props: String, default: null },
+  },
+  computed: {
+    computedLinkType()
+    {
+      return (this.href && /^http/.test(this.href)) ? 'a' : (this.href ? 'router' : null);
+    },
   },
 }
 </script>

@@ -3,7 +3,7 @@
   <button-basic
     v-for="(item,key) in items"
     :key="key"
-    :to="item.link"
+    :href="item.link"
     :inline="true"
     :color="item.color"
     size="small"

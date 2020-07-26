@@ -13,7 +13,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../assets/scss/variables";
-
 .text-description {
   font-size: 11px;
   line-height: 1.5;

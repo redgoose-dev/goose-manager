@@ -37,14 +37,14 @@
 
   <nav-bottom>
     <template v-if="nest_srl" slot="left">
-      <button-basic to="/nests/" icon-left="cloud">Nests</button-basic>
-      <button-basic :to="`/nests/${nest_srl}/articles/`" icon-left="droplet">Articles</button-basic>
+      <button-basic href="/nests/" icon-left="cloud">Nests</button-basic>
+      <button-basic :href="`/nests/${nest_srl}/articles/`" icon-left="droplet">Articles</button-basic>
     </template>
     <template v-else slot="left">
-      <button-basic to="/nests/" icon-left="archive">Nests</button-basic>
+      <button-basic href="/nests/" icon-left="archive">Nests</button-basic>
     </template>
     <template v-if="nest_srl" slot="right">
-      <button-basic to="./add/" color="key">Add Category</button-basic>
+      <button-basic href="./add/" color="key">Add Category</button-basic>
     </template>
   </nav-bottom>
 </article>

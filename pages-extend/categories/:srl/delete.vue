@@ -9,7 +9,12 @@
     </warning-message>
     <nav-bottom>
       <template slot="left">
-        <button-basic type="button" icon-left="arrow-left" @click="$router.back()">Back</button-basic>
+        <button-basic
+          type="button"
+          icon-left="arrow-left"
+          @click="$router.back()">
+          Back
+        </button-basic>
       </template>
       <template slot="right">
         <button-basic

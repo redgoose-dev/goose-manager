@@ -16,7 +16,7 @@
           v-for="(item,key) in contents.articles"
           :key="key"
           :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
-          :link="`/articles/${item.srl}/`"
+          :href="`/articles/${item.srl}/`"
           :title="item.title"
           :alt="item.title"
           :metas="[
@@ -46,7 +46,7 @@
       <index-wrap v-if="contents.nests.length" type="grid" class="items--nests">
         <item-card
           v-for="(nest,key) in contents.nests" :key="key"
-          :link="`/nests/${nest.srl}/articles/`"
+          :href="`/nests/${nest.srl}/articles/`"
           :title="nest.name"
           :alt="nest.description"
           :use-image="false"
@@ -104,7 +104,7 @@
       <index-wrap v-if="contents.json.length" type="grid" class="items--json">
         <item-list
           v-for="(item,key) in contents.json" :key="key"
-          :link="`/json/${item.srl}/`"
+          :href="`/json/${item.srl}/`"
           :title="item.name"
           :description="item.description"
           :alt="item.name"

@@ -1,10 +1,9 @@
 <template>
-<div :class="['item-card', link && 'item-card--link']" :title="alt">
+<div :class="['item-card', href && 'item-card--link']" :title="alt">
   <slot name="before"/>
   <image-thumbnail
     v-if="useImage"
     :src="image"
-    :link="link"
     :href="href"
     :target="target"
     :alt="alt"
@@ -14,7 +13,6 @@
 	<div class="item-card__body">
     <text-title
       :label="title"
-      :link="link"
       :href="href"
       :target="target"
       class="item-card__title"/>
@@ -41,7 +39,6 @@ export default {
     'image-thumbnail': () => import('./parts/image-thumbnail'),
   },
   props: {
-    link: { type: String, default: null },
     href: { type: String, default: null },
     target: { type: String, default: null },
     image: { type: String, default: null },
@@ -54,57 +51,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../../assets/scss/variables";
-@import "../../assets/scss/mixins";
-.item-card {
-  $size: 100px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  box-shadow: $shadow-box;
-  height: $size;
-  background-color: #fff;
-  border-radius: $size-border-radius;
-  min-width: 0;
-  box-sizing: border-box;
-	&__image {
-    margin: 0;
-    width: $size;
-    height: 100px;
-    border-top-left-radius: $size-border-radius;
-    border-bottom-left-radius: $size-border-radius;
-    overflow: hidden;
-  }
-	&__body {
-		flex: 1;
-		padding: 10px 20px;
-		min-width: 0;
-	}
-  &__metas {
-    margin: 2px 0 0;
-  }
-  &__nav-text {
-    margin: 5px 0 0;
-  }
-  &--link {
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      pointer-events: none;
-      transition: box-shadow .15s ease-out;
-      border-radius: $size-border-radius;
-    }
-    &:hover:after {
-      box-shadow: inset 0 0 0 1px var(--color-key);
-    }
-  }
-  @include dark-mode() {
-    background-color: $color-dark-content-bg;
-  }
-}
-</style>
+<style src="./card.scss" lang="scss" scoped/>
