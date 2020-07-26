@@ -1,5 +1,11 @@
 <template>
-<div :class="['item-list', href && 'item-list--link']" :title="alt">
+<div
+  :title="alt"
+  :class="[
+    'item-list',
+    href && 'item-list--link',
+    type && `item-list--type-${type}`,
+  ]">
   <div class="item-list__wrap">
     <image-thumbnail
       v-if="useImage"
@@ -34,6 +40,7 @@ export default {
     'image-thumbnail': () => import('./parts/image-thumbnail'),
   },
   props: {
+    type: { type: String, default: 'public' }, // public,private
     title: { type: String, default: '' },
     description: { type: String, default: '' },
     href: { type: String, default: null },

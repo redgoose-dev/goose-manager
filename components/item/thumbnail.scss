@@ -1,5 +1,6 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
+@import "./common";
 
 .item-thumbnail {
   $self: '.item-thumbnail';
@@ -30,6 +31,7 @@
     }
   }
   &__body {
+    position: relative;
     padding: 15px;
   }
   &__metas {
@@ -52,6 +54,15 @@
     }
     &:hover:after {
       box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
+  &--type {
+    &-private {
+      &:before {
+        @include type-mark('private');
+        top: unset;
+        bottom: 10px;
+      }
     }
   }
   @include dark-mode() {

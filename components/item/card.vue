@@ -1,5 +1,11 @@
 <template>
-<div :class="['item-card', href && 'item-card--link']" :title="alt">
+<div
+  :title="alt"
+  :class="[
+    'item-card',
+    href && 'item-card--link',
+    type && `item-card--type-${type}`,
+  ]">
   <slot name="before"/>
   <image-thumbnail
     v-if="useImage"
@@ -39,6 +45,7 @@ export default {
     'image-thumbnail': () => import('./parts/image-thumbnail'),
   },
   props: {
+    type: { type: String, default: 'public' }, // public,private
     href: { type: String, default: null },
     target: { type: String, default: null },
     image: { type: String, default: null },

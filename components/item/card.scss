@@ -1,5 +1,6 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
+@import "./common";
 
 .item-card {
   position: relative;
@@ -44,6 +45,13 @@
     }
     &:hover:after {
       box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
+  &--type {
+    &-private {
+      &:before {
+        @include type-mark('private');
+      }
     }
   }
   @include dark-mode() {

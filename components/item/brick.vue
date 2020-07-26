@@ -1,5 +1,11 @@
 <template>
-<div :class="['item-brick', href && 'item-brick--link']" :title="alt">
+<div
+  :title="alt"
+  :class="[
+    'item-brick',
+    href && 'item-brick--link',
+    type && `item-brick--type-${type}`,
+  ]">
   <image-thumbnail
     :src="image"
     :href="href"
@@ -32,6 +38,7 @@ export default {
     'nav-text': () => import('./parts/nav-text'),
   },
   props: {
+    type: { type: String, default: 'public' }, // public,private
     href: { type: String, default: null },
     target: { type: String, default: null },
     image: { type: String, default: null },

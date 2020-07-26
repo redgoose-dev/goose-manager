@@ -5,6 +5,7 @@
     <component
       v-for="(item,key) in articles" :key="key"
       v-bind:is="`item-${useSkin}`"
+      :type="item.type"
       :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
       :href="`./${item.srl}/`"
       :title="item.title"

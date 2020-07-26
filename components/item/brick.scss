@@ -1,5 +1,6 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
+@import "./common";
 
 .item-brick {
   $self: '.item-brick';
@@ -36,6 +37,15 @@
     }
     &:hover:after {
       box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
+  &--type {
+    &-private {
+      &:before {
+        @include type-mark('private');
+        top: unset;
+        bottom: 10px;
+      }
     }
   }
   @include dark-mode() {
