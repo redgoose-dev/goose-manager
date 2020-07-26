@@ -1,0 +1,35 @@
+@import "../../assets/scss/variables";
+
+.nests {
+  margin: 40px 0;
+  &__header {
+    h3 {
+      margin: 0;
+      font-family: $font-eng;
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1;
+      em {
+        padding-left: 0;
+        font-style: normal;
+        &:before {
+          content: '(';
+        }
+        &:after {
+          content: ')';
+        }
+      }
+    }
+    p {
+      margin: 5px 0 0;
+      font-size: 11px;
+      color: var(--color-blur);
+      word-break:keep-all;
+      overflow-wrap:break-word;
+    }
+  }
+  &__index {
+    margin-top: 15px;
+    --index-column: 3;
+  }
+}

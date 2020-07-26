@@ -2,20 +2,19 @@
 @import "../../../../../assets/scss/mixins";
 @import "../../../../form/local";
 
-$height: 26px;
 $form-focus-shadow: 0 0 0 2px var(--color-key);
 
 .form-search {
+  --height: 26px;
   padding: 0;
   margin: 0;
-  height: $height;
+  height: var(--height);
   box-sizing: border-box;
   display: flex;
   align-items: center;
   border: 1px solid $local-color-line;
   border-radius: $size-border-radius;
   background: var(--color-content-bg);
-
   &__select {
     display: block;
     position: relative;
@@ -57,18 +56,25 @@ $form-focus-shadow: 0 0 0 2px var(--color-key);
     }
   }
   &__keyword {
-    display: block;
-    background: none;
-    padding: 0 10px;
+    flex: 1;
+    margin: 0;
     height: 100%;
-    font-size: 12px;
-    outline: none;
-    border: none;
-    border-radius: $size-border-radius;
-    transition: box-shadow 120ms ease-out;
-    color: var(--color-base);
-    &:focus {
-      box-shadow: $form-focus-shadow;
+    input {
+      display: block;
+      background: none;
+      padding: 0 10px;
+      width: 100%;
+      height: 100%;
+      font-size: 12px;
+      outline: none;
+      border: none;
+      border-radius: $size-border-radius;
+      transition: box-shadow 120ms ease-out;
+      color: var(--color-base);
+      box-sizing: border-box;
+      &:focus {
+        box-shadow: $form-focus-shadow;
+      }
     }
   }
   &__clear {
@@ -76,7 +82,7 @@ $form-focus-shadow: 0 0 0 2px var(--color-key);
     display: block;
     background: none;
     border: none;
-    width: $height;
+    width: var(--height);
     height: 100%;
     cursor: pointer;
     outline: none;
@@ -114,7 +120,7 @@ $form-focus-shadow: 0 0 0 2px var(--color-key);
     display: block;
     background: none;
     border: none;
-    width: $height;
+    width: var(--height);
     height: 100%;
     cursor: pointer;
     outline: none;

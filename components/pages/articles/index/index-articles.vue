@@ -1,10 +1,7 @@
 <template>
 <div class="articles-index">
   <loading v-if="loading"/>
-  <index-wrap
-    v-else-if="!!articles && articles.length"
-    :type="computedIndexType"
-    :column="computedColumn">
+  <index-wrap v-else-if="!!articles && articles.length" :type="computedIndexType">
     <component
       v-for="(item,key) in articles" :key="key"
       v-bind:is="`item-${useSkin}`"
@@ -32,6 +29,7 @@ import * as dates from '~/libs/dates';
 import * as text from '~/libs/text';
 
 export default {
+  name: 'index-articles',
   components: {
     'loading': () => import('~/components/etc/loading'),
     'item-list': () => import('~/components/item/list'),
@@ -45,7 +43,6 @@ export default {
     articles: { type: Array, default: null },
     loading: { type: Boolean, default: false },
     skin: { type: String, default: 'thumbnail' }, // list,card,thumbnail,brick
-    column: { type: Number, default: undefined },
   },
   computed: {
     useSkin()
@@ -61,25 +58,6 @@ export default {
         case 'thumbnail':
         default:
           return 'thumbnail';
-      }
-    },
-    computedColumn()
-    {
-      if (this.column)
-      {
-        return this.column;
-      }
-
-      switch (this.useSkin) {
-        case 'card':
-          return 3;
-        case 'thumbnail':
-          return 4;
-        case 'brick':
-          return 5;
-        case 'list':
-        default:
-          return 1;
       }
     },
     computedIndexType()

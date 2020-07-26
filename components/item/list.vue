@@ -74,6 +74,8 @@ export default {
   background-color: #fff;
   box-shadow: $shadow-box;
   border-radius: $size-border-radius;
+  box-sizing: border-box;
+  min-width: 0;
   &__wrap {
     display: flex;
     align-items: center;

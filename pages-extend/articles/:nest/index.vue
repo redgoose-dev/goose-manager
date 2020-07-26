@@ -1,65 +1,63 @@
 <template>
-<article>
+<article class="articles">
   <page-header
     module="articles"
     :title="`${nest ? `[${nest.name}] ` : ''}Articles`"
     :description="computedDescription"/>
-  <div class="rg-row rg-row-v-center index-header">
-    <div class="rg-col">
-      <index-categories
-        v-if="categories"
-        :nest_srl="nest_srl"
-        :categories="categories"
-        :category_srl="category_srl"
-        @change="category_srl = $event"/>
-    </div>
-    <div class="index-filter">
+  <index-categories
+    v-if="categories"
+    :nest_srl="nest_srl"
+    :categories="categories"
+    :category_srl="category_srl"
+    class="categories"
+    @change="category_srl = $event"/>
+  <div class="articles__wrap">
+    <div class="articles__filters">
       <index-filter
         v-if="!processing"
         :init="{keyword: filter.keyword}"
         @change="onChangeFilter"
         @change-keyword="onChangeKeyword"/>
     </div>
+    <div :class="['articles__content', filter.skin]">
+      <template v-if="!error">
+        <index-articles :articles="articles" :loading="processing" :skin="filter.skin"/>
+        <paginate
+          v-if="!!total"
+          type="nuxt-link"
+          v-model="page"
+          url="./"
+          :params="computedPaginateParams"
+          :total="total"
+          :size="size"
+          :page-range="pageRange"
+          :show-direction="false"
+          :show-range-direction="true"
+          :show-end-direction="true"
+          @change="page = $event"/>
+      </template>
+      <error v-else :message="error" size="large"/>
+      <nav-bottom>
+        <template slot="left">
+          <button-basic to="../../" icon-left="cloud">Nests</button-basic>
+          <button-basic
+            v-if="(nest && parseInt(nest.json.useCategory) === 1)"
+            :to="`../../${nest_srl}/categories/`"
+            icon-left="server">
+            Categories
+          </button-basic>
+        </template>
+        <template slot="right">
+          <button-basic
+            :to="`./add/${category_srl ? `?category=${category_srl}` : ''}`"
+            color="key"
+            icon-left="plus">
+            Add article
+          </button-basic>
+        </template>
+      </nav-bottom>
+    </div>
   </div>
-  <error v-if="!!error" :message="error" size="large"/>
-  <template v-else>
-    <index-articles
-      :articles="articles"
-      :skin="skin"
-      :loading="processing"/>
-    <paginate
-      v-if="!!total"
-      type="nuxt-link"
-      v-model="page"
-      url="./"
-      :params="computedPaginateParams"
-      :total="total"
-      :size="size"
-      :page-range="pageRange"
-      :show-direction="false"
-      :show-range-direction="true"
-      :show-end-direction="true"
-      @change="page = $event"/>
-  </template>
-  <nav-bottom>
-    <template slot="left">
-      <button-basic to="../../" icon-left="cloud">Nests</button-basic>
-      <button-basic
-        v-if="(nest && parseInt(nest.json.useCategory) === 1)"
-        :to="`../../${nest_srl}/categories/`"
-        icon-left="server">
-        Categories
-      </button-basic>
-    </template>
-    <template slot="right">
-      <button-basic
-        :to="`./add/${category_srl ? `?category=${category_srl}` : ''}`"
-        color="key"
-        icon-left="plus">
-        Add article
-      </button-basic>
-    </template>
-  </nav-bottom>
 </article>
 </template>
 
@@ -101,6 +99,7 @@ export default {
         order: preference.articles.filter.order,
         sort: preference.articles.filter.sort,
         type: preference.articles.filter.type,
+        skin: preference.articles.filter.skin,
         keyword: query.q || '',
       },
     };
@@ -132,7 +131,6 @@ export default {
       result.nest = nest.success ? nest.data : null;
       result.articles = articles.success ? articles.data.index : null;
       result.categories = categories.success ? categories.data.index : null;
-      result.skin = nest.success && nest.data.json.articleSkin ? nest.data.json.articleSkin : null;
     }
     catch(e)
     {
@@ -196,6 +194,7 @@ export default {
       this.filter.type = filter.type;
       this.filter.order = filter.order;
       this.filter.sort = filter.sort;
+      this.filter.skin = filter.skin;
       // update preference
       let params = [{ key: 'articles.filter', value: filter }];
       this.$store.dispatch('updatePreference', params).then();
@@ -213,32 +212,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.index-header {
-  position: relative;
-  padding: 12px 5px;
-  z-index: 2;
-  background-color: var(--color-bg);
-  margin: -16px -5px 0;
-  box-sizing: border-box;
-  &:before,
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    background-color: var(--color-bg);
-    width: 20px;
-  }
-  &:before {
-    left: -20px;
-  }
-  &:after {
-    right: -20px;
-  }
-}
-.index-filter {
-  padding-left: 24px;
-}
-</style>
+<style src="../index.scss" lang="scss" scoped/>

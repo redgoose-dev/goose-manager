@@ -22,23 +22,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../../../assets/scss/variables";
-@import "../../../assets/scss/mixins";
-
-.text-title {
-  display: block;
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 14px;
-  line-height: 1.4;
-  a {
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-</style>
+<style src="./text-title.scss" lang="scss" scoped/>

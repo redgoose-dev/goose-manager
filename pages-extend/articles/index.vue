@@ -1,9 +1,8 @@
 <template>
-<article>
+<article class="articles">
   <page-header module="articles"/>
-  <div class="rg-row rg-row-v-center index-header">
-    <div class="rg-col"/>
-    <div class="index-filter">
+  <div class="articles__wrap">
+    <div class="articles__filters">
       <index-filter
         v-if="!processing"
         :init="{keyword: filter.keyword}"
@@ -11,28 +10,26 @@
         @change="onChangeFilter"
         @change-keyword="onChangeKeyword"/>
     </div>
+    <div :class="['articles__content', filter.skin]">
+      <template v-if="!error">
+        <index-articles :articles="articles" :loading="processing" :skin="filter.skin"/>
+        <paginate
+          v-if="!!total"
+          type="nuxt-link"
+          v-model="page"
+          url="./"
+          :total="total"
+          :size="size"
+          :params="filter.keyword ? {q: filter.keyword} : null"
+          :page-range="pageRange"
+          :show-direction="false"
+          :show-range-direction="true"
+          :show-end-direction="true"
+          @change="page = $event"/>
+      </template>
+      <error v-else :message="error" size="large"/>
+    </div>
   </div>
-  <error v-if="!!error" :message="error" size="large"/>
-  <template v-else>
-    <index-articles
-      :articles="articles"
-      :loading="processing"
-      :column="5"
-      skin="brick"/>
-    <paginate
-      v-if="!!total"
-      type="nuxt-link"
-      v-model="page"
-      url="./"
-      :total="total"
-      :size="size"
-      :params="filter.keyword ? {q: filter.keyword} : null"
-      :page-range="pageRange"
-      :show-direction="false"
-      :show-range-direction="true"
-      :show-end-direction="true"
-      @change="page = $event"/>
-  </template>
 </article>
 </template>
 
@@ -43,6 +40,7 @@ import * as object from '~/libs/object';
 import * as src from '~/components/pages/articles/src';
 
 export default {
+  name: 'page-articles',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'index-articles': () => import('~/components/pages/articles/index/index-articles'),
@@ -62,6 +60,7 @@ export default {
         order: preference.articles.filter.order,
         sort: preference.articles.filter.sort,
         type: preference.articles.filter.type,
+        skin: preference.articles.filter.skin,
         keyword: query.q || '',
       },
       processing: false,
@@ -137,6 +136,7 @@ export default {
       this.filter.type = filter.type;
       this.filter.order = filter.order;
       this.filter.sort = filter.sort;
+      this.filter.skin = filter.skin;
       // update preference
       let params = [{ key: 'articles.filter', value: filter }];
       this.$store.dispatch('updatePreference', params).then();
@@ -154,16 +154,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.index-header {
-  position: relative;
-  padding: 12px 5px;
-  z-index: 2;
-  background-color: var(--color-bg);
-  margin: -16px -5px 0;
-  box-sizing: border-box;
-}
-.index-filter {
-  padding-left: 24px;
-}
-</style>
+<style src="./index.scss" lang="scss" scoped/>

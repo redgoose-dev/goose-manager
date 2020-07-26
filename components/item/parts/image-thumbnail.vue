@@ -82,7 +82,6 @@ export default {
       }
     }
   }
-
   @include dark-mode() {
     background-color: #111;
   }

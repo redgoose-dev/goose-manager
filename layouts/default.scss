@@ -16,10 +16,8 @@ main > h1 {
 // content area
 .content-area {
   padding: 0 $size-side-max-padding;
-  @include responsive(desktop-large) {
-    max-width: $size-container;
-    margin: 0 auto;
-  }
+  max-width: var(--size-max-width);
+  margin: 0 auto;
 }
 
 // header
@@ -50,7 +48,7 @@ main > h1 {
     right: 0;
     margin: 0;
     background-color: var(--color-header-bg);
-    height: $size-header-height;
+    height: var(--size-header-height);
     user-select: none;
     box-shadow: 0 0 10px rgba(#000, .25);
   }
@@ -85,7 +83,7 @@ main > h1 {
   }
   &-nav {
     height: 100%;
-    margin: 0 -20px 0 0;
+    margin: 0;
   }
 }
 
@@ -138,6 +136,7 @@ main > h1 {
     &.nuxt-active {
       background-color: rgba($color-key, .75);
       color: #fff;
+      cursor: default;
       svg {
         color: #fff;
       }

@@ -1,11 +1,12 @@
 <template>
 <article>
   <page-header module="files"/>
+
   <error v-if="!!error" :message="error" size="large"/>
   <loading v-else-if="processing"/>
   <error v-else-if="!(index && index.length)" type="empty" size="large"/>
   <template v-else>
-    <index-wrap type="brick" :column="5">
+    <index-wrap type="brick" class="files__index">
       <item-brick
         v-for="(item,key) in index"
         :key="key"
@@ -17,7 +18,7 @@
         :metas="[
           `${item.type}`,
           `Size: ${getFileSize(item.size)}`,
-          `article_srl: ${item.article_srl}`,
+          `article_srl: ${item.target_srl}`,
           `${getDate(item.regdate)}`,
         ]"/>
     </index-wrap>
@@ -136,3 +137,5 @@ export default {
   },
 }
 </script>
+
+<style src="./index.scss" lang="scss" scoped/>

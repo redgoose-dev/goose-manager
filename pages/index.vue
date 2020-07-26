@@ -11,7 +11,7 @@
           <nuxt-link to="/articles/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="contents.articles.length" type="grid" :column="4">
+      <index-wrap v-if="contents.articles.length" type="grid" class="items--articles">
         <item-thumbnail
           v-for="(item,key) in contents.articles"
           :key="key"
@@ -43,7 +43,7 @@
           <nuxt-link to="/nests/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="contents.nests.length" type="grid" :column="3">
+      <index-wrap v-if="contents.nests.length" type="grid" class="items--nests">
         <item-card
           v-for="(nest,key) in contents.nests" :key="key"
           :link="`/nests/${nest.srl}/articles/`"
@@ -73,7 +73,7 @@
           <nuxt-link to="/apps/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="contents.apps.length" type="grid" :column="3">
+      <index-wrap v-if="contents.apps.length" type="grid" class="items--apps">
         <item-card
           v-for="(app,key) in contents.apps" :key="key"
           :title="app.name"
@@ -101,7 +101,7 @@
           <nuxt-link to="/json/"><icon name="chevron-right"/></nuxt-link>
         </nav>
       </header>
-      <index-wrap v-if="contents.json.length" type="grid" :column="2">
+      <index-wrap v-if="contents.json.length" type="grid" class="items--json">
         <item-list
           v-for="(item,key) in contents.json" :key="key"
           :link="`/json/${item.srl}/`"

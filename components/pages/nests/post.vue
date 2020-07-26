@@ -70,29 +70,6 @@
         <p class="form-help">분류를 사용할지에 대하여 결정합니다.</p>
       </template>
     </field>
-    <field label="Article skin" for="article_skin">
-      <template slot="body">
-        <div class="rg-row rg-row-v-center rg-row-gutter-h">
-          <label class="form-field">
-            <form-radio name="article_skin" id="article_skin" v-model="json.articleSkin" value="list"/>
-            <span>List</span>
-          </label>
-          <label class="form-field">
-            <form-radio name="article_skin" v-model="json.articleSkin" value="card"/>
-            <span>Card</span>
-          </label>
-          <label class="form-field">
-            <form-radio name="article_skin" v-model="json.articleSkin" value="thumbnail"/>
-            <span>Thumbnail</span>
-          </label>
-          <label class="form-field">
-            <form-radio name="article_skin" v-model="json.articleSkin" value="brick"/>
-            <span>Brick</span>
-          </label>
-        </div>
-        <p class="form-help">`Articles` 목록의 스킨입니다.</p>
-      </template>
-    </field>
     <field label="Thumnail size" for="thumbnail_width">
       <template slot="body">
         <div class="rg-row rg-row-v-center rg-row-gutter-h">
@@ -259,7 +236,6 @@ import * as fieldset from '~/components/form/fieldset';
 
 const defaultJson = {
   useCategory: 0,
-  articleSkin: 'card',
   thumbnail: {
     width: 400,
     height: 300,
@@ -333,7 +309,6 @@ export default {
       result.json = {
         ...defaultJson,
         useCategory: parseInt(nest.json.useCategory) || 0,
-        articleSkin: nest.json.articleSkin,
         thumbnail: {
           width: parseInt(nest.json.thumbnail.width),
           height: parseInt(nest.json.thumbnail.height),

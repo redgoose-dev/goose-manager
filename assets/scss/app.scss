@@ -17,6 +17,8 @@
   --color-code: #{$color-code};
   --color-content-bg: #{$color-content-bg};
   --color-content-line: #{$color-content-line};
+  --size-header-height: 42px;
+  --size-max-width: 1280px;
 
   @include dark-mode() {
     --color-edge: #000;
@@ -34,7 +36,7 @@
 // global elements
 body {
 	margin: 0;
-	min-width: $size-min;
+	min-width: 1000px;
 	-webkit-text-size-adjust: 100%;
 	font-size: 1rem;
 	line-height: 1.5;

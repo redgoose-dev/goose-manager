@@ -13,7 +13,7 @@
         </h3>
         <p v-if="!!app.description">{{app.description}}</p>
       </header>
-      <index-wrap v-if="app.children && app.children.length" :column="3" type="grid" class="nests__index">
+      <index-wrap v-if="app.children && app.children.length" type="grid" class="nests__index">
         <item-card
           v-for="(nest,key) in app.children" :key="key"
           :link="`/nests/${nest.srl}/articles/`"
@@ -35,7 +35,11 @@
       <button-basic to="/apps/" icon-left="package">Apps</button-basic>
     </template>
     <template slot="right">
-      <button-basic v-if="!error && (index && index.length)" to="/nests/add/" color="key" icon-left="plus">
+      <button-basic
+        v-if="!error && (index && index.length)"
+        to="/nests/add/"
+        color="key"
+        icon-left="plus">
         Add Nest
       </button-basic>
     </template>
@@ -115,38 +119,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../../assets/scss/variables";
-.nests {
-  margin: 40px 0;
-  &__header {
-    h3 {
-      margin: 0;
-      font-family: $font-eng;
-      font-size: 1.125rem;
-      font-weight: 600;
-      line-height: 1;
-      em {
-        padding-left: 0;
-        font-style: normal;
-        &:before {
-          content: '(';
-        }
-        &:after {
-          content: ')';
-        }
-      }
-    }
-    p {
-      margin: 5px 0 0;
-      font-size: 11px;
-      color: var(--color-blur);
-      word-break:keep-all;
-      overflow-wrap:break-word;
-    }
-  }
-  &__index {
-    margin-top: 15px;
-  }
-}
-</style>
+<style src="./index.scss" lang="scss" scoped/>

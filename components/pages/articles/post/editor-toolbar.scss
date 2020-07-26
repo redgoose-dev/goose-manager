@@ -14,7 +14,7 @@
   }
 
   position: sticky;
-  top: $size-header-height;
+  top: var(--size-header-height);
   background-color: var(--color-bg);
   padding: 0 2px;
   margin: 0 -2px 2px;

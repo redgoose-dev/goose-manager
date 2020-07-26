@@ -2,19 +2,17 @@
 
 <script>
 export default {
+  name: 'page-logout',
   layout: 'blank',
-
   async mounted()
   {
     const { $store, $axios, $router } = this;
-
     // check user in store
     if (!$store.state.authUser)
     {
       alert('You have already logged out.');
       location.href = '/';
     }
-
     try
     {
       // logout api

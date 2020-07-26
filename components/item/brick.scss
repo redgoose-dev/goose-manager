@@ -1,0 +1,47 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.item-brick {
+  $self: '.item-brick';
+  position: relative;
+  background-color: #fff;
+  border-radius: $size-border-radius;
+  overflow: hidden;
+  min-width: 0;
+  box-sizing: border-box;
+  &__image {
+    margin: 0;
+  }
+  &__body {
+    padding: 12px 15px;
+  }
+  &__metas {
+    margin: 2px 0 0;
+  }
+  &__nav-text {
+    margin: 4px 0 0;
+  }
+  &--link {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: box-shadow 100ms ease-out;
+      border-radius: $size-border-radius;
+      box-shadow: inset 0 0 0 1px #e8e8e8;
+    }
+    &:hover:after {
+      box-shadow: inset 0 0 0 1px var(--color-key);
+    }
+  }
+  @include dark-mode() {
+    background-color: $color-dark-content-bg;
+    &:after {
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0);
+    }
+  }
+}

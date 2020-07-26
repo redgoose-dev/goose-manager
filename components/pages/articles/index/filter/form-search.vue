@@ -1,14 +1,16 @@
 <template>
 <div class="form-search">
-  <input
-    type="text"
-    name="keyword"
-    v-model="keyword"
-    size="10"
-    maxlength="20"
-    placeholder="keyword"
-    class="form-search__keyword"
-    @keydown.enter="onSubmit"/>
+  <p class="form-search__keyword">
+    <input
+      type="text"
+      :name="name"
+      :id="id"
+      v-model="keyword"
+      size="10"
+      maxlength="20"
+      placeholder="keyword"
+      @keydown.enter="onSubmit"/>
+  </p>
   <button
     type="button"
     :disabled="computedClearDisabled"
@@ -34,6 +36,8 @@ export default {
     'icon': () => import('~/components/icon'),
   },
   props: {
+    id: { type: String, default: null },
+    name: { type: String, default: null },
     processing: { type: Boolean, default: false },
     init: { type: Object },
   },
