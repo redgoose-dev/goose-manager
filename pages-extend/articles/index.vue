@@ -97,11 +97,11 @@ export default {
   watch: {
     '$route': async function()
     {
-      this.update().then();
+      this.updateArticles().then();
     },
   },
   methods: {
-    async update()
+    async updateArticles()
     {
       const { $route, $axios } = this;
       this.page = parseInt($route.query.page) || 1;
@@ -133,6 +133,10 @@ export default {
     },
     async onChangeFilter(filter)
     {
+      let updateArticles = false;
+      // checking get items
+      if (this.filter.skin === filter.skin) updateArticles = true;
+      // update data in component
       this.filter.type = filter.type;
       this.filter.order = filter.order;
       this.filter.sort = filter.sort;
@@ -140,8 +144,8 @@ export default {
       // update preference
       let params = [{ key: 'articles.filter', value: filter }];
       this.$store.dispatch('updatePreference', params).then();
-      // update articles data
-      this.update().then();
+      // get items
+      if (updateArticles) this.updateArticles().then();
     },
     onChangeKeyword(keyword)
     {

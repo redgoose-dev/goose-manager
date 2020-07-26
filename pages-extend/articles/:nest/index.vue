@@ -119,7 +119,7 @@ export default {
     // set params for category
     let paramsCategory = Object.assign({}, src.defaultParamsCategory);
     paramsCategory.nest = result.nest_srl;
-
+    paramsCategory.visible_type = result.filter.type;
     try
     {
       const [ categories, articles, nest ] = await Promise.all([
@@ -155,11 +155,11 @@ export default {
   watch: {
     '$route': function()
     {
-      this.update().then();
+      this.updateArticles().then();
     },
   },
   methods: {
-    async update()
+    async updateArticles()
     {
       const { $route, $axios } = this;
       this.page = parseInt($route.query.page) || 1;
@@ -168,7 +168,7 @@ export default {
       this.processing = true;
       try
       {
-        let params = {
+        let paramsArticles = {
           ...src.defaultParamsArticle,
           nest: this.nest_srl,
           size: this.size,
@@ -176,11 +176,11 @@ export default {
           order: src.setOrder(this.filter.order, this.filter.sort),
           visible_type: this.filter.type,
         };
-        if (this.category_srl) params.category = this.category_srl;
-        if (this.filter.keyword) params.q = this.filter.keyword;
-        const res = await $axios.$get(`/articles/${text.serialize(params, true)}`);
-        this.total = (res.success && res.data) ? res.data.total : 0;
-        this.articles = (res.success && res.data) ? res.data.index : null;
+        if (this.category_srl) paramsArticles.category = this.category_srl;
+        if (this.filter.keyword) paramsArticles.q = this.filter.keyword;
+        const articles = await $axios.$get(`/articles/${text.serialize(paramsArticles, true)}`);
+        this.total = (articles.success && articles.data) ? articles.data.total : 0;
+        this.articles = (articles.success && articles.data) ? articles.data.index : null;
         this.error = null;
       }
       catch(e)
@@ -189,17 +189,33 @@ export default {
       }
       this.processing = false;
     },
-    onChangeFilter(filter)
+    async updateCategories()
     {
+      const { $axios } = this;
+      let paramsCategory = Object.assign({}, src.defaultParamsCategory);
+      paramsCategory.nest = this.nest_srl;
+      paramsCategory.visible_type = this.filter.type;
+      const categories = await $axios.$get(`/categories/${text.serialize(paramsCategory, true)}`);
+      this.categories = categories.success ? categories.data.index : null;
+    },
+    async onChangeFilter(filter)
+    {
+      let updateArticles = false;
+      let updateCategories = false;
+      // checking get items
+      if (this.categories && this.filter.type !== filter.type) updateCategories = true;
+      if (this.filter.skin === filter.skin) updateArticles = true;
+      // update data in component
       this.filter.type = filter.type;
       this.filter.order = filter.order;
       this.filter.sort = filter.sort;
       this.filter.skin = filter.skin;
       // update preference
       let params = [{ key: 'articles.filter', value: filter }];
-      this.$store.dispatch('updatePreference', params).then();
-      // update articles data
-      this.update().then();
+      await this.$store.dispatch('updatePreference', params);
+      // get items
+      if (updateArticles) this.updateArticles().then();
+      if (updateCategories) this.updateCategories().then();
     },
     onChangeKeyword(keyword)
     {

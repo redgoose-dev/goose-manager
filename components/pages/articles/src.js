@@ -8,7 +8,6 @@ export const defaultParamsCategory = {
   order: 'turn',
   sort: 'asc',
   ext_field: 'count_article,item_all,none',
-  visible_type: 'all',
 };
 
 /**
