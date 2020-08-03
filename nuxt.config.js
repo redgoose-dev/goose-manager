@@ -5,16 +5,15 @@ import extendRoutes from './assets/routes';
 
 // get .env
 require('dotenv').config();
+const env = process.env;
 
-// set env values
-const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, APP_NAME, APP_API_URL, APP_SECRET_KEY } = process.env;
 // set session store
-const sessionStore = (DB_HOST && DB_PORT && DB_USERNAME && DB_PASSWORD && DB_DATABASE) ? new MYSQLStore({
-  host: DB_HOST,
-  port: DB_PORT,
-  user: DB_USERNAME,
-  password: DB_PASSWORD,
-  database: DB_DATABASE,
+const sessionStore = (env.DB_HOST && env.DB_PORT && env.DB_USERNAME && env.DB_PASSWORD && env.DB_DATABASE) ? new MYSQLStore({
+  host: env.DB_HOST,
+  port: env.DB_PORT,
+  user: env.DB_USERNAME,
+  password: env.DB_PASSWORD,
+  database: env.DB_DATABASE,
   clearExpired: false,
 }) : null;
 
@@ -22,7 +21,7 @@ const sessionStore = (DB_HOST && DB_PORT && DB_USERNAME && DB_PASSWORD && DB_DAT
 module.exports = {
   mode: 'universal',
   head: {
-    title: APP_NAME,
+    title: env.APP_NAME,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -36,6 +35,7 @@ module.exports = {
     '~assets/scss/app.scss'
   ],
   build: {
+    publicPath: env.APP_PUBLIC_PATH,
     extractCSS: process.env.NODE_ENV === 'production',
     indicator: false,
     filenames: {
@@ -59,14 +59,14 @@ module.exports = {
     { src: '~/plugins/croppie.js', ssr: false },
   ],
   axios: {
-    baseURL: APP_API_URL,
+    baseURL: env.APP_API_URL,
   },
   loading: {
     color: '#1ccd5c',
     height: '2px',
   },
   router: {
-    base: '/',
+    base: env.APP_ROUTER_PATH,
     middleware: [ 'hook' ],
     linkActiveClass: 'nuxt-active',
     extendRoutes(routes, resolve)
@@ -84,7 +84,7 @@ module.exports = {
     bodyParser.json(),
     session({
       key: 'session_cookie_name',
-      secret: APP_SECRET_KEY,
+      secret: env.APP_SECRET_KEY,
       store: sessionStore || null,
       resave: false,
       saveUninitialized: false,
