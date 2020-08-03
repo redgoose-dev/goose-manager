@@ -69,8 +69,10 @@
     "pageRange": 10,
     "displayDateField": "regdate",
     "filter": {
+      "type": "all",
       "order": "srl",
-      "sort": "desc"
+      "sort": "desc",
+      "skin": "card"
     }
   },
   "files": {
