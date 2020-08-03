@@ -6,16 +6,10 @@ import extendRoutes from './assets/routes';
 // get .env
 require('dotenv').config();
 const env = process.env;
+const staticPath = env.APP_STATIC_PATH.replace(/\/$/, '');
 
 // set session store
-const sessionStore = (env.DB_HOST && env.DB_PORT && env.DB_USERNAME && env.DB_PASSWORD && env.DB_DATABASE) ? new MYSQLStore({
-  host: env.DB_HOST,
-  port: env.DB_PORT,
-  user: env.DB_USERNAME,
-  password: env.DB_PASSWORD,
-  database: env.DB_DATABASE,
-  clearExpired: false,
-}) : null;
+const sessionStore = (env.DB_HOST && env.DB_PORT && env.DB_USERNAME && env.DB_PASSWORD && env.DB_DATABASE) ? new MYSQLStore({ host: env.DB_HOST, port: env.DB_PORT, user: env.DB_USERNAME, password: env.DB_PASSWORD, database: env.DB_DATABASE, clearExpired: false }) : null;
 
 // nuxt config
 module.exports = {
@@ -27,15 +21,14 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
     link: [
-      { rel: 'shortcut icon', href: '/favicon.ico' },
-      { rel: 'icon', type: 'image/x-icon', href: '/icon.png' },
+      { rel: 'shortcut icon', href: `${staticPath}/favicon.ico` },
+      { rel: 'icon', type: 'image/x-icon', href: `${staticPath}/icon.png` },
     ],
   },
   css: [
     '~assets/scss/app.scss'
   ],
   build: {
-    publicPath: env.APP_PUBLIC_PATH,
     extractCSS: process.env.NODE_ENV === 'production',
     indicator: false,
     filenames: {
@@ -79,6 +72,11 @@ module.exports = {
         });
       });
     },
+  },
+  server: {
+    host: process.env.HOST || process.env.APP_HOST || 'localhost',
+    port: process.env.PORT || process.env.APP_PORT || 3000,
+    timing: false,
   },
   serverMiddleware: [
     bodyParser.json(),

@@ -1,9 +1,9 @@
 // ignore path list
 const ignorePath = [];
 
-export default function(cox)
+export default function(context)
 {
-  const { store, redirect, route, isDev } = cox;
+  const { store, redirect, route, isDev } = context;
   const { preference } = store.state;
 
   // print current route
@@ -18,11 +18,11 @@ export default function(cox)
     // check ignore path on development
     if (!isDev && ignorePath.indexOf(route.name) > -1)
     {
-      redirect('/');
+      redirect(`${store.state.path_static}/`);
     }
   }
-  else
+  else if (route.name !== 'auth-login')
   {
-    redirect('/auth/login');
+    redirect(`${store.state.path_root}/auth/login/`);
   }
 }

@@ -10,14 +10,14 @@ catch(e)
   defaultPreference = require('../resource/preference');
 }
 
-
 // state
 export const state = () => ({
   url_api: '',
+  path_root: '/',
+  path_static: '/',
   authUser: null,
   preference: defaultPreference,
 });
-
 
 // actions - 비동기가 가능한 상태관리 메서드라고 볼 수 있음
 export const actions = {
@@ -31,9 +31,10 @@ export const actions = {
       let setup = {
         url_app: box.env.APP_URL,
         url_api: box.env.APP_API_URL,
+        path_root: box.base.replace(/\/$/, ''),
+        path_static: box.env.APP_STATIC_PATH.replace(/\/$/, ''),
         authUser: (req.session && req.session.authUser) ? req.session.authUser : null,
       };
-
       // get preference
       try
       {
@@ -43,7 +44,7 @@ export const actions = {
       catch(e) {
         console.error(e);
       }
-
+      // commit
       commit('setup', setup);
     }
   },
@@ -58,18 +59,15 @@ export const actions = {
     const { preference, url_app } = context.state;
     let pref = object.convertRaw(preference);
     let arr = Array.isArray(value) ? value : [value];
-
     // set value in preference
     arr.forEach((o) => {
       pref = object.set(pref, o.key, o.value);
     });
-
     // update store
     context.commit('updatePreference', pref);
-
+    // save preference
     try
     {
-      // write preference
       this.$axios.$post(`${url_app}/api/preference-save/`, pref).then();
     }
     catch(e)
@@ -79,24 +77,17 @@ export const actions = {
   },
 };
 
-
 // mutations - 단순히 상태값만 변경해주는 메서드
 export const mutations = {
   // setup app
   setup(state, value)
   {
-    state.url_app = value.url_app;
-    state.url_api = value.url_api;
-    state.authUser = value.authUser;
-    state.preference = value.preference;
+    const keys = Object.keys(value);
+    for (let i=0; i<keys.length; i++)
+    {
+      state[keys[i]] = value[keys[i]];
+    }
   },
-
-  // update auth user
-  updateAuthUser(state, value)
-  {
-    state.authUser = value;
-  },
-
   // update preference
   updatePreference(state, value)
   {

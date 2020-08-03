@@ -31,11 +31,11 @@ export default function(cox)
 			token = cox.req.session.authUser.token;
 		}
 	}
-	else if (cox.store.state.authUser)
+	else if (store.state.authUser)
 	{
-		if (host === cox.store.state.authUser.host)
+		if (host === store.state.authUser.host)
 		{
-			token = cox.store.state.authUser.token;
+			token = store.state.authUser.token;
 		}
 	}
 	token = token || process.env.TOKEN_PUBLIC;
@@ -61,7 +61,10 @@ export default function(cox)
     {
       case 401:
         // 로그인된 상태라면 로그아웃 리다이렉트 시키기
-        if (location && store.state.authUser) location.href = '/auth/logout/';
+        if (location && store.state.authUser)
+        {
+          location.href = `${store.state.path_root}/auth/logout/`;
+        }
         break;
     }
   });

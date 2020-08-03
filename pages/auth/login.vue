@@ -104,7 +104,7 @@ export default {
     async onSubmit(e)
     {
       const { $axios, $store } = this;
-      const { preference } = $store.state;
+      const { preference, path_root } = $store.state;
       // off processing
       this.processing = true;
       // request api
@@ -135,7 +135,7 @@ export default {
         this.forms.password = '';
 
         // redirect home
-        location.href = '/';
+        location.href = `${path_root}/`;
       }
       catch(e)
       {

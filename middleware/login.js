@@ -1,8 +1,9 @@
-export default function({ store, req, redirect })
+export default function(context)
 {
-	// check token
-	if (store.state.authUser)
-	{
-		redirect('/');
-	}
+  const { store, req, redirect } = context;
+  // check token
+  if (store.state.authUser)
+  {
+    redirect(`${store.state.path_root}/`);
+  }
 }

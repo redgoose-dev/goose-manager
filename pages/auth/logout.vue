@@ -7,25 +7,26 @@ export default {
   async mounted()
   {
     const { $store, $axios, $router } = this;
+    const { authUser, url_app, path_root } = $store.state;
     // check user in store
-    if (!$store.state.authUser)
+    if (!authUser)
     {
       alert('You have already logged out.');
-      location.href = '/';
+      location.href = `${path_root}/`;
     }
     try
     {
       // logout api
       await $axios.$post(`/auth/logout/`);
       // remove session
-      await $axios.$post(`${$store.state.url_app}/api/session-clear/`);
+      await $axios.$post(`${url_app}/api/session-clear/`);
       // redirect home
-      location.href = '/';
+      location.href = `${path_root}/`;
     }
     catch(e)
     {
       alert(e);
-      $router.go(-1);
+      $router.back();
     }
   }
 };
