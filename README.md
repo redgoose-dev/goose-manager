@@ -7,18 +7,23 @@
 
 ## Setup
 
-저장소를 복제하면 루트에 `.env.example` 파일을 찾을 수 있습니다. 이것을 `.env`파일로 복사해주세요.
+다음 명령어들을 실행하여 `.env`파일과 `preference.json`파일을 프로젝트 루트에 복사해 줍니다.
 
 ```bash
-$ cp .env.example .env
+$ cp ./resource/.env ./
+$ cp ./resource/preference.json ./
 ```
 
 에디터를 열어 다음 항목들을 참고하면서 수정해주세요.
 
 - `APP_NAME`: App name
-- `APP_URL`: Manager url
-- `APP_API_URL`: API url
+- `APP_URL`: Manager URL
+- `APP_API_URL`: API URL
+- `APP_ROUTER_PATH`: 라우터에서 사용되는 경로
+- `APP_STATIC_PATH`: assets 같은 부분에서 사용되는 경로
 - `APP_SECRET_KEY`: secret key (영문, 숫자, 특수문자를 섞어서 랜덤값을 만드세요.)
+- `APP_PORT`: 프로젝트 포트
+- `APP_HOST`: 프로젝트 호스트
 - `TOKEN_PUBLIC`: API에서 사용하는 공개토큰. 자세한건 [goose-api install guide](https://github.com/redgoose-dev/goose-api/wiki/Install-guide)페이지를 참고해주세요.
 - `DB_HOST`: session db host
 - `DB_PORT`: session db port
@@ -38,7 +43,7 @@ $ yarn install
 $ yarn run dev
 ```
 
-Open in browser `http://localhost:4000`
+Open in browser `http://localhost:3000`
 
 
 ### Production
@@ -55,17 +60,19 @@ $ yarn run start # default host, port
 #### change host and port
 
 ```bash
-$ HOST=0.0.0.0 PORT=7000 yarn run start
+$ HOST=0.0.0.0 PORT=3000 yarn run start
 ```
+
+아니면 `.env`파일에서 `APP_PORT`, `APP_HOST` 항목에서 값을 고쳐서 사용해도 됩니다.
 
 #### With [PM2](http://pm2.keymetrics.io)
 
 ```bash
 $ cd /home/goose-manager
-$ HOST=0.0.0.0 PORT=7000 /usr/bin/pm2 start -l 0 npm --name "goose-manager" -- start
+$ /usr/bin/pm2 start -l 0 npm --name "goose-manager" -- start
 ```
 
-open in browser `http://0.0.0.0:7000`
+open in browser `http://0.0.0.0:3000`
 
 
 ### Utility scripts
