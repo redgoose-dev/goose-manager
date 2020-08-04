@@ -15,6 +15,7 @@
         <item-thumbnail
           v-for="(item,key) in contents.articles"
           :key="key"
+          :type="item.type"
           :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
           :href="`/articles/${item.srl}/`"
           :title="item.title"
