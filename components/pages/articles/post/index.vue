@@ -48,13 +48,17 @@
       </template>
       <template slot="body2">
         <div class="rg-row rg-row-v-center rg-row-gutter-h">
+          <label class="form-field form-field--disabled">
+            <form-radio name="type" v-model="forms.type" :disabled="true" value="ready"/>
+            <span>ready</span>
+          </label>
           <label class="form-field">
             <form-radio name="type" id="type" v-model="forms.type" value="public"/>
-            <span>Public</span>
+            <span>public</span>
           </label>
           <label class="form-field">
             <form-radio name="type" v-model="forms.type" value="private"/>
-            <span>Private</span>
+            <span>private</span>
           </label>
         </div>
       </template>
@@ -213,6 +217,12 @@ export default {
       thumbnailSetting: (article && article.json.thumbnail) ? article.json.thumbnail : { zoom: .25 },
     };
   },
+  computed: {
+    computedReadyType()
+    {
+      return this.datas.article && this.datas.article.type === 'ready';
+    },
+  },
   methods: {
     /**
      * get json
@@ -240,7 +250,16 @@ export default {
      */
     getTypeName(type)
     {
-      return type === 'private' ? 'private' : 'public';
+      switch(type)
+      {
+        case 'private':
+          return 'private';
+        case 'ready':
+          return 'ready';
+        case 'public':
+        default:
+          return 'public';
+      }
     },
     /**
      * on change position in editor
@@ -422,6 +441,7 @@ export default {
       try
       {
         this.processing = true;
+        if (this.forms.type === 'ready') this.forms.type = 'public';
         await this.save('publishing');
         // redirect
         switch (this.type)

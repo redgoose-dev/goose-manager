@@ -27,9 +27,17 @@
   > label {
     cursor: pointer;
   }
+  &--disabled {
+    > span {
+      opacity: .5;
+    }
+  }
 }
 label.form-field {
   cursor: pointer;
+  &--disabled {
+    cursor: not-allowed;
+  }
 }
 .form-help {
   margin: 5px 0 0;
