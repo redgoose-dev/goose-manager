@@ -68,7 +68,7 @@
         </p>
       </template>
     </field>
-    <field v-if="type === 'add'" label="Admin" for="admin">
+    <field v-if="computedShowAdminField" label="Admin" for="admin">
       <template slot="body">
         <label class="form-field">
           <span><form-checkbox name="admin" id="admin" v-model="forms.admin.value"/></span>
@@ -148,11 +148,19 @@ export default {
       processing: false,
     };
   },
+  computed: {
+    computedShowAdminField()
+    {
+      const { type, $store } = this;
+      const { authUser } = $store.state;
+      if (this.datas && authUser.srl === parseInt(this.datas.srl)) return false;
+      return type === 'add' || (authUser && authUser.admin);
+    },
+  },
   methods: {
     async onSubmit(e)
     {
       this.processing = true;
-
       if (this.type === 'add')
       {
         // check password
@@ -163,7 +171,6 @@ export default {
           return;
         }
       }
-
       try
       {
         let params = {
@@ -184,7 +191,7 @@ export default {
         let res = await this.$axios.$post(path, data);
         if (!res.success) throw res.message;
         this.processing = false;
-        this.$router.push('../');
+        await this.$router.push('../');
       }
       catch(e)
       {
