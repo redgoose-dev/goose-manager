@@ -14,22 +14,7 @@ $ cp ./resource/.env ./
 $ cp ./resource/preference.json ./
 ```
 
-에디터를 열어 다음 항목들을 참고하면서 수정해주세요.
-
-- `APP_NAME`: App name
-- `APP_URL`: Manager URL
-- `APP_API_URL`: API URL
-- `APP_ROUTER_PATH`: 라우터에서 사용되는 경로
-- `APP_STATIC_PATH`: assets 같은 부분에서 사용되는 경로
-- `APP_SECRET_KEY`: secret key (영문, 숫자, 특수문자를 섞어서 랜덤값을 만드세요.)
-- `APP_PORT`: 프로젝트 포트
-- `APP_HOST`: 프로젝트 호스트
-- `TOKEN_PUBLIC`: API에서 사용하는 공개토큰. 자세한건 [goose-api install guide](https://github.com/redgoose-dev/goose-api/wiki/Install-guide)페이지를 참고해주세요.
-- `DB_HOST`: session db host
-- `DB_PORT`: session db port
-- `DB_DATABASE`: session db name
-- `DB_USERNAME`: session db user name
-- `DB_PASSWORD`: session db user password
+[.env guide](https://github.com/redgoose-dev/goose-manager/wiki/.env-guide) 문서를 참고하여 수정합니다.
 
 
 ## Usage
