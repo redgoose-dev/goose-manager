@@ -9,7 +9,7 @@ const env = process.env;
 const staticPath = env.APP_STATIC_PATH.replace(/\/$/, '');
 
 // set session store
-const sessionStore = (env.DB_HOST && env.DB_PORT && env.DB_USERNAME && env.DB_PASSWORD && env.DB_DATABASE) ? new MYSQLStore({ host: env.DB_HOST, port: env.DB_PORT, user: env.DB_USERNAME, password: env.DB_PASSWORD, database: env.DB_DATABASE, clearExpired: false }) : null;
+const sessionStore = (env.APP_DB_HOST && env.APP_DB_PORT && env.APP_DB_USERNAME && env.APP_DB_PASSWORD && env.APP_DB_DATABASE) ? new MYSQLStore({ host: env.DB_HOST, port: env.DB_PORT, user: env.DB_USERNAME, password: env.DB_PASSWORD, database: env.DB_DATABASE, clearExpired: false }) : null;
 
 // nuxt config
 module.exports = {

@@ -6,11 +6,11 @@ export default function(cox)
 	const debug = store.state.preference.debug.api;
 
 	// check
-	if (!process.env.TOKEN_PUBLIC)
+	if (!process.env.APP_TOKEN_PUBLIC)
 	{
 		return error({
 			statusCode: 500,
-			message: (cox.isDev) ?  messages.printf(messages.error.noKeywords, 'TOKEN_PUBLIC', '.env') : messages.service.error
+			message: (cox.isDev) ?  messages.printf(messages.error.noKeywords, 'APP_TOKEN_PUBLIC', '.env') : messages.service.error
 		});
 	}
 	if (!process.env.APP_API_URL)
@@ -38,7 +38,7 @@ export default function(cox)
 			token = store.state.authUser.token;
 		}
 	}
-	token = token || process.env.TOKEN_PUBLIC;
+	token = token || process.env.APP_TOKEN_PUBLIC;
 
 	// set header
 	$axios.setHeader('Accept', 'application/json;charset=UTF-8');
