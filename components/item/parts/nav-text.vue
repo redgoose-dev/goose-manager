@@ -2,7 +2,7 @@
 <nav class="nav-text">
   <nuxt-link
     v-for="(item,key) in items"
-    v-if="item.link"
+    v-if="item && item.link"
     :key="key"
     :to="item.link">
     {{item.label}}

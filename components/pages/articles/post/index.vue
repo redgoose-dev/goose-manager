@@ -213,8 +213,8 @@ export default {
       showFiles: false,
       thumbnailUpdated: false,
       thumbnailImage: null,
-      thumbnailPath: (article && article.json.thumbnail) ? article.json.thumbnail.path : '',
-      thumbnailSetting: (article && article.json.thumbnail) ? article.json.thumbnail : { zoom: .25 },
+      thumbnailPath: (article && article.json && article.json.thumbnail) ? article.json.thumbnail.path : '',
+      thumbnailSetting: (article && article.json && article.json.thumbnail) ? article.json.thumbnail : { zoom: .25 },
     };
   },
   computed: {
@@ -374,7 +374,7 @@ export default {
             ...this.thumbnailSetting,
             path: res_uploadSource.data.path,
           };
-          this.thumbnailSetting = json.thumbnail;
+          this.thumbnailSetting = (json && json.thumbnail) ? json.thumbnail : {};
           this.thumbnailUpdated = false;
           this.thumbnailImage = null;
           this.thumbnailPath = res_uploadSource.data.path;

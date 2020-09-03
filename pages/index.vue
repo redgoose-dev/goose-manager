@@ -59,7 +59,7 @@
           :navs="[
             { label: 'Edit', link: `/nests/${nest.srl}/edit/` },
             { label: 'Delete', link: `/nests/${nest.srl}/delete/` },
-            !!parseInt(nest.json.useCategory) && { label: 'Category', link: `/categories/${nest.srl}/` },
+            (nest.json && !!parseInt(nest.json.useCategory)) && { label: 'Category', link: `/categories/${nest.srl}/` },
           ]"/>
       </index-wrap>
       <error v-else type="empty" :frame="true" size="small" class="dashboard__error"/>
