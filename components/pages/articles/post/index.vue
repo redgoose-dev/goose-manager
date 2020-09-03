@@ -196,7 +196,7 @@ export default {
           error: '',
         },
         content: {
-          value: article ? article.content : '',
+          value: (article && article.content) ? article.content : '',
           error: '',
         },
         json: this.getJSON(),
@@ -397,8 +397,8 @@ export default {
           nest_srl: this.forms.nest_srl,
           category_srl: this.forms.category_srl || '',
           type: type === 'publishing' ? this.getTypeName(this.forms.type) : 'ready',
-          title: this.forms.title.value,
-          content: this.forms.content.value,
+          title: this.forms.title.value || '',
+          content: this.forms.content.value || '',
           json: encodeURIComponent(JSON.stringify(json)),
           order: this.forms.order.value,
         })
