@@ -79,7 +79,7 @@ export default {
       forms: {
         email: '',
         password: '',
-        save: false,
+        save: true,
       },
       processing: false,
     };
