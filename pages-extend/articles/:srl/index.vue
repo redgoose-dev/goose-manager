@@ -7,7 +7,7 @@
   </header>
 
   <div class="article__body">
-    <div v-html="article.content" class="redgoose-body redgoose-body--dark"/>
+    <div ref="articleBody" v-html="article.content" class="redgoose-body redgoose-body--dark"/>
   </div>
 
   <article v-if="files && files.length" class="files article__files">
@@ -35,6 +35,18 @@
   </nav-bottom>
 
   <comments v-if="useComment" :article_srl="srl"/>
+
+  <transition name="preview-image">
+    <div v-if="!!previewImage" class="preview-image" @click="previewImage = null">
+      <figure class="preview-image__body">
+        <img
+          :src="previewImage"
+          alt=""
+          class="preview-image__source"
+          @click="(e) => e.stopPropagation()">
+      </figure>
+    </div>
+  </transition>
 </article>
 </template>
 
@@ -88,7 +100,8 @@ export default {
         nest: nest.data,
         category: (category && category.success) ? category.data : null,
         files: (files && files.success) ? files.data.index : null,
-        useComment: (nest.data && nest.data.json && parseInt(nest.data.json.useComment) === 1)
+        useComment: (nest.data && nest.data.json && parseInt(nest.data.json.useComment) === 1),
+        previewImage: null,
       };
     }
     catch(e)
@@ -118,6 +131,18 @@ export default {
       return str;
     }
   },
+  watch: {
+    previewImage: function(newValue)
+    {
+      if (!document) return false;
+      const $html = document.querySelector('html');
+      newValue ? $html.classList.add('popup-modal-basic') : $html.classList.remove('popup-modal-basic');
+    },
+  },
+  mounted()
+  {
+    this.initContentBody();
+  },
   methods: {
     makeButtonUrl(type)
     {
@@ -142,6 +167,18 @@ export default {
     {
       return text.getFileSize(size);
     },
+    initContentBody()
+    {
+      const $body = this.$refs.articleBody;
+
+      // set grid images
+      const $gridImages = $body.querySelectorAll('.grid-item img');
+      $gridImages.forEach((o,k) => {
+        o.addEventListener('click', (e) => {
+          this.previewImage = e.target.src;
+        });
+      });
+    },
   },
 }
 </script>
@@ -149,10 +186,72 @@ export default {
 <style src="./index.scss" lang="scss" scoped/>
 <style lang="scss">
 @import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
 .redgoose-body {
-  @media (max-width: $size-tablet) {
-    img {
-      max-width: 100%;
+  .grid-item {
+    --grid-item-columns: 4;
+    --grid-item-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-item-columns), 1fr);
+    grid-gap: var(--grid-item-gap);
+    margin: calc(var(--size-margin-vertical)*2.5) auto var(--size-margin-vertical);
+    width: 100%;
+    > p {
+      position: relative;
+      margin: 0;
+      box-sizing: border-box;
+      padding-top: 100%;
+      > img {
+        position: absolute;
+        margin: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        transform: none;
+        box-sizing: border-box;
+        object-fit: cover;
+        cursor: pointer;
+        transition: opacity 200ms ease-out;
+        &:active {
+          opacity: .5;
+        }
+      }
+    }
+    @for $i from 2 through 12 {
+      &[data-mobile="#{$i}"] { --grid-item-columns: #{$i}; }
+    }
+    @include responsive(tablet) {
+      @for $i from 2 through 12 {
+        &[data-tablet="#{$i}"] { --grid-item-columns: #{$i}; }
+      }
+    }
+    @include responsive(desktop) {
+      @for $i from 2 through 12 {
+        &[data-desktop="#{$i}"] { --grid-item-columns: #{$i}; }
+      }
+    }
+    @include responsive(desktop-large) {
+      @for $i from 2 through 12 {
+        &[data-desktop-large="#{$i}"] { --grid-item-columns: #{$i}; }
+      }
+    }
+  }
+  .grid-group {
+    margin: calc(var(--size-margin-vertical)*2.5) auto var(--size-margin-vertical);
+    > .grid-item {
+      margin-top: var(--grid-item-gap);
+      margin-bottom: var(--grid-item-gap);
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }

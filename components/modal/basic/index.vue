@@ -40,7 +40,7 @@ export default {
       {
         $html.classList.remove('popup-modal-basic');
       }
-    }
+    },
   },
 }
 </script>
@@ -94,13 +94,6 @@ $self: '.modal-basic';
     &--center {
       background-color: rgba(#000,.5);
     }
-  }
-}
-</style>
-<style lang="scss">
-.popup-modal-basic {
-  &, & > body {
-    overflow: hidden;
   }
 }
 </style>

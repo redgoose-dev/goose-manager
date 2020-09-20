@@ -315,6 +315,7 @@ export default {
      */
     onInsertFromFiles(paths)
     {
+      console.log(paths.join('\n\n') + `\n`);
       this.insertTextToEditor(paths.join('\n\n') + `\n`);
       this.showFiles = false;
     },

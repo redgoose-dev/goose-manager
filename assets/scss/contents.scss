@@ -3,6 +3,13 @@
 @import "~redgoose-content-body/dist/body.scss";
 
 // popup mode
+.popup-modal-basic {
+  &, & > body {
+    overflow: hidden;
+  }
+}
+
+// TODO: legacy
 html.rg-mode-popup {
   &, body {
     overflow: hidden;

@@ -89,7 +89,6 @@ export default {
     {
       // undefined sw
       if (sw === undefined) sw = !this.showPreview;
-
       if (sw)
       {
         if (!(this.value && this.value.length > 1))
@@ -125,17 +124,23 @@ export default {
     {
       switch (key)
       {
-        case 'preview':
-          this.showPreviewControl(true);
-          break;
         case 'insert-space':
-          this.$emit('insert-text', `\n<p><br/></p>\n`);
+          this.$emit('insert-text', `<p><br/></p>\n`);
           break;
         case 'insert-iframe':
-          this.$emit('insert-text', `\n<div class="iframe"></div>\n`, 21);
+          this.$emit('insert-text', `<div class="iframe"></div>\n`, 20);
+          break;
+        case 'insert-grid-group':
+          this.$emit('insert-text', `<div class="grid-group">\n\n</div>\n`, 25);
+          break;
+        case 'insert-grid-item':
+          this.$emit('insert-text', `<figure class="grid-item" data-mobile="3" data-tablet="" data-desktop="" data-desktop-large="">\n\n\n\n</figure>\n`, 97);
           break;
         case 'open-file-manager':
           this.$emit('open-files');
+          break;
+        case 'preview':
+          this.showPreviewControl(true);
           break;
       }
     },
