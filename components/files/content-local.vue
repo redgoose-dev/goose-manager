@@ -52,7 +52,7 @@
   <dl class="files-content__footer">
     <dt></dt>
     <dd>
-      <div v-if="full">
+      <div v-if="full" class="nav-item">
         <button-basic
           type="button"
           icon-left="x"
@@ -60,7 +60,7 @@
           Close
         </button-basic>
       </div>
-      <div>
+      <div class="nav-item">
         <button-basic
           type="button"
           color="key"
@@ -257,6 +257,8 @@ export default {
     {
       return [
         { label: '새창으로 열기', click: (e) => this.onClickContextMenu('open-window', e) },
+        { label: '에디터로 삽입하기', click: (e) => this.onClickContextMenu('insert-item', item) },
+        { label: '에디터로 삽입하기 (html)', click: (e) => this.onClickContextMenu('insert-item-html', item) },
         { label: '삭제하기', color: 'red', click: (e) => this.onClickContextMenu('remove', e) },
       ];
     },

@@ -88,43 +88,78 @@
     <dl v-if="!pending" class="files-content__footer">
       <dt>
         <template v-if="module === 'articles' && index.length">
-          <div>
+          <div :class="[
+            'footer-nav-dropdown',
+            'nav-item',
+            !thumbnail.srl && 'footer-nav-dropdown--disabled'
+          ]">
             <button-basic
               type="button"
               :disabled="!thumbnail.srl"
-              icon-left="corner-up-left"
-              @click.stop="onClickResetThumbnail">
-              Reset thumbnail
-            </button-basic>
-          </div>
-          <div>
-            <button-basic
-              type="button"
-              :disabled="!thumbnail.srl"
-              icon-left="zoom-in"
+              icon-left="image"
               @click.stop="showPreviewThumbnail = true">
-              Preview thumbnail
+              Thumbnail
             </button-basic>
+            <div class="footer-nav-dropdown__context">
+              <ul>
+                <li>
+                  <button
+                    type="button"
+                    @click.stop="onClickResetThumbnail">
+                    Reset
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    @click.stop="showPreviewThumbnail = true">
+                    Preview
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </template>
       </dt>
       <dd>
-        <div v-if="full">
+        <div :class="[
+          'footer-nav-dropdown',
+          'nav-item',
+          selected.length <= 0 && 'footer-nav-dropdown--disabled'
+        ]">
+          <button-basic
+            type="button"
+            :disabled="selected.length <= 0"
+            icon-left="download"
+            color="key"
+            @click.stop="onClickInsertText">
+            Insert Image
+          </button-basic>
+          <div class="footer-nav-dropdown__context">
+            <ul>
+              <li>
+                <button
+                  type="button"
+                  @click.stop="onClickInsertText">
+                  Insert text
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  @click.stop="onClickInsertHtml">
+                  Insert html
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div v-if="full" class="nav-item">
           <button-basic
             type="button"
             icon-left="x"
             @click.stop="$emit('custom-event', 'close')">
             Close
-          </button-basic>
-        </div>
-        <div>
-          <button-basic
-            type="button"
-            color="key"
-            :disabled="selected.length <= 0"
-            icon-left="download"
-            @click.stop="onClickInsertText">
-            Insert
           </button-basic>
         </div>
       </dd>
@@ -342,6 +377,9 @@ export default {
         case 'insert-item':
           this.$emit('custom-event', 'insert-text', [e]);
           break;
+        case 'insert-item-html':
+          this.$emit('custom-event', 'insert-html', [e]);
+          break;
       }
     },
     // 이미지 선택이 변했을때
@@ -470,6 +508,7 @@ export default {
       let items = [];
       items.push({ label: '새창으로 열기', click: (e) => this.onClickContextMenu('open-window', e) });
       items.push({ label: '에디터로 삽입하기', click: (e) => this.onClickContextMenu('insert-item', item) });
+      items.push({ label: '에디터로 삽입하기 (html)', click: (e) => this.onClickContextMenu('insert-item-html', item) });
       if (this.module === 'articles' && /^image/.test(item.type))
       {
         items.push({ label: '썸네일 이미지로 설정', click: (e) => this.onClickContextMenu('make-thumbnail', e) });
@@ -481,6 +520,10 @@ export default {
     onClickInsertText()
     {
       this.$emit('custom-event', 'insert-text', Object.assign([], this.selected));
+    },
+    onClickInsertHtml()
+    {
+      this.$emit('custom-event', 'insert-html', Object.assign([], this.selected));
     },
     // 썸네일 에디터 닫기
     onCloseThumbnailEditor()

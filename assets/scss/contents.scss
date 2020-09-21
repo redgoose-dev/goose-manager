@@ -9,6 +9,91 @@
   }
 }
 
+// article content body
+.redgoose-body {
+  .grid-item {
+    --grid-item-columns: 4;
+    --grid-item-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-item-columns), 1fr);
+    grid-gap: var(--grid-item-gap);
+    margin: calc(var(--size-margin-vertical)*2.5) auto var(--size-margin-vertical);
+    width: 100%;
+    > p {
+      position: relative;
+      margin: 0;
+      box-sizing: border-box;
+      padding-top: 100%;
+      > img {
+        position: absolute;
+        margin: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        transform: none;
+        box-sizing: border-box;
+        object-fit: cover;
+        transition: opacity 200ms ease-out;
+      }
+    }
+    @for $i from 2 through 12 {
+      &[data-mobile="#{$i}"] { --grid-item-columns: #{$i}; }
+    }
+    @include responsive(tablet) {
+      @for $i from 2 through 12 {
+        &[data-tablet="#{$i}"] { --grid-item-columns: #{$i}; }
+      }
+    }
+    @include responsive(desktop) {
+      @for $i from 2 through 12 {
+        &[data-desktop="#{$i}"] { --grid-item-columns: #{$i}; }
+      }
+    }
+    @include responsive(desktop-large) {
+      @for $i from 2 through 12 {
+        &[data-desktop-large="#{$i}"] { --grid-item-columns: #{$i}; }
+      }
+    }
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .grid-group {
+    margin: calc(var(--size-margin-vertical)*2.5) auto var(--size-margin-vertical);
+    > .grid-item {
+      margin-top: var(--grid-item-gap);
+      margin-bottom: var(--grid-item-gap);
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &:not(.redgoose-body--popup) {
+    .grid-item {
+      > p {
+        > img {
+          cursor: pointer;
+          &:active {
+            opacity: .5;
+          }
+        }
+      }
+    }
+  }
+}
+
 // TODO: legacy
 html.rg-mode-popup {
   &, body {

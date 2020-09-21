@@ -150,6 +150,18 @@ export default {
             }
           }));
           break;
+        case 'insert-html':
+          this.$emit('insert', value.map((o) => {
+            if (/^image/.test(o.type))
+            {
+              return `<p><img src="${this.$store.state.url_api}/${o.path}" alt="${o.name}"/></p>`;
+            }
+            else
+            {
+              return `<p><a href="${this.$store.state.url_api}/${o.path}" target="_blank">${o.name}</a></p>`;
+            }
+          }));
+          break;
         case 'update-thumbnail-editor':
           this.$emit('update-thumbnail', value, value2);
           break;
