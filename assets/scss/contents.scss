@@ -17,7 +17,7 @@
     display: grid;
     grid-template-columns: repeat(var(--grid-item-columns), 1fr);
     grid-gap: var(--grid-item-gap);
-    margin: calc(var(--size-margin-vertical)*2.5) auto var(--size-margin-vertical);
+    margin: calc(var(--size-margin-vertical) * 1.5) auto;
     width: 100%;
     > p {
       position: relative;
@@ -67,7 +67,7 @@
     }
   }
   .grid-group {
-    margin: calc(var(--size-margin-vertical)*2.5) auto var(--size-margin-vertical);
+    margin: calc(var(--size-margin-vertical) * 1.5) auto;
     > .grid-item {
       margin-top: var(--grid-item-gap);
       margin-bottom: var(--grid-item-gap);
