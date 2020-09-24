@@ -39,11 +39,7 @@
   <transition name="preview-image">
     <div v-if="!!previewImage" class="preview-image" @click="previewImage = null">
       <figure class="preview-image__body">
-        <img
-          :src="previewImage"
-          alt=""
-          class="preview-image__source"
-          @click="(e) => e.stopPropagation()">
+        <img :src="previewImage" alt="" class="preview-image__source">
       </figure>
     </div>
   </transition>

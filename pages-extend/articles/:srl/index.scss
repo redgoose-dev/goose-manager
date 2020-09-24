@@ -117,7 +117,11 @@
   box-sizing: border-box;
   cursor: zoom-out;
   overflow: hidden;
-  background-color: rgba(#fff,.75);
+  background-color: rgba(255,255,255,.75);
+  @supports (backdrop-filter: blur(10px)) {
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(10px);
+  }
   &__body {
     margin: 0;
     display: flex;
@@ -133,7 +137,6 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    cursor: auto;
     box-shadow: 0 2px 30px rgba(0,0,0,.25);
   }
   // transition
@@ -146,6 +149,6 @@
     opacity: 0;
   }
   @include dark-mode() {
-    background-color: rgba(#000,.5);
+    background: rgba(0,0,0,.5);
   }
 }
