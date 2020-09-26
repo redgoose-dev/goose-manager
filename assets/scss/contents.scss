@@ -17,7 +17,7 @@
     display: grid;
     grid-template-columns: repeat(var(--grid-item-columns, 1), 1fr);
     grid-gap: var(--grid-item-gap);
-    margin: calc(var(--size-margin-vertical) * 1.5) auto;
+    margin: calc(var(--size-margin-vertical) * 2.5) auto var(--size-margin-vertical);
     width: 100%;
     > p {
       position: relative;
@@ -42,7 +42,7 @@
         transition: opacity 200ms ease-out;
       }
     }
-    @for $i from 2 through 6 {
+    @for $i from 1 through 6 {
       &[data-mobile="#{$i}"] { --grid-item-columns: #{$i}; }
       > p[col="#{$i}"] {
         --padding-top: calc(100% / #{$i});
@@ -50,7 +50,7 @@
       }
     }
     @include responsive(tablet) {
-      @for $i from 2 through 6 {
+      @for $i from 1 through 6 {
         &[data-tablet="#{$i}"] { --grid-item-columns: #{$i}; }
         > p[col-tablet="#{$i}"] {
           --padding-top: calc(100% / #{$i});
@@ -59,7 +59,7 @@
       }
     }
     @include responsive(desktop) {
-      @for $i from 2 through 6 {
+      @for $i from 1 through 6 {
         &[data-desktop="#{$i}"] { --grid-item-columns: #{$i}; }
         > p[col-desktop="#{$i}"] {
           --padding-top: calc(100% / #{$i});
@@ -68,7 +68,7 @@
       }
     }
     @include responsive(desktop-large) {
-      @for $i from 2 through 6 {
+      @for $i from 1 through 6 {
         &[data-desktop-large="#{$i}"] { --grid-item-columns: #{$i}; }
         > p[col-desktop-large="#{$i}"] {
           --padding-top: calc(100% / #{$i});
@@ -84,7 +84,7 @@
     }
   }
   .grid-group {
-    margin: calc(var(--size-margin-vertical) * 1.5) auto;
+    margin: calc(var(--size-margin-vertical) * 2.5) auto var(--size-margin-vertical);
     > .grid-item {
       margin-top: var(--grid-item-gap);
       margin-bottom: var(--grid-item-gap);
