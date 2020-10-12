@@ -125,7 +125,7 @@
         <div :class="[
           'footer-nav-dropdown',
           'nav-item',
-          selected.length <= 0 && 'footer-nav-dropdown--disabled'
+          selected.length <= 0 && 'footer-nav-dropdown--disabled',
         ]">
           <button-basic
             type="button"

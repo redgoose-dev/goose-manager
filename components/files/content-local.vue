@@ -51,21 +51,44 @@
   <dl class="files-content__footer">
     <dt></dt>
     <dd>
+      <div :class="[
+        'footer-nav-dropdown',
+        'nav-item',
+        selected.length <= 0 && 'footer-nav-dropdown--disabled',
+      ]">
+        <button-basic
+          type="button"
+          :disabled="selected.length <= 0"
+          icon-left="download"
+          color="key"
+          @click.stop="onClickInsertText">
+          Insert Image
+        </button-basic>
+        <div class="footer-nav-dropdown__context">
+          <ul>
+            <li>
+              <button
+                type="button"
+                @click.stop="onClickInsertText">
+                Insert text
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                @click.stop="onClickInsertHtml">
+                Insert html
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div v-if="full" class="nav-item">
         <button-basic
           type="button"
           icon-left="x"
           @click.stop="$emit('custom-event', 'close')">
           Close
-        </button-basic>
-      </div>
-      <div class="nav-item">
-        <button-basic
-          type="button"
-          color="key"
-          :disabled="selected.length <= 0"
-          @click.stop="onClickInsertText">
-          Insert
         </button-basic>
       </div>
     </dd>
@@ -232,14 +255,22 @@ export default {
     onClickContextMenu(type, e)
     {
       const { url_api } = this.$store.state;
-      const key = parseInt(e.currentTarget.dataset.key);
+      let key = null;
       switch (type)
       {
         case 'open-window':
+          key = parseInt(e.currentTarget.dataset.key);
           window.open(`${url_api}/${this.index[key].path}`);
           break;
         case 'remove':
+          key = parseInt(e.currentTarget.dataset.key);
           this.remove([this.index[key]]).then();
+          break;
+        case 'insert-item':
+          this.$emit('custom-event', 'insert-text', [e]);
+          break;
+        case 'insert-item-html':
+          this.$emit('custom-event', 'insert-html', [e]);
           break;
       }
     },
@@ -265,6 +296,10 @@ export default {
     onClickInsertText()
     {
       this.$emit('custom-event', 'insert-text', Object.assign([], this.selected));
+    },
+    onClickInsertHtml()
+    {
+      this.$emit('custom-event', 'insert-html', Object.assign([], this.selected));
     },
     initDragAndDropEvent(remove)
     {
