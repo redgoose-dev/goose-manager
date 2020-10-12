@@ -170,7 +170,7 @@ export default {
         idx = idx - 1;
         let res = await this.$axios.$post(
           `/files/upload-file/`,
-          formData({ sub_dir: this.dir, file: files[n] }),
+          formData({ sub_dir: this.dir, files: files[n] }),
           {
             headers: { 'Content-Type': 'multipart/form-data' },
             onUploadProgress(progressEvent)
