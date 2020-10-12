@@ -1,10 +1,9 @@
 <template>
-  <article
-    :class="[
-    'files-content',
-    'files-content--local',
-    full && 'files-content--full',
-  ]">
+<article :class="[
+  'files-content',
+  'files-content--local',
+  full && 'files-content--full',
+]">
   <header class="files-content__header">
     <div @click.stop="">
       <content-button
@@ -183,13 +182,13 @@ export default {
         index[idx] = {
           complete: true,
           srl: this.count_srl,
-          name: res.data.name,
-          path: res.data.path,
-          pathFull: res.data.pathFull,
-          size: res.data.size,
-          type: res.data.type,
+          name: res.data[0].name,
+          path: res.data[0].path,
+          pathFull: res.data[0].pathFull,
+          size: res.data[0].size,
+          type: res.data[0].type,
           badge: [],
-          context: this.setContextMenuInThumbnail(res.data),
+          context: this.setContextMenuInThumbnail(res.data[0]),
         };
         this.index = index;
         n++;
