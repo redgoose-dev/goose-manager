@@ -146,7 +146,6 @@ export default {
   },
   mounted()
   {
-    // TODO: 로그인전 리다이렉트가 안됐을 경우에 화면이 표시되어버리는 현상이 나타나는데 방어코드가 필요해 보인다.
     // initial window custom event
     util.initCustomEvent();
   },

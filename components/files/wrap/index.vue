@@ -11,11 +11,11 @@ export default {
   name: 'files-wrap',
   mounted()
   {
-    document.querySelector('html').classList.add('rg-mode-popup');
+    document.querySelector('html').classList.add('popup-modal-basic');
   },
   destroyed()
   {
-    document.querySelector('html').classList.remove('rg-mode-popup');
+    document.querySelector('html').classList.remove('popup-modal-basic');
   },
 }
 </script>

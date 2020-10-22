@@ -99,7 +99,7 @@ export default {
           });
           return;
         }
-        document.querySelector('html').classList.add('rg-mode-popup');
+        document.querySelector('html').classList.add('popup-modal-basic');
         this.showPreview = true;
         this.preview = marked(this.value);
         window.on('keyup.article-body-preview', (e) => {
@@ -108,7 +108,7 @@ export default {
       }
       else
       {
-        document.querySelector('html').classList.remove('rg-mode-popup');
+        document.querySelector('html').classList.remove('popup-modal-basic');
         this.showPreview = false;
         this.preview = '';
         window.off('keyup.article-body-preview');
