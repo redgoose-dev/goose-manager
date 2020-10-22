@@ -99,7 +99,8 @@ export default {
   watch: {
     '$route': async function()
     {
-      this.page = parseInt(this.$route.query.page) || 1;
+      const { $route } = this;
+      this.page = parseInt($route.query.page) || 1;
       this.processing = true;
       try
       {

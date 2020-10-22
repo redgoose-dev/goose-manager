@@ -98,9 +98,7 @@ export default {
         let params = {};
         if (this.category_srl) params.category = this.category_srl;
         if (this.page && this.page > 1) params.page = this.page;
-        // let url = `/articles${this.nest_srl ? `/${this.nest_srl}` : ''}/`;
-        this.$router.replace('../../');
-        // this.$router.replace(url + text.serialize(params, true));
+        await this.$router.replace(`../../${text.serialize(params, true)}`);
       }
       catch(e)
       {

@@ -21,7 +21,11 @@
     </div>
     <div :class="['articles__content', filter.skin]">
       <template v-if="!error">
-        <index-articles :articles="articles" :loading="processing" :skin="filter.skin"/>
+        <index-articles
+          :articles="articles"
+          :loading="processing"
+          :skin="filter.skin"
+          :funcGetQuery="setQueryDataInArticles"/>
         <paginate
           v-if="!!total"
           type="nuxt-link"
@@ -169,6 +173,12 @@ export default {
       let params = {};
       if (keyword) params.q = keyword;
       this.$router.push(`./${text.serialize(params, true)}`);
+    },
+    setQueryDataInArticles(item)
+    {
+      let query = {};
+      if (this.page && this.page > 1) query.page = this.page;
+      return text.serialize(query, true);
     },
   },
 }

@@ -28,7 +28,7 @@ export default {
   {
     const srl = parseInt(cox.params.article);
     const nest_srl = parseInt(cox.params.nest) || null;
-    const category_srl = parseInt(cox.query.category) || null;
+    const category_srl = cox.query.category || undefined;
     const page = parseInt(cox.query.page) || null;
 
     try

@@ -217,12 +217,6 @@ export default {
       thumbnailSetting: (article && article.json && article.json.thumbnail) ? article.json.thumbnail : { zoom: .25 },
     };
   },
-  computed: {
-    computedReadyType()
-    {
-      return this.datas.article && this.datas.article.type === 'ready';
-    },
-  },
   methods: {
     /**
      * get json
@@ -387,6 +381,10 @@ export default {
             zoom: .25,
           };
         }
+      }
+      else if (this.thumbnailSetting.path)
+      {
+        json.thumbnail = this.thumbnailSetting;
       }
 
       // save article

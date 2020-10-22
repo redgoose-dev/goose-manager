@@ -4,10 +4,10 @@
   <index-wrap v-else-if="!!articles && articles.length" :type="computedIndexType">
     <component
       v-for="(item,key) in articles" :key="key"
-      v-bind:is="`item-${useSkin}`"
+      v-bind:is="`item-${computedUseSkin}`"
       :type="item.type"
       :image="(item.json && item.json.thumbnail) ? getImageUrl(item.json.thumbnail.path) : null"
-      :href="`./${item.srl}/`"
+      :href="`./${item.srl}/${getQuery(item)}`"
       :title="item.title"
       :alt="item.title"
       :metas="[
@@ -17,8 +17,8 @@
         `hit:${item.hit}`,
       ]"
       :navs="[
-        { label: 'Edit', link: `./${item.srl}/edit/` },
-        { label: 'Delete', link: `./${item.srl}/delete/` }
+        { label: 'Edit', link: `./${item.srl}/edit/${getQuery(item)}` },
+        { label: 'Delete', link: `./${item.srl}/delete/${getQuery(item)}` },
       ]"/>
   </index-wrap>
   <error v-else type="empty" size="large"/>
@@ -44,9 +44,10 @@ export default {
     articles: { type: Array, default: null },
     loading: { type: Boolean, default: false },
     skin: { type: String, default: 'thumbnail' }, // list,card,thumbnail,brick
+    funcGetQuery: { type: Function }, // 링크주소 쿼리를 만들기 위하여 부모 컴포넌트에서 처리하는 함수
   },
   computed: {
-    useSkin()
+    computedUseSkin()
     {
       switch(this.skin)
       {
@@ -63,7 +64,7 @@ export default {
     },
     computedIndexType()
     {
-      switch (this.useSkin)
+      switch (this.computedUseSkin)
       {
         case 'card':
         case 'thumbnail':
@@ -95,6 +96,10 @@ export default {
     getType(type)
     {
       return text.getArticleType(type);
+    },
+    getQuery(item)
+    {
+      return (this.funcGetQuery && typeof this.funcGetQuery === 'function') ? this.funcGetQuery(item) : '';
     },
   },
 }

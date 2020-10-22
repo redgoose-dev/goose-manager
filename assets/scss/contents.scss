@@ -39,7 +39,6 @@
         transform: none;
         box-sizing: border-box;
         object-fit: cover;
-        transition: opacity 200ms ease-out;
       }
     }
     @for $i from 1 through 6 {
@@ -98,14 +97,11 @@
   }
 
   &:not(.redgoose-body--popup) {
-    .grid-item {
-      > p {
-        > img {
-          cursor: pointer;
-          &:active {
-            opacity: .5;
-          }
-        }
+    img {
+      cursor: pointer;
+      transition: opacity 200ms ease-out;
+      &:active {
+        opacity: .75;
       }
     }
   }
