@@ -40,6 +40,7 @@ export default {
     {
       return [
         'files-content-button',
+        this.type === 'file' && `files-content-button--file`,
         this.color && `files-content-button--color-${this.color}`,
         this.disabled && `files-content-button--disabled`,
       ];

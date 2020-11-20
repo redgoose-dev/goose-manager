@@ -23,6 +23,7 @@ export default {
       return {
         datas: {
           apps: res.data.index,
+          nest: null,
         },
       };
     }

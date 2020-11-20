@@ -59,11 +59,11 @@
       <template slot="body">
         <div class="rg-row rg-row-v-center rg-row-gutter-h">
           <label class="form-field">
-            <form-radio name="use_category" id="use_category" v-model="json.useCategory" :value="1"/>
+            <form-radio name="use_category" id="use_category" v-model="json.useCategory" value="1"/>
             <span>Yes</span>
           </label>
           <label class="form-field">
-            <form-radio name="use_category" v-model="json.useCategory" :value="0"/>
+            <form-radio name="use_category" v-model="json.useCategory" value="0"/>
             <span>No</span>
           </label>
         </div>
@@ -131,14 +131,14 @@
               name="thumbnail_size_tool"
               id="thumbnail_size_tool"
               v-model="json.useThumbnailSizeTool"
-              :value="1"/>
+              value="1"/>
             <span>Yes</span>
           </label>
           <label class="form-field">
             <form-radio
               name="thumbnail_size_tool"
               v-model="json.useThumbnailSizeTool"
-              :value="0"/>
+              value="0"/>
             <span>No</span>
           </label>
         </div>
@@ -196,11 +196,18 @@
       <template slot="body">
         <div class="rg-row rg-row-v-center rg-row-gutter-h">
           <label class="form-field">
-            <form-radio name="use_comment" id="use_comment" v-model="json.useComment" :value="1"/>
+            <form-radio
+              name="use_comment"
+              id="use_comment"
+              v-model="json.useComment"
+              value="1"/>
             <span>Yes</span>
           </label>
           <label class="form-field">
-            <form-radio name="use_comment" v-model="json.useComment" :value="0"/>
+            <form-radio
+              name="use_comment"
+              v-model="json.useComment"
+              value="0"/>
             <span>No</span>
           </label>
         </div>
@@ -240,19 +247,19 @@ import * as text from '~/libs/text';
 import * as fieldset from '~/components/form/fieldset';
 
 const defaultJson = {
-  useCategory: 0,
+  useCategory: '0',
   thumbnail: {
     width: 400,
     height: 300,
     type: 'crop',
   },
-  useThumbnailSizeTool: 0,
+  useThumbnailSizeTool: '0',
   files: {
     count: 15,
     sizeSingle: 5242880,
     sizeTotal: 20971520,
   },
-  useComment: 0,
+  useComment: '0',
 };
 
 export default {
@@ -277,7 +284,7 @@ export default {
   },
   data()
   {
-    const { nest, apps } = this.datas;
+    const { apps, nest, type } = this.datas;
 
     let result = {
       forms: {
@@ -309,30 +316,37 @@ export default {
 
     try
     {
-      if (!nest) throw 'no nest';
-      result.nest = nest;
-      result.json = {
-        ...defaultJson,
-        useCategory: parseInt(nest.json.useCategory) || 0,
-        thumbnail: {
-          width: parseInt(nest.json.thumbnail.width),
-          height: parseInt(nest.json.thumbnail.height),
-          type: nest.json.thumbnail.type,
-        },
-        useThumbnailSizeTool: parseInt(nest.json.useThumbnailSizeTool) || 0,
-        files: {
-          count: parseInt(nest.json.files.count),
-          sizeSingle: parseInt(nest.json.files.sizeSingle),
-          sizeTotal: parseInt(nest.json.files.sizeTotal)
-        },
-        useComment: parseInt(nest.json.useComment) || 0,
-      };
+      if (type === 'edit')
+      {
+        result.nest = nest;
+        result.json = {
+          ...defaultJson,
+          useCategory: nest.json.useCategory || '0',
+          thumbnail: {
+            width: parseInt(nest.json.thumbnail.width),
+            height: parseInt(nest.json.thumbnail.height),
+            type: nest.json.thumbnail.type,
+          },
+          useThumbnailSizeTool: nest.json.useThumbnailSizeTool || '0',
+          files: {
+            count: parseInt(nest.json.files.count),
+            sizeSingle: parseInt(nest.json.files.sizeSingle),
+            sizeTotal: parseInt(nest.json.files.sizeTotal)
+          },
+          useComment: nest.json.useComment || '0',
+        };
+      }
+      else
+      {
+        throw new Error('not edit on type');
+      }
     }
     catch(e)
     {
       result.nest = {};
-      result.json = defaultJson;
+      result.json = JSON.parse(JSON.stringify(defaultJson));
     }
+
     return result;
   },
   computed: {

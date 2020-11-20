@@ -61,6 +61,9 @@ $self: '.files-content-button';
     }
   }
 
+  &--file {
+    overflow: hidden;
+  }
   &--color {
     &-red {
       #{$self} {
