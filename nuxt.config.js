@@ -13,6 +13,7 @@ const sessionStore = (env.APP_DB_HOST && env.APP_DB_PORT && env.APP_DB_USERNAME 
 
 // nuxt config
 module.exports = {
+  ssr: true,
   head: {
     title: env.APP_NAME,
     meta: [

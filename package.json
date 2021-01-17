@@ -11,21 +11,21 @@
     "build-check": "./node_modules/.bin/nuxt build --analyze"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/dotenv": "^1.4.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "express-mysql-session": "^2.1.4",
+    "express-mysql-session": "^2.1.5",
     "express-session": "^1.17.1",
     "image-resize": "^1.1.5",
-    "marked": "^1.2.5",
-    "nuxt": "^2.14.7",
+    "marked": "^1.2.7",
+    "nuxt": "^2.14.12",
     "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
     "vue-croppie": "^2.0.2",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.1.0"
+    "sass": "^1.32.4",
+    "sass-loader": "^10.1.1"
   }
 }
