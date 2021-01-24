@@ -74,7 +74,7 @@ export default {
       const category_srl = query.category || null;
       const page = query.page || null;
       const article = await $axios.$get(`/articles/${srl}/?ext_field=category_name&visible_type=all`);
-      if (!article.success) throw article.message;
+      if (!article?.success) throw new Error(article?.message);
 
       // get nest, category data
       const [ nest, category, files ] = await Promise.all([
@@ -82,7 +82,7 @@ export default {
         article.data.category_srl && $axios.$get(`/categories/${article.data.category_srl}/`),
         $axios.$get(`/files/?target=${srl}&module=articles`),
       ]);
-      if (!nest.success) throw nest.message;
+      if (!nest.success) throw new Error(nest.message);
 
       // convert content
       article.data.content = marked(article.data.content);
@@ -92,7 +92,7 @@ export default {
         nest_srl,
         category_srl,
         page,
-        article: article.data,
+        article: article?.data,
         nest: nest.data,
         category: (category && category.success) ? category.data : null,
         files: (files && files.success) ? files.data.index : null,
@@ -104,7 +104,7 @@ export default {
     {
       error({
         statusCode: 500,
-        message: (typeof e === 'string') ? e : messages.error.service,
+        message: e.message || messages.error.service,
       });
     }
   },
@@ -112,7 +112,7 @@ export default {
     computedDescription()
     {
       let src = [
-        `${text.getArticleType(this.article.type)}`,
+        `${text.getArticleType(this.article?.type)}`,
         `regdate: ${dates.getFormatDate(this.article.regdate, false)}`,
       ];
       if (this.article.order) src.push(`order: ${this.article.order}`);

@@ -117,6 +117,14 @@ export default {
         keyword: query.q || '',
       },
     };
+    const nest = await context.$axios.$get(`/nests/${result.nest_srl}/?field=name,json,description`);
+    if (!nest.success)
+    {
+      return context.error({
+        statusCode: 404,
+        message: messages.error.notFound,
+      });
+    }
 
     // set params for articles
     let paramsArticle = {
@@ -136,13 +144,12 @@ export default {
     paramsCategory.visible_type = result.filter.type;
     try
     {
-      const [ categories, articles, nest ] = await Promise.all([
+      const [ categories, articles ] = await Promise.all([
         context.$axios.$get(`/categories/${text.serialize(paramsCategory, true)}`),
         context.$axios.$get(`/articles/${text.serialize(paramsArticle, true)}`),
-        context.$axios.$get(`/nests/${result.nest_srl}/?field=name,json,description`)
       ]);
       result.total = articles.success ? articles.data.total : 0;
-      result.nest = nest.success ? nest.data : null;
+      result.nest = nest?.success ? nest.data : null;
       result.articles = articles.success ? articles.data.index : null;
       result.categories = categories.success ? categories.data.index : null;
     }

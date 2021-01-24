@@ -4,7 +4,7 @@
     <icon :name="icon"/>
   </figure>
   <h1 class="title">
-    {{message.title}} / {{error.statusCode}}
+    {{message.title}}{{error.statusCode !== 500 ? ` / ${error.statusCode}` : ''}}
   </h1>
   <p class="description">
     {{error.message}}

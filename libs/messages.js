@@ -28,6 +28,7 @@ export const error = {
 	confirmPassword: `확인용 비밀번호가 다릅니다.`,
 	failedLogin: 'Failed login',
   noKeywords: `No {0} in {1}`,
+  notFound: 'Not found page.',
 };
 
 export const msg = {
