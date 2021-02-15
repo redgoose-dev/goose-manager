@@ -67,3 +67,29 @@ export function convertDateInService(item, field)
       return getFormatDate(item.regdate, false);
   }
 }
+
+/**
+ * compare date
+ *
+ * @param {Date} date1
+ * @param {Date} date2
+ * @param {String} compare
+ * @return {Boolean}
+ * @throws
+ * */
+export function compareDate(date1, date2, compare = '<')
+{
+  if (!(date1 && date2)) throw new Error('no date1 or date2');
+  let d1 = date1.setHours(0,0,0,0);
+  let d2 = date2.setHours(0,0,0,0);
+  switch (compare)
+  {
+    case '<':
+      return d1 < d2;
+    case '>':
+      return d1 > d2;
+    case '=':
+    default:
+      return d1 === d2;
+  }
+}

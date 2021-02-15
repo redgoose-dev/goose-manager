@@ -5,7 +5,18 @@ $self: '.page-header';
 
 .page-header {
   margin: 0 0 30px;
-
+  display: flex;
+  align-items: center;
+  &__body {
+    flex: 1;
+  }
+  &__nav {
+    display: flex;
+    align-items: center;
+    > *:nth-child(n+2) {
+      margin-left: 8px;
+    }
+  }
   &__prefix {
     display: block;
     margin: 0 0 -4px;
@@ -28,9 +39,8 @@ $self: '.page-header';
     color: var(--color-blur);
     letter-spacing: -.25px;
   }
-
   &--eng {
-    #{$self} {
+    .page-header {
       &__title {
         padding-top: 0;
         font-family: $font-eng-circular;
@@ -42,7 +52,6 @@ $self: '.page-header';
       }
     }
   }
-
   @include dark-mode() {
     &__title {
       color: #fff;

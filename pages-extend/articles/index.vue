@@ -111,7 +111,7 @@ export default {
   computed: {
     computedTotal()
     {
-      return number.withCommas(this.total);
+      return number.withCommas(this.total) || 0;
     },
   },
   watch: {
@@ -174,7 +174,7 @@ export default {
       if (keyword) params.q = keyword;
       this.$router.push(`./${text.serialize(params, true)}`);
     },
-    setQueryDataInArticles(item)
+    setQueryDataInArticles()
     {
       let query = {};
       if (this.page && this.page > 1) query.page = this.page;

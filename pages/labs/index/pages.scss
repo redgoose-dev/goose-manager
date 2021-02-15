@@ -67,3 +67,11 @@
     border-color: #555;
   }
 }
+
+.page-section-line {
+  margin: 5rem 0;
+  padding: 0;
+  height: 1px;
+  border: none;
+  background-color: var(--color-content-line);
+}

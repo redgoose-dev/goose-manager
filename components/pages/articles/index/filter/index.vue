@@ -1,5 +1,5 @@
 <template>
-<form @submit.prevent="" class="index-filter">
+<form class="index-filter" @submit.prevent="">
   <div class="index-filter__section">
     <p><label for="filter_type">Type</label></p>
     <div>
