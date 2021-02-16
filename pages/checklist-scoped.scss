@@ -1,0 +1,17 @@
+@import "../assets/scss/variables";
+@import "../assets/scss/mixins";
+
+.checklist {
+  &__wrap {}
+  &__side {}
+  &__body {}
+  &__header-button {
+    --button-icon-unit-size: 16px;
+  }
+  &__progress {
+    position: sticky;
+    left: 50%;
+    bottom: 30px;
+    border: 1px solid red;
+  }
+}

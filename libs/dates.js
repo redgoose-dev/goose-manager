@@ -1,3 +1,7 @@
+export const month = [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ];
+export const weeks = [ '일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일' ];
+export const shortWeeks = [ '일', '월', '화', '수', '목', '금', '토' ];
+
 /**
  * get format date
  * make `year-month-day hour:minutes:second`
@@ -92,4 +96,20 @@ export function compareDate(date1, date2, compare = '<')
     default:
       return d1 === d2;
   }
+}
+
+/**
+ * check today
+ *
+ * @param {Date} date
+ * @return {boolean}
+ */
+export function checkToday(date)
+{
+  const today = new Date();
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
 }

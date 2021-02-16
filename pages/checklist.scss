@@ -1,17 +1,71 @@
-@import "../assets/scss/variables";
 @import "../assets/scss/mixins";
 
-.checklist {
-  &__wrap {}
-  &__side {}
-  &__body {}
-  &__header-button {
-    --button-icon-unit-size: 16px;
+.checklist__body {
+  .checkbox-item {
+    vertical-align: middle;
+    > label {
+      cursor: pointer;
+    }
+    .checkbox {
+      position: relative;
+      display: inline-block;
+      font-size: 0;
+      vertical-align: middle;
+      margin: 0 4px 0 0;
+      input {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+      }
+      i {
+        position: relative;
+        display: inline-block;
+        background-color: #eee;
+        border: 1px solid #999;
+        border-radius: 2px;
+        width: 18px;
+        height: 18px;
+        box-sizing: border-box;
+        transition: box-shadow 200ms ease-out;
+        &:before {
+          content: '';
+          position: relative;
+          display: block;
+          background: var(--color-key);
+          width: 10px;
+          height: 10px;
+          left: 50%;
+          top: 50%;
+          border-radius: 1px;
+          transition: transform 150ms ease-out;
+          transform: translate(-50%, -50%) rotate(0deg) scale(0,0);
+        }
+      }
+      input:focus + i {
+        box-shadow: inset 0 -5px 10px var(--color-content-bg), 0 0 0 2px var(--color-key);
+        border-color: transparent;
+      }
+      input:checked + i:before {
+        transform: translate(-50%, -50%) rotate(90deg) scale(1,1);
+      }
+    }
   }
-  &__progress {
-    position: sticky;
-    left: 50%;
-    bottom: 30px;
-    border: 1px solid red;
+  @include dark-mode() {
+    .checkbox-item {
+      .checkbox {
+        i {
+          background-color: #383838;
+          border-color: #666;
+        }
+      }
+    }
   }
 }

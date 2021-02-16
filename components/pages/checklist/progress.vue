@@ -1,12 +1,16 @@
 <template>
 <div class="checklist-progress">
-  .progress
+  <p>.progress</p>
+  <em>{{percent}}</em>
 </div>
 </template>
 
 <script>
 export default {
   name: 'checklist-progress',
+  props: {
+    percent: { type: Number, default: 0 },
+  },
 }
 </script>
 
