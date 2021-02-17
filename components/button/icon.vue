@@ -18,7 +18,8 @@
   v-else
   :type="computedType"
   :title="title"
-  :class="computedClass">
+  :class="computedClass"
+  @click="$emit('click')">
   <icon :name="iconName" class="button-icon__unit"/>
 </button>
 </template>

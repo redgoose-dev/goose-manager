@@ -8,16 +8,14 @@
       class="checklist__header-button"/>
   </page-header>
   <article class="checklist__wrap">
-    <header class="checklist__head">
-      <h3>{{computedDate}}</h3>
-    </header>
-    <div ref="checklist-body" class="checklist__body"/>
-    {{computedToday}}
+    <h3 class="checklist__date">{{computedDate}}</h3>
+    <div ref="checklist-body" class="redgoose-body redgoose-body--dark checklist__body"/>
   </article>
   <checklist-progress
     :percent="computedPercent"
-    class="checklist__progress"/>
-  <nuxt-child @update="updateChildren"/>
+    class="checklist__progress"
+    @edit-item="onClickEdit"/>
+  <nuxt-child @action="actionChildren"/>
 </article>
 </template>
 
@@ -36,7 +34,7 @@ export default {
   },
   async asyncData(context)
   {
-    const { query, store, $axios } = context;
+    const { store, $axios } = context;
     const { preference } = store.state;
     try
     {
@@ -88,37 +86,36 @@ export default {
   watch: {
     srl: async function()
     {
+      // TODO
       console.log('change srl / call');
     },
   },
   mounted()
   {
     this.$body = this.$refs['checklist-body'];
+    this.processingEditContent = false;
     this.resetContent();
   },
   methods: {
-    updateChildren(action)
+    actionChildren(action)
     {
-      console.log('call update children');
+      // TODO
+      console.log('call action children');
+      switch (action)
+      {}
     },
     async resetContent()
     {
       const onChangeCheckbox = e => {
         const index = Number(e.target.dataset?.index);
         const checkMark = e.target.checked ? 'x' : ' ';
-        let body = replaceMark(
-          this.content,
-          /\- \[[x|\s]\]/gmi,
-          `- [${checkMark}]`,
-          index + 1
-        );
-        // 수정된 소스로 호출한곳으로 콜백 이벤트로 호출한다.
-        this.editContent(body).then();
+        let body = replaceMark(this.content, /\- \[[x|\s]\]/gmi, `- [${checkMark}]`, index + 1);
+        this.editContent(body);
       }
 
       // clear content
       this.$body.innerHTML = '';
-      // set renderer
+      // set marked renderer
       const renderer = new marked.Renderer();
       renderer.listitem = (text, task) => {
         if (task)
@@ -156,10 +153,15 @@ export default {
     },
     async editContent(str)
     {
-      let res = await this.$axios.$post(`/checklist/${this.srl}/edit/?return=1`, {
-        content: str,
-      });
-      this.content = res?.data?.content;
+      this.content = str;
+      if (this.processingEditContent) return;
+      this.processingEditContent = true;
+      await this.$axios.$post(`/checklist/${this.srl}/edit/`, { content: str });
+      this.processingEditContent = false;
+    },
+    async onClickEdit()
+    {
+      console.log('call onClickEdit');
     },
   },
 }
