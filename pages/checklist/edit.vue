@@ -1,31 +1,34 @@
 <template>
-<article class="edit-item">
-  <page-header module="checklist" title="Checklist / Edit item"/>
+<article>
+  <page-header module="checklist" title="Checklist / Edit"/>
   <post :datas="datas"/>
 </article>
 </template>
 
 <script>
 import * as messages from '~/libs/messages';
+import { getLastItem } from '~/components/pages/checklist/src';
 
 export default {
-  name: 'checklist-edit-item',
+  name: 'checklist-edit',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'post': () => import('~/components/pages/checklist/post'),
   },
   async asyncData(context)
   {
-    const { params, $axios, error } = context;
+    const { store, $axios, error } = context;
+    const { preference } = store.state;
+
     try
     {
-      let res = await $axios.$get(`/checklist/${Number(params.srl)}/`);
-      if (!res.success) throw res.message;
+      let res = await getLastItem($axios, preference.checklist.reset);
+      if (!res) throw 'not found item';
       return {
         datas: {
-          srl: Number(res.data.srl),
-          regdate: res.data.regdate,
-          content: res.data.content,
+          srl: Number(res.srl),
+          regdate: res.regdate,
+          content: res.content,
         },
       };
     }
@@ -39,5 +42,3 @@ export default {
   },
 }
 </script>
-
-<style src="./edit.scss" lang="scss" scoped></style>

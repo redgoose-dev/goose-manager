@@ -75,3 +75,31 @@ export function replaceMark(src, search, replace, index)
     return match;
   });
 }
+
+/**
+ * get last item
+ * 최근 데이터를 가져오거나 추가한다.
+ *
+ * @param {any} $axios
+ * @param {String} reset
+ * @return {Object}
+ */
+export async function getLastItem($axios, reset)
+{
+  let item;
+  let res = await $axios.$get(`/checklist/?order=srl&sort=desc&size=1`);
+  let lastItem = res?.data?.index[0];
+  if (!lastItem || (!!lastItem && checkTime(lastItem.regdate, reset)))
+  {
+    // add item
+    let res = await $axios.$post('/checklist/?return=1', {
+      content: (lastItem?.content) ? lastItem.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
+    });
+    item = res?.data;
+  }
+  else
+  {
+    item = lastItem;
+  }
+  return item;
+}

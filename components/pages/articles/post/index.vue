@@ -1,5 +1,5 @@
 <template>
-<form @submit.prevent="submit" ref="form">
+<form ref="form" @submit.prevent="submit">
   <!-- basic fields -->
   <field-wrap :legend="`${type} article form`" :hide-legend="true">
     <field v-if="datas.categories && datas.categories.length" label="Category" for="category">

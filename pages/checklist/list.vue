@@ -1,3 +1,3 @@
 <template>
-  <p>checklist-items</p>
+  <p>/checklist/list/</p>
 </template>

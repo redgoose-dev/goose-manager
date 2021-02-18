@@ -38,7 +38,7 @@ export default {
   methods: {
     onClickEditItem()
     {
-      this.$router.push(`/checklist/${this.srl}/edit/`);
+      this.$router.push(`/checklist/edit/`);
     },
   },
 }

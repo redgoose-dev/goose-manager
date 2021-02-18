@@ -22,7 +22,7 @@
 
 <script>
 import * as messages from '~/libs/messages';
-import { defaultContent, checkTime, countingCheckbox } from '~/components/pages/checklist/src';
+import { checkTime, countingCheckbox, getLastItem } from '~/components/pages/checklist/src';
 
 export default {
   name: 'page-checklist',
@@ -34,25 +34,11 @@ export default {
   },
   async asyncData(context)
   {
-    const { store, $axios } = context;
+    const { store, $axios, error } = context;
     const { preference } = store.state;
     try
     {
-      let item;
-      let res = await $axios.$get(`/checklist/?order=srl&sort=desc&size=1`);
-      let lastItem = res?.data?.index[0];
-      if (!lastItem || (!!lastItem && checkTime(lastItem.regdate, preference.checklist.reset)))
-      {
-        // add item
-        let res = await $axios.$post('/checklist/?return=1', {
-          content: (lastItem?.content) ? lastItem.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
-        });
-        item = res?.data;
-      }
-      else
-      {
-        item = lastItem;
-      }
+      let item = await getLastItem($axios, preference.checklist.reset);
       return {
         srl: Number(item.srl),
         content: item.content,
@@ -61,7 +47,10 @@ export default {
     }
     catch(e)
     {
-      return { error: (typeof e === 'string') ? e : messages.error.service };
+      error({
+        statusCode: 500,
+        message: (typeof e === 'string') ? e : messages.error.service,
+      });
     }
   },
   computed: {
@@ -76,10 +65,6 @@ export default {
       const { preference } = this.$store.state;
       return !checkTime(this.regdate, preference.checklist.reset);
     },
-  },
-  mounted()
-  {
-    //
   },
   methods: {
     //
