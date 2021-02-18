@@ -18,6 +18,7 @@
   v-else
   :type="computedType"
   :title="title"
+  :disabled="disabled"
   :class="computedClass"
   @click="$emit('click')">
   <icon :name="iconName" class="button-icon__unit"/>

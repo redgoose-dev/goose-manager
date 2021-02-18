@@ -23,6 +23,9 @@
     --button-icon-size: var(--height);
     --button-icon-unit-size: 20px;
     margin: 0 6px 0 -4px;
+    &[disabled] {
+      --button-icon-color: var(--color-blur);
+    }
   }
   &__graph {
     --graph-height: 10px;

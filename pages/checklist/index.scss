@@ -1,0 +1,12 @@
+@import "../../assets/scss/mixins";
+
+.checklist {
+  &__header-button {
+    --button-icon-unit-size: 16px;
+  }
+  &__progress {
+    position: sticky;
+    bottom: 30px;
+    margin: 0 auto;
+  }
+}
