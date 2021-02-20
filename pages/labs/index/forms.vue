@@ -190,6 +190,25 @@
       <pre class="content-editable__render">{{contentEditable}}</pre>
     </div>
   </section>
+
+  <section class="page-section">
+    <header>
+      <h3>keyword</h3>
+      <p>
+        <code>~/components/form/keyword</code>
+      </p>
+    </header>
+    <div class="example">
+      <form-keyword
+        v-model="keyword"
+        :processing="false"
+        :disabled="false"
+        form-size="large"
+        @clear="keyword = ''"
+        @submit=""/>
+      <p>{{keyword}}</p>
+    </div>
+  </section>
 </article>
 </template>
 
@@ -201,6 +220,7 @@ export default {
     'form-checkbox': () => import('~/components/form/checkbox'),
     'form-radio': () => import('~/components/form/radio'),
     'form-content-editable': () => import('~/components/form/content-editable'),
+    'form-keyword': () => import('~/components/form/keyword'),
     'button-basic': () => import('~/components/button/basic'),
   },
   data()
@@ -216,6 +236,7 @@ export default {
       checkbox: false,
       radio: 'radio1',
       contentEditable: 'hello',
+      keyword: 'foo',
     };
   },
 }

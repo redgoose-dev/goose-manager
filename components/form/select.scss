@@ -55,7 +55,7 @@ $self: '.form-select';
   & {
     &__unit {
       height: $form-text-height-basic;
-      font-size: $form-text-text-basic;
+      font-size: $form-text-size-basic;
       line-height: 1.5;
       padding-left: $form-text-side-padding;
       padding-right: 36px;
@@ -81,7 +81,7 @@ $self: '.form-select';
       &-small {
         #{$self}__unit {
           height: $form-text-height-small;
-          font-size: $form-text-text-small;
+          font-size: $form-text-size-small;
           padding-right: 30px;
         }
         #{$self}__icon {
@@ -93,7 +93,7 @@ $self: '.form-select';
       &-large {
         #{$self}__unit {
           height: $form-text-height-large;
-          font-size: $form-text-text-large;
+          font-size: $form-text-size-large;
           padding-right: 42px;
         }
         #{$self}__icon {

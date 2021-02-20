@@ -106,3 +106,12 @@
     }
   }
 }
+
+// section line
+.section-line {
+  margin: var(--section-line-margin, 1rem) 0;
+  padding: 0;
+  height: var(--section-line-stroke, 1px);
+  border: none;
+  background-color: var(--color-content-line);
+}

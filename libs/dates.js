@@ -1,3 +1,5 @@
+import { twoDigit } from '~/libs/text';
+
 export const month = [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ];
 export const weeks = [ '일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일' ];
 export const shortWeeks = [ '일', '월', '화', '수', '목', '금', '토' ];
@@ -25,6 +27,7 @@ export function getFormatDate(date=null, useTime=true)
 /**
  * convert date format
  * make `year-month-day hour:minutes:second` type Date
+ * TODO: `dateFormat`함수로 교체하여 리팩토링 하기
  *
  * @param {Date} date
  * @param {Boolean} time
@@ -36,6 +39,27 @@ export function convertDateFormat(date=null, time=true)
   let str = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
   str = str.substr(0, 19).split('T');
   return time ? `${str[0]} ${str[1]}` : str[0];
+}
+
+/**
+ * convert date format
+ *
+ * @param {Date} date
+ * @param {String} format `{yyyy}-{mm}-{dd} / {month},{week},{weekShort} / {hh}:{mm}:{ss}`
+ * @return {String}
+ */
+export function dateFormat(date, format)
+{
+  let mix = format.replace(/\{yyyy\}/, String(date.getFullYear()));
+  mix = mix.replace(/\{MM\}/, twoDigit(date.getMonth() + 1));
+  mix = mix.replace(/\{dd\}/, twoDigit(date.getDate()));
+  mix = mix.replace(/\{month\}/, month[date.getMonth()]);
+  mix = mix.replace(/\{week\}/, weeks[date.getDay()]);
+  mix = mix.replace(/\{weekShort\}/, shortWeeks[date.getDay()]);
+  mix = mix.replace(/\{hh\}/, twoDigit(date.getHours()));
+  mix = mix.replace(/\{mm\}/, twoDigit(date.getMinutes()));
+  mix = mix.replace(/\{ss\}/, twoDigit(date.getSeconds()));
+  return mix;
 }
 
 /**

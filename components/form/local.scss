@@ -25,12 +25,14 @@ $local-color-dark-shadow2: rgba(#000, .25);
 $local-color-dark-autofill-bg: rgba($color-dark-key, .2);
 
 // text & select
+$form-text-height-mini: 26px;
 $form-text-height-small: 36px;
 $form-text-height-basic: 42px;
 $form-text-height-large: 48px;
-$form-text-text-small: 14px;
-$form-text-text-basic: 16px;
-$form-text-text-large: 18px;
+$form-text-size-mini: 12px;
+$form-text-size-small: 14px;
+$form-text-size-basic: 16px;
+$form-text-size-large: 18px;
 $form-text-side-padding: 12px;
 
 // checkbox & radio

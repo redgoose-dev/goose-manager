@@ -1,12 +1,13 @@
 <template>
 <article class="checklist">
-  <page-header module="checklist">
+  <header class="checklist__header">
+    <h2>{{computedDate}}</h2>
     <button-icon
       href="/checklist/list/"
       icon-name="archive"
       title="Checklist list"
       class="checklist__header-button"/>
-  </page-header>
+  </header>
   <checklist-item
     :srl="srl"
     :current-date="computedCurrentDate"
@@ -22,7 +23,7 @@
 
 <script>
 import * as messages from '~/libs/messages';
-import { checkTime, countingCheckbox, getLastItem } from '~/components/pages/checklist/src';
+import { checkTime, convertDateFormat, countingCheckbox, getLastItem } from '~/components/pages/checklist/src';
 
 export default {
   name: 'page-checklist',
@@ -65,9 +66,12 @@ export default {
       const { preference } = this.$store.state;
       return !checkTime(this.regdate, preference.checklist.reset);
     },
-  },
-  methods: {
-    //
+    computedDate()
+    {
+      const { preference } = this.$store.state;
+      const regdate = this.regdate.split('-').map(o => Number(o));
+      return convertDateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
+    },
   },
 }
 </script>

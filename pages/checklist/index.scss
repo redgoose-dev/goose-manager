@@ -1,7 +1,9 @@
 @import "../../assets/scss/mixins";
 
 .checklist {
+  &__header {}
   &__header-button {
+    // TODO: 리팩토링 필요하다.
     --button-icon-unit-size: 16px;
   }
   &__progress {

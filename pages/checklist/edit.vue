@@ -10,7 +10,7 @@ import * as messages from '~/libs/messages';
 import { getLastItem } from '~/components/pages/checklist/src';
 
 export default {
-  name: 'checklist-edit',
+  name: 'page-checklist-edit',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'post': () => import('~/components/pages/checklist/post'),

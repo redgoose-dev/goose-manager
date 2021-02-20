@@ -49,17 +49,17 @@ $self: '.form-text';
     height: $form-text-height-basic;
     padding-left: $form-text-side-padding;
     padding-right: $form-text-side-padding;
-    font-size: $form-text-text-basic;
+    font-size: $form-text-size-basic;
     line-height: 1.5;
   }
   &--size {
     &-small {
       height: $form-text-height-small;
-      font-size: $form-text-text-small;
+      font-size: $form-text-size-small;
     }
     &-large {
       height: $form-text-height-large;
-      font-size: $form-text-text-large;
+      font-size: $form-text-size-large;
     }
   }
 

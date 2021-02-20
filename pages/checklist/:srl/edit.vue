@@ -1,5 +1,5 @@
 <template>
-<article class="edit-item">
+<article>
   <page-header module="checklist" title="Checklist / Edit item"/>
   <post :datas="datas"/>
 </article>
@@ -9,7 +9,7 @@
 import * as messages from '~/libs/messages';
 
 export default {
-  name: 'checklist-edit-item',
+  name: 'page-checklist-edit-item',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'post': () => import('~/components/pages/checklist/post'),
@@ -39,5 +39,3 @@ export default {
   },
 }
 </script>
-
-<style src="./edit.scss" lang="scss" scoped></style>

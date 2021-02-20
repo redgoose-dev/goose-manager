@@ -1,10 +1,13 @@
 <template>
 <component
   :is="tag"
-  :contenteditable="true"
-  @input="update"
-  @blur="update"
-  @paste="paste"/>
+  :contenteditable="!disabled"
+  @input="onInput"
+  @blur="onBlur"
+  @paste="onPaste"
+  @keydown.meta.enter="$emit('submit')"
+  @keyup.ctrl.enter="$emit('submit')"
+/>
 </template>
 
 <script>
@@ -13,6 +16,7 @@ export default {
   props: {
     tag: { type: String, default: 'div' },
     value: { type: String },
+    disabled: { type: Boolean, default: false },
   },
   mounted() {
     this.$el.innerText = this.value;
@@ -27,11 +31,15 @@ export default {
     }
   },
   methods: {
-    update(e)
+    onInput(e)
     {
       this.$emit('input', e.target.innerText);
     },
-    paste(e)
+    onBlur(e)
+    {
+      this.$emit('input', e.target.innerText);
+    },
+    onPaste(e)
     {
       e.preventDefault();
       if (!window) return;
@@ -47,5 +55,8 @@ div {
   display: inline-block;
   width: 100%;
   box-sizing: border-box;
+}
+div[contenteditable=false] {
+  cursor: not-allowed;
 }
 </style>

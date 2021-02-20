@@ -1,0 +1,47 @@
+@import "../../../assets/scss/mixins";
+
+.checklist-post {
+  &__fieldset {
+    margin: 0;
+    padding: 0;
+    border: none;
+    > legend {
+      font-size: 0;
+    }
+  }
+  &__date {
+    display: block;
+    margin: 0;
+    padding: 16px 0;
+    font-size: 16px;
+    letter-spacing: -.5px;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.15;
+    background-color: var(--color-content-bg);
+  }
+  &__body {
+    margin: 24px 0 0;
+    outline: none;
+    border: 1px solid var(--color-content-line);
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 20px rgb(0 0 0 / 12%);
+    min-height: 240px;
+    font-size: 16px;
+    line-height: 1.48;
+    resize: vertical;
+    border-radius: 2px;
+    &:focus {
+      box-shadow: inset 0 2px 20px rgb(0 0 0 / 16%), 0 0 0 1px var(--color-key);
+    }
+  }
+  @include dark-mode() {
+    &__body {
+      box-shadow: inset 0 2px 20px rgb(0 0 0 / 24%);
+      &:focus {
+        box-shadow: inset 0 2px 20px rgb(0 0 0 / 36%), 0 0 0 1px var(--color-key);
+      }
+    }
+  }
+}
