@@ -78,3 +78,8 @@ export function getKey(src, key, value)
     if (src[i][key] === value) return i;
   }
 }
+
+/**
+ * make range number
+ */
+export const range = (from, to, step) => [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);

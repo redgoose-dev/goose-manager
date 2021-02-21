@@ -1,14 +1,16 @@
 @import "../../assets/scss/mixins";
 
 .checklist {
-  &__header {}
-  &__header-button {
-    // TODO: 리팩토링 필요하다.
-    --button-icon-unit-size: 16px;
-  }
-  &__progress {
-    position: sticky;
-    bottom: 30px;
-    margin: 0 auto;
+  //&__title {
+  //  margin: 0;
+  //  padding: 8px 0 0;
+  //  font-size: 28px;
+  //  font-weight: 700;
+  //  color: var(--color-edge);
+  //  line-height: 1.15;
+  //  letter-spacing: -.5px;
+  //}
+  &__bottom {
+    margin-bottom: 30px;
   }
 }

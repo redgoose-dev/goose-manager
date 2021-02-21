@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { convertDateFormat } from '~/components/pages/checklist/src';
 import * as messages from '~/libs/messages';
+import { dateFormat } from '~/libs/dates';
 
 export default {
   name: 'checklist-post',
@@ -59,7 +59,7 @@ export default {
       if (!this.datas) return;
       const { preference } = this.$store.state;
       const regdate = this.datas.regdate.split('-').map(o => Number(o));
-      return convertDateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
+      return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
   },
   methods: {
@@ -78,7 +78,6 @@ export default {
       }
       catch(e)
       {
-        console.error(e);
         if (e === messages.error.service) e = null;
         this.processing = false;
         this.$toast.add({

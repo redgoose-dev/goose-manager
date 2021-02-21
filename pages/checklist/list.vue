@@ -1,94 +1,88 @@
 <template>
 <article class="checklist-items">
-  <page-header module="checklist" title="Checklist items"/>
+  <page-header module="checklist" title="Checklist / List"/>
   <side-filter-wrapper class="checklist-items__body">
     <template slot="side">
-      <side-filter-meta-items :items="[{ label: 'Total', value: total }]"/>
+      <side-filter-meta-items :items="[{ label: 'Total', value: computedTotal }]"/>
       <hr class="section-line">
       <side-filter-section label="Date range" name="filter_range">
-        <div class="rg-row rg-row-gutter-h">
-          <div class="rg-col">
-            <form-select
-              id="filter_range"
-              name="filter_range"
-              v-model="filter.dateYear"
-              size="mini"
-              placeholder="년도 선택"
-              :options="[
-                { label: '2020', value: 2020 },
-                { label: '2021', value: 2021 },
-                { label: '2022', value: 2022 },
-                { label: '2023', value: 2023 },
-              ]"
-              @change=""/>
-          </div>
-          <div class="rg-col">
-            <form-select
-              v-model="filter.dateMonth"
-              size="mini"
-              placeholder="월 선택"
-              :options="[
-                { label: '1월', value: 1 },
-                { label: '2월', value: 2 },
-                { label: '3월', value: 3 },
-                { label: '4월', value: 4 },
-              ]"
-              @change=""/>
-          </div>
-        </div>
+        <form-select
+          id="filter_range"
+          name="filter_range"
+          v-model="filter.year"
+          size="mini"
+          placeholder="년도 선택하기"
+          :options="tree.year"
+          @change="onChangeFilter"/>
+        <form-select
+          v-model="filter.month"
+          size="mini"
+          placeholder="월 선택하기"
+          :options="tree.month"
+          @change="onChangeFilter"/>
       </side-filter-section>
       <side-filter-section label="Keyword" name="filter_keyword">
         <form-keyword
-          v-model="filter.keyword"
+          v-model="keyword"
           form-size="mini"
           placeholder="Keyword"
           :processing="false"
-          @clear="filter.keyword = ''"
-          @submit="onSubmitFilterKeyword"/>
+          @clear="keyword = ''"
+          @submit="onSubmitKeywordInFilter"/>
       </side-filter-section>
     </template>
     <template slot="body">
-      <loading v-if="loading"/>
+      <loading v-if="processing"/>
       <error v-else-if="!!error" :message="error" size="large"/>
-      <template v-else>
-        <index-wrap type="grid" class="checklist-items__index">
-          <item-card
-            v-for="(item,key) in computedItems"
-            :key="key"
-            :title="item.title"
-            :href="`/checklist/${item.srl}/`"
-            :alt="item.title"
-            :metas="[ `Progress: ${item.percent}%` ]"
-            :navs="[
-              { label: 'Edit', link: `/checklist/${item.srl}/edit/` },
-              { label: 'Delete', link: `/checklist/${item.srl}/delete/` },
-            ]"
-            :use-image="false"/>
-        </index-wrap>
-        <paginate
-          v-if="!!total"
-          type="nuxt-link"
-          v-model="page"
-          url="./"
-          :total="total"
-          :size="size"
-          :params="filter.keyword ? { q: filter.keyword } : null"
-          :page-range="10"
-          :show-direction="false"
-          :show-range-direction="true"
-          :show-end-direction="true"
-          @change="page = $event"/>
-      </template>
+      <index-wrap v-else type="grid" class="checklist-items__index">
+        <item-card
+          v-for="(item,key) in computedItems"
+          :key="key"
+          :title="item.title"
+          :href="`/checklist/${item.srl}/`"
+          :alt="item.title"
+          :metas="[ `Progress: ${item.percent}%` ]"
+          :navs="[
+            { label: 'Edit', link: `/checklist/${item.srl}/edit/` },
+            { label: 'Delete', link: `/checklist/${item.srl}/delete/` },
+          ]"
+          :use-image="false"/>
+      </index-wrap>
+      <paginate
+        v-if="!!total && computedSize > 0"
+        type="nuxt-link"
+        v-model="page"
+        url="./"
+        :total="total"
+        :size="computedSize"
+        :params="keyword ? { q: keyword } : null"
+        :page-range="10"
+        :show-direction="false"
+        :show-range-direction="true"
+        :show-end-direction="true"
+        @change="page = $event"/>
     </template>
   </side-filter-wrapper>
+  <nav-bottom>
+    <template slot="right">
+      <button-basic href="../" icon-left="check" color="key">Go to Today</button-basic>
+    </template>
+  </nav-bottom>
 </article>
 </template>
 
 <script>
 import * as object from '~/libs/object';
 import * as text from '~/libs/text';
+import * as number from '~/libs/number';
 import * as messages from '~/libs/messages';
-import { dateFormat } from '~/libs/dates';
+import { dateFormat, month } from '~/libs/dates';
+
+const defaultParamsGetItems = {
+  field: 'srl,percent,regdate',
+  order: 'srl',
+  sort: 'desc',
+};
 
 export default {
   name: 'page-checklist-list',
@@ -99,58 +93,33 @@ export default {
     'error': () => import('~/components/contents/error'),
     'loading': () => import('~/components/etc/loading'),
     'paginate': () => import('~/components/etc/paginate'),
+    'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'button-basic': () => import('~/components/button/basic'),
     'side-filter-wrapper': () => import('~/components/contents/side-filter/wrapper'),
     'side-filter-meta-items': () => import('~/components/contents/side-filter/meta-items'),
     'side-filter-section': () => import('~/components/contents/side-filter/section'),
     'form-select': () => import('~/components/form/select'),
     'form-keyword': () => import('~/components/form/keyword'),
   },
-  async asyncData(context)
+  data()
   {
-    const { query, store, $axios } = context;
-    const { preference } = store.state;
+    const { $store, $route } = this;
+    const { preference } = $store.state;
     const preferenceFilter = object.getValue(preference, 'checklist', 'filter');
-    let result = {
-      page: Number(query.page || 1),
-      size: 32,
+
+    return {
+      page: Number($route.query.page || 1),
+      size: 20,
       filter: {
-        dateYear: preferenceFilter.year,
-        dateMonth: preferenceFilter.month,
-        keyword: query.q || null,
+        year: preferenceFilter.year,
+        month: preferenceFilter.month,
       },
-      loading: false,
+      keyword: $route.query.q || '',
       processing: false,
       error: null,
-      // items,
-      // total,
+      total: 0,
+      items: [],
     };
-    try
-    {
-      let params = {
-        size: result.size,
-        page: result.page,
-        order: 'srl',
-        sort: 'desc',
-      };
-      if (result.filter.dateYear && result.filter.dateMonth)
-      {
-        let date = new Date(result.filter.dateYear, result.filter.dateMonth - 1, 1);
-        params.start = dateFormat(date, '{yyyy}-{MM}-{dd}');
-        date = new Date(result.filter.dateYear, result.filter.dateMonth, 0);
-        params.end = dateFormat(date, '{yyyy}-{MM}-{dd}');
-      }
-      if (result.filter.keyword) params.q = result.filter.keyword;
-      // get items
-      let res = await $axios.$get(`/checklist/${text.serialize(params, true)}`);
-      if (!res.success) throw res.message;
-      result.total = res.success ? res.data.total : 0;
-      result.items = res.success ? res.data.index : [];
-    }
-    catch(e)
-    {
-      result.error = (typeof e === 'string') ? e : messages.error.service;
-    }
-    return result;
   },
   computed: {
     computedItems()
@@ -165,13 +134,82 @@ export default {
         };
       });
     },
+    computedTotal()
+    {
+      return number.withCommas(this.total) || 0;
+    },
+    computedSize()
+    {
+      return (this.filter.year && this.filter.month) ? 0 : this.size;
+    },
+  },
+  watch: {
+    '$route': function()
+    {
+      this.updateItems().then();
+    },
+  },
+  created()
+  {
+    this.tree = {
+      month: month.map((o, k) => ({ label: o, value: k + 1 })),
+      year: object.range(2020, 2030, 1).map(o => ({ label: o, value: o })),
+    };
+  },
+  mounted()
+  {
+    this.updateItems().then();
   },
   methods: {
-    async onSubmitFilterKeyword()
+    async updateItems()
     {
-      console.log('call onSubmitFilterKeyword()', this.filter.keyword);
-    }
-  }
+      const { $route, $axios } = this;
+      this.page = parseInt($route.query.page) || 1;
+      this.keyword = $route.query.q || '';
+      this.processing = true;
+      try
+      {
+        let params = {
+          ...defaultParamsGetItems,
+          size: this.computedSize,
+          page: this.page,
+        };
+        if (this.filter.year && this.filter.month)
+        {
+          let date = new Date(this.filter.year, this.filter.month - 1, 1);
+          params.start = dateFormat(date, '{yyyy}-{MM}-{dd}');
+          date = new Date(this.filter.year, this.filter.month, 0);
+          params.end = dateFormat(date, '{yyyy}-{MM}-{dd}');
+        }
+        if (this.keyword) params.q = this.keyword;
+        let res = await $axios.$get(`/checklist/${text.serialize(params, true)}`);
+        if (!res.success) throw res.message;
+        this.total = res.data.total;
+        this.items = res.data.index;
+        this.error = null;
+      }
+      catch(e)
+      {
+        this.error = (typeof e === 'string') ? e : messages.error.service;
+      }
+      this.processing = false;
+    },
+    async onChangeFilter()
+    {
+      // update preference
+      let params = [{ key: 'checklist.filter', value: this.filter }];
+      this.$store.dispatch('updatePreference', params).then();
+      // update items
+      this.updateItems().then();
+    },
+    onSubmitKeywordInFilter(keyword)
+    {
+      if (keyword.length < 2 && keyword.length > 0) return;
+      let params = {};
+      if (keyword) params.q = keyword;
+      this.$router.push(`./${text.serialize(params, true)}`);
+    },
+  },
 }
 </script>
 

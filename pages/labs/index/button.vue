@@ -13,6 +13,9 @@
     <div class="example">
       <div class="rg-row rg-row-gutter-h">
         <div class="rg-col">
+          <button-basic type="button" size="mini" icon-right="power">mini</button-basic>
+        </div>
+        <div class="rg-col">
           <button-basic type="button" size="small">small</button-basic>
         </div>
         <div class="rg-col">

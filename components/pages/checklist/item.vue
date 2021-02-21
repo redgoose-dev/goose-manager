@@ -1,13 +1,11 @@
 <template>
-<article class="checklist-item">
-  <h3 class="checklist-item__date">{{computedDate}}</h3>
-  <div ref="body" class="redgoose-body redgoose-body--dark checklist-item__body"/>
-</article>
+<div ref="body" class="checklist-item redgoose-body redgoose-body--dark"/>
 </template>
 
 <script>
 import marked from 'marked';
-import { convertDateFormat, replaceMark } from './src';
+import { replaceMark } from './src';
+import { dateFormat } from '~/libs/dates';
 
 export default {
   name: 'checklist-item',
@@ -27,7 +25,7 @@ export default {
     {
       const { preference } = this.$store.state;
       const regdate = this.regdate.split('-').map(o => Number(o));
-      return convertDateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
+      return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
   },
   mounted()
@@ -97,4 +95,8 @@ export default {
 </script>
 
 <style src="./item.scss" lang="scss"></style>
-<style src="./item-scoped.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+.checklist-item {
+  margin: 30px 0 60px;
+}
+</style>

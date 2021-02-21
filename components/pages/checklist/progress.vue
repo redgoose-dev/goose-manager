@@ -1,12 +1,6 @@
 <template>
 <div class="checklist-progress">
   <div class="checklist-progress__wrap">
-    <button-icon
-      type="button"
-      icon-name="edit"
-      :disabled="!currentDate"
-      class="checklist-progress__edit"
-      @click="onClickEditItem"/>
     <div class="checklist-progress__graph">
       <i
         :class="[ computedComplete && 'complete' ]"
@@ -25,7 +19,7 @@ export default {
     'button-icon': () => import('~/components/button/icon'),
   },
   props: {
-    srl: { type: Number },
+    editUrl: { type: String },
     percent: { type: Number, default: 0 },
     currentDate: { type: Boolean, default: false },
   },
@@ -33,12 +27,6 @@ export default {
     computedComplete()
     {
       return this.percent === 100;
-    },
-  },
-  methods: {
-    onClickEditItem()
-    {
-      this.$router.push(`/checklist/edit/`);
     },
   },
 }

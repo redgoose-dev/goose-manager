@@ -25,24 +25,6 @@ export function checkTime(src, resetTime)
 }
 
 /**
- * convert date format
- *
- * @param {Date} date
- * @param {String} format
- * @return {String}
- */
-export function convertDateFormat(date, format)
-{
-  let mix = format.replace(/\{yyyy\}/, String(date.getFullYear()));
-  mix = mix.replace(/\{mm\}/, twoDigit(date.getMonth() + 1));
-  mix = mix.replace(/\{dd\}/, twoDigit(date.getDate()));
-  mix = mix.replace(/\{month\}/, month[date.getMonth()]);
-  mix = mix.replace(/\{week\}/, weeks[date.getDay()]);
-  mix = mix.replace(/\{weekShort\}/, shortWeeks[date.getDay()]);
-  return mix;
-}
-
-/**
  * counting checkbox in markdown
  *
  * @param {String} str

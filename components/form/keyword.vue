@@ -71,7 +71,7 @@ export default {
     },
     computedSubmitDisabled()
     {
-      return !(this.value?.length > 0) || this.processing;
+      return this.processing;
     }
   },
 }

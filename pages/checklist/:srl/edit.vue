@@ -1,6 +1,6 @@
 <template>
 <article>
-  <page-header module="checklist" title="Checklist / Edit item"/>
+  <page-header module="checklist" title="Checklist / Edit"/>
   <post :datas="datas"/>
 </article>
 </template>

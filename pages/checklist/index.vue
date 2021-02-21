@@ -1,37 +1,43 @@
 <template>
 <article class="checklist">
-  <header class="checklist__header">
-    <h2>{{computedDate}}</h2>
-    <button-icon
-      href="/checklist/list/"
-      icon-name="archive"
-      title="Checklist list"
-      class="checklist__header-button"/>
-  </header>
+  <page-header
+    module="checklist"
+    :title="computedDate"
+    :eng="false"
+    description="오늘날짜의 체크리스트 보드입니다."/>
   <checklist-item
     :srl="srl"
     :current-date="computedCurrentDate"
     v-model="content"
     :regdate="regdate"/>
+  <nav-bottom class="checklist__bottom">
+    <template slot="left">
+      <button-basic href="./list/" icon-left="list">List</button-basic>
+    </template>
+    <template slot="right">
+      <button-basic href="./edit/" color="gray" icon-left="edit">Edit</button-basic>
+    </template>
+  </nav-bottom>
   <checklist-progress
-    :srl="srl"
     :current-date="computedCurrentDate"
     :percent="computedPercent"
-    class="checklist__progress"/>
+    edit-url="/checklist/edit/"/>
 </article>
 </template>
 
 <script>
 import * as messages from '~/libs/messages';
-import { checkTime, convertDateFormat, countingCheckbox, getLastItem } from '~/components/pages/checklist/src';
+import { checkTime, countingCheckbox, getLastItem } from '~/components/pages/checklist/src';
+import { dateFormat } from '~/libs/dates';
 
 export default {
   name: 'page-checklist',
   components: {
     'page-header': () => import('~/components/contents/page-header'),
-    'button-icon': () => import('~/components/button/icon'),
     'checklist-item': () => import('~/components/pages/checklist/item'),
     'checklist-progress': () => import('~/components/pages/checklist/progress'),
+    'nav-bottom': () => import('~/components/contents/nav-bottom'),
+    'button-basic': () => import('~/components/button/basic'),
   },
   async asyncData(context)
   {
@@ -70,10 +76,10 @@ export default {
     {
       const { preference } = this.$store.state;
       const regdate = this.regdate.split('-').map(o => Number(o));
-      return convertDateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
+      return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
   },
 }
 </script>
 
-<style src="./index.scss" lang="scss"></style>
+<style src="./index.scss" lang="scss" scoped></style>

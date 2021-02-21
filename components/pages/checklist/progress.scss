@@ -2,6 +2,9 @@
 
 .checklist-progress {
   --height: 48px;
+  position: sticky;
+  bottom: 60px;
+  margin: 60px auto 40px;
   width: 680px;
   height: var(--height);
   padding: 0 24px;
@@ -15,17 +18,6 @@
     align-items: center;
     height: 100%;
     box-sizing: border-box;
-  }
-  &__edit {
-    --button-icon-bgcolor: none;
-    --button-icon-color: var(--color-key);
-    --button-icon-stroke: 1.5px;
-    --button-icon-size: var(--height);
-    --button-icon-unit-size: 20px;
-    margin: 0 6px 0 -4px;
-    &[disabled] {
-      --button-icon-color: var(--color-blur);
-    }
   }
   &__graph {
     --graph-height: 10px;
@@ -41,9 +33,6 @@
       width: var(--percent, 0%);
       background-color: var(--color-key);
       transition: width 200ms ease-out, background-color 300ms ease-out;
-      &.complete {
-        background-color: var(--color-primary);
-      }
     }
   }
   &__percent {
