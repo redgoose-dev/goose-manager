@@ -19,14 +19,14 @@
     "express-session": "^1.17.1",
     "image-resize": "^1.1.5",
     "marked": "^2.0.0",
-    "nuxt": "^2.14.12",
+    "nuxt": "^2.15.1",
     "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
     "vue-croppie": "^2.0.2",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "fibers": "^5.0.0",
-    "sass": "^1.32.7",
+    "sass": "^1.32.8",
     "sass-loader": "^10.1.1"
   }
 }
