@@ -1,6 +1,10 @@
 <template>
 <article class="checklist-items">
-  <page-header module="checklist" title="Checklist / List"/>
+  <page-header module="checklist" title="Checklist / List">
+    <button-basic href="../" icon-left="check" color="key" size="small">
+      Go to Today
+    </button-basic>
+  </page-header>
   <side-filter-wrapper class="checklist-items__body">
     <template slot="side">
       <side-filter-meta-items :items="[{ label: 'Total', value: computedTotal }]"/>
@@ -78,11 +82,6 @@
         @change="page = $event"/>
     </template>
   </side-filter-wrapper>
-  <nav-bottom>
-    <template slot="right">
-      <button-basic href="../" icon-left="check" color="key">Go to Today</button-basic>
-    </template>
-  </nav-bottom>
 </article>
 </template>
 
@@ -102,7 +101,6 @@ export default {
     'error': () => import('~/components/contents/error'),
     'loading': () => import('~/components/etc/loading'),
     'paginate': () => import('~/components/etc/paginate'),
-    'nav-bottom': () => import('~/components/contents/nav-bottom'),
     'button-basic': () => import('~/components/button/basic'),
     'side-filter-wrapper': () => import('~/components/contents/side-filter/wrapper'),
     'side-filter-meta-items': () => import('~/components/contents/side-filter/meta-items'),
