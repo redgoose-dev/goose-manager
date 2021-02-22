@@ -23,15 +23,21 @@
     border-top-right-radius: 2px;
   }
   &__body {
+    display: block;
     margin: 0;
     outline: none;
     border: 1px solid var(--color-content-line);
+    background-color: var(--color-bg);
     padding: 20px;
     box-sizing: border-box;
     box-shadow: inset 0 2px 20px rgb(0 0 0 / 12%);
+    width: 100%;
+    height: var(--height, auto);
     min-height: 240px;
+    max-height: 480px;
     font-size: 16px;
     line-height: 1.48;
+    color: var(--color-base);
     resize: vertical;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;

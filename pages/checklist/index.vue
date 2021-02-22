@@ -3,10 +3,11 @@
   <page-header module="checklist"/>
   <div class="checklist__body">
     <checklist-item
+      v-model="content"
       :srl="srl"
       :current-date="computedCurrentDate"
-      v-model="content"
-      :regdate="regdate"/>
+      :regdate="regdate"
+      :shortcut-event="true"/>
     <nav-bottom class="checklist__bottom">
       <template slot="left">
         <button-basic href="./list/" icon-left="list">List</button-basic>
@@ -16,16 +17,13 @@
       </template>
     </nav-bottom>
   </div>
-  <checklist-progress
-    :percent="computedPercent"
-    edit-url="/checklist/edit/"/>
+  <checklist-progress :percent="computedPercent"/>
 </article>
 </template>
 
 <script>
 import * as messages from '~/libs/messages';
 import { checkTime, countingCheckbox, getLastItem } from '~/components/pages/checklist/src';
-import { dateFormat } from '~/libs/dates';
 
 export default {
   name: 'page-checklist',

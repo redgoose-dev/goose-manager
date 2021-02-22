@@ -3,11 +3,12 @@
   <page-header module="checklist" title="Checklist / Item"/>
   <div class="checklist__body">
     <checklist-item
+      v-model="content"
       :srl="srl"
       :current-date="computedCurrentDate"
-      v-model="content"
       :regdate="regdate"
-      :percent="computedPercent"/>
+      :percent="computedPercent"
+      :shortcut-event="false"/>
     <nav-bottom class="checklist__bottom">
       <template slot="left">
         <button-basic href="../list/" icon-left="list">List</button-basic>

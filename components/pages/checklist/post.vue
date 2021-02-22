@@ -3,10 +3,14 @@
   <fieldset class="checklist-post__fieldset">
     <legend>Edit item form in checklist</legend>
     <h3 class="checklist-post__date">{{computedDate}}</h3>
-    <form-content-editable
+    <textarea
+      ref="textarea"
       v-model="form.content"
+      placeholder="Please input text."
       class="checklist-post__body"
-      @submit="onSubmit"/>
+      @input="onInputTextarea"
+      @keyup.ctrl.enter="onSubmit"
+      @keydown.meta.enter="onSubmit"/>
   </fieldset>
   <nav-bottom>
     <template slot="left">
@@ -62,7 +66,23 @@ export default {
       return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
   },
+  mounted()
+  {
+    this.$nextTick(() => {
+      this.$textarea = this.$refs.textarea;
+      this.setSize();
+    });
+  },
   methods: {
+    onInputTextarea(e)
+    {
+      this.$textarea.style.setProperty('--height', `auto`);
+      this.setSize();
+    },
+    setSize()
+    {
+      this.$textarea.style.setProperty('--height', `${this.$textarea.scrollHeight}px`);
+    },
     async onSubmit()
     {
       try

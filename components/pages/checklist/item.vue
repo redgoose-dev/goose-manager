@@ -22,6 +22,7 @@ export default {
     regdate: { type: String },
     percent: { type: Number, default: undefined },
     currentDate: { type: Boolean, default: false },
+    shortcutEvent: { type: Boolean, default: false },
   },
   model: {
     prop: 'content',
@@ -39,7 +40,23 @@ export default {
   {
     this.$body = this.$refs['body'];
     this.processingEditContent = false;
-    this.setupContent();
+    this.setupContent().then();
+    if (this.shortcutEvent)
+    {
+      this.metaKey = false;
+      window.on('keydown.checklist-item', e => {
+        if (e.key === 'Control' || e.key === 'Meta') this.metaKey = true;
+        if (this.metaKey && e.key === 'e') this.$router.push(`./edit/`);
+      });
+      window.on('keyup.checklist-item', e => {
+        if (e.key === 'Control' || e.key === 'Meta') this.metaKey = false;
+      });
+    }
+  },
+  beforeDestroy()
+  {
+    window.off('keydown.checklist-item');
+    window.off('keyup.checklist-item');
   },
   methods: {
     async setupContent()
