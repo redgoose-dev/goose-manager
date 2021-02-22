@@ -1,22 +1,24 @@
 <template>
 <article class="checklist">
   <page-header module="checklist" title="Checklist / Item"/>
-  <checklist-item
-    :srl="srl"
-    :current-date="computedCurrentDate"
-    v-model="content"
-    :regdate="regdate"
-    :percent="percent"/>
-  <nav-bottom class="checklist__bottom">
-    <template slot="left">
-      <button-basic href="../list/" icon-left="list">List</button-basic>
-    </template>
-    <template slot="right">
-      <button-basic href="../" icon-left="check" color="key">Go to Today</button-basic>
-      <button-basic href="./edit/" color="gray" icon-left="edit">Edit</button-basic>
-      <button-basic href="./delete/" icon-left="trash">Delete</button-basic>
-    </template>
-  </nav-bottom>
+  <div class="checklist__body">
+    <checklist-item
+      :srl="srl"
+      :current-date="computedCurrentDate"
+      v-model="content"
+      :regdate="regdate"
+      :percent="computedPercent"/>
+    <nav-bottom class="checklist__bottom">
+      <template slot="left">
+        <button-basic href="../list/" icon-left="list">List</button-basic>
+      </template>
+      <template slot="right">
+        <button-basic href="../" icon-left="check" color="key">Go to Today</button-basic>
+        <button-basic href="./edit/" color="gray" icon-left="edit">Edit</button-basic>
+        <button-basic href="./delete/" icon-left="trash">Delete</button-basic>
+      </template>
+    </nav-bottom>
+  </div>
 </article>
 </template>
 
@@ -72,23 +74,22 @@ export default {
       const regdate = this.regdate.split(' ')[0].split('-').map(o => Number(o));
       return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
+    computedPercent()
+    {
+      if (!this.computedCurrentDate) return this.percent;
+      if (!this.content) return 0;
+      const { percent } = countingCheckbox(this.content);
+      return percent;
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .checklist {
-  &__date {
-    margin: 0;
-    padding: 12px 0;
-    background-color: var(--color-content-bg);
-    text-align: center;
-    font-size: 16px;
-    font-weight: 700;
-    strong {
-      font-weight: 700;
-      color: var(--color-primary);
-    }
+  &__body {
+    margin: auto;
+    max-width: 768px;
   }
 }
 </style>

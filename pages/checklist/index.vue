@@ -1,19 +1,21 @@
 <template>
 <article class="checklist">
   <page-header module="checklist"/>
-  <checklist-item
-    :srl="srl"
-    :current-date="computedCurrentDate"
-    v-model="content"
-    :regdate="regdate"/>
-  <nav-bottom class="checklist__bottom">
-    <template slot="left">
-      <button-basic href="./list/" icon-left="list">List</button-basic>
-    </template>
-    <template slot="right">
-      <button-basic href="./edit/" color="key" icon-left="edit">Edit</button-basic>
-    </template>
-  </nav-bottom>
+  <div class="checklist__body">
+    <checklist-item
+      :srl="srl"
+      :current-date="computedCurrentDate"
+      v-model="content"
+      :regdate="regdate"/>
+    <nav-bottom class="checklist__bottom">
+      <template slot="left">
+        <button-basic href="./list/" icon-left="list">List</button-basic>
+      </template>
+      <template slot="right">
+        <button-basic href="./edit/" color="key" icon-left="edit">Edit</button-basic>
+      </template>
+    </nav-bottom>
+  </div>
   <checklist-progress
     :percent="computedPercent"
     edit-url="/checklist/edit/"/>
@@ -73,6 +75,10 @@ export default {
 
 <style lang="scss" scoped>
 .checklist {
+  &__body {
+    margin: auto;
+    max-width: 768px;
+  }
   &__bottom {
     margin-bottom: 30px;
   }
