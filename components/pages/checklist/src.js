@@ -20,7 +20,7 @@ export function checkTime(src, resetTime)
   reset.setMilliseconds(0);
   src = src.split(' ')[0].split('-');
   let srcDate = new Date(Number(src[0]), Number(src[1])-1, Number(src[2]));
-  return ((now.getTime() > reset.getTime()) && compareDate(srcDate, now, '<'))
+  return ((now.getTime() > reset.getTime()) && compareDate(srcDate, now, '<'));
 }
 
 /**

@@ -15,7 +15,7 @@
     </template>
   </nav-bottom>
   <checklist-progress
-    :current-date="computedCurrentDate"
+    :percent="computedPercent"
     edit-url="/checklist/edit/"/>
 </article>
 </template>

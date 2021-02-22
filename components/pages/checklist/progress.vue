@@ -19,9 +19,7 @@ export default {
     'button-icon': () => import('~/components/button/icon'),
   },
   props: {
-    editUrl: { type: String },
     percent: { type: Number, default: 0 },
-    currentDate: { type: Boolean, default: false },
   },
   computed: {
     computedComplete()
