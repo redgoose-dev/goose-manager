@@ -53,7 +53,7 @@ export default {
     target: { type: String },
     title: { type: String },
     disabled: { type: Boolean, default: false },
-    size: { type: String, default: null }, // small,large
+    size: { type: String, default: null }, // mini,small,large
     color: { type: String, default: null }, // key,gray
     inline: { type: Boolean, default: false },
     rotateIcon: { type: Boolean, default: false },

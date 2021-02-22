@@ -1,7 +1,7 @@
 <template>
 <article>
   <header class="page-header">
-    <h2>Button</h2>
+    <h2>Button Basic</h2>
     <p>`button-basic`컴포넌트에 관한 내용을 다룹니다.</p>
   </header>
 
@@ -12,6 +12,9 @@
     </header>
     <div class="example">
       <div class="rg-row rg-row-gutter-h">
+        <div class="rg-col">
+          <button-basic type="button" size="mini" icon-right="power">mini</button-basic>
+        </div>
         <div class="rg-col">
           <button-basic type="button" size="small">small</button-basic>
         </div>
@@ -97,6 +100,33 @@
       <button-basic type="button" :disabled="true">button</button-basic>
     </div>
   </section>
+
+  <hr class="page-section-line">
+
+  <header class="page-header">
+    <h2>Button Icon</h2>
+    <p>`button-icon`컴포넌트에 관한 내용을 다룹니다.</p>
+  </header>
+
+  <section class="page-section">
+    <header>
+      <h3>type</h3>
+      <p>사용 용도에 따른 타입</p>
+    </header>
+    <div class="example">
+      <div class="rg-row rg-row-v-center">
+        <button-icon icon-name="menu"/>
+        <button-icon icon-name="activity" href="/foo/"/>
+        <button-icon icon-name="twitter" href="https://google.com"/>
+      </div>
+    </div>
+    <header>
+      <h3>disabled</h3>
+    </header>
+    <div class="example">
+      <button-icon icon-name="github" :disabled="true"/>
+    </div>
+  </section>
 </article>
 </template>
 
@@ -104,6 +134,7 @@
 export default {
   components: {
     'button-basic': () => import('~/components/button/basic'),
+    'button-icon': () => import('~/components/button/icon'),
   },
 }
 </script>

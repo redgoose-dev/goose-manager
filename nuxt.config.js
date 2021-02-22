@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import session from 'express-session';
-const MYSQLStore = require('express-mysql-session')(session);
 import extendRoutes from './assets/routes';
+const MYSQLStore = require('express-mysql-session')(session);
 
 // get .env
 require('dotenv').config();
@@ -14,6 +14,7 @@ const sessionStore = (env.APP_DB_HOST && env.APP_DB_PORT && env.APP_DB_USERNAME 
 // nuxt config
 module.exports = {
   ssr: true,
+  telemetry: false,
   head: {
     title: env.APP_NAME,
     meta: [
@@ -82,5 +83,4 @@ module.exports = {
     }),
     '~/api',
   ],
-  telemetry: false,
 };

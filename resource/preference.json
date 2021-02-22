@@ -64,6 +64,7 @@
       }
     }
   },
+  "nests": {},
   "articles": {
     "pageCount": 24,
     "pageRange": 10,
@@ -77,5 +78,14 @@
   },
   "files": {
     "pageCount": 24
+  },
+  "checklist": {
+    "reset": "05:00",
+    "format": "{yyyy}-{MM}-{dd} ({week})",
+    "filter": {
+      "year": "",
+      "month": "",
+      "sort": "desc"
+    }
   }
 }

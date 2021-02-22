@@ -7,11 +7,9 @@
 export function formData(obj=null)
 {
 	if (!(obj && typeof obj === 'object')) return null;
-
+	if (!FormData) return obj;
 	let data = new FormData();
-	Object.keys(obj).forEach((o) => {
-		data.append(o, obj[o]);
-	});
+	Object.keys(obj).forEach((o) => data.append(o, obj[o]));
 	return data;
 }
 

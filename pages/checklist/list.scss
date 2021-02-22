@@ -1,0 +1,17 @@
+@import "../../assets/scss/mixins";
+
+.checklist-items {
+  &__body {
+    --side-filter-side-top: var(--size-header-height);
+    --side-filter-side-width: 160px;
+  }
+  &__index {
+    --index-column: 2;
+  }
+
+  @include responsive(desktop-large) {
+    &__index {
+      --index-column: 3;
+    }
+  }
+}

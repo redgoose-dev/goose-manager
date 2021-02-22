@@ -155,10 +155,21 @@ export default {
     computedArticleMetas()
     {
       const { preference } = this.$store.state;
+      let date;
+      switch (preference.articles.displayDateField)
+      {
+        case 'order':
+          date = dates.getFormatDate(this.article.order, false);
+          break;
+        case 'regdate':
+        default:
+          date = dates.getFormatDate(this.article.regdate, false);
+          break;
+      }
       return [
         `Nest: ${this.article.nest_name}`,
         this.article.category_name && `Category: ${this.article.category_name}`,
-        dates.convertDateInService(this.article, preference.articles.displayDateField),
+        date,
       ];
     },
   },

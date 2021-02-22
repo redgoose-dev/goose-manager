@@ -1,7 +1,6 @@
 <template>
 <article>
   <page-header module="files"/>
-
   <error v-if="!!error" :message="error" size="large"/>
   <loading v-else-if="processing"/>
   <error v-else-if="!(index && index.length)" type="empty" size="large"/>

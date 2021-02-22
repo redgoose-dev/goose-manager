@@ -139,7 +139,7 @@ export default {
         if (!res.success) throw res.message;
         this.processing = false;
         // redirect
-        this.$router.push('../');
+        await this.$router.push('../');
       }
       catch(e)
       {

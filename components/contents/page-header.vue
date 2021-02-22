@@ -1,8 +1,13 @@
 <template>
 <header :class="['page-header', eng && 'page-header--eng']">
-  <small v-if="!!prefix" class="page-header__prefix">{{prefix}}</small>
-  <h2 class="page-header__title">{{title || messages.title}}</h2>
-  <p class="page-header__description">{{messages.description}}</p>
+  <div class="page-header__body">
+    <small v-if="!!prefix" class="page-header__prefix">{{prefix}}</small>
+    <h2 class="page-header__title">{{title || messages.title}}</h2>
+    <p class="page-header__description">{{messages.description}}</p>
+  </div>
+  <nav v-if="!!$slots.default" class="page-header__nav">
+    <slot/>
+  </nav>
 </header>
 </template>
 
@@ -53,7 +58,12 @@ export default {
         case 'files':
           return {
             title: this.title || 'Files',
-            description: this.description || '첨부된 파일들의 목록입니다.',
+            description: this.description || '첨부된 파일들을 관리하는 모듈입니다.',
+          };
+        case 'checklist':
+          return {
+            title: this.title || 'Checklist',
+            description: this.description || '체크리스트를 관리하는 모듈입니다.',
           };
         default:
           return {

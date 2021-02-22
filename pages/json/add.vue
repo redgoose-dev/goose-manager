@@ -14,6 +14,6 @@ export default {
   mounted()
   {
     setTimeout(() => this.$refs.post.$refs.form.name.focus(), 200);
-  }
+  },
 }
 </script>

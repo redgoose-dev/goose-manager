@@ -29,12 +29,15 @@ $color-dark-bg-gray-focus: rgba(#fff, .5);
 $color-dark-bg-gray-active: rgba(#000, .25);
 
 // size
+$size-height-mini: 26px;
 $size-height-small: 36px;
 $size-height-basic: 42px;
 $size-height-large: 48px;
+$size-text-mini: 11px;
 $size-text-small: 12px;
 $size-text-basic: 16px;
 $size-text-large: 20px;
+$size-icon-mini: 11px;
 $size-icon-small: 12px;
 $size-icon-basic: 16px;
 $size-icon-large: 22px;
@@ -57,7 +60,6 @@ $size-icon-large: 22px;
   }
   &[type='button'], &[type='submit'], &[type='reset'] {
     width: 100%;
-    cursor: pointer;
     -webkit-appearance: button;
   }
   &[disabled] {
@@ -108,6 +110,17 @@ $size-icon-large: 22px;
     #{$self}__icon {
       width: $size-icon-basic;
       height: $size-icon-basic;
+    }
+    &--size-mini {
+      height: $size-height-mini;
+      padding: 0 12px;
+      #{$self}__label {
+        font-size: $size-text-mini;
+      }
+      #{$self}__icon {
+        width: $size-icon-mini;
+        height: $size-icon-mini;
+      }
     }
     &--size-small {
       height: $size-height-small;

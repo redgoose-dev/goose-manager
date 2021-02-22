@@ -174,6 +174,41 @@
       <p>[checked value: {{radio}}]</p>
     </div>
   </section>
+
+  <section class="page-section">
+    <header>
+      <h3>content-editable</h3>
+      <p>
+        <code>~/components/form/content-editable</code>
+      </p>
+    </header>
+    <div class="example content-editable">
+      <form-content-editable
+        v-model="contentEditable"
+        class="content-editable__body"/>
+      <hr class="content-editable__line">
+      <pre class="content-editable__render">{{contentEditable}}</pre>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <header>
+      <h3>keyword</h3>
+      <p>
+        <code>~/components/form/keyword</code>
+      </p>
+    </header>
+    <div class="example">
+      <form-keyword
+        v-model="keyword"
+        :processing="false"
+        :disabled="false"
+        form-size="large"
+        @clear="keyword = ''"
+        @submit=""/>
+      <p>{{keyword}}</p>
+    </div>
+  </section>
 </article>
 </template>
 
@@ -184,6 +219,8 @@ export default {
     'form-select': () => import('~/components/form/select'),
     'form-checkbox': () => import('~/components/form/checkbox'),
     'form-radio': () => import('~/components/form/radio'),
+    'form-content-editable': () => import('~/components/form/content-editable'),
+    'form-keyword': () => import('~/components/form/keyword'),
     'button-basic': () => import('~/components/button/basic'),
   },
   data()
@@ -198,6 +235,8 @@ export default {
       ],
       checkbox: false,
       radio: 'radio1',
+      contentEditable: 'hello',
+      keyword: 'foo',
     };
   },
 }
@@ -208,6 +247,20 @@ export default {
 .check-items {
   > label > span {
     margin-left: 8px;
+  }
+}
+.content-editable {
+  &__body {
+    box-sizing: border-box;
+    padding: 16px;
+    background: var(--color-content-bg);
+  }
+  &__line {
+    display: block;
+    margin: 16px 0;
+    height: 1px;
+    border: none;
+    background: var(--color-content-line);
   }
 }
 </style>

@@ -1,0 +1,150 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+@import "./local";
+
+.form-keyword {
+  --form-keyword-height: #{$form-text-height-basic};
+  --form-keyword-focus-shadow: 0 0 0 1px var(--color-key);
+  --form-keyword-line-color: #{$local-color-line};
+  --form-keyword-bg-color: #{$local-color-bg};
+  --form-keyword-radius: #{$size-border-radius};
+  --form-keyword-side-padding: #{$form-text-side-padding};
+  --form-keyword-font-size: #{$form-text-size-basic};
+  --form-keyword-icon-size: 18px;
+  --form-keyword-icon-stroke: 1.8px;
+  --form-keyword-disabled-opacity: #{$local-disabled-opacity};
+  --form-keyword-inner-shadow: #{$local-color-shadow};
+
+  display: flex;
+  align-items: center;
+  height: var(--form-keyword-height);
+  border: 1px solid var(--form-keyword-line-color);
+  border-radius: var(--form-keyword-radius);
+  background: var(--form-keyword-bg-color);
+  box-sizing: border-box;
+
+  &__text {
+    flex: 1;
+    margin: 0;
+    height: 100%;
+    input {
+      display: block;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      background: none;
+      outline: none;
+      border: none;
+      transition: box-shadow 120ms ease-out;
+      color: var(--color-base);
+      border-radius: var(--form-keyword-radius);
+      box-shadow: inset 0 2px 3px var(--form-keyword-inner-shadow);
+      &:focus {
+        box-shadow: inset 0 2px 3px var(--form-keyword-inner-shadow), var(--form-keyword-focus-shadow);
+      }
+      &:disabled {
+        opacity: var(--form-keyword-disabled-opacity);
+        cursor: not-allowed;
+      }
+    }
+  }
+  &__clear,
+  &__submit {
+    position: relative;
+    display: block;
+    background: none;
+    border: none;
+    width: var(--form-keyword-height);
+    height: 100%;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    border-radius: var(--form-keyword-radius);
+    transition: box-shadow 120ms ease-out;
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--form-keyword-line-color);
+      opacity: .5;
+    }
+    > svg {
+      width: var(--form-keyword-icon-size);
+      height: var(--form-keyword-icon-size);
+      stroke-width: var(--form-keyword-icon-stroke);
+      margin: 0 auto;
+      transform-origin: 50% 50%;
+      color: var(--color-base);
+    }
+    &:focus {
+      box-shadow: var(--form-keyword-focus-shadow);
+    }
+    &:disabled {
+      cursor: not-allowed;
+      > svg {
+        opacity: .5;
+      }
+    }
+  }
+  &__clear {}
+  &__submit {
+    &.processing {
+      cursor: not-allowed;
+      svg {
+        @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+        @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+        @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+        animation:spin 2s linear infinite;
+      }
+    }
+  }
+
+  // size
+  & {
+    > .form-keyword {
+      &__text {
+        > input {
+          padding: 0 var(--form-keyword-side-padding);
+          font-size: var(--form-keyword-font-size);
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+  &--size {
+    &-mini {
+      --form-keyword-height: #{$form-text-height-mini};
+      --form-keyword-font-size: #{$form-text-size-mini};
+      --form-keyword-side-padding: 12px;
+      --form-keyword-icon-size: 12px;
+      --form-keyword-icon-stroke: 2.4px;
+    }
+    &-small {
+      --form-keyword-height: #{$form-text-height-small};
+      --form-keyword-font-size: #{$form-text-size-small};
+      --form-keyword-icon-size: 16px;
+      --form-keyword-icon-stroke: 1.6px;
+    }
+    &-large {
+      --form-keyword-height: #{$form-text-height-large};
+      --form-keyword-font-size: #{$form-text-size-large};
+      --form-keyword-icon-size: 22px;
+      --form-keyword-icon-stroke: 1.8px;
+    }
+  }
+
+  // disabled
+  &--disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
+  @include dark-mode() {
+    --form-keyword-line-color: #{$local-color-dark-line};
+    --form-keyword-bg-color: #{$local-color-dark-bg};
+  }
+}
