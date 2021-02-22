@@ -58,7 +58,7 @@ export default {
     {
       if (!this.datas) return;
       const { preference } = this.$store.state;
-      const regdate = this.datas.regdate.split('-').map(o => Number(o));
+      const regdate = this.datas.regdate.split(' ')[0].split('-').map(o => Number(o));
       return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
   },

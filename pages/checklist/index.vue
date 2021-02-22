@@ -1,10 +1,6 @@
 <template>
 <article class="checklist">
-  <page-header
-    module="checklist"
-    :title="computedDate"
-    :eng="false"
-    description="오늘날짜의 체크리스트 보드입니다."/>
+  <page-header module="checklist"/>
   <checklist-item
     :srl="srl"
     :current-date="computedCurrentDate"
@@ -15,12 +11,11 @@
       <button-basic href="./list/" icon-left="list">List</button-basic>
     </template>
     <template slot="right">
-      <button-basic href="./edit/" color="gray" icon-left="edit">Edit</button-basic>
+      <button-basic href="./edit/" color="key" icon-left="edit">Edit</button-basic>
     </template>
   </nav-bottom>
   <checklist-progress
     :current-date="computedCurrentDate"
-    :percent="computedPercent"
     edit-url="/checklist/edit/"/>
 </article>
 </template>
@@ -72,14 +67,14 @@ export default {
       const { preference } = this.$store.state;
       return !checkTime(this.regdate, preference.checklist.reset);
     },
-    computedDate()
-    {
-      const { preference } = this.$store.state;
-      const regdate = this.regdate.split('-').map(o => Number(o));
-      return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
-    },
   },
 }
 </script>
 
-<style src="./index.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+.checklist {
+  &__bottom {
+    margin-bottom: 30px;
+  }
+}
+</style>

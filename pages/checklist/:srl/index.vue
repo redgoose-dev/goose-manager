@@ -1,12 +1,12 @@
 <template>
 <article class="checklist">
   <page-header module="checklist" title="Checklist / Item"/>
-  <h3 class="checklist__date">{{computedDate}}</h3>
   <checklist-item
     :srl="srl"
     :current-date="computedCurrentDate"
     v-model="content"
-    :regdate="regdate"/>
+    :regdate="regdate"
+    :percent="percent"/>
   <nav-bottom class="checklist__bottom">
     <template slot="left">
       <button-basic href="../list/" icon-left="list">List</button-basic>
@@ -17,10 +17,6 @@
       <button-basic href="./delete/" icon-left="trash">Delete</button-basic>
     </template>
   </nav-bottom>
-  <checklist-progress
-    :current-date="computedCurrentDate"
-    :percent="computedPercent"
-    :edit-url="`/checklist/${srl}/edit/`"/>
 </article>
 </template>
 
@@ -34,7 +30,6 @@ export default {
   components: {
     'page-header': () => import('~/components/contents/page-header'),
     'checklist-item': () => import('~/components/pages/checklist/item'),
-    'checklist-progress': () => import('~/components/pages/checklist/progress'),
     'nav-bottom': () => import('~/components/contents/nav-bottom'),
     'button-basic': () => import('~/components/button/basic'),
   },
@@ -54,6 +49,7 @@ export default {
         srl,
         content: res.data.content,
         regdate: res.data.regdate,
+        percent: Number(res.data.percent),
       };
     }
     catch(e)
@@ -65,12 +61,6 @@ export default {
     }
   },
   computed: {
-    computedPercent()
-    {
-      if (!this.content) return 0;
-      const { percent } = countingCheckbox(this.content);
-      return percent;
-    },
     computedCurrentDate()
     {
       const { preference } = this.$store.state;
@@ -79,7 +69,7 @@ export default {
     computedDate()
     {
       const { preference } = this.$store.state;
-      const regdate = this.regdate.split('-').map(o => Number(o));
+      const regdate = this.regdate.split(' ')[0].split('-').map(o => Number(o));
       return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
   },
@@ -95,6 +85,10 @@ export default {
     text-align: center;
     font-size: 16px;
     font-weight: 700;
+    strong {
+      font-weight: 700;
+      color: var(--color-primary);
+    }
   }
 }
 </style>

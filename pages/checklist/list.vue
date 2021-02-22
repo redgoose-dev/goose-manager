@@ -21,8 +21,23 @@
           :options="tree.month"
           @change="onChangeFilter"/>
       </side-filter-section>
+      <side-filter-section label="Sort" name="filter_sort">
+        <form-select
+          id="filter_sort"
+          name="filter_sort"
+          v-model="filter.sort"
+          size="mini"
+          :placeholder="null"
+          :options="[
+            { label: 'A to Z', value: 'asc' },
+            { label: 'Z to A', value: 'desc' },
+          ]"
+          @change="onChangeFilter"/>
+      </side-filter-section>
       <side-filter-section label="Keyword" name="filter_keyword">
         <form-keyword
+          name="filter_keyword"
+          id="filter_keyword"
           v-model="keyword"
           form-size="mini"
           placeholder="Keyword"
@@ -49,7 +64,7 @@
           :use-image="false"/>
       </index-wrap>
       <paginate
-        v-if="!!total && computedSize > 0"
+        v-if="!!total && !(filter.year && filter.month)"
         type="nuxt-link"
         v-model="page"
         url="./"
@@ -77,12 +92,6 @@ import * as text from '~/libs/text';
 import * as number from '~/libs/number';
 import * as messages from '~/libs/messages';
 import { dateFormat, month } from '~/libs/dates';
-
-const defaultParamsGetItems = {
-  field: 'srl,percent,regdate',
-  order: 'srl',
-  sort: 'desc',
-};
 
 export default {
   name: 'page-checklist-list',
@@ -113,6 +122,7 @@ export default {
       filter: {
         year: preferenceFilter.year,
         month: preferenceFilter.month,
+        sort: preferenceFilter.sort,
       },
       keyword: $route.query.q || '',
       processing: false,
@@ -126,7 +136,7 @@ export default {
     {
       const { preference } = this.$store.state;
       return this.items.map(item => {
-        const regdate = item.regdate.split('-').map(o => Number(o));
+        const regdate = item.regdate.split(' ')[0].split('-').map(o => Number(o));
         const date = new Date(regdate[0], regdate[1] - 1, regdate[2]);
         return {
           ...item,
@@ -140,7 +150,7 @@ export default {
     },
     computedSize()
     {
-      return (this.filter.year && this.filter.month) ? 0 : this.size;
+      return (this.filter.year && this.filter.month) ? 40 : this.size;
     },
   },
   watch: {
@@ -170,9 +180,11 @@ export default {
       try
       {
         let params = {
-          ...defaultParamsGetItems,
+          field: 'srl,percent,regdate',
+          order: 'srl',
           size: this.computedSize,
           page: this.page,
+          sort: this.filter.sort,
         };
         if (this.filter.year && this.filter.month)
         {

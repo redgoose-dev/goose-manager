@@ -19,6 +19,8 @@
     font-weight: 600;
     line-height: 1.15;
     background-color: var(--color-content-bg);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
   }
   &__body {
     margin: 0;
@@ -31,7 +33,8 @@
     font-size: 16px;
     line-height: 1.48;
     resize: vertical;
-    border-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
     &:focus {
       box-shadow: inset 0 2px 20px rgb(0 0 0 / 16%), 0 0 0 1px var(--color-key);
     }

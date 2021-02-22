@@ -1,5 +1,11 @@
 <template>
-<div ref="body" class="checklist-item redgoose-body redgoose-body--dark"/>
+<div class="checklist-item">
+  <p class="checklist-item__date">
+    {{computedDate}}
+    <template v-if="percent !== undefined"> / Completed: <strong>{{percent}}%</strong></template>
+  </p>
+  <div ref="body" class="checklist-item__body redgoose-body redgoose-body--dark"/>
+</div>
 </template>
 
 <script>
@@ -14,6 +20,7 @@ export default {
     srl: { type: Number },
     content: { type: String },
     regdate: { type: String },
+    percent: { type: Number, default: undefined },
     currentDate: { type: Boolean, default: false },
   },
   model: {
@@ -24,7 +31,7 @@ export default {
     computedDate()
     {
       const { preference } = this.$store.state;
-      const regdate = this.regdate.split('-').map(o => Number(o));
+      const regdate = this.regdate.split(' ')[0].split('-').map(o => Number(o));
       return dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.format);
     },
   },
@@ -97,6 +104,8 @@ export default {
 <style src="./item.scss" lang="scss"></style>
 <style lang="scss" scoped>
 .checklist-item {
-  margin: 30px 0 60px;
+  &__body {
+    margin: 30px 0 60px;
+  }
 }
 </style>

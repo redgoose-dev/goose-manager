@@ -8,4 +8,10 @@
   &__index {
     --index-column: 2;
   }
+
+  @include responsive(desktop-large) {
+    &__index {
+      --index-column: 3;
+    }
+  }
 }
