@@ -8,45 +8,22 @@ export const shortWeeks = [ '일', '월', '화', '수', '목', '금', '토' ];
  * get format date
  * make `year-month-day hour:minutes:second`
  *
- * @param {String} date
- * @param {Boolean} useTime
+ * @param {string} date
+ * @param {boolean} useTime
+ * @return {string}
  */
 export function getFormatDate(date=null, useTime=true)
 {
-	const dateSource = date.split(' ');
-	if (useTime)
-	{
-		return `${dateSource[0]} ${dateSource[1]}`;
-	}
-	else
-	{
-		return dateSource[0];
-	}
-}
-
-/**
- * convert date format
- * make `year-month-day hour:minutes:second` type Date
- * TODO: `dateFormat`함수로 교체하여 리팩토링 하기
- *
- * @param {Date} date
- * @param {Boolean} time
- * @return {String}
- */
-export function convertDateFormat(date=null, time=true)
-{
-  date = date || new Date();
-  let str = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
-  str = str.substr(0, 19).split('T');
-  return time ? `${str[0]} ${str[1]}` : str[0];
+	const src = date.split(' ');
+	return useTime ? `${src[0]} ${src[1]}` : src[0];
 }
 
 /**
  * convert date format
  *
  * @param {Date} date
- * @param {String} format `{yyyy}-{mm}-{dd} / {month},{week},{weekShort} / {hh}:{mm}:{ss}`
- * @return {String}
+ * @param {string} format `{yyyy}-{mm}-{dd} / {month},{week},{weekShort} / {hh}:{mm}:{ss}`
+ * @return {string}
  */
 export function dateFormat(date, format)
 {
@@ -77,32 +54,12 @@ export function checkOrderDate(str='')
 }
 
 /**
- * convert date in service
- * 서비스 전용 날짜 변환툴 (regdate,order 필드를 선택하여 출력할 수 있도록 도와준다.)
- *
- * @param {object} item
- * @param {string} field
- * @return {string}
- */
-export function convertDateInService(item, field)
-{
-  switch (field)
-  {
-    case 'order':
-      return getFormatDate(item.order, false);
-    case 'regdate':
-    default:
-      return getFormatDate(item.regdate, false);
-  }
-}
-
-/**
  * compare date
  *
  * @param {Date} date1
  * @param {Date} date2
- * @param {String} compare
- * @return {Boolean}
+ * @param {string} compare
+ * @return {boolean}
  * @throws
  * */
 export function compareDate(date1, date2, compare = '<')
@@ -120,20 +77,4 @@ export function compareDate(date1, date2, compare = '<')
     default:
       return d1 === d2;
   }
-}
-
-/**
- * check today
- *
- * @param {Date} date
- * @return {boolean}
- */
-export function checkToday(date)
-{
-  const today = new Date();
-  return (
-    date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() === today.getFullYear()
-  );
 }

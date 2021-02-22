@@ -1,5 +1,4 @@
-import { compareDate, month, weeks, shortWeeks } from '~/libs/dates';
-import { twoDigit } from '~/libs/text';
+import { compareDate } from '~/libs/dates';
 
 export const defaultContent = `- [ ] content body\n- [ ] content body\n\n`;
 

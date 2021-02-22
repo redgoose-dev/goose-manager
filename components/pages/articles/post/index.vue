@@ -148,7 +148,7 @@
 import { formData } from '~/libs/forms';
 import * as messages from '~/libs/messages';
 import * as text from '~/libs/text';
-import * as dates from '~/libs/dates';
+import { checkOrderDate, dateFormat } from '~/libs/dates';
 import * as fieldset from '~/components/form/fieldset';
 
 export default {
@@ -185,7 +185,6 @@ export default {
     const { datas, nest_srl } = this;
     const { nest, article } = datas;
     return {
-      processing: false,
       forms: {
         app_srl: nest ? parseInt(nest.app_srl) : null,
         nest_srl: article ? parseInt(article.nest_srl) : nest_srl,
@@ -201,7 +200,7 @@ export default {
         },
         json: this.getJSON(),
         order: {
-          value: article ? article.order : dates.convertDateFormat(null, true),
+          value: article ? article.order : dateFormat(new Date(), '{yyyy}-{MM}-{dd}'),
           error: '',
         },
       },
@@ -215,6 +214,7 @@ export default {
       thumbnailImage: null,
       thumbnailPath: (article && article.json && article.json.thumbnail) ? article.json.thumbnail.path : '',
       thumbnailSetting: (article && article.json && article.json.thumbnail) ? article.json.thumbnail : { zoom: .25 },
+      processing: false,
     };
   },
   methods: {
@@ -293,7 +293,7 @@ export default {
      */
     onChangeOrder()
     {
-      if (!dates.checkOrderDate(this.forms.order.value))
+      if (!checkOrderDate(this.forms.order.value))
       {
         this.forms.order.error = messages.msg.errorOrderFormat;
       }
@@ -338,7 +338,7 @@ export default {
       let json = Object.assign({}, this.forms.json);
 
       // check order
-      if (!dates.checkOrderDate(this.forms.order.value))
+      if (!checkOrderDate(this.forms.order.value))
       {
         this.forms.order.error = messages.msg.errorOrderFormat;
         throw new Error('Error check order date');
