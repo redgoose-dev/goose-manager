@@ -82,6 +82,9 @@
   "checklist": {
     "reset": "05:00",
     "format": "{yyyy}-{MM}-{dd} ({week})",
+    "range": {
+      "year": [ 2020, 2030 ]
+    },
     "filter": {
       "year": "",
       "month": "",

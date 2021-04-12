@@ -52,7 +52,9 @@
     </template>
     <template slot="body">
       <loading v-if="processing"/>
-      <error v-else-if="!!error" :message="error" size="large"/>
+      <div v-else-if="!!error">
+        <error :message="error" size="large"/>
+      </div>
       <index-wrap v-else type="grid" class="checklist-items__index">
         <item-card
           v-for="(item,key) in computedItems"
@@ -159,9 +161,12 @@ export default {
   },
   created()
   {
+    const { preference } = this.$store.state;
+    let rangeYear = preference.checklist?.range?.year;
+    if (!rangeYear) rangeYear = [ 2020, 2030 ];
     this.tree = {
       month: month.map((o, k) => ({ label: o, value: k + 1 })),
-      year: object.range(2020, 2030, 1).map(o => ({ label: o, value: o })),
+      year: object.range(rangeYear[0], rangeYear[1], 1).map(o => ({ label: o, value: o })),
     };
   },
   mounted()
@@ -208,9 +213,9 @@ export default {
     {
       // update preference
       let params = [{ key: 'checklist.filter', value: this.filter }];
-      this.$store.dispatch('updatePreference', params).then();
+      await this.$store.dispatch('updatePreference', params);
       // update items
-      this.updateItems().then();
+      await this.updateItems();
     },
     onSubmitKeywordInFilter(keyword)
     {

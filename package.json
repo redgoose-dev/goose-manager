@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "private": false,
   "license": "MIT",
   "scripts": {
@@ -18,8 +18,8 @@
     "express-mysql-session": "^2.1.5",
     "express-session": "^1.17.1",
     "image-resize": "^1.1.5",
-    "marked": "^2.0.0",
-    "nuxt": "^2.15.1",
+    "marked": "^2.0.3",
+    "nuxt": "^2.15.4",
     "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
     "vue-croppie": "^2.0.2",
     "vuedraggable": "^2.24.3"

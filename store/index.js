@@ -94,3 +94,6 @@ export const mutations = {
     state.preference = value;
   },
 };
+
+// strict
+export const strict = false;
