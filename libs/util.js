@@ -144,7 +144,7 @@ export function initCustomEvent()
     },
     off(event)
     {
-      if (!this.namespaces[event]) return;
+      if (!(this.namespaces && this.namespaces[event])) return;
       this.removeEventListener(event.split('.')[0], this.namespaces[event]);
       delete this.namespaces[event];
       return this;

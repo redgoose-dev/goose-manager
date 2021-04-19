@@ -2,7 +2,7 @@
 <div class="checklist-item">
   <p class="checklist-item__date">
     {{computedDate}}
-    <template v-if="percent !== undefined"> / Completed: <strong>{{percent}}%</strong></template>
+    <template v-if="percent !== undefined"> / <strong>{{percent}}%</strong></template>
   </p>
   <div ref="body" class="checklist-item__body redgoose-body redgoose-body--dark"/>
 </div>

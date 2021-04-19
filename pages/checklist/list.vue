@@ -62,12 +62,20 @@
           :title="item.title"
           :href="`/checklist/${item.srl}/`"
           :alt="item.title"
-          :metas="[ `Progress: ${item.percent}%` ]"
           :navs="[
             { label: 'Edit', link: `/checklist/${item.srl}/edit/` },
             { label: 'Delete', link: `/checklist/${item.srl}/delete/` },
           ]"
-          :use-image="false"/>
+          :use-image="false">
+          <p slot="after" class="percent">
+            <graph-donut
+              :percent="Number(item.percent)"
+              :radius="26"
+              :stroke="6"
+              class="percent__graph"/>
+            <em class="percent__value">{{item.percent}}%</em>
+          </p>
+        </item-card>
       </index-wrap>
       <paginate
         v-if="!!total && !(filter.year && filter.month)"
@@ -103,6 +111,7 @@ export default {
     'error': () => import('~/components/contents/error'),
     'loading': () => import('~/components/etc/loading'),
     'paginate': () => import('~/components/etc/paginate'),
+    'graph-donut': () => import('~/components/etc/graph-donut'),
     'button-basic': () => import('~/components/button/basic'),
     'side-filter-wrapper': () => import('~/components/contents/side-filter/wrapper'),
     'side-filter-meta-items': () => import('~/components/contents/side-filter/meta-items'),
