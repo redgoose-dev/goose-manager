@@ -168,8 +168,8 @@ export default {
       const $body = this.$refs.articleBody;
       // set grid images
       const $gridImages = $body.querySelectorAll('img');
-      $gridImages.forEach((o,k) => {
-        o.addEventListener('click', (e) => {
+      $gridImages.forEach(o => {
+        o.addEventListener('click', e => {
           this.previewImage = e.target.src;
         });
       });

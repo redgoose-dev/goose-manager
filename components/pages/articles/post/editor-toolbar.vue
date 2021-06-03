@@ -34,18 +34,12 @@
           <div class="dropdown__children">
             <ul>
               <li>
-                <button
-                  type="button"
-                  data-key="insert-grid-group"
-                  @click="onClickItem">
+                <button type="button" data-key="insert-grid-group" @click="onClickItem">
                   Grid group
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  data-key="insert-grid-item"
-                  @click="onClickItem">
+                <button type="button" data-key="insert-grid-item" @click="onClickItem">
                   Grid image
                 </button>
               </li>
