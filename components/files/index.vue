@@ -139,7 +139,7 @@ export default {
           this.$emit('close');
           break;
         case 'insert-text':
-          this.$emit('insert', value.map((o) => {
+          this.$emit('insert', value.map(o => {
             if (/^image/.test(o.type))
             {
               return `![${o.name}](${this.$store.state.url_api}/${o.path})`;
@@ -151,7 +151,7 @@ export default {
           }));
           break;
         case 'insert-html':
-          this.$emit('insert', value.map((o) => {
+          this.$emit('insert', value.map(o => {
             if (/^image/.test(o.type))
             {
               return `<p><img src="${this.$store.state.url_api}/${o.path}" alt="${o.name}"/></p>`;
@@ -161,6 +161,9 @@ export default {
               return `<p><a href="${this.$store.state.url_api}/${o.path}" target="_blank">${o.name}</a></p>`;
             }
           }));
+          break;
+        case 'insert-address':
+          this.$emit('insert', value.map(o => (`${this.$store.state.url_api}/${o.path}`)));
           break;
         case 'update-thumbnail-editor':
           this.$emit('update-thumbnail', value, value2);

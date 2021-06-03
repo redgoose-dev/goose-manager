@@ -138,17 +138,18 @@
           <div class="footer-nav-dropdown__context">
             <ul>
               <li>
-                <button
-                  type="button"
-                  @click.stop="onClickInsertText">
-                  Insert text
+                <button type="button" @click.stop="onClickInsertAddress">
+                  Insert address
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  @click.stop="onClickInsertHtml">
+                <button type="button" @click.stop="onClickInsertHtml">
                   Insert html
+                </button>
+              </li>
+              <li>
+                <button type="button" @click.stop="onClickInsertText">
+                  Insert text
                 </button>
               </li>
             </ul>
@@ -380,6 +381,9 @@ export default {
         case 'insert-item-html':
           this.$emit('custom-event', 'insert-html', [e]);
           break;
+        case 'insert-item-address':
+          this.$emit('custom-event', 'insert-address', [e]);
+          break;
       }
     },
     // 이미지 선택이 변했을때
@@ -505,10 +509,12 @@ export default {
     // 이미지 컨텍스트 메뉴 설정
     setContextMenuInThumbnail(item)
     {
-      let items = [];
-      items.push({ label: '새창으로 열기', click: (e) => this.onClickContextMenu('open-window', e) });
-      items.push({ label: '에디터로 삽입하기', click: (e) => this.onClickContextMenu('insert-item', item) });
-      items.push({ label: '에디터로 삽입하기 (html)', click: (e) => this.onClickContextMenu('insert-item-html', item) });
+      let items = [
+        { label: '새창으로 열기', click: e => this.onClickContextMenu('open-window', e) },
+        { label: '삽입하기', click: () => this.onClickContextMenu('insert-item', item) },
+        { label: 'html 삽입하기', click: () => this.onClickContextMenu('insert-item-html', item) },
+        { label: '주소 삽입하기', click: () => this.onClickContextMenu('insert-item-address', item) },
+      ];
       if (this.module === 'articles' && /^image/.test(item.type))
       {
         items.push({ label: '썸네일 이미지로 설정', click: (e) => this.onClickContextMenu('make-thumbnail', e) });
@@ -524,6 +530,10 @@ export default {
     onClickInsertHtml()
     {
       this.$emit('custom-event', 'insert-html', Object.assign([], this.selected));
+    },
+    onClickInsertAddress()
+    {
+      this.$emit('custom-event', 'insert-address', Object.assign([], this.selected));
     },
     // 썸네일 에디터 닫기
     onCloseThumbnailEditor()

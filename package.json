@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "private": false,
   "license": "MIT",
   "scripts": {
@@ -11,22 +11,21 @@
     "build-check": "./node_modules/.bin/nuxt build --analyze"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/axios": "^5.13.5",
     "@nuxtjs/dotenv": "^1.4.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "express-mysql-session": "^2.1.5",
-    "express-session": "^1.17.1",
+    "express-mysql-session": "^2.1.6",
+    "express-session": "^1.17.2",
     "image-resize": "^1.1.5",
-    "marked": "^2.0.3",
-    "nuxt": "^2.15.4",
+    "marked": "^2.0.7",
+    "nuxt": "^2.15.6",
     "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
     "vue-croppie": "^2.0.2",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
-    "fibers": "^5.0.0",
-    "sass": "^1.32.8",
-    "sass-loader": "^10.1.1"
+    "sass": "~1.32.8",
+    "sass-loader": "^10.2.0"
   }
 }

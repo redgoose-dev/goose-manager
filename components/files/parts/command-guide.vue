@@ -75,9 +75,8 @@ export default {
   h2 {
     margin: 0;
     font-family: $font-eng-circular;
-    font-size: 28px;
+    font-size: 24px;
     letter-spacing: -1px;
-    text-transform: uppercase;
     line-height: 1;
   }
   ul {
@@ -108,14 +107,14 @@ export default {
       color: #fff;
       line-height: 1;
       font-weight: 600;
-      font-family: $font-console;
+      font-family: var(--font-eng);
     }
     .shortcut {
       color: #000;
-      font-size: 15px;
+      font-size: 14px;
     }
     .description {
-      font-size: 13px;
+      font-size: 12px;
     }
   }
   nav {

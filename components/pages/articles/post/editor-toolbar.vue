@@ -3,25 +3,29 @@
   <div class="toolbar__wrap">
     <div class="toolbar__side">
       <div class="toolbar__group">
-        <div class="toolbar__group-item">
-          <button
-            type="button"
-            title="space"
-            data-key="insert-space"
-            class="toolbar__button"
-            @click="onClickItem">
-            <icon name="git-commit"/>
-          </button>
-        </div>
-        <div class="toolbar__group-item">
-          <button
-            type="button"
-            title="iframe"
-            data-key="insert-iframe"
-            class="toolbar__button on"
-            @click="onClickItem">
-            <icon name="video"/>
-          </button>
+        <div class="toolbar__group-item dropdown">
+          <div title="Add elements" class="toolbar__button">
+            <icon name="box"/>
+          </div>
+          <div class="dropdown__children">
+            <ul>
+              <li>
+                <button type="button" data-key="insert-space" @click="onClickItem">
+                  Empty space
+                </button>
+              </li>
+              <li>
+                <button type="button" data-key="insert-iframe" @click="onClickItem">
+                  Iframe
+                </button>
+              </li>
+              <li>
+                <button type="button" data-key="insert-picture" @click="onClickItem">
+                  Picture
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="toolbar__group-item dropdown">
           <div title="grid image" class="toolbar__button">

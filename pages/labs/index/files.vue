@@ -108,9 +108,8 @@ export default {
     }
   },
   methods: {
-    onInsert(paths)
+    onInsert()
     {
-      console.log('onInsert', paths);
       this.visibleFiles = false;
     },
     async onUpdateThumbnail(set, image)

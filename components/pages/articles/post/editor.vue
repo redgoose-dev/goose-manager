@@ -136,6 +136,9 @@ export default {
         case 'insert-grid-item':
           this.$emit('insert-text', `<figure class="grid-item" data-mobile="3" data-tablet="" data-desktop="" data-desktop-large="">\n\n\n\n</figure>\n`, 97);
           break;
+        case 'insert-picture':
+          this.$emit('insert-text', `<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>`);
+          break;
         case 'open-file-manager':
           this.$emit('open-files');
           break;

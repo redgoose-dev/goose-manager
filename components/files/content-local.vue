@@ -67,17 +67,18 @@
         <div class="footer-nav-dropdown__context">
           <ul>
             <li>
-              <button
-                type="button"
-                @click.stop="onClickInsertText">
-                Insert text
+              <button type="button" @click.stop="onClickInsertAddress">
+                Insert address
               </button>
             </li>
             <li>
-              <button
-                type="button"
-                @click.stop="onClickInsertHtml">
+              <button type="button" @click.stop="onClickInsertHtml">
                 Insert html
+              </button>
+            </li>
+            <li>
+              <button type="button" @click.stop="onClickInsertText">
+                Insert text
               </button>
             </li>
           </ul>
@@ -243,7 +244,6 @@ export default {
         catch(err)
         {
           this.$toast.add({ message: err.message, color: 'error' });
-          return;
         }
       };
       if (!(arr && arr.length > 0)) return;
@@ -272,6 +272,9 @@ export default {
         case 'insert-item-html':
           this.$emit('custom-event', 'insert-html', [e]);
           break;
+        case 'insert-item-address':
+          this.$emit('custom-event', 'insert-address', [e]);
+          break;
       }
     },
     onChangeSelected(arr)
@@ -286,9 +289,10 @@ export default {
     setContextMenuInThumbnail(item)
     {
       return [
-        { label: '새창으로 열기', click: (e) => this.onClickContextMenu('open-window', e) },
-        { label: '에디터로 삽입하기', click: (e) => this.onClickContextMenu('insert-item', item) },
-        { label: '에디터로 삽입하기 (html)', click: (e) => this.onClickContextMenu('insert-item-html', item) },
+        { label: '새창으로 열기', click: e => this.onClickContextMenu('open-window', e) },
+        { label: '삽입하기', click: () => this.onClickContextMenu('insert-item', item) },
+        { label: 'html 삽입하기', click: () => this.onClickContextMenu('insert-item-html', item) },
+        { label: '주소 삽입하기', click: () => this.onClickContextMenu('insert-item-address', item) },
         { label: '삭제하기', color: 'red', click: (e) => this.onClickContextMenu('remove', e) },
       ];
     },
@@ -300,6 +304,10 @@ export default {
     onClickInsertHtml()
     {
       this.$emit('custom-event', 'insert-html', Object.assign([], this.selected));
+    },
+    onClickInsertAddress()
+    {
+      this.$emit('custom-event', 'insert-address', Object.assign([], this.selected));
     },
     initDragAndDropEvent(remove)
     {

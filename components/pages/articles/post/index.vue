@@ -309,7 +309,6 @@ export default {
      */
     onInsertFromFiles(paths)
     {
-      console.log(paths.join('\n\n') + `\n`);
       this.insertTextToEditor(paths.join('\n\n') + `\n`);
       this.showFiles = false;
     },
@@ -426,9 +425,13 @@ export default {
         this.processing = false;
         if (e.message === messages.error.service) e = null;
         this.$toast.add({
-          message: (e.message && typeof e.message === 'string') ? e : `Failed save article.`,
+          message: `Failed save article.`,
           color: 'error',
         });
+        if (this.$store.state.preference.debug.service)
+        {
+          console.error(e.message)
+        }
       }
     },
     /**
@@ -465,6 +468,10 @@ export default {
           message: `Failed ${this.type} article.`,
           color: 'error',
         });
+        if (this.$store.state.preference.debug.service)
+        {
+          console.error(e.message)
+        }
       }
     },
     submit()
