@@ -5,11 +5,11 @@
     type && `image-thumbnail--type-${type}`,
     mode && `image-thumbnail--mode-${mode}`,
   ]">
-  <a v-if="computedLinkType === 'a'" :href="href" :target="target">
+  <a v-if="computedLinkType === 'a'" :href="href" :target="target" tabindex="-1">
     <img v-if="!!src" :src="src" :alt="alt" class="image-thumbnail__image"/>
     <image-empty v-else class="image-thumbnail__empty"/>
   </a>
-  <nuxt-link v-else-if="computedLinkType === 'router'" :to="href">
+  <nuxt-link v-else-if="computedLinkType === 'router'" :to="href" tabindex="-1">
     <img v-if="!!src" :src="src" :alt="alt" class="image-thumbnail__image"/>
     <image-empty v-else class="image-thumbnail__empty"/>
   </nuxt-link>

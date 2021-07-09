@@ -12,7 +12,8 @@
               :is="getNavigationElementName(item)"
               :to="item.link"
               :href="item.href"
-              :target="item.target">
+              :target="item.target"
+              tabindex="0">
               <em>{{item.name}}</em>
               <icon v-if="item.icon" :name="item.icon"/>
               <icon v-if="item.children && item.children.length" name="chevron-down" class="flip-y dropdown"/>
@@ -24,7 +25,8 @@
                     :is="getNavigationElementName(item2)"
                     :to="item2.link"
                     :href="item2.href"
-                    :target="item2.target">
+                    :target="item2.target"
+                    tabindex="0">
                     <em>{{item2.name}}</em>
                     <icon v-if="item2.icon" :name="item2.icon"/>
                     <icon v-if="item2.children && item2.children.length" name="chevron-right" class="dropdown"/>
@@ -36,7 +38,8 @@
                           :is="getNavigationElementName(item3)"
                           :to="item3.link"
                           :href="item3.href"
-                          :target="item3.target">
+                          :target="item3.target"
+                          tabindex="0">
                           <em>{{item3.name}}</em>
                           <icon v-if="item3.icon" :name="item3.icon"/>
                         </component>
@@ -52,7 +55,7 @@
       <nav v-if="!!user" class="header-nav">
         <ul class="navigation navigation--side">
           <li>
-            <span>
+            <span tabindex="0">
               <em>{{user.email}}</em>
               <icon name="chevron-down" class="flip-y"/>
             </span>

@@ -112,6 +112,7 @@ main > h1 {
     &.flip-y {
       transition: transform 250ms ease-out;
       transform-origin: 50% 50%;
+      will-change: transform;
     }
     &.dropdown {
       order: 5;
@@ -131,7 +132,6 @@ main > h1 {
   }
   a {
     text-decoration: none;
-    outline: none;
     cursor: pointer;
     &.nuxt-active {
       background-color: rgba($color-key, .75);
@@ -149,8 +149,8 @@ main > h1 {
     position: relative;
     transition: background-color 200ms ease-out;
     > div {
-      display: none;
       position: relative;
+      pointer-events: none;
       > ul {
         margin: 0;
         padding: 0;
@@ -158,6 +158,8 @@ main > h1 {
         position: absolute;
         min-width: 150px;
         box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 200ms ease-out;
       }
     }
     &:focus-within, &:hover {
@@ -169,7 +171,15 @@ main > h1 {
         }
       }
       > div {
-        display: block;
+        pointer-events: auto;
+        > ul {
+          opacity: 1;
+          > li {
+            > a, > span {
+              display: flex;
+            }
+          }
+        }
       }
     }
   }
