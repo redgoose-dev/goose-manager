@@ -150,7 +150,7 @@ main > h1 {
     transition: background-color 200ms ease-out;
     > div {
       position: relative;
-      pointer-events: none;
+      display: none;
       > ul {
         margin: 0;
         padding: 0;
@@ -158,8 +158,6 @@ main > h1 {
         position: absolute;
         min-width: 150px;
         box-sizing: border-box;
-        opacity: 0;
-        transition: opacity 200ms ease-out;
       }
     }
     &:focus-within, &:hover {
@@ -171,15 +169,7 @@ main > h1 {
         }
       }
       > div {
-        pointer-events: auto;
-        > ul {
-          opacity: 1;
-          > li {
-            > a, > span {
-              display: flex;
-            }
-          }
-        }
+        display: block;
       }
     }
   }
