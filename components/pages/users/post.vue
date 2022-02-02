@@ -141,7 +141,7 @@ export default {
           error: null,
         },
         admin: {
-          value: !!(this.datas && parseInt(this.datas.admin) === 2),
+          value: !!(this.datas && Number(this.datas.admin) === 1),
           error: null,
         },
       },
@@ -158,7 +158,7 @@ export default {
     },
   },
   methods: {
-    async onSubmit(e)
+    async onSubmit()
     {
       this.processing = true;
       if (this.type === 'add')
@@ -178,7 +178,7 @@ export default {
           name: this.forms.name.value,
           password: this.forms.password.value,
           password2: this.forms.password2.value,
-          admin: !!this.forms.admin.value ? 2 : 1,
+          admin: !!this.forms.admin.value ? 1 : 0,
         };
         if (this.type === 'edit')
         {

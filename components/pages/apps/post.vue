@@ -133,7 +133,7 @@ export default {
         if (!res.success) throw res.message;
         this.processing = false;
         // redirect
-        this.$router.push('/apps/');
+        await this.$router.push('/apps/');
       }
       catch(e)
       {

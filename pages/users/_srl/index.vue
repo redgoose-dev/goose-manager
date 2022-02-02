@@ -17,7 +17,7 @@
     </field>
     <field>
       <strong slot="label">Admin</strong>
-      <template slot="body">{{parseInt(user.admin) === 2 ? 'Yes' : 'No'}}</template>
+      <template slot="body">{{parseInt(user.admin) === 1 ? 'Yes' : 'No'}}</template>
     </field>
     <field>
       <strong slot="label">Register date</strong>

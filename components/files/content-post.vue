@@ -287,34 +287,34 @@ export default {
             target_srl: this.target_srl,
             module: this.module,
             check: '1',
-            files: files[n],
+            file: files[n],
           }),
           {
             headers: { 'Content-Type': 'multipart/form-data' },
             onUploadProgress(progressEvent)
             {
-              self.index[idx].percent = Math.round((progressEvent.loaded/progressEvent.total) * 100);
+              self.index[idx].percent = Math.round((progressEvent.loaded / progressEvent.total) * 100);
             },
           });
         if (!res.success) throw new Error(res.message);
-        if (res.data[0].status === 'error')
+        if (res.data.status === 'error')
         {
-          throw new Error(res.data[0].message);
+          throw new Error(res.data.message);
         }
         let index = Object.assign([], this.index);
         index[idx] = {
           complete: true,
           module: this.module,
           target_srl: this.target_srl,
-          name: res.data[0].name,
-          path: res.data[0].path,
-          ready: res.data[0].ready,
+          name: res.data.name,
+          path: res.data.path,
+          ready: res.data.ready,
           regdate: null,
-          size: res.data[0].size,
-          srl: res.data[0].srl,
-          type: res.data[0].type,
+          size: res.data.size,
+          srl: res.data.srl,
+          type: res.data.type,
           badge: [],
-          context: this.setContextMenuInThumbnail(res.data[0]),
+          context: this.setContextMenuInThumbnail(res.data),
         };
         this.index = index;
         n++;

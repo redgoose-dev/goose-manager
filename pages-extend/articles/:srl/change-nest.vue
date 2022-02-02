@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import marked from 'marked';
+import { marked } from 'marked';
 import * as messages from "~/libs/messages";
 import * as text from "~/libs/text";
 import * as dates from '~/libs/dates';

@@ -40,6 +40,11 @@
           "target": "_blank"
         }
       ]
+    },
+    {
+      "name": "Checklist",
+      "link": "/checklist/",
+      "icon": "check"
     }
   ],
   "dashboard": {
@@ -83,7 +88,7 @@
     "reset": "05:00",
     "format": "{yyyy}-{MM}-{dd} ({week})",
     "range": {
-      "year": [ 2020, 2030 ]
+      "year": [ 2020, 2030, 2040, 2050 ]
     },
     "filter": {
       "year": "",
