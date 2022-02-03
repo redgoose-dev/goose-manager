@@ -1,0 +1,35 @@
+$dir: '../fonts';
+
+// mixins
+@mixin font-loader-ortsa($weight-name, $weight)
+{
+  // ortsa font - 30(light), 45(regular), 60(medium), 75(bold), 90(black)
+  @font-face {
+    font-family: 'ortsa';
+    font-style: normal;
+    font-weight: $weight;
+    src: url('#{$dir}/ortsa/ortsaWeb-#{$weight-name}.woff2') format('woff2');
+  }
+}
+@mixin font-loader-ortsa-italic($weight-name, $weight)
+{
+  // italic style
+  @font-face {
+    font-family: 'ortsa';
+    font-style: italic;
+    font-weight: $weight;
+    src: url('#{$dir}/ortsa/ortsaWeb-#{$weight-name}-italic.woff2') format('woff2');
+  }
+}
+
+// load fonts
+@include font-loader-ortsa('30', 300); // light
+@include font-loader-ortsa('45', 400); // regular
+@include font-loader-ortsa('60', 500); // medium
+@include font-loader-ortsa('75', 600); // bold
+@include font-loader-ortsa('90', 900); // black
+@include font-loader-ortsa-italic('30', 300); // light italic
+@include font-loader-ortsa-italic('45', 400); // regular italic
+@include font-loader-ortsa-italic('60', 500); // medium italic
+@include font-loader-ortsa-italic('75', 600); // bold italic
+@include font-loader-ortsa-italic('90', 900); // black italic

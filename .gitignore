@@ -1,0 +1,11 @@
+# directories
+.idea/
+node_modules/
+.AppleDouble/
+
+# files
+.env.local
+package-lock.json
+yarn.lock
+.DS_Store
+0

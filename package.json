@@ -7,7 +7,13 @@
   "type": "module",
   "repository": "https://github.com/redgoose-dev/goose-manager.git",
   "author": "redgoose <scripter@me.com>",
-  "scripts": {},
+  "scripts": {
+    "dev": "node server/entry.js --development",
+    "dev:live": "nodemon server/entry.js --development",
+    "prebuild": "rm -rf ./dist",
+    "build": "vite build",
+    "start": "node server/entry.js --production"
+  },
   "nodemonConfig": {
     "delay": 500
   },
@@ -15,6 +21,15 @@
     "> 1%",
     "last 2 versions"
   ],
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.36",
+    "nodemon": "^2.0.15",
+    "sass": "^1.49.7",
+    "svelte": "^3.46.3",
+    "svelte-preprocess": "^4.10.2",
+    "vite": "^2.7.13"
+  }
 }
