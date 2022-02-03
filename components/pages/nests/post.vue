@@ -284,7 +284,8 @@ export default {
   },
   data()
   {
-    const { apps, nest, type } = this.datas;
+    const { type, datas } = this;
+    const { apps, nest } = datas;
 
     let result = {
       forms: {
@@ -323,15 +324,15 @@ export default {
           ...defaultJson,
           useCategory: nest.json.useCategory || '0',
           thumbnail: {
-            width: parseInt(nest.json.thumbnail.width),
-            height: parseInt(nest.json.thumbnail.height),
+            width: Number(nest.json.thumbnail.width),
+            height: Number(nest.json.thumbnail.height),
             type: nest.json.thumbnail.type,
           },
           useThumbnailSizeTool: nest.json.useThumbnailSizeTool || '0',
           files: {
-            count: parseInt(nest.json.files.count),
-            sizeSingle: parseInt(nest.json.files.sizeSingle),
-            sizeTotal: parseInt(nest.json.files.sizeTotal)
+            count: Number(nest.json.files.count),
+            sizeSingle: Number(nest.json.files.sizeSingle),
+            sizeTotal: Number(nest.json.files.sizeTotal)
           },
           useComment: nest.json.useComment || '0',
         };

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import marked from 'marked';
+import { marked, Renderer } from 'marked';
 import { replaceMark } from './src';
 import { dateFormat } from '~/libs/dates';
 
@@ -71,7 +71,7 @@ export default {
       // clear content
       this.$body.innerHTML = '';
       // set marked renderer
-      const renderer = new marked.Renderer();
+      const renderer = new Renderer();
       renderer.listitem = (text, task) => {
         if (task)
         {

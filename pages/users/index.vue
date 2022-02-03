@@ -1,7 +1,6 @@
 <template>
 <article>
   <page-header module="users"/>
-
   <error v-if="!!error" :message="error" size="large"/>
   <error v-else-if="!(index && index.length)" type="empty" size="large"/>
   <index-wrap v-else type="grid">
@@ -21,7 +20,6 @@
         { label: 'Change password', link: `/users/${item.srl}/change-password/` },
       ]"/>
   </index-wrap>
-
   <nav-bottom>
     <template slot="right">
       <button-basic
@@ -59,7 +57,7 @@ export default {
         index: res.data.index.map((o) => {
           o.srl = parseInt(o.srl);
           o.regdate = dates.getFormatDate(o.regdate, false);
-          o.admin = parseInt(o.admin) === 2;
+          o.admin = parseInt(o.admin) === 1;
           return o;
         }),
         error: '',

@@ -193,7 +193,7 @@ export default {
         idx = idx - 1;
         let res = await this.$axios.$post(
           `/files/upload-file/`,
-          formData({ sub_dir: this.dir, files: files[n] }),
+          formData({ sub_dir: this.dir, file: files[n] }),
           {
             headers: { 'Content-Type': 'multipart/form-data' },
             onUploadProgress(progressEvent)
@@ -206,13 +206,13 @@ export default {
         index[idx] = {
           complete: true,
           srl: this.count_srl,
-          name: res.data[0].name,
-          path: res.data[0].path,
-          pathFull: res.data[0].pathFull,
-          size: res.data[0].size,
-          type: res.data[0].type,
+          name: res.data.name,
+          path: res.data.path,
+          pathFull: res.data.pathFull,
+          size: res.data.size,
+          type: res.data.type,
           badge: [],
-          context: this.setContextMenuInThumbnail(res.data[0]),
+          context: this.setContextMenuInThumbnail(res.data),
         };
         this.index = index;
         n++;
