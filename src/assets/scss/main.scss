@@ -15,18 +15,20 @@
 }
 
 // global elements
+html, body {
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+}
 body {
   margin: 0;
   font-size: 1rem;
   line-height: 1.5;
   background: var(--color-bg);
   color: var(--color-base);
-  text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
 }
 body, button, input, textarea, select {
   font-family: var(--font-base);
-  text-size-adjust: none;
 }
 a {
   color: var(--color-key);

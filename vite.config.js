@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import sveltePreprocess from 'svelte-preprocess';
+import vue from '@vitejs/plugin-vue';
 
 // docs: https://vitejs.dev/config
 
@@ -20,12 +19,21 @@ const config = defineConfig(async ({ mode }) => {
     },
     define: {
       'TITLE': JSON.stringify(env.VITE_TITLE),
+      'DESCRIPTION': JSON.stringify(env.VITE_DESCRIPTION),
+      'SHORT_NAME': JSON.stringify(env.VITE_SHORT_NAME),
       'DEBUG': JSON.stringify(env.VITE_DEBUG === 'true'),
+      'API_URL': JSON.stringify(env.VITE_API_URL),
+      'BASE_URL': JSON.stringify(env.VITE_BASE_URL),
+      'STORAGE_PREFIX': JSON.stringify(env.VITE_STORAGE_PREFIX),
     },
     plugins: [
       // https://vitejs.dev/guide/api-plugin.html
-      svelte({
-        preprocess: sveltePreprocess(),
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: tag => tag.startsWith('ext-'),
+          },
+        },
       }),
     ],
     css: {},

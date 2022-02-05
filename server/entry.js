@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import { createServer, loadEnv } from 'vite';
 import { openServerMessage, isDev } from './libs/entry-assets.js';
 import serviceServer from './index.js';
@@ -15,6 +17,11 @@ async function server()
   const outDir = env.VITE_OUT_DIR || 'dist';
   const clientPath = dev ? __dirname : path.resolve(outDir);
 
+  // setup
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
+  app.use(cookieParser());
+
   if (dev)
   {
     // # Development
@@ -25,7 +32,7 @@ async function server()
     });
     app.use(vite.middlewares);
     // extend routes
-    serviceServer(app);
+    serviceServer(app, env);
     // global route
     app.use('*', async (req, res) => {
       try
@@ -46,7 +53,7 @@ async function server()
   {
     // # Production
     // extend routes
-    serviceServer(app);
+    serviceServer(app, env);
     // global route
     app.use((req, res, next) => {
       if (req.path.indexOf('.') > -1)
