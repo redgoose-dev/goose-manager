@@ -1,0 +1,14 @@
+.form-checks {
+  // size
+  --checks-size-small: 16px;
+  --checks-size-basic: 20px;
+  --checks-size-large: 24px;
+  // color
+  --checks-color-border: rgb(0 0 0 / 30%);
+  --checks-color-bg: rgb(0 0 0 / 5%);
+  --checks-color-shadow-body: rgb(0 0 0 / 10%);
+  // shadow
+  --checks-shadow-body: inset 0 -2px 5px;
+  // opacity
+  --forms-opacity-disabled: .5;
+}

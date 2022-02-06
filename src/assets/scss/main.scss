@@ -5,9 +5,17 @@
 :root {
   // color
   --color-bg: #fafbfc;
+  --color-bg-rgb: 250 251 252;
   --color-base: #222;
+  --color-base-rgb: 34 34 34;
+  --color-invert: #fff;
+  --color-invert-rgb: 255 255 255;
+  --color-weak: #555;
+  --color-weak-rgb: 85 85 85;
   --color-key: #b31f37;
+  --color-key-rgb: 179 31 55;
   // size
+  --size-content-body: 1280px;
   // font
   --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-eng: 'ortsa', 'Helvetica Neue', Helvetica, Arial, sans-serif;

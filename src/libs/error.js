@@ -7,5 +7,5 @@
  */
 export function errorRecord(err)
 {
-  if (DEBUG) console.error('SERVICE ERROR:', err.message);
+  if (window.DEBUG) console.error('SERVICE ERROR:', err.message);
 }

@@ -1,0 +1,199 @@
+@use '../assets/scss/mixins';
+
+// layout
+.layout {
+  --size-header-height: 42px;
+  --size-side-padding: 60px;
+}
+
+// header
+.layout-header {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  background-color: rgb(136 136 136 / 95%);
+  height: var(--size-header-height);
+  user-select: none;
+  box-shadow: 0 0 10px rgba(#000, .25);
+  padding: 0 var(--size-side-padding);
+  &__wrap {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    height: 100%;
+    max-width: var(--size-content-body);
+  }
+  &__logo {
+    margin: 0;
+    height: 100%;
+    a {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      margin: 0 0 0 -16px;
+      padding: 0 16px;
+      text-decoration: none;
+      font-family: var(--font-eng);
+      font-weight: 600;
+      font-size: 22px;
+      color: rgb(var(--color-invert-rgb) / 100%);
+      box-sizing: border-box;
+      transition: opacity 100ms ease-out;
+      &:active {
+        opacity: .5;
+      }
+    }
+  }
+  &__gnb {
+    flex: 1;
+    height: 100%;
+    padding: 0 0 0 5px;
+    box-sizing: border-box;
+  }
+  &__side {
+    height: 100%;
+    .navigation {
+      ol {
+        left: unset;
+        right: -16px;
+      }
+    }
+  }
+}
+
+// navigation
+.navigation {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+  box-sizing: border-box;
+  > li {
+    position: relative;
+    > a, > span {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      font-family: var(--font-eng);
+      box-sizing: border-box;
+      color: rgb(var(--color-invert-rgb) / 100%);
+      outline: none;
+      font-size: 15px;
+      line-height: 1;
+      padding: 8px 16px;
+      transition: background-color 200ms ease-out;
+      em {
+        display: block;
+        font-style: normal;
+      }
+    }
+    > a {
+      cursor: pointer;
+      text-decoration: none;
+      &.router-link-active {
+        background-color: rgb(var(--color-key-rgb) / 90%);
+      }
+    }
+    > span {
+      cursor: default;
+    }
+    > div {
+      position: relative;
+      display: none;
+    }
+    &:hover {
+      > a:not(.router-link-active), > span {
+        background-color: rgb(0 0 0 / 25%);
+      }
+      > div {
+        display: block;
+      }
+    }
+  }
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    min-width: 150px;
+    box-sizing: border-box;
+    left: 0;
+    top: 0;
+    background-color: rgb(125 126 129 / 90%);
+    > li {
+      position: relative;
+      transition: background-color 200ms ease-out;
+      &:nth-child(n+2) {
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          height: 1px;
+          background-color: rgb(255 255 255 / 10%);
+          transform-origin: 0 0;
+          transform: scaleY(.5);
+        }
+      }
+      > a, > span, > button {
+        display: flex;
+        align-items: center;
+        height: 36px;
+        font-size: 13px;
+        font-weight: 400;
+        padding: 0 15px;
+        letter-spacing: -.25px;
+        box-sizing: border-box;
+        color: rgb(var(--color-invert-rgb) / 100%);
+        em {
+          display: block;
+          font-style: normal;
+        }
+      }
+      > a {
+        text-decoration: none;
+        cursor: pointer;
+      }
+      > button {
+        width: 100%;
+        text-align: left;
+        border: none;
+        background: none;
+        appearance: none;
+        @include mixins.button-touch-options(false);
+      }
+      &:hover {
+        background-color: rgb(0 0 0 / 10%);
+      }
+    }
+  }
+}
+
+// container
+.container {
+  margin: 30px 0 60px;
+  padding: 0 var(--size-side-padding);
+  &__wrap {
+    max-width: var(--size-content-body);
+    margin: 0 auto;
+  }
+}
+
+// footer
+.layout-footer {
+  margin: 0;
+  padding: 0 16px 16px 0;
+  user-select: none;
+  text-align: right;
+  address {
+    font-family: var(--font-eng);
+    font-size: 11px;
+    color: var(--color-weak);
+  }
+}

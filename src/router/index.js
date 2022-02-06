@@ -13,7 +13,6 @@ const router = createRouter({
 // 라우트 업데이트 전 후크
 router.beforeEach(async (to, from) => {
   const auth = await checkAuth();
-  // console.log(auth)
   // redirect screen
   switch (to.name)
   {

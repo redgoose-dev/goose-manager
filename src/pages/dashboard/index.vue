@@ -5,6 +5,7 @@
 <!--    <button type="button" @click="onClickLogin">login</button>-->
 <!--    <button type="button" @click="onClickLogout">logout</button>-->
 <!--  </div>-->
+  <pre>{{store.state}}</pre>
 </article>
 </template>
 

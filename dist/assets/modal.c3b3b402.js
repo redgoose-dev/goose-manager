@@ -1,0 +1,1 @@
+import{_ as e}from"./index.24d3ff97.js";import{o,e as c,f as r}from"./vendor.cc7e59d8.js";const t={},s=r("h1",null,"guide/modal",-1),a=[s];function n(d,_){return o(),c("article",null,a)}var i=e(t,[["render",n]]);export{i as default};

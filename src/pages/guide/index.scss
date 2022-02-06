@@ -1,0 +1,11 @@
+@use '../../assets/scss/mixins';
+
+.guide {
+  &__header {}
+  &__tabs {
+    margin: -12px 0 0;
+  }
+  &__body {
+    margin: 50px 0 0;
+  }
+}

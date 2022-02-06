@@ -1,0 +1,1 @@
+import{_ as e}from"./index.24d3ff97.js";import{o as c,e as t,f as o}from"./vendor.cc7e59d8.js";const r={},s=o("h1",null,"guide/etc",-1),n=[s];function a(_,d){return c(),t("article",null,n)}var l=e(r,[["render",a]]);export{l as default};

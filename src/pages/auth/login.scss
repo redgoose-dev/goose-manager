@@ -1,12 +1,148 @@
 @use '../../assets/scss/mixins';
 
 .login {
+  --color-input-line: rgb(0 0 0 / 40%);
+  --color-input-placeholder: rgb(0 0 0 / 20%);
+  --color-input-autofill: rgb(0 0 0 / 20%);
   display: grid;
   height: 100vh;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  padding: 30px;
   &__wrap {
-    border: 1px solid #000;
+    width: 380px;
+    margin: 0 auto;
+    padding: 60px 0 70px;
+    background: var(--body-bg);
+    border-radius: 4px;
+    text-align: left;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 50px 0 rgb(0 0 0 / 5%), 0 0 15px 0 rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 10%);
+  }
+  &__title {
+    margin: -4px 0 0;
+    padding: 0;
+    font-family: var(--font-eng);
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+    text-align: center;
+    line-height: 1.15;
+    color: var(--title);
+  }
+  &__description {
+    text-align: center;
+    margin: 2px 0 0;
+    box-sizing: border-box;
+    font-size: .75rem;
+    font-family: var(--font-eng);
+    color: var(--color-blur);
+    font-weight: 400;
+  }
+  &__body {
+    width: 260px;
+    margin: 30px auto 0;
+    padding: 0;
+    > fieldset {
+      margin: 0;
+      padding: 0;
+      border: none;
+      > legend {
+        font-size: 0;
+        visibility: hidden;
+      }
+    }
+  }
+  @include mixins.dark-mode() {
+    //
+  }
+}
+
+.login-field {
+  &__label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    user-select: none;
+  }
+  &__body {
+    position: relative;
+    margin: 0;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: var(--color-input-line);
+    }
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-key);
+      height: 1px;
+      transform-origin: left bottom;
+      transform: scaleX(0);
+      transition: transform 300ms ease-out;
+    }
+    > input {
+      display: block;
+      width: 100%;
+      padding: 12px 2px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      box-shadow: 0 0 0;
+      background-color: var(--color-bg);
+      box-sizing: border-box;
+      outline: none;
+      border-radius: 0;
+      &::placeholder {
+        color: var(--color-input-placeholder);
+      }
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        padding-left: 12px;
+        padding-right: 12px;
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-transition: background-color 9999s ease-out;
+        -webkit-box-shadow: 0 0 0 1000px var(--color-input-autofill) inset !important;
+        -webkit-text-fill-color: var(--color-base) !important;
+      }
+    }
+    &:focus-within {
+      &:after {
+        transform: scaleX(1);
+      }
+    }
+  }
+  &--id {}
+  &--password {
+    margin-top: 24px;
+  }
+  &--save {
+    margin-top: 12px;
+  }
+}
+
+.login-save-auth {
+  display: flex;
+  align-items: center;
+  > span {
+    display: block;
+    margin: 0 0 0 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    user-select: none;
+    cursor: pointer;
   }
 }
