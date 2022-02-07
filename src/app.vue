@@ -24,7 +24,6 @@ const layout = computed(() => {
 
 // children component error
 onErrorCaptured((e, component, info) => {
-  console.error(e, component, info);
   error.value = e;
   errorRecord(e);
   return false;

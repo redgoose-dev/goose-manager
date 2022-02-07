@@ -15,14 +15,15 @@
               :to="item.link"
               :href="item.href"
               :target="item.target">
-              <em>{{item.name}}</em>
               <Icon
                 v-if="item.icon"
-                :name="item.icon"/>
+                :name="item.icon"
+                class="ico-custom"/>
+              <em>{{item.name}}</em>
               <Icon
                 v-if="item.children && item.children.length"
                 name="chevron-down"
-                class="flip-y dropdown"/>
+                class="ico-arrow"/>
             </component>
             <div v-if="item.children && item.children.length">
               <ol>
@@ -32,14 +33,11 @@
                     :to="item2.link"
                     :href="item2.href"
                     :target="item2.target">
-                    <em>{{item2.name}}</em>
                     <Icon
                       v-if="item2.icon"
-                      :name="item2.icon"/>
-                    <Icon
-                      v-if="item2.children && item2.children.length"
-                      name="chevron-right"
-                      class="dropdown"/>
+                      :name="item2.icon"
+                      class="ico-custom"/>
+                    <em>{{item2.name}}</em>
                   </component>
                 </li>
               </ol>
@@ -52,12 +50,15 @@
           <li>
             <span>
               <em>{{store.state.user.email}}</em>
-              <Icon name="chevron-down" class="flip-y"/>
+              <Icon name="chevron-down" class="ico-arrow"/>
             </span>
             <div>
               <ol>
                 <li>
-                  <ButtonBasic type="button" icon-left="user" @click.native="onClickProfileItem">
+                  <ButtonBasic
+                    type="router"
+                    icon-left="user"
+                    :href="`/users/${store.state.user.srl}/`">
                     Account
                   </ButtonBasic>
                 </li>
@@ -84,8 +85,8 @@
     </div>
   </div>
   <footer class="layout-footer">
-    <div class="footer__wrap">
-      <address>
+    <div class="layout-footer__wrap">
+      <address class="layout-footer__address">
         Copyright © 2014-{{year}} <a href="https://redgoose.me" target="_blank">redgoose.me</a>
       </address>
     </div>
@@ -97,7 +98,7 @@
 import { computed } from 'vue';
 import axios from 'axios';
 import store from '../store';
-import { logout } from '../router/auth';
+import { logout } from '../libs/auth';
 // import {} from '../libs/util';
 import Icon from '../components/icons/index.vue';
 import ButtonBasic from '../components/button/basic.vue';
@@ -112,11 +113,6 @@ const gnb = computed(() => {
     }
   }).filter((item) => !!item.show);
 });
-
-function onClickProfileItem()
-{
-  //
-}
 
 function onClickClearTokens()
 {
@@ -137,18 +133,9 @@ async function onClickLogout()
  */
 function getNavigationElementName(item)
 {
-  if (item.link)
-  {
-    return 'router-link';
-  }
-  else if (item.href)
-  {
-    return 'a';
-  }
-  else
-  {
-    return 'span';
-  }
+  if (item.link) return 'router-link';
+  else if (item.href) return 'a';
+  else return 'span';
 }
 </script>
 

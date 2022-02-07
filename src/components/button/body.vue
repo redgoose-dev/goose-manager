@@ -33,6 +33,7 @@ const props = defineProps({
   box-sizing: border-box;
   height: 100%;
   &__icon {
+    --icon-size: 18px;
     &.left {
       margin-left: -2px;
       & + em {

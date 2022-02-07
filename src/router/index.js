@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import routes from './routes';
-import { checkAuth } from './auth';
+import { checkAuth } from '../libs/auth';
 
 /** @var {string} BASE_URL */
 

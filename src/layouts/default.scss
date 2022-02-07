@@ -14,11 +14,12 @@
   left: 0;
   right: 0;
   margin: 0;
-  background-color: rgb(136 136 136 / 95%);
+  background-color: rgb(128 128 128 / 80%);
   height: var(--size-header-height);
   user-select: none;
   box-shadow: 0 0 10px rgba(#000, .25);
   padding: 0 var(--size-side-padding);
+  @include mixins.background-blur(8px);
   &__wrap {
     display: flex;
     margin: 0 auto;
@@ -39,6 +40,7 @@
       font-family: var(--font-eng);
       font-weight: 600;
       font-size: 22px;
+      line-height: 1;
       color: rgb(var(--color-invert-rgb) / 100%);
       box-sizing: border-box;
       transition: opacity 100ms ease-out;
@@ -55,6 +57,7 @@
   }
   &__side {
     height: 100%;
+    margin-right: -16px;
     .navigation {
       ol {
         left: unset;
@@ -90,12 +93,25 @@
         display: block;
         font-style: normal;
       }
+      .ico-arrow {
+        display: block;
+        margin: 0 -4px 0 4px;
+        --icon-size: 20px;
+        transition: transform 200ms ease-out
+      }
+      .ico-custom {
+        display: block;
+        --icon-size: 16px;
+        &:first-child {
+          margin: 0 6px 0 0;
+        }
+      }
     }
     > a {
       cursor: pointer;
       text-decoration: none;
       &.router-link-active {
-        background-color: rgb(var(--color-key-rgb) / 90%);
+        background-color: rgb(var(--color-key-rgb) / 85%);
       }
     }
     > span {
@@ -108,6 +124,9 @@
     &:hover {
       > a:not(.router-link-active), > span {
         background-color: rgb(0 0 0 / 25%);
+        .ico-arrow {
+          transform: rotateX(180deg);
+        }
       }
       > div {
         display: block;
@@ -123,7 +142,7 @@
     box-sizing: border-box;
     left: 0;
     top: 0;
-    background-color: rgb(125 126 129 / 90%);
+    background-color: rgb(86 86 86 / 90%);
     > li {
       position: relative;
       transition: background-color 200ms ease-out;
@@ -136,7 +155,7 @@
           right: 0;
           top: 0;
           height: 1px;
-          background-color: rgb(255 255 255 / 10%);
+          background-color: rgb(255 255 255 / 20%);
           transform-origin: 0 0;
           transform: scaleY(.5);
         }
@@ -144,21 +163,33 @@
       > a, > span, > button {
         display: flex;
         align-items: center;
-        height: 36px;
-        font-size: 13px;
+        height: 40px;
+        font-size: 14px;
         font-weight: 400;
-        padding: 0 15px;
+        padding: 0 16px;
         letter-spacing: -.25px;
         box-sizing: border-box;
         color: rgb(var(--color-invert-rgb) / 100%);
         em {
           display: block;
           font-style: normal;
+          white-space: nowrap;
+        }
+        .ico-custom {
+          display: block;
+          --icon-size: 16px;
+          margin: 0 8px 0 0;
+        }
+        &:hover {
+          background-color: rgb(0 0 0 / 10%);
         }
       }
       > a {
         text-decoration: none;
         cursor: pointer;
+        &.router-link-active {
+          background-color: rgb(var(--color-key-rgb) / 50%);
+        }
       }
       > button {
         width: 100%;
@@ -167,9 +198,6 @@
         background: none;
         appearance: none;
         @include mixins.button-touch-options(false);
-      }
-      &:hover {
-        background-color: rgb(0 0 0 / 10%);
       }
     }
   }
@@ -188,10 +216,14 @@
 // footer
 .layout-footer {
   margin: 0;
-  padding: 0 16px 16px 0;
+  padding: 0 var(--size-side-padding) 16px;
   user-select: none;
   text-align: right;
-  address {
+  &__wrap {
+    max-width: var(--size-content-body);
+    margin: 0 auto;
+  }
+  &__address {
     font-family: var(--font-eng);
     font-size: 11px;
     color: var(--color-weak);

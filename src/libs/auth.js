@@ -1,8 +1,7 @@
 import axios from 'axios';
 import store from '../store';
-import router from './index';
-import { setup } from '../libs/service';
-import { destroy } from '../libs/service';
+import router from '../router';
+import { setup, destroy } from './service';
 
 /**
  * check auth

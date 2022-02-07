@@ -23,7 +23,7 @@
     align-items: center;
     padding: 0 15px;
     background-color: rgb(204 204 204 / 40%);
-    border-radius: 4px;
+    border-radius: 2px;
     user-select: none;
   }
   a {

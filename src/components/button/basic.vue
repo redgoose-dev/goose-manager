@@ -79,14 +79,8 @@ const classes = computed(() => ([
   props.className,
 ]));
 const type = computed(() => {
-  if (props.href)
-  {
-    return /^http/.test(props.href) ? 'a' : 'router';
-  }
-  else
-  {
-    return props.type || null;
-  }
+  if (props.href) return /^http/.test(props.href) ? 'a' : 'router';
+  else return props.type || null;
 });
 </script>
 

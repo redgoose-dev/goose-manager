@@ -103,6 +103,7 @@ async function onSubmit()
     // on loading
     loading.value = true;
     // request api
+    // TODO: 임시로 넣어뒀는데 나중에 정리하기
     let res = await axios.post('/local/login/', {
       email: 'x@x.x',
       password: '1234',

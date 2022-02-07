@@ -4,7 +4,6 @@
     <h2>Icons</h2>
     <p>`icon` 컴포넌트에 관한 내용을 다룹니다.</p>
   </header>
-
   <section class="page-section">
     <header>
       <h3>icons index</h3>
@@ -21,7 +20,6 @@
       </li>
     </ul>
   </section>
-
   <section class="page-section">
     <header>
       <h3>color</h3>
@@ -30,31 +28,43 @@
     <ul class="icons-index icons-index--col-4">
       <li class="icons-index__item">
         <div>
-          <Icon name="target" color="#ff235d" class="icon color"/>
+          <Icon
+            name="target"
+            color="#ff235d"
+            class="icon color"
+            style="--icon-color: #ff235d;"/>
           <em>#ff235d</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="twitter" color="#b536ff" class="icon color"/>
+          <Icon
+            name="twitter"
+            class="icon color"
+            style="--icon-color: #b536ff;"/>
           <em>#b536ff</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="cloud-snow" color="#2ab5ff" class="icon color"/>
+          <Icon
+            name="cloud-snow"
+            class="icon color"
+            style="--icon-color: #2ab5ff;"/>
           <em>#2ab5ff</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="radio" color="#2acd4c" class="icon color"/>
+          <Icon
+            name="radio"
+            class="icon color"
+            style="--icon-color: #2acd4c;"/>
           <em>#2acd4c</em>
         </div>
       </li>
     </ul>
   </section>
-
   <section class="page-section">
     <header>
       <h3>size</h3>
@@ -63,31 +73,42 @@
     <ul class="icons-index icons-index--col-4">
       <li class="icons-index__item">
         <div>
-          <Icon name="target" :size="24" class="icon"/>
-          <em>12</em>
+          <Icon
+            name="target"
+            class="icon"
+            style="--icon-size: 20px;"/>
+          <em>20</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="twitter" :size="36" class="icon"/>
-          <em>24</em>
+          <Icon
+            name="twitter"
+            class="icon"
+            style="--icon-size: 28px;"/>
+          <em>28</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="cloud-snow" :size="48" class="icon"/>
-          <em>36</em>
+          <Icon
+            name="cloud-snow"
+            class="icon"
+            style="--icon-size: 42px;"/>
+          <em>42</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="radio" :size="60" class="icon"/>
-          <em>48</em>
+          <Icon
+            name="radio"
+            class="icon"
+            style="--icon-size: 64px;"/>
+          <em>64</em>
         </div>
       </li>
     </ul>
   </section>
-
   <section class="page-section">
     <header>
       <h3>stroke-width</h3>
@@ -96,25 +117,37 @@
     <ul class="icons-index icons-index--col-4">
       <li class="icons-index__item">
         <div>
-          <Icon name="target" :size="36" :stroke-width=".5" class="icon"/>
+          <Icon
+            name="target"
+            class="icon"
+            style="--icon-size: 36px; --icon-stroke-width: .5;"/>
           <em>.5</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="twitter" :size="36" :stroke-width="1" class="icon"/>
+          <Icon
+            name="twitter"
+            class="icon"
+            style="--icon-size: 36px; --icon-stroke-width: 1;"/>
           <em>1</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="cloud-snow" :size="36" :stroke-width="2" class="icon"/>
+          <Icon
+            name="cloud-snow"
+            class="icon"
+            style="--icon-size: 36px; --icon-stroke-width: 2;"/>
           <em>2</em>
         </div>
       </li>
       <li class="icons-index__item">
         <div>
-          <Icon name="radio" :size="36" :stroke-width="2.5" class="icon"/>
+          <Icon
+            name="radio"
+            class="icon"
+            style="--icon-size: 36px; --icon-stroke-width: 2.5;"/>
           <em>2.5</em>
         </div>
       </li>
@@ -132,7 +165,7 @@ import Icon from '../../components/icons/index.vue';
 <style lang="scss" scoped>
 @use '../../assets/scss/mixins';
 .icons-index {
-  --column: 8;
+  --column: 6;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -169,6 +202,12 @@ import Icon from '../../components/icons/index.vue';
   }
   &--col-4 {
     --column: 4;
+  }
+  @include mixins.responsive(desktop) {
+    --column: 8;
+    &--col-4 {
+      --column: 4;
+    }
   }
   //@include mixins.dark-mode() {
   //  &__item {

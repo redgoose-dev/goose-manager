@@ -2,29 +2,50 @@ export default {
   lang: 'ko',
   navigation: [
     {
-      name: 'Apps',
-      link: '/apps/',
-    },
-    {
-      name: 'Nests',
-      link: '/nests/',
-    },
-    {
-      name: 'Users',
-      link: '/users/',
-      admin: true
-    },
-    {
-      name: 'JSON',
-      link: '/json/'
+      name: 'Modules',
+      icon: 'cloud',
+      children: [
+        {
+          name: 'Apps',
+          link: '/apps/',
+          icon: 'cloud',
+        },
+        {
+          name: 'Nests',
+          link: '/nests/',
+          icon: 'folder',
+        },
+        {
+          name: 'Users',
+          href: '/users/',
+          icon: 'user',
+        },
+        {
+          name: 'Files',
+          link: '/files/',
+          icon: 'file',
+        },
+        {
+          name: 'JSON',
+          link: '/json/',
+          icon: 'code',
+        },
+        {
+          name: 'Checklist',
+          link: '/checklist/',
+          icon: 'check'
+        },
+      ],
     },
     {
       name: 'Resource',
+      icon: 'link',
       children: [
         {
           name: 'GitHub',
           href: 'https://github.com/redgoose-dev/goose-manager',
-          target: '_blank'
+          target: '_blank',
+          icon: 'github',
         },
         {
           name: 'API Documentation',
@@ -34,9 +55,9 @@ export default {
       ]
     },
     {
-      name: 'Checklist',
-      link: '/checklist/',
-      icon: 'check'
+      name: 'Guide',
+      link: '/guide/',
+      icon: 'book',
     }
   ],
   dashboard: {},
