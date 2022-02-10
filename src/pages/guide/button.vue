@@ -1,7 +1,7 @@
 <template>
 <article>
   <header class="page-header">
-    <h2>Button Basic</h2>
+    <h1>Button Basic</h1>
     <p>`button-basic`컴포넌트에 관한 내용을 다룹니다.</p>
   </header>
 

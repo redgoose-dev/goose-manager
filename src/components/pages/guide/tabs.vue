@@ -32,6 +32,7 @@
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
+    border-radius: 2px;
     &:active {
       opacity: .5;
     }
@@ -45,6 +46,13 @@
       &:hover {
         background-color: transparent;
       }
+    }
+    &:focus-visible {
+      outline: none;
+    }
+    &:focus-visible:not(.router-link-exact-active) {
+      outline: none;
+      box-shadow: 0 0 0 3px rgb(0 0 0 / 20%);
     }
   }
 }

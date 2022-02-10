@@ -5,6 +5,10 @@
   align-items: center;
   width: var(--button-size, 42px);
   height: var(--button-size, 42px);
+  @supports (aspect-ratio: 1 / 1) {
+    aspect-ratio: 1 / 1;
+    height: unset;
+  }
   cursor: pointer;
   box-sizing: border-box;
   border: none;

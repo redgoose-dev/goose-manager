@@ -1,21 +1,18 @@
 @use '../../assets/scss/mixins';
 
-.form-checkbox {
+.checkbox {
   position: relative;
   display: block;
   font-size: 0;
-  &__unit {
+  i {
     display: block;
     position: relative;
-    width: var(--checks-size-basic);
-    height: var(--checks-size-basic);
+    width: var(--checkbox-size, 20px);
+    height: var(--checkbox-size, 20px);
     box-sizing: border-box;
     border-radius: 3px;
-    background-color: var(--checks-color-bg);
-    box-shadow:
-      var(--checks-shadow-body) var(--checks-color-shadow-body),
-      0 0 0 0 rgb(var(--color-key-rgb) / 0%),
-      inset 0 0 0 1px var(--checks-color-border);
+    background-color: var(--checkbox-bg, rgb(222 222 222));
+    box-shadow: var(--checkbox-shadow, inset 0 -2px 5px rgb(0 0 0 / 10%), 0 0 0 0 rgb(var(--color-key-rgb) / 0%), inset 0 0 0 1px rgb(0 0 0 / 20%));
     transition: box-shadow 120ms ease-out;
     &:after {
       content: '';
@@ -26,13 +23,14 @@
       transform-origin: 50% 50%;
       transform: translate(-50%, -50%) scale(0);
       transition: transform 50ms ease-out;
-      background: var(--color-key);
-      width: calc(var(--checks-size-basic) - 8px);
-      height: calc(var(--checks-size-basic) - 8px);
+      background: var(--checkbox-unit-color, var(--color-key));
+      box-shadow: inset 0 2px 6px rgb(var(--color-sub-rgb) / 75%);
+      width: var(--checkbox-point-size, 12px);
+      height: var(--checkbox-point-size, 12px);
       border-radius: 2px;
     }
   }
-  &__input {
+  input {
     display: block;
     margin: 0;
     padding: 0;
@@ -47,10 +45,7 @@
     &:active,
     &:focus {
       & + i {
-        box-shadow:
-          var(--checks-shadow-body) var(--checks-color-shadow-body),
-          0 0 0 3px rgb(var(--color-key-rgb) / 30%),
-          inset 0 0 0 1px var(--color-key);
+        --checkbox-shadow: inset 0 -2px 5px rgb(0 0 0 / 10%), 0 0 0 3px rgb(var(--color-key-rgb) / 30%), inset 0 0 0 1px var(--color-key)
       }
     }
     &:checked {
@@ -61,8 +56,8 @@
     }
     &:disabled {
       cursor: not-allowed;
-      & + .form-checkbox__unit {
-        opacity: var(--forms-opacity-disabled);
+      & + i {
+        opacity: .5;
       }
     }
   }
@@ -70,49 +65,33 @@
   // size
   &--size {
     &-small {
-      .form-checkbox {
-        &__unit {
-          width: var(--checks-size-small);
-          height: var(--checks-size-small);
-          &:after {
-            width: calc(var(--checks-size-small) - 6px);
-            height: calc(var(--checks-size-small) - 6px);
-          }
-        }
-      }
+      --checkbox-size: 16px;
+      --checkbox-point-size: 10px;
     }
     &-large {
-      .form-checkbox {
-        &__unit {
-          width: var(--checks-size-large);
-          height: var(--checks-size-large);
-          &:after {
-            width: calc(var(--checks-size-large) - 8px);
-            height: calc(var(--checks-size-large) - 8px);
-          }
-        }
-      }
+      --checkbox-size: 24px;
+      --checkbox-point-size: 16px;
     }
   }
 
   // dark mode
   // TODO: 나중에 작업하기
   //@include mixins.dark-mode() {
-  //  &__unit {
+  //  i {
   //    border-color: $local-check-color-dark-border;
   //    background-color: $local-check-color-dark-bg;
   //    box-shadow: inset -2px -5px 10px $local-check-color-dark-shadow-inner;
   //  }
   //  > input {
   //    &:focus {
-  //      & + .form-checkbox__unit {
+  //      & + i {
   //        box-shadow:
   //          inset 0 -5px 10px $local-check-color-dark-shadow-inner,
   //          0 0 0 $size-focus $local-color-dark-shadow1;
   //      }
   //    }
   //    &:active {
-  //      & + .form-checkbox__unit {
+  //      & + i {
   //        box-shadow: inset 0 -5px 15px $local-check-color-dark-shadow-inner-active;
   //      }
   //    }
