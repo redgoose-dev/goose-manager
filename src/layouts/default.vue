@@ -55,22 +55,22 @@
             <div>
               <ol>
                 <li>
-                  <ButtonBasic
-                    type="router"
-                    icon-left="user"
-                    :href="`/users/${store.state.user.srl}/`">
-                    Account
-                  </ButtonBasic>
+                  <router-link :to="`/users/${store.state.user.srl}/`">
+                    <Icon name="user" class="ico-custom"/>
+                    <em>Account</em>
+                  </router-link>
                 </li>
                 <li>
-                  <ButtonBasic type="button" icon-left="trash" @click.prevent="onClickClearTokens">
-                    Clear tokens
-                  </ButtonBasic>
+                  <button type="button" @click="onClickClearTokens">
+                    <Icon name="trash" class="ico-custom"/>
+                    <em>Clear tokens</em>
+                  </button>
                 </li>
                 <li>
-                  <ButtonBasic type="button" icon-left="log-out" @click="onClickLogout">
-                    Logout
-                  </ButtonBasic>
+                  <button type="button" @click="onClickLogout">
+                    <Icon name="log-out" class="ico-custom"/>
+                    <em>Logout</em>
+                  </button>
                 </li>
               </ol>
             </div>

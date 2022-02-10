@@ -1,41 +1,24 @@
 <template>
 <component :is="tag" v-bind="rootProps">
-  <Body v-bind="bodyProps">
-    <slot v-if="$slots.default"/>
-  </Body>
+  <Icon :name="props.iconName" class="button-icon__body"/>
 </component>
 </template>
 
 <script setup>
 import { computed } from 'vue';
-import Body from './body.vue';
+import Icon from '../icons/index.vue';
 
 const props = defineProps({
-  type: { type: String, default: 'button' }, // label,button,submit,reset
-  label: String,
+  type: String,
+  iconName: { type: String, default: 'menu' },
   href: String,
   target: String,
   title: String,
   disabled: Boolean,
-  size: String, // mini,small,large
-  color: String, // key,gray
-  inline: Boolean,
-  rotateIcon: Boolean,
-  iconLeft: String,
-  iconRight: String,
-  className: String,
-  styles: [ Object, Array ],
 });
 const type = computed(() => {
   if (props.href) return /^http/.test(props.href) ? 'a' : 'router';
   else return props.type || null;
-});
-const bodyProps = computed(() => {
-  return {
-    iconLeft: props.iconLeft,
-    iconRight: props.iconRight,
-    rotateIcon: props.rotateIcon,
-  };
 });
 const tag = computed(() => {
   switch (type.value)
@@ -66,16 +49,11 @@ const rootProps = computed(() => {
       break;
   }
   attr.class = [
-    'button',
-    props.size && `button--size-${props.size}`,
-    props.color && `button--color-${props.color}`,
-    props.inline && `button--inline`,
-    props.rotateIcon && `button--animation`,
-    props.className,
+    'button-icon',
+    props.disabled && 'button-icon--disabled',
   ];
-  attr.style = props.styles;
   return attr;
 });
 </script>
 
-<style src="./basic.scss" lang="scss" scoped/>
+<style src="./icon.scss" lang="scss" scoped></style>

@@ -3,7 +3,7 @@
   <Icon
     v-if="props.iconLeft"
     :name="props.iconLeft"
-    class="button-body__icon left"/>
+    class="button-body__icon"/>
   <em
     v-if="$slots.default"
     class="button-body__label">
@@ -12,7 +12,7 @@
   <Icon
     v-if="props.iconRight"
     :name="props.iconRight"
-    class="button-body__icon right"/>
+    class="button-body__icon"/>
 </span>
 </template>
 
@@ -22,6 +22,7 @@ import Icon from '../icons/index.vue';
 const props = defineProps({
   iconLeft: String,
   iconRight: String,
+  rotateIcon: Boolean,
 });
 </script>
 
@@ -33,24 +34,32 @@ const props = defineProps({
   box-sizing: border-box;
   height: 100%;
   &__icon {
-    --icon-size: 18px;
-    &.left {
-      margin-left: -2px;
-      & + em {
-        margin-left: 6px;
-      }
+    box-sizing: border-box;
+    @-webkit-keyframes spin {
+      100% { transform: rotate(360deg); }
     }
-    &.right {
-      margin-right: -2px;
+    animation: var(--icon-animation, none);
+    &:is(:first-child) {
+      margin-right: 4px;
+    }
+    &:is(:last-child) {
+      margin-left: 4px;
     }
   }
   &__label {
     display: block;
     font-style: normal;
     font-weight: 500;
+    font-size: var(--font-size);
+    line-height: 1.15;
     & + i {
       margin-left: 6px;
     }
   }
+}
+</style>
+<style>
+@keyframes spin {
+  100% { transform: rotate(360deg); }
 }
 </style>

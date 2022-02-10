@@ -177,8 +177,9 @@
         }
         .ico-custom {
           display: block;
-          --icon-size: 16px;
           margin: 0 8px 0 0;
+          --icon-size: 16px;
+          --icon-stroke-width: 1.5;
         }
         &:hover {
           background-color: rgb(0 0 0 / 10%);

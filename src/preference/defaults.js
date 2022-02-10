@@ -50,7 +50,8 @@ export default {
         {
           name: 'API Documentation',
           href: 'https://github.com/redgoose-dev/goose-api/wiki',
-          target: '_blank'
+          target: '_blank',
+          icon: 'server',
         }
       ]
     },
