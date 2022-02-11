@@ -28,10 +28,10 @@
   }
   &:focus-visible:not([disabled]) {
     outline: 0;
-    box-shadow: var(--button-focus, 0 0 0 3px rgb(0 0 0 / 20%));
+    box-shadow: var(--button-focus, inset 0 2px 15px rgb(0 0 0 / 10%), (0 0 0 3px rgb(0 0 0 / 8%), inset 0 0 0 1px rgb(0 0 0 / 15%)));
   }
   &:active:not([disabled]) {
-    box-shadow: var(--button-active, inset 0 2px 15px rgb(0 0 0 / 10%), inset 0 0 0 1px rgb(0 0 0 / 10%));
+    box-shadow: var(--button-active, inset 0 2px 15px rgb(0 0 0 / 10%), inset 0 0 0 1px rgb(0 0 0 / 15%));
   }
   &__body {
     display: block;

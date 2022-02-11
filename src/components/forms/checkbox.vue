@@ -22,7 +22,7 @@ const props = defineProps({
   modelValue: Boolean,
   required: Boolean,
   disabled: Boolean,
-  size: String,
+  size: String, // small
 });
 const emits = defineEmits([ 'update:modelValue' ]);
 </script>

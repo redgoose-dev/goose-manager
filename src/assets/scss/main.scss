@@ -2,6 +2,7 @@
 @use 'fonts';
 @use 'mixins';
 @use 'variables';
+@use 'keyframes';
 
 :root {
   // color
@@ -19,6 +20,8 @@
   --color-sub-rgb: #{variables.$color-light-sub-rgb};
   --color-code: #{variables.$color-light-code};
   --color-code-rgb: #{variables.$color-light-code-rgb};
+  --color-error: #{variables.$color-light-error};
+  --color-error-rgb: #{variables.$color-light-error-rgb};
   // size
   --size-content-body: 1280px;
   // font

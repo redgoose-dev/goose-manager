@@ -5,6 +5,7 @@
   margin: 0;
   padding: var(--button-padding, 0 24px);
   width: var(--button-width, unset);
+  height: var(--button-height, 42px);
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
@@ -14,7 +15,6 @@
   user-select: none;
   white-space: nowrap;
   transition: box-shadow 100ms ease-out, background-color 150ms ease-out, filter 150ms ease-out;
-  height: var(--button-height, 42px);
   background: var(--button-color-bg, rgb(222 222 222));
   color: var(--button-text-color, var(--color-base));
   --icon-size: var(--button-icon-size, 18px);
@@ -24,7 +24,7 @@
   &[type=button],
   &[type=submit],
   &[type=reset] {
-    --button-width: 100%;
+    width: var(--button-width, 100%);
     -webkit-appearance: button;
   }
   &[disabled] {
@@ -36,10 +36,10 @@
   }
   &:focus-visible:not([disabled]) {
     outline: 0;
-    box-shadow: var(--button-focus, 0 0 0 3px rgb(0 0 0 / 20%));
+    box-shadow: var(--button-focus, inset 0 2px 15px rgb(0 0 0 / 10%), (0 0 0 3px rgb(0 0 0 / 8%), inset 0 0 0 1px rgb(0 0 0 / 20%)));
   }
   &:active:not([disabled]) {
-    box-shadow: var(--button-active, inset 0 2px 15px rgb(0 0 0 / 10%), inset 0 0 0 1px rgb(0 0 0 / 10%));
+    box-shadow: var(--button-active, inset 0 2px 15px rgb(0 0 0 / 10%), inset 0 0 0 1px rgb(0 0 0 / 15%));
   }
 
   // inline
@@ -53,23 +53,11 @@
 
   // size
   &--size {
-    &-mini {
-      --button-height: 30px;
+    &-small {
+      --button-height: 28px;
       --button-padding: 0 12px;
       --icon-size: 13px;
-      --font-size: 12px;
-    }
-    &-small {
-      --button-height: 36px;
-      --button-padding: 0 16px;
-      --icon-size: 14px;
-      --font-size: 14px;
-    }
-    &-large {
-      --button-height: 48px;
-      --button-padding: 0 30px;
-      --icon-size: 22px;
-      --font-size: 16px;
+      --font-size: 13px;
     }
   }
 
@@ -78,13 +66,13 @@
     &-key {
       --button-color-bg: var(--color-key);
       --button-text-color: rgb(255 255 255);
-      --button-focus: 0 0 0 3px rgb(var(--color-key-rgb) / 30%);
+      --button-focus: 0 0 0 3px rgb(var(--color-key-rgb) / 30%), inset 0 0 0 1px rgb(0 0 0 / 20%);
       --button-active: inset 0 2px 15px rgb(0 0 0 / 30%), inset 0 0 0 1px rgb(0 0 0 / 20%);
     }
     &-sub {
       --button-color-bg: var(--color-sub);
       --button-text-color: rgb(255 255 255);
-      --button-focus: 0 0 0 3px rgb(var(--color-sub-rgb) / 30%);
+      --button-focus: 0 0 0 3px rgb(var(--color-sub-rgb) / 30%), inset 0 0 0 1px rgb(0 0 0 / 20%);
       --button-active: inset 0 2px 15px rgb(0 0 0 / 20%), inset 0 0 0 1px rgb(0 0 0 / 20%);
     }
   }

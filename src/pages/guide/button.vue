@@ -7,7 +7,7 @@
 
   <section class="page-section">
     <header>
-      <h3>basic</h3>
+      <h2>basic</h2>
       <p>기본적으로 사용하는 모습</p>
     </header>
     <div class="example">
@@ -15,28 +15,22 @@
     </div>
 
     <header>
-      <h3>size</h3>
+      <h2>size</h2>
       <p>버튼의 사이즈 모음</p>
     </header>
     <div class="example">
-      <div class="grid grid--col-4">
-        <div>
-          <ButtonBasic type="button" size="mini">mini</ButtonBasic>
-        </div>
+      <div class="grid grid--col-2">
         <div>
           <ButtonBasic type="button" size="small">small</ButtonBasic>
         </div>
         <div>
           <ButtonBasic type="button">default</ButtonBasic>
         </div>
-        <div>
-          <ButtonBasic type="button" size="large">large</ButtonBasic>
-        </div>
       </div>
     </div>
 
     <header>
-      <h3>color</h3>
+      <h2>color</h2>
       <p>버톤의 컬러</p>
     </header>
     <div class="example">
@@ -54,7 +48,7 @@
     </div>
 
     <header>
-      <h3>element type</h3>
+      <h2>element type</h2>
       <p>다양한 엘리먼트 사용</p>
     </header>
     <div class="example">
@@ -72,7 +66,7 @@
     </div>
 
     <header>
-      <h3>with icon</h3>
+      <h2>with icon</h2>
       <p>아이콘 사용하기</p>
     </header>
     <div class="example">
@@ -93,7 +87,7 @@
     </div>
 
     <header>
-      <h3>inline</h3>
+      <h2>inline</h2>
       <p>인라인 버튼</p>
     </header>
     <div class="example">
@@ -101,7 +95,7 @@
     </div>
 
     <header>
-      <h3>disabled</h3>
+      <h2>disabled</h2>
       <p>버튼 비활성화</p>
     </header>
     <div class="example">
@@ -112,13 +106,13 @@
   <hr class="page-section-line">
 
   <header class="page-header">
-    <h2>Button Icon</h2>
+    <h1>Button Icon</h1>
     <p>`button-icon`컴포넌트에 관한 내용을 다룹니다.</p>
   </header>
 
   <section class="page-section">
     <header>
-      <h3>type</h3>
+      <h2>type</h2>
       <p>사용 용도에 따른 타입</p>
     </header>
     <div class="example">
@@ -129,7 +123,7 @@
       </div>
     </div>
     <header>
-      <h3>disabled</h3>
+      <h2>disabled</h2>
     </header>
     <div class="example">
       <div class="flex">

@@ -17,7 +17,7 @@ const props = defineProps({
   target: String,
   title: String,
   disabled: Boolean,
-  size: String, // mini,small,large
+  size: String, // small
   color: String, // key,gray
   inline: Boolean,
   rotateIcon: Boolean,

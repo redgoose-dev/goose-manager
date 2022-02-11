@@ -11,8 +11,8 @@
     height: var(--checkbox-size, 20px);
     box-sizing: border-box;
     border-radius: 3px;
-    background-color: var(--checkbox-bg, rgb(222 222 222));
-    box-shadow: var(--checkbox-shadow, inset 0 -2px 5px rgb(0 0 0 / 10%), 0 0 0 0 rgb(var(--color-key-rgb) / 0%), inset 0 0 0 1px rgb(0 0 0 / 20%));
+    background-color: var(--checkbox-bg, rgb(255 255 255));
+    box-shadow: var(--checkbox-shadow, inset 0 2px 5px rgb(0 0 0 / 15%), inset 0 0 0 1px rgb(0 0 0 / 20%));
     transition: box-shadow 120ms ease-out;
     &:after {
       content: '';
@@ -45,7 +45,7 @@
     &:active,
     &:focus {
       & + i {
-        --checkbox-shadow: inset 0 -2px 5px rgb(0 0 0 / 10%), 0 0 0 3px rgb(var(--color-key-rgb) / 30%), inset 0 0 0 1px var(--color-key)
+        --checkbox-shadow: inset 0 -2px 5px rgb(0 0 0 / 10%), inset 0 0 0 1px rgb(0 0 0 / 40%), 0 0 0 3px rgb(0 0 0 / 15%);
       }
     }
     &:checked {
@@ -67,10 +67,6 @@
     &-small {
       --checkbox-size: 16px;
       --checkbox-point-size: 10px;
-    }
-    &-large {
-      --checkbox-size: 24px;
-      --checkbox-point-size: 16px;
     }
   }
 

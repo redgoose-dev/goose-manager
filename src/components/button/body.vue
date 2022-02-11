@@ -58,8 +58,3 @@ const props = defineProps({
   }
 }
 </style>
-<style>
-@keyframes spin {
-  100% { transform: rotate(360deg); }
-}
-</style>

@@ -24,7 +24,7 @@ const props = defineProps({
   modelValue: [ String, Number, Boolean ],
   required: Boolean,
   disabled: Boolean,
-  size: String,
+  size: String, // large
 });
 const emits = defineEmits([ 'update:modelValue' ]);
 </script>

@@ -20,7 +20,7 @@
   margin: 42px 0;
   > header {
     margin: 24px 0 16px;
-    h3 {
+    h2 {
       margin: 0;
       font-size: 20px;
       font-weight: 600;
@@ -52,6 +52,18 @@
     &:last-child {
       margin-bottom: 0;
     }
+  }
+  > hr {
+    margin: 24px 0;
+    display: block;
+    border: none;
+    border-top: 1px dashed rgb(0 0 0 / 30%);
+  }
+  > pre {
+    font-size: 12px;
+    white-space: break-spaces;
+    word-break: keep-all;
+    word-wrap: break-word;
   }
   //@include mixins.dark-mode() {
   //  border-color: #555;
