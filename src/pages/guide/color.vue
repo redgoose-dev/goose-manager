@@ -1,12 +1,13 @@
 <template>
 <article>
   <header class="page-header">
-    <h2>Colors</h2>
+    <h1>Colors</h1>
     <p>서비스에서 사용되는 컬러들 목록</p>
   </header>
+
   <section class="page-section">
     <header>
-      <h3>light colors</h3>
+      <h2>light colors</h2>
       <p>라이트모드에서 사용되는 컬러들입니다.</p>
     </header>
     <div class="colors colors--light">
@@ -18,9 +19,10 @@
       </ul>
     </div>
   </section>
+
   <section class="page-section">
     <header>
-      <h3>dark colors</h3>
+      <h2>dark colors</h2>
       <p>다크모드에서 사용되는 컬러들입니다.</p>
     </header>
     <div class="colors colors--dark">

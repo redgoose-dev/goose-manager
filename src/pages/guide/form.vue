@@ -12,10 +12,50 @@
         <code>/src/components/forms/text.vue</code>
       </p>
     </header>
+    <p>다양한 타입</p>
     <div class="example">
-      inputs
+      <div class="grid grid--col-4">
+        <FormInput type="text" placeholder="type=text"/>
+        <FormInput type="password" placeholder="type=password"/>
+        <FormInput type="number" :step="5" :min="0" :max="200" placeholder="type=number"/>
+        <FormInput type="date" placeholder="type=date"/>
+      </div>
+    </div>
+    <p>사이즈</p>
+    <div class="example">
+      <div class="grid grid--col-2">
+        <FormInput
+          v-model="text"
+          size="small"
+          placeholder="size=small"/>
+        <FormInput
+          v-model="text"
+          placeholder="size=normal"/>
+      </div>
       <hr>
       <pre>{{text}}</pre>
+    </div>
+    <p>`readonly`와 `disabled` 속성</p>
+    <div class="example">
+      <div class="grid grid--col-2">
+        <FormInput
+          placeholder="readonly"
+          :readonly="true"/>
+        <FormInput
+          placeholder="disabled"
+          :disabled="true"/>
+      </div>
+    </div>
+    <p>버튼과 함께 사용하기</p>
+    <div class="example">
+      <div class="flex flex--small-gap">
+        <div>
+          <FormInput type="text" placeholder="type=text"/>
+        </div>
+        <div>
+          <ButtonBasic>Submit</ButtonBasic>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -170,6 +210,8 @@ import FormRadio from '../../components/forms/radio.vue';
 import FormContentEditable from '../../components/forms/content-editable.vue';
 import FormKeyword from '../../components/forms/keyword.vue';
 import FormTextarea from '../../components/forms/textarea.vue';
+import FormInput from '../../components/forms/input.vue';
+import ButtonBasic from '../../components/button/basic.vue';
 
 const text = ref(null);
 const textarea = ref(null);
@@ -188,7 +230,7 @@ const selectOptions = [
 async function onSubmitKeyword(e)
 {
   keywordProcessing.value = true;
-  await sleep(3000);
+  await sleep(2000);
   console.log('on submit keyword:', keywordMessage.value);
   keywordProcessing.value = false;
 }

@@ -1,12 +1,13 @@
 <template>
 <article>
   <header class="page-header">
-    <h2>Icons</h2>
+    <h1>Icons</h1>
     <p>`icon` 컴포넌트에 관한 내용을 다룹니다.</p>
   </header>
+
   <section class="page-section">
     <header>
-      <h3>icons index</h3>
+      <h2>icons index</h2>
       <p>
         다음은 아이콘들의 목록입니다. 아이콘의 아래의 이름은 `icon` 컴포넌트의 `name`값입니다.
       </p>
@@ -20,9 +21,10 @@
       </li>
     </ul>
   </section>
+
   <section class="page-section">
     <header>
-      <h3>color</h3>
+      <h2>color</h2>
       <p>아이콘의 컬러 예제입니다.</p>
     </header>
     <ul class="icons-index icons-index--col-4">
@@ -65,9 +67,10 @@
       </li>
     </ul>
   </section>
+
   <section class="page-section">
     <header>
-      <h3>size</h3>
+      <h2>size</h2>
       <p>아이콘의 사이즈 예제입니다.</p>
     </header>
     <ul class="icons-index icons-index--col-4">
@@ -109,9 +112,10 @@
       </li>
     </ul>
   </section>
+
   <section class="page-section">
     <header>
-      <h3>stroke-width</h3>
+      <h2>stroke-width</h2>
       <p>아이콘의 선 두께 예제입니다.</p>
     </header>
     <ul class="icons-index icons-index--col-4">

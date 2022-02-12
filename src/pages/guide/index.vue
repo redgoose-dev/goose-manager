@@ -27,6 +27,7 @@ const title = computed(() => {
   {
     case 'GuideButton': return 'Button';
     case 'GuideForm': return 'Form';
+    case 'GuideFieldset': return 'Fieldset';
     case 'GuideIcon': return 'Icon';
     case 'GuideColor': return 'Color';
     case 'GuideFile': return 'File';

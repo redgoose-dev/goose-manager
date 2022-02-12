@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import router from './router';
+import * as toast from './modules/toast/index.js';
 import App from './app.vue';
 
 // set stylesheet
@@ -16,6 +17,9 @@ window.DEBUG = !!DEBUG;
 // set index.html
 document.title = TITLE;
 document.querySelector('meta[name=description]').setAttribute('content', DESCRIPTION);
+
+// set toast
+toast.setup();
 
 // set component
 const app = createApp(App, {})

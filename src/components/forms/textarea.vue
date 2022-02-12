@@ -17,8 +17,8 @@
   @input="onChangeText"
   @click="onChangePosition"
   @keyup="onChangePosition"
-  @keyup.ctrl.enter="onSubmit"
-  @keydown.meta.enter="onSubmit"/>
+  @keyup.ctrl.enter="emits('submit')"
+  @keydown.meta.enter="emits('submit')"/>
 </template>
 
 <script setup>
@@ -53,11 +53,6 @@ function onChangeText(e)
 {
   if (props.autoSize) changeHeight();
   emits('update:modelValue', e.target.value);
-}
-
-function onSubmit()
-{
-  emits('submit');
 }
 
 function changeHeight()

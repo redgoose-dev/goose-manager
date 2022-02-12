@@ -31,6 +31,7 @@
       margin: 2px 0 0;
       font-size: 12px;
       line-height: 1.25;
+      color: var(--color-weak);
     }
   }
 }
@@ -103,8 +104,16 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
   &--small-gap {
-    gap: 8px;
+    gap: 10px;
+  }
+  &--h {
+    &-center {
+      justify-content: center;
+    }
+    &-end {
+      justify-content: flex-end;
+    }
   }
 }

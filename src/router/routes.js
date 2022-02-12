@@ -24,6 +24,11 @@ const guide = [
         component: () => import('../pages/guide/form.vue'),
       },
       {
+        path: 'fieldset/',
+        name: 'GuideFieldset',
+        component: () => import('../pages/guide/fieldset.vue'),
+      },
+      {
         path: 'icon/',
         name: 'GuideIcon',
         component: () => import('../pages/guide/icon.vue'),
