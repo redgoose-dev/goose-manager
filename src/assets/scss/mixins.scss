@@ -4,7 +4,7 @@
 @mixin responsive($range)
 {
   @if ($range == tablet) { @media (min-width: 768px) { @content; } }
-  @if ($range == desktop) { @media (min-width: 1024px) { @content; } }
+  @else if ($range == desktop) { @media (min-width: 1024px) { @content; } }
   @else if ($range == desktop-1280) { @media (min-width: 1280px) { @content; } }
   @else if ($range == desktop-1440) { @media (min-width: 1440px) { @content; } }
   @else if ($range == desktop-1920) { @media (min-width: 1920px) { @content; } }
@@ -42,6 +42,17 @@
       opacity: .6;
     }
   }
+}
+
+
+// === Typography
+
+// single line text
+@mixin text-single-line()
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

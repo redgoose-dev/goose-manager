@@ -29,6 +29,7 @@ const props = defineProps({
     line-height: 1.15;
     font-weight: 600;
     letter-spacing: -.25px;
+    user-select: none;
   }
   &__body {
     display: grid;

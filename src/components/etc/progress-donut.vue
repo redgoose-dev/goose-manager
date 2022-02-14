@@ -1,5 +1,6 @@
 <template>
 <svg
+  xmlns="http://www.w3.org/2000/svg"
   :width="props.radius * 2"
   :height="props.radius * 2"
   class="progress-donut">
@@ -24,12 +25,12 @@ import { computed } from 'vue';
 const props = defineProps({
   radius: { type: Number, default: 40 },
   stroke: { type: Number, default: 8 },
-  percent: { type: Number, default: 0 },
+  percent: { type: [ Number, String ], default: 0 },
 });
 const normalizedRadius = computed(() => (props.radius - props.stroke * 2));
 const circumference = computed(() => (normalizedRadius.value * 2 * Math.PI));
 const computedStrokeDashOffset = computed(() => {
-  const percent = Math.min(props.percent, 100);
+  const percent = Math.min(Number(props.percent), 100);
   return circumference.value - percent / 100 * circumference.value;
 });
 </script>

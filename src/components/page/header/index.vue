@@ -1,6 +1,6 @@
 <template>
 <header class="page-header">
-  <div class="page-header__body">
+  <div>
     <h1 class="page-header__title">
       {{props.prefix ? `${props.prefix} ` : ''}}
       {{messages.title}}
@@ -87,7 +87,7 @@ const messages = computed(() => {
   grid-template-columns: 1fr auto;
   align-items: center;
   margin: 50px 0 30px;
-  &__body {}
+  user-select: none;
   &__title {
     margin: 0;
     font-size: 32px;

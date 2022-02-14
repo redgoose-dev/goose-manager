@@ -34,6 +34,7 @@ const props = defineProps({
     font-weight: 600;
     letter-spacing: -.5px;
     line-height: 1.15;
+    user-select: none;
   }
   &__body {
     margin: 0;

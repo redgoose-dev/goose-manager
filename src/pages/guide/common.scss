@@ -1,6 +1,7 @@
 @use '../../assets/scss/mixins';
 
 .page-header {
+  user-select: none;
   > h1 {
     margin: 0;
     font-size: 28px;
@@ -20,6 +21,7 @@
   margin: 42px 0;
   > header {
     margin: 24px 0 16px;
+    user-select: none;
     h2 {
       margin: 0;
       font-size: 20px;
@@ -102,18 +104,31 @@
 
 .flex {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
   gap: 20px;
   &--small-gap {
     gap: 10px;
   }
   &--h {
+    &-start {
+      justify-content: flex-start;
+    }
     &-center {
       justify-content: center;
     }
     &-end {
       justify-content: flex-end;
+    }
+  }
+  &--v {
+    &-start {
+      align-items: flex-start;
+    }
+    &-center {
+      align-items: center;
+    }
+    &-end {
+      align-items: flex-end;
     }
   }
 }

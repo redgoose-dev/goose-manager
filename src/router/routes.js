@@ -49,6 +49,11 @@ const guide = [
         component: () => import('../pages/guide/modal.vue'),
       },
       {
+        path: 'item/',
+        name: 'GuideItem',
+        component: () => import('../pages/guide/item.vue'),
+      },
+      {
         path: 'etc/',
         name: 'GuideEtc',
         component: () => import('../pages/guide/etc.vue'),

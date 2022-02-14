@@ -1,7 +1,7 @@
 <template>
 <article>
   <header class="page-header">
-    <h1>ETC components</h1>
+    <h1>ETC</h1>
     <p>기타 잡다한 컴포넌트들</p>
   </header>
 
@@ -35,8 +35,8 @@
       <p>도넛 형태의 그래프를 표시하는 컴포넌트 입니다.</p>
     </header>
     <div class="example">
-      <div class="flex flex--h-center">
-        <ProgressDonut :percent="progress"/>
+      <div class="flex flex--h-center flex--v-center">
+        <ProgressDonut :label="true" :percent="progress"/>
         <input type="range" v-model="progress" :min="0" :max="100" :step="10">
         <span style="width: 44px">{{progress}}%</span>
       </div>

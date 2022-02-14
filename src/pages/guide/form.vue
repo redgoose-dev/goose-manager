@@ -1,7 +1,7 @@
 <template>
 <article>
   <header class="page-header">
-    <h1>Form components</h1>
+    <h1>Form assets</h1>
     <p>입력폼에서 사용되는 컴포넌트들에 대한 예제입니다.</p>
   </header>
 

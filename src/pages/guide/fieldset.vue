@@ -1,7 +1,7 @@
 <template>
 <article>
   <header class="page-header">
-    <h1>Fieldset components</h1>
+    <h1>Fieldset</h1>
     <p>입력폼 필드셋에서 사용되는 컴포넌트들의 예제입니다.</p>
   </header>
 
