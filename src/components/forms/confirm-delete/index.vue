@@ -1,11 +1,36 @@
 <template>
-<article class="confirm-delete">
-  .confirm-delete
+<article class="confirm">
+  <div class="confirm__body">
+    <h1 class="confirm__title">{{props.title}}</h1>
+    <p class="confirm__description">{{props.description}}</p>
+    <p class="confirm__name">{{props.name}}</p>
+  </div>
+  <Controller>
+    <template #left>
+      <ButtonBasic icon-left="arrow-left" @click="emits('cancel')">
+        Back
+      </ButtonBasic>
+    </template>
+    <template #right>
+      <ButtonBasic icon-left="check" color="key" @click="emits('submit')">
+        {{props.buttonLabel}}
+      </ButtonBasic>
+    </template>
+  </Controller>
 </article>
 </template>
 
 <script setup>
-//
+import { Controller } from '../../forms/fieldset';
+import ButtonBasic from '../../button/basic.vue';
+
+const props = defineProps({
+  title: String,
+  description: String,
+  name: String,
+  buttonLabel: String,
+});
+const emits = defineEmits([ 'cancel', 'submit' ]);
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

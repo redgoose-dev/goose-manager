@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { watch } from 'vue';
+import { watch, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
   show: Boolean,
@@ -18,10 +18,15 @@ const props = defineProps({
 });
 const emits = defineEmits([ 'close' ]);
 
-watch(() => props.show, value => {
+function control(sw)
+{
   if (!props.scroll) return;
-  document.querySelector('html').classList[value ? 'add' : 'remove']('mode-modal');
-});
+  document.querySelector('html').classList[sw ? 'add' : 'remove']('mode-modal');
+}
+
+watch(() => props.show, value => control(value));
+onMounted(() => control(props.show));
+onUnmounted(() => control(false));
 </script>
 
 <style>

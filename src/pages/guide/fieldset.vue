@@ -154,9 +154,6 @@ const checkbox = ref([ true, false, false ]);
 .optional-fieldset {
   margin-top: 30px;
 }
-.controller {
-  margin-top: 30px;
-}
 .help {
   strong {
     color: var(--color-key);

@@ -1,3 +1,3 @@
 <template>
-<p>.paginate</p>
+<p>.pagination</p>
 </template>

@@ -20,7 +20,6 @@ const props = defineProps({
   span {
     display: block;
     font-size: 10px;
-    color: var(--color-weak);
     line-height: 1.25;
     &:nth-child(n+2):before {
       content: ',';

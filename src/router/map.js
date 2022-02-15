@@ -66,10 +66,27 @@ const apps = [
     path: '/apps/',
     name: 'Apps',
     component: () => import('../pages/apps/index.vue'),
-    children: [],
+  },
+  {
+    path: '/apps/create/',
+    name: 'AppsCreate',
+    component: () => import('../pages/apps/create.vue'),
+  },
+  {
+    path: '/apps/:srl/edit/',
+    name: 'AppsEdit',
+    component: () => import('../pages/apps/edit.vue'),
+  },
+  {
+    path: '/apps/:srl/delete/',
+    name: 'AppsDelete',
+    component: () => import('../pages/apps/delete.vue'),
   },
 ];
 const nests = [];
+const articles = [];
+const categories = [];
+const files = [];
 
 export default [
   {

@@ -1,9 +1,9 @@
 <template>
 <nav class="controller">
-  <div v-if="$slots.left" class="controller__left">
+  <div class="controller__left">
     <slot name="left"/>
   </div>
-  <div v-if="$slots.right" class="controller__right">
+  <div class="controller__right">
     <slot name="right"/>
   </div>
 </nav>
@@ -15,6 +15,7 @@
   grid-auto-flow: column;
   justify-content: space-between;
   align-items: center;
+  margin: 30px 0 0;
   &__left {
     display: grid;
     grid-auto-flow: column;

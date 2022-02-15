@@ -1,5 +1,5 @@
 <template>
-<fieldset class="fieldset">
+<fieldset :disabled="props.disabled" class="fieldset">
   <legend v-if="props.legend" class="fieldset__legend">
     {{props.legend}}
   </legend>
@@ -12,6 +12,7 @@
 <script setup>
 const props = defineProps({
   legend: String,
+  disabled: Boolean,
 });
 </script>
 

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import routes from './routes';
+import map from './map';
 import { checkAuth } from '../libs/auth';
 
 /** @var {string} BASE_URL */
@@ -7,7 +7,7 @@ import { checkAuth } from '../libs/auth';
 const router = createRouter({
   base: BASE_URL || '/',
   history: createWebHistory(),
-  routes,
+  routes: map,
 });
 
 // 라우트 업데이트 전 후크
