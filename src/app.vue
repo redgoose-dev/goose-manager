@@ -7,12 +7,12 @@
 
 <script setup>
 import { computed, ref, onErrorCaptured, defineAsyncComponent } from 'vue';
-import { useRoute } from 'vue-router';
-import router from './router';
+import { useRouter, useRoute } from 'vue-router';
 import store from './store';
-import { errorRecord } from './libs/error';
+import { err } from './libs/error';
 import ErrorService from './pages/error/500.vue';
 
+const router = useRouter();
 const route = useRoute();
 const error = ref(null);
 const layout = computed(() => {
@@ -24,13 +24,14 @@ const layout = computed(() => {
 
 // children component error
 onErrorCaptured((e, component, info) => {
+  err([ 'app.vue', 'onErrorCaptured()' ], 'error', e.message);
   error.value = e;
-  errorRecord(e);
   return false;
 });
+
 // router error
 router.onError(e => {
+  err([ 'app.vue', 'router.onError()' ], 'error', e.message);
   error.value = e;
-  errorRecord(e);
 });
 </script>

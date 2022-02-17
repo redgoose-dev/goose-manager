@@ -4,6 +4,7 @@ import { checkAuth } from '../libs/auth';
 
 /** @var {string} BASE_URL */
 
+/** @var {Router} router */
 const router = createRouter({
   base: BASE_URL || '/',
   history: createWebHistory(),

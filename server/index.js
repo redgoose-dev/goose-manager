@@ -42,7 +42,7 @@ function localRoutes()
   router.post('/login', async (req, res) => {
     try
     {
-      const { email, password, host } = req.body;
+      const { email, password, save, host } = req.body;
       // request to api
       const apiRes = await api.post(getApiUrl('/auth/login/'), {
         email,
@@ -59,8 +59,11 @@ function localRoutes()
       delete user.token;
       delete user.host;
       // set cookie
-      res.cookie(cookie.prefix + '-token', token, cookie.options);
-      res.cookie(cookie.prefix + '-user', JSON.stringify(user, null, ''), cookie.options);
+      if (save)
+      {
+        res.cookie(cookie.prefix + '-token', token, cookie.options);
+        res.cookie(cookie.prefix + '-user', JSON.stringify(user, null, ''), cookie.options);
+      }
       // result
       res.json({
         success: true,

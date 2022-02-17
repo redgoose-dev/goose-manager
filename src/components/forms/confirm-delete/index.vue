@@ -12,7 +12,12 @@
       </ButtonBasic>
     </template>
     <template #right>
-      <ButtonBasic icon-left="check" color="key" @click="emits('submit')">
+      <ButtonBasic
+        color="key"
+        :icon-left="props.processing ? 'loader' : 'check'"
+        :rotate-icon="props.processing"
+        :disabled="props.processing"
+        @click="emits('submit')">
         {{props.buttonLabel}}
       </ButtonBasic>
     </template>
@@ -29,6 +34,7 @@ const props = defineProps({
   description: String,
   name: String,
   buttonLabel: String,
+  processing: Boolean,
 });
 const emits = defineEmits([ 'cancel', 'submit' ]);
 </script>

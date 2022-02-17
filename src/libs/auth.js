@@ -1,7 +1,6 @@
 import axios from 'axios';
 import store from '../store';
-import router from '../router';
-import { setup, destroy } from './service';
+import { setup } from './service';
 
 /**
  * check auth
@@ -37,6 +36,5 @@ export async function logout()
 {
   let res = await axios.post('/local/logout/');
   if (!res.data.success) throw new Error('Failed request');
-  destroy();
-  router.replace('/auth/login');
+  location.href = '/auth/login/';
 }

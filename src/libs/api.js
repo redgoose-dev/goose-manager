@@ -43,6 +43,18 @@ export function formData(src)
 }
 
 /**
+ * check forms
+ * @param {object} src
+ * @throws {Error}
+ */
+export function checkForms(src)
+{
+  Object.keys(src).forEach(key => {
+    if (!!src[key].error) throw new Error(src[key].error);
+  });
+}
+
+/**
  * get method
  * @param {string} url
  * @param {object} params
@@ -64,7 +76,7 @@ export async function get(url, params = {})
  * @param {any} data
  * @return {Promise<object>}
  */
-export async function post(url, data)
+export async function post(url, data = null)
 {
   if (!instance) setup();
   let res = await instance.post(url, data);

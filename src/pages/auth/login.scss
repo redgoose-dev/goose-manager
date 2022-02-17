@@ -1,9 +1,6 @@
 @use '../../assets/scss/mixins';
 
 .login {
-  --color-input-line: rgb(0 0 0 / 40%);
-  --color-input-placeholder: rgb(0 0 0 / 20%);
-  --color-input-autofill: rgb(0 0 0 / 20%);
   display: grid;
   height: 100vh;
   align-items: center;
@@ -30,6 +27,7 @@
     text-align: center;
     line-height: 1.15;
     color: var(--title);
+    user-select: none;
   }
   &__description {
     text-align: center;
@@ -39,6 +37,7 @@
     font-family: var(--font-eng);
     color: var(--color-blur);
     font-weight: 400;
+    user-select: none;
   }
   &__body {
     width: 260px;
@@ -54,8 +53,14 @@
       }
     }
   }
+  &__nav {
+    margin: 30px 0 0;
+  }
   @include mixins.dark-mode() {
-    //
+    // TODO: 다크모드 작업
+    // --color-input-line
+    // --color-input-placeholder
+    // --color-input-autofill
   }
 }
 
@@ -77,7 +82,7 @@
       right: 0;
       bottom: 0;
       height: 1px;
-      background-color: var(--color-input-line);
+      background-color: var(--color-input-line, rgb(0 0 0 / 50%));
     }
     &:after {
       content: '';
@@ -105,7 +110,7 @@
       outline: none;
       border-radius: 0;
       &::placeholder {
-        color: var(--color-input-placeholder);
+        color: var(--color-input-placeholder, rgb(0 0 0 / 25%));
       }
       &:-webkit-autofill,
       &:-webkit-autofill:hover,
@@ -115,7 +120,7 @@
         padding-right: 12px;
         transition: background-color 5000s ease-in-out 0s;
         -webkit-transition: background-color 9999s ease-out;
-        -webkit-box-shadow: 0 0 0 1000px var(--color-input-autofill) inset !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--color-input-autofill, rgb(0 0 0 / 5%)) inset !important;
         -webkit-text-fill-color: var(--color-base) !important;
       }
     }
@@ -125,7 +130,6 @@
       }
     }
   }
-  &--id {}
   &--password {
     margin-top: 24px;
   }

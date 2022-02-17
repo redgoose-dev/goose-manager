@@ -1,7 +1,7 @@
 <template>
 <article>
   <PageHeader module="apps" title="Create App"/>
-  <Post ref="$post"/>
+  <Post ref="$post" mode="create"/>
 </article>
 </template>
 

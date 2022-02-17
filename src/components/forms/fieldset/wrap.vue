@@ -1,16 +1,23 @@
 <template>
-<fieldset :disabled="props.disabled" class="fieldset">
-  <legend v-if="props.legend" class="fieldset__legend">
+<component
+  :is="props.tag"
+  :disabled="props.disabled"
+  class="fieldset">
+  <component
+    v-if="props.legend"
+    :is="props.tag === 'fieldset' ? 'legend' : 'h1'"
+    class="fieldset__legend">
     {{props.legend}}
-  </legend>
+  </component>
   <div class="fieldset__body">
     <slot/>
   </div>
-</fieldset>
+</component>
 </template>
 
 <script setup>
 const props = defineProps({
+  tag: { type: String, default: 'fieldset' },
   legend: String,
   disabled: Boolean,
 });

@@ -1,11 +1,11 @@
 <template>
 <article>
-  <PageHeader module="apps" title="Delete App"/>
+  <PageHeader module="users" title="Delete User"/>
   <ConfirmDelete
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete App"
+    button-label="Delete User"
     :processing="processing"
     @cancel="$router.back()"
     @submit="onSubmit"/>
@@ -18,6 +18,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { get, post } from '../../libs/api';
 import { err } from '../../libs/error';
 import { toast } from '../../modules/toast';
+import { printf, words } from '../../libs/message';
 import PageHeader from '../../components/page/header/index.vue';
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue';
 
@@ -25,7 +26,7 @@ const router = useRouter();
 const route = useRoute();
 const fields = reactive({
   title: '',
-  description: '이것을 삭제하면 하위의 `Nest`, `Article`, `Category`, `File`의 데이터가 전부 삭제됩니다.',
+  description: printf(words.warningDeleteItem, '사용자'),
   name: '',
 });
 const processing = ref(false);
@@ -35,14 +36,14 @@ async function onSubmit()
   try
   {
     processing.value = true;
-    await post(`/apps/${route.params.srl}/delete/`);
+    await post(`/users/${route.params.srl}/delete/`);
     processing.value = false;
     await router.push('../../');
-    toast.add('Success delete app.', 'success');
+    toast.add('Success delete user.', 'success');
   }
   catch (e)
   {
-    err(['pages', 'apps', 'delete.vue', 'onSubmit()'], 'error', e.message);
+    err(['pages', 'users', 'delete.vue', 'onSubmit()'], 'error', e.message);
     processing.value = false;
     toast.add('Failed delete app.', 'error');
   }
@@ -51,16 +52,20 @@ async function onSubmit()
 onMounted(async () => {
   try
   {
-    let res = await get(`/apps/${route.params.srl}/`, { field: 'id,name' });
+    let res = await get(`/users/${route.params.srl}/`, { field: '*' });
     res = res.data;
-    fields.title = `이 "${res.name}" 항목을 삭제할까요?`;
-    fields.name = `[${res.id}] ${res.name}`;
+    fields.title = printf(words.confirmDeleteItem, `사용자(${res.name})`);
+    fields.name = `${res.email}`;
   }
   catch (e)
   {
-    err(['pages', 'apps', 'delete.vue', 'onMounted()'], 'error', e.message);
-    toast.add('Failed load app item.', 'error');
+    err(['pages', 'users', 'delete.vue', 'onMounted()'], 'error', e.message);
+    toast.add('Failed load user item.', 'error');
     await router.back();
   }
 });
 </script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="apps"/>
+  <PageHeader module="users"/>
   <Loading v-if="processing"/>
   <Items v-else-if="index?.length > 0">
     <Card
@@ -8,17 +8,22 @@
       :title="item.title"
       :description="item.description"
       :meta="item.meta"
+      :href="`./${item.srl}/`"
       :nav="[
         { label: 'Edit', href: `./${item.srl}/edit/` },
-        { label: 'Delete', href: `./${item.srl}/delete/` },
-      ].filter(Boolean)"
-      class="item"/>
+        !item.self && { label: 'Delete', href: `./${item.srl}/delete/` },
+        { label: 'Change Password', href: `./${item.srl}/change-password/` },
+      ].filter(Boolean)">
+      <template v-if="item.self" #after>
+        <Mark/>
+      </template>
+    </Card>
   </Items>
   <Empty v-else/>
-  <Controller>
+  <Controller v-if="store.state.user.admin">
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        Create App
+        Create User
       </ButtonBasic>
     </template>
   </Controller>
@@ -27,9 +32,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import getData from '../../structure/apps';
+import store from '../../store';
+import getData from '../../structure/users';
 import { err } from '../../libs/error';
-import { Items, Card } from '../../components/item';
+import { Items, Card, Mark } from '../../components/item';
 import PageHeader from '../../components/page/header/index.vue';
 import Controller from '../../components/forms/fieldset/controller.vue';
 import ButtonBasic from '../../components/button/basic.vue';
@@ -49,16 +55,10 @@ onMounted(async () => {
     index.value = res.index;
     processing.value = false;
   }
-  catch(e)
+  catch (e)
   {
     err(['pages', 'apps', 'index.vue', 'onMounted()'], 'error', e.message);
     processing.value = false;
   }
 });
 </script>
-
-<style lang="scss" scoped>
-.item {
-  --item-height: 110px;
-}
-</style>

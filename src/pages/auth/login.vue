@@ -2,12 +2,8 @@
 <article class="login">
   <div class="login__wrap">
     <header>
-      <h1 class="login__title">
-        {{title}}
-      </h1>
-      <h2 class="login__description">
-        {{description}}
-      </h2>
+      <h1 class="login__title">{{title}}</h1>
+      <h2 class="login__description">{{description}}</h2>
     </header>
     <form class="login__body" @submit.prevent="onSubmit">
       <fieldset>
@@ -74,14 +70,17 @@
 /** @var {string} TITLE */
 /** @var {string} DESCRIPTION */
 /** @var {string} API_URL */
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
-import router from '../../router';
 import store from '../../store';
 import { setup } from '../../libs/service';
+import { toast } from '../../modules/toast';
 import FormCheckbox from '../../components/forms/checkbox.vue';
 import ButtonBasic from '../../components/button/basic.vue';
+import { err } from "../../libs/error.js";
 
+const router = useRouter();
 const loading = ref(false);
 const title = ref(TITLE || 'manager');
 const description = ref(DESCRIPTION || 'manager description');
@@ -103,10 +102,10 @@ async function onSubmit()
     // on loading
     loading.value = true;
     // request api
-    // TODO: 임시로 넣어뒀는데 나중에 정리하기
     let res = await axios.post('/local/login/', {
-      email: 'x@x.x',
-      password: '1234',
+      email: forms.email,
+      password: forms.password,
+      save: forms.save,
     });
     // check and set values
     const { success, message, data } = res.data;
@@ -118,12 +117,13 @@ async function onSubmit()
     // off loading
     loading.value = false;
     // redirect url
-    router.replace('/');
+    await router.replace('/');
   }
   catch(e)
   {
+    err(['pages', 'auth', 'login.vue', 'onSubmit()'], 'error', e.message);
     loading.value = false;
-    // throw new Error(e.message);
+    toast.add('Failed login.', 'error');
   }
 }
 </script>

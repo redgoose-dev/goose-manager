@@ -6,7 +6,7 @@ import { pureObject } from '../libs/object';
 /**
  * get preference
  * @return {object}
- * */
+ */
 export function getPreference()
 {
   const storagePreference = storage.get('preference');

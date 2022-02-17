@@ -1,5 +1,36 @@
 @use '../../../assets/scss/mixins';
 
 .confirm {
-  //
+  &__body {
+    display: grid;
+    align-content: center;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 30px rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%);
+    padding: 0 30px;
+    text-align: center;
+    min-height: 280px;
+    height: 32vw;
+    max-height: 420px;
+  }
+  &__title {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 500;
+  }
+  &__description {
+    margin: 8px 0 0;
+    font-size: 12px;
+    line-height: 1.15;
+    color: var(--color-weak);
+  }
+  &__name {
+    margin: 24px 0 0;
+    font-size: 14px;
+    line-height: 1.15;
+    color: var(--color-key);
+    font-weight: 700;
+  }
 }

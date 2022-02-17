@@ -1,12 +1,9 @@
+import store from '../../store';
 import { get } from '../../libs/api';
-import { getDate } from '../../libs/date';
 
 const defaultOptions = {
-  url: '/apps/',
-  params: {
-    order: 'srl',
-    sort: 'desc',
-  },
+  url: null,
+  params: {},
 };
 
 async function request(op)
@@ -17,17 +14,12 @@ async function request(op)
 function filtering(res)
 {
   return {
-    total: res.total,
-    index: res.index.map(item => ({
-      srl: item.srl,
-      title: item.name,
-      description: item.description,
-      meta: [
-        `srl: ${item.srl}`,
-        `id: ${item.id}`,
-        `date: ${getDate(item.regdate)}`,
-      ],
-    })),
+    srl: Number(res.srl),
+    email: res.email,
+    name: res.name,
+    regdate: res.regdate,
+    admin: res.admin > 0,
+    self: store.state.user.srl === Number(res.srl),
   };
 }
 

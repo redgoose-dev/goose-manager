@@ -14,7 +14,8 @@
               :is="getNavigationElementName(item)"
               :to="item.link"
               :href="item.href"
-              :target="item.target">
+              :target="item.target"
+              :class="[ (route.meta.active === item.active) && 'router-link-active' ]">
               <Icon
                 v-if="item.icon"
                 :name="item.icon"
@@ -32,7 +33,8 @@
                     :is="getNavigationElementName(item2)"
                     :to="item2.link"
                     :href="item2.href"
-                    :target="item2.target">
+                    :target="item2.target"
+                    :class="[ (route.meta.active === item2.active) && 'router-link-active' ]">
                     <Icon
                       v-if="item2.icon"
                       :name="item2.icon"
@@ -96,13 +98,13 @@
 
 <script setup>
 import { computed } from 'vue';
-import axios from 'axios';
+import { useRoute } from 'vue-router';
 import store from '../store';
 import { logout } from '../libs/auth';
-// import {} from '../libs/util';
+import * as message from '../libs/message';
 import Icon from '../components/icons/index.vue';
-import ButtonBasic from '../components/button/basic.vue';
 
+const route = useRoute();
 const year = new Date().getFullYear();
 const gnb = computed(() => {
   const { navigation } = store.state.preference;
@@ -121,7 +123,7 @@ function onClickClearTokens()
 
 async function onClickLogout()
 {
-  if (!confirm('정말 로그아웃 할까요?')) return;
+  if (!confirm(message.words.confirmLogout)) return;
   await logout();
 }
 

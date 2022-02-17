@@ -54,7 +54,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        {{props.srl ? 'Edit App' : 'Create App'}}
+        {{isEdit ? 'Edit App' : 'Create App'}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -62,18 +62,21 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { Fieldset, Field, Controller, Help } from '../../forms/fieldset';
 import { validateId } from '../../../libs/string';
-import { get, post, formData } from '../../../libs/api';
+import { get, post, formData, checkForms } from '../../../libs/api';
 import { toast } from '../../../modules/toast';
 import { err } from '../../../libs/error';
 import FormInput from '../../forms/input.vue';
 import ButtonBasic from '../../button/basic.vue';
 
 const router = useRouter();
-const props = defineProps({ srl: Number });
+const props = defineProps({
+  srl: Number,
+  mode: String,
+});
 const forms = reactive({
   id: { value: '', error: null },
   name: { value: '', error: null },
@@ -81,39 +84,37 @@ const forms = reactive({
 });
 const loading = ref(false);
 const processing = ref(false);
+const isEdit = computed(() => (props.mode === 'edit'));
 
 async function onSubmit()
 {
   forms.id.error = null;
-  if (!validateId(forms.id.value))
-  {
-    forms.id.error = 'Please check `ID`';
-    return;
-  }
+  if (!validateId(forms.id.value)) forms.id.error = 'Please check `ID`';
 
   try
   {
     processing.value = true;
+    checkForms(forms);
     const data = formData({
       id: forms.id.value,
       name: forms.name.value,
       description: forms.description.value,
     });
-    await post(props.srl ? `/apps/${props.srl}/edit/` : '/apps/', data);
+    let res = await post(props.srl ? `/apps/${props.srl}/edit/` : '/apps/', data);
     processing.value = false;
     await router.push('/apps/');
+    toast.add(`Success ${props.mode} app.`, 'success');
   }
   catch (e)
   {
     err([ 'components', 'pages', 'apps', 'post.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
-    const message = props.srl ? 'Failed edit app.' : 'Failed create app.';
-    toast.add(message, 'error');
+    toast.add(`Failed ${props.mode} app.`, 'error');
   }
 }
 
 onMounted(async () => {
-  if (!props.srl) return;
+  if (props.mode !== 'edit') return;
   try
   {
     loading.value = true;

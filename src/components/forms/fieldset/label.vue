@@ -13,5 +13,6 @@
   justify-content: flex-start;
   padding: 4px 0;
   box-sizing: border-box;
+  cursor: pointer;
 }
 </style>

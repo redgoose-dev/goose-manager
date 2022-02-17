@@ -3,37 +3,43 @@ export default {
   navigation: [
     {
       name: 'Modules',
-      icon: 'cloud',
+      icon: 'box',
       children: [
         {
           name: 'Apps',
           link: '/apps/',
           icon: 'cloud',
+          active: 'apps',
         },
         {
           name: 'Nests',
           link: '/nests/',
           icon: 'folder',
+          active: 'nests',
         },
         {
           name: 'Users',
-          href: '/users/',
+          link: '/users/',
           icon: 'user',
+          active: 'users',
         },
         {
           name: 'Files',
           link: '/files/',
           icon: 'file',
+          active: 'files',
         },
         {
           name: 'JSON',
           link: '/json/',
           icon: 'code',
+          active: 'json',
         },
         {
           name: 'Checklist',
           link: '/checklist/',
-          icon: 'check'
+          icon: 'check',
+          active: 'checklist',
         },
       ],
     },
@@ -59,9 +65,11 @@ export default {
       name: 'Guide',
       link: '/guide/',
       icon: 'book',
+      active: 'guide',
     }
   ],
   dashboard: {},
+  apps: {},
   nests: {},
   articles: {
     pageCount: 24,
@@ -77,6 +85,7 @@ export default {
   files: {
     pageCount: 24,
   },
+  users: {},
   checklist: {
     reset: '05:00',
     format: '{yyyy}-{MM}-{dd} ({week})',

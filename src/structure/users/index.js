@@ -1,8 +1,9 @@
+import store from '../../store';
 import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
 
 const defaultOptions = {
-  url: '/apps/',
+  url: '/users/',
   params: {
     order: 'srl',
     sort: 'desc',
@@ -20,13 +21,14 @@ function filtering(res)
     total: res.total,
     index: res.index.map(item => ({
       srl: item.srl,
-      title: item.name,
-      description: item.description,
+      title: item.email,
       meta: [
         `srl: ${item.srl}`,
-        `id: ${item.id}`,
-        `date: ${getDate(item.regdate)}`,
-      ],
+        `name: ${item.name}`,
+        getDate(item.regdate),
+        item.admin && `Admin`,
+      ].filter(Boolean),
+      self: store.state.user.srl === Number(item.srl),
     })),
   };
 }
