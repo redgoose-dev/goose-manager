@@ -57,7 +57,14 @@ function onChangePosition(e)
 }
 function onChangeText(e)
 {
-  emits('update:modelValue', e.target.value);
+  let value = e.target.value;
+  switch (props.type)
+  {
+    case 'number':
+      value = Number(value);
+      break;
+  }
+  emits('update:modelValue', value);
 }
 
 function focus()

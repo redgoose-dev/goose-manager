@@ -5,13 +5,16 @@
   <div v-else-if="index?.length > 0" class="apps">
     <section v-for="app in index" class="app">
       <header class="app__header">
-        <h1 class="app__title">{{app.title}}</h1>
+        <h1 class="app__title">
+          <span>{{app.title}}</span>
+          <em>{{app.countNests}}</em>
+        </h1>
         <p class="app__description">{{app.description}}</p>
       </header>
       <Items v-if="app.nests?.length > 0" theme="card" class="app__nests">
         <Card
           v-for="nest in app.nests"
-          :href="`./${nest.srl}/`"
+          :href="`./${nest.srl}/articles/`"
           :title="nest.title"
           :description="nest.description"
           :meta="nest.meta"
@@ -22,6 +25,9 @@
           ].filter(Boolean)"
           class="nest"/>
       </Items>
+      <div v-else class="nests-empty">
+        <strong>no item</strong>
+      </div>
     </section>
   </div>
   <Empty v-else/>

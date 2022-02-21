@@ -40,6 +40,42 @@ const nests = [
     component: () => import('../pages/nests/index.vue'),
     meta: { active: 'nests' },
   },
+  {
+    path: '/nests/create/',
+    name: 'NestsCreate',
+    component: () => import('../pages/nests/create.vue'),
+    meta: { active: 'nests' },
+  },
+  {
+    path: '/nests/:srl/',
+    name: 'NestsItem',
+    component: () => import('../pages/nests/item.vue'),
+    meta: { active: 'nests' },
+  },
+  {
+    path: '/nests/:srl/edit/',
+    name: 'NestsEdit',
+    component: () => import('../pages/nests/edit.vue'),
+    meta: { active: 'nests' },
+  },
+  {
+    path: '/nests/:srl/delete/',
+    name: 'NestsDelete',
+    component: () => import('../pages/nests/delete.vue'),
+    meta: { active: 'nests' },
+  },
+  {
+    path: '/nests/:srl/articles/',
+    name: 'NestsArticles',
+    component: () => import('../pages/nests/articles.vue'),
+    meta: { active: 'nests' },
+  },
+  {
+    path: '/nests/:srl/categories/',
+    name: 'NestsCategories',
+    component: () => import('../pages/nests/categories.vue'),
+    meta: { active: 'nests' },
+  },
 ];
 const articles = [
   {

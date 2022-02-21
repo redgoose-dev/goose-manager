@@ -24,6 +24,7 @@ export default {
   word: {
     user: '사용자',
     app: '앱',
+    nest: '둥지',
     password: '비밀번호',
     add: '추가',
     edit: '수정',

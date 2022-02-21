@@ -6,13 +6,20 @@
 }
 
 .app {
-  &__header {
-  }
   &__title {
     margin: 0;
     font-size: 16px;
     line-height: 1.05;
     letter-spacing: -.25px;
+    em {
+      font-style: normal;
+      &:before {
+        content: '(';
+      }
+      &:after {
+        content: ')';
+      }
+    }
   }
   &__description {
     margin: 4px 0 0;
@@ -22,5 +29,24 @@
   }
   &__nests {
     margin-top: 16px;
+  }
+}
+
+.nests-empty {
+  display: grid;
+  align-content: center;
+  margin: 16px 0 0;
+  border-radius: 2px;
+  height: 110px;
+  user-select: none;
+  background: var(--color-invert);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 3%), 0 1px 20px rgb(0 0 0 / 10%);
+  strong {
+    display: block;
+    margin: 0 auto;
+    font-size: 13px;
+    letter-spacing: 0;
+    font-weight: 300;
+    color: var(--color-weak);
   }
 }

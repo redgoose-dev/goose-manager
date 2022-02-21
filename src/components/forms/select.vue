@@ -12,7 +12,7 @@
     :disabled="props.disabled"
     @input="emits('update:modelValue', $event.target.value)">
     <template v-if="props.options?.length > 0">
-      <option v-if="placeholder" value="">
+      <option v-if="props.placeholder" value="">
         {{props.placeholder}}
       </option>
       <option v-for="item in props.options" :value="item.value">

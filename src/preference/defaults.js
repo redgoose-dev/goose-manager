@@ -76,7 +76,11 @@ export default {
   ],
   dashboard: {},
   apps: {},
-  nests: {},
+  nests: {
+    uploadFileCount: 20,
+    limitUploadFile: 5242880,
+    limitUploadFiles: 20971520,
+  },
   articles: {
     pageCount: 24,
     pageRange: 10,

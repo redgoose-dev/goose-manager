@@ -1,8 +1,5 @@
 <template>
-<label :class="[
-  'radio',
-  size && `radio--size-${size}`
-]">
+<label :class="[ 'radio', size && `radio--size-${size}` ]">
   <input
     type="radio"
     :name="props.name"

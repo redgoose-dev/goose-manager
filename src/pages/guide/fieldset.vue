@@ -32,7 +32,7 @@
       </Fieldset>
       <Fieldset legend="Optional fields" class="optional-fieldset">
         <Field label="Radio buttons" for="radios">
-          <div class="flex">
+          <Labels>
             <Label>
               <FormRadio name="radios" id="radios" v-model="radio" value="apple"/>
               <span>Apple</span>
@@ -45,14 +45,14 @@
               <FormRadio name="radios" v-model="radio" value="mango"/>
               <span>Mango</span>
             </Label>
-          </div>
+          </Labels>
           <Help>
             Check value: <strong>{{radio}}</strong>
           </Help>
         </Field>
         <Field label="Mix forms">
           <div class="flex">
-            <div class="flex">
+            <Labels>
               <Label>
                 <FormRadio name="radios2" value="apple"/>
                 <span>Apple</span>
@@ -61,10 +61,10 @@
                 <FormRadio name="radios2" value="banana"/>
                 <span>Banana</span>
               </Label>
-            </div>
+            </Labels>
           </div>
           <div class="flex">
-            <div class="flex">
+            <Labels>
               <Label>
                 <span>Width:</span>
                 <FormInput
@@ -83,12 +83,12 @@
                   style="--input-width: 70px"/>
                 <span>px</span>
               </Label>
-            </div>
+            </Labels>
           </div>
         </Field>
         <Columns>
           <Field label="Checkbox buttons" for="checkboxes">
-            <div class="flex">
+            <Labels>
               <Label>
                 <FormCheckbox name="checkboxes" id="checkboxes" v-model="checkbox[0]"/>
                 <span>Apple</span>
@@ -101,13 +101,13 @@
                 <FormCheckbox name="checkboxes" v-model="checkbox[2]"/>
                 <span>Mango</span>
               </Label>
-            </div>
+            </Labels>
             <Help>
               Check value: <strong>{{checkbox}}</strong>
             </Help>
           </Field>
           <Field label="Side input" for="column-input">
-            <div class="flex">
+            <Labels>
               <Label>
                 <FormRadio name="radios3" value="apple"/>
                 <span>Apple</span>
@@ -116,7 +116,7 @@
                 <FormRadio name="radios3" value="banana"/>
                 <span>Banana</span>
               </Label>
-            </div>
+            </Labels>
           </Field>
         </Columns>
       </Fieldset>
@@ -136,7 +136,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Fieldset, Field, Columns, Controller, Label, Help } from '../../components/forms/fieldset';
+import { Fieldset, Field, Columns, Controller, Labels, Label, Help } from '../../components/forms/fieldset';
 import FormInput from '../../components/forms/input.vue';
 import FormSelect from '../../components/forms/select.vue';
 import FormCheckbox from '../../components/forms/checkbox.vue';

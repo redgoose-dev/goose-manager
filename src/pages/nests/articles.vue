@@ -1,0 +1,12 @@
+<template>
+<article>
+  <PageHeader
+    title="[NAME] Articles"
+    description="[NEST_DESCRIPTION]"/>
+  <p>asdasd</p>
+</article>
+</template>
+
+<script setup>
+import PageHeader from '../../components/page/header/index.vue';
+</script>

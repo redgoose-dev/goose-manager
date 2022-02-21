@@ -119,15 +119,15 @@
     </header>
     <div class="example">
       <div class="grid grid--col-3">
-        <label class="flex flex--small-gap">
+        <label class="flex flex--small-gap flex--v-center">
           <FormCheckbox v-model="checkbox" size="small"/>
           <span>small</span>
         </label>
-        <label class="flex flex--small-gap">
+        <label class="flex flex--small-gap flex--v-center">
           <FormCheckbox v-model="checkbox"/>
           <span>normal</span>
         </label>
-        <label class="flex flex--small-gap">
+        <label class="flex flex--small-gap flex--v-center">
           <FormCheckbox v-model="checkbox" :disabled="true"/>
           <span>disabled</span>
         </label>
@@ -147,20 +147,45 @@
     </header>
     <div class="example">
       <div class="grid grid--col-3">
-        <label class="flex flex--small-gap">
+        <label class="flex flex--small-gap flex--v-center">
           <FormRadio name="radio" v-model="radio" value="radio1" size="small"/>
           <span>radio1(small)</span>
         </label>
-        <label class="flex flex--small-gap">
+        <label class="flex flex--small-gap flex--v-center">
           <FormRadio name="radio" v-model="radio" value="radio2"/>
           <span>radio2(normal)</span>
         </label>
-        <label class="flex flex--small-gap">
+        <label class="flex flex--small-gap flex--v-center">
           <FormRadio name="radio" v-model="radio" value="radio4" :disabled="true"/>
           <span>disabled</span>
         </label>
       </div>
       <p>[checked value: {{radio}}]</p>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <header>
+      <h2>switch</h2>
+      <p>
+        <code>/src/components/forms/switch.vue</code>
+      </p>
+    </header>
+    <div class="example">
+      <div class="flex flex--v-center">
+        <FormSwitch v-model="sw"/>
+        <span>{{sw}}</span>
+      </div>
+      <hr>
+      <div class="flex flex--v-center">
+        <small>apple</small>
+        <FormSwitch
+          v-model="customSwitch"
+          :values="[ 'apple', 'mango' ]"/>
+        <small>mango</small>
+        <span>|</span>
+        <span>Selected value: <strong>{{customSwitch}}</strong></span>
+      </div>
     </div>
   </section>
 
@@ -211,12 +236,15 @@ import FormContentEditable from '../../components/forms/content-editable.vue';
 import FormKeyword from '../../components/forms/keyword.vue';
 import FormTextarea from '../../components/forms/textarea.vue';
 import FormInput from '../../components/forms/input.vue';
+import FormSwitch from '../../components/forms/switch.vue';
 import ButtonBasic from '../../components/button/basic.vue';
 
 const text = ref(null);
 const textarea = ref(null);
 const select = ref(null);
 const checkbox = ref(false);
+const sw = ref(false);
+const customSwitch = ref('apple');
 const radio = ref('radio1');
 const contentEditable = ref('hello content-editable');
 const keywordMessage = ref('hello keyword');
