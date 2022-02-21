@@ -7,6 +7,134 @@ const auth = [
     meta: { layout: 'blank', active: 'auth' },
   },
 ];
+const apps = [
+  {
+    path: '/apps/',
+    name: 'Apps',
+    component: () => import('../pages/apps/index.vue'),
+    meta: { active: 'apps' },
+  },
+  {
+    path: '/apps/create/',
+    name: 'AppsCreate',
+    component: () => import('../pages/apps/create.vue'),
+    meta: { active: 'apps' },
+  },
+  {
+    path: '/apps/:srl/edit/',
+    name: 'AppsEdit',
+    component: () => import('../pages/apps/edit.vue'),
+    meta: { active: 'apps' },
+  },
+  {
+    path: '/apps/:srl/delete/',
+    name: 'AppsDelete',
+    component: () => import('../pages/apps/delete.vue'),
+    meta: { active: 'apps' },
+  },
+];
+const nests = [
+  {
+    path: '/nests/',
+    name: 'Nests',
+    component: () => import('../pages/nests/index.vue'),
+    meta: { active: 'nests' },
+  },
+];
+const articles = [
+  {
+    path: '/articles/',
+    name: 'Articles',
+    component: () => import('../pages/articles/index.vue'),
+    meta: { active: 'articles' },
+  },
+];
+const files = [
+  {
+    path: '/files/',
+    name: 'Files',
+    component: () => import('../pages/files/index.vue'),
+    meta: { active: 'files' },
+  },
+];
+const json = [
+  {
+    path: '/json/',
+    name: 'Json',
+    component: () => import('../pages/json/index.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/create/',
+    name: 'JsonCreate',
+    component: () => import('../pages/json/create.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/:srl/',
+    name: 'JsonItem',
+    component: () => import('../pages/json/item.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/:srl/edit/',
+    name: 'JsonEdit',
+    component: () => import('../pages/json/edit.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/:srl/delete/',
+    name: 'JsonDelete',
+    component: () => import('../pages/json/delete.vue'),
+    meta: { active: 'json' },
+  },
+];
+const users = [
+  {
+    path: '/users/',
+    name: 'Users',
+    component: () => import('../pages/users/index.vue'),
+    meta: { active: 'users' },
+  },
+  {
+    path: '/users/:srl/',
+    name: 'UsersItem',
+    component: () => import('../pages/users/item.vue'),
+    meta: { active: 'users' },
+  },
+  {
+    path: '/users/:srl/edit/',
+    name: 'UsersEdit',
+    component: () => import('../pages/users/edit.vue'),
+    meta: { active: 'users' },
+  },
+  {
+    path: '/users/:srl/delete/',
+    name: 'UsersDelete',
+    component: () => import('../pages/users/delete.vue'),
+    meta: { active: 'users' },
+  },
+  {
+    path: '/users/create/',
+    name: 'UsersCreate',
+    component: () => import('../pages/users/create.vue'),
+    meta: { active: 'users' },
+  },
+  {
+    path: '/users/:srl/change-password/',
+    name: 'UsersChangePassword',
+    component: () => import('../pages/users/change-password.vue'),
+    meta: { active: 'users' },
+  },
+];
+const checklist = [
+  {
+    path: '/checklist/',
+    name: 'Checklist',
+    component: () => import('../pages/checklist/index.vue'),
+    meta: { active: 'checklist' },
+  },
+];
 const guide = [
   {
     path: '/guide/',
@@ -71,74 +199,6 @@ const guide = [
     ],
   },
 ];
-const apps = [
-  {
-    path: '/apps/',
-    name: 'Apps',
-    component: () => import('../pages/apps/index.vue'),
-    meta: { active: 'apps' },
-  },
-  {
-    path: '/apps/create/',
-    name: 'AppsCreate',
-    component: () => import('../pages/apps/create.vue'),
-    meta: { active: 'apps' },
-  },
-  {
-    path: '/apps/:srl/edit/',
-    name: 'AppsEdit',
-    component: () => import('../pages/apps/edit.vue'),
-    meta: { active: 'apps' },
-  },
-  {
-    path: '/apps/:srl/delete/',
-    name: 'AppsDelete',
-    component: () => import('../pages/apps/delete.vue'),
-    meta: { active: 'apps' },
-  },
-];
-const nests = [];
-const articles = [];
-const categories = [];
-const files = [];
-const users = [
-  {
-    path: '/users/',
-    name: 'Users',
-    component: () => import('../pages/users/index.vue'),
-    meta: { active: 'users' },
-  },
-  {
-    path: '/users/:srl/',
-    name: 'UsersItem',
-    component: () => import('../pages/users/item.vue'),
-    meta: { active: 'users' },
-  },
-  {
-    path: '/users/:srl/edit/',
-    name: 'UsersEdit',
-    component: () => import('../pages/users/edit.vue'),
-    meta: { active: 'users' },
-  },
-  {
-    path: '/users/:srl/delete/',
-    name: 'UsersDelete',
-    component: () => import('../pages/users/delete.vue'),
-    meta: { active: 'users' },
-  },
-  {
-    path: '/users/create/',
-    name: 'UsersCreate',
-    component: () => import('../pages/users/create.vue'),
-    meta: { active: 'users' },
-  },
-  {
-    path: '/users/:srl/change-password/',
-    name: 'UsersChangePassword',
-    component: () => import('../pages/users/change-password.vue'),
-    meta: { active: 'users' },
-  },
-];
 
 export default [
   {
@@ -151,9 +211,10 @@ export default [
   ...apps,
   ...nests,
   ...articles,
-  ...categories,
   ...files,
+  ...json,
   ...users,
+  ...checklist,
   ...guide,
   {
     path: '/:pathMatch(.*)*',

@@ -1,12 +1,12 @@
 <template>
-<ErrorService v-if="error" :data="error"/>
+<ErrorService v-if="error" :error="error"/>
 <component v-else-if="layout" :is="layout">
   <router-view/>
 </component>
 </template>
 
 <script setup>
-import { computed, ref, onErrorCaptured, defineAsyncComponent } from 'vue';
+import { computed, ref, watch, onErrorCaptured, defineAsyncComponent } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import store from './store';
 import { err } from './libs/error';
@@ -33,5 +33,11 @@ onErrorCaptured((e, component, info) => {
 router.onError(e => {
   err([ 'app.vue', 'router.onError()' ], 'error', e.message);
   error.value = e;
+});
+
+// watch route name
+watch(() => route.name, () => {
+  // 오류난 화면에서 뒤로가기나 다른페이지로 이동했을때 오류값 초기화하기
+  if (!!error.value) error.value = null;
 });
 </script>

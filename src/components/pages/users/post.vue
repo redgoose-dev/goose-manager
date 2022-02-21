@@ -87,12 +87,13 @@ import { useRouter } from 'vue-router';
 import store from '../../../store';
 import { get, post, formData, checkForms } from '../../../libs/api';
 import { err } from '../../../libs/error';
-import * as message from '../../../libs/message';
+import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import { Fieldset, Field, Label, Labels, Controller, Help } from '../../forms/fieldset';
 import FormInput from '../../forms/input.vue';
 import FormCheckbox from '../../forms/checkbox.vue';
 import ButtonBasic from '../../button/basic.vue';
+import { printf } from "../../../libs/string.js";
 
 const root = ref();
 const router = useRouter();
@@ -148,17 +149,18 @@ async function onSubmit()
       password2: forms.password2.value,
       admin: !!forms.admin.value ? 1 : 0,
     });
-    let res = await post(props.srl ? `/users/${props.srl}/edit/` : '/users/', data);
+    let url = props.srl ? `/users/${props.srl}/edit/` : '/users/';
+    let res = await post(url, data);
     processing.value = false;
     const srl = res.srl || props.srl || null;
     await router.push(srl ? `/users/${srl}/` : '/users/');
-    toast.add(`Success ${props.mode} user.`, 'success');
+    toast.add(printf(message.success[props.mode], message.word.user), 'success');
   }
   catch (e)
   {
     err([ 'components', 'pages', 'users', 'post.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
-    toast.add(`Failed ${props.mode} user.`, 'error');
+    toast.add(printf(message.fail[props.mode], message.word.user), 'error');
   }
 }
 
@@ -177,8 +179,7 @@ onMounted(async () => {
   {
     err([ 'components', 'pages', 'users', 'post.vue', 'onMounted()' ], 'error', e.message);
     loading.value = false;
-    toast.add('Failed load data.', 'error');
-    await router.back();
+    throw new Error(e.message);
   }
 });
 </script>

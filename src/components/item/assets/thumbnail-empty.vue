@@ -5,9 +5,10 @@
 </template>
 
 <script setup>
-import icons from '../../icons/svg-index.json';
+import { iconRandomPick } from '../../icons/assets';
 import Icon from '../../icons/index.vue';
-const iconName = icons[Math.floor(Math.random() * icons.length)];
+
+const iconName = iconRandomPick();
 </script>
 
 <style lang="scss" scoped>

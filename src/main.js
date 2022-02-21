@@ -18,7 +18,7 @@ window.DEBUG = !!DEBUG;
 document.title = TITLE;
 document.querySelector('meta[name=description]').setAttribute('content', DESCRIPTION);
 
-// set toast
+// set modules
 toast.setup();
 
 // set component

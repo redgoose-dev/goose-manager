@@ -86,6 +86,8 @@ function localRoutes()
     res.json({ success: true });
   });
 
+  // TODO: 로그를 기록하는 기능 만들기
+
   return router;
 }
 

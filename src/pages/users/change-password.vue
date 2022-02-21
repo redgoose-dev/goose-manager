@@ -53,7 +53,9 @@
     </Fieldset>
     <Controller>
       <template #left>
-        <ButtonBasic icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+        <ButtonBasic icon-left="arrow-left" @click="router.back()">
+          Back
+        </ButtonBasic>
       </template>
       <template #right>
         <ButtonBasic
@@ -77,8 +79,9 @@ import store from '../../store';
 import getData from '../../structure/users/item';
 import { post, checkForms, formData } from '../../libs/api';
 import { logout } from '../../libs/auth';
-import * as message from '../../libs/message';
 import { err } from '../../libs/error';
+import { printf } from '../../libs/string';
+import { message } from '../../message';
 import { toast } from '../../modules/toast';
 import PageHeader from '../../components/page/header/index.vue';
 import { Fieldset, Field, Controller, Help } from '../../components/forms/fieldset';
@@ -129,20 +132,20 @@ async function onSubmit()
     processing.value = false;
     if (self.value)
     {
-      if (!confirm(`${message.words.successChangePassword} ${message.words.confirmLogout}`)) return;
+      if (!confirm(`${message.words.successChangePassword} ${message.confirm.logout}`)) return;
       await logout();
     }
     else
     {
       await router.push(`/users/${route.params.srl}/`);
-      toast.add(`Success change password.`, 'success');
+      toast.add(printf(message.success.change, message.word.password), 'success');
     }
   }
   catch (e)
   {
     err([ 'components', 'pages', 'users', 'change-password.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
-    toast.add(`Failed change password in user.`, 'error');
+    toast.add(printf(message.fail.change, message.word.password), 'error');
   }
 }
 

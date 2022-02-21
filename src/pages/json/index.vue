@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="users"/>
+  <PageHeader module="json" title="JSON Items"/>
   <Loading v-if="loading"/>
   <Items v-else-if="index?.length > 0">
     <Card
@@ -11,19 +11,14 @@
       :href="`./${item.srl}/`"
       :nav="[
         { label: 'Edit', href: `./${item.srl}/edit/` },
-        !item.self && { label: 'Delete', href: `./${item.srl}/delete/` },
-        { label: 'Change Password', href: `./${item.srl}/change-password/` },
-      ].filter(Boolean)">
-      <template v-if="item.self" #after>
-        <Mark/>
-      </template>
-    </Card>
+        { label: 'Delete', href: `./${item.srl}/delete/` },
+      ]"/>
   </Items>
   <Empty v-else/>
-  <Controller v-if="store.state.user.admin">
+  <Controller>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        Create User
+        Create JSON
       </ButtonBasic>
     </template>
   </Controller>
@@ -32,17 +27,16 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import store from '../../store';
-import getData from '../../structure/users';
 import { err } from '../../libs/error';
+import getData from '../../structure/json';
 import PageHeader from '../../components/page/header/index.vue';
-import { Items, Card, Mark } from '../../components/item';
+import { Items, Card } from '../../components/item';
 import Controller from '../../components/forms/fieldset/controller.vue';
 import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/error/empty.vue';
 
-const loading = ref(true);
+const loading = ref(false);
 const index = ref(null);
 const total = ref(0);
 
@@ -57,7 +51,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'apps', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['pages', 'json', 'index.vue', 'onMounted()'], 'error', e.message);
     loading.value = false;
   }
 });

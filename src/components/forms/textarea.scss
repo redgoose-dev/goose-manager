@@ -6,7 +6,7 @@
   border: none;
   border-radius: 2px;
   box-sizing: border-box;
-  height: var(--textarea-height, 64px);
+  height: var(--textarea-height, auto);
   padding: var(--textarea-padding, 12px 16px);
   background: var(--textarea-bg, rgb(255 255 255));
   color: var(--textarea-text-color, var(--color-base));

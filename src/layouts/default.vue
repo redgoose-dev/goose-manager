@@ -101,7 +101,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import store from '../store';
 import { logout } from '../libs/auth';
-import * as message from '../libs/message';
+import { message } from '../message';
 import Icon from '../components/icons/index.vue';
 
 const route = useRoute();
@@ -123,7 +123,7 @@ function onClickClearTokens()
 
 async function onClickLogout()
 {
-  if (!confirm(message.words.confirmLogout)) return;
+  if (!confirm(message.confirm.logout)) return;
   await logout();
 }
 

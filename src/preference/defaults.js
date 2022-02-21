@@ -18,6 +18,12 @@ export default {
           active: 'nests',
         },
         {
+          name: 'Articles',
+          link: '/articles/',
+          icon: 'droplet',
+          active: 'articles',
+        },
+        {
           name: 'Users',
           link: '/users/',
           icon: 'user',

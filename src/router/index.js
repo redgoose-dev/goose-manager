@@ -25,8 +25,8 @@ router.beforeEach(async (to, from) => {
 });
 
 // 업데이트 후 후크
-router.afterEach((to, from) => {
-  // console.log('afterEach()');
-});
+// router.afterEach((to, from) => {
+//   console.log('afterEach()');
+// });
 
 export default router;

@@ -1,23 +1,18 @@
 <template>
 <article>
-  <PageHeader module="users" title="User"/>
+  <PageHeader module="json" :title="`JSON / ${item.name}`"/>
   <Loading v-if="loading"/>
   <Fieldset v-else tag="section">
     <Field label="srl">
       {{item.srl}}
     </Field>
-    <Field label="Email">
-      <strong>{{item.email}}</strong>
-    </Field>
     <Field label="Name">
-      {{item.name}}
+      <strong>{{item.name}}</strong>
     </Field>
-    <Field label="Register date">
-      {{item.regdate}}
+    <Field label="Description">
+      {{item.description}}
     </Field>
-    <Field label="Admin">
-      <strong>{{item.admin ? 'Yes' : 'No'}}</strong>
-    </Field>
+    <pre class="json-code"><code>{{item.json}}</code></pre>
   </Fieldset>
   <Controller>
     <template #left>
@@ -29,10 +24,7 @@
       <ButtonBasic href="./edit/" icon-left="edit">
         Edit
       </ButtonBasic>
-      <ButtonBasic href="./change-password/" icon-left="key">
-        Change password
-      </ButtonBasic>
-      <ButtonBasic v-if="!self" href="./delete/" color="key" icon-left="trash">
+      <ButtonBasic href="./delete/" color="key" icon-left="trash">
         Delete
       </ButtonBasic>
     </template>
@@ -41,11 +33,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import store from '../../store';
-import getData from '../../structure/users/item';
 import { err } from '../../libs/error';
+import getData from '../../structure/json/item';
 import PageHeader from '../../components/page/header/index.vue';
 import { Fieldset, Field } from '../../components/forms/fieldset';
 import Controller from '../../components/forms/fieldset/controller.vue';
@@ -55,21 +46,34 @@ import Loading from '../../components/etc/loading.vue';
 const route = useRoute();
 const loading = ref(false);
 const item = ref({});
-const self = computed(() => (store.state.user.srl === Number(route.params.srl)));
 
 onMounted(async () => {
   try
   {
     if (!route.params.srl) throw new Error('no srl');
     loading.value = true;
-    item.value = await getData({ url: `/users/${route.params.srl}/` });
+    item.value = await getData({ url: `/json/${route.params.srl}/` });
     loading.value = false;
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'users', 'item.vue', 'onMounted()' ], 'error', e.message);
+    err([ 'components', 'pages', 'json', 'item.vue', 'onMounted()' ], 'error', e.message);
     loading.value = false;
     throw new Error(e.message);
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.json-code {
+  display: block;
+  margin: 0;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: rgb(var(--color-base-rgb) / 5%);
+  border-radius: 2px;
+  line-height: 1.42;
+  font-size: 15px;
+  font-family: var(--font-console);
+}
+</style>

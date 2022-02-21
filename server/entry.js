@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 import { createServer, loadEnv } from 'vite';
 import { openServerMessage, isDev } from './libs/entry-assets.js';
 import serviceServer from './index.js';

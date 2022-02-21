@@ -18,6 +18,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { get, post } from '../../libs/api';
 import { err } from '../../libs/error';
 import { toast } from '../../modules/toast';
+import { printf } from '../../libs/string';
+import { message } from '../../message';
 import PageHeader from '../../components/page/header/index.vue';
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue';
 
@@ -38,13 +40,13 @@ async function onSubmit()
     await post(`/apps/${route.params.srl}/delete/`);
     processing.value = false;
     await router.push('../../');
-    toast.add('Success delete app.', 'success');
+    toast.add(printf(message.success.delete, message.word.app), 'success');
   }
   catch (e)
   {
     err(['pages', 'apps', 'delete.vue', 'onSubmit()'], 'error', e.message);
     processing.value = false;
-    toast.add('Failed delete app.', 'error');
+    toast.add(printf(message.fail.delete, message.word.app), 'error');
   }
 }
 
@@ -53,14 +55,13 @@ onMounted(async () => {
   {
     let res = await get(`/apps/${route.params.srl}/`, { field: 'id,name' });
     res = res.data;
-    fields.title = `이 "${res.name}" 항목을 삭제할까요?`;
+    fields.title = printf(message.confirm.deleteItem, res.name);
     fields.name = `[${res.id}] ${res.name}`;
   }
   catch (e)
   {
     err(['pages', 'apps', 'delete.vue', 'onMounted()'], 'error', e.message);
-    toast.add('Failed load app item.', 'error');
-    await router.back();
+    throw new Error(e.message);
   }
 });
 </script>
