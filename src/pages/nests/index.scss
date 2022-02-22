@@ -10,15 +10,21 @@
     margin: 0;
     font-size: 16px;
     line-height: 1.05;
-    letter-spacing: -.25px;
+    letter-spacing: -.5px;
+    font-weight: 700;
     em {
       font-style: normal;
-      &:before {
-        content: '(';
+      &:nth-child(1) {
+        &:before { content: '['; }
+        &:after { content: '] '; }
       }
-      &:after {
-        content: ')';
+      &:nth-child(3) {
+        &:before { content: '('; }
+        &:after { content: ')'; }
       }
+    }
+    strong {
+      font-weight: 700;
     }
   }
   &__description {
@@ -37,7 +43,7 @@
   align-content: center;
   margin: 16px 0 0;
   border-radius: 2px;
-  height: 110px;
+  height: 120px;
   user-select: none;
   background: var(--color-invert);
   box-shadow: 0 0 0 1px rgb(0 0 0 / 3%), 0 1px 20px rgb(0 0 0 / 10%);

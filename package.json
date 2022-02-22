@@ -24,7 +24,8 @@
   "dependencies": {
     "axios": "^0.25.0",
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.1.0",

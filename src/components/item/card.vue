@@ -48,7 +48,7 @@ const props = defineProps({
   description: String,
   meta: Array,
   nav: Array,
-  href: String,
+  href: [ String, Object ],
   target: String,
 });
 </script>

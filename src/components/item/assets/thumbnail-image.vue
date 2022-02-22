@@ -15,7 +15,7 @@ import Empty from './thumbnail-empty.vue';
 
 const props = defineProps({
   src: String,
-  href: String,
+  href: [ String, Object ],
   target: String,
   alt: String,
   type: { type: String, default: 'cover' }, // cover,contain

@@ -14,7 +14,8 @@ function filteringApps(res)
 {
   return res.map(item => ({
     srl: item.srl,
-    title: `[${item.id}] ${item.name}`,
+    name: item.name,
+    id: item.id,
     countNests: Number(item.count_nest || 0),
     description: item.description,
   }));

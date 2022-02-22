@@ -26,8 +26,8 @@ import ConfirmDelete from '../../components/forms/confirm-delete/index.vue';
 const router = useRouter();
 const route = useRoute();
 const fields = reactive({
-  title: printf(message.confirm.deleteItem, message.word.nest),
-  description: '이것을 삭제하면 하위의 `Article`, `Category`, `File`의 데이터가 삭제됩니다.',
+  title: '',
+  description: '',
   name: '',
 });
 const processing = ref(false);
@@ -55,6 +55,8 @@ onMounted(async () => {
   {
     let res = await get(`/nests/${route.params.srl}/`, { field: 'id,name' });
     res = res.data;
+    fields.title = printf(message.confirm.deleteItem, message.word.nest);
+    fields.description = '이것을 삭제하면 하위의 `Article`, `Category`, `File`의 데이터가 삭제됩니다.';
     fields.name = `[${res.id}] ${res.name}`;
   }
   catch (e)

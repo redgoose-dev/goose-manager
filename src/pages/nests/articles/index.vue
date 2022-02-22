@@ -8,5 +8,5 @@
 </template>
 
 <script setup>
-import PageHeader from '../../components/page/header/index.vue';
+import PageHeader from '../../../components/page/header/index.vue';
 </script>

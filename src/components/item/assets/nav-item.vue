@@ -12,7 +12,7 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  href: String,
+  href: [ String, Object ],
   target: String,
   click: Function,
 });
@@ -54,6 +54,7 @@ function onClickButton(e)
   font-size: 12px;
   color: var(--color-base);
   font-weight: 600;
+  letter-spacing: -.25px;
   @include mixins.button-touch-options(false);
   &:is(a) {
     text-decoration: none;

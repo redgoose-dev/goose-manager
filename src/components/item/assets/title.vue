@@ -1,8 +1,5 @@
 <template>
-<h3 :class="[
-  'title',
-  tag !== 'strong' && 'title--link',
-]">
+<h3 :class="[ 'title', tag !== 'strong' && 'title--link' ]">
   <component :is="tag" v-bind="rootProps" class="title__body">
     <slot/>
   </component>
@@ -13,7 +10,7 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  href: String,
+  href: [ String, Object ],
   target: String,
 });
 const tag = computed(() => {
@@ -43,6 +40,7 @@ const rootProps = computed(() => {
   line-height: 1.25;
   word-break: break-all;
   font-size: 15px;
+  letter-spacing: -.25px;
   @include mixins.text-single-line();
   &__body {
     color: var(--color-base);

@@ -52,6 +52,7 @@ const props = defineProps({
     font-weight: 500;
     font-size: var(--font-size);
     line-height: 1.15;
+    letter-spacing: -.25px;
     & + i {
       margin-left: 6px;
     }

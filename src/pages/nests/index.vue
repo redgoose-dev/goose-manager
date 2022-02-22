@@ -6,8 +6,9 @@
     <section v-for="app in index" class="app">
       <header class="app__header">
         <h1 class="app__title">
-          <span>{{app.title}}</span>
-          <em>{{app.countNests}}</em>
+          <em v-if="!!app.id">{{app.id}}</em>
+          <strong>{{app.name}}</strong>
+          <em v-if="!!app.countNests">{{app.countNests}}</em>
         </h1>
         <p class="app__description">{{app.description}}</p>
       </header>
@@ -21,7 +22,10 @@
           :nav="[
             { label: 'Edit', href: `./${nest.srl}/edit/` },
             { label: 'Delete', href: `./${nest.srl}/delete/` },
-            nest.useCategory && { label: 'Category', href: `./${nest.srl}/categories/` }
+            nest.useCategory && {
+              label: 'Category',
+              href: `./${nest.srl}/categories/`,
+            },
           ].filter(Boolean)"
           class="nest"/>
       </Items>
