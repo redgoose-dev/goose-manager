@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  column-gap: 24px;
-  row-gap: 4px;
+  column-gap: var(--column-gap, 24px);
+  row-gap: var(--row-gap, 4px);
 }
 </style>

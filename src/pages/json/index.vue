@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="json" title="JSON Items"/>
+  <PageHeader module="json"/>
   <Loading v-if="loading"/>
   <Items v-else-if="index?.length > 0">
     <Card

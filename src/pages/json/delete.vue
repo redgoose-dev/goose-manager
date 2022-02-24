@@ -1,7 +1,9 @@
 <template>
 <article>
   <PageHeader module="json" title="Delete JSON"/>
+  <Loading v-if="loading"/>
   <ConfirmDelete
+    v-else
     :title="fields.title"
     :description="fields.description"
     button-label="Delete JSON"
@@ -21,6 +23,7 @@ import { toast } from '../../modules/toast';
 import { message } from '../../message';
 import PageHeader from '../../components/page/header/index.vue';
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue';
+import Loading from '../../components/etc/loading.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -29,6 +32,7 @@ const fields = reactive({
   description: printf(message.words.warningDeleteItem, 'JSON'),
   name: '',
 });
+const loading = ref(true);
 const processing = ref(false);
 
 async function onSubmit()
@@ -52,12 +56,15 @@ async function onSubmit()
 onMounted(async () => {
   try
   {
+    loading.value = true;
     let res = await get(`/json/${route.params.srl}/`, { field: 'name' });
     fields.title = printf(message.confirm.deleteItem, res.data.name);
+    loading.value = false;
   }
   catch (e)
   {
     err(['pages', 'json', 'delete.vue', 'onMounted()'], 'error', e.message);
+    loading.value = false;
     throw new Error(e.message);
   }
 });

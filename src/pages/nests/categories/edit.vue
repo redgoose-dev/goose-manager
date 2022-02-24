@@ -1,8 +1,8 @@
 <template>
 <article>
-  <PageHeader module="categories" title="Create category"/>
+  <PageHeader module="categories" title="Edit category"/>
   <Post
-    mode="create"
+    mode="edit"
     :nest-srl="Number(route.params.srl)"
     :srl="Number(route.params.categorySrl)"/>
 </article>

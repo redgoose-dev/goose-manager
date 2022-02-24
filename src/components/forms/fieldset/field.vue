@@ -19,7 +19,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .field {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: var(--field-label-width, 135px) 1fr;
   grid-auto-flow: column;
   align-items: center;
   margin: 0;

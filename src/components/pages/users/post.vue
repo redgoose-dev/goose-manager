@@ -88,12 +88,12 @@ import store from '../../../store';
 import { get, post, formData, checkForms } from '../../../libs/api';
 import { err } from '../../../libs/error';
 import { message } from '../../../message';
+import { printf } from '../../../libs/string';
 import { toast } from '../../../modules/toast';
 import { Fieldset, Field, Label, Labels, Controller, Help } from '../../forms/fieldset';
 import FormInput from '../../forms/input.vue';
 import FormCheckbox from '../../forms/checkbox.vue';
 import ButtonBasic from '../../button/basic.vue';
-import { printf } from "../../../libs/string.js";
 
 const root = ref();
 const router = useRouter();

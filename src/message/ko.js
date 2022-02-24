@@ -2,6 +2,7 @@ export default {
   error: {
     samePassword: '확인용 비밀번호가 다릅니다.',
     parsingJSON: 'JSON 파싱하는데 오류가 발생헀습니다.',
+    emptyContent: '이 {0}은 비어있습니다.',
   },
   confirm: {
     deleteItem: '이 {0}을(를) 삭제할까요?',
@@ -28,6 +29,9 @@ export default {
     password: '비밀번호',
     add: '추가',
     edit: '수정',
+    category: '분류',
+    order: '순서',
+    content: '내용',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',

@@ -4,11 +4,12 @@ import { getDate } from '../../libs/date';
 // apps data
 async function requestApps()
 {
-  return await get('/apps/', {
+  let res = await get('/apps/', {
     field: 'srl,id,name,description',
     ext_field: 'count_nests',
     unlimit: 1,
   });
+  return (res.data?.index?.length > 0) ? res.data.index : [];
 }
 function filteringApps(res)
 {
@@ -24,11 +25,12 @@ function filteringApps(res)
 // nests data
 async function requestNests()
 {
-  return await get(`/nests/`, {
+  let res = await get(`/nests/`, {
     ext_field: 'count_articles',
     visible_type: 'all',
     unlimit: 1,
   });
+  return (res.data?.index?.length > 0) ? res.data.index : [];
 }
 function filteringNests(res)
 {
@@ -41,7 +43,7 @@ function filteringNests(res)
         getDate(item.regdate),
         `id: ${item.id}`,
       ],
-      useCategory: !!item.json?.useCategory,
+      useCategory: item.json?.useCategory === '1',
     };
   });
 }
@@ -53,14 +55,15 @@ function filteringNests(res)
  */
 export default async function getData()
 {
+  // get data
+  let [ apps, nests ] = await Promise.all([
+    requestApps(),
+    requestNests(),
+  ]);
   // get apps
-  let apps = await requestApps();
-  if (apps.data?.total <= 0) return [];
-  apps = filteringApps(apps.data.index);
-
+  apps = filteringApps(apps);
   // get nests
-  let nests = await requestNests();
-  nests = (nests.data?.index.length > 0) ? filteringNests(nests.data.index) : [];
+  nests = filteringNests(nests);
 
   // combine items
   return apps.map(app => {

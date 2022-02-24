@@ -24,17 +24,19 @@
   "dependencies": {
     "axios": "^0.25.0",
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.2",
-    "vuedraggable": "^4.1.0"
+    "express": "^4.17.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.1.0",
+    "marked": "^4.0.12",
     "nodemon": "^2.0.15",
+    "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
     "sass": "^1.49.7",
     "vite": "^2.7.13",
     "vue": "^3.2.29",
     "vue-i18n": "^9.2.0-beta.30",
     "vue-router": "^4.0.12",
+    "vuedraggable": "^4.1.0",
     "vuex": "^4.0.2"
   }
 }

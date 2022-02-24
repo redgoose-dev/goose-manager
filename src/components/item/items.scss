@@ -45,7 +45,7 @@
       }
     }
   }
-  @include mixins.responsive(desktop-1280) {
+  @include mixins.responsive(desktop-large) {
     &--theme {
       &-card {
         --items-column: 3;

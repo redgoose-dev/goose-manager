@@ -71,6 +71,12 @@ const nests = [
     meta: { active: 'nests' },
   },
   {
+    path: '/nests/:srl/articles/create/',
+    name: 'NestsCreateArticle',
+    component: () => import('../pages/nests/articles/create.vue'),
+    meta: { active: 'nests' },
+  },
+  {
     path: '/nests/:srl/categories/',
     name: 'NestsCategories',
     component: () => import('../pages/nests/categories/index.vue'),

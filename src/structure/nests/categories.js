@@ -2,6 +2,27 @@ import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
 
 /**
+ * request nest
+ * @param {number} nestSrl
+ * @return {Promise<object>}
+ */
+async function requestNest(nestSrl)
+{
+  let res = await get(`/nests/${nestSrl}/`, {
+    field: 'srl,id,name',
+  });
+  return res.data;
+}
+function filteringNest(src)
+{
+  return {
+    srl: src.srl,
+    id: src.id,
+    name: src.name,
+  };
+}
+
+/**
  * request categories
  * @param {number} nestSrl
  * @return {Promise<array>}
@@ -29,13 +50,18 @@ function filteringCategories(src)
 /**
  * get data
  * @param {number} srl nest srl
- * @return {Promise<array>}
+ * @return {Promise<{nest,categories}>}
  * @throws {Error}
  */
 export default async function getData(srl)
 {
-  // TODO: 아무래도 nest-id도 가져와야할거같어..
   if (!srl) throw new Error('no srl');
-  let categories = await requestCategories(srl);
-  return filteringCategories(categories);
+  const [ nest, categories ] = await Promise.all([
+    requestNest(srl),
+    requestCategories(srl),
+  ]);
+  return {
+    nest: filteringNest(nest),
+    categories: filteringCategories(categories),
+  };
 }

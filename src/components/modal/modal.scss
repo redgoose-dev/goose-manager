@@ -24,12 +24,11 @@
 // transition
 .modal-enter-active,
 .modal-leave-active {
-  transition: opacity 200ms ease-out, transform 150ms ease-out;
+  transition: opacity 200ms ease-out;
 }
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
-  transform: scale(1.05);
 }
 
 // set class to global
