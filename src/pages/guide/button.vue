@@ -44,6 +44,12 @@
         <div>
           <ButtonBasic type="button" color="sub">sub</ButtonBasic>
         </div>
+        <div>
+          <ButtonBasic type="button" color="error">error</ButtonBasic>
+        </div>
+        <div>
+          <ButtonBasic type="button" color="weak">weak</ButtonBasic>
+        </div>
       </div>
     </div>
 

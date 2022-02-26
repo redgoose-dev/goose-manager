@@ -3,7 +3,7 @@
   <PageHeader module="categories" title="Edit category"/>
   <Post
     mode="edit"
-    :nest-srl="Number(route.params.srl)"
+    :nest-srl="Number(route.params.nestSrl)"
     :srl="Number(route.params.categorySrl)"/>
 </article>
 </template>

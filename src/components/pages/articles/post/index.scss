@@ -1,0 +1,26 @@
+.category {
+  display: inline-block;
+  --select-width: auto;
+}
+.types {
+  --column-gap: 16px;
+  &__label {
+    &.ready {
+      cursor: not-allowed;
+      > span {
+        opacity: .5;
+      }
+    }
+  }
+}
+.editor {
+  margin: 0;
+}
+.button-submit {
+  position: absolute;
+  display: block;
+  padding: 0;
+  border: none;
+  visibility: hidden;
+  pointer-events: none;
+}

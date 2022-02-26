@@ -1,4 +1,4 @@
-import { get } from '../../libs/api';
+import { get, post, formData } from '../../libs/api';
 
 /**
  * request nest
@@ -46,6 +46,49 @@ async function requestArticle(articleSrl)
   // TODO: 데이터가 생기면 작업하기
   return {};
 }
+/**
+ * request ready article
+ * @param {object} nest
+ * @return {Promise<object>}
+ */
+async function requestReadyArticle(nest)
+{
+  let article;
+  let res = await get(`/articles/`, {
+    visible_type: 'ready',
+  });
+  if (res.data?.index?.length > 0)
+  {
+    article = res.data.index[0];
+    if (nest.srl !== article.nest_srl)
+    {
+      article.category_srl = null;
+    }
+  }
+  else
+  {
+    let json = {};
+    res = await post('/articles/', formData({
+      app_srl: Number(nest.app_srl),
+      nest_srl: Number(nest.srl),
+      type: 'ready',
+      json: encodeURIComponent(JSON.stringify(json)),
+    }));
+    if (res.success)
+    {
+      res = await get(`/articles/`, {
+        visible_type: 'ready',
+      });
+      if (!(res.data?.index?.length > 0)) throw new Error('no ready item');
+      article = res.data.index[0];
+    }
+    else
+    {
+      throw new Error(res.message);
+    }
+  }
+  return article;
+}
 
 /**
  * get data
@@ -56,10 +99,10 @@ async function requestArticle(articleSrl)
  */
 export default async function getData(nestSrl, articleSrl)
 {
-  let [ nest, categories, article ] = await Promise.all([
-    requestNest(nestSrl),
+  const nest = await requestNest(nestSrl);
+  let [ categories, article ] = await Promise.all([
     requestCategories(nestSrl),
-    !!articleSrl && requestArticle(articleSrl),
+    !!articleSrl ? requestArticle(articleSrl) : requestReadyArticle(nest),
   ].filter(Boolean));
   return {
     nest,

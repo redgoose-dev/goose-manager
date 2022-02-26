@@ -31,7 +31,7 @@ const iconName = iconRandomPick();
   justify-content: center;
   align-items: center;
   min-height: 320px;
-  max-height: 640px;
+  max-height: 420px;
   height: 35vw;
   &__wrap {
     text-align: center;

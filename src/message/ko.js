@@ -14,6 +14,7 @@ export default {
     edit: '{0}을(를) 수정했습니다.',
     delete: '{0}을(를) 삭제했습니다.',
     change: '{0}을(를) 변경했습니다.',
+    draftSave: '임시저장했습니다.',
   },
   fail: {
     get: '{0}을(를) 가져오지 못했습니다.',
@@ -21,6 +22,8 @@ export default {
     edit: '{0}을(를) 수정하지 못했습니다.',
     delete: '{0}을(를) 삭제하지 못했습니다.',
     change: '{0}을(를) 변경하지 못했습니다.',
+    draftSave: '임시저장하지 못했습니다.',
+    checkOrderDate: 'OrderDate 검사 실패했습니다.',
   },
   word: {
     user: '사용자',
@@ -32,6 +35,7 @@ export default {
     category: '분류',
     order: '순서',
     content: '내용',
+    article: '아티클',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',

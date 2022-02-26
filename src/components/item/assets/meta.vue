@@ -23,7 +23,7 @@ const props = defineProps({
     line-height: 1.25;
     &:nth-child(n+2):before {
       content: ',';
-      padding-right: 4px;
+      padding-right: 3px;
     }
   }
 }

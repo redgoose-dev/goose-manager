@@ -62,3 +62,25 @@ export function getByte(bytes)
   let i = Math.floor(Math.log(bytes) / Math.log(1024));
   return Math.round(bytes / Math.pow(1024, i), 2) + sizes[i];
 }
+
+/**
+ * serialize
+ * object to queryString
+ * @param {object} obj
+ * @param {boolean} usePrefix
+ * @return {string}
+ */
+export function serialize(obj, usePrefix=false)
+{
+  let str = [];
+  let res = '';
+  for (let p in obj)
+  {
+    if (obj.hasOwnProperty(p))
+    {
+      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+    }
+  }
+  res = str.join('&');
+  return (res && usePrefix ? '?' : '') + res;
+}

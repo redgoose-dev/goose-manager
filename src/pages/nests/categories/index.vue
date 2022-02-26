@@ -77,10 +77,10 @@ async function onChangeIndex()
 {
   try
   {
-    if (!route.params.srl) throw new Error('no nestSrl');
+    if (!route.params.nestSrl) throw new Error('no nestSrl');
     let srls = data.index.map((o, k) => (o.srl)).join(',');
     let res = await post('/categories/sort/', formData({
-      nest_srl: Number(route.params.srl),
+      nest_srl: Number(route.params.nestSrl),
       srls,
     }));
     if (!res.success) throw new Error(res.message);
@@ -97,7 +97,7 @@ onMounted(async () => {
   try
   {
     loading.value = true;
-    const { nest, categories } = await getData(Number(route.params.srl));
+    const { nest, categories } = await getData(Number(route.params.nestSrl));
     data.index = categories;
     data.nest = nest;
     loading.value = false;

@@ -41,9 +41,11 @@ const props = defineProps({
     animation: var(--icon-animation, none);
     &:is(:first-child) {
       margin-right: 4px;
+      margin-left: -4px;
     }
     &:is(:last-child) {
       margin-left: 4px;
+      margin-right: -4px;
     }
   }
   &__label {

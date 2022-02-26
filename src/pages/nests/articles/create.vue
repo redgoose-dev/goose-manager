@@ -4,7 +4,7 @@
   <Post
     ref="$post"
     mode="create"
-    :nest-srl="Number(route.params.srl)"/>
+    :nest-srl="Number(route.params.nestSrl)"/>
 </article>
 </template>
 

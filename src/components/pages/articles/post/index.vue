@@ -17,8 +17,7 @@
         :maxlength="120"
         placeholder="Article title"
         :error="!!forms.title.error"
-        :required="true"
-        @submit="saveDraft"/>
+        :required="true"/>
     </Field>
     <Columns style="--columns-template: .75fr 1fr">
       <Field label="Order date" for="order">
@@ -30,8 +29,7 @@
           placeholder="0000-00-00"
           :error="!!forms.order.error"
           :required="true"
-          style="--input-width: 140px"
-          @submit="saveDraft"/>
+          style="--input-width: 140px"/>
         <Help v-if="!!forms.order.error" color="error">
           {{forms.order.error}}
         </Help>
@@ -102,14 +100,16 @@
         Save draft
       </ButtonBasic>
       <ButtonBasic
-        type="submit"
+        type="button"
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
-        :rotate-icon="processing">
+        :rotate-icon="processing"
+        @click="publishing">
         Publishing article
       </ButtonBasic>
     </template>
   </Controller>
+  <button type="submit" class="button-submit"/>
   <teleport to="#modals">
     <Modal
       :show="showFilesManager"
@@ -129,9 +129,11 @@ import { useRouter } from 'vue-router';
 import getData from '../../../../structure/articles/post';
 import { get, post, formData, checkForms } from '../../../../libs/api';
 import { err } from '../../../../libs/error';
-import { dateFormat } from '../../../../libs/date';
+import { dateFormat, checkOrderDate } from '../../../../libs/date';
+import { printf, serialize } from '../../../../libs/string';
 import { message } from '../../../../message';
 import { toast } from '../../../../modules/toast';
+import { getTypeArticle } from '../libs';
 import { Fieldset, Field, Label, Labels, Controller, Help, Columns } from '../../../forms/fieldset';
 import { Modal, Body } from '../../../modal';
 import FormInput from '../../../forms/input.vue';
@@ -151,6 +153,7 @@ const props = defineProps({
 const data = reactive({
   nest: null,
   categories: null,
+  article: null,
 });
 const forms = reactive({
   app_srl: null,
@@ -180,24 +183,92 @@ async function save(type)
 {
   let json = Object.assign({}, forms.json);
 
+  // check error
+  forms.order.error = null;
+
   // check order
+  if (!checkOrderDate(forms.order.value))
+  {
+    forms.order.error = message.fail.checkOrderDate;
+    throw new Error(message.fail.checkOrderDate);
+  }
 
   // update thumbnail image
+  // TODO: 썸네일 이미지 삭제하기와 업로드하기
 
   // save article
+  let res = await post(`/articles/${data.article.srl}/edit/`, formData({
+    mode: props.mode === 'create' ? 'add' : 'edit',
+    app_srl: data.nest.app_srl,
+    nest_srl: data.nest.srl,
+    category_srl: forms.category_srl || '',
+    type: type === 'publishing' ? getTypeArticle(forms.type) : 'ready',
+    title: forms.title.value || '',
+    content: forms.content.value || '',
+    json: encodeURIComponent(JSON.stringify(json)),
+    order: forms.order.value,
+  }));
+  if (!res.success) throw new Error(res.message);
 }
 async function saveDraft()
 {
-  //
+  if (props.mode !== 'create') return;
+  if (processing.value) return;
+  try
+  {
+    processing.value = true;
+    await save('draft');
+    processing.value = false;
+    toast.add(message.success.draftSave, 'success');
+  }
+  catch (e)
+  {
+    err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'saveDraft()' ], 'error', e.message);
+    processing.value = false;
+    toast.add(message.fail.draftSave, 'error');
+  }
 }
 async function publishing()
 {
-  //
+  if (processing.value) return;
+  try
+  {
+    processing.value = true;
+    if (forms.type === 'ready') forms.type = 'public';
+    await save('publishing');
+    processing.value = false;
+    // redirection
+    switch (props.mode)
+    {
+      case 'edit':
+      case 'create':
+        let queries = {};
+        // TODO: category 붙이기
+        // TODO: page 붙이기
+        await router.push(`../${serialize(queries, true)}`)
+        break;
+      default:
+        await router.push('/articles/');
+        break;
+    }
+  }
+  catch (e)
+  {
+    err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'publishing()' ], 'error', e.message);
+    processing.value = false;
+    toast.add(printf(message.fail[props.mode], message.word.article), 'error');
+  }
 }
-async function onSubmit()
+function onSubmit()
 {
-  console.log('onSubmit()');
-  await publishing();
+  if (props.mode === 'create')
+  {
+    saveDraft().then();
+  }
+  else
+  {
+    publishing().then();
+  }
 }
 
 onMounted(async () => {
@@ -207,7 +278,15 @@ onMounted(async () => {
     let { nest, categories, article } = await getData(props.nestSrl, props.articleSrl);
     data.nest = nest;
     data.categories = categories;
-    // TODO: 수정모드를 위하여 article 값 업데이트하기
+    data.article = article;
+    forms.category_srl = article.category_srl || null;
+    forms.title.value = article.title || '';
+    forms.content.value = article.content || '';
+    forms.order.value = article.order;
+    if (article.json.thumbnail)
+    {
+      // TODO
+    }
     loading.value = false;
   }
   catch (e)
@@ -219,23 +298,4 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped>
-.category {
-  display: inline-block;
-  --select-width: auto;
-}
-.types {
-  --column-gap: 16px;
-  &__label {
-    &.ready {
-      cursor: not-allowed;
-      > span {
-        opacity: .5;
-      }
-    }
-  }
-}
-.editor {
-  margin: 0;
-}
-</style>
+<style src="./index.scss" lang="scss" scoped></style>
