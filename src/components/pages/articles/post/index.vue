@@ -1,5 +1,5 @@
 <template>
-<form ref="$root" @submit.prevent="onSubmit">
+<form ref="$root" v-if="!loading" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
     <Field v-if="data.categories?.length > 0" label="Category" for="category">
       <FormSelect
@@ -100,16 +100,14 @@
         Save draft
       </ButtonBasic>
       <ButtonBasic
-        type="button"
+        type="submit"
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
-        :rotate-icon="processing"
-        @click="publishing">
+        :rotate-icon="processing">
         Publishing article
       </ButtonBasic>
     </template>
   </Controller>
-  <button type="submit" class="button-submit"/>
   <teleport to="#modals">
     <Modal
       :show="showFilesManager"
@@ -124,10 +122,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import getData from '../../../../structure/articles/post';
-import { get, post, formData, checkForms } from '../../../../libs/api';
+import { post, formData } from '../../../../libs/api';
 import { err } from '../../../../libs/error';
 import { dateFormat, checkOrderDate } from '../../../../libs/date';
 import { printf, serialize } from '../../../../libs/string';
@@ -261,14 +259,7 @@ async function publishing()
 }
 function onSubmit()
 {
-  if (props.mode === 'create')
-  {
-    saveDraft().then();
-  }
-  else
-  {
-    publishing().then();
-  }
+  publishing().then();
 }
 
 onMounted(async () => {
@@ -283,9 +274,10 @@ onMounted(async () => {
     forms.title.value = article.title || '';
     forms.content.value = article.content || '';
     forms.order.value = article.order;
+    forms.type = article.type || 'ready';
     if (article.json.thumbnail)
     {
-      // TODO
+      // TODO: 첨부파일 부분 작업하면 할 수 있다.
     }
     loading.value = false;
   }

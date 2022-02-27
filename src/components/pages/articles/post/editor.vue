@@ -151,6 +151,7 @@ function resize()
 {
   textareaHeight.value = 'unset';
   nextTick().then(() => {
+    if (!$textarea.value) return;
     textareaHeight.value = `${$textarea.value.scrollHeight}px`;
   });
 }

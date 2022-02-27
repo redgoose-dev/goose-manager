@@ -1,16 +1,34 @@
+import { useRoute } from 'vue-router';
 import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
 import { getTypeLabelArticle } from '../../components/pages/articles/libs';
 
-const defaultParams = {
-  field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
-  ext_field: 'category_name',
-  visible_type: 'all',
-};
+let route;
 
-async function requestArticles(op)
+async function requestNest()
 {
-  let res = await get('/articles/', op);
+  if (!route.params.nestSrl) return null;
+  let res = await get(`/nests/${route.params.nestSrl}/`, {
+    field: 'srl,id,description',
+  });
+  if (!res.success) throw new Error(res.message);
+  return res.data;
+}
+
+async function requestArticles()
+{
+  const { category, page, visibleType } = route.query;
+  let res = await get('/articles/', {
+    nest: route.params.nestSrl || undefined,
+    category: category || undefined,
+    field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
+    size: 20,
+    ext_field: 'category_name',
+    visible_type: visibleType || 'all',
+    page: Number(route.query.page) > 1 ? Number(route.query.page) : undefined,
+    // order: '', // TODO
+    q: route.query.q || undefined,
+  });
   if (!res.success) throw new Error(res.message);
   return {
     total: res.data.total,
@@ -21,48 +39,71 @@ async function requestArticles(op)
         meta: [
           getTypeLabelArticle(item.type),
           getDate(item.regdate),
-          item.category_name,
+          item.category_name && item.category_name,
           `Hit:${item.hit}`,
-        ],
+        ].filter(Boolean),
         image: '', // TODO: 썸네일 이미지 주소
       };
     }),
   };
 }
 
-async function requestCategories(srl)
+async function requestCategories()
 {
+  if (!route.params.nestSrl) return null;
+  const { category, visibleType } = route.query;
   let res = await get(`/categories/`, {
-    nest: srl,
+    nest: route.params.nestSrl,
     field: 'srl,name,turn',
     order: 'turn',
     sort: 'asc',
+    ext_field: 'count_article,item_all,none',
+    visible_type: visibleType || 'all',
     strict: 1,
   });
-  return res.data?.index?.length > 0 ? res.data?.index.map(item => {
+  if (!res.success) throw new Error(res.message);
+  return res.data?.index.map(item => {
+    let link, active;
+    switch (item.srl)
+    {
+      case '':
+        link = '';
+        active = !category;
+        break;
+      case 'null':
+        link = '?category=null';
+        active = category === 'null';
+        break;
+      default:
+        link = item.srl ? `?category=${item.srl}` : '';
+        active = Number(category) === item.srl;
+        break;
+    }
     return {
+      link,
       label: item.name,
-      value: item.srl,
+      count: item.count_article,
+      active,
     };
-  }) : [];
+  });
 }
 
 /**
  * get data
- * @param {number} nestSrl
- * @param {object} options
  * @return {Promise<object>}
  * @throws {Error}
  */
-export default async function getData(nestSrl, options = {})
+export default async function getData()
 {
-  options = Object.assign({}, defaultParams, options);
-  let [ articles, categories ] = await Promise.all([
-    requestArticles(options),
-    requestCategories(nestSrl),
+  route = useRoute();
+  let [ nest, articles, categories ] = await Promise.all([
+    requestNest(),
+    requestArticles(),
+    requestCategories(),
   ]);
   return {
     total: articles.total,
+    nest,
     articles: articles.index,
     categories,
   };

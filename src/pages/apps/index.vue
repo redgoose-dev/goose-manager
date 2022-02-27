@@ -1,7 +1,7 @@
 <template>
 <article>
   <PageHeader module="apps"/>
-  <Loading v-if="processing"/>
+  <Loading v-if="loading"/>
   <Items v-else-if="index?.length > 0">
     <Card
       v-for="item in index"
@@ -36,23 +36,23 @@ import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/error/empty.vue';
 
-const processing = ref(false);
+const loading = ref(false);
 const index = ref(null);
 const total = ref(0);
 
 onMounted(async () => {
   try
   {
-    processing.value = true;
+    loading.value = true;
     let res = await getData();
     total.value = res.total;
     index.value = res.index;
-    processing.value = false;
+    loading.value = false;
   }
   catch(e)
   {
     err(['pages', 'apps', 'index.vue', 'onMounted()'], 'error', e.message);
-    processing.value = false;
+    loading.value = false;
   }
 });
 </script>

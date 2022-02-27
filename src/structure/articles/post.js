@@ -43,8 +43,12 @@ async function requestCategories(nestSrl)
  */
 async function requestArticle(articleSrl)
 {
-  // TODO: 데이터가 생기면 작업하기
-  return {};
+  let res = await get(`/articles/${articleSrl}/`, {
+    ext_field: 'category_name',
+    visible_type: 'all',
+  });
+  if (!res.success) throw new Error(res.message);
+  return res.data;
 }
 /**
  * request ready article
@@ -54,7 +58,7 @@ async function requestArticle(articleSrl)
 async function requestReadyArticle(nest)
 {
   let article;
-  let res = await get(`/articles/`, {
+  let res = await get('/articles/', {
     visible_type: 'ready',
   });
   if (res.data?.index?.length > 0)

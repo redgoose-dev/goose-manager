@@ -24,7 +24,10 @@ const layout = computed(() => {
 
 // children component error
 onErrorCaptured((e, component, info) => {
-  err([ 'app.vue', 'onErrorCaptured()' ], 'error', e.message);
+  if (!!e.message)
+  {
+    err([ 'app.vue', 'onErrorCaptured()' ], 'error', e.message);
+  }
   error.value = e;
   return false;
 });

@@ -42,6 +42,7 @@ async function onSubmit()
   {
     processing.value = true;
     await post(`/categories/${route.params.categorySrl}/delete/`);
+    // TODO: 단순히 분류만 삭제하면 연결되어 있는 article 데이터가 로스트되어 버리니 일괄적으로 `null`로 변경해줘야할거같다. 이 부분은 `goose-api`에서 처리해줘야 하는 역할이다.
     processing.value = false;
     await router.push('../../');
     toast.add(printf(message.success.delete, message.word.category), 'success');

@@ -1,7 +1,7 @@
 export default {
   error: {
     samePassword: '확인용 비밀번호가 다릅니다.',
-    parsingJSON: 'JSON 파싱하는데 오류가 발생헀습니다.',
+    parsingJSON: 'JSON 파싱하는데 오류가 발생했습니다.',
     emptyContent: '이 {0}은 비어있습니다.',
   },
   confirm: {

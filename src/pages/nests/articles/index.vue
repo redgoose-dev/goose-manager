@@ -1,14 +1,18 @@
 <template>
 <article>
   <PageHeader
-    title="[NAME] Articles"
-    description="[NEST_DESCRIPTION]"/>
+    module="articles"
+    :title="title"
+    :description="description"/>
   <div class="articles">
     <div class="articles__body">
+      <Categories
+        v-if="data.categories?.length > 0"
+        :items="data.categories"/>
       <Loading v-if="loading"/>
-      <Items v-else-if="index?.length > 0" theme="card">
+      <Items v-else-if="data.index?.length > 0" theme="card">
         <Card
-          v-for="item in index"
+          v-for="item in data.index"
           :title="item.title"
           :meta="item.meta"
           :href="`./${item.srl}/`"
@@ -20,34 +24,36 @@
           ]"/>
       </Items>
       <Empty v-else/>
-      <nav>
+      <nav v-if="data.total > 0">
         .paginate
       </nav>
+      <Controller>
+        <template #left>
+          <ButtonBasic href="../../" icon-left="cloud">
+            Nests
+          </ButtonBasic>
+          <ButtonBasic href="../categories/" icon-left="server">
+            Categories
+          </ButtonBasic>
+        </template>
+        <template #right>
+          <ButtonBasic href="./create/" color="key" icon-left="plus">
+            Create article
+          </ButtonBasic>
+        </template>
+      </Controller>
     </div>
-    <aside class="articles__filter">
-      .filter
-    </aside>
+    <div class="articles__filter">
+      <aside class="filter">
+        .filter
+      </aside>
+    </div>
   </div>
-  <Controller>
-    <template #left>
-      <ButtonBasic href="../../" icon-left="cloud">
-        Nests
-      </ButtonBasic>
-      <ButtonBasic href="../categories/" icon-left="server">
-        Categories
-      </ButtonBasic>
-    </template>
-    <template #right>
-      <ButtonBasic href="./create/" color="key" icon-left="plus">
-        Create article
-      </ButtonBasic>
-    </template>
-  </Controller>
 </article>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { err } from '../../../libs/error';
 import getData from '../../../structure/articles';
@@ -57,22 +63,29 @@ import Controller from '../../../components/forms/fieldset/controller.vue';
 import ButtonBasic from '../../../components/button/basic.vue';
 import Loading from '../../../components/etc/loading.vue';
 import Empty from '../../../components/error/empty.vue';
+import Categories from '../../../components/pages/articles/categories.vue';
 
 const route = useRoute();
 const router = useRouter();
+const data = reactive({
+  total: 0,
+  index: null,
+  nest: null,
+  categories: null,
+});
+const title = computed(() => (data.nest ? `[${data.nest.id}] Articles` : undefined));
+const description = computed(() => (data.nest ? data.nest.description : undefined));
 const loading = ref(false);
-const index = ref(null);
-const total = ref(0);
 
 onMounted(async () => {
   try
   {
     loading.value = true;
-    let res = await getData(Number(route.params.nestSrl), {
-      //
-    });
-    total.value = res.total;
-    index.value = res.articles;
+    let res = await getData();
+    data.total = res.total;
+    data.index = res.articles;
+    data.nest = res.nest;
+    data.categories = res.categories;
     loading.value = false;
   }
   catch (e)
@@ -89,10 +102,11 @@ onMounted(async () => {
   grid-template-columns: 1fr 150px;
   gap: 30px;
   &__body {}
-  &__filter {
-    position: sticky;
-    top: calc(var(--size-header-height) + 16px);
-    background: lime;
-  }
+  &__filter {}
+}
+.filter {
+  position: sticky;
+  top: calc(var(--size-header-height) + 16px);
+  background: lime;
 }
 </style>

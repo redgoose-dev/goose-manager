@@ -69,7 +69,7 @@ onMounted(async () => {
   {
     err([ 'components', 'pages', 'users', 'item.vue', 'onMounted()' ], 'error', e.message);
     loading.value = false;
-    throw new Error(e.message);
+    throw new Error();
   }
 });
 </script>
