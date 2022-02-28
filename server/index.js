@@ -3,12 +3,6 @@ import { Router } from 'express';
 
 let cookie, app, env, api;
 
-function getApiUrl(url)
-{
-  const { VITE_API_URL } = env;
-  return VITE_API_URL + url;
-}
-
 /**
  * local routes
  */
@@ -42,12 +36,11 @@ function localRoutes()
   router.post('/login', async (req, res) => {
     try
     {
-      const { email, password, save, host } = req.body;
+      const { email, password, save } = req.body;
       // request to api
-      const apiRes = await api.post(getApiUrl('/auth/login/'), {
+      const apiRes = await api.post('/auth/login/', {
         email,
         password,
-        host,
       });
       // check response values
       if (!(apiRes.data.success && !!apiRes.data?.data))
@@ -101,7 +94,7 @@ function setup(_app, _env)
 {
   app = _app;
   env = _env;
-  const { VITE_COOKIE_PREFIX, VITE_COOKIE_EXPIRY, VITE_TOKEN_PUBLIC } = env;
+  const { VITE_COOKIE_PREFIX, VITE_COOKIE_EXPIRY, VITE_TOKEN_PUBLIC, VITE_API_URL } = env;
   // set cookie assets
   cookie = {
     prefix: VITE_COOKIE_PREFIX,
@@ -114,6 +107,7 @@ function setup(_app, _env)
   };
   // set api instance
   api = new axios.create({
+    baseURL: VITE_API_URL,
     headers: { 'Authorization': 'Bearer ' + VITE_TOKEN_PUBLIC },
   });
 }
