@@ -40,8 +40,7 @@ const props = defineProps({
     margin: -4px -8px;
     padding: 4px 8px;
     color: var(--color-text, var(--color-weak));
-    font-family: var(--font-eng);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 1.25;
     text-decoration: none;

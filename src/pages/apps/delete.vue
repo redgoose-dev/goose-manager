@@ -1,11 +1,13 @@
 <template>
 <article>
-  <PageHeader module="apps" title="Delete App"/>
+  <PageHeader module="apps" title="Delete app"/>
+  <Loading v-if="loading"/>
   <ConfirmDelete
+    v-else
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete App"
+    button-label="Delete app"
     :processing="processing"
     @cancel="$router.back()"
     @submit="onSubmit"/>
@@ -15,21 +17,23 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { get, post } from '../../libs/api';
 import { err } from '../../libs/error';
 import { toast } from '../../modules/toast';
 import { printf } from '../../libs/string';
 import { message } from '../../message';
+import { getItem, submit } from '../../structure/apps/delete';
 import PageHeader from '../../components/page/header/index.vue';
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue';
+import Loading from '../../components/etc/loading.vue';
 
 const router = useRouter();
 const route = useRoute();
 const fields = reactive({
   title: '',
-  description: '이것을 삭제하면 하위의 `Nest`, `Article`, `Category`, `File`의 데이터가 전부 삭제됩니다.',
+  description: message.words.deleteApp,
   name: '',
 });
+const loading = ref(false);
 const processing = ref(false);
 
 async function onSubmit()
@@ -37,7 +41,7 @@ async function onSubmit()
   try
   {
     processing.value = true;
-    await post(`/apps/${route.params.srl}/delete/`);
+    await submit(Number(route.params.srl));
     processing.value = false;
     await router.push('../../');
     toast.add(printf(message.success.delete, message.word.app), 'success');
@@ -53,15 +57,17 @@ async function onSubmit()
 onMounted(async () => {
   try
   {
-    let res = await get(`/apps/${route.params.srl}/`, { field: 'id,name' });
-    res = res.data;
-    fields.title = printf(message.confirm.deleteItem, res.name);
-    fields.name = `[${res.id}] ${res.name}`;
+    loading.value = true;
+    let res = await getItem(Number(route.params.srl));
+    fields.title = printf(message.confirm.deleteItem, `${message.word.app}"${res.name}"`);
+    fields.name = `${message.words.deleteItem}: ${res.srl}`;
+    loading.value = false;
   }
   catch (e)
   {
     err(['pages', 'apps', 'delete.vue', 'onMounted()'], 'error', e.message);
-    throw new Error(e.message);
+    loading.value = false;
+    throw new Error();
   }
 });
 </script>

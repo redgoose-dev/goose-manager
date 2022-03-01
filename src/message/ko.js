@@ -46,5 +46,9 @@ export default {
     successChangePassword: '비밀번호가 변경되었습니다.',
     pleaseCheck: '{0}을(를) 확인해주세요.',
     unknownError: '알 수 없는 오류가 발생했습니다.',
+    deleteApp: '이 앱을 삭제하면 하위의 "둥지", "아티클", "분류", "첨부파일" 데이터들이 전부 삭제됩니다.',
+    deleteNest: '이 둥지를 삭제하면 하위의 "아티클", "분류", "첨부파일" 데이터들이 전부 삭제됩니다.',
+    deleteArticle: '이 아티클을 삭제하면 관련된 첨부파일, 댓글들을 삭제하며 복구할 수 없습니다.',
+    deleteItem: '삭제되는 요소',
   },
 }

@@ -1,7 +1,9 @@
 <template>
 <article>
   <PageHeader module="nests" title="Delete nest"/>
+  <Loading v-if="loading"/>
   <ConfirmDelete
+    v-else
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
@@ -15,21 +17,23 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { get, post } from '../../libs/api';
 import { err } from '../../libs/error';
 import { toast } from '../../modules/toast';
 import { printf } from '../../libs/string';
 import { message } from '../../message';
+import { getItem, submit } from '../../structure/nests/delete';
 import PageHeader from '../../components/page/header/index.vue';
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue';
+import Loading from '../../components/etc/loading.vue';
 
 const router = useRouter();
 const route = useRoute();
 const fields = reactive({
   title: '',
-  description: '',
+  description: message.words.deleteNest,
   name: '',
 });
+const loading = ref(false);
 const processing = ref(false);
 
 async function onSubmit()
@@ -37,7 +41,7 @@ async function onSubmit()
   try
   {
     processing.value = true;
-    await post(`/nests/${route.params.srl}/delete/`);
+    await submit(Number(route.params.srl));
     processing.value = false;
     await router.push('../../');
     toast.add(printf(message.success.delete, message.word.nest), 'success');
@@ -53,17 +57,17 @@ async function onSubmit()
 onMounted(async () => {
   try
   {
-    let res = await get(`/nests/${route.params.srl}/`, { field: 'id,name' });
-    res = res.data;
+    loading.value = true;
+    let res = await getItem(Number(route.params.srl));
     fields.title = printf(message.confirm.deleteItem, message.word.nest);
-    fields.description = '이것을 삭제하면 하위의 `Article`, `Category`, `File`의 데이터가 삭제됩니다.';
-    fields.name = `[${res.id}] ${res.name}`;
+    fields.name = `${message.words.deleteItem}: ${res.srl}`;
+    loading.value = false;
   }
   catch (e)
   {
     err(['pages', 'nests', 'delete.vue', 'onMounted()'], 'error', e.message);
-    toast.add(printf(message.fail.get, message.word.user), 'error');
-    await router.back();
+    loading.value = false;
+    throw new Error();
   }
 });
 </script>

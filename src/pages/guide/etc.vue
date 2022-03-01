@@ -21,7 +21,7 @@
 
   <section class="page-section">
     <header>
-      <h3>Loading</h3>
+      <h2>Loading</h2>
       <p>데이터를 로딩하고있을때 사용하는 컴포넌트 입니다.</p>
     </header>
     <div class="example">
@@ -31,7 +31,7 @@
 
   <section class="page-section">
     <header>
-      <h3>Progress donut</h3>
+      <h2>Progress donut</h2>
       <p>도넛 형태의 그래프를 표시하는 컴포넌트 입니다.</p>
     </header>
     <div class="example">
@@ -42,21 +42,43 @@
       </div>
     </div>
   </section>
+
+  <section class="page-section">
+    <header>
+      <h2>Pagination</h2>
+      <p>목록에서 사용하는 페이지 네비게이션</p>
+    </header>
+    <div class="example">
+      <Pagination
+        v-model="page"
+        :total="200"
+        :size="10"
+        :range="8"
+        @update:modelValue="onUpdatePage"/>
+    </div>
+  </section>
 </article>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { toast } from '../../modules/toast';
 import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 import ProgressDonut from '../../components/etc/progress-donut.vue';
+import Pagination from '../../components/etc/pagination.vue';
 
 const progress = ref(30);
+const page = ref(1);
 
 function addToast(color)
 {
   toast.add('hello toast', color);
+}
+
+function onUpdatePage(page)
+{
+  console.log('onUpdatePage()', page);
 }
 </script>
 

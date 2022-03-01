@@ -60,6 +60,7 @@ async function onSubmit()
 {
   try
   {
+    // TODO: 데이터 처리 부분을 스트럭쳐 영역으로 분리해야겠다.
     processing.value = true;
     checkForms(forms);
     await post(isEdit.value ? `/categories/${props.srl}/edit/` : '/categories/', formData({
@@ -82,6 +83,7 @@ onMounted(async () => {
   if ( props.mode !== 'edit' ) return;
   try
   {
+    // TODO: 데이터 가져오는 부분을 스트럭쳐 영역으로 분리해야겠다.
     loading.value = true;
     const res = await get(`/categories/${props.srl}/`);
     forms.name.value = res.data.name;

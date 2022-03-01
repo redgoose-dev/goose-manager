@@ -2,6 +2,7 @@ import { useRoute } from 'vue-router';
 import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
 import { getTypeLabelArticle } from '../../components/pages/articles/libs';
+import store from '../../store';
 
 let route;
 
@@ -22,7 +23,7 @@ async function requestArticles()
     nest: route.params.nestSrl || undefined,
     category: category || undefined,
     field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
-    size: 20,
+    size: store.state.preference.articles.pageCount,
     ext_field: 'category_name',
     visible_type: visibleType || 'all',
     page: Number(route.query.page) > 1 ? Number(route.query.page) : undefined,

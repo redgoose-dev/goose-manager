@@ -1,12 +1,10 @@
 <template>
-<article>
-  <PageHeader module="articles" title="Delete article"/>
-</article>
+<Delete :srl="Number(route.params.articleSrl)"/>
 </template>
 
 <script setup>
 import { useRoute } from 'vue-router';
-import PageHeader from '../../../components/page/header/index.vue';
+import Delete from '../../../components/pages/articles/delete.vue';
 
 const route = useRoute();
 </script>

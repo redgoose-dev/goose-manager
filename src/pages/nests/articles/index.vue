@@ -4,11 +4,11 @@
     module="articles"
     :title="title"
     :description="description"/>
+  <Categories
+    v-if="data.categories?.length > 0"
+    :items="data.categories"/>
   <div class="articles">
     <div class="articles__body">
-      <Categories
-        v-if="data.categories?.length > 0"
-        :items="data.categories"/>
       <Loading v-if="loading"/>
       <Items v-else-if="data.index?.length > 0" theme="card">
         <Card
@@ -24,10 +24,14 @@
           ]"/>
       </Items>
       <Empty v-else/>
-      <nav v-if="data.total > 0">
-        .paginate
-      </nav>
-      <Controller>
+      <Pagination
+        v-model="page"
+        :total="data.total"
+        :size="store.state.preference.articles.pageCount"
+        :range="store.state.preference.articles.pageRange"
+        class="articles__pagination"
+        @update:modelValue="onChangePage"/>
+      <Controller class="articles__controller">
         <template #left>
           <ButtonBasic href="../../" icon-left="cloud">
             Nests
@@ -38,14 +42,14 @@
         </template>
         <template #right>
           <ButtonBasic href="./create/" color="key" icon-left="plus">
-            Create article
+            Create
           </ButtonBasic>
         </template>
       </Controller>
     </div>
     <div class="articles__filter">
       <aside class="filter">
-        .filter
+        .TODO-filter
       </aside>
     </div>
   </div>
@@ -55,7 +59,9 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import store from '../../../store';
 import { err } from '../../../libs/error';
+import { serialize } from '../../../libs/string';
 import getData from '../../../structure/articles';
 import PageHeader from '../../../components/page/header/index.vue';
 import { Items, Card } from '../../../components/item';
@@ -64,6 +70,7 @@ import ButtonBasic from '../../../components/button/basic.vue';
 import Loading from '../../../components/etc/loading.vue';
 import Empty from '../../../components/error/empty.vue';
 import Categories from '../../../components/pages/articles/categories.vue';
+import Pagination from '../../../components/etc/pagination.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -76,6 +83,17 @@ const data = reactive({
 const title = computed(() => (data.nest ? `[${data.nest.id}] Articles` : undefined));
 const description = computed(() => (data.nest ? data.nest.description : undefined));
 const loading = ref(false);
+const page = ref(route.query.page ? Number(route.query.page) : 1);
+
+function onChangePage(page)
+{
+  console.log();
+  let params = {
+    ...route.query,
+    page: page > 1 ? page : undefined,
+  };
+  router.push(`./${serialize(params, true)}`);
+}
 
 onMounted(async () => {
   try
@@ -103,6 +121,12 @@ onMounted(async () => {
   gap: 30px;
   &__body {}
   &__filter {}
+  &__pagination {
+    margin: 30px 0 0;
+  }
+  &__controller {
+    margin-top: 40px;
+  }
 }
 .filter {
   position: sticky;

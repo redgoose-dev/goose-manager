@@ -52,7 +52,7 @@
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Draggable from 'vuedraggable';
-import getData from '../../../structure/nests/categories';
+import getData from '../../../structure/categories/index';
 import { err } from '../../../libs/error';
 import { post, formData } from '../../../libs/api';
 import { toast } from '../../../modules/toast';

@@ -76,7 +76,7 @@ export function serialize(obj, usePrefix=false)
   let res = '';
   for (let p in obj)
   {
-    if (obj.hasOwnProperty(p))
+    if (obj.hasOwnProperty(p) && obj[p] !== undefined)
     {
       str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
     }

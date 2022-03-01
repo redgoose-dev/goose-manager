@@ -1,11 +1,13 @@
 <template>
 <article>
-  <PageHeader module="users" title="Delete User"/>
+  <PageHeader module="users" title="Delete user"/>
+  <Loading v-if="loading"/>
   <ConfirmDelete
+    v-else
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete User"
+    button-label="Delete user"
     :processing="processing"
     @cancel="$router.back()"
     @submit="onSubmit"/>
@@ -15,13 +17,14 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { get, post } from '../../libs/api';
 import { err } from '../../libs/error';
-import { message } from '../../message';
-import { printf } from '../../libs/string';
 import { toast } from '../../modules/toast';
+import { printf } from '../../libs/string';
+import { message } from '../../message';
+import { getItem, submit } from '../../structure/users/delete';
 import PageHeader from '../../components/page/header/index.vue';
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue';
+import Loading from '../../components/etc/loading.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -30,6 +33,7 @@ const fields = reactive({
   description: printf(message.words.warningDeleteItem, '사용자'),
   name: '',
 });
+const loading = ref(false);
 const processing = ref(false);
 
 async function onSubmit()
@@ -37,7 +41,7 @@ async function onSubmit()
   try
   {
     processing.value = true;
-    await post(`/users/${route.params.srl}/delete/`);
+    await submit(Number(route.params.srl));
     processing.value = false;
     await router.push('../../');
     toast.add(printf(message.success.delete, message.word.user), 'success');
@@ -53,16 +57,17 @@ async function onSubmit()
 onMounted(async () => {
   try
   {
-    let res = await get(`/users/${route.params.srl}/`, { field: '*' });
-    res = res.data;
+    loading.value = true;
+    let res = await getItem(Number(route.params.srl));
     fields.title = printf(message.confirm.deleteItem, `${message.word.user}(${res.name})`);
-    fields.name = res.email;
+    fields.name = `${message.words.deleteItem}: ${res.email}`;
+    loading.value = false;
   }
   catch (e)
   {
     err(['pages', 'users', 'delete.vue', 'onMounted()'], 'error', e.message);
-    toast.add(printf(message.fail.get, message.word.user), 'error');
-    await router.back();
+    loading.value = false;
+    throw new Error();
   }
 });
 </script>

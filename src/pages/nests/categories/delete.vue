@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="json" title="Delete category"/>
+  <PageHeader module="categories" title="Delete category"/>
   <Loading v-if="loading"/>
   <ConfirmDelete
     v-else
@@ -17,11 +17,11 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { get, post } from '../../../libs/api';
 import { err } from '../../../libs/error';
-import { printf } from '../../../libs/string';
 import { toast } from '../../../modules/toast';
+import { printf } from '../../../libs/string';
 import { message } from '../../../message';
+import { getItem, submit } from '../../../structure/categories/delete';
 import PageHeader from '../../../components/page/header/index.vue';
 import ConfirmDelete from '../../../components/forms/confirm-delete/index.vue';
 import Loading from '../../../components/etc/loading.vue';
@@ -41,8 +41,7 @@ async function onSubmit()
   try
   {
     processing.value = true;
-    await post(`/categories/${route.params.categorySrl}/delete/`);
-    // TODO: 단순히 분류만 삭제하면 연결되어 있는 article 데이터가 로스트되어 버리니 일괄적으로 `null`로 변경해줘야할거같다. 이 부분은 `goose-api`에서 처리해줘야 하는 역할이다.
+    await submit(Number(route.params.categorySrl));
     processing.value = false;
     await router.push('../../');
     toast.add(printf(message.success.delete, message.word.category), 'success');
@@ -59,15 +58,15 @@ onMounted(async () => {
   try
   {
     loading.value = true;
-    let res = await get(`/categories/${route.params.categorySrl}/`, { field: 'name' });
-    fields.name = res.data.name;
+    let res = await getItem(Number(route.params.categorySrl));
+    fields.name = `${message.words.deleteItem}: ${res.srl}`;
     loading.value = false;
   }
   catch (e)
   {
     err(['pages', 'nests', 'categories', 'delete.vue', 'onMounted()'], 'error', e.message);
     loading.value = false;
-    throw new Error(e.message);
+    throw new Error();
   }
 });
 </script>

@@ -11,14 +11,11 @@ async function requestNest(nestSrl)
   let res = await get(`/nests/${nestSrl}/`, {
     field: 'srl,id,name',
   });
-  return res.data;
-}
-function filteringNest(src)
-{
+  if (!res.success) throw new Error(res.message);
   return {
-    srl: src.srl,
-    id: src.id,
-    name: src.name,
+    srl: res.data.srl,
+    id: res.data.id,
+    name: res.data.name,
   };
 }
 
@@ -34,15 +31,14 @@ async function requestCategories(nestSrl)
     order: 'turn',
     sort: 'asc',
   });
-  return res.data?.index || [];
-}
-function filteringCategories(src)
-{
-  return src.map(item => {
+  if (!res.success) throw new Error(res.message);
+  return res.data.index.map(item => {
     return {
       srl: item.srl,
       title: item.name,
-      meta: [ getDate(item.regdate) ],
+      meta: [
+        getDate(item.regdate),
+      ],
     };
   });
 }
@@ -60,8 +56,5 @@ export default async function getData(srl)
     requestNest(srl),
     requestCategories(srl),
   ]);
-  return {
-    nest: filteringNest(nest),
-    categories: filteringCategories(categories),
-  };
+  return { nest, categories };
 }
