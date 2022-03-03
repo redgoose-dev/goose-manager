@@ -19,7 +19,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .field {
   display: grid;
-  grid-template-columns: var(--field-label-width, 135px) 1fr;
+  grid-template-columns: var(--field-label-width, 160px) 1fr;
   grid-auto-flow: column;
   align-items: center;
   margin: 0;
@@ -27,7 +27,7 @@ const props = defineProps({
   box-sizing: border-box;
   min-height: 54px;
   &__label {
-    padding: 0 0 0 8px;
+    padding: 0 0 0 12px;
     box-sizing: border-box;
     font-size: 13px;
     color: var(--color-weak);
@@ -38,7 +38,7 @@ const props = defineProps({
   }
   &__body {
     margin: 0;
-    padding: 0 8px;
+    padding: 0 16px 0 8px;
     box-sizing: border-box;
     font-size: 15px;
     line-height: 1.15;

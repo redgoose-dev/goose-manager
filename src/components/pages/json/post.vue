@@ -150,7 +150,7 @@ onMounted(async () => {
   {
     err([ 'components', 'pages', 'json', 'post.vue', 'onMounted()' ], 'error', e.message);
     loading.value = false;
-    throw new Error(e.message);
+    throw new Error();
   }
 });
 </script>

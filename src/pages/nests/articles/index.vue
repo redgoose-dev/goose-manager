@@ -21,7 +21,11 @@
           :nav="[
             { label: 'Edit', href: `./${item.srl}/edit/` },
             { label: 'Delete', href: `./${item.srl}/delete/` },
-          ]"/>
+          ]">
+          <template v-if="item.private" #after>
+            <Mark/>
+          </template>
+        </Card>
       </Items>
       <Empty v-else/>
       <Pagination
@@ -47,11 +51,12 @@
         </template>
       </Controller>
     </div>
-    <div class="articles__filter">
-      <aside class="filter">
-        .TODO-filter
-      </aside>
-    </div>
+    <aside class="articles__filter">
+      <Filter
+        :total="data.total"
+        :loading="loading"
+        @update="onUpdateFilter"/>
+    </aside>
   </div>
 </article>
 </template>
@@ -62,15 +67,16 @@ import { useRoute, useRouter } from 'vue-router';
 import store from '../../../store';
 import { err } from '../../../libs/error';
 import { serialize } from '../../../libs/string';
-import getData from '../../../structure/articles';
+import { getData, requestArticles, requestCategories } from '../../../structure/articles';
 import PageHeader from '../../../components/page/header/index.vue';
-import { Items, Card } from '../../../components/item';
+import { Items, Card, Thumbnail, Mark } from '../../../components/item';
 import Controller from '../../../components/forms/fieldset/controller.vue';
 import ButtonBasic from '../../../components/button/basic.vue';
 import Loading from '../../../components/etc/loading.vue';
 import Empty from '../../../components/error/empty.vue';
 import Categories from '../../../components/pages/articles/categories.vue';
 import Pagination from '../../../components/etc/pagination.vue';
+import Filter from '../../../components/pages/articles/filter.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -85,14 +91,36 @@ const description = computed(() => (data.nest ? data.nest.description : undefine
 const loading = ref(false);
 const page = ref(route.query.page ? Number(route.query.page) : 1);
 
+// TODO: 테마값 적용
+
 function onChangePage(page)
 {
-  console.log();
   let params = {
     ...route.query,
     page: page > 1 ? page : undefined,
   };
   router.push(`./${serialize(params, true)}`);
+}
+
+async function onUpdateFilter()
+{
+  try
+  {
+    loading.value = true;
+    let [ articles, categories ] = await Promise.all([
+      requestArticles(),
+      requestCategories(),
+    ]);
+    data.total = articles.total;
+    data.index = articles.index;
+    data.categories = categories;
+    loading.value = false;
+  }
+  catch (e)
+  {
+    err(['pages', 'nests', 'articles', 'index.vue', 'onUpdateFilter()'], 'error', e.message);
+    loading.value = false;
+  }
 }
 
 onMounted(async () => {
@@ -108,7 +136,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'nests', 'articles', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['pages', 'nests', 'articles', 'index.vue', 'fetch()'], 'error', e.message);
     loading.value = false;
   }
 });
@@ -118,7 +146,7 @@ onMounted(async () => {
 .articles {
   display: grid;
   grid-template-columns: 1fr 150px;
-  gap: 30px;
+  gap: 40px;
   &__body {}
   &__filter {}
   &__pagination {
@@ -131,6 +159,5 @@ onMounted(async () => {
 .filter {
   position: sticky;
   top: calc(var(--size-header-height) + 16px);
-  background: lime;
 }
 </style>

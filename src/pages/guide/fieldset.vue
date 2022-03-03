@@ -13,18 +13,18 @@
     <div class="example">
       <Fieldset legend="Basic fields">
         <Field label="Text" for="text">
-          <FormInput v-model="text" id="text" style="--input-width: 360px"/>
+          <Input v-model="text" id="text" style="--input-width: 360px"/>
           <Help>
             Typed text: <strong>{{text || 'none'}}</strong>
           </Help>
         </Field>
         <Field label="Select" for="select">
-          <FormSelect v-model="select" placeholder="Please select item" style="--select-width: 200px">
+          <Select v-model="select" placeholder="Please select item" style="--select-width: 200px">
             <option value="">Please select item</option>
             <option value="apple">apple</option>
             <option value="banana">banana</option>
             <option value="mango">mango</option>
-          </FormSelect>
+          </Select>
           <Help>
             Selected item: <strong>{{select || 'none'}}</strong>
           </Help>
@@ -34,15 +34,15 @@
         <Field label="Radio buttons" for="radios">
           <Labels>
             <Label>
-              <FormRadio name="radios" id="radios" v-model="radio" value="apple"/>
+              <Radio name="radios" id="radios" v-model="radio" value="apple"/>
               <span>Apple</span>
             </Label>
             <Label>
-              <FormRadio name="radios" v-model="radio" value="banana"/>
+              <Radio name="radios" v-model="radio" value="banana"/>
               <span>Banana</span>
             </Label>
             <Label>
-              <FormRadio name="radios" v-model="radio" value="mango"/>
+              <Radio name="radios" v-model="radio" value="mango"/>
               <span>Mango</span>
             </Label>
           </Labels>
@@ -54,11 +54,11 @@
           <div class="flex">
             <Labels>
               <Label>
-                <FormRadio name="radios2" value="apple"/>
+                <Radio name="radios2" value="apple"/>
                 <span>Apple</span>
               </Label>
               <Label>
-                <FormRadio name="radios2" value="banana"/>
+                <Radio name="radios2" value="banana"/>
                 <span>Banana</span>
               </Label>
             </Labels>
@@ -67,7 +67,7 @@
             <Labels>
               <Label>
                 <span>Width:</span>
-                <FormInput
+                <Input
                   type="number"
                   size="small"
                   placeholder="0"
@@ -76,7 +76,7 @@
               </Label>
               <Label>
                 <span>Height:</span>
-                <FormInput
+                <Input
                   type="number"
                   size="small"
                   placeholder="0"
@@ -90,15 +90,15 @@
           <Field label="Checkbox buttons" for="checkboxes">
             <Labels>
               <Label>
-                <FormCheckbox name="checkboxes" id="checkboxes" v-model="checkbox[0]"/>
+                <Checkbox name="checkboxes" id="checkboxes" v-model="checkbox[0]"/>
                 <span>Apple</span>
               </Label>
               <Label>
-                <FormCheckbox name="checkboxes" v-model="checkbox[1]"/>
+                <Checkbox name="checkboxes" v-model="checkbox[1]"/>
                 <span>Banana</span>
               </Label>
               <Label>
-                <FormCheckbox name="checkboxes" v-model="checkbox[2]"/>
+                <Checkbox name="checkboxes" v-model="checkbox[2]"/>
                 <span>Mango</span>
               </Label>
             </Labels>
@@ -109,16 +109,22 @@
           <Field label="Side input" for="column-input">
             <Labels>
               <Label>
-                <FormRadio name="radios3" value="apple"/>
+                <Radio name="radios3" value="apple"/>
                 <span>Apple</span>
               </Label>
               <Label>
-                <FormRadio name="radios3" value="banana"/>
+                <Radio name="radios3" value="banana"/>
                 <span>Banana</span>
               </Label>
             </Labels>
           </Field>
         </Columns>
+        <FieldCheck
+          label="Switch value"
+          for="switchValue"
+          description="Switch value description">
+          <Switch name="switchValue" id="switchValue" :model-value="switchValue"/>
+        </FieldCheck>
       </Fieldset>
       <Controller class="controller">
         <template #left>
@@ -136,17 +142,15 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Fieldset, Field, Columns, Controller, Labels, Label, Help } from '../../components/forms/fieldset';
-import FormInput from '../../components/forms/input.vue';
-import FormSelect from '../../components/forms/select.vue';
-import FormCheckbox from '../../components/forms/checkbox.vue';
-import FormRadio from '../../components/forms/radio.vue';
+import { Fieldset, Field, FieldCheck, Columns, Controller, Labels, Label, Help } from '../../components/forms/fieldset';
+import { Input, Select, Checkbox, Radio, Switch } from '../../components/forms';
 import ButtonBasic from '../../components/button/basic.vue';
 
 const text = ref('');
 const select = ref('');
 const radio = ref('apple');
 const checkbox = ref([ true, false, false ]);
+const switchValue = ref(false);
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>

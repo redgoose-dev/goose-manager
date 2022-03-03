@@ -1,11 +1,15 @@
 <template>
-<label class="switch">
+<label :class="[
+  'switch',
+  props.disabled && 'switch--disabled',
+  props.readonly && 'switch--readonly',
+]">
   <input
     type="checkbox"
     :name="props.name"
     :id="props.id"
     :required="props.required"
-    :disabled="props.disabled"
+    :disabled="props.disabled || props.readonly"
     :checked="sw"
     @change="onChange"
     class="form-switch__body">
@@ -22,6 +26,7 @@ const props = defineProps({
   modelValue: [ String, Number, Boolean ],
   values: Array, // [false,true]
   disabled: Boolean,
+  readonly: Boolean,
   required: Boolean,
 });
 const emits = defineEmits([ 'update:modelValue' ]);

@@ -96,10 +96,10 @@ const pages = computed(() => {
   return checkEmpty ? items : [];
 });
 const disabledFirstArrow = computed(() => {
-  return page <= 1 || pageBlock.value !== 1;
+  return pageBlock.value === 0;
 });
 const disabledLastArrow = computed(() => {
-  return props.modelValue >= pageCount.value || pageBlock.value === pageBlockTotal.value;
+  return page.value >= pageCount.value || pageBlock.value === pageBlockTotal.value;
 });
 
 function onPrevRange()

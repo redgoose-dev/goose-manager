@@ -1,10 +1,29 @@
 import { useRoute } from 'vue-router';
 import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
+import { serialize } from '../../libs/string';
 import { getTypeLabelArticle } from '../../components/pages/articles/libs';
 import store from '../../store';
 
 let route;
+
+/**
+ * set order
+ * @param {string} order
+ * @param {string} sort
+ * @return {string}
+ */
+export function setOrder(order='srl', sort='desc')
+{
+  switch (order)
+  {
+    case 'order':
+      return `\`order\` ${sort}, \`srl\` ${sort}`;
+    case 'srl':
+    default:
+      return `\`srl\` ${sort}`;
+  }
+}
 
 async function requestNest()
 {
@@ -16,18 +35,20 @@ async function requestNest()
   return res.data;
 }
 
-async function requestArticles()
+export async function requestArticles()
 {
-  const { category, page, visibleType } = route.query;
+  const { category, page } = route.query;
+  const { displayDateField, pageCount, filter } = store.state.preference.articles;
+  const { type, order, sort } = filter;
   let res = await get('/articles/', {
     nest: route.params.nestSrl || undefined,
     category: category || undefined,
     field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
-    size: store.state.preference.articles.pageCount,
+    size: pageCount || 24,
     ext_field: 'category_name',
-    visible_type: visibleType || 'all',
-    page: Number(route.query.page) > 1 ? Number(route.query.page) : undefined,
-    // order: '', // TODO
+    visible_type: type || 'all',
+    page: Number(page) > 1 ? Number(page) : undefined,
+    order: setOrder(order, sort),
     q: route.query.q || undefined,
   });
   if (!res.success) throw new Error(res.message);
@@ -39,44 +60,54 @@ async function requestArticles()
         title: item.title,
         meta: [
           getTypeLabelArticle(item.type),
-          getDate(item.regdate),
+          getDate(displayDateField === 'order' ? item.order : item.regdate),
           item.category_name && item.category_name,
           `Hit:${item.hit}`,
         ].filter(Boolean),
         image: '', // TODO: 썸네일 이미지 주소
+        private: item.type === 'private',
       };
     }),
   };
 }
 
-async function requestCategories()
+export async function requestCategories()
 {
   if (!route.params.nestSrl) return null;
-  const { category, visibleType } = route.query;
+  const { category, q } = route.query;
+  const { type } = store.state.preference.articles.filter;
   let res = await get(`/categories/`, {
     nest: route.params.nestSrl,
     field: 'srl,name,turn',
     order: 'turn',
     sort: 'asc',
     ext_field: 'count_article,item_all,none',
-    visible_type: visibleType || 'all',
+    visible_type: type || 'all',
+    q: q || undefined,
     strict: 1,
   });
   if (!res.success) throw new Error(res.message);
+  let params = {
+    ...route.query,
+    page: undefined,
+    category: undefined,
+  };
   return res.data?.index.map(item => {
     let link, active;
     switch (item.srl)
     {
       case '':
-        link = '';
+        link = serialize(params, true);
         active = !category;
         break;
       case 'null':
-        link = '?category=null';
+        params.category = 'null';
+        link = serialize(params, true);
         active = category === 'null';
         break;
       default:
-        link = item.srl ? `?category=${item.srl}` : '';
+        params.category = item.srl;
+        link = item.srl ? serialize(params, true) : '';
         active = Number(category) === item.srl;
         break;
     }
@@ -94,7 +125,7 @@ async function requestCategories()
  * @return {Promise<object>}
  * @throws {Error}
  */
-export default async function getData()
+export async function getData()
 {
   route = useRoute();
   let [ nest, articles, categories ] = await Promise.all([

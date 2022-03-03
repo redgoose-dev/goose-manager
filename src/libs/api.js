@@ -4,6 +4,7 @@ import axios from 'axios';
 import store from '../store';
 
 let instance;
+let timer;
 
 /**
  * setup
@@ -66,7 +67,7 @@ export async function get(url, params = {})
   let res = await instance.get(url, { params });
   res = res.data;
   checkStatus(res);
-  // TODO: `res._token`값이 존재하면 리프레시 토큰이라고 인식하고 업데이트 해줘야할거같다.
+  if (res._token) refreshToken(res._token);
   return res;
 }
 
@@ -82,6 +83,21 @@ export async function post(url, data = null)
   let res = await instance.post(url, data);
   res = res.data;
   checkStatus(res);
-  // TODO: `res._token`값이 존재하면 리프레시 토큰이라고 인식하고 업데이트 해줘야할거같다.
+  if (res._token) refreshToken(res._token);
   return res;
+}
+
+/**
+ * refresh token
+ * @param {string} token
+ */
+function refreshToken(token)
+{
+  const delay = 2000;
+  if (timer) clearTimeout(timer);
+  timer = setTimeout(async () => {
+    let res = await axios.post('/local/refresh-token/', { token });
+    if (res.data.token) store.state.token = res.data.token;
+    timer = undefined;
+  }, delay);
 }

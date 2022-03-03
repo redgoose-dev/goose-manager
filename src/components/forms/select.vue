@@ -10,7 +10,7 @@
     :value="props.modelValue"
     :required="props.required"
     :disabled="props.disabled"
-    @input="emits('update:modelValue', $event.target.value)">
+    @input="onUpdate">
     <template v-if="props.options?.length > 0">
       <option v-if="props.placeholder" value="">
         {{props.placeholder}}
@@ -33,6 +33,7 @@ const props = defineProps({
   name: String,
   id: String,
   modelValue: { type: [ String, Number ], default: '' },
+  valueType: String, // text,number
   options: Array,
   required: Boolean,
   disabled: Boolean,
@@ -42,6 +43,22 @@ const props = defineProps({
 });
 const emits = defineEmits([ 'update:modelValue' ]);
 const placeholder = computed(() => (!props.modelValue && props.placeholder));
+
+function onUpdate(e)
+{
+  let value;
+  switch (props.valueType)
+  {
+    case 'number':
+      value = Number(e.target.value);
+      break;
+    case 'text':
+    default:
+      value = e.target.value;
+      break;
+  }
+  emits('update:modelValue', value);
+}
 </script>
 
 <style src="./select.scss" lang="scss" scoped></style>

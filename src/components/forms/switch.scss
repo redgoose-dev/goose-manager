@@ -16,7 +16,7 @@
     box-sizing: border-box;
     pointer-events: none;
     appearance: none;
-    background-color: var(--switch-bg, rgb(240 240 240));
+    background-color: var(--switch-bg, rgb(245 245 245));
     border-radius: calc(var(--switch-height, 28px) * .5);
     box-shadow: var(--switch-shadow, inset 0 2px 5px rgb(0 0 0 / 15%), inset 0 0 0 1px rgb(0 0 0 / 20%), 0 0 0 3px rgb(0 0 0 / 0));
     transition: box-shadow 200ms ease-out;
@@ -24,11 +24,12 @@
     border: none;
   }
   i {
+    --unit-size: calc(var(--switch-height, 28px) - (var(--switch-padding, 5px) * 2));
     display: block;
     position: absolute;
     left: var(--switch-padding, 5px);
     top: var(--switch-padding, 5px);
-    width: calc(var(--switch-height, 28px) - calc(var(--switch-padding, 5px) * 2));
+    width: calc(var(--switch-height, 28px) - (var(--switch-padding, 5px) * 2));
     height: calc(var(--switch-height, 28px) - calc(var(--switch-padding, 5px) * 2));
     background-color: var(--switch-color, var(--color-weak));
     border-radius: calc(var(--switch-height, 28px) * .5);
@@ -36,9 +37,9 @@
     pointer-events: none;
     box-shadow: 0 0 3px 0 rgba(0,0,0,.15);
   }
-  &:active {
+  &:not(.switch--disabled, .switch--readonly):active {
     i {
-      width: calc(var(--switch-height, 28px) - calc(var(--switch-padding, 5px) * 2) + var(--switch-active-offset, 8px));
+      width: calc(var(--switch-height, 28px) - (var(--switch-padding, 5px) * 2) + var(--switch-active-offset, 8px));
     }
   }
   &:focus-within {
@@ -51,9 +52,13 @@
     right: var(--switch-padding, 5px);
     --switch-color: var(--color-key);
   }
+  &--readonly {
+    --switch-bg: rgb(230 230 230);
+    cursor: default;
+  }
   &--disabled {
-    cursor: not-allowed;
     opacity: .5;
+    cursor: not-allowed;
   }
 
   //@include mixins.dark-mode() {

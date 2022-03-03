@@ -1,11 +1,11 @@
 <template>
 <div :class="[
   'keyword-text',
-  props.size && `keyword-text--size-${props.size}`,
   props.disabled && `keyword-text--disabled`,
 ]">
   <p class="keyword-text__input">
     <input
+      ref="$input"
       :type="props.type"
       :name="props.name"
       :id="props.id"
@@ -14,9 +14,11 @@
       :disabled="keywordDisabled"
       :readonly="props.readonly"
       :maxlength="props.maxlength"
+      :minlength="2"
       :placeholder="props.placeholder"
       @input="$emit('update:modelValue', $event.target.value)"
-      @keydown.enter="$emit('submit', props.modelValue)"/>
+      @keydown.enter.prevent="$emit('submit', props.modelValue)"
+      @keydown.esc="$emit('clear')"/>
   </p>
   <button
     type="button"
@@ -27,7 +29,7 @@
   </button>
   <button
     type="button"
-    :disabled="submitDisabled"
+    :disabled="props.processing"
     :class="[
       'keyword-text__submit',
       props.processing && 'processing',
@@ -40,15 +42,15 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import Icon from '../icons/index.vue';
 
+const $input = ref();
 const props = defineProps({
   type: { type: String, default: 'text' },
   name: String,
   id: String,
   modelValue: String,
-  size: String, // mini,small
   required: Boolean,
   disabled: Boolean,
   readonly: Boolean,
@@ -63,8 +65,9 @@ const keywordDisabled = computed(() => {
 const clearDisabled = computed(() => {
   return !(props.modelValue?.length > 0);
 });
-const submitDisabled = computed(() => {
-  return props.processing || props.modelValue?.length <= 0;
+
+defineExpose({
+  $input,
 });
 </script>
 

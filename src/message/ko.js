@@ -3,6 +3,7 @@ export default {
     samePassword: '확인용 비밀번호가 다릅니다.',
     parsingJSON: 'JSON 파싱하는데 오류가 발생했습니다.',
     emptyContent: '이 {0}은 비어있습니다.',
+    keywordMinlength: '검색어를 {0}자이상 입력할 수 있습니다.',
   },
   confirm: {
     deleteItem: '이 {0}을(를) 삭제할까요?',
@@ -36,6 +37,7 @@ export default {
     order: '순서',
     content: '내용',
     article: '아티클',
+    comment: '댓글',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',

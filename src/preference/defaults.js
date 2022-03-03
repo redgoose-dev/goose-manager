@@ -89,7 +89,7 @@ export default {
       type: 'all',
       order: 'srl',
       sort: 'desc',
-      skin: 'card'
+      theme: 'card',
     },
   },
   files: {

@@ -79,6 +79,14 @@ function localRoutes()
     res.json({ success: true });
   });
 
+  // refresh token
+  router.post('/refresh-token/', async (req, res) => {
+    const { token } = req.body;
+    if (!token) return;
+    res.cookie(cookie.prefix + '-token', token, cookie.options);
+    res.json({ token });
+  });
+
   // TODO: 로그를 기록하는 기능 만들기
 
   return router;

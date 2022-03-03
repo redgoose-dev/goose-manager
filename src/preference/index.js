@@ -10,7 +10,7 @@ import { pureObject } from '../libs/object';
 export function getPreference()
 {
   const storagePreference = storage.get('preference');
-  return storagePreference ? JSON.parse(storagePreference) : defaults;
+  return storagePreference ? storagePreference : defaults;
 }
 
 /**
@@ -18,6 +18,5 @@ export function getPreference()
  */
 export function savePreference()
 {
-  const pref = pureObject(store.state.preference);
-  storage.set('preference', JSON.stringify(pref, null, ''));
+  storage.set('preference', pureObject(store.state.preference));
 }

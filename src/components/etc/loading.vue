@@ -23,7 +23,7 @@ onMounted(() => {
   mounted = true;
   setTimeout(() => {
     if (mounted) show.value = true;
-  }, 80);
+  }, 240);
 });
 onUnmounted(() => {
   mounted = false;

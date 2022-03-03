@@ -2,7 +2,7 @@
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
     <Field label="E-Mail" for="email">
-      <FormInput
+      <Input
         type="email"
         v-model="forms.email.value"
         name="email"
@@ -18,7 +18,7 @@
       </Help>
     </Field>
     <Field label="Name" for="name">
-      <FormInput
+      <Input
         v-model="forms.name.value"
         name="name"
         id="name"
@@ -29,7 +29,7 @@
         class="fields__name"/>
     </Field>
     <Field v-if="!isEdit" label="Password" for="password">
-      <FormInput
+      <Input
         type="password"
         v-model="forms.password.value"
         name="password"
@@ -41,7 +41,7 @@
         class="fields__password"/>
     </Field>
     <Field v-if="!isEdit" label="Confirm password" for="password2">
-      <FormInput
+      <Input
         type="password"
         v-model="forms.password2.value"
         name="password2"
@@ -55,14 +55,9 @@
         {{forms.password2.error}}
       </Help>
     </Field>
-    <Field v-if="useAdminField" label="Admin" for="admin">
-      <Labels>
-        <Label>
-          <FormCheckbox v-model="forms.admin.value"/>
-          <span>체크하면 관리자 권한으로 사용합니다.</span>
-        </Label>
-      </Labels>
-    </Field>
+    <FieldCheck label="Admin" description="관리자 권한으로 사용합니다." for="admin">
+      <Switch v-model="forms.admin.value" :disabled="!useAdminField"/>
+    </FieldCheck>
   </Fieldset>
   <Controller>
     <template #left>
@@ -90,9 +85,8 @@ import { err } from '../../../libs/error';
 import { message } from '../../../message';
 import { printf } from '../../../libs/string';
 import { toast } from '../../../modules/toast';
-import { Fieldset, Field, Label, Labels, Controller, Help } from '../../forms/fieldset';
-import FormInput from '../../forms/input.vue';
-import FormCheckbox from '../../forms/checkbox.vue';
+import { Fieldset, Field, FieldCheck, Controller, Help } from '../../forms/fieldset';
+import { Input, Switch } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
 const root = ref();

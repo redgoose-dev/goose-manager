@@ -175,6 +175,12 @@
       <div class="flex flex--v-center">
         <FormSwitch v-model="sw"/>
         <span>{{sw}}</span>
+        <span>/</span>
+        <span>disabled:</span>
+        <FormSwitch v-model="sw" :disabled="true"/>
+        <span>/</span>
+        <span>readonly:</span>
+        <FormSwitch v-model="sw" :readonly="true"/>
       </div>
       <hr>
       <div class="flex flex--v-center">
