@@ -24,11 +24,15 @@ const layout = computed(() => {
 
 // children component error
 onErrorCaptured((e, component, info) => {
-  if (!!e.message)
+  if (typeof e === 'string')
+  {
+    error.value = new Error(e);
+  }
+  else
   {
     err([ 'app.vue', 'onErrorCaptured()' ], 'error', e.message);
+    error.value = e;
   }
-  error.value = e;
   return false;
 });
 

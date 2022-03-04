@@ -64,6 +64,7 @@ const rootProps = computed(() => {
   }
   &__empty {
     box-sizing: border-box;
+    height: 100%;
   }
   &--type {
     &-cover {

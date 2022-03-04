@@ -56,10 +56,10 @@
           size="small"
           v-model="filter.theme"
           :options="[
-            { label: 'list', value: 'list' },
-            { label: 'card', value: 'card' },
-            { label: 'thumbnail', value: 'thumbnail' },
-            { label: 'brick', value: 'brick' },
+            { label: 'List', value: 'list' },
+            { label: 'Card', value: 'card' },
+            { label: 'Thumbnail', value: 'thumbnail' },
+            { label: 'Brick', value: 'brick' },
           ]"
           :placeholder="null"
           @update:modelValue="onUpdate('theme', $event)"/>

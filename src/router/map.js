@@ -134,6 +134,30 @@ const articles = [
     component: () => import('../pages/articles/index.vue'),
     meta: { active: 'articles' },
   },
+  {
+    path: '/articles/:srl/',
+    name: 'Article',
+    component: () => import('../pages/articles/item.vue'),
+    meta: { active: 'articles' },
+  },
+  {
+    path: '/articles/:srl/edit/',
+    name: 'EditArticle',
+    component: () => import('../pages/articles/edit.vue'),
+    meta: { active: 'articles' },
+  },
+  {
+    path: '/articles/:srl/delete/',
+    name: 'DeleteArticle',
+    component: () => import('../pages/articles/delete.vue'),
+    meta: { active: 'articles' },
+  },
+  {
+    path: '/articles/:srl/change-nest/',
+    name: 'ChangeNestArticle',
+    component: () => import('../pages/articles/change-nest.vue'),
+    meta: { active: 'articles' },
+  },
 ];
 const files = [
   {

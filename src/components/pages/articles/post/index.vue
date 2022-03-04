@@ -145,7 +145,7 @@ const $root = ref();
 const $editor = ref();
 const props = defineProps({
   mode: { type: String, required: true },
-  nestSrl: { type: Number, required: true },
+  nestSrl: Number,
   articleSrl: Number,
 });
 const data = reactive({

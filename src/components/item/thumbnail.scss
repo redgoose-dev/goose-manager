@@ -15,6 +15,8 @@
   &__thumbnail {
     width: 100%;
     height: var(--item-image-height, auto);
+    min-height: var(--item-image-min-height, unset);
+    max-height: var(--item-image-max-height, unset);
     box-sizing: border-box;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;

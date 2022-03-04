@@ -103,14 +103,22 @@ async function requestReadyArticle(nest)
  */
 export default async function getData(nestSrl, articleSrl)
 {
-  const nest = await requestNest(nestSrl);
-  let [ categories, article ] = await Promise.all([
-    requestCategories(nestSrl),
-    !!articleSrl ? requestArticle(articleSrl) : requestReadyArticle(nest),
-  ].filter(Boolean));
-  return {
-    nest,
-    categories,
-    article,
-  };
+  let nest, categories, article;
+  if (nestSrl)
+  {
+    nest = await requestNest(nestSrl);
+    [ categories, article ] = await Promise.all([
+      requestCategories(nestSrl),
+      !!articleSrl ? requestArticle(articleSrl) : requestReadyArticle(nest),
+    ].filter(Boolean));
+  }
+  else
+  {
+    article = await requestArticle(articleSrl);
+    [ nest, categories ] = await Promise.all([
+      requestNest(article.nest_srl),
+      requestCategories(article.nest_srl),
+    ]);
+  }
+  return { nest, categories, article };
 }

@@ -9,7 +9,7 @@
 
 <script setup>
 const props = defineProps({
-  theme: String, // list,card,image,brick
+  theme: String, // list,card,thumbnail,brick
 });
 </script>
 

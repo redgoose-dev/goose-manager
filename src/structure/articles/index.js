@@ -2,7 +2,6 @@ import { useRoute } from 'vue-router';
 import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
 import { serialize } from '../../libs/string';
-import { getTypeLabelArticle } from '../../components/pages/articles/libs';
 import store from '../../store';
 
 let route;
@@ -37,15 +36,16 @@ async function requestNest()
 
 export async function requestArticles()
 {
+  const { nestSrl } = route.params;
   const { category, page } = route.query;
   const { displayDateField, pageCount, filter } = store.state.preference.articles;
   const { type, order, sort } = filter;
   let res = await get('/articles/', {
-    nest: route.params.nestSrl || undefined,
+    nest: nestSrl || undefined,
     category: category || undefined,
-    field: 'srl,type,title,hit,regdate,category_srl,json,`order`',
+    field: 'srl,type,title,hit,star,regdate,nest_srl,category_srl,json,`order`',
     size: pageCount || 24,
-    ext_field: 'category_name',
+    ext_field: `category_name${!nestSrl ? ',nest_name' : ''}`,
     visible_type: type || 'all',
     page: Number(page) > 1 ? Number(page) : undefined,
     order: setOrder(order, sort),
@@ -55,16 +55,24 @@ export async function requestArticles()
   return {
     total: res.data.total,
     index: res.data.index.map(item => {
+      let title = item.title;
+      if (item.nest_id)
+      {
+        title = `[${item.nest_id}] ${item.title}`;
+      }
+      else if (!route.query.category && item.category_name)
+      {
+        title = `[${item.category_name}] ${item.title}`;
+      }
       return {
         srl: item.srl,
-        title: item.title,
+        title,
         meta: [
-          getTypeLabelArticle(item.type),
           getDate(displayDateField === 'order' ? item.order : item.regdate),
-          item.category_name && item.category_name,
           `Hit:${item.hit}`,
+          `Star:${item.star}`,
         ].filter(Boolean),
-        image: '', // TODO: 썸네일 이미지 주소
+        thumbnail: '', // TODO: 썸네일 이미지 주소
         private: item.type === 'private',
       };
     }),

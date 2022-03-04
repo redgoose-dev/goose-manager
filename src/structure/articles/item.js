@@ -2,10 +2,10 @@ import { marked } from 'marked';
 import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
 
-async function requestArticle(srl)
+async function requestArticle(srl, root)
 {
   let res = await get(`/articles/${srl}/`, {
-    ext_field: 'category_name',
+    ext_field: `category_name${root ? ',nest_name' : ''}`,
   });
   if (!res.success) throw new Error(res.message);
   return {
@@ -15,6 +15,7 @@ async function requestArticle(srl)
     type: res.data.type,
     content: marked(res.data.content),
     categoryName: res.data.category_name,
+    nestName: res.data.nest_name,
     hit: res.data.hit,
     star: res.data.star,
     json: res.data.json,
@@ -48,12 +49,13 @@ async function requestFiles(articleSrl)
 /**
  * get data
  * @param {number} srl
+ * @param {boolean} root
  * @return {Promise<object>}
  * @throws {Error}
  */
-export default async function getData(srl)
+export default async function getData(srl, root)
 {
-  let article = await requestArticle(srl);
+  let article = await requestArticle(srl, root);
   let [ nest, files ] = await Promise.all([
     requestNest(article.nestSrl),
     requestFiles(article.srl),

@@ -10,8 +10,12 @@
   <div class="articles">
     <div class="articles__body">
       <Loading v-if="loading"/>
-      <Items v-else-if="data.index?.length > 0" theme="card">
-        <Card
+      <Items
+        v-else-if="data.index?.length > 0"
+        :theme="store.state.preference.articles.filter.theme"
+        class="articles__index">
+        <component
+          :is="itemComponent"
           v-for="item in data.index"
           :title="item.title"
           :meta="item.meta"
@@ -25,7 +29,7 @@
           <template v-if="item.private" #after>
             <Mark/>
           </template>
-        </Card>
+        </component>
       </Items>
       <Empty v-else/>
       <Pagination
@@ -46,7 +50,7 @@
         </template>
         <template #right>
           <ButtonBasic href="./create/" color="key" icon-left="plus">
-            Create
+            Create article
           </ButtonBasic>
         </template>
       </Controller>
@@ -90,8 +94,18 @@ const title = computed(() => (data.nest ? `[${data.nest.id}] Articles` : undefin
 const description = computed(() => (data.nest ? data.nest.description : undefined));
 const loading = ref(false);
 const page = ref(route.query.page ? Number(route.query.page) : 1);
-
-// TODO: 테마값 적용
+const itemComponent = computed(() => {
+  switch (store.state.preference.articles.filter.theme)
+  {
+    case 'list':
+    case 'card':
+      return Card;
+    case 'thumbnail':
+    case 'brick':
+      return Thumbnail;
+  }
+  return Card;
+});
 
 function onChangePage(page)
 {
@@ -136,7 +150,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'nests', 'articles', 'index.vue', 'fetch()'], 'error', e.message);
+    err(['pages', 'nests', 'articles', 'index.vue', 'onMounted()'], 'error', e.message);
     loading.value = false;
   }
 });
@@ -145,9 +159,22 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .articles {
   display: grid;
-  grid-template-columns: 1fr 150px;
+  grid-template-columns: calc(100% - 150px - 40px) 150px;
   gap: 40px;
-  &__body {}
+  &__index {
+    &.items--theme-thumbnail {
+      .item {
+        --item-image-height: 14vw;
+        --item-image-min-height: 120px;
+        --item-image-max-height: 180px;
+      }
+    }
+    &.items--theme-brick {
+      .item {
+        --item-image-height: 150px;
+      }
+    }
+  }
   &__filter {}
   &__pagination {
     margin: 30px 0 0;

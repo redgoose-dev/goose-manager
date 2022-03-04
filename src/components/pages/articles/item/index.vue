@@ -54,8 +54,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, reactive, computed, onMounted } from 'vue';
 import getData from '../../../../structure/articles/item';
 import { err } from '../../../../libs/error';
 import Loading from '../../../etc/loading.vue';
@@ -64,8 +63,6 @@ import ButtonBasic from '../../../button/basic.vue';
 import Files from './files.vue';
 import Comments from './comments.vue';
 
-const router = useRouter();
-const route = useRoute();
 const props = defineProps({
   srl: { type: Number, required: true },
   nestSrl: Number,
@@ -79,15 +76,10 @@ const loading = ref(true);
 const previewImage = ref(null);
 const useComments = computed(() => (Number(data.nest.json.useComment) === 1));
 
-// watches
-watch(() => previewImage.value, image => {
-  //
-});
-
 onMounted(async () => {
   try
   {
-    let { article, nest, files } = await getData(Number(route.params.articleSrl));
+    let { article, nest, files } = await getData(props.srl, !props.nestSrl);
     data.article = article;
     data.nest = nest;
     data.files = files;
@@ -96,8 +88,7 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'pages', 'articles', 'item', 'index.vue', 'onMounted()' ], 'error', e.message);
-    loading.value = false;
-    throw new Error();
+    throw new Error('no item');
   }
 });
 </script>
