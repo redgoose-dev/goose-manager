@@ -86,7 +86,7 @@ const messages = computed(() => {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  margin: 0 0 40px;
+  margin: 0 0 30px;
   user-select: none;
   &__title {
     margin: 0;

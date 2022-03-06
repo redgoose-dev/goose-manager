@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import router from './router';
-import * as toast from './modules/toast/index.js';
+import * as toast from './modules/toast';
+import { initCustomEvent } from './libs/util';
 import App from './app.vue';
 
 // set stylesheet
@@ -20,6 +21,9 @@ document.querySelector('meta[name=description]').setAttribute('content', DESCRIP
 
 // set modules
 toast.setup();
+
+// set custom events
+initCustomEvent();
 
 // set component
 const app = createApp(App, {})

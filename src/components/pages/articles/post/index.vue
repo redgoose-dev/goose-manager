@@ -111,10 +111,16 @@
   <teleport to="#modals">
     <Modal
       :show="showFilesManager"
+      :scroll="true"
       @close="showFilesManager = false">
       <Body type="full">
-        <div>smdgiosdg</div>
-        <button type="button" @click="showFilesManager = false">close</button>
+        <FilesManager
+          tab="post"
+          :post="fileManagerOptions"
+          acceptFileType="image/*"
+          :full="true"
+          class="files-manager"
+          @close="showFilesManager = false"/>
       </Body>
     </Modal>
   </teleport>
@@ -122,7 +128,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, computed, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import getData from '../../../../structure/articles/post';
 import { post, formData } from '../../../../libs/api';
@@ -139,6 +145,7 @@ import FormSelect from '../../../forms/select.vue';
 import FormRadio from '../../../forms/radio.vue';
 import ButtonBasic from '../../../button/basic.vue';
 import Editor from './editor.vue';
+import FilesManager from '../../../files-manager/index.vue';
 
 const router = useRouter();
 const $root = ref();
@@ -175,7 +182,15 @@ const forms = reactive({
 const editor = reactive({ start: 0, end: 0 });
 const loading = ref(false);
 const processing = ref(false);
-const showFilesManager = ref(false);
+const showFilesManager = ref(true);
+const fileManagerOptions = computed(() => {
+  return {
+    module: 'articles',
+    targetSrl: data.article?.srl,
+    croppie: {},
+    thumbnail: {},
+  };
+});
 
 async function save(type)
 {
