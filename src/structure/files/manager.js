@@ -1,4 +1,4 @@
-import { get, post } from '../../libs/api';
+import { get, post, formData } from '../../libs/api';
 
 /**
  * get global items
@@ -8,6 +8,11 @@ import { get, post } from '../../libs/api';
 export async function getGlobalItems(path)
 {
   //
+}
+export async function uploadFileGlobal(file, path, func)
+{
+  // console.log('uploadFileGlobal()');
+  return {};
 }
 
 /**

@@ -75,6 +75,7 @@ const contentOptions = computed(() => {
     case 'global':
       return {
         path: props.global?.path || 'assets',
+        acceptFileType: props.acceptFileType,
       };
     default:
       return null;

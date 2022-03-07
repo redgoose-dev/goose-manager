@@ -66,6 +66,15 @@
   --empty-title-size: 24px;
 }
 
+.files-forms {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .dropdown {
   position: relative;
   &__context {
