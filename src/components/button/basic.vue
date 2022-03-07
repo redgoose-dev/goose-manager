@@ -11,7 +11,7 @@ import { computed } from 'vue';
 import Body from './body.vue';
 
 const props = defineProps({
-  type: { type: String, default: 'button' }, // label,button,submit,reset
+  type: { type: String, default: 'button' }, // label,button,submit,reset,text
   label: String,
   href: String,
   target: String,

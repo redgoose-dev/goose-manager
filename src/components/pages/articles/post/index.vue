@@ -115,11 +115,10 @@
       @close="showFilesManager = false">
       <Body type="full">
         <FilesManager
-          tab="post"
+          tab="global"
           :post="fileManagerOptions"
           acceptFileType="image/*"
           :full="true"
-          class="files-manager"
           @close="showFilesManager = false"/>
       </Body>
     </Modal>

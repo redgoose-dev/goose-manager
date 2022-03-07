@@ -1,6 +1,32 @@
 @use '../../assets/scss/mixins';
 
 .files-manager {
-  //
-  &--full {}
+  --tab-height: 44px;
+  --color-shape-bg: rgb(240 240 240);
+  box-sizing: border-box;
+  &__body {
+    box-sizing: border-box;
+  }
+  &__no-tab {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: var(--color-weak);
+    user-select: none;
+  }
+  &--full {
+    height: 100%;
+    .files-manager {
+      &__body {
+        height: calc(100% - var(--tab-height));
+      }
+    }
+    &:deep(.files) {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
 }

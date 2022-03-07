@@ -30,9 +30,9 @@ const iconName = iconRandomPick();
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 320px;
-  max-height: 420px;
-  height: 35vw;
+  min-height: var(--empty-min-height, 320px);
+  max-height: var(--empty-max-height, 420px);
+  height: var(--empty-height, 35vw);
   &__wrap {
     text-align: center;
   }
@@ -47,12 +47,12 @@ const iconName = iconRandomPick();
     }
   }
   &__title {
-    margin: 16px 0 0;
+    margin: 12px 0 0;
     font-family: var(--font-eng);
     font-weight: 600;
-    letter-spacing: -.75px;
-    font-size: 36px;
-    line-height: 1.2;
+    letter-spacing: -.25px;
+    font-size: var(--empty-title-size, 36px);
+    line-height: 1.1;
   }
   &__message {
     margin: 2px 0 0;

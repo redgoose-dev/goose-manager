@@ -7,9 +7,9 @@
   top: 0;
   display: flex;
   justify-content: space-between;
-  height: 44px;
+  height: var(--tab-height, 44px);
   box-sizing: border-box;
-  background: var(--color-bg);
+  background: var(--color-invert);
   border-bottom: 1px solid rgb(var(--color-base-rgb) / 15%);
   &__contents {
     display: flex;

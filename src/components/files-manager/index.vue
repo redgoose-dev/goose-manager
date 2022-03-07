@@ -6,14 +6,16 @@
     class="files-manager__tabs"
     @select-tab="selectTab"
     @select-function="selectFunction"/>
-  <div class="file-manager__body">
+  <div class="files-manager__body">
     <component
       v-if="!!contentBody"
       :is="contentBody"
+      v-bind="contentOptions"
       @open-window="controlWindow(true, $event)"
-      @close-window="controlWindow(false, $event)"/>
+      @close-window="controlWindow(false, $event)"
+      @close="emits('close')"/>
     <div v-else class="files-manager__no-tab">
-      선택된 탭이 없습니다.
+      There is no tab selected.
     </div>
   </div>
   <teleport to="#modals">
@@ -58,6 +60,22 @@ const contentBody = computed(() => {
       return ModulePost;
     case 'global':
       return ModuleGlobal;
+    default:
+      return null;
+  }
+});
+const contentOptions = computed(() => {
+  switch (tab.value)
+  {
+    case 'post':
+      // TODO: 좀더 개선하기
+      return props.post ? {
+        ...props.post,
+      } : {};
+    case 'global':
+      return {
+        path: props.global?.path || 'assets',
+      };
     default:
       return null;
   }

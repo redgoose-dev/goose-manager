@@ -58,7 +58,6 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'pages', 'json', 'item.vue', 'onMounted()' ], 'error', e.message);
-    loading.value = false;
     throw new Error(e.message);
   }
 });

@@ -1,0 +1,137 @@
+@use '../../../assets/scss/mixins';
+
+.files {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.files-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-shape-bg);
+  height: 48px;
+  padding: 0 12px;
+  box-shadow: 0 1px 10px 0 rgb(var(--color-base-rgb) / 20%), 0 1px 0 rgb(var(--color-base-rgb) / 5%);
+  &__left {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.files-total {
+  margin: 0;
+  color: var(--color-weak);
+  font-size: 13px;
+  user-select: none;
+  line-height: 1.15;
+  em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-base);
+  }
+}
+
+.files-footer {
+  position: sticky;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background: var(--color-shape-bg);
+  box-shadow: 0 -1px 0 0 rgb(var(--color-base-rgb) / 15%);
+  > * {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.files-loading {
+  --loading-width: auto;
+  --loading-height: 100%;
+}
+
+.files-empty {
+  --empty-height: 100%;
+  --empty-max-height: none;
+  --empty-title-size: 24px;
+}
+
+.dropdown {
+  position: relative;
+  &__context {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      min-width: 180px;
+      opacity: 0;
+      transition: opacity 200ms ease-out;
+      transition-delay: 120ms;
+      background: var(--color-invert);
+      box-sizing: border-box;
+      overflow: hidden;
+      border-radius: 2px;
+      box-shadow: 0 1px 12px rgb(var(--color-base-rgb) / 15%);
+    }
+    li {
+      &:nth-child(n+2) {
+        border-top: 1px solid rgb(var(--color-base-rgb) / 10%);
+      }
+    }
+    button {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 12px 20px;
+      text-align: left;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      box-sizing: border-box;
+      font-size: 14px;
+      @include mixins.button-touch-options(false);
+      transition: background-color 120ms ease-out;
+      &:hover,
+      &:active {
+        background-color: rgb(var(--color-base-rgb) / 5%);
+      }
+    }
+  }
+  &:hover {
+    .dropdown__context {
+      pointer-events: auto;
+      ul {
+        opacity: 1;
+      }
+    }
+  }
+  &--right {
+    .dropdown {
+      &__context {
+        left: unset;
+        right: 0;
+        ul {
+          left: unset;
+          right: 0;
+        }
+      }
+    }
+  }
+}
