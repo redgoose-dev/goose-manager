@@ -8,6 +8,7 @@ export default {
   confirm: {
     deleteItem: '이 {0}을(를) 삭제할까요?',
     logout: '정말 로그아웃 할까요?',
+    deleteFiles: '정말 {0}개의 파일을 삭제할까요?',
   },
   success: {
     get: '{0}을(를) 가져왔습니다.',

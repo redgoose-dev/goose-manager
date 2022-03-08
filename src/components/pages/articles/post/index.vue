@@ -110,6 +110,7 @@
   </Controller>
   <teleport to="#modals">
     <Modal
+      v-if="!loading"
       :show="showFilesManager"
       :scroll="true"
       @close="showFilesManager = false">
@@ -179,7 +180,7 @@ const forms = reactive({
   json: {},
 });
 const editor = reactive({ start: 0, end: 0 });
-const loading = ref(false);
+const loading = ref(true);
 const processing = ref(false);
 const showFilesManager = ref(true);
 const fileManagerOptions = computed(() => {

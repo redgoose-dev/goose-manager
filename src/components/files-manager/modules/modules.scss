@@ -56,14 +56,8 @@
 }
 
 .files-loading {
-  --loading-width: auto;
-  --loading-height: 100%;
-}
-
-.files-empty {
-  --empty-height: 100%;
-  --empty-max-height: none;
-  --empty-title-size: 24px;
+  --loading-width: 100%;
+  --loading-height: auto;
 }
 
 .files-forms {

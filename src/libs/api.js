@@ -59,12 +59,13 @@ export function checkForms(src)
  * get method
  * @param {string} url
  * @param {object} params
+ * @param {object} options
  * @return {Promise<object>}
  */
-export async function get(url, params = {})
+export async function get(url, params = {}, options)
 {
   if (!instance) setup();
-  let res = await instance.get(url, { params });
+  let res = await instance.get(url, { params }, options);
   res = res.data;
   checkStatus(res);
   if (res._token) refreshToken(res._token);
@@ -75,12 +76,13 @@ export async function get(url, params = {})
  * post method
  * @param {string} url
  * @param {any} data
+ * @param {object} options
  * @return {Promise<object>}
  */
-export async function post(url, data = null)
+export async function post(url, data = null, options)
 {
   if (!instance) setup();
-  let res = await instance.post(url, data);
+  let res = await instance.post(url, data, options);
   res = res.data;
   checkStatus(res);
   if (res._token) refreshToken(res._token);

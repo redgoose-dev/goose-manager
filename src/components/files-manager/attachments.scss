@@ -1,0 +1,44 @@
+@use '../../assets/scss/mixins';
+
+.attachments {
+  position: relative;
+  box-sizing: border-box;
+  &__index {
+    margin: 0;
+    padding: var(--attachments-gap, 12px);
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(var(--attachments-column, 5), 1fr);
+    gap: var(--attachments-gap, 12px);
+  }
+  @include mixins.responsive(desktop) {
+    --attachments-column: 6;
+    --attachments-gap: 16px;
+  }
+  @include mixins.responsive(desktop-large) {
+    --attachments-column: 8;
+    --attachments-gap: 20px;
+  }
+}
+
+.attachments-empty {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  box-sizing: border-box;
+  user-select: none;
+  height: 100%;
+  svg {
+    display: block;
+    margin: 0 auto;
+    --icon-size: 48px;
+    --icon-stroke-width: .75;
+    --icon-color: var(--color-weak);
+  }
+  p {
+    margin: 16px 0 0;
+    font-size: 14px;
+    line-height: 1.1;
+    color: var(--color-weak);
+  }
+}

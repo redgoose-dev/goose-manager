@@ -4,9 +4,9 @@
     <input
       ref="$file"
       type="file"
-      :multiple="true"
       :accept="props.acceptFileType"
       :disabled="disabledAssets"
+      multiple
       @change="onChangeFiles">
   </div>
   <header class="files-header">
@@ -14,7 +14,8 @@
       <ButtonBasic
         size="small"
         color="key"
-        icon-left="upload"
+        :icon-left="processing ? 'loader' : 'upload'"
+        :rotate-icon="processing"
         :disabled="disabledAssets"
         @click="onClickUploadFiles">
         Upload files
@@ -22,25 +23,28 @@
       <ButtonBasic
         size="small"
         icon-left="minus-square"
-        :disabled="disabledAssets">
+        :disabled="disabledAssets"
+        @click="onSelectAll()">
         Select all
       </ButtonBasic>
       <ButtonBasic
         size="small"
         color="error"
         icon-left="trash-2"
-        :disabled="disabledAssets">
+        :disabled="disabledDeleteButton"
+        @click="onClickDeleteItems">
         Delete
       </ButtonBasic>
     </div>
     <p class="files-total">Count: <em>{{index.length}}</em></p>
   </header>
-  <div class="files__body">
-    <Loading v-if="loading" class="files-loading"/>
-    <Files v-else-if="index.length > 0"/>
-    <Empty v-else class="files-empty"/>
-    <pre style="font-size: 13px;line-height: 1.4">{{index}}</pre>
-  </div>
+  <Loading v-if="loading" class="files-loading"/>
+  <Attachments
+    v-else
+    ref="$attachments"
+    :index="index"
+    :processing="processing"
+    @change-select="selected = $event"/>
   <footer class="files-footer">
     <nav class="files-footer__left"></nav>
     <nav class="files-footer__right">
@@ -88,30 +92,36 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
-import store from '../../../store';
-import { getGlobalItems, uploadFileGlobal } from '../../../structure/files/manager';
+import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager';
 import { err } from '../../../libs/error';
+import { pureObject } from '../../../libs/object';
+import { printf } from '../../../libs/string';
+import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import ButtonBasic from '../../button/basic.vue';
-import Files from '../files.vue';
+import Attachments from '../attachments.vue';
 import Loading from '../../etc/loading.vue';
-import Empty from '../../error/empty.vue';
 
 const $file = ref();
+const $attachments = ref();
 const props = defineProps({
   acceptFileType: String,
   path: String,
 });
 const emits = defineEmits([ 'close' ]);
 const index = ref([]);
+const selected = ref([]);
 const loading = ref(false);
 const processing = ref(false);
 const dragEvent = ref(false);
-const disabledAssets = computed(() => {
-  return loading.value || processing.value;
+const disabledAssets = computed(() => (loading.value || processing.value));
+const disabledDeleteButton = computed(() => {
+  if (disabledAssets.value) return true;
+  return selected.value.length <= 0;
 });
 const filesIdx = ref(0);
 
+// upload files
 function onClickUploadFiles()
 {
   $file.value.click();
@@ -119,7 +129,6 @@ function onClickUploadFiles()
 async function onChangeFiles(e)
 {
   const { files } = e.target;
-  const { preference } = store.state;
   if (processing.value || files.length <= 0) return;
   processing.value = true;
   await uploadFile(files, 0);
@@ -131,28 +140,23 @@ async function uploadFile(files, n)
   {
     idx = index.value.push({ ready: true, percent: 0 });
     idx = idx - 1;
-    if (idx === 1) throw new Error('==>')
-    const res = await uploadFileGlobal(files[idx], props.path, (e) => {
-      console.log('progress', Math.round((e.loaded / e.total) * 100) + '%');
+    const res = await uploadFileGlobal(files[n], props.path, (e) => {
       index.value[idx].percent = Math.round((e.loaded / e.total) * 100);
     });
-    index.value[idx] = {
-      ready: false,
+    index.value.splice(idx, 1, {
+      ...res,
+      selected: false,
       key: filesIdx.value,
-      name: '',
-      path: '',
-      pathFull: '',
-      size: '',
-      type: '',
-      badge: [],
-    };
+    });
     filesIdx.value = filesIdx.value + 1;
-    if (files.length <= n + 1)
+    // next queue
+    n++;
+    if (files.length <= n)
     {
       completeUploadFiles();
       return;
     }
-    await uploadFile(files, n + 1);
+    if (files.length > n) await uploadFile(files, n);
   }
   catch (e)
   {
@@ -162,22 +166,52 @@ async function uploadFile(files, n)
 }
 function completeUploadFiles()
 {
+  $attachments.value.reset();
+  $file.value.value = '';
   processing.value = false;
-  console.log(processing.value)
-  console.log('completeUploadFiles()');
 }
 function errorUploadFiles(e)
 {
+  $attachments.value.reset();
   processing.value = false;
-  console.error(e);
+  err([ 'components', 'files-manager', 'modules', 'global.vue', 'errorUploadFiles()' ], 'error', e.message);
   toast.add('Failed upload files.', 'error');
+}
+
+async function onClickDeleteItems()
+{
+  if (selected.value.length <= 0) return;
+  if (!confirm(printf(message.confirm.deleteFiles, String(selected.value.length)))) return;
+  let paths = selected.value.map(key => ({ key, path: index.value[key].path }));
+  onSelectAll(false);
+  let res = await removeFilesGlobal(paths);
+  let newIndex = pureObject(index.value);
+  res.forEach(o => {
+    switch (typeof o)
+    {
+      case 'number':
+        newIndex[o] = false;
+        break;
+      case 'string':
+        toast.add(o, 'error');
+        break;
+    }
+  });
+  index.value = newIndex.filter(Boolean);
+  $attachments.value.reset();
+}
+
+function onSelectAll(sw)
+{
+  $attachments.value.selectAll(sw);
 }
 
 onMounted(async () => {
   try
   {
     loading.value = true;
-    const res = await getGlobalItems(props.path);
+    index.value = await getItemsGlobal(props.path);
+    filesIdx.value = index.value.length;
     loading.value = false;
   }
   catch (e)
@@ -186,6 +220,8 @@ onMounted(async () => {
     throw new Error(e.message);
   }
 });
+
+defineExpose({});
 </script>
 
 <style src="./modules.scss" lang="scss" scoped></style>
