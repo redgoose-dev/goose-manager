@@ -10,6 +10,7 @@
 .files-header {
   position: sticky;
   top: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,6 +72,7 @@
 
 .dropdown {
   position: relative;
+  &__button {}
   &__context {
     position: absolute;
     left: 0;
@@ -91,7 +93,7 @@
       box-sizing: border-box;
       overflow: hidden;
       border-radius: 2px;
-      box-shadow: 0 1px 12px rgb(var(--color-base-rgb) / 15%);
+      box-shadow: 0 1px 12px rgb(var(--color-base-rgb) / 15%), 0 0 0 1px rgb(var(--color-base-rgb) / 10%);
     }
     li {
       &:nth-child(n+2) {
@@ -118,7 +120,7 @@
     }
   }
   &:hover {
-    .dropdown__context {
+    .dropdown__button:not([disabled]) + .dropdown__context {
       pointer-events: auto;
       ul {
         opacity: 1;
@@ -132,7 +134,7 @@
         right: 0;
         ul {
           left: unset;
-          right: 0;
+          right: -8px;
         }
       }
     }

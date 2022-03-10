@@ -118,8 +118,9 @@
         <FilesManager
           tab="global"
           :post="fileManagerOptions"
-          acceptFileType="image/*"
+          :accept-file-type="store.state.preference.files.acceptFileType"
           :full="true"
+          @custom-event="onFilesManagerEvent"
           @close="showFilesManager = false"/>
       </Body>
     </Modal>
@@ -130,6 +131,7 @@
 <script setup>
 import { ref, computed, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import store from '../../../../store';
 import getData from '../../../../structure/articles/post';
 import { post, formData } from '../../../../libs/api';
 import { err } from '../../../../libs/error';
@@ -155,6 +157,7 @@ const props = defineProps({
   nestSrl: Number,
   articleSrl: Number,
 });
+const emits = defineEmits([]);
 const data = reactive({
   nest: null,
   categories: null,
@@ -275,6 +278,16 @@ async function publishing()
 function onSubmit()
 {
   publishing().then();
+}
+
+function onFilesManagerEvent({ key, value })
+{
+  switch (key)
+  {
+    case 'insert-text':
+      console.warn('onFilesManagerEvent()', key, value);
+      break;
+  }
 }
 
 onMounted(async () => {

@@ -31,7 +31,7 @@
         size="small"
         color="error"
         icon-left="trash-2"
-        :disabled="disabledDeleteButton"
+        :disabled="selectedAssets"
         @click="onClickDeleteItems">
         Delete
       </ButtonBasic>
@@ -44,7 +44,8 @@
     ref="$attachments"
     :index="index"
     :processing="processing"
-    @change-select="selected = $event"/>
+    @change-select="selected = $event"
+    @select-context-item="onSelectContextItem"/>
   <footer class="files-footer">
     <nav class="files-footer__left"></nav>
     <nav class="files-footer__right">
@@ -52,9 +53,10 @@
         <ButtonBasic
           color="key"
           icon-left="download"
-          :disabled="disabledAssets"
-          @click="">
-          Insert image
+          :disabled="selectedAssets"
+          class="dropdown__button"
+          @click="onClickFunction('insert-markdown')">
+          Insert assets
         </ButtonBasic>
         <div class="dropdown__context">
           <ul>
@@ -62,15 +64,15 @@
               <button
                 type="button"
                 :disabled="disabledAssets"
-                @click="">
-                Insert address
+                @click="onClickFunction('insert-markdown')">
+                Insert markdown
               </button>
             </li>
             <li>
               <button
                 type="button"
                 :disabled="disabledAssets"
-                @click="">
+                @click="onClickFunction('insert-html')">
                 Insert html
               </button>
             </li>
@@ -78,7 +80,7 @@
               <button
                 type="button"
                 :disabled="disabledAssets"
-                @click="">
+                @click="onClickFunction('insert-text')">
                 Insert text
               </button>
             </li>
@@ -98,8 +100,9 @@ import { pureObject } from '../../../libs/object';
 import { printf } from '../../../libs/string';
 import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
+import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil';
 import ButtonBasic from '../../button/basic.vue';
-import Attachments from '../attachments.vue';
+import Attachments from '../attachments/index.vue';
 import Loading from '../../etc/loading.vue';
 
 const $file = ref();
@@ -108,14 +111,14 @@ const props = defineProps({
   acceptFileType: String,
   path: String,
 });
-const emits = defineEmits([ 'close' ]);
+const emits = defineEmits([ 'close', 'custom-event' ]);
 const index = ref([]);
 const selected = ref([]);
 const loading = ref(false);
 const processing = ref(false);
 const dragEvent = ref(false);
 const disabledAssets = computed(() => (loading.value || processing.value));
-const disabledDeleteButton = computed(() => {
+const selectedAssets = computed(() => {
   if (disabledAssets.value) return true;
   return selected.value.length <= 0;
 });
@@ -178,11 +181,8 @@ function errorUploadFiles(e)
   toast.add('Failed upload files.', 'error');
 }
 
-async function onClickDeleteItems()
+async function deleteItems(paths)
 {
-  if (selected.value.length <= 0) return;
-  if (!confirm(printf(message.confirm.deleteFiles, String(selected.value.length)))) return;
-  let paths = selected.value.map(key => ({ key, path: index.value[key].path }));
   onSelectAll(false);
   let res = await removeFilesGlobal(paths);
   let newIndex = pureObject(index.value);
@@ -199,11 +199,91 @@ async function onClickDeleteItems()
   });
   index.value = newIndex.filter(Boolean);
   $attachments.value.reset();
+  toast.add('첨부파일을 삭제했습니다.', 'success');
+}
+function onDeleteItem(key)
+{
+  if (key === undefined) return;
+  if (!confirm(`이 항목을 삭제할까요?\n파일을 삭제하면 복구할 수 없습니다.`)) return;
+  onSelectAll(false);
+  let paths = [{ key, path: index.value[key].path }];
+  deleteItems(paths).then();
+}
+function onClickDeleteItems()
+{
+  if (selected.value.length <= 0) return;
+  if (!confirm(printf(message.confirm.deleteFiles, String(selected.value.length)))) return;
+  let paths = selected.value.map(key => ({ key, path: index.value[key].path }));
+  deleteItems(paths).then();
 }
 
 function onSelectAll(sw)
 {
   $attachments.value.selectAll(sw);
+}
+
+function onClickFunction(key)
+{
+  if (key === undefined) return;
+  console.log('onClickFunction()', key);
+  console.log(selected.value);
+  // TODO: 참고하기
+  // const item = {
+  //   name: src.name,
+  //   path: src.pathFull,
+  //   type: src.type,
+  // };
+  switch (key)
+  {
+    case 'insert-markdown':
+      break;
+    case 'insert-html':
+      break;
+    case 'insert-text':
+      break;
+  }
+}
+
+function onSelectContextItem(key, type)
+{
+  const src = index.value[key];
+  if (!src) return;
+  const item = {
+    name: src.name,
+    path: src.pathFull,
+    type: src.type,
+  };
+  let path;
+  switch (type)
+  {
+    case 'open-new-window':
+      path = index.value[key]?.pathFull;
+      if (path) window.open(path);
+      break;
+    case 'insert':
+      emits('custom-event', {
+        key: 'insert-text',
+        value: createMarkdownItems([item]),
+      });
+      break;
+    case 'insert-html':
+      emits('custom-event', {
+        key: 'insert-text',
+        value: createHtmlItems([item]),
+      });
+      break;
+    case 'insert-address':
+      emits('custom-event', {
+        key: 'insert-text',
+        value: createAddressItems([item]),
+      });
+      break;
+    case 'set-thumbnail':
+      break;
+    case 'delete':
+      onDeleteItem(key);
+      break;
+  }
 }
 
 onMounted(async () => {

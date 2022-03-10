@@ -11,6 +11,7 @@
       v-if="!!contentBody"
       :is="contentBody"
       v-bind="contentOptions"
+      @custom-event="onCustomEvent"
       @open-window="controlWindow(true, $event)"
       @close-window="controlWindow(false, $event)"
       @close="emits('close')"/>
@@ -50,7 +51,7 @@ const props = defineProps({
   acceptFileType: { type: String, default: 'image/*' },
   full: Boolean,
 });
-const emits = defineEmits([ 'close' ]);
+const emits = defineEmits([ 'close', 'custom-event' ]);
 const tab = ref(props.tab);
 const guide = ref(false);
 const contentBody = computed(() => {
@@ -127,6 +128,16 @@ function controlGuide(sw)
 {
   guide.value = sw;
   controlWindow(sw, 'guide');
+}
+
+function onCustomEvent({ key, value })
+{
+  switch (key)
+  {
+    case 'insert-text':
+      emits('custom-event', { key, value });
+      break;
+  }
 }
 
 onMounted(() => {

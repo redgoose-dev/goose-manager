@@ -1,4 +1,4 @@
-@use '../../assets/scss/mixins';
+@use '../../../assets/scss/mixins';
 
 .attachments {
   position: relative;
@@ -9,15 +9,17 @@
     list-style: none;
     display: grid;
     grid-template-columns: repeat(var(--attachments-column, 5), 1fr);
-    gap: var(--attachments-gap, 12px);
+    gap: var(--attachments-inner-gap, 8px);
   }
   @include mixins.responsive(desktop) {
     --attachments-column: 6;
     --attachments-gap: 16px;
+    --attachments-inner-gap: 16px;
   }
   @include mixins.responsive(desktop-large) {
     --attachments-column: 8;
     --attachments-gap: 20px;
+    --attachments-inner-gap: 20px;
   }
 }
 

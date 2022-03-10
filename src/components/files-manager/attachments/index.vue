@@ -8,19 +8,19 @@
       <Progress
         v-if="item.ready"
         :percent="item.percent"/>
-      <Attachment
+      <Item
         v-else
         :image="item.pathFull"
         :name="item.name"
         :type="item.type"
+        :size="item.size"
+        :context="item.context"
         :badge="[]"
         :selected="selected[key]"
-        :ready="item.ready"
-        :percent="item.percent"
-        @select-item="onSelectItem(key, $event)"/>
+        @select-item="onSelectItem(key, $event)"
+        @select-context-item="emits('select-context-item', key, $event)"/>
     </li>
   </ul>
-  <pre style="font-size: 11px">{{props.index}}</pre>
 </div>
 <div v-else class="attachments-empty">
   <Icon name="paperclip"/>
@@ -29,17 +29,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { selectItem, selectAll } from './selectItems';
-import Icon from '../icons/index.vue';
-import Attachment from './attachment.vue';
-import Progress from './progress.vue';
+import { ref } from 'vue';
+import { selectItem, selectAll } from '../selectItems';
+import Icon from '../../icons/index.vue';
+import Item from './item.vue';
+import Progress from '../progress.vue';
 
 const props = defineProps({
   index: Array,
   processing: Boolean,
 });
-const emits = defineEmits([ 'change-select' ]);
+const emits = defineEmits([ 'change-select', 'select-context-item' ]);
 const selected = ref(new Array(props.index.length).fill(false));
 
 function onSelectItem(key, event)
@@ -71,4 +71,4 @@ defineExpose({
 });
 </script>
 
-<style src="./attachments.scss" lang="scss" scoped></style>
+<style src="./index.scss" lang="scss" scoped></style>

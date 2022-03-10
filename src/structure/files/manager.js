@@ -14,6 +14,13 @@ function filteringItem(src)
     size: src.size,
     type: src.type,
     badge: [],
+    context: [
+      'open-new-window',
+      'insert',
+      'insert-html',
+      'insert-address',
+      'delete',
+    ],
   };
 }
 
