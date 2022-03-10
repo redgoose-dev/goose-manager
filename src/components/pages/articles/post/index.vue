@@ -114,7 +114,7 @@
       @close="showFilesManager = false">
       <Body type="full">
         <FilesManager
-          tab="global"
+          tab="post"
           :post="fileManagerOptions"
           :accept-file-type="store.state.preference.files.acceptFileType"
           :full="true"

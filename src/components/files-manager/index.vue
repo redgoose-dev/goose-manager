@@ -69,10 +69,10 @@ const contentOptions = computed(() => {
   switch (tab.value)
   {
     case 'post':
-      // TODO: 좀더 개선하기
-      return props.post ? {
+      return {
         ...props.post,
-      } : {};
+        acceptFileType: props.acceptFileType,
+      };
     case 'global':
       return {
         path: props.global?.path || 'assets',

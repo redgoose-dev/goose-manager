@@ -26,7 +26,7 @@ export function selectItem(src, key, event)
     let range = [
       lastSelectedKey.length > 0 ? lastSelectedKey[lastSelectedKey.length - 1] : 0,
       key,
-    ].sort();
+    ].sort((a, b) => (a - b));
     src = src.map((item,key) => {
       return (range[0] <= key && range[1] >= key);
     });

@@ -45,7 +45,8 @@
     :index="index"
     :processing="processing"
     @change-select="selected = $event"
-    @select-context-item="onSelectContextItem"/>
+    @select-context-item="onSelectContextItem"
+    @upload="uploadFile($event, 0)"/>
   <footer class="files-footer">
     <nav class="files-footer__left"></nav>
     <nav class="files-footer__right">
@@ -93,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager';
 import { err } from '../../../libs/error';
 import { pureObject } from '../../../libs/object';
@@ -114,9 +115,8 @@ const props = defineProps({
 const emits = defineEmits([ 'close', 'custom-event' ]);
 const index = ref([]);
 const selected = ref([]);
-const loading = ref(false);
+const loading = ref(true);
 const processing = ref(false);
-const dragEvent = ref(false);
 const disabledAssets = computed(() => (loading.value || processing.value));
 const selectedAssets = computed(() => {
   if (disabledAssets.value) return true;
@@ -287,8 +287,6 @@ function onSelectContextItem(key, type)
         value: createAddressItems([item]),
       });
       break;
-    case 'set-thumbnail':
-      break;
     case 'delete':
       onDeleteItem(key);
       break;
@@ -298,7 +296,6 @@ function onSelectContextItem(key, type)
 onMounted(async () => {
   try
   {
-    loading.value = true;
     index.value = await getItemsGlobal(props.path);
     filesIdx.value = index.value.length;
     loading.value = false;
@@ -309,8 +306,6 @@ onMounted(async () => {
     throw e.message;
   }
 });
-
-defineExpose({});
 </script>
 
 <style src="./modules.scss" lang="scss" scoped></style>
