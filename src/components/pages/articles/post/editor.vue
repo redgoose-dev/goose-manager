@@ -174,9 +174,23 @@ function controlPreview(sw)
   showPreview.value = sw;
 }
 
+async function changeCursor(start, end)
+{
+  position.value.start = start;
+  position.value.end = end;
+  await nextTick();
+  $textarea.value.focus();
+  $textarea.value.setSelectionRange(start, end);
+  await nextTick();
+  resize();
+}
+
 onMounted(() => resize());
 
-defineExpose({});
+defineExpose({
+  position,
+  changeCursor,
+});
 </script>
 
 <style src="./editor.scss" lang="scss" scoped></style>

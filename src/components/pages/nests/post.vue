@@ -272,8 +272,7 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'pages', 'nests', 'post.vue', 'onMounted()' ], 'error', e.message);
-    loading.value = false;
-    throw new Error(e.message);
+    throw e.message;
   }
 });
 </script>

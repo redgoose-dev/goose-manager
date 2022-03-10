@@ -66,8 +66,7 @@ onMounted(async () => {
   catch (e)
   {
     err(['pages', 'json', 'delete.vue', 'onMounted()'], 'error', e.message);
-    loading.value = false;
-    throw new Error(e.message);
+    throw e.message;
   }
 });
 </script>

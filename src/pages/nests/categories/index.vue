@@ -105,7 +105,7 @@ onMounted(async () => {
   catch (e)
   {
     err(['pages', 'nests', 'categories', 'index.vue', 'onMounted()'], 'error', e.message);
-    loading.value = false;
+    throw e.message;
   }
 });
 </script>

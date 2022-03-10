@@ -48,7 +48,6 @@
           <Label class="types__label public">
             <FormRadio
               name="type"
-              id="type"
               v-model="forms.type"
               value="public"/>
             <span>public</span>
@@ -56,7 +55,6 @@
           <Label class="types__label private">
             <FormRadio
               name="type"
-              id="type"
               v-model="forms.type"
               value="private"/>
             <span>private</span>
@@ -185,7 +183,7 @@ const forms = reactive({
 const editor = reactive({ start: 0, end: 0 });
 const loading = ref(true);
 const processing = ref(false);
-const showFilesManager = ref(true);
+const showFilesManager = ref(false);
 const fileManagerOptions = computed(() => {
   return {
     module: 'articles',
@@ -280,14 +278,39 @@ function onSubmit()
   publishing().then();
 }
 
+/**
+ * on FilesManager event
+ * custom event
+ * @param {string} key
+ * @param {any} value
+ */
 function onFilesManagerEvent({ key, value })
 {
   switch (key)
   {
     case 'insert-text':
-      console.warn('onFilesManagerEvent()', key, value);
+      insertTextToEditor(value);
+      showFilesManager.value = false;
       break;
   }
+}
+
+/**
+ * insert text to editor
+ * 에디터 입력창에 문자를 넣는다.
+ * @param {string} keyword
+ * @param {number} position
+ */
+function insertTextToEditor(keyword, position = 0)
+{
+  if (!keyword) return;
+  let content = forms.content.value + '';
+  let start = $editor.value.position.start;
+  if (start === 0) keyword = keyword.replace(/^\n/g, '');
+  forms.content.value = content.substr(0, start) + keyword + content.substr(start);
+  // change cursor
+  let endPosition = start + (position ? position : keyword.length);
+  $editor.value.changeCursor(endPosition, endPosition);
 }
 
 onMounted(async () => {
@@ -312,8 +335,7 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'onMounted()' ], 'error', e.message);
-    loading.value = false;
-    throw new Error(e.message);
+    throw e.message;
   }
 });
 </script>

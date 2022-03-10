@@ -127,8 +127,7 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'pages', 'apps', 'post.vue', 'onMounted()' ], 'error', e.message);
-    loading.value = false;
-    throw new Error(e.message);
+    throw e.message;
   }
 });
 </script>

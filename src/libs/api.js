@@ -62,7 +62,7 @@ export function checkForms(src)
  * @param {object} options
  * @return {Promise<object>}
  */
-export async function get(url, params = {}, options)
+export async function get(url, params = {}, options = undefined)
 {
   if (!instance) setup();
   let res = await instance.get(url, { params }, options);
@@ -79,7 +79,7 @@ export async function get(url, params = {}, options)
  * @param {object} options
  * @return {Promise<object>}
  */
-export async function post(url, data = null, options)
+export async function post(url, data = null, options = undefined)
 {
   if (!instance) setup();
   let res = await instance.post(url, data, options);

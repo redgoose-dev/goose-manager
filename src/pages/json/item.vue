@@ -58,7 +58,7 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'pages', 'json', 'item.vue', 'onMounted()' ], 'error', e.message);
-    throw new Error(e.message);
+    throw e.message;
   }
 });
 </script>

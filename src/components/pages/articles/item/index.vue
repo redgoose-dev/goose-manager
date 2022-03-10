@@ -88,7 +88,7 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'pages', 'articles', 'item', 'index.vue', 'onMounted()' ], 'error', e.message);
-    throw new Error('no item');
+    throw e.message;
   }
 });
 </script>

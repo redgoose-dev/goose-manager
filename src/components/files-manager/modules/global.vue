@@ -80,8 +80,8 @@
               <button
                 type="button"
                 :disabled="disabledAssets"
-                @click="onClickFunction('insert-text')">
-                Insert text
+                @click="onClickFunction('insert-address')">
+                Insert address
               </button>
             </li>
           </ul>
@@ -225,21 +225,30 @@ function onSelectAll(sw)
 function onClickFunction(key)
 {
   if (key === undefined) return;
-  console.log('onClickFunction()', key);
-  console.log(selected.value);
-  // TODO: 참고하기
-  // const item = {
-  //   name: src.name,
-  //   path: src.pathFull,
-  //   type: src.type,
-  // };
+  let items = selected.value.map(key => ({
+    name: index.value[key].name,
+    path: index.value[key].pathFull,
+    type: index.value[key].type,
+  }));
   switch (key)
   {
     case 'insert-markdown':
+      emits('custom-event', {
+        key: 'insert-text',
+        value: createMarkdownItems(items),
+      });
       break;
     case 'insert-html':
+      emits('custom-event', {
+        key: 'insert-text',
+        value: createHtmlItems(items),
+      });
       break;
-    case 'insert-text':
+    case 'insert-address':
+      emits('custom-event', {
+        key: 'insert-text',
+        value: createAddressItems(items),
+      });
       break;
   }
 }
@@ -297,7 +306,7 @@ onMounted(async () => {
   catch (e)
   {
     err([ 'components', 'files-manager', 'modules', 'global.vue', 'onMounted()' ], 'error', e.message);
-    throw new Error(e.message);
+    throw e.message;
   }
 });
 
