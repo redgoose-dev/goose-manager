@@ -12,7 +12,7 @@
 
 <script setup>
 const props = defineProps({
-  type: String,
+  type: String, // full,window
 });
 </script>
 

@@ -1,10 +1,11 @@
 @use '../../../assets/scss/mixins';
 
 .files {
-  position: relative;
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  --files-header-height: 48px;
+  --files-footer-height: 58px;
 }
 
 .files-header {
@@ -15,7 +16,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--color-shape-bg);
-  height: 48px;
+  height: var(--files-header-height, 48px);
   padding: 0 16px;
   box-shadow: 0 1px 10px 0 rgb(var(--color-base-rgb) / 20%), 0 1px 0 rgb(var(--color-base-rgb) / 5%);
   &__left {
@@ -42,7 +43,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 58px;
+  height: var(--files-footer-height, 58px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -132,7 +133,7 @@
       &__context {
         left: 0;
         ul {
-          left: -8px;
+          left: -4px;
         }
       }
     }
@@ -144,7 +145,7 @@
         right: 0;
         ul {
           left: unset;
-          right: -8px;
+          right: -4px;
         }
       }
     }

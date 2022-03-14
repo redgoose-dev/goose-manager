@@ -11,7 +11,7 @@ import { computed } from 'vue';
 import Body from './body.vue';
 
 const props = defineProps({
-  type: { type: String, default: 'button' }, // label,button,submit,reset,text
+  type: { type: String, default: 'button' }, // label,button,submit,reset
   label: String,
   href: String,
   target: String,
@@ -59,6 +59,7 @@ const rootProps = computed(() => {
       attr.to = props.href || '#';
       break;
     case 'label':
+      if (props.disabled) attr.disabled = props.disabled;
       break;
     default:
       attr.type = props.type;

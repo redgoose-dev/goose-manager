@@ -28,6 +28,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.1.0",
+    "croppie": "^2.6.5",
+    "image-resize": "^1.2.6",
     "marked": "^4.0.12",
     "nodemon": "^2.0.15",
     "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",

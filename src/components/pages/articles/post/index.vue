@@ -115,9 +115,10 @@
       <Body type="full">
         <FilesManager
           tab="post"
+          :global="{ path: 'articles' }"
           :post="fileManagerOptions"
           :accept-file-type="store.state.preference.files.acceptFileType"
-          :full="true"
+          :full-size="true"
           @custom-event="onFilesManagerEvent"
           @close="showFilesManager = false"/>
       </Body>
@@ -188,8 +189,8 @@ const fileManagerOptions = computed(() => {
   return {
     module: 'articles',
     targetSrl: data.article?.srl,
-    croppie: {},
-    thumbnail: {},
+    cropper: {},
+    thumbnail: forms.json.thumbnail || undefined,
   };
 });
 
@@ -208,7 +209,11 @@ async function save(type)
   }
 
   // update thumbnail image
-  // TODO: 썸네일 이미지 삭제하기와 업로드하기
+  if (forms.json.thumbnail)
+  {
+    console.log(forms.json.thumbnail);
+    // TODO: 썸네일 이미지 삭제하기와 업로드하기
+  }
 
   // save article
   let res = await post(`/articles/${data.article.srl}/edit/`, formData({
@@ -291,6 +296,15 @@ function onFilesManagerEvent({ key, value })
     case 'insert-text':
       insertTextToEditor(value);
       showFilesManager.value = false;
+      break;
+    case 'update-thumbnail':
+      forms.json.thumbnail = value ? {
+        srl: value.srl,
+        image: value.image,
+        points: value.points,
+        zoom: value.zoom,
+        orientation: value.orientation,
+      } : undefined;
       break;
   }
 }

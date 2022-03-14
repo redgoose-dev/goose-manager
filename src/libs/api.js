@@ -13,7 +13,7 @@ function setup()
 {
   instance = axios.create({
     baseURL: API_URL,
-    timeout: 3000,
+    timeout: 10000,
     headers: {
       'Authorization': `Bearer ${store.state.token}`,
     },

@@ -1,0 +1,27 @@
+@use '../../../assets/scss/mixins';
+
+.thumbnail-editor {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr 54px;
+  &__title {
+    position: absolute;
+    font-size: 0;
+    margin: 0;
+    visibility: hidden;
+  }
+  &__body {
+    position: relative;
+    box-sizing: border-box;
+  }
+  &__nav {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    background: var(--color-bg);
+  }
+}

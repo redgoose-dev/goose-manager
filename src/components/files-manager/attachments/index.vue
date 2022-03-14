@@ -1,31 +1,34 @@
 <template>
 <div
-  v-if="props.index.length > 0"
   ref="$root"
-  class="attachments"
+  :class="[ 'wrap', dragOver && 'wrap--drag-over' ]"
   @click="onSelectAll(false)">
-  <ul class="attachments__index">
-    <li v-for="(item,key) in props.index" @click.stop="">
-      <Progress
-        v-if="item.ready"
-        :percent="item.percent"/>
-      <Item
-        v-else
-        :image="item.pathFull"
-        :name="item.name"
-        :type="item.type"
-        :size="item.size"
-        :context="item.context"
-        :badge="[]"
-        :selected="selected[key]"
-        @select-item="onSelectItem(key, $event)"
-        @select-context-item="emits('select-context-item', key, $event)"/>
-    </li>
-  </ul>
-</div>
-<div v-else class="attachments-empty">
-  <Icon name="paperclip"/>
-  <p>There are no attachments.</p>
+  <div
+    v-if="props.index.length > 0"
+    class="attachments">
+    <ul class="attachments__index">
+      <li v-for="(item,key) in props.index" @click.stop="">
+        <Progress
+          v-if="item.ready"
+          :percent="item.percent"/>
+        <Item
+          v-else
+          :image="item.pathFull"
+          :name="item.name"
+          :type="item.type"
+          :size="item.size"
+          :context="item.context"
+          :badge="[]"
+          :selected="selected[key]"
+          @select-item="onSelectItem(key, $event)"
+          @select-context-item="emits('select-context-item', key, $event)"/>
+      </li>
+    </ul>
+  </div>
+  <div v-else class="attachments-empty">
+    <Icon name="paperclip"/>
+    <p>There are no attachments.</p>
+  </div>
 </div>
 </template>
 
@@ -78,7 +81,7 @@ function onOverFiles(e)
 function onLeaveFiles(e)
 {
   e.preventDefault();
-  dragOver.value = false;
+  if ($root.value === e.target) dragOver.value = false;
 }
 function onDropFiles(e)
 {

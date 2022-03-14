@@ -31,7 +31,7 @@
       <Icon name="command"/>
     </button>
     <button
-      v-if="props.show.close"
+      v-if="!!localStore.state.fullSize"
       type="button"
       title="Close"
       class="close"
@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+import localStore from './store';
 import Icon from '../icons/index.vue';
 
 const props = defineProps({

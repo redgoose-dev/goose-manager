@@ -9,7 +9,6 @@
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
-  cursor: pointer;
   box-sizing: border-box;
   border: 0;
   user-select: none;
@@ -22,6 +21,9 @@
   --icon-stroke-width: 2;
   --icon-color: var(--button-text-color, var(--color-base));
   --font-size: 15px;
+  &:not(label) {
+    cursor: pointer;
+  }
   &[type=button],
   &[type=submit],
   &[type=reset] {
@@ -32,14 +34,14 @@
     opacity: .5;
     cursor: not-allowed;
   }
-  &:hover:not([disabled]) {
+  &:hover:not([disabled],label) {
     filter: brightness(95%);
   }
-  &:focus-visible:not([disabled]) {
+  &:focus-visible:not([disabled],label) {
     outline: 0;
     box-shadow: var(--button-shadow-focus, inset 0 2px 15px rgb(0 0 0 / 10%), 0 0 0 4px rgb(0 0 0 / 8%), 0 0 0 1px rgb(150 150 150));
   }
-  &:active:not([disabled]) {
+  &:active:not([disabled],label) {
     box-shadow: var(--button-shadow-active, inset 0 2px 15px rgb(0 0 0 / 10%), 0 0 0 4px rgb(0 0 0 / 0), 0 0 0 1px rgb(150 150 150));
   }
 

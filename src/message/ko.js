@@ -9,6 +9,8 @@ export default {
     deleteItem: '이 {0}을(를) 삭제할까요?',
     logout: '정말 로그아웃 할까요?',
     deleteFiles: '정말 {0}개의 파일을 삭제할까요?',
+    deleteFileItems: '정말 {0}개의 항목들을 삭제할까요?',
+    deleteFile: `이 항목을 삭제할까요?\n이 데이터를 삭제하면 복구할 수 없습니다.`,
   },
   success: {
     get: '{0}을(를) 가져왔습니다.',
@@ -39,6 +41,7 @@ export default {
     content: '내용',
     article: '아티클',
     comment: '댓글',
+    file: '첨부파일',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',

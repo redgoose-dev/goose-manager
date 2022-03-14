@@ -4,7 +4,7 @@
     <input
       ref="$file"
       type="file"
-      :accept="props.acceptFileType"
+      :accept="localState.state.acceptFileType"
       :disabled="disabledAssets"
       multiple
       @change="onChangeFiles">
@@ -36,15 +36,15 @@
         Delete
       </ButtonBasic>
     </div>
-    <p class="files-total">Count: <em>{{index.length}}</em></p>
+    <p class="files-total">Count: <em>{{localState.state.global.index.length}}</em></p>
   </header>
   <Loading v-if="loading" class="files-loading"/>
   <Attachments
     v-else
     ref="$attachments"
-    :index="index"
+    :index="localState.state.global.index"
     :processing="processing"
-    @change-select="selected = $event"
+    @change-select="localState.state.global.selected = $event"
     @select-context-item="onSelectContextItem"
     @upload="uploadFile($event, 0)"/>
   <footer class="files-footer">
@@ -94,7 +94,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
+import localState from '../store';
 import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager';
 import { err } from '../../../libs/error';
 import { pureObject } from '../../../libs/object';
@@ -108,21 +109,14 @@ import Loading from '../../etc/loading.vue';
 
 const $file = ref();
 const $attachments = ref();
-const props = defineProps({
-  acceptFileType: String,
-  path: String,
-});
 const emits = defineEmits([ 'close', 'custom-event' ]);
-const index = ref([]);
-const selected = ref([]);
 const loading = ref(true);
 const processing = ref(false);
 const disabledAssets = computed(() => (loading.value || processing.value));
 const selectedAssets = computed(() => {
   if (disabledAssets.value) return true;
-  return selected.value.length <= 0;
+  return localState.state.global.selected.length <= 0;
 });
-const filesIdx = ref(0);
 
 // upload files
 function onClickUploadFiles()
@@ -141,17 +135,17 @@ async function uploadFile(files, n)
   let idx;
   try
   {
-    idx = index.value.push({ ready: true, percent: 0 });
+    idx = localState.state.global.index.push({ ready: true, percent: 0 });
     idx = idx - 1;
-    const res = await uploadFileGlobal(files[n], props.path, (e) => {
-      index.value[idx].percent = Math.round((e.loaded / e.total) * 100);
+    const res = await uploadFileGlobal(files[n], localState.state.global.path, (e) => {
+      localState.state.global.index[idx].percent = Math.round((e.loaded / e.total) * 100);
     });
-    index.value.splice(idx, 1, {
+    localState.state.global.index.splice(idx, 1, {
       ...res,
       selected: false,
-      key: filesIdx.value,
+      key: localState.state.global.idx,
     });
-    filesIdx.value = filesIdx.value + 1;
+    localState.state.global.idx = localState.state.global.idx + 1;
     // next queue
     n++;
     if (files.length <= n)
@@ -163,7 +157,7 @@ async function uploadFile(files, n)
   }
   catch (e)
   {
-    if (index.value[idx].ready) index.value.pop();
+    if (localState.state.global.index[idx].ready) localState.state.global.index.pop();
     errorUploadFiles(e);
   }
 }
@@ -185,7 +179,7 @@ async function deleteItems(paths)
 {
   onSelectAll(false);
   let res = await removeFilesGlobal(paths);
-  let newIndex = pureObject(index.value);
+  let newIndex = pureObject(localState.state.global.index);
   res.forEach(o => {
     switch (typeof o)
     {
@@ -197,7 +191,8 @@ async function deleteItems(paths)
         break;
     }
   });
-  index.value = newIndex.filter(Boolean);
+  localState.state.global.index = newIndex.filter(Boolean);
+  await nextTick();
   $attachments.value.reset();
   toast.add('첨부파일을 삭제했습니다.', 'success');
 }
@@ -206,14 +201,17 @@ function onDeleteItem(key)
   if (key === undefined) return;
   if (!confirm(`이 항목을 삭제할까요?\n파일을 삭제하면 복구할 수 없습니다.`)) return;
   onSelectAll(false);
-  let paths = [{ key, path: index.value[key].path }];
+  let paths = [{ key, path: localState.state.global.index[key].path }];
   deleteItems(paths).then();
 }
 function onClickDeleteItems()
 {
-  if (selected.value.length <= 0) return;
-  if (!confirm(printf(message.confirm.deleteFiles, String(selected.value.length)))) return;
-  let paths = selected.value.map(key => ({ key, path: index.value[key].path }));
+  if (localState.state.global.selected.length <= 0) return;
+  if (!confirm(printf(message.confirm.deleteFiles, String(localState.state.global.selected.length)))) return;
+  let paths = localState.state.global.selected.map(key => {
+    if (!localState.state.global.index[key]) return false;
+    return { key, path: localState.state.global.index[key].path };
+  }).filter(Boolean);
   deleteItems(paths).then();
 }
 
@@ -225,11 +223,14 @@ function onSelectAll(sw)
 function onClickFunction(key)
 {
   if (key === undefined) return;
-  let items = selected.value.map(key => ({
-    name: index.value[key].name,
-    path: index.value[key].pathFull,
-    type: index.value[key].type,
-  }));
+  let items = localState.state.global.selected.map(key => {
+    const { name, pathFull, type } = localState.state.global.index[key];
+    return {
+      name,
+      path: pathFull,
+      type,
+    };
+  });
   switch (key)
   {
     case 'insert-markdown':
@@ -255,7 +256,7 @@ function onClickFunction(key)
 
 function onSelectContextItem(key, type)
 {
-  const src = index.value[key];
+  const src = localState.state.global.index[key];
   if (!src) return;
   const item = {
     name: src.name,
@@ -266,7 +267,7 @@ function onSelectContextItem(key, type)
   switch (type)
   {
     case 'open-new-window':
-      path = index.value[key]?.pathFull;
+      path = localState.state.global.index[key]?.pathFull;
       if (path) window.open(path);
       break;
     case 'insert':
@@ -296,8 +297,8 @@ function onSelectContextItem(key, type)
 onMounted(async () => {
   try
   {
-    index.value = await getItemsGlobal(props.path);
-    filesIdx.value = index.value.length;
+    localState.state.global.index = await getItemsGlobal(localState.state.global.path);
+    localState.state.global.idx = localState.state.global.index.length;
     loading.value = false;
   }
   catch (e)

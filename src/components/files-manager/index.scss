@@ -4,8 +4,17 @@
   --tab-height: 44px;
   --color-shape-bg: rgb(240 240 240);
   box-sizing: border-box;
+  position: relative;
   &__body {
     box-sizing: border-box;
+  }
+  &__tabs {
+    position: sticky;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 3;
+    border-bottom: 1px solid rgb(var(--color-base-rgb) / 15%);
   }
   &__no-tab {
     display: grid;

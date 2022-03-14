@@ -23,18 +23,21 @@ const layout = computed(() => {
 });
 
 // children component error
-onErrorCaptured((e, component, info) => {
-  if (typeof e === 'string')
-  {
-    error.value = new Error(e);
-  }
-  else
-  {
-    err([ 'app.vue', 'onErrorCaptured()' ], 'error', e.message);
-    error.value = e;
-  }
-  return false;
-});
+if (!DEVELOPMENT)
+{
+  onErrorCaptured((e, component, info) => {
+    if (typeof e === 'string')
+    {
+      error.value = new Error(e);
+    }
+    else
+    {
+      err([ 'app.vue', 'onErrorCaptured()' ], 'error', e.message);
+      error.value = e;
+    }
+    return false;
+  });
+}
 
 // router error
 router.onError(e => {

@@ -57,16 +57,27 @@
         @update:modelValue="onUpdatePage"/>
     </div>
   </section>
+
+  <section class="page-section">
+    <header>
+      <h2>Files manager</h2>
+      <p>파일을 업로드하고 관리하는 컴포넌트</p>
+    </header>
+    <div class="example example--file-manager">
+      <FilesManager :post="{}"/>
+    </div>
+  </section>
 </article>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
 import { toast } from '../../modules/toast';
 import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 import ProgressDonut from '../../components/etc/progress-donut.vue';
 import Pagination from '../../components/etc/pagination.vue';
+import FilesManager from '../../components/files-manager/index.vue';
 
 const progress = ref(30);
 const page = ref(1);
@@ -83,3 +94,9 @@ function onUpdatePage(page)
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+.example--file-manager {
+  padding: 0;
+  overflow: hidden;
+}
+</style>

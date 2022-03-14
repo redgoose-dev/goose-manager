@@ -36,7 +36,7 @@ const props = defineProps({
     font-style: normal;
     color: var(--color-invert);
     font-weight: 400;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.1;
     font-family: var(--font-eng);
   }

@@ -11,9 +11,11 @@ import './assets/scss/main.scss';
 /** @var {string} DESCRIPTION */
 /** @var {string} SHORT_NAME */
 /** @var {boolean} DEBUG */
+/** @var {boolean} DEVELOPMENT */
 
 // set global values
 window.DEBUG = !!DEBUG;
+window.DEVELOPMENT = !!DEVELOPMENT;
 
 // set index.html
 document.title = TITLE;
