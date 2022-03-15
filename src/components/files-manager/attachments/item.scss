@@ -150,6 +150,35 @@
       }
     }
   }
+  &__badges {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    pointer-events: none;
+    box-sizing: border-box;
+    li {
+      display: grid;
+      align-content: center;
+      justify-content: center;
+      width: 32px;
+      aspect-ratio: 1 / 1;
+      background: rgb(var(--color-base-rgb) / 50%);
+      --icon-size: 20px;
+      --icon-color: var(--color-invert);
+      --icon-stroke-width: 2;
+      box-sizing: border-box;
+      border-radius: 2px;
+      svg {
+        display: block;
+      }
+    }
+  }
   &:hover {
     .attachment {
       &__button {

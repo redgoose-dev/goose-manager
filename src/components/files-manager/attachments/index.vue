@@ -18,7 +18,9 @@
           :type="item.type"
           :size="item.size"
           :context="item.context"
-          :badge="[]"
+          :badge="[
+            item.srl === localStore.state.post.thumbnail?.srl && 'thumbnail',
+          ].filter(Boolean)"
           :selected="selected[key]"
           @select-item="onSelectItem(key, $event)"
           @select-context-item="emits('select-context-item', key, $event)"/>
@@ -34,6 +36,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import localStore from '../store';
 import { selectItem, selectAll } from '../selectItems';
 import Icon from '../../icons/index.vue';
 import Item from './item.vue';
@@ -88,7 +91,7 @@ function onDropFiles(e)
   e.preventDefault();
   dragOver.value = false;
   const files = (e.dataTransfer) ? e.dataTransfer.files : null;
-  if (files && files.length) emits('upload', files);
+  if (files?.length > 0) emits('upload', files);
 }
 
 onMounted(() => {

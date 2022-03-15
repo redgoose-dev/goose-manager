@@ -22,7 +22,7 @@
     </li>
     <li>
       <p class="shortcut">
-        <code>Shift</code> + <code>Tab</code>
+        <code>Tab</code>
       </p>
       <p class="description">Change next tab</p>
     </li>
@@ -36,9 +36,18 @@
 </template>
 
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
+import { controlWindow } from './util';
 import ButtonBasic from '../button/basic.vue';
 
 const emits = defineEmits([ 'close' ]);
+
+onMounted(() => {
+  controlWindow(true, 'guide');
+});
+onUnmounted(() => {
+  controlWindow(false, 'guide');
+});
 </script>
 
 <style lang="scss" scoped>
@@ -86,7 +95,7 @@ const emits = defineEmits([ 'close' ]);
       }
     }
     .description {
-      margin: 4px 0 0;
+      margin: 2px 0 0;
       font-size: 13px;
       letter-spacing: -.25px;
     }

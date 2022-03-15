@@ -101,7 +101,7 @@ async function requestReadyArticle(nest)
  * @return {Promise<{nest:{}, categories:object[], article:{}}>}
  * @throws {Error}
  */
-export default async function getData(nestSrl, articleSrl)
+export async function getData(nestSrl, articleSrl)
 {
   let nest, categories, article;
   if (nestSrl)
@@ -121,4 +121,30 @@ export default async function getData(nestSrl, articleSrl)
     ]);
   }
   return { nest, categories, article };
+}
+
+/**
+ * delete thumbnail
+ * @param {string} path
+ * @return {Promise<void>}
+ */
+export async function deleteThumbnail(path)
+{
+  await post('/files/remove-file/', formData({ path }));
+}
+
+/**
+ * upload thumbnail
+ * @param {string} base64
+ * @return {Promise<string>}
+ */
+export async function uploadThumbnail(base64)
+{
+  let res = await post('/files/upload-file/', formData({
+    sub_dir: 'thumbnail',
+    base64,
+  }));
+  if (!res.success) throw new Error(res.message || 'Failed upload file.');
+  if (!res.data.path) throw new Error('Not found source path.');
+  return res.data.path;
 }

@@ -119,6 +119,7 @@
           :post="fileManagerOptions"
           :accept-file-type="store.state.preference.files.acceptFileType"
           :full-size="true"
+          :use-thumbnail="true"
           @custom-event="onFilesManagerEvent"
           @close="showFilesManager = false"/>
       </Body>
@@ -131,7 +132,7 @@
 import { ref, computed, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import store from '../../../../store';
-import getData from '../../../../structure/articles/post';
+import { getData, deleteThumbnail, uploadThumbnail } from '../../../../structure/articles/post';
 import { post, formData } from '../../../../libs/api';
 import { err } from '../../../../libs/error';
 import { dateFormat, checkOrderDate } from '../../../../libs/date';
@@ -179,18 +180,30 @@ const forms = reactive({
     value: '',
     error: null,
   },
-  json: {},
+  json: {
+    thumbnail: {},
+  },
 });
 const editor = reactive({ start: 0, end: 0 });
 const loading = ref(true);
 const processing = ref(false);
 const showFilesManager = ref(false);
 const fileManagerOptions = computed(() => {
+  const { thumbnail, files } = data.nest.json;
   return {
     module: 'articles',
     targetSrl: data.article?.srl,
-    cropper: {},
+    limitCount: files.count,
+    limitSize: files.sizeSingle,
+    cropper: {
+      viewport: {
+        width: thumbnail?.width || 320,
+        height: thumbnail?.height || 240,
+        type: 'square',
+      },
+    },
     thumbnail: forms.json.thumbnail || undefined,
+    thumbnailType: thumbnail.type || 'crop',
   };
 });
 
@@ -209,10 +222,20 @@ async function save(type)
   }
 
   // update thumbnail image
-  if (forms.json.thumbnail)
+  if (forms.json.thumbnail?.image)
   {
-    console.log(forms.json.thumbnail);
-    // TODO: 썸네일 이미지 삭제하기와 업로드하기
+    // delete current image
+    if (forms.json.thumbnail?.path)
+    {
+      await deleteThumbnail(forms.json.thumbnail.path);
+    }
+    // upload new image
+    forms.json.thumbnail.path = await uploadThumbnail(forms.json.thumbnail.image);
+    delete forms.json.thumbnail.image;
+  }
+  else if (forms.json.thumbnail?.path)
+  {
+    forms.json.thumbnail = {};
   }
 
   // save article
@@ -340,10 +363,7 @@ onMounted(async () => {
     forms.content.value = article.content || '';
     forms.order.value = article.order;
     forms.type = article.type || 'ready';
-    if (article.json.thumbnail)
-    {
-      // TODO: 첨부파일 부분 작업하면 할 수 있다.
-    }
+    forms.json = article.json || { thumbnail: {} };
     loading.value = false;
   }
   catch (e)

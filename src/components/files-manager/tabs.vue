@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+import { computed, onMounted } from 'vue';
 import localStore from './store';
 import Icon from '../icons/index.vue';
 
@@ -56,6 +57,7 @@ const props = defineProps({
   },
 });
 const emits = defineEmits([ 'select-tab', 'select-function' ]);
+let tabNames;
 
 function onClickTab(tab)
 {
@@ -64,6 +66,25 @@ function onClickTab(tab)
     options: {},
   });
 }
+
+function changeTab()
+{
+  let idx = tabNames.indexOf(props.active);
+  idx = idx + 1;
+  if (idx >= tabNames.length) idx = 0;
+  localStore.state.tab = tabNames[idx] || 'global';
+}
+
+onMounted(() => {
+  tabNames = [
+    props.show.post && 'post',
+    props.show.global && 'global',
+  ].filter(Boolean);
+});
+
+defineExpose({
+  changeTab,
+});
 </script>
 
 <style src="./tabs.scss" lang="scss" scoped></style>

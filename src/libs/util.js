@@ -34,3 +34,59 @@ export function initCustomEvent()
   window.on = document.on = Element.prototype.on = events.on;
   window.off = document.off = Element.prototype.off = events.off;
 }
+
+/**
+ * load image
+ * @param {string} src
+ * @return {Promise<HTMLImageElement>}
+ */
+export function loadImage(src)
+{
+  return new Promise((resolve => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.src = src;
+  }));
+}
+
+/**
+ * get image size
+ * @param {string} type
+ * @param {number} set_w
+ * @param {number} set_h
+ * @param {number} img_w
+ * @param {number} img_h
+ * @return {object}
+ */
+export function getImageSize(type, set_w, set_h, img_w, img_h)
+{
+  let size = {};
+  switch(type)
+  {
+    case 'resize':
+      if (img_w < img_h)
+      {
+        size.width = Math.floor((img_w / img_h) * set_h);
+        size.height = set_h;
+      }
+      else
+      {
+        size.width = set_w;
+        size.height = Math.floor((img_h / img_w) * set_w);
+      }
+      break;
+    case 'resizeWidth':
+      size.width = set_w;
+      size.height = Math.floor((img_h / img_w) * set_w);
+      break;
+    case 'resizeHeight':
+      size.width = Math.floor((img_w / img_h) * set_h);
+      size.height = set_h;
+      break;
+    default:
+      size.width = set_w;
+      size.height = set_h;
+      break;
+  }
+  return size;
+}

@@ -12,12 +12,21 @@
 </template>
 
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
+import { controlWindow } from '../util';
 import Icon from '../../icons/index.vue';
 
 const props = defineProps({
   image: String,
 });
 const emits = defineEmits([ 'close' ]);
+
+onMounted(() => {
+  controlWindow(true, 'thumbnail-preview');
+});
+onUnmounted(() => {
+  controlWindow(false, 'thumbnail-preview');
+});
 </script>
 
 <style lang="scss" scoped>
@@ -25,15 +34,17 @@ const emits = defineEmits([ 'close' ]);
 .thumbnail-preview {
   position: relative;
   margin: 0;
-  display: grid;
-  align-items: center;
-  justify-content: center;
   height: 100%;
+  overflow: hidden;
   &__image {
+    position: absolute;
+    left: 50%;
+    top: 50%;
     display: block;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    transform: translate(-50%, -50%);
   }
   &__close {
     display: block;

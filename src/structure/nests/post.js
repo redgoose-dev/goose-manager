@@ -36,7 +36,6 @@ function setJson(src)
 {
   return {
     useCategory: src.useCategory || '0',
-    useThumbnailSizeTool: src.useThumbnailSizeTool || '0',
     useComment: src.useComment || '0',
     thumbnail: {
       width: Number(src.thumbnail?.width || 640),
@@ -46,7 +45,6 @@ function setJson(src)
     files: {
       count: Number(src.files?.count || uploadFileCount),
       sizeSingle: Number(src.files?.sizeSingle || limitUploadFile),
-      sizeTotal: Number(src.files?.sizeTotal || limitUploadFiles),
     },
   };
 }

@@ -15,7 +15,6 @@
       @input="onInputTextarea"
       @click="changePosition"
       @keyup="changePosition"
-      @keyup.ctrl.enter="emits('submit')"
       @keydown.meta.enter="emits('submit')"/>
   </div>
   <teleport to="#modals">

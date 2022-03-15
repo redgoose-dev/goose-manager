@@ -16,7 +16,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'upload'"
         :rotate-icon="processing"
-        :disabled="disabledAssets"
+        :disabled="disabledUploadButton"
         @click="onClickUploadFiles">
         Upload files
       </ButtonBasic>
@@ -36,7 +36,10 @@
         Delete
       </ButtonBasic>
     </div>
-    <p class="files-total">Count: <em>{{localStore.state.post.index.length}}</em></p>
+    <p class="files-total">
+      Count:
+      <em>{{localStore.state.post.index.length}} / {{localStore.state.post.limitCount}}</em>
+    </p>
   </header>
   <Loading v-if="loading" class="files-loading"/>
   <Attachments
@@ -49,7 +52,7 @@
     @upload="uploadFile($event, 0)"/>
   <footer class="files-footer">
     <nav class="files-footer__left">
-      <div class="dropdown dropdown--left">
+      <div v-if="localStore.state.useThumbnail" class="dropdown dropdown--left">
         <ButtonBasic
           type="label"
           icon-left="image"
@@ -119,6 +122,7 @@
       <Body type="full">
         <ThumbnailEditor
           :srl="thumbnail.srl"
+          :type="localStore.state.post.thumbnailType"
           :data="thumbnail.data"
           :cropper="thumbnail.cropper"
           @close="controlThumbnailEditor(false)"
@@ -130,7 +134,7 @@
       @close="showThumbnailPreview = false">
       <Body type="full">
         <ThumbnailPreview
-          :image="localStore.state.post.thumbnail.image || localStore.state.post.thumbnail.path"
+          :image="previewThumbnail"
           @close="showThumbnailPreview = false"/>
       </Body>
     </Modal>
@@ -142,9 +146,10 @@
 import { ref, reactive, onMounted, computed } from 'vue';
 import localStore from '../store';
 import { getItemsPost, removeFilesPost, uploadFilePost } from '../../../structure/files/manager';
+import { createFullPath } from '../../../structure/files/util';
 import { err } from '../../../libs/error';
 import { pureObject } from '../../../libs/object';
-import { printf } from '../../../libs/string';
+import { printf, getByte } from '../../../libs/string';
 import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil';
@@ -164,9 +169,19 @@ const thumbnail = reactive({ srl: NaN, data: {}, cropper: {} });
 const loading = ref(true);
 const processing = ref(false);
 const disabledAssets = computed(() => (loading.value || processing.value));
+const disabledUploadButton = computed(() => {
+  if (disabledAssets.value) return true;
+  return localStore.state.post.limitCount <= localStore.state.post.index.length;
+});
 const selectedAssets = computed(() => {
   if (disabledAssets.value) return true;
   return localStore.state.post.selected?.length <= 0;
+});
+const previewThumbnail = computed(() => {
+  const { image, path } = localStore.state.post.thumbnail;
+  if (image) return image;
+  else if (path) return createFullPath(path);
+  else return '';
 });
 
 /**
@@ -204,7 +219,19 @@ async function onChangeFiles(e)
 async function uploadFile(files, n)
 {
   let idx;
-  const { module, targetSrl, index } = localStore.state.post;
+  const { module, targetSrl, index, limitCount, limitSize } = localStore.state.post;
+  // check files count
+  if (limitCount <= index.length)
+  {
+    errorUploadFiles(undefined, printf('파일을 {0}개까지 업로드할 수 있습니다.', limitCount));
+    return;
+  }
+  // check files size
+  if (limitSize < files[n].size)
+  {
+    errorUploadFiles(undefined, printf('파일 업로드 사이즈 제한은 {0}입니다.', getByte(limitSize)));
+    return;
+  }
   try
   {
     idx = localStore.state.post.index.push({ ready: true, percent: 0 });
@@ -225,12 +252,15 @@ async function uploadFile(files, n)
       completeUploadFiles();
       return;
     }
-    if (files.length > n) await uploadFile(files, n);
+    if (files.length > n)
+    {
+      await uploadFile(files, n);
+    }
   }
   catch (e)
   {
     if (index[idx].ready) localStore.state.post.index.pop();
-    errorUploadFiles(e);
+    errorUploadFiles(e, 'Failed upload files.');
   }
 }
 /**
@@ -245,13 +275,17 @@ function completeUploadFiles()
 /**
  * error upload files
  * @param {Error} e
+ * @param {string} message
  */
-function errorUploadFiles(e)
+function errorUploadFiles(e, message)
 {
   $attachments.value.reset();
   processing.value = false;
-  err([ 'components', 'files-manager', 'modules', 'post.vue', 'errorUploadFiles()' ], 'error', e.message);
-  toast.add('Failed upload files.', 'error');
+  if (e)
+  {
+    err([ 'components', 'files-manager', 'modules', 'post.vue', 'errorUploadFiles()' ], 'error', e.message);
+  }
+  toast.add(message || e.message, 'error');
 }
 
 /**
@@ -326,7 +360,12 @@ function controlThumbnailEditor(sw, key = undefined)
     }
     thumbnail.cropper = {
       image: post.index[key].pathFull,
-      viewport: { width: 320, height: 240, type: 'square' },
+      viewport: {
+        width: 320,
+        height: 240,
+        type: 'square',
+        ...localStore.state.post.cropper?.viewport,
+      },
     };
   }
   else
@@ -367,17 +406,26 @@ function onSelectAll(sw)
 function onClickFunction(key)
 {
   if (key === undefined) return;
-  let items = localStore.state.post.selected.map(key => {
-    const { name, pathFull, type } = localStore.state.post.index[key];
-    return {
-      name,
-      path: pathFull,
-      type,
-    };
-  });
+  let items;
   switch (key)
   {
     case 'insert-markdown':
+    case 'insert-html':
+    case 'insert-address':
+      items = localStore.state.post.selected.map(key => {
+        const { name, pathFull, type } = localStore.state.post.index[key];
+        return {
+          name,
+          path: pathFull,
+          type,
+        };
+      });
+      break;
+  }
+  switch (key)
+  {
+    case 'insert-markdown':
+      if (items.length <= 0) return;
       emits('custom-event', {
         key: 'insert-text',
         value: createMarkdownItems(items),
@@ -394,6 +442,12 @@ function onClickFunction(key)
         key: 'insert-text',
         value: createAddressItems(items),
       });
+      break;
+    case 'close-thumbnail-editor':
+      showThumbnailEditor.value = false;
+      break;
+    case 'close-thumbnail-preview':
+      showThumbnailPreview.value = false;
       break;
   }
 }
@@ -454,6 +508,11 @@ onMounted(async () => {
     err([ 'components', 'files-manager', 'modules', 'post.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
+});
+
+defineExpose({
+  selectAll: onSelectAll,
+  func: onClickFunction,
 });
 </script>
 

@@ -1,6 +1,5 @@
 import { get, post, formData } from '../../libs/api';
-
-/** @var {string} API_URL */
+import { createFullPath } from './util';
 
 /**
  * filtering item for global
@@ -12,7 +11,7 @@ function filteringItemGlobal(src)
   return {
     name: src.name,
     path: src.path,
-    pathFull: API_URL + '/' + src.path,
+    pathFull: createFullPath(src.path),
     size: src.size,
     type: src.type,
     badge: [],
@@ -36,7 +35,7 @@ function filteringItemPost(src)
     srl: src.srl,
     name: src.name,
     path: src.path,
-    pathFull: API_URL + '/' + src.path,
+    pathFull: createFullPath(src.path),
     size: src.size,
     type: src.type,
     badge: [],

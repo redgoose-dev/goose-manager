@@ -92,7 +92,7 @@ const data = reactive({
 });
 const title = computed(() => (data.nest ? `[${data.nest.id}] Articles` : undefined));
 const description = computed(() => (data.nest ? data.nest.description : undefined));
-const loading = ref(false);
+const loading = ref(true);
 const page = ref(route.query.page ? Number(route.query.page) : 1);
 const itemComponent = computed(() => {
   switch (store.state.preference.articles.filter.theme)
@@ -140,7 +140,6 @@ async function onUpdateFilter()
 onMounted(async () => {
   try
   {
-    loading.value = true;
     let res = await getData();
     data.total = res.total;
     data.index = res.articles;

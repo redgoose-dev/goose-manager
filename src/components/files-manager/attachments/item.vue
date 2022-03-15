@@ -12,53 +12,48 @@
       <em>{{getByte(props.size)}}</em>
     </span>
   </button>
-  <p v-if="props.badge?.length > 0">
-    badge
-  </p>
+  <ul v-if="props.badge?.length > 0" class="attachment__badges">
+    <li v-for="o in props.badge">
+      <Icon v-if="o === 'thumbnail'" name="image"/>
+    </li>
+  </ul>
   <div v-if="props.context?.length > 0" class="attachment__context">
     <button type="button">
       <Icon name="menu"/>
     </button>
     <ul>
-      <li v-for="o in props.context">
-        <button
-          v-if="o === 'open-new-window'"
-          type="button"
-          @click="onClickContextItem(o)">
-          새창으로 열기
-        </button>
-        <button
-          v-else-if="o === 'insert'"
-          type="button"
-          @click="onClickContextItem(o)">
-          삽입하기
-        </button>
-        <button
-          v-else-if="o === 'insert-html'"
-          type="button"
-          @click="onClickContextItem(o)">
-          HTML 삽입하기
-        </button>
-        <button
-          v-else-if="o === 'insert-address'"
-          type="button"
-          @click="onClickContextItem(o)">
-          주소 삽입하기
-        </button>
-        <button
-          v-else-if="o === 'set-thumbnail'"
-          type="button"
-          @click="onClickContextItem(o)">
-          썸네일 이미지 설정
-        </button>
-        <button
-          v-else-if="o === 'delete'"
-          type="button"
-          class="color-error"
-          @click="onClickContextItem(o)">
-          삭제하기
-        </button>
-      </li>
+      <template v-for="o in props.context">
+        <li v-if="o === 'open-new-window'">
+          <button type="button" @click="onClickContextItem(o)">
+            새창으로 열기
+          </button>
+        </li>
+        <li v-else-if="o === 'insert'">
+          <button type="button" @click="onClickContextItem(o)">
+            삽입하기
+          </button>
+        </li>
+        <li v-else-if="o === 'insert-html'">
+          <button type="button" @click="onClickContextItem(o)">
+            HTML 삽입하기
+          </button>
+        </li>
+        <li v-else-if="o === 'insert-address'">
+          <button type="button" @click="onClickContextItem(o)">
+            주소 삽입하기
+          </button>
+        </li>
+        <li v-else-if="o === 'set-thumbnail' && localStore.state.useThumbnail">
+          <button type="button" @click="onClickContextItem(o)">
+            썸네일 이미지 설정
+          </button>
+        </li>
+        <li v-else-if="o === 'delete'">
+          <button type="button" class="color-error" @click="onClickContextItem(o)">
+            삭제하기
+          </button>
+        </li>
+      </template>
     </ul>
   </div>
 </div>
@@ -66,6 +61,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import localStore from '../store';
 import { getByte } from '../../../libs/string';
 import Icon from '../../icons/index.vue';
 

@@ -118,9 +118,6 @@
         </Label>
       </Labels>
     </Field>
-    <Field label="Thumbnail size tool" for="thumbnailSizeTool">
-      <FormSwitch v-model="forms.json.useThumbnailSizeTool" :values="[ '0', '1' ]"/>
-    </Field>
     <Field label="Files count" for="filesCount">
       <FormInput
         type="number"
@@ -134,38 +131,21 @@
         style="--input-width: 70px"/>
       <Help>업로드 할 수 있는 파일의 갯수를 설정합니다.</Help>
     </Field>
-    <Columns>
-      <Field label="Upload size(single)" for="filesSizeSingle">
-        <Label>
-          <FormInput
-            type="number"
-            name="filesSizeSingle"
-            id="filesSizeSingle"
-            v-model="forms.json.files.sizeSingle"
-            placeholder="5242880"
-            :min="100"
-            :max="99999999"
-            size="small"
-            class="input-file-size"/>
-          <small>({{printBytes.singleFile}})</small>
-        </Label>
-      </Field>
-      <Field label="Upload size(total)" for="filesSizeTotal">
-        <Label>
-          <FormInput
-            type="number"
-            name="filesSizeTotal"
-            id="filesSizeTotal"
-            v-model="forms.json.files.sizeTotal"
-            placeholder="20971520"
-            :min="100"
-            :max="99999999"
-            size="small"
-            class="input-file-size"/>
-          <small>({{printBytes.totalFiles}})</small>
-        </Label>
-      </Field>
-    </Columns>
+    <Field label="Upload file size" for="filesSize">
+      <Label>
+        <FormInput
+          type="number"
+          name="filesSize"
+          id="filesSize"
+          v-model="forms.json.files.sizeSingle"
+          placeholder="5242880"
+          :min="100"
+          :max="99999999"
+          size="small"
+          class="input-file-size"/>
+        <small>({{limitUploadFileSize}})</small>
+      </Label>
+    </Field>
   </Fieldset>
   <Controller>
     <template #left>
@@ -217,10 +197,7 @@ const apps = ref();
 const loading = ref(true);
 const processing = ref(false);
 const isEdit = computed(() => (props.mode === 'edit'));
-const printBytes = reactive({
-  singleFile: computed(() => getByte(forms.json.files?.sizeSingle || 0)),
-  totalFiles: computed(() => getByte(forms.json.files?.sizeTotal || 0)),
-});
+const limitUploadFileSize = computed(() => getByte(forms.json.files?.sizeSingle || 0));
 
 async function onSubmit()
 {

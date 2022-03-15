@@ -1,5 +1,6 @@
 import { useRoute } from 'vue-router';
 import { get } from '../../libs/api';
+import { createFullPath } from '../files/util';
 import { getDate } from '../../libs/date';
 import { serialize } from '../../libs/string';
 import store from '../../store';
@@ -72,7 +73,7 @@ export async function requestArticles()
           `Hit:${item.hit}`,
           `Star:${item.star}`,
         ].filter(Boolean),
-        thumbnail: '', // TODO: 썸네일 이미지 주소
+        image: item.json.thumbnail?.path ? createFullPath(item.json.thumbnail?.path) : '',
         private: item.type === 'private',
       };
     }),

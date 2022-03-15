@@ -69,16 +69,14 @@
 <script setup>
 /** @var {string} TITLE */
 /** @var {string} DESCRIPTION */
-/** @var {string} API_URL */
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import store from '../../store';
 import { setup } from '../../libs/service';
 import { toast } from '../../modules/toast';
+import { err } from '../../libs/error';
 import FormCheckbox from '../../components/forms/checkbox.vue';
 import ButtonBasic from '../../components/button/basic.vue';
-import { err } from "../../libs/error.js";
 
 const router = useRouter();
 const loading = ref(false);

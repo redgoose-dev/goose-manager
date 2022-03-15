@@ -307,6 +307,11 @@ onMounted(async () => {
     throw e.message;
   }
 });
+
+defineExpose({
+  selectAll: onSelectAll,
+  func: onClickFunction,
+});
 </script>
 
 <style src="./modules.scss" lang="scss" scoped></style>

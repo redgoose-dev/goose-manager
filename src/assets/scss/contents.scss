@@ -1,5 +1,4 @@
 @use 'mixins';
-@use 'redgoose-content-body/dist/body.scss';
 
 .redgoose-body {
   .grid-item {
@@ -82,3 +81,5 @@
     }
   }
 }
+
+@import 'redgoose-content-body/dist/body.scss';

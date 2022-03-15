@@ -1,6 +1,7 @@
 <template>
 <article :class="[ 'files-manager', localStore.state.fullSize && 'files-manager--full' ]">
   <Tabs
+    ref="$tabs"
     :active="localStore.state.tab"
     :show="showTabButtons"
     class="files-manager__tabs"
@@ -8,22 +9,19 @@
     @select-function="selectFunction"/>
   <div class="files-manager__body">
     <component
+      ref="$module"
       v-if="!!contentBody"
       :is="contentBody"
       @custom-event="onCustomEvent"
-      @open-window="controlWindow(true, $event)"
-      @close-window="controlWindow(false, $event)"
       @close="emits('close')"/>
     <div v-else class="files-manager__no-tab">
       There is no tab selected.
     </div>
   </div>
   <teleport to="#modals">
-    <Modal
-      :show="guide"
-      @close="controlGuide(false)">
+    <Modal :show="guide" @close="guide = false">
       <Body type="window">
-        <Guide @close="controlGuide(false)"/>
+        <Guide @close="guide = false"/>
       </Body>
     </Modal>
   </teleport>
@@ -33,12 +31,15 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import localStore from './store';
+import { controlWindow } from './util';
 import { Modal, Body } from '../modal';
 import Tabs from './tabs.vue';
 import ModulePost from './modules/post.vue';
 import ModuleGlobal from './modules/global.vue';
 import Guide from './guide.vue';
 
+const $tabs = ref();
+const $module = ref();
 const props = defineProps({
   tab: { type: String, default: 'global' }, // post,global
   post: {
@@ -53,6 +54,7 @@ const props = defineProps({
   },
   acceptFileType: { type: String, default: 'image/*' },
   fullSize: Boolean,
+  useThumbnail: Boolean,
 });
 const emits = defineEmits([ 'close', 'custom-event' ]);
 const guide = ref(false);
@@ -79,12 +81,15 @@ const showTabButtons = computed(() => {
 
 initialize();
 
+/**
+ * initialize
+ */
 function initialize()
 {
-  // initialize store
   localStore.commit('initialize');
   if (props.tab) localStore.state.tab = props.tab;
   localStore.state.fullSize = props.fullSize;
+  localStore.state.useThumbnail = props.useThumbnail;
   if (props.global)
   {
     localStore.state.global.path = props.global.path || 'assets';
@@ -94,12 +99,18 @@ function initialize()
     localStore.state.post = {
       module: props.post.module,
       targetSrl: props.post.targetSrl,
-      cropper: {},
-      thumbnail: props.post.thumbnail || {},
       index: [],
       idx: 0,
       selected: [],
+      limitCount: props.post.limitCount,
+      limitSize: props.post.limitSize,
     };
+    if (props.useThumbnail)
+    {
+      localStore.state.post.thumbnail = props.post.thumbnail || {};
+      localStore.state.post.cropper = props.post.cropper;
+      localStore.state.post.thumbnailType = props.post.thumbnailType;
+    }
   }
   localStore.state.window = [];
 }
@@ -113,32 +124,12 @@ function selectFunction(key)
   switch (key)
   {
     case 'guide':
-      controlGuide(true);
+      guide.value = true;
       break;
     case 'close':
       emits('close');
       break;
   }
-}
-
-function controlWindow(sw, key)
-{
-  if (!key) return;
-  if(sw)
-  {
-    if (!(localStore.state.window.indexOf(key) > -1)) localStore.state.window.push(key);
-  }
-  else
-  {
-    let idx = localStore.state.window.indexOf(key);
-    if (idx > -1) localStore.state.window.splice(idx, 1);
-  }
-}
-
-function controlGuide(sw)
-{
-  guide.value = sw;
-  controlWindow(sw, 'guide');
 }
 
 function onCustomEvent({ key, value })
@@ -152,11 +143,63 @@ function onCustomEvent({ key, value })
   }
 }
 
+function shortcuts(e, type)
+{
+  switch (type)
+  {
+    case 'keyup':
+      e.preventDefault();
+      if (e.key === 'Escape') pushEscKey();
+      if (e.key === 'Tab') $tabs.value.changeTab();
+      break;
+    case 'keydown':
+      if (e.metaKey || e.ctrlKey)
+      {
+        switch (e.key)
+        {
+          case 'Enter':
+            $module.value.func('insert-markdown');
+            break;
+          case 'a':
+            $module.value.selectAll();
+            break;
+        }
+      }
+      break;
+  }
+}
+function pushEscKey()
+{
+  if (localStore.state.window.length > 0)
+  {
+    let key = localStore.state.window[localStore.state.window.length - 1];
+    controlWindow(false);
+    switch (key)
+    {
+      case 'guide':
+        guide.value = false;
+        break;
+      case 'thumbnail-preview':
+        $module.value.func('close-thumbnail-preview');
+        break;
+      case 'thumbnail-editor':
+        $module.value.func('close-thumbnail-editor');
+        break;
+    }
+  }
+  else
+  {
+    emits('close');
+  }
+}
+
 onMounted(() => {
-  // TODO: 단축키 설정하기
+  window.on('keyup.file-manager', (e) => shortcuts(e, 'keyup'));
+  window.on('keydown.file-manager', (e) => shortcuts(e, 'keydown'));
 });
 onUnmounted(() => {
-  // TODO: 단축키 이벤트 해지하기
+  window.off('keyup.file-manager');
+  window.off('keydown.file-manager');
 });
 </script>
 

@@ -48,21 +48,29 @@
     :article-srl="props.srl"
     class="article__comments"/>
   <teleport to="#modals">
+    <Modal :show="!!previewImage" @close="previewImage = null">
+      <Body>
+        <PreviewImage :src="previewImage" @close="previewImage = null"/>
+      </Body>
+    </Modal>
   </teleport>
 </article>
 <Loading v-else class="loading"/>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted, nextTick } from 'vue';
 import getData from '../../../../structure/articles/item';
 import { err } from '../../../../libs/error';
 import Loading from '../../../etc/loading.vue';
 import { Controller } from '../../../forms/fieldset';
+import { Modal, Body } from '../../../modal';
 import ButtonBasic from '../../../button/basic.vue';
 import Files from './files.vue';
 import Comments from './comments.vue';
+import PreviewImage from './preview-image.vue';
 
+const $content = ref();
 const props = defineProps({
   srl: { type: Number, required: true },
   nestSrl: Number,
@@ -76,6 +84,15 @@ const loading = ref(true);
 const previewImage = ref(null);
 const useComments = computed(() => (Number(data.nest.json.useComment) === 1));
 
+function initContentEvents()
+{
+  $content.value.querySelectorAll('img').forEach(el => {
+    el.addEventListener('click', evt => {
+      previewImage.value = evt.currentTarget.src;
+    });
+  });
+}
+
 onMounted(async () => {
   try
   {
@@ -84,6 +101,8 @@ onMounted(async () => {
     data.nest = nest;
     data.files = files;
     loading.value = false;
+    await nextTick();
+    initContentEvents();
   }
   catch (e)
   {
