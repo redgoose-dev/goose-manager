@@ -93,7 +93,7 @@ export default {
     },
   },
   files: {
-    pageCount: 24,
+    pagePerSize: 24,
     acceptFileType: 'image/*,audio/*,video/*,text/*,.pdf',
   },
   users: {},

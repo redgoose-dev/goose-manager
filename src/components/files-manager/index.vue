@@ -88,6 +88,7 @@ function initialize()
 {
   localStore.commit('initialize');
   if (props.tab) localStore.state.tab = props.tab;
+  localStore.state.acceptFileType = props.acceptFileType || 'image/*';
   localStore.state.fullSize = props.fullSize;
   localStore.state.useThumbnail = props.useThumbnail;
   if (props.global)

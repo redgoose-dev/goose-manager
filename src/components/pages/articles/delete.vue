@@ -20,17 +20,18 @@ import { useRoute, useRouter } from 'vue-router';
 import { getItem, submit } from '../../../structure/articles/delete';
 import { printf } from '../../../libs/string';
 import { err } from '../../../libs/error';
+import { createQueries } from './libs';
 import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import PageHeader from '../../page/header/index.vue';
 import ConfirmDelete from '../../forms/confirm-delete/index.vue';
 import Loading from '../../etc/loading.vue';
 
+const router = useRouter();
+const route = useRoute();
 const props = defineProps({
   srl: { type: Number, required: true },
 });
-const router = useRouter();
-const route = useRoute();
 const fields = reactive({
   title: '',
   description: message.words.deleteArticle,
@@ -46,7 +47,7 @@ async function onSubmit()
     processing.value = true;
     await submit(props.srl);
     processing.value = false;
-    await router.push('../../');
+    await router.push(`../../${createQueries(['category','page'], route.query)}`);
     toast.add(printf(message.success.delete, message.word.article), 'success');
   }
   catch (e)

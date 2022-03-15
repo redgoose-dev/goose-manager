@@ -136,7 +136,7 @@
       <p>썸네일 스타일로 표현하기</p>
     </header>
     <div class="example">
-      <Items theme="image">
+      <Items theme="thumbnail">
         <Thumbnail
           v-for="o in Array(6)"
           href="/"
@@ -184,6 +184,3 @@ function callAlert()
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>
-<style lang="scss" scoped>
-//
-</style>

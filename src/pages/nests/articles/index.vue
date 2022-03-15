@@ -23,8 +23,8 @@
           :alt="item.title"
           :image="item.image"
           :nav="[
-            { label: 'Edit', href: `./${item.srl}/edit/` },
-            { label: 'Delete', href: `./${item.srl}/delete/` },
+            { label: 'Edit', href: `./${item.srl}/edit/${createQueries(['category','page'], route.query)}` },
+            { label: 'Delete', href: `./${item.srl}/delete/${createQueries(['category','page'], route.query)}` },
           ]">
           <template v-if="item.private" #after>
             <Mark/>
@@ -49,7 +49,10 @@
           </ButtonBasic>
         </template>
         <template #right>
-          <ButtonBasic href="./create/" color="key" icon-left="plus">
+          <ButtonBasic
+            :href="`./create/${createQueries(['category'], route.query)}`"
+            color="key"
+            icon-left="plus">
             Create article
           </ButtonBasic>
         </template>
@@ -71,6 +74,7 @@ import { useRoute, useRouter } from 'vue-router';
 import store from '../../../store';
 import { err } from '../../../libs/error';
 import { serialize } from '../../../libs/string';
+import { createQueries } from '../../../components/pages/articles/libs';
 import { getData, requestArticles, requestCategories } from '../../../structure/articles';
 import PageHeader from '../../../components/page/header/index.vue';
 import { Items, Card, Thumbnail, Mark } from '../../../components/item';
@@ -107,6 +111,10 @@ const itemComponent = computed(() => {
   return Card;
 });
 
+/**
+ * on change page
+ * @param {number} page
+ */
 function onChangePage(page)
 {
   let params = {
@@ -150,7 +158,7 @@ onMounted(async () => {
   catch (e)
   {
     err(['pages', 'nests', 'articles', 'index.vue', 'onMounted()'], 'error', e.message);
-    loading.value = false;
+    throw e.message;
   }
 });
 </script>

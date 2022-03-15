@@ -130,16 +130,16 @@
 
 <script setup>
 import { ref, computed, reactive, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import store from '../../../../store';
 import { getData, deleteThumbnail, uploadThumbnail } from '../../../../structure/articles/post';
 import { post, formData } from '../../../../libs/api';
 import { err } from '../../../../libs/error';
 import { dateFormat, checkOrderDate } from '../../../../libs/date';
-import { printf, serialize } from '../../../../libs/string';
+import { printf } from '../../../../libs/string';
+import { getTypeArticle, createQueries } from '../libs';
 import { message } from '../../../../message';
 import { toast } from '../../../../modules/toast';
-import { getTypeArticle } from '../libs';
 import { Fieldset, Field, Label, Labels, Controller, Help, Columns } from '../../../forms/fieldset';
 import { Modal, Body } from '../../../modal';
 import FormInput from '../../../forms/input.vue';
@@ -149,6 +149,7 @@ import ButtonBasic from '../../../button/basic.vue';
 import Editor from './editor.vue';
 import FilesManager from '../../../files-manager/index.vue';
 
+const route = useRoute();
 const router = useRouter();
 const $root = ref();
 const $editor = ref();
@@ -166,7 +167,7 @@ const data = reactive({
 const forms = reactive({
   app_srl: null,
   nest_srl: props.nestSrl,
-  category_srl: null,
+  category_srl: (!route.query.category || route.query.category === 'null') ? null : route.query.category,
   type: 'ready',
   title: {
     value: '',
@@ -184,7 +185,6 @@ const forms = reactive({
     thumbnail: {},
   },
 });
-const editor = reactive({ start: 0, end: 0 });
 const loading = ref(true);
 const processing = ref(false);
 const showFilesManager = ref(false);
@@ -284,18 +284,16 @@ async function publishing()
     {
       case 'edit':
       case 'create':
-        let queries = {};
-        // TODO: category 붙이기
-        // TODO: page 붙이기
-        await router.push(`../${serialize(queries, true)}`)
+        await router.push(`../${createQueries(['category','page'], route.query)}`)
         break;
       default:
-        await router.push('/articles/');
+        await router.push(`/articles/${createQueries(['category','page'], route.query)}`);
         break;
     }
   }
   catch (e)
   {
+    console.error(e);
     err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'publishing()' ], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail[props.mode], message.word.article), 'error');
@@ -358,7 +356,10 @@ onMounted(async () => {
     data.nest = nest;
     data.categories = categories;
     data.article = article;
-    forms.category_srl = article.category_srl || null;
+    if (article.category_srl)
+    {
+      forms.category_srl = article.category_srl === 'null' ? null : article.category_srl;
+    }
     forms.title.value = article.title || '';
     forms.content.value = article.content || '';
     forms.order.value = article.order;

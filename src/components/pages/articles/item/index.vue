@@ -24,21 +24,33 @@
     class="article__files"/>
   <Controller>
     <template #left>
-      <ButtonBasic href="../" icon-left="list">
+      <ButtonBasic
+        :href="`../${createQueries(['category','page'], route.query)}`"
+        icon-left="list">
         Index
       </ButtonBasic>
     </template>
     <template #right>
-      <ButtonBasic v-if="props.nestSrl" href="../create/" color="key" icon-left="plus">
+      <ButtonBasic
+        v-if="props.nestSrl"
+        :href="`../create/${createQueries(['category'], route.query)}`"
+        color="key"
+        icon-left="plus">
         Create
       </ButtonBasic>
       <ButtonBasic href="./change-nest/">
         Change nest
       </ButtonBasic>
-      <ButtonBasic href="./edit/" color="weak" icon-left="edit-3">
+      <ButtonBasic
+        :href="`./edit/${createQueries(['category','page'], route.query)}`"
+        color="weak"
+        icon-left="edit-3">
         Edit
       </ButtonBasic>
-      <ButtonBasic href="./delete/" color="error" icon-left="trash">
+      <ButtonBasic
+        :href="`./delete/${createQueries(['category','page'], route.query)}`"
+        color="error"
+        icon-left="trash">
         Delete
       </ButtonBasic>
     </template>
@@ -60,8 +72,10 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
 import getData from '../../../../structure/articles/item';
 import { err } from '../../../../libs/error';
+import { createQueries } from '../libs';
 import Loading from '../../../etc/loading.vue';
 import { Controller } from '../../../forms/fieldset';
 import { Modal, Body } from '../../../modal';
@@ -70,6 +84,7 @@ import Files from './files.vue';
 import Comments from './comments.vue';
 import PreviewImage from './preview-image.vue';
 
+const route = useRoute();
 const $content = ref();
 const props = defineProps({
   srl: { type: Number, required: true },
