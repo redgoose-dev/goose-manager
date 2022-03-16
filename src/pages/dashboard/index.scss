@@ -1,0 +1,60 @@
+@use '../../assets/scss/mixins';
+
+.dashboard {
+  &__body {
+    display: grid;
+    gap: 60px;
+  }
+  &__section {
+    > header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      margin: 0 0 10px;
+      h1 {
+        margin: 0;
+        padding: 0 0 0 2px;
+        font-family: var(--font-eng);
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.15;
+        letter-spacing: -.5px;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        margin: -8px -6px -8px -8px;
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          aspect-ratio: 1 / 1;
+          @include mixins.button-touch-options(true);
+          svg {
+            display: block;
+            --icon-size: 24px;
+            --icon-stroke-width: 2;
+          }
+        }
+      }
+    }
+    .items-image {
+      --items-column: 4;
+      --item-image-height: 14vw;
+      --item-image-min-height: 120px;
+      --item-image-max-height: 180px;
+    }
+    .items-card {
+      --items-column: 3;
+    }
+  }
+
+  @include mixins.responsive(desktop-large) {
+    &__section {
+      .items-card {
+        --items-column: 4;
+      }
+    }
+  }
+}

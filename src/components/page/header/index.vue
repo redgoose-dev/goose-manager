@@ -27,6 +27,11 @@ const props = defineProps({
 const messages = computed(() => {
   switch(props.module)
   {
+    case 'dashboard':
+      return {
+        title: props.title || 'Dashboard',
+        description: props.description || '',
+      };
     case 'apps':
       return {
         title: props.title || 'Apps',
@@ -92,7 +97,7 @@ const messages = computed(() => {
     margin: 0;
     font-size: 32px;
     line-height: 1.25;
-    letter-spacing: -.75px;
+    letter-spacing: -1px;
     font-weight: 600;
     font-family: var(--font-eng);
   }

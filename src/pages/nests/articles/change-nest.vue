@@ -8,7 +8,7 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import PageHeader from '../../../components/page/header/index.vue';
-import ChangeNest from '../../../components/pages/articles/change-nest/index.vue';
+import ChangeNest from '../../../components/pages/articles/change-nest.vue';
 
 const route = useRoute();
 </script>

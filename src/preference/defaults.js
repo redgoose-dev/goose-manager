@@ -74,7 +74,36 @@ export default {
       active: 'guide',
     }
   ],
-  dashboard: {},
+  dashboard: {
+    title: 'Dashboard',
+    description: 'Welcome to goose manager',
+    contents: [
+      {
+        module: 'articles',
+        options: {
+          size: 8,
+        },
+      },
+      {
+        module: 'nests',
+        options: {
+          size: 12,
+        },
+      },
+      {
+        module: 'apps',
+        options: {
+          size: 6,
+        },
+      },
+      {
+        module: 'json',
+        options: {
+          size: 4,
+        },
+      },
+    ],
+  },
   apps: {},
   nests: {
     uploadFileCount: 20,

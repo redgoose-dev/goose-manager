@@ -143,6 +143,7 @@
     left: 0;
     top: 0;
     background-color: rgb(86 86 86 / 90%);
+    @include mixins.background-blur(8px);
     > li {
       position: relative;
       transition: background-color 200ms ease-out;

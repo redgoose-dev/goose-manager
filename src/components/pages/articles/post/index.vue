@@ -1,8 +1,8 @@
 <template>
 <form ref="$root" v-if="!loading" @submit.prevent="onSubmit">
-  <Fieldset class="fields" :disabled="loading">
+  <Fieldset class="fields" :disabled="processing">
     <Field v-if="data.categories?.length > 0" label="Category" for="category">
-      <FormSelect
+      <Select
         id="category"
         name="category"
         v-model="forms.category_srl"
@@ -10,7 +10,7 @@
         class="category"/>
     </Field>
     <Field label="Title" for="title">
-      <FormInput
+      <Input
         name="title"
         id="title"
         v-model="forms.title.value"
@@ -21,7 +21,7 @@
     </Field>
     <Columns style="--columns-template: .75fr 1fr">
       <Field label="Order date" for="order">
-        <FormInput
+        <Input
           name="order"
           id="order"
           v-model="forms.order.value"
@@ -37,7 +37,7 @@
       <Field label="Article type" for="type">
         <Labels class="types">
           <Label class="types__label ready">
-            <FormRadio
+            <Radio
               name="type"
               id="type"
               v-model="forms.type"
@@ -46,14 +46,14 @@
             <span>ready</span>
           </Label>
           <Label class="types__label public">
-            <FormRadio
+            <Radio
               name="type"
               v-model="forms.type"
               value="public"/>
             <span>public</span>
           </Label>
           <Label class="types__label private">
-            <FormRadio
+            <Radio
               name="type"
               v-model="forms.type"
               value="private"/>
@@ -140,11 +140,9 @@ import { printf } from '../../../../libs/string';
 import { getTypeArticle, createQueries } from '../libs';
 import { message } from '../../../../message';
 import { toast } from '../../../../modules/toast';
+import { Input, Select, Radio } from '../../../forms';
 import { Fieldset, Field, Label, Labels, Controller, Help, Columns } from '../../../forms/fieldset';
 import { Modal, Body } from '../../../modal';
-import FormInput from '../../../forms/input.vue';
-import FormSelect from '../../../forms/select.vue';
-import FormRadio from '../../../forms/radio.vue';
 import ButtonBasic from '../../../button/basic.vue';
 import Editor from './editor.vue';
 import FilesManager from '../../../files-manager/index.vue';
@@ -158,7 +156,6 @@ const props = defineProps({
   nestSrl: Number,
   articleSrl: Number,
 });
-const emits = defineEmits([]);
 const data = reactive({
   nest: null,
   categories: null,
@@ -266,8 +263,8 @@ async function saveDraft()
   catch (e)
   {
     err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'saveDraft()' ], 'error', e.message);
-    processing.value = false;
     toast.add(message.fail.draftSave, 'error');
+    processing.value = false;
   }
 }
 async function publishing()
@@ -293,10 +290,9 @@ async function publishing()
   }
   catch (e)
   {
-    console.error(e);
     err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'publishing()' ], 'error', e.message);
-    processing.value = false;
     toast.add(printf(message.fail[props.mode], message.word.article), 'error');
+    processing.value = false;
   }
 }
 function onSubmit()

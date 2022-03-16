@@ -153,7 +153,7 @@ const articles = [
     meta: { active: 'articles' },
   },
   {
-    path: '/articles/:srl/change-nest/',
+    path: '/articles/:articleSrl/change-nest/',
     name: 'ChangeNestArticle',
     component: () => import('../pages/articles/change-nest.vue'),
     meta: { active: 'articles' },
