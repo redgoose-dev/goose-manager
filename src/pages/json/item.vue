@@ -39,7 +39,7 @@ import { err } from '../../libs/error';
 import getData from '../../structure/json/item';
 import PageHeader from '../../components/page/header/index.vue';
 import { Fieldset, Field } from '../../components/forms/fieldset';
-import Controller from '../../components/forms/fieldset/controller.vue';
+import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 

@@ -31,7 +31,7 @@ import getData from '../../structure/apps';
 import { err } from '../../libs/error';
 import { Items, Card } from '../../components/item';
 import PageHeader from '../../components/page/header/index.vue';
-import Controller from '../../components/forms/fieldset/controller.vue';
+import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/error/empty.vue';

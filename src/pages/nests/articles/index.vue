@@ -78,7 +78,7 @@ import { createQueries } from '../../../components/pages/articles/libs';
 import { getData, requestArticles, requestCategories } from '../../../structure/articles';
 import PageHeader from '../../../components/page/header/index.vue';
 import { Items, Card, Thumbnail, Mark } from '../../../components/item';
-import Controller from '../../../components/forms/fieldset/controller.vue';
+import { Controller } from '../../../components/navigation';
 import ButtonBasic from '../../../components/button/basic.vue';
 import Loading from '../../../components/etc/loading.vue';
 import Empty from '../../../components/error/empty.vue';

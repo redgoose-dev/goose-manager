@@ -49,7 +49,7 @@ import { err } from '../../libs/error';
 import PageHeader from '../../components/page/header/index.vue';
 import { Fieldset, Field } from '../../components/forms/fieldset';
 import { Switch } from '../../components/forms';
-import Controller from '../../components/forms/fieldset/controller.vue';
+import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 
