@@ -77,7 +77,7 @@ import getData from '../../../../structure/articles/item';
 import { err } from '../../../../libs/error';
 import { createQueries } from '../libs';
 import Loading from '../../../etc/loading.vue';
-import { Controller } from '../../../forms/fieldset';
+import { Controller } from '../../../navigation';
 import { Modal, Body } from '../../../modal';
 import ButtonBasic from '../../../button/basic.vue';
 import Files from './files.vue';

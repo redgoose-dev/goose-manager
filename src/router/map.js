@@ -244,6 +244,36 @@ const checklist = [
     component: () => import('../pages/checklist/index.vue'),
     meta: { active: 'checklist' },
   },
+  {
+    path: '/checklist/list/',
+    name: 'ChecklistList',
+    component: () => import('../pages/checklist/list.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/edit/',
+    name: 'ChecklistEditToday',
+    component: () => import('../pages/checklist/edit.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/:srl/',
+    name: 'ChecklistItem',
+    component: () => import('../pages/checklist/item.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/:srl/edit/',
+    name: 'ChecklistEdit',
+    component: () => import('../pages/checklist/edit.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/:srl/delete/',
+    name: 'ChecklistDelete',
+    component: () => import('../pages/checklist/delete.vue'),
+    meta: { active: 'checklist' },
+  },
 ];
 const guide = [
   {

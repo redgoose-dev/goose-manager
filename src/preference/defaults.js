@@ -127,11 +127,9 @@ export default {
   },
   users: {},
   checklist: {
-    reset: '05:00',
-    format: '{yyyy}-{MM}-{dd} ({week})',
-    range: {
-      year: [ 2020, 2030, 2040, 2050 ],
-    },
+    resetTime: '05:00',
+    dateFormat: '{yyyy}-{MM}-{dd} ({week})',
+    rangeYear: [ 2020, 2040 ],
     filter: {
       year: '',
       month: '',

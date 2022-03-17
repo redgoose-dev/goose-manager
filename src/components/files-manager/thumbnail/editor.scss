@@ -6,6 +6,7 @@
   box-sizing: border-box;
   display: grid;
   grid-template-rows: 1fr 54px;
+  user-select: none;
   &__title {
     position: absolute;
     font-size: 0;

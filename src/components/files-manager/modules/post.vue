@@ -68,7 +68,7 @@
               </button>
             </li>
             <li>
-              <button type="button" @click="showThumbnailPreview = true">
+              <button type="button" @click="showThumbnailPreview.value = true">
                 Preview
               </button>
             </li>
@@ -131,11 +131,11 @@
     </Modal>
     <Modal
       :show="showThumbnailPreview"
-      @close="showThumbnailPreview = false">
+      @close="showThumbnailPreview.value = false">
       <Body type="full">
         <ThumbnailPreview
           :image="previewThumbnail"
-          @close="showThumbnailPreview = false"/>
+          @close="showThumbnailPreview.value = false"/>
       </Body>
     </Modal>
   </teleport>
@@ -143,7 +143,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, reactive, onMounted, computed, nextTick } from 'vue';
 import localStore from '../store';
 import { getItemsPost, removeFilesPost, uploadFilePost } from '../../../structure/files/manager';
 import { createFullPath } from '../../../structure/files/util';
@@ -319,7 +319,7 @@ function onDeleteItem(key)
   onSelectAll(false);
   deleteItems([localStore.state.post.index[key] ? { key, srl: localStore.state.post.index[key]?.srl } : false].filter(Boolean)).then();
 }
-function onClickDeleteItems()
+async function onClickDeleteItems()
 {
   if (localStore.state.post.selected.length <= 0) return;
   if (!confirm(printf(message.confirm.deleteFileItems, String(localStore.state.post.selected.length)))) return;
@@ -327,7 +327,8 @@ function onClickDeleteItems()
     if (!localStore.state.post.index[key]) return false;
     return { key, srl: localStore.state.post.index[key]?.srl };
   }).filter(Boolean);
-  deleteItems(items).then();
+  await deleteItems(items);
+  $attachments.value.reset();
 }
 
 /**

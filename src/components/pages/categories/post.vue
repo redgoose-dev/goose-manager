@@ -38,7 +38,8 @@ import { err } from '../../../libs/error';
 import { printf } from '../../../libs/string';
 import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
-import { Fieldset, Field, Controller } from '../../forms/fieldset';
+import { Fieldset, Field } from '../../forms/fieldset';
+import { Controller } from '../../navigation';
 import FormInput from '../../forms/input.vue';
 import ButtonBasic from '../../button/basic.vue';
 

@@ -61,6 +61,7 @@ export function checkOrderDate(str='')
 
 /**
  * compare date
+ * 시간을 0으로 변경하고 `년,월,일`로 날짜를 비교한다.
  * @param {Date} date1
  * @param {Date} date2
  * @param {string} compare

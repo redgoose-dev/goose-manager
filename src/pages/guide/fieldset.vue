@@ -142,7 +142,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Fieldset, Field, FieldCheck, Columns, Controller, Labels, Label, Help } from '../../components/forms/fieldset';
+import { Fieldset, Field, FieldCheck, Columns, Labels, Label, Help } from '../../components/forms/fieldset';
+import { Controller } from '../../components/navigation';
 import { Input, Select, Checkbox, Radio, Switch } from '../../components/forms';
 import ButtonBasic from '../../components/button/basic.vue';
 

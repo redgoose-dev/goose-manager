@@ -58,7 +58,8 @@ import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import { Card } from '../../item';
 import { Select } from '../../forms';
-import { Fieldset, Field, Controller, Help } from '../../forms/fieldset';
+import { Fieldset, Field, Help } from '../../forms/fieldset';
+import { Controller } from '../../navigation';
 import ButtonBasic from '../../button/basic.vue';
 
 const route = useRoute();

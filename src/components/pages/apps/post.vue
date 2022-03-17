@@ -69,7 +69,8 @@ import { get, post, formData, checkForms } from '../../../libs/api';
 import { toast } from '../../../modules/toast';
 import { err } from '../../../libs/error';
 import { message } from '../../../message';
-import { Fieldset, Field, Controller, Help } from '../../forms/fieldset';
+import { Fieldset, Field, Help } from '../../forms/fieldset';
+import { Controller } from '../../navigation';
 import FormInput from '../../forms/input.vue';
 import ButtonBasic from '../../button/basic.vue';
 

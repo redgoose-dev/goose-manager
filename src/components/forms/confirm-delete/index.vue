@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { Controller } from '../../forms/fieldset';
+import { Controller } from '../../navigation';
 import ButtonBasic from '../../button/basic.vue';
 
 const props = defineProps({
