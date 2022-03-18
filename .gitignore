@@ -2,6 +2,7 @@
 .idea/
 node_modules/
 .AppleDouble/
+dist/
 
 # files
 .env.local
