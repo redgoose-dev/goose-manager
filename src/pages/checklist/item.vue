@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="checklist" title="Checklist / Item"/>
+  <PageHeader module="checklist" title="Checklist"/>
 </article>
 </template>
 

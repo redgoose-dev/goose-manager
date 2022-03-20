@@ -42,6 +42,7 @@ export default {
     article: '아티클',
     comment: '댓글',
     file: '첨부파일',
+    checklist: '체크리스트',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',

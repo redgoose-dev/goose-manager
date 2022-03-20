@@ -8,7 +8,7 @@
       v-model="state.content"
       :date="state.date"
       :today="today"
-      :percent="12"
+      :percent="percent"
       @update:modelValue="onUpdateContent"/>
     <Controller>
       <template #left>
