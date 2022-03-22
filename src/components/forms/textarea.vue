@@ -67,13 +67,24 @@ function focus()
   $root.value.focus();
 }
 
+/**
+ * change cursor
+ * @param {number} start
+ * @param {number} end
+ */
+function changeCursor(start, end)
+{
+  $root.value.setSelectionRange(start, end);
+}
+
 onMounted(() => {
   if (props.autoSize) changeHeight();
 });
 
 defineExpose({
-  focus,
   changeHeight,
+  changeCursor,
+  focus,
 });
 </script>
 

@@ -1,32 +1,4 @@
-@use '../../../../assets/scss/mixins';
-
-.toolbar {
-  display: grid;
-  align-items: center;
-  justify-content: space-between;
-  grid-template-columns: auto auto;
-  box-sizing: border-box;
-  &__column {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    &:first-child {
-      justify-self: start;
-    }
-    &:last-child {
-      justify-self: end;
-    }
-  }
-}
-
-.group {
-  display: flex;
-  align-items: center;
-  height: 34px;
-  box-sizing: border-box;
-  border-radius: 2px;
-  box-shadow: 0 0 0 1px rgb(var(--group-color-line, 180 180 180));
-}
+@use '../../../assets/scss/mixins';
 
 .toolbar-item {
   position: relative;
@@ -88,6 +60,10 @@
       box-shadow: 0 2px 8px rgb(0 0 0 / 25%), 0 0 0 1px rgb(222 222 222);
       overflow: hidden;
       border-radius: 2px;
+      &.right {
+        left: unset;
+        right: -16px;
+      }
     }
     li {
       &:nth-child(n+2) {
@@ -128,6 +104,9 @@
     }
   }
   &.dropdown {
+    .toolbar-item__button {
+      cursor: default;
+    }
     &:hover {
       .toolbar-item__children {
         display: block;

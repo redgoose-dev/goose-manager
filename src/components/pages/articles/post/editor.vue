@@ -1,6 +1,6 @@
 <template>
 <fieldset :disabled="props.disabled" class="editor">
-  <Toolbar class="editor__toolbar" @select-item="onClickToolbarItem"/>
+  <PostToolbar class="editor__toolbar" @select-item="onSelectToolbarItem"/>
   <div class="editor__body">
     <textarea
       ref="$textarea"
@@ -40,9 +40,8 @@ import { marked } from 'marked';
 import { toast } from '../../../../modules/toast';
 import { printf } from '../../../../libs/string';
 import { message } from '../../../../message';
-import Icon from '../../../icons/index.vue';
-import Toolbar from './toolbar.vue';
 import { Modal, Body } from '../../../modal';
+import PostToolbar from '../../../navigation/post-toolbar.vue';
 
 const $textarea = ref();
 const $preview = ref();
@@ -71,10 +70,10 @@ function onInputTextarea(e)
 }
 
 /**
- * on click toolbar item
+ * on select toolbar item
  * @param {string} key
  */
-function onClickToolbarItem(key)
+function onSelectToolbarItem(key)
 {
   switch (key)
   {

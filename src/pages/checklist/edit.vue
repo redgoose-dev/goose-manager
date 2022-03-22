@@ -5,14 +5,18 @@
     <header class="checklist-post__header">
       <h2>{{forms.date}}</h2>
     </header>
+    <PostToolbar
+      class="checklist-post__toolbar"
+      @select-item="onSelectToolbarItem"/>
     <div class="checklist-post__body">
       <Textarea
         ref="$content"
         name="content"
         id="content"
         v-model="forms.content.value"
-        :rows="3"
+        :rows="8"
         :auto-size="true"
+        @position="onUpdatePosition"
         @keydown.meta.enter="onSubmit"/>
     </div>
     <Controller>
@@ -47,6 +51,7 @@ import PageHeader from '../../components/page/header/index.vue';
 import { Textarea } from '../../components/forms';
 import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
+import PostToolbar from '../../components/navigation/post-toolbar.vue';
 
 const $content = ref();
 const router = useRouter();
@@ -61,6 +66,70 @@ const forms = reactive({
     error: null,
   },
 });
+const position = ref({ start: 0, end: 0 });
+
+/**
+ * insert text
+ * @param {string} text
+ * @param {number} cursor
+ * @return {Promise<void>}
+ */
+async function insertText(text, cursor)
+{
+  if (!text) return;
+  let content = forms.content.value + '';
+  const { start } = position.value;
+  if (start === 0) text = text.replace(/^\n/g, '');
+  content = content.substr(0, start) + text + content.substr(start);
+  forms.content.value = content;
+  let last = start + (cursor || text.length);
+  position.value.start = last;
+  position.value.end = last;
+  await nextTick();
+  $content.value.changeHeight();
+  $content.value.changeCursor(position.value.start, position.value.end);
+  $content.value.focus();
+}
+
+/**
+ * on select toolbar item
+ * @param {string} code
+ */
+function onSelectToolbarItem(code)
+{
+  switch (code)
+  {
+    case 'insert-space':
+      insertText(`<p><br/></p>\n`, undefined);
+      break;
+    case 'insert-iframe':
+      insertText(`<div class="iframe"></div>\n`, 20);
+      break;
+    case 'insert-grid-group':
+      insertText(`<div class="grid-group">\n\n</div>\n`, 25);
+      break;
+    case 'insert-grid-item':
+      insertText(`<figure class="grid-item" data-mobile="3" data-tablet="" data-desktop="" data-desktop-large="">\n\n</figure>\n`, 96);
+      break;
+    case 'insert-picture':
+      insertText(`<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>\n`, undefined);
+      break;
+    case 'open-file-manager':
+      break;
+    case 'preview':
+      break;
+  }
+}
+
+/**
+ * on update position
+ * @param {{start, end}} o
+ */
+function onUpdatePosition(o)
+{
+  position.value.start = o.start;
+  position.value.end = o.end;
+}
 
 async function onSubmit()
 {
@@ -114,8 +183,11 @@ onMounted(async () => {
       text-align: center;
     }
   }
+  &__toolbar {
+    margin: 16px 0 0;
+  }
   &__body {
-    margin: 4px 0 0;
+    margin: 8px 0 0;
     .textarea {
       max-height: 480px;
     }
