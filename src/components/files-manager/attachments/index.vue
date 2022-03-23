@@ -8,9 +8,7 @@
     class="attachments">
     <ul class="attachments__index">
       <li v-for="(item,key) in props.index" @click.stop="">
-        <Progress
-          v-if="item.ready"
-          :percent="item.percent"/>
+        <Progress v-if="item.ready" :percent="item.percent"/>
         <Item
           v-else
           :image="item.pathFull"
@@ -19,7 +17,7 @@
           :size="item.size"
           :context="item.context"
           :badge="[
-            item.srl === localStore.state.post.thumbnail?.srl && 'thumbnail',
+            (post.thumbnail?.srl && item.srl === post.thumbnail?.srl) && 'thumbnail',
           ].filter(Boolean)"
           :selected="selected[key]"
           @select-item="onSelectItem(key, $event)"
@@ -35,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import localStore from '../store';
 import { selectItem, selectAll } from '../selectItems';
 import Icon from '../../icons/index.vue';
@@ -49,6 +47,7 @@ const props = defineProps({
 const emits = defineEmits([ 'change-select', 'select-context-item', 'upload' ]);
 const $root = ref();
 const selected = ref(new Array(props.index.length).fill(false));
+const post = computed(() => (localStore.state.post));
 let dragEvent = false;
 let dragOver = ref(false);
 

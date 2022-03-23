@@ -115,7 +115,7 @@
       <Body type="full">
         <FilesManager
           tab="post"
-          :global="{ path: 'articles' }"
+          :global="{ path: store.state.preference.files.globalPath }"
           :post="fileManagerOptions"
           :accept-file-type="store.state.preference.files.acceptFileType"
           :full-size="true"

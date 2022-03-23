@@ -18,18 +18,10 @@
       @keydown.meta.enter="emits('submit')"/>
   </div>
   <teleport to="#modals">
-    <Modal
+    <Preview
       :show="showPreview"
-      :scroll="true"
-      class="preview"
-      @close="controlPreview(false)">
-      <Body type="window" class="preview__body">
-        <div
-          ref="$preview"
-          v-html="preview"
-          class="preview__content redgoose-body redgoose-body--popup"/>
-      </Body>
-    </Modal>
+      :content="preview"
+      @close="controlPreview(false)"/>
   </teleport>
 </fieldset>
 </template>
@@ -40,11 +32,10 @@ import { marked } from 'marked';
 import { toast } from '../../../../modules/toast';
 import { printf } from '../../../../libs/string';
 import { message } from '../../../../message';
-import { Modal, Body } from '../../../modal';
 import PostToolbar from '../../../navigation/post-toolbar.vue';
+import Preview from '../../../content/preview.vue';
 
 const $textarea = ref();
-const $preview = ref();
 const props = defineProps({
   name: String,
   id: String,

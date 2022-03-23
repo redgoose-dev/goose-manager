@@ -34,12 +34,36 @@
       </template>
     </Controller>
   </form>
+  <teleport to="#modals">
+    <Preview
+      :show="showPreview"
+      :content="preview"
+      @close="controlPreview(false)"/>
+    <Modal
+      v-if="!loading"
+      :show="showFilesManager"
+      :scroll="true"
+      @close="showFilesManager = false">
+      <Body type="full">
+        <FilesManager
+          tab="global"
+          :global="{ path: store.state.preference.files.globalPath }"
+          :post="fileManagerOptions"
+          :accept-file-type="store.state.preference.files.acceptFileType"
+          :full-size="true"
+          :use-thumbnail="false"
+          @custom-event="onFilesManagerEvent"
+          @close="showFilesManager = false"/>
+      </Body>
+    </Modal>
+  </teleport>
 </article>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, nextTick } from 'vue';
+import { ref, reactive, computed, onMounted, nextTick } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { marked } from 'marked';
 import store from '../../store';
 import { err } from '../../libs/error';
 import { toast } from '../../modules/toast';
@@ -48,10 +72,13 @@ import { message } from '../../message';
 import { dateFormat } from '../../libs/date';
 import { getData, submit } from '../../structure/checklist/edit';
 import PageHeader from '../../components/page/header/index.vue';
+import { Modal, Body } from '../../components/modal';
 import { Textarea } from '../../components/forms';
 import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
 import PostToolbar from '../../components/navigation/post-toolbar.vue';
+import Preview from '../../components/content/preview.vue';
+import FilesManager from '../../components/files-manager/index.vue';
 
 const $content = ref();
 const router = useRouter();
@@ -61,12 +88,20 @@ const processing = ref(false);
 const forms = reactive({
   srl: Number(route.params.srl),
   date: '',
-  content: {
-    value: '',
-    error: null,
-  },
+  content: { value: '', error: null },
 });
 const position = ref({ start: 0, end: 0 });
+const showPreview = ref(false);
+const preview = ref('');
+const showFilesManager = ref(false);
+const fileManagerOptions = computed(() => {
+  return {
+    module: 'checklist',
+    targetSrl: NaN,
+    limitCount: NaN,
+    limitSize: NaN,
+  };
+});
 
 /**
  * insert text
@@ -115,8 +150,10 @@ function onSelectToolbarItem(code)
       insertText(`<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>\n`, undefined);
       break;
     case 'open-file-manager':
+      showFilesManager.value = true;
       break;
     case 'preview':
+      controlPreview(true);
       break;
   }
 }
@@ -129,6 +166,28 @@ function onUpdatePosition(o)
 {
   position.value.start = o.start;
   position.value.end = o.end;
+}
+
+/**
+ * control preview
+ * @param {boolean} sw
+ */
+function controlPreview(sw)
+{
+  if (sw && !forms.content.value)
+  {
+    toast.add(printf(message.error.emptyContent, message.word.content), 'error');
+    return;
+  }
+  if (sw)
+  {
+    preview.value = marked(forms.content.value);
+  }
+  else
+  {
+    preview.value = '';
+  }
+  showPreview.value = sw;
 }
 
 async function onSubmit()
@@ -147,6 +206,22 @@ async function onSubmit()
     err([ 'pages', 'checklist', 'edit.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail.edit, message.word.checklist), 'error');
+  }
+}
+
+/**
+ * FilesManager event
+ * @param {string} key
+ * @param {any} value
+ */
+function onFilesManagerEvent({ key, value })
+{
+  switch (key)
+  {
+    case 'insert-text':
+      insertText(value, undefined);
+      showFilesManager.value = false;
+      break;
   }
 }
 

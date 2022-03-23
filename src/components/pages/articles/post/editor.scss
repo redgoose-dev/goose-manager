@@ -37,32 +37,3 @@
     }
   }
 }
-
-.preview {
-  display: block;
-  overflow: auto;
-  padding: 40px;
-  &__body {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  &__content {
-    box-sizing: border-box;
-    word-break:keep-all;
-    overflow-wrap:break-word;
-  }
-  @include mixins.responsive(tablet) {
-    padding: 50px 50px 60px;
-    &__body {
-      padding: 40px;
-    }
-  }
-  @include mixins.responsive(desktop) {
-    padding: 60px 60px 80px;
-    &__body {
-      padding: 50px;
-    }
-  }
-}

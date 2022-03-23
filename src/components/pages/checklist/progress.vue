@@ -26,14 +26,16 @@ const complete = computed(() => (props.percent === 100));
   position: sticky;
   bottom: 60px;
   margin: 60px auto 40px;
-  width: 680px;
+  width: 480px;
   height: var(--progress-height, 48px);
   padding: 0 24px;
   border-radius: calc(var(--progress-height, 48px) / 2);
-  background-color: var(--color-bg);
+  background: rgb(var(--color-weak-rgb) / 50%);
   user-select: none;
   box-sizing: border-box;
   box-shadow: 0 0 0 1px rgb(var(--color-base-rgb) / 5%), 0 -1px 12px 0 rgba(0,0,0,.15);
+  pointer-events: none;
+  @include mixins.background-blur(16px);
   &__wrap {
     display: grid;
     align-items: center;
@@ -46,7 +48,7 @@ const complete = computed(() => (props.percent === 100));
     height: var(--progress--graph-height, 10px);
     box-sizing: border-box;
     border-radius: calc(var(--progress--graph-height, 10px) * .5);
-    background-color: #e2e2e2;
+    background-color: rgb(var(--color-invert-rgb) / 85%);
     overflow: hidden;
     i {
       display: block;
@@ -62,9 +64,10 @@ const complete = computed(() => (props.percent === 100));
   &__percent {
     display: block;
     font-style: normal;
-    margin-left: 20px;
-    font-weight: 500;
-    font-size: 13px;
+    margin: -1px 0 0 16px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-invert);
   }
   @include mixins.dark-mode() {
     // TODO

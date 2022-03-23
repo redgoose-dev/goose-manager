@@ -6,15 +6,24 @@
   </h3>
   <!-- TODO: `redgoose-body--dark` -->
   <div ref="$body" class="checklist-item__body redgoose-body"/>
+  <teleport to="#modals">
+    <Modal :show="!!previewImage" @close="previewImage = null">
+      <Body>
+        <PreviewImage :src="previewImage" @close="previewImage = null"/>
+      </Body>
+    </Modal>
+  </teleport>
 </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import { marked, Renderer } from 'marked';
 import store from '../../../store';
 import { dateFormat } from '../../../libs/date';
 import { replaceMark } from '../../../structure/checklist/lib';
+import { Modal, Body } from '../../modal';
+import PreviewImage from '../articles/item/preview-image.vue';
 
 const $body = ref();
 const props = defineProps({
@@ -30,8 +39,18 @@ const title = computed(() => {
   const date = props.date.split(' ')[0].split('-').map(o => Number(o));
   return dateFormat(new Date(date[0], date[1]-1, date[2]), preference.checklist.dateFormat);
 });
+const previewImage = ref(null);
 
-onMounted(() => {
+function initContentEvents()
+{
+  $body.value.querySelectorAll('img').forEach(el => {
+    el.addEventListener('click', evt => {
+      previewImage.value = evt.currentTarget.src;
+    });
+  });
+}
+
+onMounted(async () => {
   const onChangeCheckbox = e => {
     const index = Number(e.target.dataset?.index);
     const checkMark = e.target.checked ? 'x' : ' ';
@@ -75,6 +94,8 @@ onMounted(() => {
       o.setAttribute('disabled', 'disabled');
     }
   });
+  await nextTick();
+  initContentEvents();
 });
 </script>
 

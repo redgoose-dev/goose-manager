@@ -68,7 +68,7 @@
               </button>
             </li>
             <li>
-              <button type="button" @click="showThumbnailPreview.value = true">
+              <button type="button" @click="showThumbnailPreview = true">
                 Preview
               </button>
             </li>
@@ -131,11 +131,11 @@
     </Modal>
     <Modal
       :show="showThumbnailPreview"
-      @close="showThumbnailPreview.value = false">
+      @close="showThumbnailPreview = false">
       <Body type="full">
         <ThumbnailPreview
           :image="previewThumbnail"
-          @close="showThumbnailPreview.value = false"/>
+          @close="showThumbnailPreview = false"/>
       </Body>
     </Modal>
   </teleport>

@@ -124,6 +124,7 @@ export default {
   files: {
     pagePerSize: 24,
     acceptFileType: 'image/*,audio/*,video/*,text/*,.pdf',
+    globalPath: 'assets',
   },
   users: {},
   checklist: {

@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  @include mixins.background-blur(8px);
+  @include mixins.background-blur(16px);
 
   @include mixins.dark-mode() {
     //
