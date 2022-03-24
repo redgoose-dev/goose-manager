@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue';
 
 const config = defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd());
-  console.log(mode)
   return {
     server: {
       // https://vitejs.dev/config/#server-options
