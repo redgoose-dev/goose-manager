@@ -248,7 +248,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .checklist-post {
   &__header {
-    background-color: rgb(var(--color-base-rgb) / 5%);
+    background-color: rgb(var(--color-base-rgb) / 10%);
     border-radius: var(--size-radius);
     h2 {
       margin: 0;
@@ -259,7 +259,7 @@ onMounted(async () => {
     }
   }
   &__toolbar {
-    margin: 16px 0 0;
+    margin: 20px 0 0;
   }
   &__body {
     margin: 8px 0 0;

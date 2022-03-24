@@ -135,6 +135,8 @@ export default {
       year: '',
       month: '',
       sort: 'desc'
-    }
+    },
+    pageCount: 24,
+    pageRange: 10,
   },
 };
