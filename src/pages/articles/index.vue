@@ -93,14 +93,14 @@ async function onUpdateFilter()
   try
   {
     loading.value = true;
-    let articles = await requestArticles();
-    data.total = articles.total;
-    data.index = articles.index;
+    let res = await requestArticles();
+    data.total = res.total;
+    data.index = res.index;
     loading.value = false;
   }
   catch (e)
   {
-    err(['pages', 'articles', 'index.vue', 'onUpdateFilter()'], 'error', e.message);
+    err(['/pages/articles/index.vue', 'onUpdateFilter()'], 'error', e.message);
     loading.value = false;
   }
 }
@@ -116,7 +116,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'articles', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/articles/index.vue', 'onMounted()'], 'error', e.message);
     loading.value = false;
   }
 });

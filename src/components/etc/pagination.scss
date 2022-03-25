@@ -79,6 +79,7 @@
     font-weight: 500;
     &.active {
       color: var(--color-invert);
+      border-radius: var(--size-radius);
       &:before {
         transform: translateY(0);
       }

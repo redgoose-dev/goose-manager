@@ -27,6 +27,16 @@ export function getTime(date)
 }
 
 /**
+ * set date
+ * @param {string} src
+ * @return {Date}
+ */
+export function setDate(src)
+{
+  return new Date(src);
+}
+
+/**
  * convert date format
  * @param {Date} date
  * @param {string} format `{yyyy}-{mm}-{dd} / {month},{week},{weekShort} / {hh}:{mm}:{ss}`

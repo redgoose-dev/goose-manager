@@ -38,7 +38,7 @@ const props = defineProps({
   required: Boolean,
   disabled: Boolean,
   inline: { type: Boolean, default: false },
-  size: { type: String }, // small
+  size: String, // small
   placeholder: { type: String, default: 'Please select' },
 });
 const emits = defineEmits([ 'update:modelValue' ]);

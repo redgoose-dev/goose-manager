@@ -31,7 +31,7 @@
       background: none;
       outline: none;
       border-radius: 2px;
-      font-size: var(--keyword-text-size);
+      font-size: var(--keyword-text-size, 15px);
       line-height: 1.42;
     }
   }

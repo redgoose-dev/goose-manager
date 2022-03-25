@@ -1,33 +1,33 @@
 import { useRoute } from 'vue-router';
 import store from '../../store';
-import { get, post, formData } from '../../libs/api';
-import { dateFormat } from '../../libs/date';
+import { get } from '../../libs/api';
+import { dateFormat, setDate } from '../../libs/date';
+import { checkTime } from './lib';
 
 let route;
 
 /**
  * get data
- * @return {Promise<{}>}
+ * @return {Promise<{total, index}>}
+ * @throws {Error}
  */
 export async function getData()
 {
-  route = useRoute();
+  if (!route) route = useRoute();
+  const { checklist } = store.state.preference;
   let params = {
     field: 'srl,percent,regdate',
     order: 'srl',
-    size: store.state.preference.checklist.pageCount,
+    size: checklist.pageCount,
     page: Number(route.query.page || 1),
-    sort: 'desc',
+    sort: checklist.filter.sort,
   };
-  if (route.query.year && route.query.month)
+  if (checklist.filter.dateStart && checklist.filter.dateEnd)
   {
-    // TODO: 날짜부분, 선택한월 첫번째 날부터 마지막 날까지..
-    // let date = new Date(this.filter.year, this.filter.month - 1, 1);
-    // params.start = dateFormat(date, '{yyyy}-{MM}-{dd}');
-    // date = new Date(this.filter.year, this.filter.month, 0);
-    // params.end = dateFormat(date, '{yyyy}-{MM}-{dd}');
+    params.start = checklist.filter.dateStart;
+    params.end = checklist.filter.dateEnd;
   }
-  if (route.query.q) params.q = route.query.q;
+  if (checklist.filter.keyword) params.q = checklist.filter.keyword;
   let res = await get('/checklist/', params);
   if (!res.success) throw new Error(res.message);
   return {
@@ -37,7 +37,8 @@ export async function getData()
       const date = new Date(regdate[0], regdate[1] - 1, regdate[2]);
       return {
         ...item,
-        title: dateFormat(date, store.state.preference.checklist.dateFormat),
+        title: dateFormat(date, checklist.dateFormat),
+        today: !checkTime(item.regdate, checklist.resetTime),
       };
     }),
   };

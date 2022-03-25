@@ -41,4 +41,11 @@
   &--error {
     --input-shadow: inset 0 1px 6px rgb(0 0 0 / 15%), 0 0 0 1px var(--color-error), 0 0 0 4px rgb(0 0 0 / 0);
   }
+
+  // extra
+  &[type=date]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 6px;
+    margin: 0;
+  }
 }

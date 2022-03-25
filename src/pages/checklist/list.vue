@@ -15,9 +15,10 @@
           ]">
           <template #after>
             <div class="checklist-list__graph">
-              <ProgressDonut :radius="32" :stroke="8" :percent="item.percent"/>
+              <ProgressDonut :radius="30" :stroke="8" :percent="item.percent"/>
               <p>{{item.percent}}%</p>
             </div>
+            <Mark v-if="item.today"/>
           </template>
         </Card>
       </Items>
@@ -28,13 +29,19 @@
         :size="store.state.preference.checklist.pageCount"
         :range="store.state.preference.checklist.pageRange"
         class="checklist-list__paginate"/>
+      <Controller>
+        <template #left>
+          <ButtonBasic href="../" icon-left="sun">
+            Go to Today
+          </ButtonBasic>
+        </template>
+      </Controller>
     </div>
     <aside class="checklist-list__filter">
-      <nav>
-        <ButtonBasic href="../" icon-left="check" color="key" size="small">
-          Go to Today
-        </ButtonBasic>
-      </nav>
+      <Filter
+        :total="data.total"
+        :loading="loading"
+        @update="onUpdateFilter"/>
     </aside>
   </div>
 </article>
@@ -48,13 +55,14 @@ import { err } from '../../libs/error';
 import { serialize } from '../../libs/string';
 import { getData } from '../../structure/checklist/list';
 import PageHeader from '../../components/page/header/index.vue';
-import { Items, Card } from '../../components/item';
+import { Items, Card, Mark } from '../../components/item';
 import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
 import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/error/empty.vue';
 import Pagination from '../../components/etc/pagination.vue';
 import ProgressDonut from '../../components/etc/progress-donut.vue';
+import Filter from '../../components/pages/checklist/filter.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -83,7 +91,9 @@ async function onUpdateFilter()
   try
   {
     loading.value = true;
-    //
+    let res = await getData();
+    data.total = res.total;
+    data.index = res.index;
     loading.value = false;
   }
   catch (e)

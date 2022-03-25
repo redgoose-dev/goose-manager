@@ -119,6 +119,7 @@ export default {
       order: 'srl',
       sort: 'desc',
       theme: 'card',
+      keyword: '',
     },
   },
   files: {
@@ -130,11 +131,11 @@ export default {
   checklist: {
     resetTime: '05:00',
     dateFormat: '{yyyy}-{MM}-{dd} ({week})',
-    rangeYear: [ 2020, 2040 ],
     filter: {
-      year: '',
-      month: '',
-      sort: 'desc'
+      dateStart: '',
+      dateEnd: '',
+      sort: 'desc',
+      keyword: '',
     },
     pageCount: 24,
     pageRange: 10,

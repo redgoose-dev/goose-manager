@@ -61,7 +61,12 @@
   }
 }
 
-.sort {
+.range {
+  .input {
+    display: block;
+    margin: 0;
+    --input-width: 100%;
+  }
   > *:nth-child(3) {
     margin-top: 8px;
   }

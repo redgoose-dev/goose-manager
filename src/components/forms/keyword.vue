@@ -2,6 +2,7 @@
 <div :class="[
   'keyword-text',
   props.disabled && `keyword-text--disabled`,
+  props.size && `keyword-text--size-${props.size}`,
 ]">
   <p class="keyword-text__input">
     <input
@@ -14,13 +15,14 @@
       :disabled="keywordDisabled"
       :readonly="props.readonly"
       :maxlength="props.maxlength"
-      :minlength="2"
+      :minlength="props.minlength"
       :placeholder="props.placeholder"
       @input="$emit('update:modelValue', $event.target.value)"
       @keydown.enter.prevent="$emit('submit', props.modelValue)"
       @keydown.esc="$emit('clear')"/>
   </p>
   <button
+    v-if="props.useClear"
     type="button"
     :disabled="clearDisabled"
     class="keyword-text__clear"
@@ -28,6 +30,7 @@
     <Icon name="x-circle"/>
   </button>
   <button
+    v-if="props.useSubmit"
     type="button"
     :disabled="props.processing"
     :class="[
@@ -54,9 +57,13 @@ const props = defineProps({
   required: Boolean,
   disabled: Boolean,
   readonly: Boolean,
+  minlength: Number,
   maxlength: Number,
   placeholder: { type: String, default: 'Please input keyword.' },
   processing: Boolean,
+  size: String,
+  useClear: Boolean,
+  useSubmit: Boolean,
 });
 const emits = defineEmits([ 'update:modelValue', 'clear', 'submit' ]);
 const keywordDisabled = computed(() => {

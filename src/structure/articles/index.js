@@ -40,7 +40,7 @@ export async function requestArticles()
   const { nestSrl } = route.params;
   const { category, page } = route.query;
   const { displayDateField, pageCount, filter } = store.state.preference.articles;
-  const { type, order, sort } = filter;
+  const { type, order, sort, keyword } = filter;
   let res = await get('/articles/', {
     nest: nestSrl || undefined,
     category: category || undefined,
@@ -50,7 +50,7 @@ export async function requestArticles()
     visible_type: type || 'all',
     page: Number(page) > 1 ? Number(page) : undefined,
     order: setOrder(order, sort),
-    q: route.query.q || undefined,
+    q: keyword || undefined,
   });
   if (!res.success) throw new Error(res.message);
   return {
@@ -136,7 +136,7 @@ export async function requestCategories()
  */
 export async function getData()
 {
-  route = useRoute();
+  if (!route) route = useRoute();
   let [ nest, articles, categories ] = await Promise.all([
     requestNest(),
     requestArticles(),
