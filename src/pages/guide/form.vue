@@ -223,7 +223,8 @@
         v-model="keywordMessage"
         :processing="keywordProcessing"
         :disabled="false"
-        size=""
+        :use-clear="true"
+        :use-submit="true"
         @clear="keywordMessage = ''"
         @submit="onSubmitKeyword"/>
       <p>{{keywordMessage}}</p>

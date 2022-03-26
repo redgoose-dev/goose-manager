@@ -11,7 +11,6 @@ export async function getData(srl = NaN)
   let res;
   if (srl)
   {
-    // TODO: 나중에 검사해야한다.
     res = await getItem(srl);
   }
   else

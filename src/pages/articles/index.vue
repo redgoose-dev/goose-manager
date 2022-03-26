@@ -151,6 +151,6 @@ onMounted(async () => {
 }
 .filter {
   position: sticky;
-  top: calc(var(--size-header-height) + 16px);
+  top: calc(var(--size-header-height, 42px) + 16px);
 }
 </style>

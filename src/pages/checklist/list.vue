@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="checklist" title="Checklist items"/>
+  <PageHeader module="checklist" title="Checklist boards"/>
   <div class="checklist-list">
     <div class="checklist-list__body">
       <Loading v-if="loading" class="checklist-list__loading"/>
@@ -14,7 +14,10 @@
             { label: 'Delete', href: `/checklist/${item.srl}/delete/` },
           ]">
           <template #after>
-            <div class="checklist-list__graph">
+            <div :class="[
+              'checklist-list__graph',
+              item.percent === 100 && 'complete',
+            ]">
               <ProgressDonut :radius="30" :stroke="8" :percent="item.percent"/>
               <p>{{item.percent}}%</p>
             </div>
@@ -28,10 +31,11 @@
         :total="data.total"
         :size="store.state.preference.checklist.pageCount"
         :range="store.state.preference.checklist.pageRange"
-        class="checklist-list__paginate"/>
+        class="checklist-list__paginate"
+        @update:modelValue="onChangePage"/>
       <Controller>
         <template #left>
-          <ButtonBasic href="../" icon-left="sun">
+          <ButtonBasic href="../" icon-left="sun" color="key">
             Go to Today
           </ButtonBasic>
         </template>
@@ -90,11 +94,18 @@ async function onUpdateFilter()
 {
   try
   {
-    loading.value = true;
-    let res = await getData();
-    data.total = res.total;
-    data.index = res.index;
-    loading.value = false;
+    if (Number(route.query.page) > 1)
+    {
+      await router.push('./');
+    }
+    else
+    {
+      loading.value = true;
+      let res = await getData();
+      data.total = res.total;
+      data.index = res.index;
+      loading.value = false;
+    }
   }
   catch (e)
   {

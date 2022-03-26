@@ -1,6 +1,7 @@
 @use '../../assets/scss/mixins';
 
 .input {
+  position: relative;
   display: block;
   width: var(--input-width, 100%);
   height: var(--input-height, 38px);

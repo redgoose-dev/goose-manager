@@ -30,7 +30,7 @@ const router = useRouter();
 const route = useRoute();
 const fields = reactive({
   title: '',
-  description: printf(message.words.warningDeleteItem, 'JSON'),
+  description: printf(message.words.warningDeleteItem, message.word.json),
   name: '',
 });
 const loading = ref(true);
@@ -44,20 +44,19 @@ async function onSubmit()
     await submit(Number(route.params.srl));
     processing.value = false;
     await router.push('../../');
-    toast.add(printf(message.success.delete, 'JSON'), 'success');
+    toast.add(printf(message.success.delete, message.word.json), 'success');
   }
   catch (e)
   {
     err(['pages', 'json', 'delete.vue', 'onSubmit()'], 'error', e.message);
     processing.value = false;
-    toast.add(printf(message.fail.delete, 'JSON'), 'error');
+    toast.add(printf(message.fail.delete, message.word.json), 'error');
   }
 }
 
 onMounted(async () => {
   try
   {
-    loading.value = true;
     let res = await getItem(Number(route.params.srl));
     fields.title = printf(message.confirm.deleteItem, res.name);
     fields.name = `${message.words.deleteItem}: ${res.name}`;

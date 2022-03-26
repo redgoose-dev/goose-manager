@@ -11,6 +11,7 @@ export default {
     deleteFiles: '정말 {0}개의 파일을 삭제할까요?',
     deleteFileItems: '정말 {0}개의 항목들을 삭제할까요?',
     deleteFile: `이 항목을 삭제할까요?\n이 데이터를 삭제하면 복구할 수 없습니다.`,
+    resetToken: '토큰 데이터들을 리셋할까요?',
   },
   success: {
     get: '{0}을(를) 가져왔습니다.',
@@ -19,6 +20,7 @@ export default {
     delete: '{0}을(를) 삭제했습니다.',
     change: '{0}을(를) 변경했습니다.',
     draftSave: '임시저장했습니다.',
+    resetTokens: '토큰을 재설정했습니다.',
   },
   fail: {
     get: '{0}을(를) 가져오지 못했습니다.',
@@ -28,6 +30,7 @@ export default {
     change: '{0}을(를) 변경하지 못했습니다.',
     draftSave: '임시저장하지 못했습니다.',
     checkOrderDate: 'OrderDate 검사 실패했습니다.',
+    resetTokens: '토큰 재설정에 실패했습니다.',
   },
   word: {
     user: '사용자',
@@ -43,6 +46,8 @@ export default {
     comment: '댓글',
     file: '첨부파일',
     checklist: '체크리스트',
+    json: 'JSON',
+    board: '보드',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',

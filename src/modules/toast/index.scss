@@ -4,7 +4,7 @@
   position: fixed;
   z-index: 9999999;
   right: 16px;
-  top: 16px;
+  top: calc(var(--size-header-height) + 16px);
   pointer-events: none;
   ul {
     margin: 0;

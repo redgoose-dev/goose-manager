@@ -1,11 +1,5 @@
 @use '../assets/scss/mixins';
 
-// layout
-.layout {
-  --size-header-height: 42px;
-  --size-side-padding: 60px;
-}
-
 // header
 .layout-header {
   position: sticky;
@@ -15,7 +9,7 @@
   right: 0;
   margin: 0;
   background-color: rgb(128 128 128 / 80%);
-  height: var(--size-header-height);
+  height: var(--size-header-height, 42px);
   user-select: none;
   box-shadow: 0 0 10px rgba(#000, .25);
   padding: 0 var(--size-side-padding);

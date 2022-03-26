@@ -72,7 +72,7 @@ const contentBody = computed(() => {
 const showTabButtons = computed(() => {
   const { module } = localStore.state.post;
   return {
-    post: module === 'articles' || module === 'comments',
+    post: module === 'articles' || module === 'comments' || module === 'checklist',
     global: true,
     guide: true,
     close: localStore.state.fullSize,

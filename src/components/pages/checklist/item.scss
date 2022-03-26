@@ -5,7 +5,6 @@
     .checkbox-item {
       > label {
         position: relative;
-        cursor: pointer;
         line-height: 1.42;
         > * {
           vertical-align: middle;
@@ -27,6 +26,9 @@
           margin: 0;
           padding: 0;
           cursor: pointer;
+          &:disabled {
+            cursor: default;
+          }
         }
         i {
           position: relative;

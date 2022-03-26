@@ -4,11 +4,11 @@
   <div class="checklist__body">
     <Loading v-if="loading"/>
     <ChecklistItem
-      v-if="!loading"
+      v-else
       v-model="state.content"
       :date="state.date"
       :today="today"
-      :percent="percent"
+      :files="state.files"
       @update:modelValue="onUpdateContent"/>
     <Controller>
       <template #left>
@@ -46,6 +46,7 @@ const state = reactive({
   content: '',
   date: '',
   percent: NaN,
+  files: [],
 });
 const today = computed(() => {
   const { preference } = store.state;
@@ -70,11 +71,12 @@ onMounted(async () => {
     state.content = res.content;
     state.date = res.date;
     state.percent = res.percent;
+    state.files = res.files;
     loading.value = false;
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'checklist', 'index.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/pages/checklist/index.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

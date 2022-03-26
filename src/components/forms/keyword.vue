@@ -61,7 +61,6 @@ const props = defineProps({
   maxlength: Number,
   placeholder: { type: String, default: 'Please input keyword.' },
   processing: Boolean,
-  size: String,
   useClear: Boolean,
   useSubmit: Boolean,
 });

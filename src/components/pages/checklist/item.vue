@@ -6,6 +6,10 @@
   </h3>
   <!-- TODO: `redgoose-body--dark` -->
   <div ref="$body" class="checklist-item__body redgoose-body"/>
+  <Files
+    v-if="props.files?.length > 0"
+    :items="props.files"
+    class="checklist-item__files"/>
   <teleport to="#modals">
     <Modal :show="!!previewImage" @close="previewImage = null">
       <Body>
@@ -24,6 +28,7 @@ import { dateFormat } from '../../../libs/date';
 import { replaceMark } from '../../../structure/checklist/lib';
 import { Modal, Body } from '../../modal';
 import PreviewImage from '../articles/item/preview-image.vue';
+import Files from '../articles/item/files.vue';
 
 const $body = ref();
 const props = defineProps({
@@ -31,6 +36,7 @@ const props = defineProps({
   date: String,
   today: Boolean,
   percent: Number,
+  files: Array,
 });
 const emits = defineEmits([ 'update:modelValue' ]);
 const processing = ref(false);
@@ -100,4 +106,4 @@ onMounted(async () => {
 </script>
 
 <style src="./item.scoped.scss" lang="scss" scoped></style>
-<style src="./item.scss"></style>
+<style src="./item.scss" lang="scss"></style>

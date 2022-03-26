@@ -7,7 +7,6 @@
     <router-link to="/guide/fieldset/">Fieldset</router-link>
     <router-link to="/guide/icon/">Icon</router-link>
     <router-link to="/guide/color/">Color</router-link>
-    <router-link to="/guide/file/">File</router-link>
     <router-link to="/guide/modal/">Modal</router-link>
     <router-link to="/guide/item/">Item</router-link>
     <router-link to="/guide/etc/">ETC</router-link>

@@ -19,12 +19,12 @@
   &__left {
     display: grid;
     grid-auto-flow: column;
-    gap: 10px;
+    gap: 8px;
   }
   &__right {
     display: grid;
     grid-auto-flow: column;
-    gap: 10px;
+    gap: 8px;
   }
 }
 </style>

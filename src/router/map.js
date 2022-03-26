@@ -313,12 +313,6 @@ const guide = [
         meta: { active: 'guide' },
       },
       {
-        path: 'file/',
-        name: 'GuideFile',
-        component: () => import('../pages/guide/file.vue'),
-        meta: { active: 'guide' },
-      },
-      {
         path: 'modal/',
         name: 'GuideModal',
         component: () => import('../pages/guide/modal.vue'),

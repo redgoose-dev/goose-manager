@@ -139,5 +139,7 @@ export default {
     },
     pageCount: 24,
     pageRange: 10,
+    limitUploadFilesCount: 20,
+    limitUploadFileSize: 5242880,
   },
 };

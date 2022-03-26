@@ -2,10 +2,9 @@
 
 .loading {
   position: relative;
-  width: var(--loading-width, 30vw);
-  height: var(--loading-height, 20vw);
-  min-height: var(--loading-min-height, 250px);
-  min-width: var(--loading-min-width, 300px);
+  height: var(--loading-height, 35vw);
+  min-height: var(--loading-min-height, 350px);
+  max-height: var(--loading-max-height, 480px);
   margin: 0 auto;
   &__loader {
     position: absolute;

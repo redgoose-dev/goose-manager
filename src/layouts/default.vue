@@ -100,8 +100,12 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import store from '../store';
+import { post } from '../libs/api';
 import { logout } from '../libs/auth';
+import { err } from '../libs/error';
+import { printf } from '../libs/string';
 import { message } from '../message';
+import { toast } from '../modules/toast';
 import Icon from '../components/icons/index.vue';
 
 const route = useRoute();
@@ -116,9 +120,25 @@ const gnb = computed(() => {
   }).filter((item) => !!item.show);
 });
 
-function onClickClearTokens()
+async function onClickClearTokens(e)
 {
-  //
+  if (!confirm(message.confirm.resetToken))
+  {
+    e.currentTarget.blur();
+    return;
+  }
+  try
+  {
+    e.currentTarget.blur();
+    let res = await post('/token/clear/');
+    if (!res.success) throw new Error(res.message);
+    toast.add(message.success.resetTokens, 'success');
+  }
+  catch (e)
+  {
+    err([ '/layouts/default.vue', 'onClickClearTokens()' ], 'error', e.message);
+    toast.add(message.fail.resetTokens, 'error');
+  }
 }
 
 async function onClickLogout()

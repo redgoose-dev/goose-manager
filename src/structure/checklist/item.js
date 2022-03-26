@@ -18,12 +18,30 @@ function filteringItem(src)
 }
 
 /**
+ * filtering files
+ * @param {object[]} src
+ * @return {object[]}
+ */
+function filteringFiles(src)
+{
+  if (!src) return [];
+  return src.map(o => {
+    return {
+      name: o.name,
+      path: o.path,
+      size: o.size,
+    };
+  });
+}
+
+/**
  * get last item
  * @return {Promise<object>}
  */
 export async function getLastItem()
 {
   const { preference } = store.state;
+  let result, files;
   let params = { order: 'srl', sort: 'desc', size: 1 };
   let res = await get(`/checklist/`, params);
   let item = res.data?.index[0];
@@ -34,12 +52,28 @@ export async function getLastItem()
       content: (item?.content) ? item.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
     }));
     if (!res?.data) throw new Error('Not found add data.');
-    return filteringItem(res.data);
+    result = res.data;
   }
   else
   {
-    return filteringItem(item);
+    result = item;
   }
+  // get files
+  try
+  {
+    res = await get(`/files/`, {
+      module: 'checklist',
+      target: result.srl,
+      unlimit: 1,
+    });
+    files = filteringFiles(res.data?.index);
+  }
+  catch (e)
+  {}
+  return {
+    ...filteringItem(result),
+    files,
+  };
 }
 
 /**
@@ -49,7 +83,20 @@ export async function getLastItem()
  */
 export async function getItem(srl)
 {
-  return {};
+  if (!srl) throw new Error('no srl');
+  let [ items, files ] = await Promise.all([
+    get(`/checklist/${srl}/`),
+    get('/files/', {
+      module: 'checklist',
+      target: srl,
+      unlimit: 1,
+    }),
+  ]);
+  if (!items.success) throw new Error(items.message);
+  return {
+    ...filteringItem(items.data),
+    files: filteringFiles(files.data?.index),
+  };
 }
 
 /**

@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="checklist" title="Edit checklist"/>
+  <PageHeader module="checklist" title="Edit board"/>
   <form class="checklist-post" @submit.prevent="onSubmit">
     <header class="checklist-post__header">
       <h2>{{forms.date}}</h2>
@@ -46,7 +46,7 @@
       @close="showFilesManager = false">
       <Body type="full">
         <FilesManager
-          tab="global"
+          tab="post"
           :global="{ path: store.state.preference.files.globalPath }"
           :post="fileManagerOptions"
           :accept-file-type="store.state.preference.files.acceptFileType"
@@ -95,11 +95,12 @@ const showPreview = ref(false);
 const preview = ref('');
 const showFilesManager = ref(false);
 const fileManagerOptions = computed(() => {
+  const { limitUploadFilesCount, limitUploadFileSize } = store.state.preference.checklist;
   return {
     module: 'checklist',
-    targetSrl: NaN,
-    limitCount: NaN,
-    limitSize: NaN,
+    targetSrl: forms.srl,
+    limitCount: limitUploadFilesCount,
+    limitSize: limitUploadFileSize,
   };
 });
 
@@ -199,13 +200,13 @@ async function onSubmit()
     if (!forms.content.value) throw new Error('no content');
     await submit(forms.srl, forms.content.value);
     await router.push(route.params.srl ? `/checklist/${forms.srl}/` : `/checklist/`);
-    toast.add(printf(message.success.edit, message.word.checklist), 'success');
+    toast.add(printf(message.success.edit, message.word.board), 'success');
   }
   catch (e)
   {
-    err([ 'pages', 'checklist', 'edit.vue', 'onSubmit()' ], 'error', e.message);
+    err([ '/pages/checklist/edit.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
-    toast.add(printf(message.fail.edit, message.word.checklist), 'error');
+    toast.add(printf(message.fail.edit, message.word.board), 'error');
   }
 }
 
@@ -228,7 +229,7 @@ function onFilesManagerEvent({ key, value })
 onMounted(async () => {
   try
   {
-    const res = await getData(forms.srl.value);
+    const res = await getData(forms.srl);
     forms.srl = res.srl;
     forms.content.value = res.content;
     const regdate = res.date.split(' ')[0].split('-').map(o => Number(o));
@@ -239,33 +240,10 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'pages', 'checklist', 'edit.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/pages/checklist/edit.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });
 </script>
 
-<style lang="scss" scoped>
-.checklist-post {
-  &__header {
-    background-color: rgb(var(--color-base-rgb) / 10%);
-    border-radius: var(--size-radius);
-    h2 {
-      margin: 0;
-      padding: 12px 0;
-      font-size: 16px;
-      line-height: 1.15;
-      text-align: center;
-    }
-  }
-  &__toolbar {
-    margin: 20px 0 0;
-  }
-  &__body {
-    margin: 8px 0 0;
-    .textarea {
-      max-height: 480px;
-    }
-  }
-}
-</style>
+<style src="./edit.scss" lang="scss" scoped></style>

@@ -1,7 +1,7 @@
 import { useRoute } from 'vue-router';
 import store from '../../store';
 import { get } from '../../libs/api';
-import { dateFormat, setDate } from '../../libs/date';
+import { dateFormat } from '../../libs/date';
 import { checkTime } from './lib';
 
 let route;

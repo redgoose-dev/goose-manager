@@ -34,10 +34,13 @@
       letter-spacing: -.5px;
       user-select: none;
     }
+    &.complete {
+      --progress-donut-color-fill: var(--color-success);
+    }
   }
 }
 
 .filter {
   position: sticky;
-  top: calc(var(--size-header-height) + 16px);
+  top: calc(var(--size-header-height, 42px) + 16px);
 }
