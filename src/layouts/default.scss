@@ -75,7 +75,6 @@
       display: flex;
       align-items: center;
       height: 100%;
-      font-family: var(--font-eng);
       box-sizing: border-box;
       color: rgb(var(--color-invert-rgb) / 100%);
       outline: none;
@@ -89,7 +88,7 @@
       }
       .ico-arrow {
         display: block;
-        margin: 0 -4px 0 4px;
+        margin: 0 -4px 0 6px;
         --icon-size: 20px;
         transition: transform 200ms ease-out
       }
@@ -160,7 +159,7 @@
         align-items: center;
         height: 40px;
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 500;
         padding: 0 16px;
         letter-spacing: -.25px;
         box-sizing: border-box;
@@ -174,7 +173,7 @@
           display: block;
           margin: 0 8px 0 0;
           --icon-size: 16px;
-          --icon-stroke-width: 1.5;
+          --icon-stroke-width: 2;
         }
         &:hover {
           background-color: rgb(0 0 0 / 10%);

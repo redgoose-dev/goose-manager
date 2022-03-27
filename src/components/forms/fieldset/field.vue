@@ -1,5 +1,5 @@
 <template>
-<dl class="field">
+<dl v-if="!!props.label" class="field">
   <dt class="field__label">
     <label :for="props.for">{{props.label}}</label>
   </dt>
@@ -7,6 +7,9 @@
     <slot/>
   </dd>
 </dl>
+<div v-else class="field-full">
+  <slot/>
+</div>
 </template>
 
 <script setup>
@@ -49,6 +52,22 @@ const props = defineProps({
       &:last-child {
         margin-bottom: 0;
       }
+    }
+  }
+}
+.field-full {
+  margin: 0;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  min-height: 54px;
+  font-size: 15px;
+  line-height: 1.15;
+  :deep(> *) {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }

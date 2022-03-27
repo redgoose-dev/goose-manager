@@ -133,7 +133,7 @@ async function onSubmit()
     processing.value = false;
     if (self.value)
     {
-      if (!confirm(`${message.words.successChangePassword} ${message.confirm.logout}`)) return;
+      if (!confirm(`${printf(message.success.change, message.word.password)} ${message.confirm.logout}`)) return;
       await logout();
     }
     else

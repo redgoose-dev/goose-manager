@@ -28,7 +28,7 @@
               { label: 'Delete', href: `/articles/${item.srl}/delete/` },
             ]"/>
         </Items>
-<!--        <Empty/>-->
+        <Empty v-else/>
       </section>
       <section v-if="content.module === 'nests'" class="dashboard__section">
         <header>
@@ -51,6 +51,7 @@
               { label: 'Delete', href: `/nests/${item.srl}/delete/` },
             ].filter(Boolean)"/>
         </Items>
+        <Empty v-else/>
       </section>
       <section v-if="content.module === 'apps'" class="dashboard__section">
         <header>
@@ -71,6 +72,7 @@
               { label: 'Delete', href: `/apps/${item.srl}/delete/` },
             ]"/>
         </Items>
+        <Empty v-else/>
       </section>
       <section v-if="content.module === 'json'" class="dashboard__section">
         <header>
@@ -92,6 +94,7 @@
               { label: 'Delete', href: `/json/${item.srl}/delete/` },
             ]"/>
         </Items>
+        <Empty v-else/>
       </section>
     </template>
   </div>
@@ -106,7 +109,7 @@ import { getData } from '../../structure/dashboard';
 import { Items, Card, Thumbnail } from '../../components/item';
 import PageHeader from '../../components/page/header/index.vue';
 import Loading from '../../components/etc/loading.vue';
-import Empty from '../../components/error/empty.vue';
+import Empty from '../../components/pages/dashboard/empty.vue';
 import Icon from '../../components/icons/index.vue';
 
 const loading = ref(true);

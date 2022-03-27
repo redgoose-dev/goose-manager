@@ -15,9 +15,9 @@
 
 <script setup>
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 import PageHeader from '../../components/page/header/index.vue';
 import Tabs from '../../components/pages/guide/tabs.vue';
-import { useRoute } from 'vue-router';
 import Home from './home.vue';
 
 const route = useRoute();

@@ -33,12 +33,13 @@ const iconName = iconRandomPick();
   min-height: var(--empty-min-height, 320px);
   max-height: var(--empty-max-height, 420px);
   height: var(--empty-height, 35vw);
+  user-select: none;
   &__wrap {
     text-align: center;
   }
   &__icon {
     margin: 0;
-    --icon-size: 80px;
+    --icon-size: 64px;
     --icon-color: var(--color-key);
     --icon-stroke-width: .5;
     svg {
@@ -47,11 +48,11 @@ const iconName = iconRandomPick();
     }
   }
   &__title {
-    margin: 12px 0 0;
+    margin: 16px 0 0;
     font-family: var(--font-eng);
     font-weight: 600;
     letter-spacing: -.25px;
-    font-size: var(--empty-title-size, 36px);
+    font-size: var(--empty-title-size, 24px);
     line-height: 1.1;
   }
   &__message {

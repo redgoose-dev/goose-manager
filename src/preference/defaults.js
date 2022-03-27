@@ -1,5 +1,27 @@
 export default {
   lang: 'ko',
+  dashboard: {
+    title: 'Dashboard',
+    description: 'Welcome to goose manager',
+    contents: [
+      {
+        module: 'articles',
+        options: { size: 8 },
+      },
+      {
+        module: 'nests',
+        options: { size: 12 },
+      },
+      {
+        module: 'apps',
+        options: { size: 6 },
+      },
+      {
+        module: 'json',
+        options: { size: 4 },
+      },
+    ],
+  },
   navigation: [
     {
       name: 'Modules',
@@ -41,13 +63,13 @@ export default {
           icon: 'code',
           active: 'json',
         },
-        {
-          name: 'Checklist',
-          link: '/checklist/',
-          icon: 'check',
-          active: 'checklist',
-        },
       ],
+    },
+    {
+      name: 'Checklist',
+      link: '/checklist/',
+      icon: 'check-square',
+      active: 'checklist',
     },
     {
       name: 'Resource',
@@ -74,36 +96,6 @@ export default {
       active: 'guide',
     }
   ],
-  dashboard: {
-    title: 'Dashboard',
-    description: 'Welcome to goose manager',
-    contents: [
-      {
-        module: 'articles',
-        options: {
-          size: 8,
-        },
-      },
-      {
-        module: 'nests',
-        options: {
-          size: 12,
-        },
-      },
-      {
-        module: 'apps',
-        options: {
-          size: 6,
-        },
-      },
-      {
-        module: 'json',
-        options: {
-          size: 4,
-        },
-      },
-    ],
-  },
   apps: {},
   nests: {
     uploadFileCount: 20,

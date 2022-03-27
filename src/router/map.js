@@ -275,6 +275,53 @@ const checklist = [
     meta: { active: 'checklist' },
   },
 ];
+const preference = [
+  {
+    path: '/preference/',
+    name: 'Preference',
+    component: () => import('../pages/preference/index.vue'),
+    meta: { active: 'preference' },
+    children: [
+      {
+        path: 'dashboard/',
+        name: 'PreferenceDashboard',
+        component: () => import('../pages/preference/dashboard.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'navigation/',
+        name: 'PreferenceNavigation',
+        component: () => import('../pages/preference/navigation.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'nests/',
+        name: 'PreferenceNests',
+        component: () => import('../pages/preference/nests.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'articles/',
+        name: 'PreferenceArticles',
+        component: () => import('../pages/preference/articles.vue'),
+        meta: { active: 'preference' },
+      },
+
+      {
+        path: 'files/',
+        name: 'PreferenceFiles',
+        component: () => import('../pages/preference/files.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'checklist/',
+        name: 'PreferenceChecklist',
+        component: () => import('../pages/preference/checklist.vue'),
+        meta: { active: 'preference' },
+      },
+    ],
+  }
+];
 const guide = [
   {
     path: '/guide/',
@@ -349,6 +396,7 @@ export default [
   ...json,
   ...users,
   ...checklist,
+  ...preference,
   ...guide,
   {
     path: '/:pathMatch(.*)*',

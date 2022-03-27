@@ -2,7 +2,7 @@
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
     <Field label="ID" for="id">
-      <FormInput
+      <Input
         v-model="forms.id.value"
         name="id"
         id="id"
@@ -19,7 +19,7 @@
       </Help>
     </Field>
     <Field label="Name" for="name">
-      <FormInput
+      <Input
         v-model="forms.name.value"
         name="name"
         id="name"
@@ -30,7 +30,7 @@
         class="fields__name"/>
     </Field>
     <Field label="Description" for="description">
-      <FormInput
+      <Input
         v-model="forms.description.value"
         name="description"
         id="description"
@@ -71,7 +71,7 @@ import { err } from '../../../libs/error';
 import { message } from '../../../message';
 import { Fieldset, Field, Help } from '../../forms/fieldset';
 import { Controller } from '../../navigation';
-import FormInput from '../../forms/input.vue';
+import { Input } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
 const router = useRouter();

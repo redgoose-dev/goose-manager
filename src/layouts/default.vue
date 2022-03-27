@@ -63,6 +63,12 @@
                   </router-link>
                 </li>
                 <li>
+                  <router-link to="/preference/">
+                    <Icon name="settings" class="ico-custom"/>
+                    <em>Preference</em>
+                  </router-link>
+                </li>
+                <li>
                   <button type="button" @click="onClickClearTokens">
                     <Icon name="trash" class="ico-custom"/>
                     <em>Clear tokens</em>

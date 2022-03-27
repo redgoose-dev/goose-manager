@@ -12,6 +12,7 @@ export default {
     deleteFileItems: '정말 {0}개의 항목들을 삭제할까요?',
     deleteFile: `이 항목을 삭제할까요?\n이 데이터를 삭제하면 복구할 수 없습니다.`,
     resetToken: '토큰 데이터들을 리셋할까요?',
+    reload: '새로고침이 필요한 값이 변경되었습니다.\n지금 새로고침 할까요?',
   },
   success: {
     get: '{0}을(를) 가져왔습니다.',
@@ -33,6 +34,7 @@ export default {
     resetTokens: '토큰 재설정에 실패했습니다.',
   },
   word: {
+    apply: '적용하기',
     user: '사용자',
     app: '앱',
     nest: '둥지',
@@ -48,6 +50,8 @@ export default {
     checklist: '체크리스트',
     json: 'JSON',
     board: '보드',
+    preference: '환경설정',
+    language: '언어',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',
@@ -55,7 +59,6 @@ export default {
     guideNewPassword: '새로운 비밀번호를 입력해주세요.',
     guideVerifyPassword: '새로운 비밀번호와 같은 비밀번호를 입력해주세요.',
     guideSamePassword: '현재 비밀번호와 새로운 비밀번호가 같습니다.',
-    successChangePassword: '비밀번호가 변경되었습니다.',
     pleaseCheck: '{0}을(를) 확인해주세요.',
     unknownError: '알 수 없는 오류가 발생했습니다.',
     deleteApp: '이 앱을 삭제하면 하위의 "둥지", "아티클", "분류", "첨부파일" 데이터들이 전부 삭제됩니다.',
