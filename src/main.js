@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import router from './router';
+import store from './store';
 import * as toast from './modules/toast';
 import { initCustomEvent } from './libs/util';
 import { messagesPlugin } from './message';
@@ -31,6 +32,7 @@ initCustomEvent();
 // set component
 const app = createApp(App, {})
   .use(router)
+  .use(store)
   .use(messagesPlugin)
   .mount('#app');
 

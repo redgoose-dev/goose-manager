@@ -57,7 +57,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'apps', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/users/index.vue', 'onMounted()'], 'error', e.message);
     loading.value = false;
   }
 });

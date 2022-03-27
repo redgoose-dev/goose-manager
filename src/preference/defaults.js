@@ -96,7 +96,6 @@ export default {
       active: 'guide',
     }
   ],
-  apps: {},
   nests: {
     uploadFileCount: 20,
     limitUploadFile: 5242880,
@@ -119,7 +118,6 @@ export default {
     acceptFileType: 'image/*,audio/*,video/*,text/*,.pdf',
     globalPath: 'assets',
   },
-  users: {},
   checklist: {
     resetTime: '05:00',
     dateFormat: '{yyyy}-{MM}-{dd} ({week})',

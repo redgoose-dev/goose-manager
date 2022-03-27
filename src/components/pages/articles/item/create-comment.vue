@@ -66,7 +66,7 @@ async function onSubmit()
   catch (e)
   {
     processing.value = false;
-    err([ 'components', 'pages', 'articles', 'item', 'create-comment.vue', 'onSubmit()' ], 'error', e.message);
+    err(['/components/pages/articles/item/create-comment.vue', 'onSubmit()'], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail.create, message.word.comment), 'error');
   }

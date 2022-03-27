@@ -144,7 +144,7 @@ async function onSubmit()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'users', 'change-password.vue', 'onSubmit()' ], 'error', e.message);
+    err([ '/pages/users/change-password.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail.change, message.word.password), 'error');
   }
@@ -162,7 +162,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'users', 'change-password.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/pages/users/change-password.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

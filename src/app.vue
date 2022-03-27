@@ -26,13 +26,14 @@ const layout = computed(() => {
 if (!DEVELOPMENT)
 {
   onErrorCaptured((e, component, info) => {
+
     if (typeof e === 'string')
     {
       error.value = new Error(e);
     }
     else
     {
-      err([ 'app.vue', 'onErrorCaptured()' ], 'error', e.message);
+      err([ '/app.vue', 'onErrorCaptured()' ], 'error', e.message);
       error.value = e;
     }
     return false;
@@ -41,7 +42,7 @@ if (!DEVELOPMENT)
 
 // router error
 router.onError(e => {
-  err([ 'app.vue', 'router.onError()' ], 'error', e.message);
+  err([ '/app.vue', 'router.onError()' ], 'error', e.message);
   error.value = e;
 });
 

@@ -171,7 +171,7 @@ function errorUploadFiles(e)
 {
   $attachments.value.reset();
   processing.value = false;
-  err([ 'components', 'files-manager', 'modules', 'global.vue', 'errorUploadFiles()' ], 'error', e.message);
+  err([ '/components/files-manager/modules/global.vue', 'errorUploadFiles()' ], 'error', e.message);
   toast.add('Failed upload files.', 'error');
 }
 
@@ -303,7 +303,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'files-manager', 'modules', 'global.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/components/files-manager/modules/global.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

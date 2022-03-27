@@ -88,7 +88,7 @@ async function onChangeIndex()
   }
   catch (e)
   {
-    err(['pages', 'nests', 'categories', 'index.vue', 'onChangeIndex()'], 'error', e.message);
+    err(['/pages/nests/categories/index.vue', 'onChangeIndex()'], 'error', e.message);
     toast.add(printf(message.fail.change, message.word.order), 'error');
   }
 }
@@ -104,7 +104,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'nests', 'categories', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/nests/categories/index.vue', 'onMounted()'], 'error', e.message);
     throw e.message;
   }
 });

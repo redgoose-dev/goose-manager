@@ -116,7 +116,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'articles', 'change-nest', 'index.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/components/pages/articles/change-nest.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

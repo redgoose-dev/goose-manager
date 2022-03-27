@@ -121,7 +121,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'articles', 'item', 'index.vue', 'onMounted()' ], 'error', e.message);
+    err(['/components/pages/articles/item/index.vue', 'onMounted()'], 'error', e.message);
     throw e.message;
   }
 });

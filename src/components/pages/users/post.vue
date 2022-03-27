@@ -153,7 +153,7 @@ async function onSubmit()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'users', 'post.vue', 'onSubmit()' ], 'error', e.message);
+    err([ '/components/pages/users/post.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail[props.mode], message.word.user), 'error');
   }
@@ -172,7 +172,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'users', 'post.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/components/pages/users/post.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

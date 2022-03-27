@@ -74,7 +74,7 @@ async function onSubmit()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'categories', 'post.vue', 'onSubmit()' ], 'error', e.message);
+    err([ '/components/pages/categories/post.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail[props.mode], 'categories'), 'error');
   }
@@ -92,7 +92,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'categories', 'post.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/components/pages/categories/post.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

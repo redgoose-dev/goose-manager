@@ -119,7 +119,7 @@ async function onSubmit()
   }
   catch(e)
   {
-    err(['pages', 'auth', 'login.vue', 'onSubmit()'], 'error', e.message);
+    err(['/pages/auth/login.vue', 'onSubmit()'], 'error', e.message);
     loading.value = false;
     toast.add('Failed login.', 'error');
   }

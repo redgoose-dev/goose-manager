@@ -130,7 +130,7 @@ async function onSubmit()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'json', 'post.vue', 'onSubmit()' ], 'error', e.message);
+    err([ '/components/pages/json/post.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail[props.mode], 'JSON'), 'error');
   }
@@ -149,7 +149,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'json', 'post.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/components/pages/json/post.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

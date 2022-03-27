@@ -94,7 +94,7 @@ async function onEdit()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'articles', 'item', 'comment.vue', 'onEdit()' ], 'error', e.message);
+    err(['/components/pages/articles/item/comment.vue', 'onEdit()'], 'error', e.message);
     toast.add(printf(message.fail.edit, message.word.comment), 'error');
     editProcessing.value = false;
   }
@@ -114,7 +114,7 @@ async function onDelete()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'articles', 'item', 'comment.vue', 'onDelete()' ], 'error', e.message);
+    err(['/components/pages/articles/item/comment.vue', 'onDelete()'], 'error', e.message);
     toast.add(printf(message.fail.delete, message.word.comment), 'error');
     deleteProcessing.value = false;
   }

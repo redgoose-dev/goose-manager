@@ -48,7 +48,7 @@ async function onSubmit()
   }
   catch (e)
   {
-    err(['pages', 'apps', 'delete.vue', 'onSubmit()'], 'error', e.message);
+    err(['/pages/apps/delete.vue', 'onSubmit()'], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail.delete, message.word.app), 'error');
   }
@@ -65,7 +65,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'apps', 'delete.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/apps/delete.vue', 'onMounted()'], 'error', e.message);
     throw e.message;
   }
 });

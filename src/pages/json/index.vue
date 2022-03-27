@@ -51,7 +51,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'json', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/json/index.vue', 'onMounted()'], 'error', e.message);
     loading.value = false;
   }
 });

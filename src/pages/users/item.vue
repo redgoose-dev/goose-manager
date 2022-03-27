@@ -68,7 +68,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'users', 'item.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/pages/users/item.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

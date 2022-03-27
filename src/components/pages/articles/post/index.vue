@@ -263,7 +263,7 @@ async function saveDraft()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'saveDraft()' ], 'error', e.message);
+    err([ '/components/pages/articles/post/index.vue', 'saveDraft()' ], 'error', e.message);
     toast.add(message.fail.draftSave, 'error');
     processing.value = false;
   }
@@ -291,7 +291,7 @@ async function publishing()
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'publishing()' ], 'error', e.message);
+    err([ '/components/pages/articles/post/index.vue', 'publishing()' ], 'error', e.message);
     toast.add(printf(message.fail[props.mode], message.word.article), 'error');
     processing.value = false;
   }
@@ -366,7 +366,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'pages', 'articles', 'post', 'index.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/components/pages/articles/post/index.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

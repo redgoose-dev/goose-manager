@@ -58,7 +58,7 @@ onMounted(async () => {
   catch (e)
   {
     loading.value = false;
-    err(['components', 'pages', 'articles', 'item', 'comments.vue', 'onMounted()'], 'error', e.message);
+    err(['/components/pages/articles/item/comments.vue', 'onMounted()'], 'error', e.message);
   }
 });
 </script>

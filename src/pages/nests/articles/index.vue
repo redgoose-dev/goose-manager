@@ -140,7 +140,7 @@ async function onUpdateFilter()
   }
   catch (e)
   {
-    err(['pages', 'nests', 'articles', 'index.vue', 'onUpdateFilter()'], 'error', e.message);
+    err(['/pages/nests/articles/index.vue', 'onUpdateFilter()'], 'error', e.message);
     loading.value = false;
   }
 }
@@ -157,7 +157,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'nests', 'articles', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/nests/articles/index.vue', 'onMounted()'], 'error', e.message);
     throw e.message;
   }
 });

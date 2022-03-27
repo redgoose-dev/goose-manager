@@ -124,7 +124,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'dashboard', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/dashboard/index.vue', 'onMounted()'], 'error', e.message);
     throw e.message;
   }
 });

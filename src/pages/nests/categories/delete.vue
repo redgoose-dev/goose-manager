@@ -48,7 +48,7 @@ async function onSubmit()
   }
   catch (e)
   {
-    err(['pages', 'nests', 'categories', 'delete.vue', 'onSubmit()'], 'error', e.message);
+    err(['/pages/nests/categories/delete.vue', 'onSubmit()'], 'error', e.message);
     processing.value = false;
     toast.add(printf(message.fail.delete, message.word.category), 'error');
   }
@@ -64,7 +64,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'nests', 'categories', 'delete.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/nests/categories/delete.vue', 'onMounted()'], 'error', e.message);
     throw e.message;
   }
 });

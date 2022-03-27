@@ -68,7 +68,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'nests', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/nests/index.vue', 'onMounted()'], 'error', e.message);
     processing.value = false;
   }
 });

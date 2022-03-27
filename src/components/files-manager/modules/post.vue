@@ -283,7 +283,7 @@ function errorUploadFiles(e, message)
   processing.value = false;
   if (e)
   {
-    err([ 'components', 'files-manager', 'modules', 'post.vue', 'errorUploadFiles()' ], 'error', e.message);
+    err([ '/components/files-manager/modules/post.vue', 'errorUploadFiles()' ], 'error', e.message);
   }
   toast.add(message || e.message, 'error');
 }
@@ -506,7 +506,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ 'components', 'files-manager', 'modules', 'post.vue', 'onMounted()' ], 'error', e.message);
+    err([ '/components/files-manager/modules/post.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;
   }
 });

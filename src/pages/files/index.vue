@@ -61,7 +61,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err(['pages', 'files', 'index.vue', 'onMounted()'], 'error', e.message);
+    err(['/pages/files/index.vue', 'onMounted()'], 'error', e.message);
     throw e.message;
   }
 });
