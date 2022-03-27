@@ -1,31 +1,44 @@
 {
   "name": "goose-manager",
-  "version": "1.6.4",
+  "version": "2.0.0-dev",
+  "main": "index.js",
   "private": false,
   "license": "MIT",
+  "type": "module",
+  "repository": "https://github.com/redgoose-dev/goose-manager.git",
+  "author": "redgoose <scripter@me.com>",
   "scripts": {
-    "setup": "cp ./resource/.env ./ && cp ./resource/preference.json ./",
-    "dev": "./node_modules/.bin/nuxt",
-    "start": "./node_modules/.bin/nuxt start",
-    "build": "./node_modules/.bin/nuxt build",
-    "build-check": "./node_modules/.bin/nuxt build --analyze"
+    "dev": "node server/entry.js --development",
+    "dev:live": "nodemon server/entry.js --development",
+    "prebuild": "rm -rf ./dist",
+    "build": "vite build",
+    "start": "node server/entry.js --production"
   },
+  "nodemonConfig": {
+    "delay": 500
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
   "dependencies": {
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/dotenv": "^1.4.1",
-    "body-parser": "^1.19.1",
-    "express": "^4.17.2",
-    "express-mysql-session": "^2.1.7",
-    "express-session": "^1.17.2",
-    "image-resize": "^1.2.6",
-    "marked": "^4.0.12",
-    "nuxt": "^2.15.8",
-    "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
-    "vue-croppie": "^2.0.2",
-    "vuedraggable": "^2.24.3"
+    "axios": "^0.25.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.2"
   },
   "devDependencies": {
-    "sass": "~1.32.8",
-    "sass-loader": "^10.2.0"
+    "@vitejs/plugin-vue": "^2.1.0",
+    "croppie": "^2.6.5",
+    "image-resize": "^1.2.6",
+    "marked": "^4.0.12",
+    "nodemon": "^2.0.15",
+    "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
+    "sass": "^1.49.7",
+    "vite": "^2.7.13",
+    "vue": "^3.2.29",
+    "vue-i18n": "^9.2.0-beta.30",
+    "vue-router": "^4.0.12",
+    "vuedraggable": "^4.1.0",
+    "vuex": "^4.0.2"
   }
 }

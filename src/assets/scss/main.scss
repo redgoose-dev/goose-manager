@@ -1,0 +1,83 @@
+@use 'normalize';
+@use 'fonts';
+@use 'mixins';
+@use 'variables';
+@use 'keyframes';
+
+:root {
+  // color
+  --color-bg: #{variables.$color-light-bg};
+  --color-bg-rgb: #{variables.$color-light-bg-rgb};
+  --color-base: #{variables.$color-light-base};
+  --color-base-rgb: #{variables.$color-light-base-rgb};
+  --color-invert: #{variables.$color-light-invert};
+  --color-invert-rgb: #{variables.$color-light-invert-rgb};
+  --color-weak: #{variables.$color-light-weak};
+  --color-weak-rgb: #{variables.$color-light-weak-rgb};
+  --color-key: #{variables.$color-light-key};
+  --color-key-rgb: #{variables.$color-light-key-rgb};
+  --color-sub: #{variables.$color-light-sub};
+  --color-sub-rgb: #{variables.$color-light-sub-rgb};
+  --color-code: #{variables.$color-light-code};
+  --color-code-rgb: #{variables.$color-light-code-rgb};
+  --color-success: #{variables.$color-light-success};
+  --color-success-rgb: #{variables.$color-light-success-rgb};
+  --color-error: #{variables.$color-light-error};
+  --color-error-rgb: #{variables.$color-light-error-rgb};
+  // size
+  --size-content-body: 1280px;
+  --size-radius: 2px;
+  --size-header-height: 42px;
+  --size-side-padding: 60px;
+  // font
+  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-eng: 'ortsa', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-console: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  //@include mixins.dark-mode(true) {
+  //  --color-bg: #{variables.$color-dark-bg};
+  //  --color-bg-rgb: #{variables.$color-dark-bg-rgb};
+  //  --color-base: #{variables.$color-dark-base};
+  //  --color-base-rgb: #{variables.$color-dark-base-rgb};
+  //  --color-invert: #{variables.$color-dark-invert};
+  //  --color-invert-rgb: #{variables.$color-dark-invert-rgb};
+  //  --color-weak: #{variables.$color-dark-weak};
+  //  --color-weak-rgb: #{variables.$color-dark-weak-rgb};
+  //  --color-key: #{variables.$color-dark-key};
+  //  --color-key-rgb: #{variables.$color-dark-key-rgb};
+  //  --color-sub: #{variables.$color-dark-sub};
+  //  --color-sub-rgb: #{variables.$color-dark-sub-rgb};
+  //  --color-code: #{variables.$color-dark-code};
+  //  --color-code-rgb: #{variables.$color-dark-code-rgb};
+  //}
+}
+
+// global elements
+html, body {
+  -webkit-text-size-adjust: none;
+}
+html {
+  touch-action: manipulation;
+}
+body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.54;
+  background: var(--color-bg);
+  color: var(--color-base);
+  min-width: 900px;
+}
+body, button, input, textarea, select {
+  font-family: var(--font-base);
+}
+a {
+  color: var(--color-key);
+}
+code, kbd, pre, samp {
+  font-family: var(--font-console);
+}
+::selection {
+  background: var(--color-key);
+  color: #fff;
+}
+
+@import 'contents';

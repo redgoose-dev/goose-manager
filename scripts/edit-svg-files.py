@@ -16,9 +16,9 @@ ET.register_namespace('', 'http://www.w3.org/2000/svg')
 set variables
 '''
 # 편집할 svg 파일들의 경로
-path = '../static/icons/'
+path = '../public/icons/'
 # svg 파일들의 이름목록을 만들 json 파일 경로
-path_fileNames = '../components/icon/svg-index.json'
+path_fileNames = '../src/components/icons/svg-index.json'
 
 
 '''

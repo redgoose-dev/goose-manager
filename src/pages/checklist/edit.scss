@@ -1,0 +1,24 @@
+@use '../../assets/scss/mixins';
+
+.checklist-post {
+  &__header {
+    background-color: rgb(var(--color-base-rgb) / 10%);
+    border-radius: var(--size-radius);
+    h2 {
+      margin: 0;
+      padding: 12px 0;
+      font-size: 16px;
+      line-height: 1.15;
+      text-align: center;
+    }
+  }
+  &__toolbar {
+    margin: 16px 0 0;
+  }
+  &__body {
+    margin: 8px 0 0;
+    .textarea {
+      max-height: 480px;
+    }
+  }
+}

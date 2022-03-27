@@ -1,0 +1,131 @@
+@use '../../../assets/scss/mixins';
+
+.toolbar-item {
+  position: relative;
+  height: 100%;
+  &__button {
+    display: block;
+    height: 100%;
+    margin: 0;
+    padding: 0 16px;
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    user-select: none;
+    transition: filter 150ms ease-out;
+    vertical-align: middle;
+    border-radius: 0;
+    background: rgb(222 222 222);
+    @include mixins.button-touch-options(false);
+    --icon-size: 15px;
+    --icon-stroke-width: 2;
+    span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    svg {
+      display: block;
+    }
+    em {
+      display: block;
+      font-size: 12px;
+      font-style: normal;
+      line-height: normal;
+      font-weight: 500;
+      letter-spacing: -.25px;
+    }
+    &.color {
+      &--key {
+        background: var(--color-key);
+        span {
+          color: var(--color-invert);
+        }
+      }
+    }
+  }
+  &__children {
+    position: relative;
+    display: none;
+    ul {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      z-index: 2;
+      top: -2px;
+      left: -16px;
+      list-style: none;
+      min-width: 150px;
+      background: var(--color-bg);
+      box-shadow: 0 2px 8px rgb(0 0 0 / 25%), 0 0 0 1px rgb(222 222 222);
+      overflow: hidden;
+      border-radius: 2px;
+      &.right {
+        left: unset;
+        right: -16px;
+      }
+    }
+    li {
+      &:nth-child(n+2) {
+        border-top: 1px solid rgb(0 0 0 / 15%);
+      }
+    }
+    button, a {
+      display: block;
+      padding: 10px 16px;
+      border-radius: 0;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: -.5px;
+      line-height: 1.15;
+      white-space: nowrap;
+      box-sizing: border-box;
+      transition: filter 160ms ease-out;
+      &:hover {
+        background: var(--color-bg);
+        filter: brightness(95%);
+      }
+    }
+    button {
+      width: 100%;
+      text-align: left;
+      @include mixins.button-touch-options(false);
+      border: none;
+      background: none;
+    }
+    a {
+      color: var(--color-base);
+      text-decoration: none;
+    }
+  }
+  &:hover {
+    .toolbar-item__button {
+      filter: brightness(105%);
+    }
+  }
+  &.dropdown {
+    .toolbar-item__button {
+      cursor: default;
+    }
+    &:hover {
+      .toolbar-item__children {
+        display: block;
+      }
+    }
+  }
+  &:first-child {
+    .toolbar-item__button {
+      border-top-left-radius: 2px;
+      border-bottom-left-radius: 2px;
+    }
+  }
+  &:last-child {
+    .toolbar-item__button {
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+    }
+  }
+  &:nth-child(n+2) {
+    border-left: 1px solid rgb(var(--group-color-line, 180 180 180) / 100%);
+  }
+}

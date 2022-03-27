@@ -1,0 +1,80 @@
+@use '../../../assets/scss/mixins';
+
+.wrap {
+  &:after {
+    content: 'Drop files here.';
+    display: grid;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--tab-height) + var(--files-header-height));
+    height: calc(100% - var(--tab-height) - var(--files-header-height) - var(--files-footer-height));
+    box-sizing: border-box;
+    pointer-events: none;
+    background: rgb(var(--color-key-rgb) / 80%);
+    opacity: 0;
+    align-content: center;
+    justify-content: center;
+    color: var(--color-invert);
+    font-size: 36px;
+    font-weight: 600;
+    font-family: var(--font-eng);
+    text-transform: uppercase;
+    line-height: 1.1;
+    transition: opacity 150ms ease-out;
+    @include mixins.background-blur(24px);
+  }
+  &--drag-over {
+    * {
+      pointer-events: none;
+    }
+    &:after {
+      opacity: 1;
+    }
+  }
+}
+
+.attachments {
+  position: relative;
+  box-sizing: border-box;
+  &__index {
+    margin: 0;
+    padding: var(--attachments-gap, 12px);
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(var(--attachments-column, 4), 1fr);
+    gap: var(--attachments-inner-gap, 8px);
+  }
+  @include mixins.responsive(desktop) {
+    --attachments-column: 5;
+    --attachments-gap: 16px;
+    --attachments-inner-gap: 16px;
+  }
+  @include mixins.responsive(desktop-large) {
+    --attachments-column: 7;
+    --attachments-gap: 20px;
+    --attachments-inner-gap: 16px;
+  }
+}
+
+.attachments-empty {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  box-sizing: border-box;
+  user-select: none;
+  height: 100%;
+  svg {
+    display: block;
+    margin: 0 auto;
+    --icon-size: 48px;
+    --icon-stroke-width: .75;
+    --icon-color: var(--color-weak);
+  }
+  p {
+    margin: 16px 0 0;
+    font-size: 14px;
+    line-height: 1.1;
+    color: var(--color-weak);
+  }
+}

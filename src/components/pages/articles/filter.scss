@@ -1,0 +1,75 @@
+@use '../../../assets/scss/mixins';
+
+.filter {
+  padding: 2px 0 0;
+  fieldset {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+    > legend {
+      position: absolute;
+      font-size: 0;
+      visibility: hidden;
+    }
+  }
+  &__fields {
+    display: grid;
+    gap: 20px;
+  }
+  &__field {
+    > label:first-child {
+      display: block;
+      margin: 0 0 8px 0;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 1.1;
+    }
+  }
+  &__line {
+    display: block;
+    margin: 0;
+    border: none;
+    height: 1px;
+    background: rgb(var(--color-base-rgb) / 25%);
+  }
+  &__nav {
+    margin: 20px 0 0;
+    display: grid;
+    gap: 8px;
+  }
+}
+
+.total {
+  margin: 0;
+  span {
+    display: block;
+    font-size: 12px;
+    line-height: 1;
+    color: var(--color-weak);
+    font-weight: 500;
+  }
+  em {
+    display: block;
+    margin: 6px 0 0;
+    font-family: var(--font-eng);
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -.5px;
+  }
+}
+
+.sort {
+  > *:nth-child(3) {
+    margin-top: 8px;
+  }
+}
+
+.keyword {
+  --keyword-height: 28px;
+  --keyword-text-size: 13px;
+  --keyword-icon-size: 14px;
+  --keyword-icon-stroke: 3;
+}

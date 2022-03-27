@@ -1,0 +1,14 @@
+.idea/
+node_modules/
+.nuxt/
+.AppleDouble/
+
+0
+.env
+package-lock.json
+preference.json
+yarn.lock
+!resource/.env
+!resource/preference.json
+.DS_Store
+

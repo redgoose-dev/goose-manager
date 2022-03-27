@@ -1,14 +1,13 @@
+# directories
 .idea/
 node_modules/
-.nuxt/
 .AppleDouble/
+dist/
 
-0
-.env
+# files
+.env.local
 package-lock.json
-preference.json
 yarn.lock
-!resource/.env
-!resource/preference.json
 .DS_Store
-
+yarn-error.log
+0

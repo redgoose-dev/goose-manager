@@ -1,0 +1,66 @@
+// === Screen
+
+// responsive
+@mixin responsive($range)
+{
+  @if ($range == tablet) { @media (min-width: 768px) { @content; } }
+  @else if ($range == desktop) { @media (min-width: 1024px) { @content; } }
+  @else if ($range == desktop-large) { @media (min-width: 1440px) { @content; } }
+}
+
+// for retina
+@mixin retina()
+{
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    @content;
+  }
+}
+
+// dark mode
+@mixin dark-mode($root: false)
+{
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+
+// === Button
+
+// button touch options
+@mixin button-touch-options($opacity: false)
+{
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+  @if ($opacity)
+  {
+    &:active {
+      opacity: .6;
+    }
+  }
+}
+
+
+// === Typography
+
+// single line text
+@mixin text-single-line()
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// === Etc
+
+// background blur
+@mixin background-blur($size)
+{
+  @supports (backdrop-filter: blur($size)) {
+    backdrop-filter: blur($size);
+    @content;
+  }
+}

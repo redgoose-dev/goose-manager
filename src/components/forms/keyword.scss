@@ -1,0 +1,91 @@
+@use '../../assets/scss/mixins';
+
+.keyword-text {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--keyword-height, 38px);
+  background: var(--keyword-bg, rgb(255 255 255));
+  border-radius: 2px;
+  box-shadow: var(--keyword-shadow, (inset 0 1px 6px rgb(0 0 0 / 15%), 0 0 0 1px rgb(180 180 180)));
+  transition: box-shadow 100ms ease-out;
+  overflow: hidden;
+  --icon-size: var(--keyword-icon-size, 18px);
+  --icon-stroke-width: var(--keyword-icon-stroke, 2);
+  &:focus-within {
+    --keyword-shadow: inset 0 1px 6px rgb(0 0 0 / 15%), 0 0 0 1px var(--color-key), 0 0 0 4px rgb(0 0 0 / 8%);
+  }
+  &__input {
+    flex: 1;
+    display: block;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    input {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: var(--keyword-input-padding, 0 12px);
+      box-sizing: border-box;
+      border: none;
+      background: none;
+      outline: none;
+      border-radius: 2px;
+      font-size: var(--keyword-text-size, 15px);
+      line-height: 1.42;
+    }
+  }
+  &__clear,
+  &__submit {
+    display: block;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: var(--keyword-height, 38px);
+    font-size: 0;
+    background: none;
+    cursor: pointer;
+    scrollbar-highlight-color: transparent;
+    border-left: 1px solid var(--keyword-line, rgb(180 180 180));
+    transition: filter 150ms ease-out;
+    &:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+    &:hover:not([disabled]) {
+      filter: brightness(95%);
+    }
+    &:focus-visible:not([disabled]) {
+      outline: 0;
+    }
+    svg {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  &__clear {
+    --icon-color: var(--color-base);
+    background: rgb(240 240 240);
+    &:focus-visible:not([disabled]) {
+      box-shadow: inset 0 0 0 1px rgb(0 0 0 / 50%);
+    }
+  }
+  &__submit {
+    --icon-color: var(--color-invert);
+    background: var(--color-key);
+    &:disabled {
+      background: rgb(100 100 100);
+    }
+    &:focus-visible:not([disabled]) {
+      box-shadow: inset 0 0 0 1px rgb(0 0 0 / 75%);
+    }
+    &.processing {
+      svg {
+        animation:spin 2s linear infinite;
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+@use '../../assets/scss/mixins';
+
+.button-icon {
+  display: flex;
+  align-items: center;
+  width: var(--button-size, 38px);
+  height: var(--button-size, 38px);
+  @supports (aspect-ratio: 1 / 1) {
+    aspect-ratio: 1 / 1;
+    height: unset;
+  }
+  cursor: pointer;
+  box-sizing: border-box;
+  border: none;
+  user-select: none;
+  border-radius: var(--button-radius, 2px);
+  background: var(--button-color-bg, rgb(222 222 222));
+  box-shadow: var(--button-shadow, inset 0 2px 15px rgb(0 0 0 / 0), 0 0 0 0 rgb(0 0 0 / 0), 0 0 0 1px rgb(180 180 180));
+  transition: box-shadow 150ms ease-out, background-color 150ms ease-out, filter 150ms ease-out;
+  &[type='button'],
+  &[type='submit'],
+  &[type='reset'] {
+    display: block;
+    -webkit-appearance: button;
+    outline: 0;
+  }
+  &:hover:not([disabled]) {
+    filter: brightness(95%);
+  }
+  &:focus-visible:not([disabled]) {
+    outline: 0;
+    box-shadow: var(--button-focus, inset 0 2px 15px rgb(0 0 0 / 10%), 0 0 0 4px rgb(0 0 0 / 8%), 0 0 0 1px rgb(150 150 150));
+  }
+  &:active:not([disabled]) {
+    box-shadow: var(--button-active, inset 0 2px 15px rgb(0 0 0 / 10%), 0 0 0 4px rgb(0 0 0 / 0), 0 0 0 1px rgb(150 150 150));
+  }
+  &__body {
+    display: block;
+    margin: 0 auto;
+    width: var(--button-icon-size, 20px);
+    height: var(--button-icon-size, 20px);
+    color: var(--button-icon-color, var(--color-base));
+    stroke-width: var(--button-icon-stroke, 2px);
+  }
+  &--disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+
+  @include mixins.dark-mode() {
+    //
+  }
+}

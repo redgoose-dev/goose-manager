@@ -1,0 +1,18 @@
+.category {
+  display: inline-block;
+  --select-width: auto;
+}
+.types {
+  --column-gap: 16px;
+  &__label {
+    &.ready {
+      cursor: not-allowed;
+      > span {
+        opacity: .5;
+      }
+    }
+  }
+}
+.editor {
+  margin: 0;
+}
