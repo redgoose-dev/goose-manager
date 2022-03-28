@@ -56,7 +56,7 @@ const fields = reactive({
     error: null,
   },
   theme: {
-    value: general.theme,
+    value: store.state.header.theme,
     error: null,
   },
 });
@@ -64,8 +64,9 @@ const fields = reactive({
 async function onSubmit()
 {
   general.lang = fields.language.value;
-  general.theme = fields.theme.value;
+  store.state.header.theme = fields.theme.value;
   await savePreference();
+  await store.dispatch('changeTheme', fields.theme.value);
   if (confirm($msg('confirm.reload')))
   {
     location.reload();

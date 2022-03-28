@@ -1,7 +1,6 @@
 import store from '../../store';
 import { get, post, formData } from '../../libs/api';
 import { pureObject } from '../../libs/object';
-import * as storage from '../../libs/storage';
 import { changeLanguage } from '../../message';
 
 /**
@@ -13,7 +12,6 @@ export function defaultPreference()
   return {
     general: {
       lang: 'ko',
-      theme: 'system',
     },
     dashboard: {
       title: 'Dashboard',
@@ -149,6 +147,7 @@ export async function setupPreference()
   {
     store.state.preference = res.data.json.manager;
   }
+  changeLanguage(store.state.preference.general.lang);
 }
 
 /**

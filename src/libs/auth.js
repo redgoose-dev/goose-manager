@@ -19,8 +19,7 @@ export async function checkAuth()
     const res = await axios.post('/local/auth');
     if (!res.data.success) throw new Error('failed auth');
     const { token, user } = res.data.data;
-    setup(token, user);
-    await setupPreference();
+    await setup(token, user);
     return true;
   }
   catch (e)

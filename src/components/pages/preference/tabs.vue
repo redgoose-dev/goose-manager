@@ -33,6 +33,7 @@ const tree = ref([
   border-radius: var(--size-radius);
   box-shadow: 0 0 0 1px rgb(var(--color-invert-rgb) / 75%), 0 2px 15px rgb(var(--color-base-rgb) / 15%);
   overflow: hidden;
+  user-select: none;
   &__link {
     position: relative;
     display: flex;

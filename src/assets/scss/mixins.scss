@@ -17,12 +17,30 @@
 }
 
 // dark mode
-@mixin dark-mode($root: false)
+@mixin dark-mode()
 {
+  html[data-color=dark] & { @content; }
   @media (prefers-color-scheme: dark) {
-    @content;
+    html[data-color=system] &, html:not([data-color]) & {
+      @content;
+    }
   }
 }
+// dark mode
+@mixin dark-mode($root: false)
+{
+  @if ($root)
+  {
+    &[data-color=dark] { @content; }
+    &[data-color=system] { @media (prefers-color-scheme: dark) { @content; } }
+  }
+  @else
+  {
+    html[data-color=dark] & { @content; }
+    @media (prefers-color-scheme: dark) { html[data-color=system] & { @content; } }
+  }
+}
+
 
 
 // === Button

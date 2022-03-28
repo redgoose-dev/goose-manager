@@ -33,22 +33,26 @@
   --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-eng: 'ortsa', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-console: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-  //@include mixins.dark-mode(true) {
-  //  --color-bg: #{variables.$color-dark-bg};
-  //  --color-bg-rgb: #{variables.$color-dark-bg-rgb};
-  //  --color-base: #{variables.$color-dark-base};
-  //  --color-base-rgb: #{variables.$color-dark-base-rgb};
-  //  --color-invert: #{variables.$color-dark-invert};
-  //  --color-invert-rgb: #{variables.$color-dark-invert-rgb};
-  //  --color-weak: #{variables.$color-dark-weak};
-  //  --color-weak-rgb: #{variables.$color-dark-weak-rgb};
-  //  --color-key: #{variables.$color-dark-key};
-  //  --color-key-rgb: #{variables.$color-dark-key-rgb};
-  //  --color-sub: #{variables.$color-dark-sub};
-  //  --color-sub-rgb: #{variables.$color-dark-sub-rgb};
-  //  --color-code: #{variables.$color-dark-code};
-  //  --color-code-rgb: #{variables.$color-dark-code-rgb};
-  //}
+  @include mixins.dark-mode(true) {
+    --color-bg: #{variables.$color-dark-bg};
+    --color-bg-rgb: #{variables.$color-dark-bg-rgb};
+    --color-base: #{variables.$color-dark-base};
+    --color-base-rgb: #{variables.$color-dark-base-rgb};
+    --color-invert: #{variables.$color-dark-invert};
+    --color-invert-rgb: #{variables.$color-dark-invert-rgb};
+    --color-weak: #{variables.$color-dark-weak};
+    --color-weak-rgb: #{variables.$color-dark-weak-rgb};
+    --color-key: #{variables.$color-dark-key};
+    --color-key-rgb: #{variables.$color-dark-key-rgb};
+    --color-sub: #{variables.$color-dark-sub};
+    --color-sub-rgb: #{variables.$color-dark-sub-rgb};
+    --color-code: #{variables.$color-dark-code};
+    --color-code-rgb: #{variables.$color-dark-code-rgb};
+    --color-success: #{variables.$color-dark-success};
+    --color-success-rgb: #{variables.$color-dark-success-rgb};
+    --color-error: #{variables.$color-dark-error};
+    --color-error-rgb: #{variables.$color-dark-error-rgb};
+  }
 }
 
 // global elements

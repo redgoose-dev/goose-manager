@@ -75,8 +75,10 @@ import axios from 'axios';
 import { setup } from '../../libs/service';
 import { toast } from '../../modules/toast';
 import { err } from '../../libs/error';
+import { setupPreference } from '../../store/sub/preference';
 import FormCheckbox from '../../components/forms/checkbox.vue';
 import ButtonBasic from '../../components/button/basic.vue';
+import store from "../../store/index.js";
 
 const router = useRouter();
 const loading = ref(false);
@@ -111,7 +113,7 @@ async function onSubmit()
     const { user, token } = data;
     if (!(user && token)) throw new Error('not user or token');
     // setup service
-    setup(token, user);
+    await setup(token, user);
     // off loading
     loading.value = false;
     // redirect url

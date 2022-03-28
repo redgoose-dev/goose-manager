@@ -1,14 +1,17 @@
 import store from '../store';
+import { setupPreference } from '../store/sub/preference';
 
 /**
  * setup
  * @param {string} token
  * @param {object} user
  */
-export function setup(token, user)
+export async function setup(token, user)
 {
   store.state.token = token;
   store.state.user = user;
+  await setupPreference();
+  await store.dispatch('changeTheme');
 }
 
 /**

@@ -32,7 +32,6 @@ initCustomEvent();
 // set component
 const app = createApp(App, {})
   .use(router)
-  .use(store)
   .use(messagesPlugin)
   .mount('#app');
 

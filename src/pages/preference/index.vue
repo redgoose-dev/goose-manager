@@ -28,7 +28,7 @@ const isHome = computed(() => (route.name === 'Preference'));
 .preference {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 160px;
-  gap: 30px;
+  gap: 40px;
   &__body {}
   &__side {
     position: relative;

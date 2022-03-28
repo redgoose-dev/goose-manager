@@ -1,9 +1,6 @@
 import { defaultPreference } from './sub/preference';
 import { getFilters } from './sub/filters';
-
-/** @var {string} TITLE */
-/** @var {string} DESCRIPTION */
-/** @var {string} SHORT_NAME */
+import { getHeader } from './sub/header';
 
 /**
  * store
@@ -17,11 +14,7 @@ import { getFilters } from './sub/filters';
  * @property {object} filters
  */
 export default {
-  header: {
-    title: TITLE || 'Goose Manager',
-    description: DESCRIPTION || '',
-    shortName: SHORT_NAME || 'GOOSE',
-  },
+  header: getHeader(),
   token: null,
   user: null,
   preference: defaultPreference(),

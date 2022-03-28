@@ -90,3 +90,24 @@ export function getImageSize(type, set_w, set_h, img_w, img_h)
   }
   return size;
 }
+
+/**
+ * change theme
+ * @param {string} color
+ */
+export function changeTheme(color)
+{
+  let theme;
+  switch(color)
+  {
+    case 'light':
+    case 'dark':
+      theme = color;
+      break;
+    default:
+      theme = 'system';
+      break;
+  }
+  const $html = document.querySelector('html');
+  $html.dataset['color'] = theme;
+}
