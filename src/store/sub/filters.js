@@ -1,6 +1,6 @@
 import store from '../../store';
 import * as storage from '../../libs/storage';
-import { pureObject } from "../../libs/object.js";
+import { pureObject } from '../../libs/object';
 
 const defaults = {
   articles: {

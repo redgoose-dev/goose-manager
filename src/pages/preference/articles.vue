@@ -10,12 +10,12 @@
     <fieldset class="code-form__fieldset">
       <legend>Articles forms</legend>
       <div class="field">
-      <Textarea
-        v-model="fields.code.value"
-        placeholder="Please input code"
-        :auto-size="false"
-        :rows="16"
-        @submit="onSubmit"/>
+        <Textarea
+          v-model="fields.code.value"
+          placeholder="Please input code"
+          :auto-size="false"
+          :rows="8"
+          @submit="onSubmit"/>
         <Help>JSON 형식의 소스코드이니 코드 작성에 주의해 주세요.</Help>
       </div>
     </fieldset>
@@ -34,11 +34,11 @@
 import { reactive } from 'vue';
 import store from '../../store';
 import { validateForms, getStringJson } from './libs';
-import { savePreference } from '../../preference';
+import { savePreference } from '../../store/sub/preference';
 import { toast } from '../../modules/toast';
 import { printf } from '../../libs/string';
 import { err } from '../../libs/error';
-import { message } from '../../message';
+import { $msg } from '../../message';
 import { Textarea } from '../../components/forms';
 import { Help } from '../../components/forms/fieldset';
 import { Controller } from '../../components/navigation';
@@ -52,7 +52,7 @@ const fields = reactive({
   },
 });
 
-function onSubmit()
+async function onSubmit()
 {
   try
   {
@@ -60,13 +60,13 @@ function onSubmit()
     store.state.preference.articles = {
       ...(JSON.parse(fields.code.value)),
     };
-    savePreference();
-    toast.add(printf(message.success.edit, message.word.preference), 'success');
+    await savePreference();
+    toast.add(printf($msg('success.edit'), $msg('word.preference')), 'success');
   }
   catch (e)
   {
     err(['/pages/preference/articles.vue', 'onSubmit()'], 'error', e.message);
-    toast.add(printf(message.fail.edit, message.word.preference), 'error');
+    toast.add(printf($msg('fail.edit'), $msg('word.preference')), 'error');
   }
 }
 </script>

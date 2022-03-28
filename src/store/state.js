@@ -1,4 +1,4 @@
-import { getPreference } from '../preference';
+import { defaultPreference } from './sub/preference';
 import { getFilters } from './sub/filters';
 
 /** @var {string} TITLE */
@@ -24,6 +24,6 @@ export default {
   },
   token: null,
   user: null,
-  preference: getPreference(),
+  preference: defaultPreference(),
   filters: getFilters(),
 };

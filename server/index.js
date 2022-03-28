@@ -87,11 +87,6 @@ function localRoutes()
     res.json({ token });
   });
 
-  // TODO: 저번 버전같이 `preference.json`파일을 만들어서 관리하는것이 가장좋은 방법인거 같다.;
-  // TODO: 아니면 json 모듈에 있는 데이터베이스에다 저장하는 방법도 있을 것이다.
-  // TODO: 위에 두가지 다 방법이 비슷비슷한 수준이다.
-  // TODO: users 테이블쪽에 json 필드가 있는데 그걸 활용하는 방법도 있는데 이 공간이 가장 좋아 보인다. 하지만 저기다 너무 많이 사용하지 않을까 하는 걱정도 되고..
-
   // TODO: 로그를 기록하는 기능 만들기
 
   return router;

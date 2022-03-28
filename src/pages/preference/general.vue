@@ -9,7 +9,8 @@
           :options="[
             { label: '한국어', value: 'ko' },
             { label: 'English', value: 'en' },
-          ]"/>
+          ]"
+          style="--select-width: 160px"/>
         <Help>매니저에서 표시되는 언어를 선택합니다.</Help>
       </Field>
       <Field :label="$msg('word.theme')">
@@ -20,7 +21,8 @@
             { label: $msg('word.system'), value: 'system' },
             { label: $msg('word.light'), value: 'light' },
             { label: $msg('word.dark'), value: 'dark' },
-          ]"/>
+          ]"
+          style="--select-width: 160px"/>
         <Help>색상 테마를 변경합니다.</Help>
       </Field>
     </Fieldset>
@@ -38,7 +40,7 @@
 <script setup>
 import { reactive } from 'vue';
 import store from '../../store';
-import { savePreference } from '../../preference';
+import { savePreference } from '../../store/sub/preference';
 import { toast } from '../../modules/toast';
 import { printf } from '../../libs/string';
 import { $msg } from '../../message';
@@ -59,11 +61,11 @@ const fields = reactive({
   },
 });
 
-function onSubmit()
+async function onSubmit()
 {
   general.lang = fields.language.value;
   general.theme = fields.theme.value;
-  savePreference();
+  await savePreference();
   if (confirm($msg('confirm.reload')))
   {
     location.reload();
