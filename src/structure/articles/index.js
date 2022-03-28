@@ -1,9 +1,9 @@
 import { useRoute } from 'vue-router';
+import store from '../../store';
 import { get } from '../../libs/api';
 import { createFullPath } from '../files/util';
 import { getDate } from '../../libs/date';
 import { serialize } from '../../libs/string';
-import store from '../../store';
 
 let route;
 
@@ -39,8 +39,8 @@ export async function requestArticles()
 {
   const { nestSrl } = route.params;
   const { category, page } = route.query;
-  const { displayDateField, pageCount, filter } = store.state.preference.articles;
-  const { type, order, sort, keyword } = filter;
+  const { displayDateField, pageCount } = store.state.preference.articles;
+  const { type, order, sort, keyword } = store.state.filters.articles;
   let res = await get('/articles/', {
     nest: nestSrl || undefined,
     category: category || undefined,
@@ -84,7 +84,7 @@ export async function requestCategories()
 {
   if (!route.params.nestSrl) return null;
   const { category, q } = route.query;
-  const { type } = store.state.preference.articles.filter;
+  const { type } = store.state.filters.articles;
   let res = await get(`/categories/`, {
     nest: route.params.nestSrl,
     field: 'srl,name,turn',

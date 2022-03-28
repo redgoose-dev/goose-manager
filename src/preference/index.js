@@ -2,7 +2,7 @@ import * as storage from '../libs/storage';
 import defaults from './defaults';
 import store from '../store';
 import { pureObject } from '../libs/object';
-import { selectLanguage } from '../message';
+import { changeLanguage } from '../message';
 
 /**
  * get preference
@@ -12,7 +12,7 @@ export function getPreference()
 {
   let pref = storage.get('preference');
   pref = pref || defaults;
-  selectLanguage(pref.lang);
+  changeLanguage(pref.general.lang);
   return pref;
 }
 
@@ -21,6 +21,6 @@ export function getPreference()
  */
 export function savePreference()
 {
-  selectLanguage(store.state.preference.lang);
+  changeLanguage(store.state.preference.general.lang);
   storage.set('preference', pureObject(store.state.preference));
 }

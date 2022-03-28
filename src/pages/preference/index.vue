@@ -3,7 +3,7 @@
   <PageHeader module="preference"/>
   <div class="preference">
     <div class="preference__body">
-      <Home v-if="isHome"/>
+      <General v-if="isHome"/>
       <router-view v-else/>
     </div>
     <aside class="preference__side">
@@ -18,7 +18,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import PageHeader from '../../components/page/header/index.vue';
 import Tabs from '../../components/pages/preference/tabs.vue';
-import Home from './home.vue';
+import General from './general.vue';
 
 const route = useRoute();
 const isHome = computed(() => (route.name === 'Preference'));

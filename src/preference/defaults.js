@@ -1,5 +1,8 @@
 export default {
-  lang: 'ko',
+  general: {
+    lang: 'ko',
+    theme: 'system',
+  },
   dashboard: {
     title: 'Dashboard',
     description: 'Welcome to goose manager',
@@ -105,13 +108,13 @@ export default {
     pageCount: 24,
     pageRange: 10,
     displayDateField: 'regdate',
-    filter: {
-      type: 'all',
-      order: 'srl',
-      sort: 'desc',
-      theme: 'card',
-      keyword: '',
-    },
+    // filter: {
+    //   type: 'all',
+    //   order: 'srl',
+    //   sort: 'desc',
+    //   theme: 'card',
+    //   keyword: '',
+    // },
   },
   files: {
     pagePerSize: 24,
@@ -121,12 +124,12 @@ export default {
   checklist: {
     resetTime: '05:00',
     dateFormat: '{yyyy}-{MM}-{dd} ({week})',
-    filter: {
-      dateStart: '',
-      dateEnd: '',
-      sort: 'desc',
-      keyword: '',
-    },
+    // filter: {
+    //   dateStart: '',
+    //   dateEnd: '',
+    //   sort: 'desc',
+    //   keyword: '',
+    // },
     pageCount: 24,
     pageRange: 10,
     limitUploadFilesCount: 20,

@@ -12,7 +12,7 @@ import { ref } from 'vue';
 import Icon from '../../icons/index.vue';
 
 const tree = ref([
-  { label: 'Home', to: '/preference/' },
+  { label: 'General', to: '/preference/' },
   { label: 'Dashboard', to: '/preference/dashboard/' },
   { label: 'Navigation', to: '/preference/navigation/' },
   { label: 'Nests', to: '/preference/nests/' },
@@ -54,10 +54,10 @@ const tree = ref([
       display: block;
       opacity: 0;
       margin: -2px -4px -2px 0px;
+      pointer-events: none;
       --icon-color: var(--color-invert);
       --icon-size: 20px;
       --icon-stroke-width: 2.4;
-      pointer-events: none;
     }
     &:hover:not(.router-link-exact-active) {
       filter: brightness(95%);

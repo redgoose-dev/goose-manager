@@ -101,7 +101,7 @@ import { ref, computed, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import store from '../../../store';
 import { withCommas } from '../../../libs/number';
-import { savePreference } from '../../../preference';
+import { saveFilters } from '../../../store/sub/filters';
 import { Select, Keyword } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
@@ -113,7 +113,7 @@ const props = defineProps({
   loading: Boolean,
 });
 const emits = defineEmits([ 'update' ]);
-const { filter } = store.state.preference.articles;
+const filter = store.state.filters.articles;
 const forms = reactive({
   type: filter.type || '',
   order: filter.order || '',
@@ -131,7 +131,7 @@ function onReset()
   forms.sort = filter.sort = 'desc';
   forms.theme = filter.theme = 'card';
   forms.keyword = filter.keyword = '';
-  savePreference();
+  saveFilters();
   emits('update');
 }
 
@@ -142,7 +142,7 @@ function onSubmit()
   filter.sort = forms.sort;
   filter.theme = forms.theme;
   filter.keyword = forms.keyword;
-  savePreference();
+  saveFilters();
   emits('update');
 }
 </script>

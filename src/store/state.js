@@ -1,4 +1,5 @@
 import { getPreference } from '../preference';
+import { getFilters } from './sub/filters';
 
 /** @var {string} TITLE */
 /** @var {string} DESCRIPTION */
@@ -9,7 +10,11 @@ import { getPreference } from '../preference';
  * @exports store/state
  * @typedef Store
  *
+ * @property {object} header
  * @property {string} token
+ * @property {object} user
+ * @property {object} preference
+ * @property {object} filters
  */
 export default {
   header: {
@@ -20,4 +25,5 @@ export default {
   token: null,
   user: null,
   preference: getPreference(),
+  filters: getFilters(),
 };

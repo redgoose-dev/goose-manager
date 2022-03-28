@@ -6,7 +6,7 @@
       <Loading v-if="loading"/>
       <Items
         v-else-if="data.index?.length > 0"
-        :theme="store.state.preference.articles.filter.theme"
+        :theme="store.state.filters.articles.theme"
         class="articles__index">
         <component
           :is="itemComponent"
@@ -67,7 +67,7 @@ const data = reactive({
 const loading = ref(false);
 const page = ref(route.query.page ? Number(route.query.page) : 1);
 const itemComponent = computed(() => {
-  switch (store.state.preference.articles.filter.theme)
+  switch (store.state.filters.articles.theme)
   {
     case 'list':
     case 'card':
@@ -122,35 +122,4 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped>
-.articles {
-  display: grid;
-  grid-template-columns: calc(100% - 150px - 40px) 150px;
-  gap: 40px;
-  &__index {
-    &.items--theme-thumbnail {
-      .item {
-        --item-image-height: 14vw;
-        --item-image-min-height: 120px;
-        --item-image-max-height: 180px;
-      }
-    }
-    &.items--theme-brick {
-      .item {
-        --item-image-height: 150px;
-      }
-    }
-  }
-  &__filter {}
-  &__pagination {
-    margin: 30px 0 0;
-  }
-  &__controller {
-    margin-top: 40px;
-  }
-}
-.filter {
-  position: sticky;
-  top: calc(var(--size-header-height, 42px) + 16px);
-}
-</style>
+<style src="./index.scss" lang="scss" scoped></style>

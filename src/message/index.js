@@ -29,7 +29,7 @@ export function $msg(key)
 /**
  * select language
  */
-export function selectLanguage(lang)
+export function changeLanguage(lang)
 {
   switch (lang)
   {

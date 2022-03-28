@@ -15,19 +15,20 @@ export async function getData()
 {
   if (!route) route = useRoute();
   const { checklist } = store.state.preference;
+  const filter = store.state.filters.checklist;
   let params = {
     field: 'srl,percent,regdate',
     order: 'srl',
     size: checklist.pageCount,
     page: Number(route.query.page || 1),
-    sort: checklist.filter.sort,
+    sort: filter.sort,
   };
-  if (checklist.filter.dateStart && checklist.filter.dateEnd)
+  if (filter.dateStart && filter.dateEnd)
   {
-    params.start = checklist.filter.dateStart;
-    params.end = checklist.filter.dateEnd;
+    params.start = filter.dateStart;
+    params.end = filter.dateEnd;
   }
-  if (checklist.filter.keyword) params.q = checklist.filter.keyword;
+  if (filter.keyword) params.q = filter.keyword;
   let res = await get('/checklist/', params);
   if (!res.success) throw new Error(res.message);
   return {

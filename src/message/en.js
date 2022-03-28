@@ -52,6 +52,7 @@ export default {
     board: 'Board',
     preference: 'Preference',
     language: 'Language',
+    theme: 'Theme',
   },
   words: {
     warningDeleteItem: 'If this {0} is deleted, it cannot be recovered.',

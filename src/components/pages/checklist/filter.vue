@@ -11,14 +11,14 @@
       <div class="filter__field range">
         <label for="filter-range">Date range</label>
         <Input
+          type="date"
           name="filter-range"
           id="filter-range"
           v-model="forms.dateStart"
-          type="date"
           size="small"/>
         <Input
-          v-model="forms.dateEnd"
           type="date"
+          v-model="forms.dateEnd"
           size="small"/>
       </div>
       <div class="filter__field sort">
@@ -44,7 +44,8 @@
           :use-clear="true"
           :minlength="3"
           :maxlength="20"
-          @clear="forms.keyword = ''"/>
+          @clear="forms.keyword = ''"
+          @submit="onSubmit"/>
       </div>
     </div>
   </fieldset>
@@ -74,7 +75,7 @@ import { ref, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import store from '../../../store';
 import { withCommas } from '../../../libs/number';
-import { savePreference } from '../../../preference';
+import { saveFilters } from '../../../store/sub/filters';
 import { Select, Keyword, Input } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
@@ -86,7 +87,7 @@ const props = defineProps({
   loading: Boolean,
 });
 const emits = defineEmits([ 'update' ]);
-const { filter } = store.state.preference.checklist;
+const filter = store.state.filters.checklist;
 const forms = reactive({
   dateStart: filter.dateStart || '',
   dateEnd: filter.dateEnd || '',
@@ -101,7 +102,7 @@ function onReset()
   forms.dateEnd = filter.dateEnd = '';
   forms.sort = filter.sort = 'desc';
   forms.keyword = filter.keyword = '';
-  savePreference();
+  saveFilters();
   emits('update');
 }
 
@@ -111,7 +112,7 @@ function onSubmit()
   filter.dateEnd = forms.dateEnd;
   filter.sort = forms.sort;
   filter.keyword = forms.keyword;
-  savePreference();
+  saveFilters();
   emits('update');
 }
 </script>

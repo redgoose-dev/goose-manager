@@ -52,6 +52,10 @@ export default {
     board: '보드',
     preference: '환경설정',
     language: '언어',
+    theme: '테마',
+    system: '시스템',
+    light: '라이트',
+    dark: '다크',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',
