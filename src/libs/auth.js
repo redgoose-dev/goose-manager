@@ -1,7 +1,6 @@
 import axios from 'axios';
 import store from '../store';
 import { setup } from './service';
-import { setupPreference } from '../store/sub/preference';
 
 /**
  * check auth
@@ -18,6 +17,7 @@ export async function checkAuth()
     // request server for get cookie
     const res = await axios.post('/local/auth');
     if (!res.data.success) throw new Error('failed auth');
+    // setup service
     const { token, user } = res.data.data;
     await setup(token, user);
     return true;

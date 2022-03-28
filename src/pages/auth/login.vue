@@ -110,9 +110,9 @@ async function onSubmit()
     // check and set values
     const { success, message, data } = res.data;
     if (!success) throw new Error(message);
+    // setup service
     const { user, token } = data;
     if (!(user && token)) throw new Error('not user or token');
-    // setup service
     await setup(token, user);
     // off loading
     loading.value = false;

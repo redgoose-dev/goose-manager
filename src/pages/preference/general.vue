@@ -38,12 +38,12 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, nextTick } from 'vue';
 import store from '../../store';
 import { savePreference } from '../../store/sub/preference';
 import { toast } from '../../modules/toast';
 import { printf } from '../../libs/string';
-import { $msg } from '../../message';
+import { $msg, changeLanguage } from '../../message';
 import { Fieldset, Field, Help } from '../../components/forms/fieldset';
 import { Select } from '../../components/forms';
 import { Controller } from '../../components/navigation';
@@ -67,6 +67,10 @@ async function onSubmit()
   store.state.header.theme = fields.theme.value;
   await savePreference();
   await store.dispatch('changeTheme', fields.theme.value);
+  // change language
+  changeLanguage(general.lang);
+  await nextTick();
+  // after action
   if (confirm($msg('confirm.reload')))
   {
     location.reload();

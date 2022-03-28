@@ -157,13 +157,12 @@ export async function setupPreference()
 export async function savePreference()
 {
   const pref = pureObject(store.state.preference);
-  // change language
-  changeLanguage(pref.general.lang);
   let userPref;
   // get user
   let user = await get(`/users/${store.state.user.srl}/`, { field: 'json' });
   if (!user.success) throw new Error(user.message);
   if (user.data.json) userPref = user.data.json;
+  // update user
   let res = await post(`/users/${store.state.user.srl}/edit/`, formData({
     json: encodeURIComponent(JSON.stringify({
       ...userPref,
