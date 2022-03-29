@@ -1,0 +1,81 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+$self: '.files-libs';
+$size-header: 44px;
+$size-bottom: 68px;
+
+.files-libs {
+  position: relative;
+  background-color: var(--color-bg);
+  box-sizing: border-box;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: 1px solid var(--color-content-line);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  &__header {
+    box-sizing: border-box;
+    height: $size-header;
+    border-bottom: 1px solid var(--color-content-line);
+  }
+  &__body {
+    box-sizing: border-box;
+    min-height: 100px;
+  }
+  &__empty {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    svg {
+      display: block;
+      margin: 0 auto;
+      width: 64px;
+      height: 64px;
+      stroke-width: .75px;
+      color: var(--color-key);
+    }
+    p {
+      margin: 3px 0 0;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: $font-eng;
+    }
+  }
+
+  &--full {
+    height: 100%;
+    &:before {
+      display: none;
+    }
+    #{$self} {
+      &__header {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 2;
+        background-color: var(--color-bg);
+      }
+      &__body {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: $size-header;
+        bottom: 0;
+      }
+    }
+  }
+}

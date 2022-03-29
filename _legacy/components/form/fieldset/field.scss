@@ -1,0 +1,39 @@
+@import "../../../assets/scss/variables";
+
+.fieldset-field {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
+  min-height: var(--height, 56px);
+  box-sizing: border-box;
+  > dt {
+    margin: 0;
+    padding: 0 0 0 12px;
+    width: var(--label-width, 150px);
+    box-sizing: border-box;
+    > strong,
+    > label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-base);
+      letter-spacing: -.5px;
+    }
+  }
+  > dd {
+    position: relative;
+    box-sizing: border-box;
+    flex: 1;
+    margin: 0;
+    padding: 0 20px;
+    font-size: 15px;
+    > * {
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

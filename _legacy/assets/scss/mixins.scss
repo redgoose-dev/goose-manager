@@ -1,0 +1,102 @@
+@import "variables";
+
+// typo - description
+@mixin typo-text-body()
+{
+	margin: 0 0 1rem;
+	font-size: .875rem;
+}
+
+// set form size
+@mixin form-size($size, $type)
+{
+  line-height: 1.5;
+	@if $size == 'small'
+	{
+		padding: 5px 12px;
+		font-size: 13px;
+	}
+	@else if $size == 'large'
+	{
+		padding: 10px 16px;
+		font-size: 18px;
+	}
+	@else
+	{
+		padding: 7px 12px;
+		font-size: 16px;
+	}
+}
+
+// responsive
+@mixin responsive($range)
+{
+  @if $range == tablet
+  {
+    @media (min-width: #{$size-tablet}) { @content; }
+  }
+  @if $range == desktop
+  {
+    @media (min-width: #{$size-desktop}) { @content; }
+  }
+	@if $range == desktop-large
+	{
+		@media (min-width: #{$size-desktop-large}) { @content; }
+	}
+}
+
+// retina display
+@mixin retina()
+{
+	@media (-webkit-min-device-pixel-ratio: 2) { @content; }
+}
+
+// dark mode
+@mixin dark-mode()
+{
+  @media (prefers-color-scheme: dark) { @content; }
+}
+
+// background blur
+@mixin background-blur($size)
+{
+  @supports (backdrop-filter: blur($size)) {
+    backdrop-filter: blur($size);
+    @content;
+  }
+}
+
+// gradient
+@mixin color-linear-gradient($matt-color, $start, $end, $direction:'vertical')
+{
+  background: $matt-color;
+
+  @if $direction == 'horizontal'
+  {
+    background: linear-gradient(to right, $start, $end);
+  }
+  @else
+  {
+    background: linear-gradient(to bottom, $start, $end);
+  }
+}
+
+// single line text
+@mixin text-single-line()
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// multi line text
+@mixin text-multi-line($height: 1rem, $row: 3)
+{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: $height;
+  max-height: $height * $row;
+  display: -webkit-box;
+  -webkit-line-clamp: $row;
+  -webkit-box-orient: vertical;
+}

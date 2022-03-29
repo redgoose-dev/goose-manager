@@ -109,7 +109,6 @@ import store from '../store';
 import { post } from '../libs/api';
 import { logout } from '../libs/auth';
 import { err } from '../libs/error';
-import { printf } from '../libs/string';
 import { message } from '../message';
 import { toast } from '../modules/toast';
 import Icon from '../components/icons/index.vue';
@@ -125,6 +124,9 @@ const gnb = computed(() => {
     }
   }).filter((item) => !!item.show);
 });
+
+// change theme
+store.dispatch('changeTheme');
 
 async function onClickClearTokens(e)
 {
@@ -147,6 +149,10 @@ async function onClickClearTokens(e)
   }
 }
 
+/**
+ * on click logout
+ * @return {Promise<void>}
+ */
 async function onClickLogout()
 {
   if (!confirm(message.confirm.logout)) return;

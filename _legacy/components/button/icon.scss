@@ -1,0 +1,39 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.button-icon {
+  display: block;
+  width: var(--button-icon-size, 42px);
+  height: var(--button-icon-size, 42px);
+  cursor: pointer;
+  box-sizing: border-box;
+  border: none;
+  user-select: none;
+  border-radius: 2px;
+  background: var(--button-icon-bgcolor, var(--color-content-bg));
+  transition: opacity 200ms ease-out;
+  &[type='button'], &[type='submit'], &[type='reset'] {
+    -webkit-appearance: button;
+    outline: 0;
+  }
+  &:active {
+    opacity: .5;
+  }
+  &__unit {
+    display: block;
+    margin: 0 auto;
+    width: var(--button-icon-unit-size, 20px);
+    height: var(--button-icon-unit-size, 20px);
+    color: var(--button-icon-color, var(--color-base));
+    stroke-width: var(--button-icon-stroke, 2px);
+  }
+  &--link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &--disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+}

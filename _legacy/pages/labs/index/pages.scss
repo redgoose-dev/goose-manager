@@ -1,0 +1,77 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.page-header {
+  > h2 {
+    margin: 0;
+    font-size: 28px;
+    font-family: $font-eng;
+    letter-spacing: -.5px;
+    color: var(--color-primary);
+  }
+  > p {
+    margin: -2px 0 0;
+    font-size: 12px;
+    color: var(--color-blur);
+  }
+}
+
+.page-section {
+  margin: 3rem 0;
+  > header {
+    margin: 1.5rem 0 1rem;
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      font-family: $font-eng;
+    }
+    p {
+      margin: 1rem 0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    h3 + p {
+      margin-top: .5rem;
+    }
+    pre {
+      background-color: var(--color-content-bg);
+      padding: 10px;
+      code {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.page-header + .page-section {
+  margin-top: 2rem;
+}
+
+.example {
+  padding: 20px;
+  background-color: var(--color-bg);
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,.05);
+  > * {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  @include dark-mode() {
+    border-color: #555;
+  }
+}
+
+.page-section-line {
+  margin: 5rem 0;
+  padding: 0;
+  height: 1px;
+  border: none;
+  background-color: var(--color-content-line);
+}

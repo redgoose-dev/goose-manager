@@ -1,0 +1,63 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+$self: '.page-header';
+
+.page-header {
+  margin: 0 0 30px;
+  display: flex;
+  align-items: center;
+  &__body {
+    flex: 1;
+  }
+  &__nav {
+    display: flex;
+    align-items: center;
+    > *:nth-child(n+2) {
+      margin-left: 8px;
+    }
+  }
+  &__prefix {
+    display: block;
+    margin: 0 0 -4px;
+    color: var(--color-key);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  &__title {
+    margin: 0;
+    padding-top: 2px;
+    font-size: 32px;
+    line-height: 1.25;
+    letter-spacing: -.75px;
+    font-weight: 700;
+    color: $color-base;
+  }
+  &__description {
+    margin: -2px 0 0;
+    font-size: 11px;
+    color: var(--color-blur);
+    letter-spacing: -.25px;
+  }
+  &--eng {
+    .page-header {
+      &__title {
+        padding-top: 0;
+        font-family: $font-eng-circular;
+        letter-spacing: -1px;
+        font-weight: 800;
+      }
+      &__description {
+        margin-top: -2px;
+      }
+    }
+  }
+  @include dark-mode() {
+    &__title {
+      color: #fff;
+    }
+    &__description {
+      color: mix(#fff, $color-dark-blur, 25%);
+    }
+  }
+}

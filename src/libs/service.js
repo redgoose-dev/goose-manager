@@ -11,7 +11,6 @@ export async function setup(token, user)
   store.state.token = token;
   store.state.user = user;
   await setupPreference();
-  await store.dispatch('changeTheme');
 }
 
 /**

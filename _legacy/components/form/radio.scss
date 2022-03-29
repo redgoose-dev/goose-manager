@@ -1,0 +1,131 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+@import "./local";
+
+$self: '.form-radio';
+$base-inner-shadow: inset 0 -5px 10px;
+
+.form-radio {
+  & {
+    position: relative;
+    display: block;
+    font-size: 0;
+    box-sizing: border-box;
+  }
+  > input {
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  &__body {
+    display: block;
+    position: relative;
+    width: $local-check-size;
+    height: $local-check-size;
+    border: 1px solid $local-check-color-border;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: $local-check-color-bg;
+    box-shadow: $base-inner-shadow $local-check-color-shadow-inner;
+    transition: box-shadow 120ms ease-out;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: $local-check-size - 10px;
+      height: $local-check-size - 10px;
+      background-color: var(--color-key);
+      border-radius: 50%;
+      transition: transform 240ms ease-out;
+      transition-timing-function: cubic-bezier(.35,1.9,.68,1.05);
+      transform: translate(-50%, -50%) scale(0);
+    }
+  }
+
+  // status event
+  > input {
+    &:focus {
+      & + #{$self}__body {
+        box-shadow:
+          $base-inner-shadow $local-check-color-shadow-inner,
+          0 0 0 $size-focus $local-color-shadow1;
+        border-color: transparent;
+      }
+    }
+    &:active {
+      & + #{$self}__body {
+        box-shadow: $base-inner-shadow $local-check-color-shadow-inner-active;
+      }
+    }
+    &:checked {
+      & + #{$self}__body {
+        &:after {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+    }
+    &:disabled {
+      cursor: not-allowed;
+      & + #{$self}__body {
+        opacity: $local-disabled-opacity;
+      }
+    }
+  }
+
+  // size
+  &--size {
+    &-small {
+      #{$self}__body {
+        width: $local-check-size-small;
+        height: $local-check-size-small;
+        &:after {
+          width: $local-check-size-small - 8px;
+          height: $local-check-size-small - 8px;
+        }
+      }
+    }
+    &-large {
+      #{$self}__body {
+        width: $local-check-size-large;
+        height: $local-check-size-large;
+        &:after {
+          width: $local-check-size-large - 10px;
+          height: $local-check-size-large - 10px;
+        }
+      }
+    }
+  }
+
+  // dark mode
+  @include dark-mode() {
+    &__body {
+      border-color: $local-check-color-dark-border;
+      background-color: $local-check-color-dark-bg;
+      box-shadow: $base-inner-shadow $local-check-color-dark-shadow-inner;
+    }
+    > input {
+      &:focus {
+        & + #{$self}__body {
+          box-shadow:
+            $base-inner-shadow $local-check-color-dark-shadow-inner,
+            0 0 0 $size-focus $local-color-dark-shadow1;
+        }
+      }
+      &:active {
+        & + #{$self}__body {
+          box-shadow: inset 0 -5px 15px $local-check-color-dark-shadow-inner-active;
+        }
+      }
+    }
+  }
+}

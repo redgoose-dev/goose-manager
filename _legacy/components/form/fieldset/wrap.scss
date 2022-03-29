@@ -1,0 +1,35 @@
+@import "../../../assets/scss/variables";
+
+.fieldset-wrap {
+  margin: 30px 0;
+  padding: 0;
+  border: none;
+  &__body {
+    border-top: 1px solid var(--color-content-line);
+    border-bottom: 1px solid var(--color-content-line);
+    > * {
+      &:nth-child(n+2) {
+        border-top: 1px solid var(--color-content-line);
+      }
+    }
+  }
+}
+
+.fieldset-wrap-legend {
+  display: block;
+  margin: 0 0 8px;
+  > legend {
+    font-size: 20px;
+    font-family: $font-eng-circular;
+    line-height: 1.42;
+    font-weight: 500;
+  }
+  &--hide {
+    margin: 0;
+    visibility: hidden;
+    position: absolute;
+    > legend {
+      font-size: 0;
+    }
+  }
+}

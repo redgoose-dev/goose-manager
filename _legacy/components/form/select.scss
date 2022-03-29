@@ -1,0 +1,126 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+@import "./local";
+
+$self: '.form-select';
+
+.form-select {
+  & {
+    display: block;
+    font-size: 0;
+    user-select: none;
+  }
+  &__body {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+  }
+  &__unit {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: #eff0f2;
+    font-size: 14px;
+    color: var(--color-base);
+    border-radius: $size-border-radius;
+    -webkit-appearance: none;
+    border: 1px solid $local-color-line;
+    transition: box-shadow 120ms ease-out;
+    box-sizing: border-box;
+    &:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      & + #{$self}__icon {
+        opacity: .5;
+      }
+    }
+    &:focus {
+      box-shadow: 0 0 0 $size-focus $local-color-shadow1;
+      border-color: transparent;
+      outline: 0;
+    }
+  }
+  &__icon {
+    display: block;
+    position: absolute;
+    top: 50%;
+    pointer-events: none;
+    stroke-width: 2;
+    transform: translateY(-50%) rotate(90deg);
+    color: var(--color-base);
+  }
+
+  // size
+  & {
+    &__unit {
+      height: $form-text-height-basic;
+      font-size: $form-text-size-basic;
+      line-height: 1.5;
+      padding-left: $form-text-side-padding;
+      padding-right: 36px;
+    }
+    &__icon {
+      width: 14px;
+      height: 14px;
+      right: 12px;
+    }
+    &--size {
+      &-mini {
+        #{$self}__unit {
+          height: 26px;
+          font-size: 12px;
+          padding-right: 22px;
+        }
+        #{$self}__icon {
+          width: 10px;
+          height: 10px;
+          right: 6px;
+        }
+      }
+      &-small {
+        #{$self}__unit {
+          height: $form-text-height-small;
+          font-size: $form-text-size-small;
+          padding-right: 30px;
+        }
+        #{$self}__icon {
+          width: 12px;
+          height: 12px;
+          right: 10px;
+        }
+      }
+      &-large {
+        #{$self}__unit {
+          height: $form-text-height-large;
+          font-size: $form-text-size-large;
+          padding-right: 42px;
+        }
+        #{$self}__icon {
+          width: 16px;
+          height: 16px;
+          right: 14px;
+        }
+      }
+    }
+  }
+
+  // inline
+  &--inline {
+    display: inline-block;
+    width: auto;
+    #{$self}__unit {
+      padding-right: 32px;
+    }
+  }
+
+  @include dark-mode() {
+    &__unit {
+      border-color: $local-color-dark-line;
+      background-color: $local-color-dark-bg;
+      &:focus {
+        box-shadow: 0 0 0 $size-focus $local-color-dark-shadow1;
+      }
+    }
+  }
+}

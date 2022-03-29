@@ -1,0 +1,13 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.files {
+  &__index {
+    --index-column: 4;
+  }
+  @include responsive(desktop-large) {
+    &__index {
+      --index-column: 5;
+    }
+  }
+}

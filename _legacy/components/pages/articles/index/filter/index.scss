@@ -1,0 +1,23 @@
+@import "../../../../../assets/scss/variables";
+@import "../../../../../assets/scss/mixins";
+
+.index-filter {
+  padding-bottom: 16px;
+  &__section {
+    &:nth-child(n+2) {
+      margin-top: 20px;
+    }
+    > p {
+      margin: 0;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    > div {
+      margin: 10px 0 0;
+      > *:nth-child(n+2) {
+        margin-top: 8px;
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.rg-toast {
+	position: fixed;
+	z-index: 99999;
+	right: 15px;
+	top: 15px;
+	pointer-events: none;
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	&__item {
+		position: relative;
+		margin: 6px 0;
+		background: $color-blur;
+		pointer-events: auto;
+		transition-property: opacity, transform;
+		transition-timing-function: ease-out;
+		min-width: 240px;
+		max-width: 400px;
+		cursor: pointer;
+		border-radius: $size-border-radius;
+		box-shadow: 0 1px 8px rgba(0,0,0,.5);
+		transform: translateX(280px);
+
+		&:first-child {
+			margin-top: 0;
+		}
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&-show {
+			transform: translateX(0);
+		}
+		&.success {
+			background: $color-success;
+		}
+		&.error {
+			background: $color-error;
+		}
+	}
+	&__item-body {
+		display: flex;
+		align-items: center;
+		padding: 12px 15px;
+		min-width: 0;
+	}
+	&__message {
+		display: block;
+		flex: 1;
+		color: #fff;
+		font-size: .8125rem;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	&__progress {
+		position: absolute;
+		display: block;
+		left: 2px;
+		right: 2px;
+		bottom: 2px;
+		height: 2px;
+		background: #fff;
+		opacity: 0;
+		transform-origin: 0 0;
+		animation-name: progress;
+		animation-timing-function: linear;
+		animation-play-state: paused;
+		animation-duration: 3s;
+		&.play {
+			opacity: 1;
+			animation-play-state: running;
+		}
+		@keyframes progress {
+			from { transform: scaleX(0); }
+			to { transform: scaleX(1); }
+		}
+	}
+}

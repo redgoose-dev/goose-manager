@@ -1,0 +1,61 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.thumbnail-loading {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--color-content-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  user-select: none;
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    border: 1px solid rgba(#000, .15);
+    border-radius: 4px;
+    z-index: 2;
+  }
+  em {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-size: 12px;
+    font-family: $font-eng;
+    font-weight: 600;
+    &.light {
+      color: #fff;
+    }
+    &.dark {
+      color: $color-base;
+    }
+  }
+  span {
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-key);
+  }
+
+  @include dark-mode() {
+    em {
+      &.dark {
+        color: #fff;
+      }
+    }
+  }
+}

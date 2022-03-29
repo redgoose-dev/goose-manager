@@ -1,0 +1,16 @@
+@mixin type-mark($type)
+{
+  content: '';
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  @if $type == 'private'
+  {
+    background-color: var(--color-primary);
+  }
+}

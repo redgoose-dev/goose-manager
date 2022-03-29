@@ -56,3 +56,8 @@ $ /usr/bin/pm2 start -l 0 npm --name "goose-manager" -- start
 ```
 
 open in browser `http://0.0.0.0:3000`
+
+
+## TODO
+
+- 다크모드 참고 URL: https://projects.redgoose.me/goose/manager/

@@ -1,0 +1,65 @@
+@import "./variables";
+@import "./normalize";
+@import "./fonts";
+@import "./grid";
+@import "./form";
+@import "./contents";
+
+:root {
+  --color-reverse: #fff;
+  --color-edge: #000;
+  --color-bg: #{$color-bg};
+  --color-base: #{$color-base};
+  --color-blur: #{$color-blur};
+  --color-key: #{$color-key};
+  --color-primary: #{$color-primary};
+  --color-success: #{$color-success};
+  --color-error: #{$color-error};
+  --color-code: #{$color-code};
+  --color-content-bg: #{$color-content-bg};
+  --color-content-line: #{$color-content-line};
+  --size-header-height: 42px;
+  --size-max-width: 1280px;
+  --font-eng: #{$font-eng};
+  --font-eng-circular: #{$font-eng-circular};
+  --font-eng-console: #{$font-console};
+
+  @include dark-mode() {
+    --color-reverse: #000;
+    --color-edge: #fff;
+    --color-bg: #{$color-dark-bg};
+    --color-base: #{$color-dark-base};
+    --color-blur: #{$color-dark-blur};
+    --color-key: #{$color-dark-key};
+    --color-primary: #{$color-dark-primary};
+    --color-content-bg: #{$color-dark-content-bg};
+    --color-content-line: #{$color-dark-content-line};
+    --color-code: #{$color-dark-code};
+  }
+}
+
+// global elements
+body {
+	margin: 0;
+	min-width: 1000px;
+	-webkit-text-size-adjust: 100%;
+	font-size: 1rem;
+	line-height: 1.5;
+	text-size-adjust: 100%;
+	background: var(--color-bg);
+  color: var(--color-base);
+}
+body, button, input, textarea, select {
+	font-family: $font-system;
+	text-size-adjust: none;
+}
+a {
+	color: var(--color-key);
+}
+code, kbd, pre, samp {
+	font-family: $font-console;
+}
+::selection {
+	background: var(--color-key);
+	color: #fff;
+}

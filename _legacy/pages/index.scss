@@ -1,0 +1,74 @@
+@import "../assets/scss/variables";
+@import "../assets/scss/mixins";
+
+.dashboard {
+	&__section {
+		margin: 50px 0 0;
+		&:first-child {
+			margin-top: 0;
+		}
+		> header {
+			display: flex;
+			align-items: center;
+			margin: 0 0 10px;
+			h3 {
+				flex: 1;
+				margin: 0;
+				padding: 0;
+				font-family: $font-eng;
+				font-size: 22px;
+				font-weight: 600;
+				line-height: 1.15;
+				letter-spacing: -.5px;
+			}
+			nav {
+				box-sizing: border-box;
+				a {
+					display: block;
+					margin: -4px 0 -4px -4px;
+					padding: 6px;
+					font-size: 0;
+					user-select: none;
+					&:active {
+						opacity: .5;
+					}
+          svg {
+            display: block;
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+            color: var(--color-key);
+          }
+				}
+			}
+		}
+	}
+	&__error {
+		padding: 30px 0;
+	}
+
+  @include dark-mode() {
+    &__section {
+      > header {
+        h3 {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.items {
+  &--articles {
+    --index-column: 4;
+  }
+  &--nests {
+    --index-column: 3;
+  }
+  &--apps {
+    --index-column: 3;
+  }
+  &--json {
+    --index-column: 3;
+  }
+}

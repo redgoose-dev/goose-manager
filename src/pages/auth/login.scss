@@ -11,7 +11,7 @@
     width: 380px;
     margin: 0 auto;
     padding: 60px 0 70px;
-    background: var(--body-bg);
+    background: var(--login-color-body-bg, var(--color-invert));
     border-radius: 4px;
     text-align: left;
     box-sizing: border-box;
@@ -26,7 +26,7 @@
     letter-spacing: -1.5px;
     text-align: center;
     line-height: 1.15;
-    color: var(--title);
+    color: var(--login-color-title, unset);
     user-select: none;
   }
   &__description {
@@ -35,7 +35,7 @@
     box-sizing: border-box;
     font-size: .75rem;
     font-family: var(--font-eng);
-    color: var(--color-blur);
+    color: var(--color-weak);
     font-weight: 400;
     user-select: none;
   }
@@ -54,13 +54,15 @@
     }
   }
   &__nav {
-    margin: 30px 0 0;
+    margin: 40px 0 0;
+    .button {
+      --button-height: 44px;
+      --font-size: 16px;
+    }
   }
   @include mixins.dark-mode() {
-    // TODO: 다크모드 작업
-    // --color-input-line
-    // --color-input-placeholder
-    // --color-input-autofill
+    --login-color-body-bg: #333;
+    --login-color-title: #fff;
   }
 }
 
@@ -73,7 +75,7 @@
   }
   &__body {
     position: relative;
-    margin: 0;
+    margin: 6px 0 0;
     &:before {
       content: '';
       display: block;
@@ -109,6 +111,7 @@
       box-sizing: border-box;
       outline: none;
       border-radius: 0;
+      color: var(--color-input-text, var(--color-base));
       &::placeholder {
         color: var(--color-input-placeholder, rgb(0 0 0 / 25%));
       }
@@ -120,7 +123,7 @@
         padding-right: 12px;
         transition: background-color 5000s ease-in-out 0s;
         -webkit-transition: background-color 9999s ease-out;
-        -webkit-box-shadow: 0 0 0 1000px var(--color-input-autofill, rgb(0 0 0 / 5%)) inset !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--color-input-autofill, rgb(0 0 0 / 8%)) inset !important;
         -webkit-text-fill-color: var(--color-base) !important;
       }
     }
@@ -135,6 +138,15 @@
   }
   &--save {
     margin-top: 12px;
+  }
+  @include mixins.dark-mode() {
+    --color-bg: rgb(0 0 0 / 0%);
+    --color-input-text: #ddd;
+    --color-input-line: rgb(255 255 255 / 50%);
+    --color-input-placeholder: rgb(255 255 255 / 20%);
+    &__label {
+      color: var(--color-weak);
+    }
   }
 }
 

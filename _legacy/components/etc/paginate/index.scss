@@ -1,0 +1,113 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+$size-item: 38px;
+$size-font: 14px;
+
+.paginate {
+  margin: 40px 0 50px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > * {
+    min-width: $size-item;
+    height: $size-item;
+    box-sizing: border-box;
+    margin: 0;
+  }
+  a,
+  button {
+    position: relative;
+    font-family: $font-eng-circular;
+    font-size: $size-font;
+    color: var(--color-base);
+    letter-spacing: -.5px;
+    overflow: hidden;
+    &[disabled] {
+      opacity: 0;
+      &:before {
+        display: none;
+      }
+      &:hover {
+        color: inherit;
+      }
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      background: var(--color-key);
+      transform: translateY(100%);
+      transition: transform 200ms ease-out;
+    }
+    &:hover {
+      color: #fff;
+      &:before {
+        transform: translateY(0);
+      }
+    }
+    svg {
+      display: block;
+      margin: 0 auto;
+      width: 18px;
+      height: 18px;
+      box-sizing: border-box;
+      stroke-width: 2;
+    }
+  }
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+  button {
+    display: block;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    &[disabled] {
+      cursor: auto;
+    }
+  }
+  strong {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-eng-circular;
+    font-size: $size-font;
+    color: #fff;
+    background: var(--color-key);
+  }
+  .dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 -4px;
+    pointer-events: none;
+    > svg {
+      width: 16px;
+      height: 16px;
+      color: rgba($color-base, .25);
+      stroke-width: 2;
+    }
+  }
+
+  @include dark-mode() {
+    .dots {
+      > svg {
+        color: rgba($color-dark-base, .25);
+      }
+    }
+  }
+}

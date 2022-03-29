@@ -1,0 +1,88 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+
+.comment {
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid var(--color-content-line);
+  overflow: hidden;
+
+  &__body {
+    padding: 20px;
+  }
+  &__bottom {
+    border-top: 1px solid var(--color-content-line);
+    display: flex;
+    align-items: center;
+    height: 38px;
+    background: #f4f4f4;
+    > p {
+      margin: 0;
+      padding: 0 0 0 16px;
+      flex: 1;
+      font-size: 13px;
+      letter-spacing: -.25px;
+      color: var(--color-blur);
+      font-family: $font-eng-circular;
+      strong {
+        color: var(--color-base);
+      }
+      em {
+        font-style: normal;
+      }
+    }
+    > nav {
+      padding: 0 8px 0 0;
+      display: flex;
+      align-items: center;
+      span {
+        display: block;
+      }
+      button {
+        display: block;
+        margin: 0;
+        padding: 8px 8px;
+        font-size: 12px;
+        font-weight: 600;
+        border: none;
+        background: none;
+        cursor: pointer;
+        outline: none;
+        color: var(--color-base);
+        font-family: $font-eng-circular;
+        user-select: none;
+        &:active {
+          opacity: .75;
+        }
+        &.delete {
+          color: $color-error;
+        }
+        &:disabled {
+          opacity: .4;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  @include dark-mode() {
+    background-color: #242424;
+    border-color: rgba(#fff, .05);
+    &__bottom {
+      background-color: transparent;
+      border-color: rgba($color-content-line, .1);
+    }
+  }
+}
+
+.edit-form {
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 8px 0 0;
+    > div {
+      margin-left: 8px;
+    }
+  }
+}

@@ -1,0 +1,199 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+
+// set colors
+.login {
+  --bg: #e8e9eb;
+  --body-bg: #fff;
+  --title: #{$color-base};
+  --label-color: #222;
+  --input-color: $color-base;
+  --input-underline-color: #aaa;
+  --input-placeholder-color: #ddd;
+  --input-autofill: #{mix(#000, #fff, 6%)};
+  @include dark-mode() {
+    --bg: #222;
+    --body-bg: #333;
+    --title: #fff;
+    --label-color: #ddd;
+    --input-color: $color-dark-base;
+    --input-underline-color: #bbb;
+    --input-placeholder-color: #555;
+    --input-autofill: #{mix(#000, #333, 15%)};
+  }
+}
+
+.login {
+  & {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: table;
+    background: var(--bg);
+    width: 100%;
+    height: 100%;
+  }
+  &__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 30px;
+  }
+  &__body {
+    width: 380px;
+    margin: 0 auto;
+    padding: 60px 0 70px;
+    background: var(--body-bg);
+    border-radius: 3px;
+    text-align: left;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 50px 0 rgba(0,0,0,.05), 0 0 15px 0 rgba(0,0,0,.1);
+  }
+  &__title {
+    margin: -4px 0 0;
+    padding: 0;
+    font-family: $font-eng-circular;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    text-align: center;
+    line-height: 1.15;
+    color: var(--title);
+  }
+  &__description {
+    text-align: center;
+    margin: 2px 0 0;
+    box-sizing: border-box;
+    font-size: .75rem;
+    color: var(--color-blur);
+    font-weight: 400;
+  }
+  &__form {
+    width: 260px;
+    margin: 0 auto;
+  }
+  &__fieldset {
+    margin: 15px 0 30px;
+    padding: 0;
+    border: none;
+    > legend {
+      font-size: 0;
+      visibility: hidden;
+    }
+  }
+  &__field-label {
+    display: inline-block;
+    font-family: $font-eng-circular;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--label-color);
+  }
+  &__field {
+    margin: 15px 0;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    > div {
+      position: relative;
+      margin: 5px 0 0;
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background-color: var(--input-underline-color);
+      }
+      > input {
+        display: block;
+        width: 100%;
+        padding: 12px 2px;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        box-shadow: 0 0 0;
+        background-color: var(--body-bg);
+        color: var(--input-color);
+        box-sizing: border-box;
+        &:focus {
+          outline: none;
+          & + i {
+            transform: scaleX(1);
+          }
+        }
+        &::placeholder {
+          color: var(--input-placeholder-color);
+        }
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+          padding-left: 12px;
+          padding-right: 12px;
+          transition: background-color 5000s ease-in-out 0s;
+          -webkit-transition: background-color 9999s ease-out;
+          -webkit-box-shadow: 0 0 0 1000px var(--input-autofill) inset !important;
+          -webkit-text-fill-color: var(--color-base) !important;
+        }
+      }
+      > i {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--color-key);
+        height: 1px;
+        transform-origin: left bottom;
+        transform: scaleX(0);
+        transition: transform .3s ease-out;
+      }
+    }
+  }
+  &__error {
+    margin: 0 0 -12px;
+    padding: 0;
+    text-align: center;
+    color: $color-error;
+    font-size: .8125rem;
+    font-weight: bold;
+  }
+  &__nav {
+    margin: 30px 0 0;
+    .button {
+      font-weight: 600;
+    }
+  }
+
+  @include dark-mode() {
+    &__body {
+      box-shadow: 0 2px 50px 0 rgba(#000,.25), 0 0 15px 0 rgba(#000,.25);
+    }
+  }
+}
+
+.login-save-auth {
+  display: flex;
+  > label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    > span {
+      display: block;
+      margin: 0 0 0 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--color-base);
+    }
+  }
+}

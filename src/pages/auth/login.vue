@@ -1,3 +1,4 @@
+
 <template>
 <article class="login">
   <div class="login__wrap">
@@ -75,10 +76,8 @@ import axios from 'axios';
 import { setup } from '../../libs/service';
 import { toast } from '../../modules/toast';
 import { err } from '../../libs/error';
-import { setupPreference } from '../../store/sub/preference';
 import FormCheckbox from '../../components/forms/checkbox.vue';
 import ButtonBasic from '../../components/button/basic.vue';
-import store from "../../store/index.js";
 
 const router = useRouter();
 const loading = ref(false);
