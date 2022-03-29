@@ -107,13 +107,16 @@
       font-weight: 600;
       border: none;
       box-shadow: 0 0 0;
-      background-color: var(--color-bg);
+      background-color: transparent;
       box-sizing: border-box;
       outline: none;
       border-radius: 0;
-      color: var(--color-input-text, var(--color-base));
+      color: var(--color-input-text, rgb(0 0 0));
       &::placeholder {
         color: var(--color-input-placeholder, rgb(0 0 0 / 25%));
+      }
+      &::selection {
+        color: var(--color-input-selection, rgb(255 255 255));
       }
       &:-webkit-autofill,
       &:-webkit-autofill:hover,
@@ -123,8 +126,11 @@
         padding-right: 12px;
         transition: background-color 5000s ease-in-out 0s;
         -webkit-transition: background-color 9999s ease-out;
-        -webkit-box-shadow: 0 0 0 1000px var(--color-input-autofill, rgb(0 0 0 / 8%)) inset !important;
-        -webkit-text-fill-color: var(--color-base) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--color-input-autofill, rgb(0 0 0 / 5%)) inset !important;
+        -webkit-text-fill-color: var(--color-input-autofill-text, rgb(0 0 0)) !important;
+      }
+      &:-webkit-autofill::selection {
+        -webkit-text-fill-color: var(--color-input-autofill-selection, rgb(255 255 255)) !important;
       }
     }
     &:focus-within {
@@ -137,15 +143,21 @@
     margin-top: 24px;
   }
   &--save {
-    margin-top: 12px;
+    margin-top: 16px;
   }
   @include mixins.dark-mode() {
     --color-bg: rgb(0 0 0 / 0%);
-    --color-input-text: #ddd;
+    --color-input-text: rgb(255 255 255);
     --color-input-line: rgb(255 255 255 / 50%);
     --color-input-placeholder: rgb(255 255 255 / 20%);
     &__label {
       color: var(--color-weak);
+    }
+    &__body {
+      > input {
+        --color-input-autofill: rgb(0 0 0 / 30%);
+        --color-input-autofill-text: rgb(255 255 255);
+      }
     }
   }
 }
