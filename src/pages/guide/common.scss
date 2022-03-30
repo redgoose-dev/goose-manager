@@ -13,7 +13,7 @@
   > p {
     margin: 0;
     font-size: 12px;
-    color: var(--color-blur);
+    color: var(--color-weak);
   }
 }
 
@@ -67,9 +67,9 @@
     word-break: keep-all;
     word-wrap: break-word;
   }
-  //@include mixins.dark-mode() {
-  //  border-color: #555;
-  //}
+  @include mixins.dark-mode() {
+    box-shadow: 0 1px 15px rgb(0 0 0 / 30%), 0 0 0 1px rgb(85 85 85 / 50%);
+  }
 }
 
 .page-section-line {
@@ -78,6 +78,9 @@
   height: 1px;
   border: none;
   border-top: 1px dashed rgb(0 0 0 / 20%);
+  @include mixins.dark-mode() {
+    border-color: rgb(255 255 255 / 20%);
+  }
 }
 
 .grid {

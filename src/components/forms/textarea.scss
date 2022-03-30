@@ -10,15 +10,18 @@
   padding: var(--textarea-padding, 12px);
   background: var(--textarea-bg, rgb(255 255 255));
   color: var(--textarea-text-color, var(--color-base));
-  box-shadow: var(--textarea-shadow, inset 0 1px 6px rgb(0 0 0 / 15%), 0 0 0 1px rgb(180 180 180), 0 0 0 4px rgb(0 0 0 / 0));
+  box-shadow:
+    var(--textarea-shadow-1, inset 0 1px 6px rgb(0 0 0 / 15%)),
+    var(--textarea-shadow-2, 0 0 0 1px rgb(180 180 180 / 100%)),
+    var(--textarea-shadow-3, 0 0 0 4px rgb(0 0 0 / 0%));
   font-size: var(--textarea-text-size, 15px);
   line-height: 1.42;
   transition: box-shadow 150ms ease-out;
   &::-webkit-input-placeholder {
-    color: var(--textarea-placeholder, rgb(150 150 150));
+    color: var(--textarea-placeholder, rgb(150 150 150 / 100%));
   }
   &:read-only {
-    --textarea-bg: rgb(240 240 240);
+    background: var(--textarea-readonly, rgb(232 232 232));
   }
   &:disabled {
     cursor: not-allowed;
@@ -26,7 +29,9 @@
   }
   &:focus:not([disabled]) {
     outline: 0;
-    --textarea-shadow: inset 0 1px 6px rgb(0 0 0 / 15%), 0 0 0 1px var(--color-key), 0 0 0 4px rgb(0 0 0 / 8%);
+    --textarea-shadow-1: inset 0 1px 6px rgb(0 0 0 / 15%);
+    --textarea-shadow-2: 0 0 0 1px var(--color-key);
+    --textarea-shadow-3: 0 0 0 4px rgb(0 0 0 / 8%);
   }
 
   // size
@@ -39,9 +44,21 @@
 
   // error
   &--error {
-    --textarea-shadow: inset 0 1px 6px rgb(0 0 0 / 15%), 0 0 0 1px var(--color-error), 0 0 0 4px rgb(var(--color-error-rgb) / 0);
-    &:focus:not([disabled]) {
-      --textarea-shadow: inset 0 1px 6px rgb(0 0 0 / 15%), 0 0 0 1px var(--color-error), 0 0 0 4px rgb(var(--color-error-rgb) / 8%);
+    --textarea-shadow-2: 0 0 0 1px var(--color-error);
+    --textarea-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
+  }
+
+  @include mixins.dark-mode() {
+    color-scheme: dark;
+    --textarea-bg: rgb(57 57 57);
+    --textarea-shadow-1: inset 0 1px 10px rgb(0 0 0 / 15%);
+    --textarea-shadow-2: 0 0 0 1px rgb(120 120 120 / 100%);
+    --textarea-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
+    --textarea-placeholder: rgb(120 120 120 / 100%);
+    --textarea-readonly: rgb(38 38 38);
+    &--error {
+      --textarea-shadow-1: inset 0 1px 6px rgb(0 0 0 / 15%);
+      --textarea-shadow-2: 0 0 0 1px var(--color-error);
     }
   }
 }

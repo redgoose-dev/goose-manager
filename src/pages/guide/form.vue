@@ -35,15 +35,12 @@
       <hr>
       <pre>{{text}}</pre>
     </div>
-    <p>`readonly`와 `disabled` 속성</p>
+    <p>readonly, disabled, error</p>
     <div class="example">
-      <div class="grid grid--col-2">
-        <FormInput
-          placeholder="readonly"
-          :readonly="true"/>
-        <FormInput
-          placeholder="disabled"
-          :disabled="true"/>
+      <div class="grid grid--col-3">
+        <FormInput placeholder="readonly" :readonly="true"/>
+        <FormInput placeholder="disabled" :disabled="true"/>
+        <FormInput placeholder="error" :error="true"/>
       </div>
     </div>
     <p>버튼과 함께 사용하기</p>

@@ -14,47 +14,4 @@
 </nav>
 </template>
 
-<script setup>
-</script>
-
-<style lang="scss" scoped>
-.tabs {
-  &__wrap {
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    background-color: rgb(204 204 204 / 40%);
-    border-radius: 2px;
-    user-select: none;
-  }
-  a {
-    display: block;
-    padding: 12px 12px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    border-radius: 2px;
-    &:active {
-      opacity: .5;
-    }
-    &:hover {
-      background-color: rgb(0 0 0 / 5%);
-    }
-    &.router-link-exact-active {
-      color: var(--color-base);
-      cursor: default;
-      opacity: 1;
-      &:hover {
-        background-color: transparent;
-      }
-    }
-    &:focus-visible {
-      outline: none;
-    }
-    &:focus-visible:not(.router-link-exact-active) {
-      outline: none;
-      box-shadow: 0 0 0 3px rgb(0 0 0 / 20%);
-    }
-  }
-}
-</style>
+<style src="./tabs.scss" lang="scss" scoped></style>

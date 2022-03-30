@@ -126,6 +126,10 @@
         <ButtonIcon icon-name="menu"/>
         <ButtonIcon icon-name="activity" href="/foo/"/>
         <ButtonIcon icon-name="twitter" href="https://google.com"/>
+        <ButtonIcon icon-name="star" color="key"/>
+        <ButtonIcon icon-name="cast" color="sub"/>
+        <ButtonIcon icon-name="file-minus" color="error"/>
+        <ButtonIcon icon-name="cloud" color="weak"/>
       </div>
     </div>
     <header>
