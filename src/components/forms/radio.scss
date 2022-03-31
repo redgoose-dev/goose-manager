@@ -14,7 +14,7 @@
     background-color: var(--radio-bg, rgb(240 240 240));
     box-shadow:
       var(--radio-shadow-1, inset 0 2px 5px rgb(0 0 0 / 15%)),
-      var(--radio-shadow-2, inset 0 0 0 1px rgb(0 0 0 / 20%)),
+      var(--radio-shadow-2, inset 0 0 0 1px rgb(0 0 0 / 30%)),
       var(--radio-shadow-3, 0 0 0 0 rgb(var(--color-key-rgb) / 0%));
     transition: box-shadow 150ms ease-out;
     &:after {
@@ -77,7 +77,7 @@
     i {
       --radio-bg: rgb(57 57 57);
       --radio-shadow-1: inset 0 2px 5px rgb(0 0 0 / 0);
-      --radio-shadow-2: inset 0 0 0 1px rgb(102 102 102 / 100%);
+      --radio-shadow-2: inset 0 0 0 1px rgb(140 140 140 / 100%);
     }
     input {
       &:focus:not([disabled]) + i {

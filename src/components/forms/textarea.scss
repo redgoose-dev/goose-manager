@@ -12,7 +12,7 @@
   color: var(--textarea-text-color, var(--color-base));
   box-shadow:
     var(--textarea-shadow-1, inset 0 1px 6px rgb(0 0 0 / 15%)),
-    var(--textarea-shadow-2, 0 0 0 1px rgb(180 180 180 / 100%)),
+    var(--textarea-shadow-2, 0 0 0 1px rgb(120 120 120 / 100%)),
     var(--textarea-shadow-3, 0 0 0 4px rgb(0 0 0 / 0%));
   font-size: var(--textarea-text-size, 15px);
   line-height: 1.42;
@@ -52,7 +52,7 @@
     color-scheme: dark;
     --textarea-bg: rgb(57 57 57);
     --textarea-shadow-1: inset 0 1px 10px rgb(0 0 0 / 15%);
-    --textarea-shadow-2: 0 0 0 1px rgb(120 120 120 / 100%);
+    --textarea-shadow-2: 0 0 0 1px rgb(160 160 160 / 100%);
     --textarea-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
     --textarea-placeholder: rgb(120 120 120 / 100%);
     --textarea-readonly: rgb(38 38 38);

@@ -28,7 +28,7 @@
     background: var(--select-bg, rgb(255 255 255));
     box-shadow:
       var(--select-shadow-1, inset 0 1px 6px rgb(0 0 0 / 15%)),
-      var(--select-shadow-2, 0 0 0 1px rgb(180 180 180 / 100%)),
+      var(--select-shadow-2, 0 0 0 1px rgb(120 120 120 / 100%)),
       var(--select-shadow-3, 0 0 0 4px rgb(0 0 0 / 0%));
     &:disabled {
       opacity: .5;
@@ -74,7 +74,7 @@
     color-scheme: dark;
     --select-bg: rgb(57 57 57);
     --select-shadow-1: inset 0 1px 10px rgb(0 0 0 / 15%);
-    --select-shadow-2: 0 0 0 1px rgb(120 120 120 / 100%);
+    --select-shadow-2: 0 0 0 1px rgb(160 160 160 / 100%);
     --select-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
     --select-placeholder: rgb(120 120 120 / 100%);
   }

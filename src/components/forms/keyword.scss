@@ -9,7 +9,7 @@
   border-radius: 2px;
   box-shadow:
     var(--keyword-shadow-1, inset 0 1px 6px rgb(0 0 0 / 15%)),
-    var(--keyword-shadow-2, 0 0 0 1px rgb(180 180 180 / 100%)),
+    var(--keyword-shadow-2, 0 0 0 1px rgb(120 120 120 / 100%)),
     var(--keyword-shadow-3, 0 0 0 0 rgb(0 0 0 / 0));
   transition: box-shadow 100ms ease-out;
   overflow: hidden;
@@ -54,7 +54,7 @@
     background: none;
     cursor: pointer;
     scrollbar-highlight-color: transparent;
-    border-left: 1px solid var(--keyword-line, rgb(180 180 180));
+    border-left: 1px solid var(--keyword-line, rgb(120 120 120));
     transition: filter 150ms ease-out;
     &:disabled {
       opacity: .5;
@@ -98,14 +98,14 @@
     color-scheme: dark;
     --keyword-bg: rgb(57 57 57);
     --keyword-shadow-1: inset 0 1px 10px rgb(0 0 0 / 15%);
-    --keyword-shadow-2: 0 0 0 1px rgb(120 120 120 / 100%);
+    --keyword-shadow-2: 0 0 0 1px rgb(160 160 160 / 100%);
     --keyword-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
     &:focus-within {
       --keyword-shadow-1: inset 0 1px 6px rgb(0 0 0 / 15%);
       --keyword-shadow-2: 0 0 0 1px var(--color-key);
       --keyword-shadow-3: 0 0 0 4px rgb(0 0 0 / 8%);
     }
-    --keyword-line: rgb(90 90 90);
+    --keyword-line: rgb(120 120 120);
     &__clear {
       --icon-color: rgb(255 255 255);
       background: rgb(80 80 80 / 100%);

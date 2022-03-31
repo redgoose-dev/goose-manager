@@ -24,6 +24,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use '../../../assets/scss/mixins';
 .fieldset {
   margin: 0;
   padding: 0;
@@ -45,6 +46,9 @@ const props = defineProps({
     :slotted(> *) {
       border-bottom: 1px solid var(--fieldset-body-line, rgb(220 220 220));
     }
+  }
+  @include mixins.dark-mode() {
+    --fieldset-body-line: rgb(68 68 68);
   }
 }
 </style>

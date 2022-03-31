@@ -20,7 +20,7 @@
     border-radius: calc(var(--switch-height, 28px) * .5);
     box-shadow:
       var(--switch-shadow-1, inset 0 2px 5px rgb(0 0 0 / 15%)),
-      var(--switch-shadow-2, inset 0 0 0 1px rgb(0 0 0 / 20%)),
+      var(--switch-shadow-2, inset 0 0 0 1px rgb(0 0 0 / 30%)),
       var(--switch-shadow-3, 0 0 0 3px rgb(0 0 0 / 0));
     transition: box-shadow 200ms ease-out;
     outline: none;
@@ -46,11 +46,9 @@
     }
   }
   &:focus-within {
-    input {
-      --switch-shadow-1: inset 0 -2px 5px rgb(0 0 0 / 10%);
-      --switch-shadow-2: inset 0 0 0 1px var(--color-key);
-      --switch-shadow-3: 0 0 0 3px rgb(0 0 0 / 15%);
-    }
+    --switch-shadow-1: inset 0 -2px 5px rgb(0 0 0 / 10%);
+    --switch-shadow-2: inset 0 0 0 1px var(--color-key);
+    --switch-shadow-3: 0 0 0 3px rgb(0 0 0 / 15%);
   }
   input:checked + i {
     left: unset;
@@ -67,8 +65,16 @@
   }
 
   @include mixins.dark-mode() {
-    //i {
-    //  background-color: var(--color-fill);
-    //}
+    color-scheme: dark;
+    --switch-bg: rgb(68 68 68);
+    --switch-shadow-2: inset 0 0 0 1px rgb(140 140 140 / 100%);
+    --switch-color: rgb(240 240 240);
+    &:focus-within {
+      --switch-shadow-3: 0 0 0 3px rgb(0 0 0 / 30%);
+    }
+    &--readonly {
+      --switch-bg: rgb(40, 40, 40);
+      --switch-shadow-2: inset 0 0 0 1px rgb(140 140 140 / 100%);
+    }
   }
 }

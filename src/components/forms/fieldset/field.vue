@@ -20,6 +20,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use '../../../assets/scss/mixins';
 .field {
   display: grid;
   grid-template-columns: var(--field-label-width, 160px) 1fr;
