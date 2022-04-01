@@ -45,6 +45,7 @@ const rootProps = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '../../../assets/scss/mixins';
 .thumbnail {
   position: relative;
   display: block;
@@ -60,7 +61,7 @@ const rootProps = computed(() => {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    background-color: rgb(220 220 220);
+    background-color: var(--item-thumbnail-bg, rgb(220 220 220));
   }
   &__empty {
     box-sizing: border-box;
@@ -81,6 +82,9 @@ const rootProps = computed(() => {
     > * {
       transform: scale(1.05);
     }
+  }
+  @include mixins.dark-mode() {
+    --item-thumbnail-bg: rgb(85 85 85);
   }
 }
 </style>

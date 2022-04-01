@@ -59,7 +59,7 @@
     }
     &:hover {
       > svg {
-        --icon-color: var(--color-invert);
+        --icon-color: rgb(255 255 255);
       }
       &:disabled {
         > svg {
@@ -78,14 +78,14 @@
     color: var(--color-base);
     font-weight: 500;
     &.active {
-      color: var(--color-invert);
+      color: rgb(255 255 255);
       border-radius: var(--size-radius);
       &:before {
         transform: translateY(0);
       }
     }
     &:hover {
-      color: var(--color-invert);
+      color: rgb(255 255 255);
     }
     &:disabled:not(.active) {
       opacity: .25;

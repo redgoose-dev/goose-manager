@@ -190,6 +190,7 @@ import Icon from '../../components/icons/index.vue';
       justify-content: center;
       background-color: #f4f4f4;
       flex-direction: column;
+      border-radius: var(--size-radius);
       svg:not(.color) {
         color: var(--color-base);
       }
@@ -213,12 +214,12 @@ import Icon from '../../components/icons/index.vue';
       --column: 4;
     }
   }
-  //@include mixins.dark-mode() {
-  //  &__item {
-  //    div {
-  //      background-color: #333;
-  //    }
-  //  }
-  //}
+  @include mixins.dark-mode() {
+    &__item {
+      div {
+        background-color: #333;
+      }
+    }
+  }
 }
 </style>

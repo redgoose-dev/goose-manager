@@ -25,7 +25,7 @@
         </div>
       </nav>
     </template>
-    <article v-else v-html="content" class="redgoose-body"/>
+    <article v-else v-html="content" class="redgoose-body redgoose-body--dark"/>
   </div>
   <div class="comment__bottom">
     <p><strong>{{props.userName}}</strong> commented <em>{{regdate}}</em></p>

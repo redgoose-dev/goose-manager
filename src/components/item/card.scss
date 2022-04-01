@@ -7,7 +7,9 @@
   box-sizing: border-box;
   border-radius: var(--size-radius);
   background-color: var(--item-color-bg, var(--color-invert));
-  box-shadow: var(--item-shadow, 0 0 0 1px rgb(0 0 0 / 3%), 0 1px 20px rgb(0 0 0 / 10%));
+  box-shadow:
+    var(--item-shadow-1, 0 0 0 1px rgb(0 0 0 / 3%)),
+    var(--item-shadow-2, 0 1px 20px rgb(0 0 0 / 10%));
   transition: box-shadow 150ms ease-out;
   min-width: 0;
   &__thumbnail {
@@ -45,7 +47,12 @@
   }
   &--link {
     &:hover {
-      --item-shadow: 0 0 0 1px rgb(var(--color-key-rgb) / 100%), 0 1px 20px rgb(0 0 0 / 10%);
+      --item-shadow-1: 0 0 0 1px rgb(var(--color-key-rgb) / 100%);
+      --item-shadow-2: 0 1px 20px rgb(0 0 0 / 10%);
     }
+  }
+
+  @include mixins.dark-mode() {
+    --item-color-bg: rgb(56 56 56);
   }
 }

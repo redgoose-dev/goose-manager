@@ -64,6 +64,7 @@ const classes = {
 <style lang="scss" scoped>
 @use '../../assets/scss/variables';
 .colors {
+  box-sizing: border-box;
   ul {
     position: relative;
     margin: 0;
@@ -117,7 +118,8 @@ const classes = {
   }
   &--light {
     ul {
-      background-color: rgb(235 235 235);
+      background-color: variables.$color-light-bg;
+      border: 1px solid rgb(0 0 0 / 10%);
     }
     em {
       color: variables.$color-light-base;
@@ -130,7 +132,8 @@ const classes = {
   }
   &--dark {
     ul {
-      background-color: rgb(40 40 40);
+      background-color: variables.$color-dark-bg;
+      border: 1px solid rgb(255 255 255 / 10%);
     }
     em {
       color: variables.$color-dark-base;

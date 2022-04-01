@@ -15,8 +15,7 @@
     </p>
   </header>
   <div class="article__body">
-    <!-- TODO: redgoose-body--dark -->
-    <div ref="$content" v-html="data.article.content" class="redgoose-body"/>
+    <div ref="$content" v-html="data.article.content" class="redgoose-body redgoose-body--dark"/>
   </div>
   <Files
     v-if="data.files?.length > 0"

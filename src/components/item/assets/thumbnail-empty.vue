@@ -22,7 +22,7 @@ const iconName = iconRandomPick();
   min-height: var(--image-empty-min-height, unset);
   max-height: var(--image-empty-max-height, unset);
   box-sizing: border-box;
-  background-color: rgb(213 213 213);
+  background-color: var(--image-empty-bg, rgb(213 213 213));
   padding: 30px 0;
   box-shadow: inset 0 -10px 30px rgb(0 0 0 / 5%);
   --icon-size: 32px;
@@ -32,7 +32,8 @@ const iconName = iconRandomPick();
     display: block;
   }
   @include mixins.dark-mode() {
-    // TODO: 다크모드
+    --image-empty-bg: rgb(85 85 85);
+    --icon-color: rgb(170 170 170);
   }
 }
 </style>

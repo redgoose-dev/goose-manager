@@ -69,6 +69,9 @@
   }
   @include mixins.dark-mode() {
     box-shadow: 0 1px 15px rgb(0 0 0 / 30%), 0 0 0 1px rgb(85 85 85 / 50%);
+    > hr {
+      border-color: rgb(255 255 255 / 30%);
+    }
   }
 }
 

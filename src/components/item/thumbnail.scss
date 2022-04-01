@@ -4,13 +4,16 @@
   position: relative;
   box-sizing: border-box;
   border-radius: 2px;
-  background-color: var(--item-color-bg, var(--color-invert));
-  box-shadow: var(--item-shadow, 0 0 0 1px rgb(0 0 0 / 3%), 0 1px 20px rgb(0 0 0 / 10%));
+  background-color: var(--item-color-bg, rgb(255 255 255));
+  box-shadow:
+    var(--item-shadow-1, 0 0 0 1px rgb(0 0 0 / 3%)),
+    var(--item-shadow-2, 0 1px 20px rgb(0 0 0 / 10%));
   transition: box-shadow 150ms ease-out;
   width: var(--item-width, auto);
   min-width: 0;
   &:hover {
-    --item-shadow: 0 0 0 1px rgb(var(--color-key-rgb) / 100%), 0 1px 20px rgb(0 0 0 / 10%);
+    --item-shadow-1: 0 0 0 1px rgb(var(--color-key-rgb) / 100%);
+    --item-shadow-2: 0 1px 20px rgb(0 0 0 / 10%);
   }
   &__thumbnail {
     width: 100%;
@@ -42,5 +45,9 @@
   }
   &__nav {
     margin: 6px 0 0;
+  }
+
+  @include mixins.dark-mode() {
+    --item-color-bg: rgb(56 56 56);
   }
 }

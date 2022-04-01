@@ -4,8 +4,7 @@
     <strong>{{title}}</strong>
     <em v-if="!isNaN(props.percent)">{{props.percent}}%</em>
   </h3>
-  <!-- TODO: `redgoose-body--dark` -->
-  <div ref="$body" class="checklist-item__body redgoose-body"/>
+  <div ref="$body" class="checklist-item__body redgoose-body redgoose-body--dark"/>
   <Files
     v-if="props.files?.length > 0"
     :items="props.files"

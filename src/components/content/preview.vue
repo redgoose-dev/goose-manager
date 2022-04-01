@@ -8,7 +8,7 @@
     <div
       ref="$preview"
       v-html="props.content"
-      class="preview__content redgoose-body redgoose-body--popup"/>
+      class="preview__content redgoose-body redgoose-body--dark redgoose-body--popup"/>
   </Body>
 </Modal>
 </template>
