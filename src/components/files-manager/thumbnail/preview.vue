@@ -60,11 +60,11 @@ onUnmounted(() => {
     border-radius: 50%;
     border: none;
     background: var(--color-key);
-    box-shadow: 0 0 0 1px rgb(var(--color-invert-rgb) / 50%), 0 3px 15px rgb(var(--color-base-rgb) / 50%);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 50%), 0 3px 15px rgb(var(--color-base-rgb) / 50%);
     @include mixins.button-touch-options(false);
-    --icon-color: var(--color-invert);
-    --icon-stroke-width: 1.75;
-    --icon-size: 28px;
+    --icon-color: rgb(255 255 255);
+    --icon-stroke-width: 1.5;
+    --icon-size: 30px;
     transition: filter 120ms ease-out;
     svg {
       display: block;
@@ -75,6 +75,12 @@ onUnmounted(() => {
     }
     &:active {
       filter: brightness(110%);
+    }
+  }
+
+  @include mixins.dark-mode() {
+    &__close {
+      box-shadow: 0 0 0 1px rgb(0 0 0 / 30%), 0 2px 20px rgb(0 0 0 / 30%);
     }
   }
 }

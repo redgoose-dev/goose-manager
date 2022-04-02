@@ -92,6 +92,7 @@ const messages = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '../../../assets/scss/mixins';
 .page-header {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -105,6 +106,7 @@ const messages = computed(() => {
     letter-spacing: -1px;
     font-weight: 600;
     font-family: var(--font-eng);
+    color: rgb(0 0 0);
   }
   &__description {
     margin: -2px 0 0;
@@ -115,6 +117,11 @@ const messages = computed(() => {
   &__nav {
     display: flex;
     align-items: center;
+  }
+  @include mixins.dark-mode() {
+    &__title {
+      color: rgb(255 255 255);
+    }
   }
 }
 </style>

@@ -21,12 +21,12 @@
 {
   @if ($root)
   {
-    &[data-color=dark] {
+    &[data-theme=dark] {
       @content;
     }
-    &[data-color=system],
-    &:not([data-color]),
-    &[data-color=""] {
+    &[data-theme=system],
+    &:not([data-theme]),
+    &[data-theme=""] {
       @media (prefers-color-scheme: dark) {
         @content;
       }
@@ -34,13 +34,13 @@
   }
   @else
   {
-    html[data-color=dark] & {
+    html[data-theme=dark] & {
       @content;
     }
     @media (prefers-color-scheme: dark) {
-      html[data-color=system] &,
-      html:not([data-color]) &,
-      html[data-color=""] & {
+      html[data-theme=system] &,
+      html:not([data-theme]) &,
+      html[data-theme=""] & {
         @content;
       }
     }

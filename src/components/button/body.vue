@@ -33,6 +33,7 @@ const props = defineProps({
   justify-content: center;
   box-sizing: border-box;
   height: 100%;
+  gap: 2px;
   &__icon {
     box-sizing: border-box;
     @-webkit-keyframes spin {

@@ -109,5 +109,5 @@ export function changeTheme(color)
       break;
   }
   const $html = document.querySelector('html');
-  $html.dataset['color'] = theme;
+  $html.dataset['theme'] = theme;
 }

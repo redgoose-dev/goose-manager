@@ -1,6 +1,5 @@
 import { createApp } from 'vue';
 import router from './router';
-import store from './store';
 import * as toast from './modules/toast';
 import { initCustomEvent } from './libs/util';
 import { messagesPlugin } from './message';

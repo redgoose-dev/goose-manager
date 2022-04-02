@@ -5,6 +5,7 @@
   --color-shape-bg: rgb(240 240 240);
   box-sizing: border-box;
   position: relative;
+  background: var(--color-bg);
   &__body {
     box-sizing: border-box;
   }
@@ -36,6 +37,12 @@
       height: 100%;
       overflow-x: hidden;
       overflow-y: auto;
+    }
+  }
+  @include mixins.dark-mode() {
+    --color-shape-bg: rgb(50 50 50);
+    &__tabs {
+      border-color: rgb(255 255 255 / 20%);
     }
   }
 }

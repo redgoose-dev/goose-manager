@@ -16,7 +16,7 @@
   justify-content: center;
   @include mixins.background-blur(16px);
   @include mixins.dark-mode() {
-    //
+    --modal-color-bg: rgb(var(--color-invert-rgb) / 75%);
   }
 }
 

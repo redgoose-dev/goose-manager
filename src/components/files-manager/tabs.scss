@@ -5,7 +5,7 @@
   justify-content: space-between;
   height: var(--tab-height, 44px);
   box-sizing: border-box;
-  background: var(--color-invert);
+  background: rgb(255 255 255);
   &__contents {
     display: flex;
     button {
@@ -46,9 +46,9 @@
       &:disabled {
         background: var(--color-key);
         cursor: default;
-        --icon-color: var(--color-invert);
+        --icon-color: rgb(255 255 255);
         em {
-          color: var(--color-invert);
+          color: rgb(255 255 255);
         }
       }
     }
@@ -76,6 +76,29 @@
       }
       &.close {
         --icon-size: 20px;
+      }
+    }
+  }
+
+  @include mixins.dark-mode() {
+    background: rgb(32 32 32);
+    &__contents {
+      button {
+        &:active,
+        &:hover {
+          background: rgb(0 0 0 / 20%);
+        }
+        &:disabled {
+          background: var(--color-key);
+        }
+      }
+    }
+    &__functions {
+      button {
+        &:active,
+        &:hover {
+          background: rgb(0 0 0 / 20%);
+        }
       }
     }
   }

@@ -39,21 +39,19 @@
   box-sizing: border-box;
   &__index {
     margin: 0;
-    padding: var(--attachments-gap, 12px);
+    padding: var(--attachments-gap, 16px);
     list-style: none;
     display: grid;
     grid-template-columns: repeat(var(--attachments-column, 4), 1fr);
-    gap: var(--attachments-inner-gap, 8px);
+    gap: var(--attachments-inner-gap, 12px);
   }
   @include mixins.responsive(desktop) {
     --attachments-column: 5;
-    --attachments-gap: 16px;
     --attachments-inner-gap: 16px;
   }
   @include mixins.responsive(desktop-large) {
     --attachments-column: 7;
-    --attachments-gap: 20px;
-    --attachments-inner-gap: 16px;
+    --attachments-inner-gap: 20px;
   }
 }
 

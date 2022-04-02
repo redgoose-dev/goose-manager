@@ -1,9 +1,8 @@
 <template>
-<div
-  :class="[
-    'toolbar-item',
-    props.type === 'dropdown' && 'dropdown',
-  ]">
+<div :class="[
+  'toolbar-item',
+  props.type === 'dropdown' && 'dropdown',
+]">
   <button
     type="button"
     :title="props.title"

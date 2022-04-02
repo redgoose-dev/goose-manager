@@ -43,7 +43,7 @@ const rootProps = computed(() => {
   letter-spacing: -.25px;
   @include mixins.text-single-line();
   &__body {
-    color: var(--color-base);
+    color: var(--color-edge);
     font-weight: 700;
   }
   &--link {

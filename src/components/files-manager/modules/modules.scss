@@ -11,7 +11,7 @@
 .files-header {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,6 +22,9 @@
   &__left {
     display: flex;
     gap: 8px;
+  }
+  @include mixins.dark-mode() {
+    box-shadow: 0 1px 10px 0 rgb(0 0 0 / 30%), 0 1px 0 rgb(255 255 255 / 20%);
   }
 }
 
@@ -73,7 +76,6 @@
 
 .dropdown {
   position: relative;
-  &__button {}
   &__context {
     position: absolute;
     left: 0;
@@ -90,10 +92,10 @@
       opacity: 0;
       transition: opacity 200ms ease-out;
       transition-delay: 120ms;
-      background: var(--color-invert);
       box-sizing: border-box;
       overflow: hidden;
       border-radius: 2px;
+      background: rgb(255 255 255);
       box-shadow: 0 1px 12px rgb(var(--color-base-rgb) / 15%), 0 0 0 1px rgb(var(--color-base-rgb) / 10%);
     }
     li {
@@ -112,6 +114,7 @@
       border-radius: 0;
       box-sizing: border-box;
       font-size: 14px;
+      color: var(--color-base);
       @include mixins.button-touch-options(false);
       transition: background-color 120ms ease-out;
       &:hover,
@@ -146,6 +149,21 @@
         ul {
           left: unset;
           right: -4px;
+        }
+      }
+    }
+  }
+
+  @include mixins.dark-mode() {
+    &__context {
+      ul {
+        background: rgb(36 36 36);
+        box-shadow: 0 2px 8px rgb(0 0 0 / 30%), 0 0 0 1px rgb(60 60 60);
+      }
+      button {
+        &:hover,
+        &:active {
+          background-color: rgb(0 0 0 / 10%);
         }
       }
     }

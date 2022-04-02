@@ -23,11 +23,12 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use '../../../../assets/scss/mixins';
 .files {
-  padding: 16px;
-  background: rgb(var(--color-base-rgb) / 5%);
+  padding: 20px;
+  background: var(--files-bg, rgb(var(--color-base-rgb) / 5%));
   border-radius: 2px;
-  box-shadow: 0 0 0 1px rgb(var(--color-base-rgb) / 20%);
+  box-shadow: var(--files-shadow, 0 0 0 1px rgb(var(--color-base-rgb) / 20%));
   &__title {
     margin: 0;
     font-size: 16px;
@@ -66,6 +67,10 @@ const props = defineProps({
         content: ')';
       }
     }
+  }
+  @include mixins.dark-mode() {
+    --files-bg: rgb(var(--color-base-rgb) / 5%);
+    --files-shadow: 0 0 0 1px rgb(var(--color-base-rgb) / 15%);
   }
 }
 </style>

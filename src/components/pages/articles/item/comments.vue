@@ -63,4 +63,20 @@ onMounted(async () => {
 });
 </script>
 
-<style src="./comments.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+.comments {
+  position: relative;
+  &__title {
+    margin: 0;
+    font-size: 0;
+    padding: 0;
+  }
+  &__index {
+    display: grid;
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+    gap: 20px;
+  }
+}
+</style>

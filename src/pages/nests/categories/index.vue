@@ -125,7 +125,7 @@ onMounted(async () => {
   background: none;
   border: none;
   @include mixins.button-touch-options(false);
-  --icon-size: 16px;
+  --icon-size: 20px;
   --icon-stroke-width: 1.5;
   --icon-color: var(--color-weak);
   svg {

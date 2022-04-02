@@ -23,17 +23,34 @@
     line-height: 1.48;
     border: none;
     border-radius: 2px;
-    box-shadow: var(--editor-shadow, inset 0 1px 6px rgb(0 0 0 / 20%), 0 0 0 1px rgb(180 180 180), 0 0 0 4px rgb(0 0 0 / 0));
+    background: var(--editor-bg, rgb(255 255 255));
+    box-shadow:
+      var(--editor-shadow-1, inset 0 1px 6px rgb(0 0 0 / 15%)),
+      var(--editor-shadow-2, 0 0 0 1px rgb(120 120 120 / 100%)),
+      var(--editor-shadow-3, 0 0 0 4px rgb(0 0 0 / 0%));
     transition: box-shadow 120ms ease-out;
     &::-webkit-input-placeholder {
-      color: var(--editor-placeholder, rgb(150 150 150));
+      color: var(--editor-placeholder, rgb(150 150 150 / 100%));
     }
     &:focus-visible:not([disabled]) {
-      --editor-shadow: inset 0 1px 6px rgb(0 0 0 / 20%), 0 0 0 1px var(--color-key), 0 0 0 4px rgb(0 0 0 / 8%);
+      --editor-shadow-1: inset 0 1px 6px rgb(0 0 0 / 15%);
+      --editor-shadow-2: 0 0 0 1px var(--color-key);
+      --editor-shadow-3: 0 0 0 4px rgb(0 0 0 / 8%);
     }
     &:disabled {
       opacity: .5;
       cursor: not-allowed;
+    }
+  }
+
+  @include mixins.dark-mode() {
+    &__content {
+      color-scheme: dark;
+      --editor-bg: rgb(57 57 57);
+      --editor-shadow-1: inset 0 1px 10px rgb(0 0 0 / 15%);
+      --editor-shadow-2: 0 0 0 1px rgb(160 160 160 / 100%);
+      --editor-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
+      --editor-placeholder: rgb(120 120 120 / 100%);
     }
   }
 }

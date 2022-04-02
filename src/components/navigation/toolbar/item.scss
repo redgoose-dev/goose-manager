@@ -19,10 +19,11 @@
     @include mixins.button-touch-options(false);
     --icon-size: 15px;
     --icon-stroke-width: 2;
+    --icon-color: var(--color-base);
     span {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
     svg {
       display: block;
@@ -34,11 +35,13 @@
       line-height: normal;
       font-weight: 500;
       letter-spacing: -.25px;
+      color: var(--color-base);
     }
     &.color {
       &--key {
         background: var(--color-key);
-        span {
+        --icon-color: var(--color-invert);
+        em {
           color: var(--color-invert);
         }
       }
@@ -72,7 +75,7 @@
     }
     button, a {
       display: block;
-      padding: 10px 16px;
+      padding: 10px 32px 10px 16px;
       border-radius: 0;
       font-size: 12px;
       font-weight: 500;
@@ -81,9 +84,9 @@
       white-space: nowrap;
       box-sizing: border-box;
       transition: filter 160ms ease-out;
+      color: var(--color-base);
       &:hover {
-        background: var(--color-bg);
-        filter: brightness(95%);
+        background: rgb(0 0 0 / 8%);
       }
     }
     button {
@@ -94,7 +97,6 @@
       background: none;
     }
     a {
-      color: var(--color-base);
       text-decoration: none;
     }
   }
@@ -126,6 +128,45 @@
     }
   }
   &:nth-child(n+2) {
-    border-left: 1px solid rgb(var(--group-color-line, 180 180 180) / 100%);
+    border-left: 1px solid var(--group-color-line, rgb(180 180 180 / 100%));
+  }
+
+  @include mixins.dark-mode() {
+    &__button {
+      background: rgb(60, 60, 60);
+      &.color {
+        &--key {
+          background: var(--color-key);
+          --icon-color: var(--color-edge);
+          em {
+            color: var(--color-edge);
+          }
+        }
+      }
+    }
+    &__children {
+      ul {
+        background: rgb(40 40 40);
+        box-shadow: 0 1px 10px rgb(0 0 0 / 25%), 0 0 0 1px rgb(90 90 90);
+      }
+      li {
+        &:nth-child(n+2) {
+          border-color: rgb(255 255 255 / 5%);
+        }
+      }
+      button, a {
+        &:hover {
+          background: rgb(0 0 0 / 20%);
+        }
+      }
+    }
+    &:hover {
+      .toolbar-item__button {
+        filter: brightness(125%);
+      }
+    }
+    &:nth-child(n+2) {
+      --group-color-line: rgb(80 80 80);
+    }
   }
 }

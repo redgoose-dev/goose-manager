@@ -73,4 +73,7 @@ onMounted(async () => {
   --image-empty-min-height: 150px;
   --image-empty-max-height: 200px;
 }
+.pagination {
+  margin: 30px 0 0;
+}
 </style>
