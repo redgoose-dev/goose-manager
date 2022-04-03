@@ -118,7 +118,7 @@ async function onSubmit()
     // off loading
     loading.value = false;
     // redirect url
-    await router.replace(BASE_URL);
+    await router.replace('/');
   }
   catch(e)
   {
