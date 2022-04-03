@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import map from './map';
 import { checkAuth } from '../libs/auth';
+import { getPath } from '../libs/string';
 
 /** @var {string} BASE_URL */
 
@@ -17,9 +18,9 @@ router.beforeEach(async (to, from) => {
   switch (to.name)
   {
     case 'AuthLogin':
-      return auth ? '/' : undefined;
+      return auth ? getPath(`${BASE_URL}/`) : undefined;
     default:
-      return auth ? undefined : '/auth/login';
+      return auth ? undefined : getPath(`${BASE_URL}/auth/login/`);
   }
 });
 
