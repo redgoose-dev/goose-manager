@@ -6,6 +6,8 @@ import vue from '@vitejs/plugin-vue';
 const config = defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   return {
+    // base: env.VITE_BASE_URL,
+    base: env.VITE_BASE_URL,
     server: {
       // https://vitejs.dev/config/#server-options
       host: env.VITE_HOST,

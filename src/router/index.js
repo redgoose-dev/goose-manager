@@ -6,8 +6,7 @@ import { checkAuth } from '../libs/auth';
 
 /** @var {Router} router */
 const router = createRouter({
-  base: BASE_URL || '/',
-  history: createWebHistory(),
+  history: createWebHistory(BASE_URL || '/'),
   routes: map,
 });
 

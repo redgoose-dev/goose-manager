@@ -11,7 +11,7 @@ function localRoutes()
   const router = Router();
 
   // auth
-  router.post('/auth', async (req, res) => {
+  router.post('/auth/', async (req, res) => {
     try
     {
       let token = req.cookies[cookie.prefix + '-token'];
@@ -33,7 +33,7 @@ function localRoutes()
   });
 
   // login
-  router.post('/login', async (req, res) => {
+  router.post('/login/', async (req, res) => {
     try
     {
       const { email, password, save } = req.body;
@@ -73,7 +73,7 @@ function localRoutes()
   });
 
   // logout
-  router.post('/logout', async (req, res) => {
+  router.post('/logout/', async (req, res) => {
     res.clearCookie(cookie.prefix + '-token');
     res.clearCookie(cookie.prefix + '-user');
     res.json({ success: true });
@@ -130,7 +130,7 @@ function server(_app, _env)
 {
   setup(_app, _env);
   // set local routes
-  app.use('/local', localRoutes());
+  app.use('/local/', localRoutes());
 }
 
 export default server;
