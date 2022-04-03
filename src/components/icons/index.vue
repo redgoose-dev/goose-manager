@@ -5,7 +5,11 @@
 </template>
 
 <script setup>
+/** @var {string} BASE_URL */
+
 import { computed } from 'vue';
+import { getPath } from '../../libs/string';
+
 const props = defineProps({
   name: String,
   size: Number,
@@ -13,7 +17,7 @@ const props = defineProps({
   color: String,
 });
 const path = computed(() => {
-  return `/icons/${props.name}.svg#icon_${props.name}`;
+  return getPath(`${BASE_URL}/icons/${props.name}.svg#icon_${props.name}`);
 });
 </script>
 
