@@ -54,7 +54,7 @@ const complete = computed(() => (props.percent === 100));
       display: block;
       height: 100%;
       width: var(--percent, 0%);
-      background-color: var(--color-key);
+      background-color: var(--color-sub);
       transition: width 200ms ease-out, background-color 300ms ease-out;
       &.complete {
         background-color: var(--color-success);
@@ -73,12 +73,6 @@ const complete = computed(() => (props.percent === 100));
     background-color: rgb(20 20 20 / 50%);
     &__graph {
       background-color: rgb(255 255 255 / 100%);
-      i {
-        background-color: var(--color-sub);
-        &.complete {
-          background-color: var(--color-key);
-        }
-      }
     }
   }
 }

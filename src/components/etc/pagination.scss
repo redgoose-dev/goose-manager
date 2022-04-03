@@ -72,7 +72,6 @@
     }
   }
   &--number {
-    font-family: var(--font-eng);
     font-size: 15px;
     letter-spacing: -.5px;
     color: var(--color-base);
@@ -99,5 +98,9 @@
     &:before {
       transform: translateY(0);
     }
+  }
+
+  @include mixins.dark-mode() {
+    --icon-color: var(--color-base);
   }
 }

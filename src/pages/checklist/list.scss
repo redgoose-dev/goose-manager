@@ -16,6 +16,7 @@
     align-content: center;
     justify-content: center;
     aspect-ratio: .85 / 1;
+    --progress-donut-color-fill: var(--color-sub);
     > svg {
       display: block;
       box-sizing: border-box;
@@ -36,6 +37,13 @@
     }
     &.complete {
       --progress-donut-color-fill: var(--color-success);
+    }
+  }
+  @include mixins.dark-mode() {
+    &__graph {
+      &.complete {
+        --progress-donut-color-fill: var(--color-key);
+      }
     }
   }
 }

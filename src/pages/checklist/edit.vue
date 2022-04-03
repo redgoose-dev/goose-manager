@@ -200,7 +200,6 @@ async function onSubmit()
     if (!forms.content.value) throw new Error('no content');
     await submit(forms.srl, forms.content.value);
     await router.push(route.params.srl ? `/checklist/${forms.srl}/` : `/checklist/`);
-    toast.add(printf(message.success.edit, message.word.board), 'success');
   }
   catch (e)
   {
