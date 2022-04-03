@@ -57,9 +57,9 @@ async function server()
     app.use((req, res, next) => {
       if (req.path.indexOf('.') > -1)
       {
-        app.use(express.static(outDir, {
-          // https://expressjs.com/en/5x/api.html#express.static
-        }));
+        // https://expressjs.com/en/5x/api.html#express.static
+        app.use('/', express.static(outDir));
+        app.use(env.VITE_BASE_URL, express.static(outDir));
         next();
       }
       else

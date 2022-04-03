@@ -9,10 +9,11 @@
   "author": "redgoose <scripter@me.com>",
   "scripts": {
     "dev": "node server/entry.js --development",
-    "dev:live": "nodemon server/entry.js --development",
     "prebuild": "rm -rf ./dist",
     "build": "vite build",
-    "start": "node server/entry.js --production"
+    "start": "node server/entry.js --production",
+    "watch:dev": "nodemon server/entry.js --development",
+    "watch:start": "nodemon server/entry.js --production"
   },
   "nodemonConfig": {
     "delay": 500
