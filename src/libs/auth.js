@@ -1,6 +1,9 @@
 import axios from 'axios';
 import store from '../store';
 import { setup } from './service';
+import { getPath } from './string';
+
+/** @var {string} BASE_URL */
 
 /**
  * check auth
@@ -15,7 +18,7 @@ export async function checkAuth()
     // check store
     if (store.state.token && store.state.user?.srl) return true;
     // request server for get cookie
-    const res = await axios.post('/local/auth/');
+    const res = await axios.post(getPath(`${BASE_URL}/local//auth//`));
     if (!res.data.success) throw new Error('failed auth');
     // setup service
     const { token, user } = res.data.data;
@@ -35,7 +38,7 @@ export async function checkAuth()
  */
 export async function logout()
 {
-  let res = await axios.post('/local/logout/');
+  let res = await axios.post(getPath(`${BASE_URL}/local/logout/`));
   if (!res.data.success) throw new Error('Failed request');
   location.href = '/auth/login/';
 }

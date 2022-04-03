@@ -1,4 +1,3 @@
-
 <template>
 <article class="login">
   <div class="login__wrap">
@@ -70,12 +69,15 @@
 <script setup>
 /** @var {string} TITLE */
 /** @var {string} DESCRIPTION */
+/** @var {string} BASE_URL */
+
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { setup } from '../../libs/service';
 import { toast } from '../../modules/toast';
 import { err } from '../../libs/error';
+import { getPath } from '../../libs/string';
 import FormCheckbox from '../../components/forms/checkbox.vue';
 import ButtonBasic from '../../components/button/basic.vue';
 
@@ -101,7 +103,7 @@ async function onSubmit()
     // on loading
     loading.value = true;
     // request api
-    let res = await axios.post('/local/login/', {
+    let res = await axios.post(getPath(`${BASE_URL}/local/login/`), {
       email: forms.email,
       password: forms.password,
       save: forms.save,
@@ -116,7 +118,7 @@ async function onSubmit()
     // off loading
     loading.value = false;
     // redirect url
-    await router.replace('/');
+    await router.replace(BASE_URL);
   }
   catch(e)
   {

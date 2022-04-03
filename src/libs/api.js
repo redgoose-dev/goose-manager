@@ -1,7 +1,9 @@
 /** @var {string} API_URL */
+/** @var {string} BASE_URL */
 
 import axios from 'axios';
 import store from '../store';
+import { getPath } from './string';
 
 let instance;
 let timer;
@@ -98,7 +100,7 @@ function refreshToken(token)
   const delay = 2000;
   if (timer) clearTimeout(timer);
   timer = setTimeout(async () => {
-    let res = await axios.post('/local/refresh-token/', { token });
+    let res = await axios.post(getPath(`${BASE_URL}/local/refresh-token/`), { token });
     if (res.data.token) store.state.token = res.data.token;
     timer = undefined;
   }, delay);

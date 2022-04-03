@@ -84,3 +84,13 @@ export function serialize(obj, usePrefix=false)
   res = str.join('&');
   return (res && usePrefix ? '?' : '') + res;
 }
+
+/**
+ * get path
+ * @param {string} path
+ * @return {string}
+ */
+export function getPath(path)
+{
+  return path.replaceAll('//', '/');
+}
