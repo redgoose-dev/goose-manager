@@ -130,7 +130,8 @@ function server(_app, _env)
 {
   setup(_app, _env);
   // set local routes
-  app.use('/local/', localRoutes());
+  let path = `${env.VITE_BASE_URL}/local/`.replaceAll('//', '/');
+  app.use(path, localRoutes());
 }
 
 export default server;
