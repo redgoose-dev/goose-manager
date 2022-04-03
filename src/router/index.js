@@ -18,9 +18,9 @@ router.beforeEach(async (to, from) => {
   switch (to.name)
   {
     case 'AuthLogin':
-      return auth ? getPath(`${BASE_URL}/`) : undefined;
+      return auth ? '/' : undefined;
     default:
-      return auth ? undefined : getPath(`${BASE_URL}/auth/login/`);
+      return auth ? undefined : '/auth/login/';
   }
 });
 
