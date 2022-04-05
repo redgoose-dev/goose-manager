@@ -11,6 +11,7 @@
     background: var(--cropper-slider-color-bg, var(--color-bg));
     transform: translateX(-50%);
     width: var(--cropper-slider-width, 50%);
+    max-width: 420px;
     margin: 0;
     padding: 0 32px;
     height: var(--cropper-slider-height, 44px);

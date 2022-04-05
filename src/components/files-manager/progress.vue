@@ -11,6 +11,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use '../../assets/scss/mixins';
 .progress {
   position: relative;
   display: grid;
@@ -34,7 +35,7 @@ const props = defineProps({
   em {
     position: relative;
     font-style: normal;
-    color: var(--color-invert);
+    color: rgb(255 255 255);
     font-weight: 400;
     font-size: 16px;
     line-height: 1.1;
