@@ -11,7 +11,7 @@
   </div>
   <Fieldset :disabled="processing" class="fields">
     <Field label="Nest" for="nest">
-      <Select
+      <FormSelect
         id="nest"
         name="nest"
         v-model="forms.nestSrl.value"
@@ -21,7 +21,7 @@
       <Help>같은 앱에속한 둥지를 선택해주세요.</Help>
     </Field>
     <Field v-if="data.categories?.length > 0" label="Category" for="category">
-      <Select
+      <FormSelect
         id="category"
         name="category"
         v-model="forms.categorySrl.value"
@@ -57,7 +57,7 @@ import { printf } from '../../../libs/string';
 import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import { Card } from '../../item';
-import { Select } from '../../forms';
+import { FormSelect } from '../../forms';
 import { Fieldset, Field, Help } from '../../forms/fieldset';
 import { Controller } from '../../navigation';
 import ButtonBasic from '../../button/basic.vue';

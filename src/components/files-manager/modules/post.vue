@@ -119,7 +119,7 @@
   </footer>
   <teleport to="#modals">
     <Modal :show="showThumbnailEditor" @close="controlThumbnailEditor(false)">
-      <Body type="full">
+      <ModalBody type="full">
         <ThumbnailEditor
           :srl="thumbnail.srl"
           :type="localStore.state.post.thumbnailType"
@@ -127,23 +127,23 @@
           :cropper="thumbnail.cropper"
           @close="controlThumbnailEditor(false)"
           @submit="onSubmitThumbnailEditor"/>
-      </Body>
+      </ModalBody>
     </Modal>
     <Modal
       :show="showThumbnailPreview"
       @close="showThumbnailPreview = false">
-      <Body type="full">
+      <ModalBody type="full">
         <ThumbnailPreview
           :image="previewThumbnail"
           @close="showThumbnailPreview = false"/>
-      </Body>
+      </ModalBody>
     </Modal>
   </teleport>
 </article>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed, nextTick } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import localStore from '../store';
 import { getItemsPost, removeFilesPost, uploadFilePost } from '../../../structure/files/manager';
 import { createFullPath } from '../../../structure/files/util';
@@ -153,7 +153,7 @@ import { printf, getByte } from '../../../libs/string';
 import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil';
-import { Modal, Body } from '../../modal';
+import { Modal, ModalBody } from '../../modal';
 import ButtonBasic from '../../button/basic.vue';
 import Attachments from '../attachments/index.vue';
 import Loading from '../../etc/loading.vue';

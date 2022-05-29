@@ -34,9 +34,9 @@ async function output()
     size: { width: width * 2, height: height * 2 },
   });
   let resize = new ImageResize({
-    format: 'jpg',
+    format: 'webp',
     outputType: 'base64',
-    quality: .65,
+    quality: .72,
     width,
     height,
     reSample: 4,

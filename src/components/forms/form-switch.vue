@@ -49,4 +49,4 @@ function onChange(e)
 }
 </script>
 
-<style src="./switch.scss" lang="scss" scoped></style>
+<style src="./form-switch.scss" lang="scss" scoped></style>

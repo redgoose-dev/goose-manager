@@ -35,7 +35,7 @@
         @update:modelValue="onChangePage"/>
     </div>
     <aside class="articles__filter">
-      <Filter
+      <ArticleFilter
         :total="data.total"
         :loading="loading"
         @update="onUpdateFilter"/>
@@ -56,7 +56,7 @@ import { Items, Card, Thumbnail, Mark } from '../../components/item';
 import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/error/empty.vue';
 import Pagination from '../../components/etc/pagination.vue';
-import Filter from '../../components/pages/articles/filter.vue';
+import ArticleFilter from '../../components/pages/articles/article-filter.vue';
 
 const route = useRoute();
 const router = useRouter();

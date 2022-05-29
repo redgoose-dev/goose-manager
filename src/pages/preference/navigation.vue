@@ -10,7 +10,7 @@
     <fieldset class="code-form__fieldset">
       <legend>Navigation forms</legend>
       <div class="field">
-        <Textarea
+        <FormTextarea
           v-model="fields.code.value"
           placeholder="Please input code"
           :auto-size="false"
@@ -39,7 +39,7 @@ import { toast } from '../../modules/toast';
 import { printf } from '../../libs/string';
 import { err } from '../../libs/error';
 import { $msg } from '../../message';
-import { Textarea } from '../../components/forms';
+import { FormTextarea } from '../../components/forms';
 import { Help } from '../../components/forms/fieldset';
 import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';

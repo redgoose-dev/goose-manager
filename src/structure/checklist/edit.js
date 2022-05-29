@@ -1,4 +1,4 @@
-import { get, post, formData } from '../../libs/api';
+import { post, formData } from '../../libs/api';
 import { getLastItem, getItem } from './item';
 
 /**

@@ -42,7 +42,7 @@
       </Controller>
     </div>
     <aside class="checklist-list__filter">
-      <Filter
+      <ChecklistFilter
         :total="data.total"
         :loading="loading"
         @update="onUpdateFilter"/>
@@ -66,7 +66,7 @@ import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/error/empty.vue';
 import Pagination from '../../components/etc/pagination.vue';
 import ProgressDonut from '../../components/etc/progress-donut.vue';
-import Filter from '../../components/pages/checklist/filter.vue';
+import ChecklistFilter from '../../components/pages/checklist/checklist-filter.vue';
 
 const route = useRoute();
 const router = useRouter();

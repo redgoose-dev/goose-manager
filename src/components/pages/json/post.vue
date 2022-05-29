@@ -64,8 +64,7 @@ import { message } from '../../../message';
 import { toast } from '../../../modules/toast';
 import { Fieldset, Field, Help } from '../../forms/fieldset';
 import { Controller } from '../../navigation';
-import FormInput from '../../forms/input.vue';
-import FormTextarea from '../../forms/textarea.vue';
+import { FormInput, FormTextarea } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
 const root = ref();

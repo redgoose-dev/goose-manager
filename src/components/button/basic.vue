@@ -1,14 +1,14 @@
 <template>
 <component :is="tag" v-bind="rootProps">
-  <Body v-bind="bodyProps">
+  <ButtonBody v-bind="bodyProps">
     <slot v-if="$slots.default"/>
-  </Body>
+  </ButtonBody>
 </component>
 </template>
 
 <script setup>
 import { computed } from 'vue';
-import Body from './body.vue';
+import ButtonBody from './button-body.vue';
 
 const props = defineProps({
   type: { type: String, default: 'button' }, // label,button,submit,reset

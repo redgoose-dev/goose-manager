@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "main": "index.js",
   "private": false,
   "license": "MIT",
@@ -23,22 +23,23 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "axios": "^0.25.0",
+    "axios": "^0.27.2",
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.2"
+    "express": "^4.18.1",
+    "ohmyfetch": "^0.4.18"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.1.0",
+    "@vitejs/plugin-vue": "^2.3.3",
     "croppie": "^2.6.5",
-    "image-resize": "^1.2.6",
-    "marked": "^4.0.12",
-    "nodemon": "^2.0.15",
+    "image-resize": "^1.2.7",
+    "marked": "^4.0.16",
+    "nodemon": "^2.0.16",
     "redgoose-content-body": "git+https://github.com/redgoose-dev/redgoose-content-body.git",
-    "sass": "^1.49.7",
-    "vite": "^2.7.13",
-    "vue": "^3.2.29",
-    "vue-i18n": "^9.2.0-beta.30",
-    "vue-router": "^4.0.12",
+    "sass": "^1.52.1",
+    "vite": "^2.9.9",
+    "vue": "^3.2.36",
+    "vue-i18n": "^9.2.0-beta.35",
+    "vue-router": "^4.0.15",
     "vuedraggable": "^4.1.0",
     "vuex": "^4.0.2"
   }

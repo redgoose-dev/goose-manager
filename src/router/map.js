@@ -332,19 +332,19 @@ const guide = [
       {
         path: 'button/',
         name: 'GuideButton',
-        component: () => import('../pages/guide/button.vue'),
+        component: () => import('../pages/guide/guide-button.vue'),
         meta: { active: 'guide' },
       },
       {
         path: 'form/',
         name: 'GuideForm',
-        component: () => import('../pages/guide/form.vue'),
+        component: () => import('../pages/guide/guide-form.vue'),
         meta: { active: 'guide' },
       },
       {
         path: 'fieldset/',
         name: 'GuideFieldset',
-        component: () => import('../pages/guide/fieldset.vue'),
+        component: () => import('../pages/guide/guide-fieldset.vue'),
         meta: { active: 'guide' },
       },
       {

@@ -37,7 +37,7 @@ import PageHeader from '../../components/page/header/index.vue';
 import ButtonBasic from '../../components/button/basic.vue';
 import { Controller } from '../../components/navigation';
 import ChecklistItem from '../../components/pages/checklist/item.vue';
-import ChecklistProgress from '../../components/pages/checklist/progress.vue';
+import ChecklistProgress from '../../components/pages/checklist/checklist-progress.vue';
 import Loading from '../../components/etc/loading.vue';
 
 const loading = ref(true);

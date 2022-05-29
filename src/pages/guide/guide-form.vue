@@ -233,14 +233,11 @@
 <script setup>
 import { ref } from 'vue';
 import { sleep } from '../../libs/util';
-import FormSelect from '../../components/forms/select.vue';
+import { FormSelect, FormTextarea, FormInput, FormSwitch } from '../../components/forms';
 import FormCheckbox from '../../components/forms/checkbox.vue';
 import FormRadio from '../../components/forms/radio.vue';
 import FormContentEditable from '../../components/forms/content-editable.vue';
 import FormKeyword from '../../components/forms/keyword.vue';
-import FormTextarea from '../../components/forms/textarea.vue';
-import FormInput from '../../components/forms/input.vue';
-import FormSwitch from '../../components/forms/switch.vue';
 import ButtonBasic from '../../components/button/basic.vue';
 
 const text = ref(null);
@@ -259,7 +256,7 @@ const selectOptions = [
   { label: 'Mango', value: 'mango' },
 ];
 
-async function onSubmitKeyword(e)
+async function onSubmitKeyword()
 {
   keywordProcessing.value = true;
   await sleep(2000);

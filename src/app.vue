@@ -29,7 +29,7 @@ if (!DEVELOPMENT)
 
     if (typeof e === 'string')
     {
-      error.value = new Error(e);
+      error.value = new Error(e.message);
     }
     else
     {

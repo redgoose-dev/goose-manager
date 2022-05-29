@@ -20,9 +20,9 @@
   </div>
   <teleport to="#modals">
     <Modal :show="guide" @close="guide = false">
-      <Body type="window">
+      <ModalBody type="window">
         <Guide @close="guide = false"/>
-      </Body>
+      </ModalBody>
     </Modal>
   </teleport>
 </article>
@@ -32,7 +32,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import localStore from './store';
 import { controlWindow } from './util';
-import { Modal, Body } from '../modal';
+import { Modal, ModalBody } from '../modal';
 import Tabs from './tabs.vue';
 import ModulePost from './modules/post.vue';
 import ModuleGlobal from './modules/global.vue';

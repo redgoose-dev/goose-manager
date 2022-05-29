@@ -3,7 +3,7 @@
   <form @submit.prevent="onSubmit">
     <Fieldset>
       <Field :label="$msg('word.language')">
-        <Select
+        <FormSelect
           v-model="fields.language.value"
           :placeholder="null"
           :options="[
@@ -14,7 +14,7 @@
         <Help>매니저에서 표시되는 언어를 선택합니다.</Help>
       </Field>
       <Field :label="$msg('word.theme')">
-        <Select
+        <FormSelect
           v-model="fields.theme.value"
           :placeholder="null"
           :options="[
@@ -45,7 +45,7 @@ import { toast } from '../../modules/toast';
 import { printf } from '../../libs/string';
 import { $msg, changeLanguage } from '../../message';
 import { Fieldset, Field, Help } from '../../components/forms/fieldset';
-import { Select } from '../../components/forms';
+import { FormSelect } from '../../components/forms';
 import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
 

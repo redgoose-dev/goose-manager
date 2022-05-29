@@ -2,7 +2,7 @@
 <form ref="$root" v-if="!loading" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="processing">
     <Field v-if="data.categories?.length > 0" label="Category" for="category">
-      <Select
+      <FormSelect
         id="category"
         name="category"
         v-model="forms.category_srl"
@@ -10,7 +10,7 @@
         class="category"/>
     </Field>
     <Field label="Title" for="title">
-      <Input
+      <FormInput
         name="title"
         id="title"
         v-model="forms.title.value"
@@ -21,7 +21,7 @@
     </Field>
     <Columns style="--columns-template: .75fr 1fr">
       <Field label="Order date" for="order">
-        <Input
+        <FormInput
           name="order"
           id="order"
           v-model="forms.order.value"
@@ -37,7 +37,7 @@
       <Field label="Article type" for="type">
         <Labels class="types">
           <Label class="types__label ready">
-            <Radio
+            <FormRadio
               name="type"
               id="type"
               v-model="forms.type"
@@ -46,17 +46,11 @@
             <span>ready</span>
           </Label>
           <Label class="types__label public">
-            <Radio
-              name="type"
-              v-model="forms.type"
-              value="public"/>
+            <FormRadio name="type" v-model="forms.type" value="public"/>
             <span>public</span>
           </Label>
           <Label class="types__label private">
-            <Radio
-              name="type"
-              v-model="forms.type"
-              value="private"/>
+            <FormRadio name="type" v-model="forms.type" value="private"/>
             <span>private</span>
           </Label>
         </Labels>
@@ -112,7 +106,7 @@
       :show="showFilesManager"
       :scroll="true"
       @close="showFilesManager = false">
-      <Body type="full">
+      <ModalBody type="full">
         <FilesManager
           tab="post"
           :global="{ path: store.state.preference.files.globalPath }"
@@ -122,7 +116,7 @@
           :use-thumbnail="true"
           @custom-event="onFilesManagerEvent"
           @close="showFilesManager = false"/>
-      </Body>
+      </ModalBody>
     </Modal>
   </teleport>
 </form>
@@ -140,10 +134,10 @@ import { printf } from '../../../../libs/string';
 import { getTypeArticle, createQueries } from '../libs';
 import { message } from '../../../../message';
 import { toast } from '../../../../modules/toast';
-import { Input, Select, Radio } from '../../../forms';
+import { FormInput, FormSelect, FormRadio } from '../../../forms';
 import { Fieldset, Field, Label, Labels, Help, Columns } from '../../../forms/fieldset';
 import { Controller } from '../../../navigation';
-import { Modal, Body } from '../../../modal';
+import { Modal, ModalBody } from '../../../modal';
 import ButtonBasic from '../../../button/basic.vue';
 import Editor from './editor.vue';
 import FilesManager from '../../../files-manager/index.vue';

@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import localStore from './store';
 import Icon from '../icons/index.vue';
 

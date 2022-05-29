@@ -9,7 +9,7 @@
       v-model="data.index"
       item-key="srl"
       handle="button"
-      tag="transition-group"
+      tag="ul"
       @change="onChangeIndex">
       <template #item="{element, key}">
         <Card
@@ -78,7 +78,7 @@ async function onChangeIndex()
   try
   {
     if (!route.params.nestSrl) throw new Error('no nestSrl');
-    let srls = data.index.map((o, k) => (o.srl)).join(',');
+    let srls = data.index.map((o) => (o.srl)).join(',');
     let res = await post('/categories/sort/', formData({
       nest_srl: Number(route.params.nestSrl),
       srls,
@@ -137,6 +137,15 @@ onMounted(async () => {
   }
 }
 .items {
+  display: block;
+  > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(var(--items-column, 1), 1fr);
+    gap: var(--items-gap, 16px);
+  }
   &:deep([draggable]) {
     user-select: auto;
     -webkit-user-drag: element;

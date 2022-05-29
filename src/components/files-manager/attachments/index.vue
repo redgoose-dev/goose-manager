@@ -8,7 +8,7 @@
     class="attachments">
     <ul class="attachments__index">
       <li v-for="(item,key) in props.index" @click.stop="">
-        <Progress v-if="item.ready" :percent="item.percent"/>
+        <FileProgress v-if="item.ready" :percent="item.percent"/>
         <Item
           v-else
           :image="item.pathFull"
@@ -38,7 +38,7 @@ import localStore from '../store';
 import { selectItem, selectAll } from '../selectItems';
 import Icon from '../../icons/index.vue';
 import Item from './item.vue';
-import Progress from '../progress.vue';
+import FileProgress from '../file-progress.vue';
 
 const props = defineProps({
   index: Array,

@@ -4,7 +4,7 @@
   class="create-comment"
   @submit.prevent="onSubmit">
   <div class="create-comment__body">
-    <Textarea
+    <FormTextarea
       ref="$form"
       v-model="forms.content.value"
       placeholder="Please input comment."
@@ -36,7 +36,7 @@ import { printf } from '../../../../libs/string';
 import { err } from '../../../../libs/error';
 import { toast } from '../../../../modules/toast';
 import { message } from '../../../../message';
-import { Textarea } from '../../../forms';
+import { FormTextarea } from '../../../forms';
 import ButtonBasic from '../../../button/basic.vue';
 
 const $comment = ref();

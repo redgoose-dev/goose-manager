@@ -84,9 +84,9 @@ import { printf } from '../../libs/string';
 import { message } from '../../message';
 import { toast } from '../../modules/toast';
 import PageHeader from '../../components/page/header/index.vue';
+import { FormInput } from '../../components/forms';
 import { Fieldset, Field, Help } from '../../components/forms/fieldset';
 import { Controller } from '../../components/navigation';
-import FormInput from '../../components/forms/input.vue';
 import ButtonBasic from '../../components/button/basic.vue';
 
 const root = ref();

@@ -61,4 +61,4 @@ function onUpdate(e)
 }
 </script>
 
-<style src="./select.scss" lang="scss" scoped></style>
+<style src="./form-select.scss" lang="scss" scoped></style>

@@ -9,23 +9,23 @@
     :alt="props.alt"
     class="item__thumbnail"/>
   <div class="item__body">
-    <Title
+    <ItemTitle
       v-if="props.title"
       :href="props.href"
       :target="props.target"
       class="item__title">
       {{props.title}}
-    </Title>
+    </ItemTitle>
     <Description
       v-if="props.description"
       class="item__description">
       {{props.description}}
     </Description>
-    <Meta
+    <ItemMeta
       v-if="props.meta?.length > 0"
       :items="props.meta"
       class="item__meta"/>
-    <Nav
+    <ItemNav
       v-if="props.nav?.length > 0"
       :items="props.nav"
       class="item__nav"/>
@@ -36,10 +36,10 @@
 
 <script setup>
 import ThumbnailImage from './assets/thumbnail-image.vue';
-import Title from './assets/title.vue';
+import ItemTitle from './assets/item-title.vue';
 import Description from './assets/description.vue';
-import Meta from './assets/meta.vue';
-import Nav from './assets/nav.vue';
+import ItemMeta from './assets/item-meta.vue';
+import ItemNav from './assets/item-nav.vue';
 
 const props = defineProps({
   image: String,

@@ -22,12 +22,12 @@
 
   <teleport to="#modals">
     <Modal :show="windowType" @close="windowType = false">
-      <Body type="window" style="padding: 30px">
+      <ModalBody type="window" style="padding: 30px">
         <div>window type content</div>
-      </Body>
+      </ModalBody>
     </Modal>
     <Modal :show="fullSize" :scroll="true" @close="fullSize = false">
-      <Body type="full">
+      <ModalBody type="full">
         <article class="modal-full-content">
           <header>
             <h3>full size content</h3>
@@ -39,7 +39,7 @@
             </ButtonBasic>
           </nav>
         </article>
-      </Body>
+      </ModalBody>
     </Modal>
   </teleport>
 </article>
@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Modal, Body } from '../../components/modal';
+import { Modal, ModalBody } from '../../components/modal';
 import ButtonBasic from '../../components/button/basic.vue';
 
 const windowType = ref(false);

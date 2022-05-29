@@ -4,18 +4,17 @@
   :scroll="true"
   class="preview"
   @close="emits('close')">
-  <Body type="window" class="preview__body">
+  <ModalBody type="window" class="preview__body">
     <div
       ref="$preview"
       v-html="props.content"
       class="preview__content redgoose-body redgoose-body--dark redgoose-body--popup"/>
-  </Body>
+  </ModalBody>
 </Modal>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Modal, Body } from '../modal';
+import { Modal, ModalBody } from '../modal';
 
 const props = defineProps({
   show: Boolean,

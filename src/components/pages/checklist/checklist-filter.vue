@@ -10,20 +10,20 @@
       <hr class="filter__line">
       <div class="filter__field range">
         <label for="filter-range">Date range</label>
-        <Input
+        <FormInput
           type="date"
           name="filter-range"
           id="filter-range"
           v-model="forms.dateStart"
           size="small"/>
-        <Input
+        <FormInput
           type="date"
           v-model="forms.dateEnd"
           size="small"/>
       </div>
       <div class="filter__field sort">
         <label for="filter-sort">Sort</label>
-        <Select
+        <FormSelect
           name="filter-sort"
           id="filter-sort"
           v-model="forms.sort"
@@ -76,7 +76,7 @@ import { useRoute, useRouter } from 'vue-router';
 import store from '../../../store';
 import { withCommas } from '../../../libs/number';
 import { saveFilters } from '../../../store/sub/filters';
-import { Select, Keyword, Input } from '../../forms';
+import { FormSelect, Keyword, FormInput } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
 const $keyword = ref();
@@ -117,4 +117,4 @@ function onSubmit()
 }
 </script>
 
-<style src="./filter.scss" lang="scss" scoped></style>
+<style src="./checklist-filter.scss" lang="scss" scoped></style>

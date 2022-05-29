@@ -1,2 +1,2 @@
 export { default as Modal } from './modal.vue';
-export { default as Body } from './body.vue';
+export { default as ModalBody } from './modal-body.vue';

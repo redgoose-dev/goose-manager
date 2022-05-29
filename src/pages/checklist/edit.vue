@@ -9,7 +9,7 @@
       class="checklist-post__toolbar"
       @select-item="onSelectToolbarItem"/>
     <div class="checklist-post__body">
-      <Textarea
+      <FormTextarea
         ref="$content"
         name="content"
         id="content"
@@ -44,7 +44,7 @@
       :show="showFilesManager"
       :scroll="true"
       @close="showFilesManager = false">
-      <Body type="full">
+      <ModalBody type="full">
         <FilesManager
           tab="post"
           :global="{ path: store.state.preference.files.globalPath }"
@@ -54,7 +54,7 @@
           :use-thumbnail="false"
           @custom-event="onFilesManagerEvent"
           @close="showFilesManager = false"/>
-      </Body>
+      </ModalBody>
     </Modal>
   </teleport>
 </article>
@@ -72,8 +72,8 @@ import { message } from '../../message';
 import { dateFormat } from '../../libs/date';
 import { getData, submit } from '../../structure/checklist/edit';
 import PageHeader from '../../components/page/header/index.vue';
-import { Modal, Body } from '../../components/modal';
-import { Textarea } from '../../components/forms';
+import { Modal, ModalBody } from '../../components/modal';
+import { FormTextarea } from '../../components/forms';
 import { Controller } from '../../components/navigation';
 import ButtonBasic from '../../components/button/basic.vue';
 import PostToolbar from '../../components/navigation/post-toolbar.vue';

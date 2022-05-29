@@ -11,9 +11,9 @@
     class="checklist-item__files"/>
   <teleport to="#modals">
     <Modal :show="!!previewImage" @close="previewImage = null">
-      <Body>
+      <ModalBody>
         <PreviewImage :src="previewImage" @close="previewImage = null"/>
-      </Body>
+      </ModalBody>
     </Modal>
   </teleport>
 </div>
@@ -25,7 +25,7 @@ import { marked, Renderer } from 'marked';
 import store from '../../../store';
 import { dateFormat } from '../../../libs/date';
 import { replaceMark } from '../../../structure/checklist/lib';
-import { Modal, Body } from '../../modal';
+import { Modal, ModalBody } from '../../modal';
 import PreviewImage from '../articles/item/preview-image.vue';
 import Files from '../articles/item/files.vue';
 

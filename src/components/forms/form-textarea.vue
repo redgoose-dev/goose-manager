@@ -88,4 +88,4 @@ defineExpose({
 });
 </script>
 
-<style src="./textarea.scss" lang="scss" scoped></style>
+<style src="./form-textarea.scss" lang="scss" scoped></style>

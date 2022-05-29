@@ -2,7 +2,7 @@
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
     <Field label="E-Mail" for="email">
-      <Input
+      <FormInput
         type="email"
         v-model="forms.email.value"
         name="email"
@@ -18,7 +18,7 @@
       </Help>
     </Field>
     <Field label="Name" for="name">
-      <Input
+      <FormInput
         v-model="forms.name.value"
         name="name"
         id="name"
@@ -29,7 +29,7 @@
         class="fields__name"/>
     </Field>
     <Field v-if="!isEdit" label="Password" for="password">
-      <Input
+      <FormInput
         type="password"
         v-model="forms.password.value"
         name="password"
@@ -41,7 +41,7 @@
         class="fields__password"/>
     </Field>
     <Field v-if="!isEdit" label="Confirm password" for="password2">
-      <Input
+      <FormInput
         type="password"
         v-model="forms.password2.value"
         name="password2"
@@ -56,7 +56,7 @@
       </Help>
     </Field>
     <FieldCheck label="Admin" description="관리자 권한으로 사용합니다." for="admin">
-      <Switch v-model="forms.admin.value" :disabled="!useAdminField"/>
+      <FormSwitch v-model="forms.admin.value" :disabled="!useAdminField"/>
     </FieldCheck>
   </Fieldset>
   <Controller>
@@ -87,7 +87,7 @@ import { printf } from '../../../libs/string';
 import { toast } from '../../../modules/toast';
 import { Fieldset, Field, FieldCheck, Help } from '../../forms/fieldset';
 import { Controller } from '../../navigation';
-import { Input, Switch } from '../../forms';
+import { FormInput, FormSwitch } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
 const root = ref();

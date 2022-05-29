@@ -60,9 +60,9 @@
     class="article__comments"/>
   <teleport to="#modals">
     <Modal :show="!!previewImage" @close="previewImage = null">
-      <Body>
+      <ModalBody>
         <PreviewImage :src="previewImage" @close="previewImage = null"/>
-      </Body>
+      </ModalBody>
     </Modal>
   </teleport>
 </article>
@@ -77,7 +77,7 @@ import { err } from '../../../../libs/error';
 import { createQueries } from '../libs';
 import Loading from '../../../etc/loading.vue';
 import { Controller } from '../../../navigation';
-import { Modal, Body } from '../../../modal';
+import { Modal, ModalBody } from '../../../modal';
 import ButtonBasic from '../../../button/basic.vue';
 import Files from './files.vue';
 import Comments from './comments.vue';

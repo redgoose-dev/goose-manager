@@ -2,7 +2,7 @@
 <div class="comment">
   <div class="comment__body">
     <template v-if="editMode">
-      <Textarea
+      <FormTextarea
         v-model="editContent"
         placeholder="Please input comment."
         :auto-size="true"
@@ -53,14 +53,14 @@
 
 <script setup>
 import { marked } from 'marked';
-import { ref, onMounted, reactive, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { editComment, deleteComment } from '../../../../structure/comments';
 import { message } from '../../../../message';
 import { printf } from '../../../../libs/string';
 import { toast } from '../../../../modules/toast';
-import { Textarea } from '../../../forms';
-import ButtonBasic from '../../../button/basic.vue';
 import { err } from "../../../../libs/error.js";
+import { FormTextarea } from '../../../forms';
+import ButtonBasic from '../../../button/basic.vue';
 
 const props = defineProps({
   srl: Number,

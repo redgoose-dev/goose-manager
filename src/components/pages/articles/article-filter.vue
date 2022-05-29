@@ -10,7 +10,7 @@
       <hr class="filter__line">
       <div class="filter__field type">
         <label for="filter_type">Type</label>
-        <Select
+        <FormSelect
           id="filter_type"
           name="filter_type"
           v-model="forms.type"
@@ -24,7 +24,7 @@
       </div>
       <div class="filter__field sort">
         <label for="filter_order">Sort</label>
-        <Select
+        <FormSelect
           id="filter_order"
           name="filter_order"
           v-model="forms.order"
@@ -34,7 +34,7 @@
           ]"
           :placeholder="null"
           size="small"/>
-        <Select
+        <FormSelect
           id="filter_sort"
           name="filter_sort"
           v-model="forms.sort"
@@ -47,7 +47,7 @@
       </div>
       <div class="filter__field theme">
         <label for="filter_theme">Theme</label>
-        <Select
+        <FormSelect
           id="filter_theme"
           name="filter_theme"
           v-model="forms.theme"
@@ -102,7 +102,7 @@ import { useRoute, useRouter } from 'vue-router';
 import store from '../../../store';
 import { withCommas } from '../../../libs/number';
 import { saveFilters } from '../../../store/sub/filters';
-import { Select, Keyword } from '../../forms';
+import { FormSelect, Keyword } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
 const $keyword = ref();
@@ -147,4 +147,4 @@ function onSubmit()
 }
 </script>
 
-<style src="./filter.scss" lang="scss" scoped></style>
+<style src="./article-filter.scss" lang="scss" scoped></style>

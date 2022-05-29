@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import map from './map';
 import { checkAuth } from '../libs/auth';
-import { getPath } from '../libs/string';
 
 /** @var {string} BASE_URL */
 

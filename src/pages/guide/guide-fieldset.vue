@@ -13,18 +13,18 @@
     <div class="example">
       <Fieldset legend="Basic fields">
         <Field label="Text" for="text">
-          <Input v-model="text" id="text" style="--input-width: 360px"/>
+          <FormInput v-model="text" id="text" style="--input-width: 360px"/>
           <Help>
             Typed text: <strong>{{text || 'none'}}</strong>
           </Help>
         </Field>
         <Field label="Select" for="select">
-          <Select v-model="select" placeholder="Please select item" style="--select-width: 200px">
+          <FormSelect v-model="select" placeholder="Please select item" style="--select-width: 200px">
             <option value="">Please select item</option>
             <option value="apple">apple</option>
             <option value="banana">banana</option>
             <option value="mango">mango</option>
-          </Select>
+          </FormSelect>
           <Help>
             Selected item: <strong>{{select || 'none'}}</strong>
           </Help>
@@ -34,15 +34,15 @@
         <Field label="Radio buttons" for="radios">
           <Labels>
             <Label>
-              <Radio name="radios" id="radios" v-model="radio" value="apple"/>
+              <FormRadio name="radios" id="radios" v-model="radio" value="apple"/>
               <span>Apple</span>
             </Label>
             <Label>
-              <Radio name="radios" v-model="radio" value="banana"/>
+              <FormRadio name="radios" v-model="radio" value="banana"/>
               <span>Banana</span>
             </Label>
             <Label>
-              <Radio name="radios" v-model="radio" value="mango"/>
+              <FormRadio name="radios" v-model="radio" value="mango"/>
               <span>Mango</span>
             </Label>
           </Labels>
@@ -54,11 +54,11 @@
           <div class="flex">
             <Labels>
               <Label>
-                <Radio name="radios2" value="apple"/>
+                <FormRadio name="radios2" value="apple"/>
                 <span>Apple</span>
               </Label>
               <Label>
-                <Radio name="radios2" value="banana"/>
+                <FormRadio name="radios2" value="banana"/>
                 <span>Banana</span>
               </Label>
             </Labels>
@@ -67,7 +67,7 @@
             <Labels>
               <Label>
                 <span>Width:</span>
-                <Input
+                <FormInput
                   type="number"
                   size="small"
                   placeholder="0"
@@ -76,7 +76,7 @@
               </Label>
               <Label>
                 <span>Height:</span>
-                <Input
+                <FormInput
                   type="number"
                   size="small"
                   placeholder="0"
@@ -109,11 +109,11 @@
           <Field label="Side input" for="column-input">
             <Labels>
               <Label>
-                <Radio name="radios3" value="apple"/>
+                <FormRadio name="radios3" value="apple"/>
                 <span>Apple</span>
               </Label>
               <Label>
-                <Radio name="radios3" value="banana"/>
+                <FormRadio name="radios3" value="banana"/>
                 <span>Banana</span>
               </Label>
             </Labels>
@@ -123,7 +123,7 @@
           label="Switch value"
           for="switchValue"
           description="Switch value description">
-          <Switch name="switchValue" id="switchValue" :model-value="switchValue"/>
+          <FormSwitch name="switchValue" id="switchValue" :model-value="switchValue"/>
         </FieldCheck>
       </Fieldset>
       <Controller class="controller">
@@ -144,7 +144,7 @@
 import { ref } from 'vue';
 import { Fieldset, Field, FieldCheck, Columns, Labels, Label, Help } from '../../components/forms/fieldset';
 import { Controller } from '../../components/navigation';
-import { Input, Select, Checkbox, Radio, Switch } from '../../components/forms';
+import { FormInput, FormSelect, Checkbox, FormRadio, FormSwitch } from '../../components/forms';
 import ButtonBasic from '../../components/button/basic.vue';
 
 const text = ref('');

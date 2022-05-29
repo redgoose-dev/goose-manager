@@ -175,10 +175,7 @@ import { toast } from '../../../modules/toast';
 import getData, { defaultJson } from '../../../structure/nests/post';
 import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset';
 import { Controller } from '../../navigation';
-import FormInput from '../../forms/input.vue';
-import FormSelect from '../../forms/select.vue';
-import FormRadio from '../../forms/radio.vue';
-import FormSwitch from '../../forms/switch.vue';
+import { FormInput, FormSelect, FormRadio, FormSwitch } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 
 const root = ref();

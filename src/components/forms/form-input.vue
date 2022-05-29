@@ -77,4 +77,4 @@ defineExpose({
 });
 </script>
 
-<style src="./input.scss" lang="scss" scoped></style>
+<style src="./form-input.scss" lang="scss" scoped></style>
