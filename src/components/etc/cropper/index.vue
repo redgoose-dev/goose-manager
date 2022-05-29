@@ -36,7 +36,7 @@ async function output()
   let resize = new ImageResize({
     format: 'webp',
     outputType: 'base64',
-    quality: .72,
+    quality: .82,
     width,
     height,
     reSample: 4,
