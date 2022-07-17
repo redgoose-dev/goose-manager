@@ -5,7 +5,7 @@
     class="attachment__button"
     :title="props.name"
     @click="emits('select-item', $event)">
-    <img v-if="type === 'image'" :src="props.image" alt="props.name">
+    <img v-if="type === 'image'" :src="props.image" alt="props.name" draggable="false"/>
     <span v-else>
       <Icon :name="fileType"/>
       <strong>{{props.name}}</strong>
@@ -43,7 +43,7 @@
             주소 삽입하기
           </button>
         </li>
-        <li v-else-if="o === 'set-thumbnail' && localStore.state.useThumbnail">
+        <li v-else-if="o === 'set-thumbnail' && localStore.useThumbnail">
           <button type="button" @click="onClickContextItem(o)">
             썸네일 이미지 설정
           </button>
@@ -59,52 +59,55 @@
 </div>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import localStore from '../store';
-import { getByte } from '../../../libs/string';
-import Icon from '../../icons/index.vue';
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { fileManagerStore } from '../store'
+import { getByte } from '../../../libs/string'
+import Icon from '../../icons/index.vue'
 
-const props = defineProps({
-  image: String, // image url path
-  name: String,
-  type: String,
-  size: Number,
-  context: Array,
-  badge: Array,
-  selected: Boolean,
-});
-const emits = defineEmits([ 'select-item', 'select-context-item' ]);
-const type = computed(() => {
-  if (!props.type) return '';
-  const type = props.type.split('/')[0];
+interface Props {
+  image?: string
+  name?: string
+  type?: string
+  size?: number
+  context?: string[]
+  badge?: string[]
+  selected?: boolean
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits([ 'select-item', 'select-context-item' ])
+const localStore = fileManagerStore()
+const type = computed<string>(() => {
+  if (!props.type) return ''
+  const type = props.type.split('/')[0]
   switch (type)
   {
     case 'image':
-      return 'image';
+      return 'image'
     default:
-      return 'file';
+      return 'file'
   }
-});
-const fileType = computed(() => {
-  if (/^audio/.test(props.type))
+})
+const fileType = computed<string>(() => {
+  if (/^audio/.test(props.type || ''))
   {
-    return 'music';
+    return 'music'
   }
-  else if (/^video/.test(props.type))
+  else if (/^video/.test(props.type || ''))
   {
-    return 'video';
+    return 'video'
   }
-  else if (/^text/.test(props.type))
+  else if (/^text/.test(props.type || ''))
   {
-    return 'file-text';
+    return 'file-text'
   }
-  return 'file';
-});
+  return 'file'
+})
 
-function onClickContextItem(key)
+function onClickContextItem(key: string): any
 {
-  emits('select-context-item', key);
+  emits('select-context-item', key)
 }
 </script>
 

@@ -16,64 +16,56 @@
   <Pagination
     v-model="page"
     :total="total"
-    :size="store.state.preference.files.pagePerSize"
+    :size="preference.files.pagePerSize"
     :range="10"
     @update:modelValue="onChangePage"/>
 </article>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import store from '../../store';
-import { err } from '../../libs/error';
-import { getItems } from '../../structure/files';
-import PageHeader from '../../components/page/header/index.vue';
-import { Items, Thumbnail } from '../../components/item';
-import Pagination from '../../components/etc/pagination.vue';
-import Loading from '../../components/etc/loading.vue';
-import Empty from '../../components/error/empty.vue';
-import { serialize } from "../../libs/string.js";
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { preferenceStore } from '../../store/preference'
+import { err } from '../../libs/error'
+import { getItems } from '../../structure/files'
+import { serialize } from '../../libs/string'
+import PageHeader from '../../components/page/header/index.vue'
+import { Items, Thumbnail } from '../../components/item'
+import Pagination from '../../components/etc/pagination.vue'
+import Loading from '../../components/etc/loading.vue'
+import Empty from '../../components/error/empty.vue'
 
-const route = useRoute();
-const router = useRouter();
-const loading = ref(true);
-const index = ref([]);
-const total = ref(0);
-const page = ref(route.query.page ? Number(route.query.page) : 1);
+const route = useRoute()
+const router = useRouter()
+const preference = preferenceStore()
+const loading = ref<boolean>(true)
+const index = ref<any[]>([])
+const total = ref<number>(0)
+const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
 
-function onChangePage(page)
+function onChangePage(page: number): void
 {
-  let params = {
+  const params = {
     ...route.query,
     page: page > 1 ? page : undefined,
-  };
-  router.push(`./${serialize(params, true)}`);
+  }
+  router.push(`./${serialize(params, true)}`)
 }
 
 onMounted(async () => {
   try
   {
-    let res = await getItems();
-    total.value = res.total;
-    index.value = res.index;
-    loading.value = false;
+    let res = await getItems()
+    total.value = res.total
+    index.value = res.index
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/files/index.vue', 'onMounted()'], 'error', e.message);
-    throw e.message;
+    err(['/pages/files/index.vue', 'onMounted()'], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
-<style lang="scss" scoped>
-.files-index {
-  --image-empty-height: 15vw;
-  --image-empty-min-height: 150px;
-  --image-empty-max-height: 200px;
-}
-.pagination {
-  margin: 30px 0 0;
-}
-</style>
+<style src="./index.scss" lang="scss" scoped></style>

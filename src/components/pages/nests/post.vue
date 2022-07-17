@@ -164,102 +164,100 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { post, formData, checkForms } from '../../../libs/api';
-import { err } from '../../../libs/error';
-import { printf, validateId, getByte } from '../../../libs/string';
-import { message } from '../../../message';
-import { toast } from '../../../modules/toast';
-import getData, { defaultJson } from '../../../structure/nests/post';
-import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset';
-import { Controller } from '../../navigation';
-import { FormInput, FormSelect, FormRadio, FormSwitch } from '../../forms';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { post, formData, checkForms } from '../../../libs/api'
+import { err } from '../../../libs/error'
+import { printf, validateId, getByte } from '../../../libs/string'
+import { message } from '../../../message'
+import { toast } from '../../../modules/toast'
+import getData, { setJson, NestJSON } from '../../../structure/nests/post'
+import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset'
+import { Controller } from '../../navigation'
+import { FormInput, FormSelect, FormRadio, FormSwitch } from '../../forms'
+import ButtonBasic from '../../button/basic.vue'
 
-const root = ref();
-const router = useRouter();
-const props = defineProps({
-  mode: { type: String, required: true },
-  srl: Number,
-});
-const forms = reactive({
+interface Forms {
+  app_srl: { value: string, error: any }
+  id: { value: string, error: any }
+  name: { value: string, error: any }
+  description: { value: string, error: any }
+  json: NestJSON
+}
+
+const root = ref()
+const router = useRouter()
+const props = defineProps<{
+  mode: string
+  srl?: number
+}>()
+const forms = reactive<Forms>({
   app_srl: { value: '', error: null },
   id: { value: '', error: null },
   name: { value: '', error: null },
   description: { value: '', error: null },
-  json: defaultJson,
-});
-const apps = ref();
-const loading = ref(true);
-const processing = ref(false);
-const isEdit = computed(() => (props.mode === 'edit'));
-const limitUploadFileSize = computed(() => getByte(forms.json.files?.sizeSingle || 0));
+  json: setJson(),
+})
+const apps = ref()
+const loading = ref<boolean>(true)
+const processing = ref<boolean>(false)
+const isEdit = computed<boolean>(() => (props.mode === 'edit'))
+const limitUploadFileSize = computed<string>(() => getByte(forms.json.files?.sizeSingle || 0))
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
-  forms.id.error = null;
+  forms.id.error = null
   if (!validateId(forms.id.value))
   {
-    forms.id.error = printf(message.words.pleaseCheck, 'ID');
-    root.value.id.focus();
+    forms.id.error = printf(message.words.pleaseCheck, 'ID')
+    root.value.id.focus()
   }
   try
   {
-    processing.value = true;
-    checkForms(forms);
+    processing.value = true
+    checkForms(forms)
     const data = formData({
       app_srl: forms.app_srl.value,
       id: forms.id.value,
       name: forms.name.value,
       description: forms.description.value,
       json: encodeURIComponent(JSON.stringify(forms.json)),
-    });
-    await post((props.mode === 'edit') ? `/nests/${props.srl}/edit/` : '/nests/', data);
-    processing.value = false;
-    await router.push('/nests/');
-    toast.add(printf(message.success[props.mode], message.word.nest), 'success');
+    })
+    await post((props.mode === 'edit') ? `/nests/${props.srl}/edit/` : '/nests/', data)
+    processing.value = false
+    await router.push('/nests/')
+    toast.add(printf(message.success[props.mode], message.word.nest), 'success')
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/nests/post.vue', 'onSubmit()' ], 'error', e.message);
-    processing.value = false;
-    toast.add(printf(message.fail[props.mode], message.word.nest), 'error');
+    err([ '/components/pages/nests/post.vue', 'onSubmit()' ], 'error', e.message)
+    processing.value = false
+    toast.add(printf(message.fail[props.mode], message.word.nest), 'error')
   }
 }
 
 onMounted(async () => {
   try
   {
-    const res = await getData(props.mode, props.srl);
+    const res = await getData(props.mode, Number(props.srl))
     if (props.mode === 'edit')
     {
-      forms.app_srl.value = res.nest.app_srl;
-      forms.id.value = res.nest.id;
-      forms.name.value = res.nest.name;
-      forms.description.value = res.nest.description;
+      forms.app_srl.value = res.nest.app_srl
+      forms.id.value = res.nest.id
+      forms.name.value = res.nest.name
+      forms.description.value = res.nest.description
     }
-    apps.value = res.apps;
-    forms.json = res.nest.json;
-    loading.value = false;
+    apps.value = res.apps
+    forms.json = res.nest.json
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/nests/post.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/components/pages/nests/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
-<style lang="scss" scoped>
-.extra {
-  margin-top: 50px;
-}
-.input-thumbnail-size {
-  --input-width: 80px;
-}
-.input-file-size {
-  --input-width: 110px;
-}
-</style>
+<style src="./post.scss" lang="scss" scoped></style>

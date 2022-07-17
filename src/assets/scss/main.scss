@@ -6,26 +6,26 @@
 
 :root {
   // color
-  --color-bg: #{variables.$color-light-bg};
   --color-bg-rgb: #{variables.$color-light-bg-rgb};
-  --color-base: #{variables.$color-light-base};
+  --color-bg: #{variables.$color-light-bg};
   --color-base-rgb: #{variables.$color-light-base-rgb};
-  --color-invert: #{variables.$color-light-invert};
+  --color-base: #{variables.$color-light-base};
   --color-invert-rgb: #{variables.$color-light-invert-rgb};
-  --color-weak: #{variables.$color-light-weak};
+  --color-invert: #{variables.$color-light-invert};
   --color-weak-rgb: #{variables.$color-light-weak-rgb};
-  --color-edge: #{variables.$color-light-edge};
+  --color-weak: #{variables.$color-light-weak};
   --color-edge-rgb: #{variables.$color-light-edge-rgb};
-  --color-key: #{variables.$color-light-key};
+  --color-edge: #{variables.$color-light-edge};
   --color-key-rgb: #{variables.$color-light-key-rgb};
-  --color-sub: #{variables.$color-light-sub};
+  --color-key: #{variables.$color-light-key};
   --color-sub-rgb: #{variables.$color-light-sub-rgb};
-  --color-code: #{variables.$color-light-code};
+  --color-sub: #{variables.$color-light-sub};
   --color-code-rgb: #{variables.$color-light-code-rgb};
-  --color-success: #{variables.$color-light-success};
+  --color-code: #{variables.$color-light-code};
   --color-success-rgb: #{variables.$color-light-success-rgb};
-  --color-error: #{variables.$color-light-error};
+  --color-success: #{variables.$color-light-success};
   --color-error-rgb: #{variables.$color-light-error-rgb};
+  --color-error: #{variables.$color-light-error};
   // size
   --size-content-body: 1280px;
   --size-radius: 2px;
@@ -36,6 +36,7 @@
   --font-eng: 'ortsa', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-console: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   @include mixins.dark-mode(true) {
+    color-scheme: dark;
     --color-bg: #{variables.$color-dark-bg};
     --color-bg-rgb: #{variables.$color-dark-bg-rgb};
     --color-base: #{variables.$color-dark-base};
@@ -56,7 +57,6 @@
     --color-success-rgb: #{variables.$color-dark-success-rgb};
     --color-error: #{variables.$color-dark-error};
     --color-error-rgb: #{variables.$color-dark-error-rgb};
-    color-scheme: dark;
   }
 }
 

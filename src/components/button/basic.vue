@@ -6,38 +6,40 @@
 </component>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed } from 'vue';
 import ButtonBody from './button-body.vue';
 
-const props = defineProps({
-  type: { type: String, default: 'button' }, // label,button,submit,reset
-  label: String,
-  href: String,
-  target: String,
-  title: String,
-  disabled: Boolean,
-  size: String, // small
-  color: String, // key,sub,error,weak
-  inline: Boolean,
-  rotateIcon: Boolean,
-  iconLeft: String,
-  iconRight: String,
-  className: String,
-  styles: [ Object, Array ],
-});
-const type = computed(() => {
+interface Props {
+  type?: 'label' | 'button' | 'submit' | 'reset'
+  label?: string
+  href?: string
+  target?: string
+  title?: string
+  disabled?: boolean
+  size?: 'small'
+  color?: 'key' | 'sub' | 'error' | 'weak'
+  inline?: boolean
+  rotateIcon?: boolean
+  iconLeft?: string
+  iconRight?: string
+  className?: string
+  styles?: object|any[]
+}
+
+const props = defineProps<Props>();
+const type = computed<any>(() => {
   if (props.href) return /^http/.test(props.href) ? 'a' : 'router';
-  else return props.type || null;
+  else return props.type || 'button';
 });
-const bodyProps = computed(() => {
+const bodyProps = computed<any>(() => {
   return {
     iconLeft: props.iconLeft,
     iconRight: props.iconRight,
     rotateIcon: props.rotateIcon,
   };
 });
-const tag = computed(() => {
+const tag = computed<string>(() => {
   switch (type.value)
   {
     case 'a': return 'a';
@@ -46,8 +48,8 @@ const tag = computed(() => {
     default: return 'button';
   }
 });
-const rootProps = computed(() => {
-  let attr = {};
+const rootProps = computed<any>(() => {
+  let attr: any = {};
   if (props.title) attr.title = props.title;
   switch (type.value)
   {
@@ -62,8 +64,8 @@ const rootProps = computed(() => {
       if (props.disabled) attr.disabled = props.disabled;
       break;
     default:
-      attr.type = props.type;
-      if (props.disabled) attr.disabled = props.disabled;
+      attr.type = props.type || 'button'
+      if (props.disabled) attr.disabled = props.disabled
       break;
   }
   attr.class = [

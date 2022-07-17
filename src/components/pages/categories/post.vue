@@ -15,7 +15,7 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+      <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic

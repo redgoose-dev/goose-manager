@@ -28,7 +28,7 @@
     </li>
   </ul>
   <nav class="guide__nav">
-    <ButtonBasic color="key" @click="emits('close')">
+    <ButtonBasic type="button" color="key" @click="emits('close')">
       Close
     </ButtonBasic>
   </nav>

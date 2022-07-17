@@ -1,8 +1,8 @@
 <template>
 <article class="dashboard">
   <PageHeader
-    :title="store.state.preference.dashboard.title"
-    :description="store.state.preference.dashboard.description"/>
+    :title="preference.dashboard.title"
+    :description="preference.dashboard.description"/>
   <Loading v-if="loading"/>
   <div v-else class="dashboard__body">
     <template v-for="content in contents">
@@ -101,9 +101,9 @@
 </article>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted, reactive } from 'vue';
-import store from '../../store';
+import { preferenceStore } from '../../store/preference'
 import { err } from '../../libs/error';
 import { getData } from '../../structure/dashboard';
 import { Items, Card, Thumbnail } from '../../components/item';
@@ -112,22 +112,23 @@ import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/pages/dashboard/empty.vue';
 import Icon from '../../components/icons/index.vue';
 
-const loading = ref(true);
-const contents = reactive([]);
+const preference = preferenceStore()
+const loading = ref<boolean>(true);
+const contents = reactive<any>([]);
 
 onMounted(async () => {
   try
   {
-    const res = await getData(store.state.preference.dashboard.contents);
-    res.forEach(item => contents.push(item));
-    loading.value = false;
+    const res = await getData(preference.dashboard.contents)
+    res.forEach(o => contents.push(o))
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/dashboard/index.vue', 'onMounted()'], 'error', e.message);
-    throw e.message;
+    err(['/pages/dashboard/index.vue', 'onMounted()'], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

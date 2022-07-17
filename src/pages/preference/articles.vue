@@ -30,43 +30,42 @@
 </article>
 </template>
 
-<script setup>
-import { reactive } from 'vue';
-import store from '../../store';
-import { validateForms, getStringJson } from './libs';
-import { savePreference } from '../../store/sub/preference';
-import { toast } from '../../modules/toast';
-import { printf } from '../../libs/string';
-import { err } from '../../libs/error';
-import { $msg } from '../../message';
-import { FormTextarea } from '../../components/forms';
-import { Help } from '../../components/forms/fieldset';
-import { Controller } from '../../components/navigation';
-import ButtonBasic from '../../components/button/basic.vue';
+<script lang="ts" setup>
+import { reactive } from 'vue'
+import { preferenceStore } from '../../store/preference'
+import { validateForms, getStringJson } from './libs'
+import { toast } from '../../modules/toast'
+import { printf } from '../../libs/string'
+import { err } from '../../libs/error'
+import { $msg } from '../../message'
+import { FormTextarea } from '../../components/forms'
+import { Help } from '../../components/forms/fieldset'
+import { Controller } from '../../components/navigation'
+import ButtonBasic from '../../components/button/basic.vue'
 
-const { articles } = store.state.preference;
+const preference = preferenceStore()
 const fields = reactive({
   code: {
-    value: getStringJson(articles),
+    value: getStringJson(preference.articles),
     error: null,
   },
-});
+})
 
 async function onSubmit()
 {
   try
   {
-    validateForms(fields.code.value);
-    store.state.preference.articles = {
+    validateForms(fields.code.value)
+    preference.articles = {
       ...(JSON.parse(fields.code.value)),
-    };
-    await savePreference();
-    toast.add(printf($msg('success.edit'), $msg('word.preference')), 'success');
+    }
+    await preference.save()
+    toast.add(printf($msg('success.edit'), $msg('word.preference')), 'success')
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/preference/articles.vue', 'onSubmit()'], 'error', e.message);
-    toast.add(printf($msg('fail.edit'), $msg('word.preference')), 'error');
+    err(['/pages/preference/articles.vue', 'onSubmit()'], 'error', e.message)
+    toast.add(printf($msg('fail.edit'), $msg('word.preference')), 'error')
   }
 }
 </script>

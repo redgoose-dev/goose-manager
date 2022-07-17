@@ -96,54 +96,68 @@
 </form>
 </template>
 
-<script setup>
-import { ref, computed, reactive } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import store from '../../../store';
-import { withCommas } from '../../../libs/number';
-import { saveFilters } from '../../../store/sub/filters';
-import { FormSelect, Keyword } from '../../forms';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { ref, computed, reactive, DefineComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { filtersStore } from '../../../store/filters'
+import { withCommas } from '../../../libs/number'
+import { FormSelect, Keyword } from '../../forms'
+import ButtonBasic from '../../button/basic.vue'
 
-const $keyword = ref();
-const route = useRoute();
-const router = useRouter();
-const props = defineProps({
-  total: Number,
-  loading: Boolean,
-});
-const emits = defineEmits([ 'update' ]);
-const filter = store.state.filters.articles;
-const forms = reactive({
-  type: filter.type || '',
-  order: filter.order || '',
-  sort: filter.sort || 'desc',
-  theme: filter.theme || 'card',
-  keyword: filter.keyword || '',
-});
-const keyword = ref(route.query.q);
-const total = computed(() => withCommas(props.total));
-
-function onReset()
-{
-  forms.type = filter.type = 'all';
-  forms.order = filter.order = 'srl';
-  forms.sort = filter.sort = 'desc';
-  forms.theme = filter.theme = 'card';
-  forms.keyword = filter.keyword = '';
-  saveFilters();
-  emits('update');
+interface Forms {
+  type: string
+  order: string
+  sort: string
+  theme: string
+  keyword: string
 }
 
-function onSubmit()
+const $keyword = ref<DefineComponent>()
+const route = useRoute()
+const router = useRouter()
+const filters = filtersStore()
+const props = defineProps<{
+  total: number
+  loading: boolean
+}>()
+const emits = defineEmits([ 'update' ])
+const forms = reactive<Forms>({
+  type: filters.articles.type || '',
+  order: filters.articles.order || '',
+  sort: filters.articles.sort || 'desc',
+  theme: filters.articles.theme || 'card',
+  keyword: filters.articles.keyword || '',
+})
+const keyword = ref<any>(route.query.q)
+const total = computed<string>(() => withCommas(props.total))
+
+function onReset(): void
 {
-  filter.type = forms.type;
-  filter.order = forms.order;
-  filter.sort = forms.sort;
-  filter.theme = forms.theme;
-  filter.keyword = forms.keyword;
-  saveFilters();
-  emits('update');
+  forms.type = 'all'
+  forms.order = 'srl'
+  forms.sort = 'desc'
+  forms.theme = 'card'
+  forms.keyword = ''
+  filters.save('articles', {
+    type: forms.type,
+    order: forms.order,
+    sort: forms.sort,
+    theme: forms.theme,
+    keyword: forms.keyword,
+  })
+  emits('update')
+}
+
+function onSubmit(): void
+{
+  filters.save('articles', {
+    type: forms.type,
+    order: forms.order,
+    sort: forms.sort,
+    theme: forms.theme,
+    keyword: forms.keyword,
+  })
+  emits('update')
 }
 </script>
 

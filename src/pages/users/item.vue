@@ -40,36 +40,37 @@
 </article>
 </template>
 
-<script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import store from '../../store';
-import getData from '../../structure/users/item';
-import { err } from '../../libs/error';
-import PageHeader from '../../components/page/header/index.vue';
-import { Fieldset, Field } from '../../components/forms/fieldset';
-import { FormSwitch } from '../../components/forms';
-import { Controller } from '../../components/navigation';
-import ButtonBasic from '../../components/button/basic.vue';
-import Loading from '../../components/etc/loading.vue';
+<script lang="ts" setup>
+import { ref, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { authStore } from '../../store/auth'
+import getData from '../../structure/users/item'
+import { err } from '../../libs/error'
+import PageHeader from '../../components/page/header/index.vue'
+import { Fieldset, Field } from '../../components/forms/fieldset'
+import { FormSwitch } from '../../components/forms'
+import { Controller } from '../../components/navigation'
+import ButtonBasic from '../../components/button/basic.vue'
+import Loading from '../../components/etc/loading.vue'
 
-const route = useRoute();
-const loading = ref(false);
-const item = ref({});
-const self = computed(() => (store.state.user.srl === Number(route.params.srl)));
+const route = useRoute()
+const auth = authStore()
+const loading = ref<boolean>(false)
+const item = ref<AnyObject>({})
+const self = computed<boolean>(() => (auth.user?.srl === Number(route.params.srl)))
 
-onMounted(async () => {
+onMounted(async (): Promise<void> => {
   try
   {
-    if (!route.params.srl) throw new Error('no srl');
-    loading.value = true;
-    item.value = await getData({ url: `/users/${route.params.srl}/` });
-    loading.value = false;
+    if (!route.params.srl) throw new Error('no srl')
+    loading.value = true
+    item.value = await getData({ url: `/users/${route.params.srl}/` })
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/pages/users/item.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/pages/users/item.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>

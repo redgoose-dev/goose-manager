@@ -24,6 +24,7 @@
   <Controller>
     <template #left>
       <ButtonBasic
+        type="button"
         :href="`../${createQueries(['category','page'], route.query)}`"
         icon-left="list">
         Index
@@ -32,6 +33,7 @@
     <template #right>
       <ButtonBasic
         v-if="props.nestSrl"
+        type="button"
         :href="`../create/${createQueries(['category'], route.query)}`"
         color="key"
         icon-left="plus">
@@ -69,61 +71,67 @@
 <Loading v-else class="loading"/>
 </template>
 
-<script setup>
-import { ref, reactive, computed, onMounted, nextTick } from 'vue';
-import { useRoute } from 'vue-router';
-import getData from '../../../../structure/articles/item';
-import { err } from '../../../../libs/error';
-import { createQueries } from '../libs';
-import Loading from '../../../etc/loading.vue';
-import { Controller } from '../../../navigation';
-import { Modal, ModalBody } from '../../../modal';
-import ButtonBasic from '../../../button/basic.vue';
-import Files from './files.vue';
-import Comments from './comments.vue';
-import PreviewImage from './preview-image.vue';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted, nextTick, DefineComponent } from 'vue'
+import { useRoute } from 'vue-router'
+import getData from '../../../../structure/articles/item'
+import { err } from '../../../../libs/error'
+import { createQueries } from '../libs'
+import Loading from '../../../etc/loading.vue'
+import { Controller } from '../../../navigation'
+import { Modal, ModalBody } from '../../../modal'
+import ButtonBasic from '../../../button/basic.vue'
+import Files from './files.vue'
+import Comments from './comments.vue'
+import PreviewImage from './preview-image.vue'
 
-const route = useRoute();
-const $content = ref();
-const props = defineProps({
-  srl: { type: Number, required: true },
-  nestSrl: Number,
-});
-const data = reactive({
+interface Data {
+  article: any
+  nest: any
+  files: any
+}
+
+const route = useRoute()
+const $content = ref<DefineComponent>()
+const props = defineProps<{
+  srl: number
+  nestSrl?: number
+}>()
+const data = reactive<Data>({
   article: undefined,
   nest: undefined,
   files: undefined,
-});
-const loading = ref(true);
-const previewImage = ref(null);
-const useComments = computed(() => (Number(data.nest.json.useComment) === 1));
+})
+const loading = ref<boolean>(true)
+const previewImage = ref<string>('')
+const useComments = computed<boolean>(() => (Number(data.nest.json.useComment) === 1))
 
 function initContentEvents()
 {
-  $content.value.querySelectorAll('img').forEach(el => {
-    el.addEventListener('click', evt => {
-      previewImage.value = evt.currentTarget.src;
-    });
-  });
+  $content.value?.querySelectorAll('img').forEach((el: HTMLElement) => {
+    el.addEventListener('click', (e: any) => {
+      previewImage.value = e.currentTarget.src
+    })
+  })
 }
 
 onMounted(async () => {
   try
   {
-    let { article, nest, files } = await getData(props.srl, !props.nestSrl);
-    data.article = article;
-    data.nest = nest;
-    data.files = files;
-    loading.value = false;
-    await nextTick();
-    initContentEvents();
+    let { article, nest, files } = await getData(props.srl, !props.nestSrl)
+    data.article = article
+    data.nest = nest
+    data.files = files
+    loading.value = false
+    await nextTick()
+    initContentEvents()
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/components/pages/articles/item/index.vue', 'onMounted()'], 'error', e.message);
-    throw e.message;
+    err(['/components/pages/articles/item/index.vue', 'onMounted()'], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

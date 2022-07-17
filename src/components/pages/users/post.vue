@@ -79,7 +79,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import store from '../../../store';
+import store from '../../../store-legacy';
 import { get, post, formData, checkForms } from '../../../libs/api';
 import { err } from '../../../libs/error';
 import { message } from '../../../message';

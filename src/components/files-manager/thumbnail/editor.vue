@@ -14,12 +14,12 @@
   </div>
   <nav class="thumbnail-editor__nav">
     <div>
-      <ButtonBasic icon-left="x" @click="emits('close')">
+      <ButtonBasic type="button" icon-left="x" @click="emits('close')">
         Close
       </ButtonBasic>
     </div>
     <div>
-      <ButtonBasic color="key" icon-left="check" @click="onSubmit">
+      <ButtonBasic type="button" color="key" icon-left="check" @click="onSubmit">
         Set thumbnail
       </ButtonBasic>
     </div>

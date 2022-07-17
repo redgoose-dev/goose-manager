@@ -31,7 +31,7 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">
+      <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
         Back
       </ButtonBasic>
     </template>
@@ -48,100 +48,79 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, onMounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { getData, requestCategories, submit } from '../../../structure/articles/change-nest';
-import { err } from '../../../libs/error';
-import { printf } from '../../../libs/string';
-import { message } from '../../../message';
-import { toast } from '../../../modules/toast';
-import { Card } from '../../item';
-import { FormSelect } from '../../forms';
-import { Fieldset, Field, Help } from '../../forms/fieldset';
-import { Controller } from '../../navigation';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { ref, reactive, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { getData, requestCategories, submit } from '../../../structure/articles/change-nest'
+import { err } from '../../../libs/error'
+import { printf } from '../../../libs/string'
+import { message } from '../../../message'
+import { toast } from '../../../modules/toast'
+import { Card } from '../../item'
+import { FormSelect } from '../../forms'
+import { Fieldset, Field, Help } from '../../forms/fieldset'
+import { Controller } from '../../navigation'
+import { ButtonBasic } from '../../button'
 
-const route = useRoute();
-const router = useRouter();
-const loading = ref(true);
-const processing = ref(false);
-const data = reactive({
+const route = useRoute()
+const router = useRouter()
+const loading = ref<boolean>(true)
+const processing = ref<boolean>(false)
+const data = reactive<any>({
   article: null,
   nests: [],
   categories: [],
-});
-const forms = reactive({
-  nestSrl: {
-    value: null,
-    error: null,
-  },
-  categorySrl: {
-    value: null,
-    error: null,
-  },
-});
+})
+const forms = reactive<any>({
+  nestSrl: { value: null, error: null },
+  categorySrl: { value: null, error: null },
+})
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
   try
   {
-    processing.value = true;
+    processing.value = true
     await submit({
       srl: Number(route.params.articleSrl),
       nestSrl: Number(forms.nestSrl.value),
       categorySrl: String(forms.categorySrl.value),
-    });
-    processing.value = true;
-    toast.add(printf(message.success.change, message.word.nest), 'success');
-    let url = route.params.nestSrl ? `/nests/${forms.nestSrl.value}/articles/${route.params.articleSrl}/` : '../';
-    await router.push(url);
+    })
+    processing.value = true
+    toast.add(printf(message.success.change, message.word.nest), 'success')
+    let url = route.params.nestSrl ? `/nests/${forms.nestSrl.value}/articles/${route.params.articleSrl}/` : '../'
+    await router.push(url)
   }
-  catch (e)
+  catch (_)
   {
-    processing.value = false;
-    toast.add(printf(message.fail.change, message.word.nest), 'error');
+    processing.value = false
+    toast.add(printf(message.fail.change, message.word.nest), 'error')
   }
 }
 
 onMounted(async () => {
   try
   {
-    let res = await getData(Number(route.params.articleSrl));
-    data.article = res.article;
-    data.nests = res.nests;
-    forms.nestSrl.value = res.article.nestSrl;
-    forms.categorySrl.value = res.article.categorySrl;
-    loading.value = false;
+    let res = await getData(Number(route.params.articleSrl))
+    data.article = res.article
+    data.nests = res.nests
+    forms.nestSrl.value = res.article.nestSrl
+    forms.categorySrl.value = res.article.categorySrl
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/articles/change-nest.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/components/pages/articles/change-nest.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 
 watch(() => forms.nestSrl.value, async value => {
-  processing.value = true;
-  forms.categorySrl.value = data.article.nestSrl === value ? data.article.categorySrl : null;
-  data.categories = await requestCategories(String(value));
-  processing.value = false;
-});
+  processing.value = true
+  forms.categorySrl.value = data.article.nestSrl === value ? data.article.categorySrl : null
+  data.categories = await requestCategories(String(value))
+  processing.value = false
+})
 </script>
 
-<style lang="scss" scoped>
-.information {
-  margin-bottom: 24px;
-  background-color: var(--color-invert);
-  padding: 10px;
-  box-shadow: 0 0 0 1px rgb(var(--color-base-rgb) / 10%), 0 1px 20px rgb(var(--color-base-rgb) / 10%);
-  border-radius: 2px;
-  &__card {
-    box-shadow: none;
-    background-color: transparent;
-    &:deep(.item__thumbnail) {
-      border-radius: var(--size-radius);
-    }
-  }
-}
-</style>
+<style src="./change-nest.scss" lang="scss" scoped></style>

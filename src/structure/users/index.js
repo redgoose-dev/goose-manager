@@ -1,4 +1,4 @@
-import store from '../../store';
+import store from '../../store-legacy';
 import { get } from '../../libs/api';
 import { getDate } from '../../libs/date';
 

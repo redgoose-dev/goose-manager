@@ -7,12 +7,13 @@
   </div>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="emits('cancel')">
-        Back
+      <ButtonBasic type="button" icon-left="arrow-left" @click="emits('cancel')">
+        {{$msg('word.back')}}
       </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic
+        type="button"
         color="key"
         :icon-left="props.processing ? 'loader' : 'check'"
         :rotate-icon="props.processing"
@@ -25,18 +26,19 @@
 </article>
 </template>
 
-<script setup>
-import { Controller } from '../../navigation';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { $msg } from '../../../message'
+import { Controller } from '../../navigation'
+import ButtonBasic from '../../button/basic.vue'
 
-const props = defineProps({
-  title: String,
-  description: String,
-  name: String,
-  buttonLabel: String,
-  processing: Boolean,
-});
-const emits = defineEmits([ 'cancel', 'submit' ]);
+const props = defineProps<{
+  title: string
+  description: string
+  name: string
+  buttonLabel: string
+  processing: boolean
+}>()
+const emits = defineEmits([ 'cancel', 'submit' ])
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

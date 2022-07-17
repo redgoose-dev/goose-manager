@@ -71,7 +71,7 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import store from '../../../store';
+import store from '../../../store-legacy';
 import { err } from '../../../libs/error';
 import { serialize } from '../../../libs/string';
 import { createQueries } from '../../../components/pages/articles/libs';

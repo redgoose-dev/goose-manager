@@ -73,9 +73,9 @@
 <script setup>
 import { ref, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import store from '../../../store';
+import store from '../../../store-legacy';
 import { withCommas } from '../../../libs/number';
-import { saveFilters } from '../../../store/sub/filters';
+import { saveFilters } from '../../../store-legacy/sub/filters';
 import { FormSelect, Keyword, FormInput } from '../../forms';
 import ButtonBasic from '../../button/basic.vue';
 

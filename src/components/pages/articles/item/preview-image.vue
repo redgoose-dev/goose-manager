@@ -4,11 +4,11 @@
 </figure>
 </template>
 
-<script setup>
-const props = defineProps({
-  src: String,
-});
-const emits = defineEmits([ 'close' ]);
+<script lang="ts" setup>
+const props = defineProps<{
+  src: string
+}>()
+const emits = defineEmits([ 'close' ])
 </script>
 
 <style lang="scss" scoped>

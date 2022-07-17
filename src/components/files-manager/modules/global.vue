@@ -4,7 +4,7 @@
     <input
       ref="$file"
       type="file"
-      :accept="localState.state.acceptFileType"
+      :accept="localStore.acceptFileType"
       :disabled="disabledAssets"
       multiple
       @change="onChangeFiles">
@@ -12,6 +12,7 @@
   <header class="files-header">
     <div class="files-header__left">
       <ButtonBasic
+        type="button"
         size="small"
         color="key"
         :icon-left="processing ? 'loader' : 'upload'"
@@ -21,6 +22,7 @@
         Upload files
       </ButtonBasic>
       <ButtonBasic
+        type="button"
         size="small"
         icon-left="minus-square"
         :disabled="disabledAssets"
@@ -28,6 +30,7 @@
         Select all
       </ButtonBasic>
       <ButtonBasic
+        type="button"
         size="small"
         color="error"
         icon-left="trash-2"
@@ -36,15 +39,15 @@
         Delete
       </ButtonBasic>
     </div>
-    <p class="files-total">Count: <em>{{localState.state.global.index.length}}</em></p>
+    <p class="files-total">Count: <em>{{localStore.global.index.length}}</em></p>
   </header>
   <Loading v-if="loading" class="files-loading"/>
   <Attachments
     v-else
     ref="$attachments"
-    :index="localState.state.global.index"
+    :index="localStore.global.index"
     :processing="processing"
-    @change-select="localState.state.global.selected = $event"
+    @change-select="localStore.global.selected = $event"
     @select-context-item="onSelectContextItem"
     @upload="uploadFile($event, 0)"/>
   <footer class="files-footer">
@@ -52,6 +55,7 @@
     <nav class="files-footer__right">
       <div class="dropdown dropdown--right">
         <ButtonBasic
+          type="button"
           color="key"
           icon-left="download"
           :disabled="selectedAssets"
@@ -93,225 +97,226 @@
 </article>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, nextTick } from 'vue';
-import localState from '../store';
-import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager';
-import { err } from '../../../libs/error';
-import { pureObject } from '../../../libs/object';
-import { printf } from '../../../libs/string';
-import { message } from '../../../message';
-import { toast } from '../../../modules/toast';
-import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil';
-import ButtonBasic from '../../button/basic.vue';
-import Attachments from '../attachments/index.vue';
-import Loading from '../../etc/loading.vue';
+<script lang="ts" setup>
+import { ref, computed, onMounted, nextTick } from 'vue'
+import { preferenceStore } from '../../../store/preference'
+import { fileManagerStore } from '../store'
+import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager'
+import { err } from '../../../libs/error'
+import { pureObject } from '../../../libs/object'
+import { printf } from '../../../libs/string'
+import { message } from '../../../message'
+import { toast } from '../../../modules/toast'
+import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil'
+import ButtonBasic from '../../button/basic.vue'
+import Attachments from '../attachments/index.vue'
+import Loading from '../../etc/loading.vue'
 
-const $file = ref();
-const $attachments = ref();
-const emits = defineEmits([ 'close', 'custom-event' ]);
-const loading = ref(true);
-const processing = ref(false);
-const disabledAssets = computed(() => (loading.value || processing.value));
-const selectedAssets = computed(() => {
-  if (disabledAssets.value) return true;
-  return localState.state.global.selected.length <= 0;
-});
+const $file = ref<any>()
+const $attachments = ref<any>()
+const emits = defineEmits([ 'close', 'custom-event' ])
+const preference = preferenceStore()
+const localStore = fileManagerStore()
+const loading = ref<boolean>(true)
+const processing = ref<boolean>(false)
+const disabledAssets = computed<boolean>(() => (loading.value || processing.value))
+const selectedAssets = computed<boolean>(() => {
+  if (disabledAssets.value) return true
+  return localStore.global.selected.length <= 0
+})
 
 // upload files
-function onClickUploadFiles()
+function onClickUploadFiles(): void
 {
-  $file.value.click();
+  $file.value.click()
 }
-async function onChangeFiles(e)
+async function onChangeFiles(e: any): Promise<void>
 {
-  const { files } = e.target;
-  if (processing.value || files.length <= 0) return;
-  processing.value = true;
-  await uploadFile(files, 0);
+  const { files } = e.target
+  if (processing.value || files.length <= 0) return
+  processing.value = true
+  await uploadFile(files, 0)
 }
-async function uploadFile(files, n)
+async function uploadFile(files: FileList, n: number): Promise<void>
 {
-  let idx;
+  let idx: any
   try
   {
-    idx = localState.state.global.index.push({ ready: true, percent: 0 });
-    idx = idx - 1;
-    const res = await uploadFileGlobal(files[n], localState.state.global.path, (e) => {
-      localState.state.global.index[idx].percent = Math.round((e.loaded / e.total) * 100);
-    });
-    localState.state.global.index.splice(idx, 1, {
+    idx = localStore.global.index.push({ ready: true })
+    idx = idx - 1
+    const res = await uploadFileGlobal(files[n], preference.files.globalPath)
+    localStore.global.index.splice(idx, 1, {
       ...res,
       selected: false,
-      key: localState.state.global.idx,
-    });
-    localState.state.global.idx = localState.state.global.idx + 1;
+      key: localStore.global.idx,
+    })
+    localStore.global.idx = localStore.global.idx + 1
     // next queue
-    n++;
+    n++
     if (files.length <= n)
     {
-      completeUploadFiles();
-      return;
+      completeUploadFiles()
+      return
     }
-    if (files.length > n) await uploadFile(files, n);
+    if (files.length > n) await uploadFile(files, n)
   }
-  catch (e)
+  catch (err: any)
   {
-    if (localState.state.global.index[idx].ready) localState.state.global.index.pop();
-    errorUploadFiles(e);
+    if (localStore.global.index[idx].ready) localStore.global.index.pop()
+    errorUploadFiles(err)
   }
 }
 function completeUploadFiles()
 {
-  $attachments.value.reset();
-  $file.value.value = '';
-  processing.value = false;
+  $attachments.value.reset()
+  $file.value.value = ''
+  processing.value = false
 }
-function errorUploadFiles(e)
+function errorUploadFiles(e: ErrorEvent)
 {
-  $attachments.value.reset();
-  processing.value = false;
-  err([ '/components/files-manager/modules/global.vue', 'errorUploadFiles()' ], 'error', e.message);
-  toast.add('Failed upload files.', 'error');
+  $attachments.value.reset()
+  processing.value = false
+  err([ '/components/files-manager/modules/global.vue', 'errorUploadFiles()' ], 'error', e.message)
+  toast.add('Failed upload files.', 'error')
 }
 
-async function deleteItems(paths)
+async function deleteItems(paths: {}[])
 {
-  onSelectAll(false);
-  let res = await removeFilesGlobal(paths);
-  let newIndex = pureObject(localState.state.global.index);
+  onSelectAll(false)
+  let res = await removeFilesGlobal(paths)
+  let newIndex = pureObject(localStore.global.index)
   res.forEach(o => {
     switch (typeof o)
     {
       case 'number':
-        newIndex[o] = false;
-        break;
+        newIndex[o] = false
+        break
       case 'string':
-        toast.add(o, 'error');
-        break;
+        toast.add(o, 'error')
+        break
     }
-  });
-  localState.state.global.index = newIndex.filter(Boolean);
-  await nextTick();
-  $attachments.value.reset();
-  toast.add('첨부파일을 삭제했습니다.', 'success');
+  })
+  localStore.global.index = newIndex.filter(Boolean)
+  await nextTick()
+  $attachments.value.reset()
+  toast.add('첨부파일을 삭제했습니다.', 'success')
 }
-function onDeleteItem(key)
+function onDeleteItem(key: number|undefined): void
 {
-  if (key === undefined) return;
-  if (!confirm(`이 항목을 삭제할까요?\n파일을 삭제하면 복구할 수 없습니다.`)) return;
-  onSelectAll(false);
-  let paths = [{ key, path: localState.state.global.index[key].path }];
-  deleteItems(paths).then();
+  if (key === undefined) return
+  if (!confirm(`이 항목을 삭제할까요?\n파일을 삭제하면 복구할 수 없습니다.`)) return
+  onSelectAll(false)
+  let paths = [{ key, path: localStore.global.index[key].path }]
+  deleteItems(paths).then()
 }
 function onClickDeleteItems()
 {
-  if (localState.state.global.selected.length <= 0) return;
-  if (!confirm(printf(message.confirm.deleteFiles, String(localState.state.global.selected.length)))) return;
-  let paths = localState.state.global.selected.map(key => {
-    if (!localState.state.global.index[key]) return false;
-    return { key, path: localState.state.global.index[key].path };
-  }).filter(Boolean);
-  deleteItems(paths).then();
+  if (localStore.global.selected.length <= 0) return
+  if (!confirm(printf(message.confirm.deleteFiles, String(localStore.global.selected.length)))) return
+  let paths = localStore.global.selected.map(key => {
+    if (!localStore.global.index[key]) return false
+    return { key, path: localStore.global.index[key].path }
+  }).filter(Boolean)
+  deleteItems(paths).then()
 }
 
-function onSelectAll(sw)
+function onSelectAll(sw?: boolean): void
 {
-  $attachments.value.selectAll(sw);
+  $attachments.value.selectAll(sw)
 }
 
-function onClickFunction(key)
+function onClickFunction(key: string|undefined)
 {
-  if (key === undefined) return;
-  let items = localState.state.global.selected.map(key => {
-    const { name, pathFull, type } = localState.state.global.index[key];
+  if (key === undefined) return
+  let items = localStore.global.selected.map(key => {
+    const { name, pathFull, type } = localStore.global.index[key]
     return {
       name,
       path: pathFull,
       type,
-    };
-  });
+    }
+  })
   switch (key)
   {
     case 'insert-markdown':
       emits('custom-event', {
         key: 'insert-text',
         value: createMarkdownItems(items),
-      });
-      break;
+      })
+      break
     case 'insert-html':
       emits('custom-event', {
         key: 'insert-text',
         value: createHtmlItems(items),
-      });
-      break;
+      })
+      break
     case 'insert-address':
       emits('custom-event', {
         key: 'insert-text',
         value: createAddressItems(items),
-      });
-      break;
+      })
+      break
   }
 }
 
-function onSelectContextItem(key, type)
+function onSelectContextItem(key: number, type: string): void
 {
-  const src = localState.state.global.index[key];
-  if (!src) return;
+  const src = localStore.global.index[key]
+  if (!src) return
   const item = {
     name: src.name,
     path: src.pathFull,
     type: src.type,
-  };
-  let path;
+  }
+  let path: string
   switch (type)
   {
     case 'open-new-window':
-      path = localState.state.global.index[key]?.pathFull;
-      if (path) window.open(path);
-      break;
+      path = localStore.global.index[key]?.pathFull
+      if (path) window.open(path)
+      break
     case 'insert':
       emits('custom-event', {
         key: 'insert-text',
         value: createMarkdownItems([item]),
-      });
-      break;
+      })
+      break
     case 'insert-html':
       emits('custom-event', {
         key: 'insert-text',
         value: createHtmlItems([item]),
-      });
-      break;
+      })
+      break
     case 'insert-address':
       emits('custom-event', {
         key: 'insert-text',
         value: createAddressItems([item]),
-      });
-      break;
+      })
+      break
     case 'delete':
-      onDeleteItem(key);
-      break;
+      onDeleteItem(key)
+      break
   }
 }
 
 onMounted(async () => {
   try
   {
-    localState.state.global.index = await getItemsGlobal(localState.state.global.path);
-    localState.state.global.idx = localState.state.global.index.length;
-    loading.value = false;
+    localStore.global.index = await getItemsGlobal(preference.files.globalPath)
+    localStore.global.idx = localStore.global.index.length
+    loading.value = false
   }
-  catch (e)
+  catch (err: any)
   {
-    err([ '/components/files-manager/modules/global.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/components/files-manager/modules/global.vue', 'onMounted()' ], 'error', err.message)
+    throw err.message
   }
-});
+})
 
 defineExpose({
   selectAll: onSelectAll,
   func: onClickFunction,
-});
+})
 </script>
 
 <style src="./modules.scss" lang="scss" scoped></style>

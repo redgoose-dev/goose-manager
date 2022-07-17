@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import store from '../../store';
+import store from '../../store-legacy';
 import getData from '../../structure/users';
 import { err } from '../../libs/error';
 import PageHeader from '../../components/page/header/index.vue';

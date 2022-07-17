@@ -75,7 +75,7 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import store from '../../store';
+import store from '../../store-legacy';
 import getData from '../../structure/users/item';
 import { post, checkForms, formData } from '../../libs/api';
 import { logout } from '../../libs/auth';

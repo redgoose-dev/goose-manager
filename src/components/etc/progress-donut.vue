@@ -1,38 +1,42 @@
 <template>
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  :width="props.radius * 2"
-  :height="props.radius * 2"
+  :width="radius * 2"
+  :height="radius * 2"
   class="progress-donut">
   <circle
-    :stroke-width="props.stroke"
+    :stroke-width="stroke"
     :r="normalizedRadius"
-    :cx="props.radius"
-    :cy="props.radius"/>
+    :cx="radius"
+    :cy="radius"/>
   <circle
     :stroke-dasharray="`${circumference} ${circumference}`"
-    :stroke-width="props.stroke"
+    :stroke-width="stroke"
     :r="normalizedRadius"
-    :cx="props.radius"
-    :cy="props.radius"
+    :cx="radius"
+    :cy="radius"
     :style="{ '--progress-donut-dash-offset': computedStrokeDashOffset }"/>
 </svg>
 </template>
 
-<script setup>
-import { computed } from 'vue';
+<script lang="ts" setup>
+import { ref, computed } from 'vue'
 
-const props = defineProps({
-  radius: { type: Number, default: 40 },
-  stroke: { type: Number, default: 8 },
-  percent: { type: [ Number, String ], default: 0 },
-});
-const normalizedRadius = computed(() => (props.radius - props.stroke * 2));
-const circumference = computed(() => (normalizedRadius.value * 2 * Math.PI));
-const computedStrokeDashOffset = computed(() => {
-  const percent = Math.min(Number(props.percent), 100);
-  return circumference.value - percent / 100 * circumference.value;
-});
+interface Props {
+  radius: number
+  stroke: number
+  percent: number
+}
+
+const props = defineProps<Props>()
+const radius = ref<number>(props.radius || 40)
+const stroke = ref<number>(props.stroke || 8)
+const percent = ref<number>(props.percent || 0)
+const normalizedRadius = computed<number>(() => (radius.value - stroke.value * 2))
+const circumference = computed<number>(() => (normalizedRadius.value * 2 * Math.PI))
+const computedStrokeDashOffset = computed<number>(() => {
+  return circumference.value - Math.min(percent.value, 100) / 100 * circumference.value
+})
 </script>
 
 <style lang="scss" scoped>
