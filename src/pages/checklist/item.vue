@@ -32,44 +32,52 @@
 </article>
 </template>
 
-<script setup>
-import { ref, reactive, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { getItem } from '../../structure/checklist/item';
-import { err } from '../../libs/error';
-import PageHeader from '../../components/page/header/index.vue';
-import ButtonBasic from '../../components/button/basic.vue';
-import { Controller } from '../../components/navigation';
-import ChecklistItem from '../../components/pages/checklist/item.vue';
-import Loading from '../../components/etc/loading.vue';
+<script lang="ts" setup>
+import { ref, reactive, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { getItem } from '../../structure/checklist/item'
+import { err } from '../../libs/error'
+import PageHeader from '../../components/page/header/index.vue'
+import ButtonBasic from '../../components/button/basic.vue'
+import { Controller } from '../../components/navigation'
+import ChecklistItem from '../../components/pages/checklist/item.vue'
+import Loading from '../../components/etc/loading.vue'
 
-const route = useRoute();
-const loading = ref(true);
-const state = reactive({
+interface State {
+  srl: number
+  content: string
+  date: string
+  percent: number
+  files: string[]
+}
+
+const route = useRoute()
+const loading = ref<boolean>(true)
+const state = reactive<State>({
   srl: NaN,
   content: '',
   date: '',
   percent: NaN,
   files: [],
-});
+})
 
 onMounted(async () => {
   try
   {
-    let res = await getItem(Number(route.params.srl));
-    state.srl = res.srl;
-    state.content = res.content;
-    state.date = res.date;
-    state.percent = res.percent;
-    state.files = res.files;
-    loading.value = false;
+    let res = await getItem(Number(route.params.srl))
+    state.srl = res.srl
+    state.content = res.content
+    state.date = res.date
+    state.percent = res.percent
+    state.files = res.files
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/pages/checklist/item.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/pages/checklist/item.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

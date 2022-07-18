@@ -70,50 +70,61 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import store from '../../../store-legacy';
-import { withCommas } from '../../../libs/number';
-import { saveFilters } from '../../../store-legacy/sub/filters';
-import { FormSelect, Keyword, FormInput } from '../../forms';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { reactive, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { filtersStore } from '../../../store/filters'
+import { withCommas } from '../../../libs/number'
+import { FormSelect, Keyword, FormInput } from '../../forms'
+import ButtonBasic from '../../button/basic.vue'
 
-const $keyword = ref();
-const route = useRoute();
-const router = useRouter();
-const props = defineProps({
-  total: Number,
-  loading: Boolean,
-});
-const emits = defineEmits([ 'update' ]);
-const filter = store.state.filters.checklist;
-const forms = reactive({
-  dateStart: filter.dateStart || '',
-  dateEnd: filter.dateEnd || '',
-  sort: filter.sort || 'desc',
-  keyword: filter.keyword || '',
-});
-const total = computed(() => withCommas(props.total));
-
-function onReset()
-{
-  forms.dateStart = filter.dateStart = '';
-  forms.dateEnd = filter.dateEnd = '';
-  forms.sort = filter.sort = 'desc';
-  forms.keyword = filter.keyword = '';
-  saveFilters();
-  emits('update');
+interface Forms {
+  dateStart: string
+  dateEnd: string
+  sort: string
+  keyword: string
 }
 
-function onSubmit()
+const route = useRoute()
+const router = useRouter()
+const props = defineProps<{
+  total: number
+  loading: boolean
+}>()
+const emits = defineEmits([ 'update' ])
+const filters = filtersStore()
+const forms = reactive<Forms>({
+  dateStart: filters.checklist.dateStart || '',
+  dateEnd: filters.checklist.dateEnd || '',
+  sort: filters.checklist.sort || 'desc',
+  keyword: filters.checklist.keyword || '',
+})
+const total = computed<string>(() => withCommas(props.total))
+
+function onReset(): void
 {
-  filter.dateStart = forms.dateStart;
-  filter.dateEnd = forms.dateEnd;
-  filter.sort = forms.sort;
-  filter.keyword = forms.keyword;
-  saveFilters();
-  emits('update');
+  forms.dateStart = ''
+  forms.dateEnd = ''
+  forms.sort = 'desc'
+  forms.keyword = ''
+  filters.save('checklist', {
+    dateStart: forms.dateStart,
+    dateEnd: forms.dateEnd,
+    sort: forms.sort,
+    keyword: forms.keyword,
+  })
+  emits('update')
+}
+
+function onSubmit(): void
+{
+  filters.save('checklist', {
+    dateStart: forms.dateStart,
+    dateEnd: forms.dateEnd,
+    sort: forms.sort,
+    keyword: forms.keyword,
+  })
+  emits('update')
 }
 </script>
 

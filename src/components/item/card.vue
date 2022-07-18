@@ -47,8 +47,8 @@ interface Props {
   image?: string
   alt?: string
   meta?: string[]
-  nav: any[]
-  href: any,
+  nav?: any[]
+  href?: any,
   target?: string,
 }
 

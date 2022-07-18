@@ -88,8 +88,8 @@ function onChangePage(page: number): void
   let params = {
     ...route.query,
     page: page > 1 ? page : undefined,
-  };
-  router.push(`./${serialize(params, true)}`);
+  }
+  router.push(`./${serialize(params, true)}`)
 }
 
 async function onUpdateFilter(): Promise<void>
@@ -111,25 +111,25 @@ async function onUpdateFilter(): Promise<void>
   }
   catch (e: any)
   {
-    err(['/pages/checklist/list.vue', 'onUpdateFilter()'], 'error', e.message);
-    loading.value = false;
+    err(['/pages/checklist/list.vue', 'onUpdateFilter()'], 'error', e.message)
+    loading.value = false
   }
 }
 
 onMounted(async () => {
   try
   {
-    let res = await getData();
-    data.total = res.total;
-    data.index = res.index;
-    loading.value = false;
+    const { total, index } = await getData()
+    data.total = total
+    data.index = index
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/checklist/list.vue', 'onMounted()'], 'error', e.message);
-    throw e.message;
+    err(['/pages/checklist/list.vue', 'onMounted()'], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style src="./list.scss" lang="scss" scoped></style>

@@ -79,7 +79,7 @@ onMounted(async () => {
       return `<li>${text}</li>`
     }
   }
-  let parsed = marked(props.modelValue, { renderer })
+  const parsed = marked(props.modelValue, { renderer })
   if (!parsed) return
   // input content
   $body.value.innerHTML = parsed

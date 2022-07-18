@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
-  theme: 'list' | 'card' | 'thumbnail' | 'brick'
+  theme: string | 'list' | 'card' | 'thumbnail' | 'brick'
 }>()
 </script>
 

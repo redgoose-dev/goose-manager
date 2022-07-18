@@ -1,7 +1,24 @@
 import { defineStore } from 'pinia'
 import { pureObject } from '../libs/object'
 import * as storage from '../libs/storage'
-import type { Filters } from './filters.d'
+
+declare interface FilterArticles {
+  type?: string
+  order?: string
+  sort?: string
+  theme?: string
+  keyword?: string
+}
+declare interface FilterChecklist {
+  dateStart?: string
+  dateEnd?: string
+  sort?: string
+  keyword?: string
+}
+interface Filters {
+  articles: FilterArticles
+  checklist: FilterChecklist
+}
 
 const defaultFilters: Filters = {
   articles: {
@@ -29,9 +46,8 @@ export const filtersStore = defineStore('filters', {
     setup(): void
     {
       let src = storage.get('filters')
-      if (!src) return
-      this.articles = src.articles
-      this.checklist = src.checklist
+      if (src?.articles) this.articles = src.articles
+      if (src?.checklist) this.checklist = src.checklist
     },
     save(type: string, src: any): void
     {
@@ -44,10 +60,10 @@ export const filtersStore = defineStore('filters', {
           this.articles.keyword = src.keyword
           break
         case 'checklist':
-          this.checklist = src.dateStart
-          this.checklist = src.dateEnd
-          this.checklist = src.sort
-          this.checklist = src.keyword
+          this.checklist.dateStart = src.dateStart
+          this.checklist.dateEnd = src.dateEnd
+          this.checklist.sort = src.sort
+          this.checklist.keyword = src.keyword
           break
       }
       storage.set('filters', <Filters>pureObject({
