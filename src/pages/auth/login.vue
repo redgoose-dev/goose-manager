@@ -76,7 +76,7 @@ import { toast } from '../../modules/toast'
 import { err } from '../../libs/error'
 import { getPath } from '../../libs/string'
 import FormCheckbox from '../../components/forms/checkbox.vue'
-import ButtonBasic from '../../components/button/basic.vue'
+import { ButtonBasic } from '../../components/button'
 
 interface Forms {
   email: string
@@ -85,6 +85,7 @@ interface Forms {
 }
 
 const router = useRouter()
+const auth = authStore()
 const loading = ref<boolean>(false)
 const title = ref<string>(TITLE || 'manager')
 const description = ref<string>(DESCRIPTION || 'manager description')
@@ -117,7 +118,6 @@ async function onSubmit(): Promise<void>
     const { user, token } = data
     if (!(user && token)) throw new Error('not user or token')
     // setup store
-    const auth = authStore()
     const preference = preferenceStore()
     auth.setup(token, user)
     await preference.setup()

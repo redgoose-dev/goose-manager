@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { fileManagerStore } from './store'
+import { fileManagerStore } from '../../store/tool-manager'
 import { controlWindow } from './util';
 import { Modal, ModalBody } from '../modal';
 import Tabs from './tabs.vue';
@@ -48,12 +48,12 @@ interface Props {
     limitSize: number
     thumbnailType: string
   }
-  global: {
+  global?: {
     path: string
   },
-  acceptFileType: string
-  fullSize: boolean
-  useThumbnail: boolean
+  acceptFileType?: string
+  fullSize?: boolean
+  useThumbnail?: boolean
 }
 
 const $tabs = ref<any>()
@@ -88,8 +88,8 @@ function initialize(): void
   localStore.setup()
   localStore.tab = props.tab || 'global'
   localStore.acceptFileType = props.acceptFileType || 'image/*'
-  localStore.fullSize = props.fullSize
-  localStore.useThumbnail = props.useThumbnail
+  localStore.fullSize = props.fullSize || false
+  localStore.useThumbnail = props.useThumbnail || false
   if (props.post)
   {
     localStore.post.module = props.post.module

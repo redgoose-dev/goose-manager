@@ -45,13 +45,13 @@
 </article>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { Modal, ModalBody } from '../../components/modal';
-import ButtonBasic from '../../components/button/basic.vue';
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { Modal, ModalBody } from '../../components/modal'
+import { ButtonBasic } from '../../components/button'
 
-const windowType = ref(false);
-const fullSize = ref(false);
+const windowType = ref<boolean>(false)
+const fullSize = ref<boolean>(false)
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>

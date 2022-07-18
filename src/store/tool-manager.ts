@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { pureObject } from '../../../libs/object'
+import { pureObject } from '../libs/object'
 
 export declare interface Structure {
   tab: string

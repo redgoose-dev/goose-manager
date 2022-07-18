@@ -32,7 +32,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { pureObject } from '../../../libs/object';
 import { controlWindow } from '../util';
 import { loadImage, getImageSize } from '../../../libs/util';
-import ButtonBasic from '../../button/basic.vue';
+import { ButtonBasic } from '../../button';
 import Cropper from '../../etc/cropper/index.vue';
 
 const $cropper = ref();

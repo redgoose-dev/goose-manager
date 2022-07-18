@@ -160,9 +160,9 @@
 </article>
 </template>
 
-<script setup>
-import icons from '../../components/icons/svg-index';
-import Icon from '../../components/icons/index.vue';
+<script lang="ts" setup>
+import icons from '../../components/icons/svg-index.json'
+import Icon from '../../components/icons/index.vue'
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>

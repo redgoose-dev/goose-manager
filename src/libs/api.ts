@@ -3,7 +3,18 @@ import type { $Fetch, FetchOptions } from 'ohmyfetch';
 import store from '../store-legacy'
 import { authStore } from '../store/auth'
 import { getPath, serialize } from './string'
-import type { ResponseService } from './api.d'
+
+interface Response {
+  success: boolean
+  code: number
+  message?: string
+  data?: AnyObject
+  query?: string
+  time?: string
+  url?: string
+  srl?: number
+  _token?: string
+}
 
 let instance: $Fetch
 let headers: { [key: string]: any }
@@ -20,10 +31,10 @@ function setup(): void
   headers = { 'Authorization': `Bearer ${auth.token}` }
 }
 
-export async function get(url: string, params?: AnyObject): Promise<ResponseService>
+export async function get(url: string, params?: AnyObject): Promise<Response>
 {
   if (!instance) setup()
-  let res: ResponseService = await instance(`${url}${serialize(params, true)}`, {
+  let res: Response = await instance(`${url}${serialize(params, true)}`, {
     method: 'get',
     headers: headers,
   })
@@ -32,10 +43,10 @@ export async function get(url: string, params?: AnyObject): Promise<ResponseServ
   return res
 }
 
-export async function post(url: string, data?: any, _options?: any): Promise<ResponseService>
+export async function post(url: string, data?: any, _options?: any): Promise<Response>
 {
   if (!instance) setup()
-  let res: ResponseService = await instance(url, {
+  let res: Response = await instance(url, {
     method: 'post',
     headers: headers,
     ...(_options || {}),
@@ -52,7 +63,7 @@ export async function post(url: string, data?: any, _options?: any): Promise<Res
  * Utility Area
  */
 
-function checkStatus(src: ResponseService): void
+function checkStatus(src: Response): void
 {
   if (!src.success) throw new Error(src.message || 'An unknown error has occurred.')
 }

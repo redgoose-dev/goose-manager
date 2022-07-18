@@ -23,9 +23,9 @@
 import { ref, computed } from 'vue'
 
 interface Props {
-  radius: number
-  stroke: number
-  percent: number
+  radius?: number
+  stroke?: number
+  percent?: number
 }
 
 const props = defineProps<Props>()

@@ -88,7 +88,7 @@ import { toast } from '../../../modules/toast';
 import { Fieldset, Field, FieldCheck, Help } from '../../forms/fieldset';
 import { Controller } from '../../navigation';
 import { FormInput, FormSwitch } from '../../forms';
-import ButtonBasic from '../../button/basic.vue';
+import { ButtonBasic } from '../../button';
 
 const root = ref();
 const router = useRouter();

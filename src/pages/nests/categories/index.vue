@@ -29,7 +29,7 @@
       </template>
     </Draggable>
   </Items>
-  <Empty v-else/>
+  <Empty v-else title="no item"/>
   <Controller>
     <template #left>
       <ButtonBasic href="../../" icon-left="cloud">
@@ -61,7 +61,7 @@ import { printf } from '../../../libs/string';
 import { Items, Card } from '../../../components/item';
 import PageHeader from '../../../components/page/header/index.vue';
 import { Controller } from '../../../components/navigation';
-import ButtonBasic from '../../../components/button/basic.vue';
+import { ButtonBasic } from '../../../components/button';
 import Loading from '../../../components/etc/loading.vue';
 import Empty from '../../../components/error/empty.vue';
 import Icon from '../../../components/icons/index.vue';

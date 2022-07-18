@@ -31,7 +31,7 @@
           </template>
         </component>
       </Items>
-      <Empty v-else/>
+      <Empty v-else title="no item"/>
       <Pagination
         v-model="page"
         :total="data.total"
@@ -79,7 +79,7 @@ import { getData, requestArticles, requestCategories } from '../../../structure/
 import PageHeader from '../../../components/page/header/index.vue';
 import { Items, Card, Thumbnail, Mark } from '../../../components/item';
 import { Controller } from '../../../components/navigation';
-import ButtonBasic from '../../../components/button/basic.vue';
+import { ButtonBasic } from '../../../components/button';
 import Loading from '../../../components/etc/loading.vue';
 import Empty from '../../../components/error/empty.vue';
 import Categories from '../../../components/pages/articles/categories.vue';

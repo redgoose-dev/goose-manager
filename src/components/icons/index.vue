@@ -4,21 +4,21 @@
 </svg>
 </template>
 
-<script setup>
-/** @var {string} BASE_URL */
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { getPath } from '../../libs/string'
 
-import { computed } from 'vue';
-import { getPath } from '../../libs/string';
+interface Props {
+  name: string
+  size?: number
+  strokeWidth?: number
+  color?: string
+}
 
-const props = defineProps({
-  name: String,
-  size: Number,
-  strokeWidth: Number,
-  color: String,
-});
+const props = defineProps<Props>()
 const path = computed(() => {
-  return getPath(`${BASE_URL}/icons/${props.name}.svg#icon_${props.name}`);
-});
+  return getPath(`${BASE_URL}/icons/${props.name}.svg#icon_${props.name}`)
+})
 </script>
 
 <style lang="scss" scoped>

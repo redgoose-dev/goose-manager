@@ -25,7 +25,7 @@
           </template>
         </component>
       </Items>
-      <Empty v-else/>
+      <Empty v-else title="no item"/>
       <Pagination
         v-model="page"
         :total="data.total"

@@ -44,7 +44,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { fileManagerStore } from './store'
+import { fileManagerStore } from '../../store/tool-manager'
 import Icon from '../icons/index.vue'
 
 interface Props {

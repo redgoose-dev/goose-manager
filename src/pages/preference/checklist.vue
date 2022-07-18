@@ -41,7 +41,7 @@ import { $msg } from '../../message'
 import { FormTextarea } from '../../components/forms'
 import { Help } from '../../components/forms/fieldset'
 import { Controller } from '../../components/navigation'
-import ButtonBasic from '../../components/button/basic.vue'
+import { ButtonBasic } from '../../components/button'
 
 const preference = preferenceStore()
 const fields = reactive({

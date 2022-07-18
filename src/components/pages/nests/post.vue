@@ -176,7 +176,7 @@ import getData, { setJson, NestJSON } from '../../../structure/nests/post'
 import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
 import { FormInput, FormSelect, FormRadio, FormSwitch } from '../../forms'
-import ButtonBasic from '../../button/basic.vue'
+import { ButtonBasic } from '../../button'
 
 interface Forms {
   app_srl: { value: string, error: any }

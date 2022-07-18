@@ -37,7 +37,7 @@
 </article>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 const classes = {
   light: [
     'color-light-bg',
@@ -57,7 +57,7 @@ const classes = {
     'color-dark-weak',
     'color-dark-code',
   ],
-};
+}
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>

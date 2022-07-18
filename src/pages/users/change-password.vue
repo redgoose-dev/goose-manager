@@ -87,7 +87,7 @@ import PageHeader from '../../components/page/header/index.vue';
 import { FormInput } from '../../components/forms';
 import { Fieldset, Field, Help } from '../../components/forms/fieldset';
 import { Controller } from '../../components/navigation';
-import ButtonBasic from '../../components/button/basic.vue';
+import { ButtonBasic } from '../../components/button';
 
 const root = ref();
 const router = useRouter();

@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import { $msg } from '../../../message'
 import { Controller } from '../../navigation'
-import ButtonBasic from '../../button/basic.vue'
+import { ButtonBasic } from '../../button'
 
 const props = defineProps<{
   title: string

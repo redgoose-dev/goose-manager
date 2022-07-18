@@ -144,12 +144,9 @@
 </article>
 </template>
 
-<script setup>
-import ButtonBasic from '../../components/button/basic.vue';
-import ButtonIcon from '../../components/button/icon.vue';
+<script lang="ts" setup>
+import { ButtonBasic } from '../../components/button'
+import ButtonIcon from '../../components/button/icon.vue'
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>
-<style lang="scss" scoped>
-
-</style>

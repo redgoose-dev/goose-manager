@@ -50,7 +50,7 @@ import PageHeader from '../../components/page/header/index.vue'
 import { Fieldset, Field } from '../../components/forms/fieldset'
 import { FormSwitch } from '../../components/forms'
 import { Controller } from '../../components/navigation'
-import ButtonBasic from '../../components/button/basic.vue'
+import { ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 
 const route = useRoute()

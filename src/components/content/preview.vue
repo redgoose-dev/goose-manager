@@ -6,21 +6,22 @@
   @close="emits('close')">
   <ModalBody type="window" class="preview__body">
     <div
-      ref="$preview"
       v-html="props.content"
       class="preview__content redgoose-body redgoose-body--dark redgoose-body--popup"/>
   </ModalBody>
 </Modal>
 </template>
 
-<script setup>
-import { Modal, ModalBody } from '../modal';
+<script lang="ts" setup>
+import { Modal, ModalBody } from '../modal'
 
-const props = defineProps({
-  show: Boolean,
-  content: String,
-});
-const emits = defineEmits([ 'close' ]);
+interface Props {
+  show?: boolean
+  content?: string
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits([ 'close' ])
 </script>
 
 <style src="./preview.scss" lang="scss" scoped></style>

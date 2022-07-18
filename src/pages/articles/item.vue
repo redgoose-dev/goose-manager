@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import Item from '../../components/pages/articles/item/index.vue';
-import { useRoute } from 'vue-router';
+import Item from '../../components/pages/articles/item/index.vue'
+import { useRoute } from 'vue-router'
 
-const route = useRoute();
+const route = useRoute()
 </script>

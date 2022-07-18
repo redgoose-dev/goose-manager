@@ -100,7 +100,7 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { preferenceStore } from '../../../store/preference'
-import { fileManagerStore } from '../store'
+import { fileManagerStore } from '../../../store/tool-manager'
 import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager'
 import { err } from '../../../libs/error'
 import { pureObject } from '../../../libs/object'
@@ -108,7 +108,7 @@ import { printf } from '../../../libs/string'
 import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil'
-import ButtonBasic from '../../button/basic.vue'
+import { ButtonBasic } from '../../button'
 import Attachments from '../attachments/index.vue'
 import Loading from '../../etc/loading.vue'
 

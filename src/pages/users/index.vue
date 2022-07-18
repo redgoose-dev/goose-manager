@@ -2,7 +2,7 @@
 <article>
   <PageHeader module="users"/>
   <Loading v-if="loading"/>
-  <Items v-else-if="index?.length > 0">
+  <Items v-else-if="index?.length > 0" theme="list">
     <Card
       v-for="item in index"
       :title="item.title"
@@ -19,7 +19,7 @@
       </template>
     </Card>
   </Items>
-  <Empty v-else/>
+  <Empty v-else title="no item"/>
   <Controller v-if="store.state.user.admin">
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
@@ -38,7 +38,7 @@ import { err } from '../../libs/error';
 import PageHeader from '../../components/page/header/index.vue';
 import { Items, Card, Mark } from '../../components/item';
 import { Controller } from '../../components/navigation';
-import ButtonBasic from '../../components/button/basic.vue';
+import { ButtonBasic } from '../../components/button';
 import Loading from '../../components/etc/loading.vue';
 import Empty from '../../components/error/empty.vue';
 

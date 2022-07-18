@@ -47,7 +47,7 @@ import { $msg, changeLanguage } from '../../message'
 import { Fieldset, Field, Help } from '../../components/forms/fieldset'
 import { FormSelect } from '../../components/forms'
 import { Controller } from '../../components/navigation'
-import ButtonBasic from '../../components/button/basic.vue'
+import { ButtonBasic } from '../../components/button'
 
 const preference = preferenceStore()
 const head = headStore()

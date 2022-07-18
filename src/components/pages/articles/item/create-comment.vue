@@ -37,7 +37,7 @@ import { err } from '../../../../libs/error'
 import { toast } from '../../../../modules/toast'
 import { message } from '../../../../message'
 import { FormTextarea } from '../../../forms'
-import ButtonBasic from '../../../button/basic.vue'
+import { ButtonBasic } from '../../../button'
 
 const $comment = ref<any>()
 const $form = ref<any>()

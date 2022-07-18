@@ -34,7 +34,7 @@
       </div>
     </section>
   </div>
-  <Empty v-else/>
+  <Empty v-else title="no item"/>
   <Controller>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
@@ -52,7 +52,7 @@ import getData, { SectionItem } from '../../structure/nests'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card } from '../../components/item'
 import { Controller } from '../../components/navigation'
-import ButtonBasic from '../../components/button/basic.vue'
+import { ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
 

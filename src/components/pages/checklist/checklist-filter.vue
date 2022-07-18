@@ -76,7 +76,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { filtersStore } from '../../../store/filters'
 import { withCommas } from '../../../libs/number'
 import { FormSelect, Keyword, FormInput } from '../../forms'
-import ButtonBasic from '../../button/basic.vue'
+import { ButtonBasic } from '../../button'
 
 interface Forms {
   dateStart: string

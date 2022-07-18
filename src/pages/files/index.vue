@@ -12,7 +12,7 @@
       :alt="item.title"
       :meta="item.meta"/>
   </Items>
-  <Empty v-else/>
+  <Empty v-else title="no item"/>
   <Pagination
     v-model="page"
     :total="total"
@@ -39,7 +39,7 @@ const route = useRoute()
 const router = useRouter()
 const preference = preferenceStore()
 const loading = ref<boolean>(true)
-const index = ref<any[]>([])
+const index = ref<any>([])
 const total = ref<number>(0)
 const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
 

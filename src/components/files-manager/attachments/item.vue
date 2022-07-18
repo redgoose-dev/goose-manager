@@ -61,7 +61,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { fileManagerStore } from '../store'
+import { fileManagerStore } from '../../../store/tool-manager'
 import { getByte } from '../../../libs/string'
 import Icon from '../../icons/index.vue'
 

@@ -25,7 +25,7 @@
           </template>
         </Card>
       </Items>
-      <Empty v-else/>
+      <Empty v-else title="no item"/>
       <Pagination
         v-model="page"
         :total="data.total"
@@ -61,7 +61,7 @@ import { getData } from '../../structure/checklist/list'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card, Mark } from '../../components/item'
 import { Controller } from '../../components/navigation'
-import ButtonBasic from '../../components/button/basic.vue'
+import { ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
 import Pagination from '../../components/etc/pagination.vue'

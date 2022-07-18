@@ -38,7 +38,7 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import { controlWindow } from './util';
-import ButtonBasic from '../button/basic.vue';
+import { ButtonBasic } from '../button';
 
 const emits = defineEmits([ 'close' ]);
 

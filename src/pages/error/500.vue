@@ -19,20 +19,20 @@
 </article>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import { iconRandomPick } from '../../components/icons/assets';
-import { message } from '../../message';
-import ButtonBasic from '../../components/button/basic.vue';
-import Icon from '../../components/icons/index.vue';
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { iconRandomPick } from '../../components/icons/assets'
+import { message } from '../../message'
+import { ButtonBasic } from '../../components/button'
+import Icon from '../../components/icons/index.vue'
 
 const props = defineProps({
   error: Error,
-});
-const iconName = iconRandomPick();
+})
+const iconName = iconRandomPick()
 const description = computed(() => {
-  return (window.DEBUG && props.error?.message) ? props.error.message : message.words.unknownError;
-});
+  return (window.DEBUG && props.error?.message) ? props.error.message : message.words.unknownError
+})
 </script>
 
 <style src="./error.scss" lang="scss" scoped></style>

@@ -14,7 +14,7 @@ export function htmlToElement(str: string): HTMLElement
  */
 export function twoDigit(day: number|string): string
 {
-  return `0${day}`.slice(-2);
+  return `0${day}`.slice(-2)
 }
 
 /**

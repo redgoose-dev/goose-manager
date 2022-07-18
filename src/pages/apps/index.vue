@@ -2,7 +2,7 @@
 <article>
   <PageHeader module="apps"/>
   <Loading v-if="loading"/>
-  <Items v-else-if="index?.length > 0">
+  <Items v-else-if="index?.length > 0" theme="list">
     <Card
       v-for="item in index"
       :title="item.title"
@@ -14,7 +14,7 @@
       ].filter(Boolean)"
       class="item"/>
   </Items>
-  <Empty v-else/>
+  <Empty v-else title="no item"/>
   <Controller>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
@@ -32,7 +32,7 @@ import { err } from '../../libs/error'
 import { Items, Card } from '../../components/item'
 import PageHeader from '../../components/page/header/index.vue'
 import { Controller } from '../../components/navigation'
-import ButtonBasic from '../../components/button/basic.vue'
+import { ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
 

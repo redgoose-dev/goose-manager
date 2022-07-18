@@ -72,7 +72,7 @@ import { message, $msg } from '../../../message'
 import { Fieldset, Field, Help } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
 import { FormInput } from '../../forms'
-import ButtonBasic from '../../button/basic.vue'
+import { ButtonBasic } from '../../button'
 
 interface Forms {
   id: { value: string, error: any }

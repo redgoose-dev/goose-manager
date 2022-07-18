@@ -1,4 +1,4 @@
-import { fileManagerStore } from './store';
+import { fileManagerStore } from '../../store/tool-manager';
 
 export function controlWindow(sw: boolean, key?: string): void
 {
