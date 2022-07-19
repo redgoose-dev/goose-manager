@@ -20,7 +20,7 @@
     </Card>
   </Items>
   <Empty v-else title="no item"/>
-  <Controller v-if="store.state.user.admin">
+  <Controller v-if="auth.user.admin">
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
         Create User
@@ -30,35 +30,36 @@
 </article>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
-import store from '../../store-legacy';
-import getData from '../../structure/users';
-import { err } from '../../libs/error';
-import PageHeader from '../../components/page/header/index.vue';
-import { Items, Card, Mark } from '../../components/item';
-import { Controller } from '../../components/navigation';
-import { ButtonBasic } from '../../components/button';
-import Loading from '../../components/etc/loading.vue';
-import Empty from '../../components/error/empty.vue';
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue'
+import { authStore } from '../../store/auth'
+import { getData } from '../../structure/users'
+import { err } from '../../libs/error'
+import PageHeader from '../../components/page/header/index.vue'
+import { Items, Card, Mark } from '../../components/item'
+import { Controller } from '../../components/navigation'
+import { ButtonBasic } from '../../components/button'
+import Loading from '../../components/etc/loading.vue'
+import Empty from '../../components/error/empty.vue'
 
-const loading = ref(true);
-const index = ref(null);
-const total = ref(0);
+const auth = authStore()
+const loading = ref<boolean>(true)
+const index = ref<any>()
+const total = ref<number>(0)
 
 onMounted(async () => {
   try
   {
-    loading.value = true;
-    let res = await getData();
-    total.value = res.total;
-    index.value = res.index;
-    loading.value = false;
+    loading.value = true
+    const res = await getData()
+    total.value = res.total
+    index.value = res.index
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/users/index.vue', 'onMounted()'], 'error', e.message);
-    loading.value = false;
+    err(['/pages/users/index.vue', 'onMounted()'], 'error', e.message)
+    loading.value = false
   }
 });
 </script>

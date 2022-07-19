@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, reactive, DefineComponent } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { filtersStore } from '../../../store/filters'
 import { withCommas } from '../../../libs/number'
@@ -112,7 +112,7 @@ interface Forms {
   keyword: string
 }
 
-const $keyword = ref<DefineComponent>()
+const $keyword = ref<any>()
 const route = useRoute()
 const router = useRouter()
 const filters = filtersStore()

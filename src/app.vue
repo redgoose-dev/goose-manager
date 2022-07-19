@@ -33,7 +33,7 @@ const layout = computed<DefineComponent>(() => {
     default:
       return LayoutBlank
   }
-});
+})
 
 // children component error
 if (!DEVELOPMENT)
@@ -48,7 +48,7 @@ if (!DEVELOPMENT)
       err([ '/app.vue', 'onErrorCaptured()' ], 'error', e.message)
       error.value = e
     }
-  });
+  })
 }
 
 // change theme
@@ -61,11 +61,11 @@ filters.setup()
 router.onError(e => {
   err([ '/app.vue', 'router.onError()' ], 'error', e.message)
   error.value = e
-});
+})
 
 // watch route name
 watch(() => route.name, () => {
   // 오류난 화면에서 뒤로가기나 다른페이지로 이동했을때 오류값 초기화하기
   if (!!error.value) error.value = undefined
-});
+})
 </script>

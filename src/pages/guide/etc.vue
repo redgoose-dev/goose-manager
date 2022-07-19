@@ -71,20 +71,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { preferenceStore } from '../../store/preference'
-import { toast } from '../../modules/toast';
-import { ButtonBasic } from '../../components/button';
-import Loading from '../../components/etc/loading.vue';
-import ProgressDonut from '../../components/etc/progress-donut.vue';
-import Pagination from '../../components/etc/pagination.vue';
-import FilesManager from '../../components/files-manager/index.vue';
+import { toast } from '../../modules/toast'
+import { ButtonBasic } from '../../components/button'
+import Loading from '../../components/etc/loading.vue'
+import ProgressDonut from '../../components/etc/progress-donut.vue'
+import Pagination from '../../components/etc/pagination.vue'
+import FilesManager from '../../components/files-manager/index.vue'
 
 const preference = preferenceStore()
 const progress = ref<number>(30)
 const page = ref<number>(1)
 
-function addToast(color: string): void
+function addToast(color?: string): void
 {
   toast.add('hello toast', color)
 }

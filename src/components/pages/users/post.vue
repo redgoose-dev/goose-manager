@@ -76,64 +76,65 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import store from '../../../store-legacy';
-import { get, post, formData, checkForms } from '../../../libs/api';
-import { err } from '../../../libs/error';
-import { message } from '../../../message';
-import { printf } from '../../../libs/string';
-import { toast } from '../../../modules/toast';
-import { Fieldset, Field, FieldCheck, Help } from '../../forms/fieldset';
-import { Controller } from '../../navigation';
-import { FormInput, FormSwitch } from '../../forms';
-import { ButtonBasic } from '../../button';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { authStore } from '../../../store/auth'
+import { get, post, formData, checkForms } from '../../../libs/api'
+import { err } from '../../../libs/error'
+import { message } from '../../../message'
+import { printf } from '../../../libs/string'
+import { toast } from '../../../modules/toast'
+import { Fieldset, Field, FieldCheck, Help } from '../../forms/fieldset'
+import { Controller } from '../../navigation'
+import { FormInput, FormSwitch } from '../../forms'
+import { ButtonBasic } from '../../button'
 
-const root = ref();
-const router = useRouter();
-const props = defineProps({
-  mode: { type: String, required: true },
-  srl: Number,
-});
-const forms = reactive({
+interface Props {
+  mode: string
+  srl?: number
+}
+
+const router = useRouter()
+const props = defineProps<Props>()
+const auth = authStore()
+const root = ref<any>()
+const forms = reactive<any>({
   email: { value: '', error: null },
   name: { value: '', error: null },
   password: { value: '', error: null },
   password2: { value: '', error: null },
   admin: { value: false, error: null },
-});
-const loading = ref(false);
-const processing = ref(false);
-const useAdminField = computed(() => {
+})
+const loading = ref<boolean>(false)
+const processing = ref<boolean>(false)
+const useAdminField = computed<boolean>(() => {
   if (props.mode === 'create')
   {
-    return store.state.user.admin;
+    return Boolean(auth.user?.admin)
   }
   else
   {
-    return store.state.user.srl !== Number(props.srl);
+    return auth.user?.srl !== Number(props.srl)
   }
-});
-const isEdit = computed(() => (props.mode === 'edit'));
+})
+const isEdit = computed<boolean>(() => (props.mode === 'edit'))
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
-  // check password
   if (props.mode === 'create')
   {
-    forms.password2.error = null;
+    forms.password2.error = null
     if (forms.password.value !== forms.password2.value)
     {
-      forms.password2.error = message.error.samePassword;
-      root.value.password2.focus();
+      forms.password2.error = message.error.samePassword
+      root.value.password2.focus()
     }
   }
-
   try
   {
-    processing.value = true;
-    checkForms(forms);
+    processing.value = true
+    checkForms(forms)
     const data = formData(isEdit.value ? {
       name: forms.name.value,
       admin: !!forms.admin.value ? 1 : 0,
@@ -143,51 +144,39 @@ async function onSubmit()
       password: forms.password.value,
       password2: forms.password2.value,
       admin: !!forms.admin.value ? 1 : 0,
-    });
-    let url = props.srl ? `/users/${props.srl}/edit/` : '/users/';
-    let res = await post(url, data);
-    processing.value = false;
-    const srl = res.srl || props.srl || null;
-    await router.push(srl ? `/users/${srl}/` : '/users/');
-    toast.add(printf(message.success[props.mode], message.word.user), 'success');
+    })
+    const url = props.srl ? `/users/${props.srl}/edit/` : '/users/'
+    const res = await post(url, data)
+    processing.value = false
+    const srl: number = res.srl || props.srl || NaN
+    await router.push(srl ? `/users/${String(srl)}/` : '/users/')
+    toast.add(printf(message.success[props.mode], message.word.user), 'success')
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/users/post.vue', 'onSubmit()' ], 'error', e.message);
-    processing.value = false;
-    toast.add(printf(message.fail[props.mode], message.word.user), 'error');
+    err([ '/components/pages/users/post.vue', 'onSubmit()' ], 'error', e.message)
+    processing.value = false
+    toast.add(printf(message.fail[props.mode], message.word.user), 'error')
   }
 }
 
 onMounted(async () => {
-  if (props.mode !== 'edit') return;
+  if (props.mode !== 'edit') return
   try
   {
-    loading.value = true;
-    const res = await get(`/users/${props.srl}/`);
-    forms.email.value = res.data.email;
-    forms.name.value = res.data.name;
-    forms.admin.value = res.data.admin > 0;
-    loading.value = false;
+    loading.value = true
+    const res = await get(`/users/${props.srl}/`)
+    forms.email.value = res.data.email
+    forms.name.value = res.data.name
+    forms.admin.value = res.data.admin > 0
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/users/post.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/components/pages/users/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
-<style lang="scss" scoped>
-.fields {
-  &__email {
-    --input-width: 400px;
-  }
-  &__name {
-    --input-width: 200px;
-  }
-  &__password {
-    --input-width: 300px;
-  }
-}
-</style>
+<style src="./post.scss" lang="scss" scoped></style>

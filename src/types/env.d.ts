@@ -21,9 +21,6 @@ declare global {
     on: any
     off: any
   }
-
-  // etc
-  type AnyObject = { [key: string]: any }
 }
 
 export {}

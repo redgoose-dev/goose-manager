@@ -32,7 +32,7 @@ async function request(op: Options)
   return await get(op.url, op.params);
 }
 
-function filtering(res: AnyObject): Result
+function filtering(res: any): Result
 {
   return {
     total: res.total,

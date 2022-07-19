@@ -1,8 +1,19 @@
 import { defineStore } from 'pinia'
 import { $fetch } from 'ohmyfetch'
 import { preferenceStore } from './preference'
-import { getPath } from '../libs/string';
-import type { Auth, AuthUser } from './auth.d'
+import { getPath } from '../libs/string'
+
+interface AuthUser {
+  srl: number
+  email: string
+  name: string
+  admin: boolean
+}
+interface Auth {
+  token: string
+  user?: AuthUser
+}
+
 
 export const authStore = defineStore('auth', {
   state(): Auth
@@ -33,7 +44,7 @@ export const authStore = defineStore('auth', {
         })
         if (!success) throw new Error('failed auth')
         // setup store
-        const { token, user } = data;
+        const { token, user } = data
         const preference = preferenceStore()
         this.setup(token, user)
         await preference.setup()

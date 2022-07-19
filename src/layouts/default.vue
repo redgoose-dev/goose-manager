@@ -114,57 +114,57 @@ import { message } from '../message'
 import { toast } from '../modules/toast'
 import Icon from '../components/icons/index.vue'
 
-const route = useRoute();
+const route = useRoute()
 const preference = preferenceStore()
 const auth = authStore()
 const head = headStore()
-const year = new Date().getFullYear();
-const gnb = computed(() => {
-  const { navigation } = preference;
+const year: number = new Date().getFullYear()
+const gnb = computed<any>(() => {
+  const { navigation } = preference
   return navigation.map((item: any) => {
     return {
       ...item,
       show: item.admin === undefined || item.admin,
     }
-  }).filter((item) => !!item.show);
-});
+  }).filter((item) => !!item.show)
+})
 
-async function onClickClearTokens(e: any)
+async function onClickClearTokens(e: any): Promise<void>
 {
   if (!confirm(message.confirm.resetToken))
   {
-    e.currentTarget.blur();
-    return;
+    e.currentTarget.blur()
+    return
   }
   try
   {
-    e.currentTarget.blur();
-    let res = await post('/token/clear/');
-    if (!res.success) throw new Error(res.message);
-    toast.add(message.success.resetTokens, 'success');
+    e.currentTarget.blur()
+    let res = await post('/token/clear/')
+    if (!res.success) throw new Error(res.message)
+    toast.add(message.success.resetTokens, 'success').then()
   }
   catch (e: any)
   {
-    err([ '/layouts/default.vue', 'onClickClearTokens()' ], 'error', e.message);
-    toast.add(message.fail.resetTokens, 'error');
+    err([ '/layouts/default.vue', 'onClickClearTokens()' ], 'error', e.message)
+    toast.add(message.fail.resetTokens, 'error').then()
   }
 }
 
 async function onClickLogout(): Promise<void>
 {
-  if (!confirm(message.confirm.logout)) return;
-  await auth.logout();
+  if (!confirm(message.confirm.logout)) return
+  await auth.logout()
 }
 
 /**
  * get navigation element name
  * 메뉴 상태에 따라 링크 엘리먼트 이름 설정하기
  */
-function getNavigationElementName(item: AnyObject): string
+function getNavigationElementName(item: any): string
 {
-  if (item.link) return 'router-link';
-  else if (item.href) return 'a';
-  else return 'span';
+  if (item.link) return 'router-link'
+  else if (item.href) return 'a'
+  else return 'span'
 }
 </script>
 

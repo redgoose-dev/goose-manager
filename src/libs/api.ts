@@ -1,6 +1,5 @@
 import { $fetch } from 'ohmyfetch'
-import type { $Fetch, FetchOptions } from 'ohmyfetch';
-import store from '../store-legacy'
+import type { $Fetch, FetchOptions } from 'ohmyfetch'
 import { authStore } from '../store/auth'
 import { getPath, serialize } from './string'
 
@@ -8,7 +7,7 @@ interface Response {
   success: boolean
   code: number
   message?: string
-  data?: AnyObject
+  data?: any
   query?: string
   time?: string
   url?: string
@@ -31,7 +30,7 @@ function setup(): void
   headers = { 'Authorization': `Bearer ${auth.token}` }
 }
 
-export async function get(url: string, params?: AnyObject): Promise<Response>
+export async function get(url: string, params?: any): Promise<Response>
 {
   if (!instance) setup()
   let res: Response = await instance(`${url}${serialize(params, true)}`, {
@@ -68,7 +67,7 @@ function checkStatus(src: Response): void
   if (!src.success) throw new Error(src.message || 'An unknown error has occurred.')
 }
 
-export function formData(src?: AnyObject): FormData|null
+export function formData(src?: any): FormData|null
 {
   if (!src) return null
   let data = new FormData()
@@ -85,6 +84,7 @@ export function checkForms(src: any): void
 
 function refreshToken(token: string): void
 {
+  const auth = authStore()
   const delay = 2000
   if (timer) clearTimeout(timer)
   timer = setTimeout(async () => {
@@ -92,11 +92,9 @@ function refreshToken(token: string): void
       method: 'post',
       responseType: 'json',
       retry: 0,
-      body: {
-        token,
-      },
-    });
-    if (res.token) store.state.token = res.token
+      body: { token },
+    })
+    if (res.token) auth.token = res.token
     timer = undefined
   }, delay)
 }

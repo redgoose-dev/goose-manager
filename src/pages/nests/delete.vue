@@ -60,7 +60,7 @@ async function onSubmit(): Promise<void>
   }
 }
 
-onMounted(async (): Promise<void> => {
+onMounted(async () => {
   try
   {
     loading.value = true

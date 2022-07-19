@@ -25,7 +25,7 @@ export const headStore = defineStore('head', {
   },
   getters: {},
   actions: {
-    updateStorage(obj: AnyObject): void
+    updateStorage(obj: any): void
     {
       storage.set('head', obj)
     },

@@ -60,19 +60,7 @@ onMounted(async () => {
     err([ '/pages/json/item.vue', 'onMounted()' ], 'error', e.message)
     throw e.message
   }
-});
+})
 </script>
 
-<style lang="scss" scoped>
-.json-code {
-  display: block;
-  margin: 0;
-  padding: 16px;
-  box-sizing: border-box;
-  background-color: rgb(var(--color-base-rgb) / 5%);
-  border-radius: 2px;
-  line-height: 1.42;
-  font-size: 15px;
-  font-family: var(--font-console);
-}
-</style>
+<style src="./item.scss" lang="scss" scoped></style>

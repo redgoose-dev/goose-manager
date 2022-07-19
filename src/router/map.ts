@@ -6,7 +6,7 @@ const auth = [
     component: () => import('../pages/auth/login.vue'),
     meta: { layout: 'blank', active: 'auth' },
   },
-];
+]
 const apps = [
   {
     path: '/apps/',
@@ -32,7 +32,7 @@ const apps = [
     component: () => import('../pages/apps/delete.vue'),
     meta: { active: 'apps' },
   },
-];
+]
 const nests = [
   {
     path: '/nests/',
@@ -120,7 +120,7 @@ const nests = [
     component: () => import('../pages/nests/categories/delete.vue'),
     meta: { active: 'nests' },
   },
-];
+]
 const articles = [
   {
     path: '/articles/',
@@ -152,7 +152,7 @@ const articles = [
     component: () => import('../pages/articles/change-nest.vue'),
     meta: { active: 'articles' },
   },
-];
+]
 const files = [
   {
     path: '/files/',
@@ -160,7 +160,7 @@ const files = [
     component: () => import('../pages/files/index.vue'),
     meta: { active: 'files' },
   },
-];
+]
 const json = [
   {
     path: '/json/',
@@ -192,7 +192,7 @@ const json = [
     component: () => import('../pages/json/delete.vue'),
     meta: { active: 'json' },
   },
-];
+]
 const users = [
   {
     path: '/users/',
@@ -230,7 +230,7 @@ const users = [
     component: () => import('../pages/users/change-password.vue'),
     meta: { active: 'users' },
   },
-];
+]
 const checklist = [
   {
     path: '/checklist/',
@@ -268,7 +268,7 @@ const checklist = [
     component: () => import('../pages/checklist/delete.vue'),
     meta: { active: 'checklist' },
   },
-];
+]
 const preference = [
   {
     path: '/preference/',
@@ -315,7 +315,7 @@ const preference = [
       },
     ],
   }
-];
+]
 const guide = [
   {
     path: '/guide/',
@@ -373,7 +373,7 @@ const guide = [
       },
     ],
   },
-];
+]
 
 export default [
   {

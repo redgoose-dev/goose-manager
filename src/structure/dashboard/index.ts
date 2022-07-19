@@ -1,9 +1,15 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 import { createFullPath } from '../files/util'
-import type { Module } from './index.d'
 
-async function requestArticles({ size }: AnyObject = {}): Promise<AnyObject>
+interface Module {
+  module: string
+  options?: {
+    size?: number
+  }
+}
+
+async function requestArticles({ size }: any = {}): Promise<any>
 {
   let { success, message, data } = await get('/articles/', {
     field: 'srl,category_srl,title,hit,star,type,json,`order`',
@@ -15,7 +21,7 @@ async function requestArticles({ size }: AnyObject = {}): Promise<AnyObject>
   if (!success) throw new Error(message)
   return {
     module: 'articles',
-    index: (data as AnyObject).index.map((item: AnyObject) => {
+    index: (data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.title,
@@ -32,7 +38,7 @@ async function requestArticles({ size }: AnyObject = {}): Promise<AnyObject>
   }
 }
 
-async function requestNests({ size }: AnyObject = {}): Promise<AnyObject>
+async function requestNests({ size }: any = {}): Promise<any>
 {
   let { success, message, data } = await get('/nests/', {
     field: 'srl,id,name,regdate,json',
@@ -43,7 +49,7 @@ async function requestNests({ size }: AnyObject = {}): Promise<AnyObject>
   if (!success) throw new Error(message)
   return {
     module: 'nests',
-    index: (data as AnyObject).index.map((item: AnyObject) => {
+    index: (data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.name,
@@ -59,7 +65,7 @@ async function requestNests({ size }: AnyObject = {}): Promise<AnyObject>
   }
 }
 
-async function requestApps({ size }: AnyObject = {}): Promise<AnyObject>
+async function requestApps({ size }: any = {}): Promise<any>
 {
   let { success, message, data } = await get('/apps/', {
     field: 'srl,id,name,regdate',
@@ -70,7 +76,7 @@ async function requestApps({ size }: AnyObject = {}): Promise<AnyObject>
   if (!success) throw new Error(message)
   return {
     module: 'apps',
-    index: (data as AnyObject).index.map((item: AnyObject) => {
+    index: (data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.name,
@@ -84,7 +90,7 @@ async function requestApps({ size }: AnyObject = {}): Promise<AnyObject>
   }
 }
 
-async function requestJSON({ size }: AnyObject = {}): Promise<AnyObject>
+async function requestJSON({ size }: any = {}): Promise<any>
 {
   let { success, message, data } = await get('/json/', {
     field: 'srl,name,regdate',
@@ -95,7 +101,7 @@ async function requestJSON({ size }: AnyObject = {}): Promise<AnyObject>
   if (!success) throw new Error(message)
   return {
     module: 'json',
-    index: (data as AnyObject).index.map((item: AnyObject) => {
+    index: (data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.name,

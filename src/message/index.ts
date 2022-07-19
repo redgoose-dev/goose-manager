@@ -1,6 +1,14 @@
 import ko from './ko'
 import en from './en'
-import type { Structure } from './index.d'
+
+interface Structure {
+  error: any
+  confirm: any
+  success: any
+  fail: any
+  word: any
+  words: any
+}
 
 const fallback: Structure = ko
 export let message: Structure = ko
@@ -12,7 +20,7 @@ export function $msg(key: string): string
     return keys.split('.').reduce((acc: any, cur: string) => {
       if (!(acc && acc[cur])) return
       return acc[cur]
-    }, src);
+    }, src)
   }
   let msg = find(key, message)
   if (!msg) msg = find(key, fallback)

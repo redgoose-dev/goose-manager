@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import map from './map';
+import { createRouter, createWebHistory } from 'vue-router'
+import map from './map'
 import { authStore } from '../store/auth'
 
 /** @var {string} BASE_URL */
@@ -26,7 +26,7 @@ router.beforeEach(async (to: any) => {
 
 // 업데이트 후 후크
 // router.afterEach((to, from) => {
-//   console.log('afterEach()');
-// });
+//   console.log('afterEach()')
+// })
 
 export default router

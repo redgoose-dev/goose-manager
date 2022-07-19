@@ -2,7 +2,7 @@
 <article>
   <PageHeader
     module="categories"
-    :prefix="data.nest.id ? `[${data.nest.id}]` : undefined"/>
+    :prefix="data.nest.id ? `[${data.nest.id}]` : ''"/>
   <Loading v-if="loading"/>
   <Items v-else-if="data.index?.length > 0" theme="card" class="items">
     <Draggable
@@ -48,114 +48,66 @@
 </article>
 </template>
 
-<script setup>
-import { ref, reactive, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import Draggable from 'vuedraggable';
-import getData from '../../../structure/categories/index';
-import { err } from '../../../libs/error';
-import { post, formData } from '../../../libs/api';
-import { toast } from '../../../modules/toast';
-import { message } from '../../../message';
-import { printf } from '../../../libs/string';
-import { Items, Card } from '../../../components/item';
-import PageHeader from '../../../components/page/header/index.vue';
-import { Controller } from '../../../components/navigation';
-import { ButtonBasic } from '../../../components/button';
-import Loading from '../../../components/etc/loading.vue';
-import Empty from '../../../components/error/empty.vue';
-import Icon from '../../../components/icons/index.vue';
+<script lang="ts" setup>
+import { ref, reactive, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import Draggable from 'vuedraggable'
+import getData from '../../../structure/categories'
+import { err } from '../../../libs/error'
+import { post, formData } from '../../../libs/api'
+import { toast } from '../../../modules/toast'
+import { message } from '../../../message'
+import { printf } from '../../../libs/string'
+import { Items, Card } from '../../../components/item'
+import PageHeader from '../../../components/page/header/index.vue'
+import { Controller } from '../../../components/navigation'
+import { ButtonBasic } from '../../../components/button'
+import Loading from '../../../components/etc/loading.vue'
+import Empty from '../../../components/error/empty.vue'
+import Icon from '../../../components/icons/index.vue'
 
-const route = useRoute();
-const loading = ref(false);
-const data = reactive({
+const route = useRoute()
+const loading = ref<boolean>(false)
+const data = reactive<any>({
   nest: {},
   index: [],
-});
+})
 
 async function onChangeIndex()
 {
   try
   {
-    if (!route.params.nestSrl) throw new Error('no nestSrl');
-    let srls = data.index.map((o) => (o.srl)).join(',');
-    let res = await post('/categories/sort/', formData({
+    if (!route.params.nestSrl) throw new Error('no nestSrl')
+    const srls = data.index.map((o: any) => (o.srl)).join(',')
+    const res = await post('/categories/sort/', formData({
       nest_srl: Number(route.params.nestSrl),
       srls,
-    }));
-    if (!res.success) throw new Error(res.message);
-    toast.add(printf(message.success.change, message.word.order), 'success');
+    }))
+    if (!res.success) throw new Error(res.message)
+    toast.add(printf(message.success.change, message.word.order), 'success')
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/nests/categories/index.vue', 'onChangeIndex()'], 'error', e.message);
-    toast.add(printf(message.fail.change, message.word.order), 'error');
+    err(['/pages/nests/categories/index.vue', 'onChangeIndex()'], 'error', e.message)
+    toast.add(printf(message.fail.change, message.word.order), 'error')
   }
 }
 
 onMounted(async () => {
   try
   {
-    loading.value = true;
-    const { nest, categories } = await getData(Number(route.params.nestSrl));
-    data.index = categories;
-    data.nest = nest;
-    loading.value = false;
+    loading.value = true
+    const { nest, categories } = await getData(Number(route.params.nestSrl))
+    data.nest = nest
+    data.index = categories
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/nests/categories/index.vue', 'onMounted()'], 'error', e.message);
-    throw e.message;
+    err(['/pages/nests/categories/index.vue', 'onMounted()'], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
-<style lang="scss" scoped>
-@use '../../../assets/scss/mixins';
-.card {
-  &:deep(.item__body) {
-    padding-left: 0;
-  }
-}
-.move {
-  display: block;
-  margin: 0;
-  padding: 0;
-  width: 72px;
-  background: none;
-  border: none;
-  @include mixins.button-touch-options(false);
-  --icon-size: 20px;
-  --icon-stroke-width: 1.5;
-  --icon-color: var(--color-weak);
-  svg {
-    display: block;
-    margin: 0 auto;
-  }
-  &:active {
-    --icon-color: var(--color-key);
-  }
-}
-.items {
-  display: block;
-  > ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(var(--items-column, 1), 1fr);
-    gap: var(--items-gap, 16px);
-  }
-  &:deep([draggable]) {
-    user-select: auto;
-    -webkit-user-drag: element;
-  }
-  &:deep(.sortable-ghost) {
-    outline: 2px dashed var(--color-sub);
-    outline-offset: 0;
-    > * {
-      opacity: .1;
-    }
-  }
-}
-</style>
+<style src="./index.scss" lang="scss" scoped></style>

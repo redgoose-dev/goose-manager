@@ -3,20 +3,24 @@ import { get } from '../../libs/api'
 
 interface Options {
   url: string
-  params?: AnyObject
+  params?: any
+}
+
+interface Response {
+  srl: number
+  email: string
+  name: string
+  regdate: string
+  admin: boolean
+  self: boolean
 }
 
 const defaultOptions: Options = {
   url: '',
   params: {},
-};
-
-async function request({ url, params }: Options): Promise<AnyObject>
-{
-  return await get(url, params)
 }
 
-function filtering(res: AnyObject): AnyObject
+function filtering(res: any): Response
 {
   const auth = authStore()
   return {
@@ -29,14 +33,13 @@ function filtering(res: AnyObject): AnyObject
   }
 }
 
-
-export default async function getData(options: Options): Promise<AnyObject>
+export default async function getData(options?: Options): Promise<Response>
 {
-  let op = Object.assign({}, defaultOptions, options)
-  if (options.params)
+  let op: Options = Object.assign({}, defaultOptions, options)
+  if (options?.params)
   {
-    op.params = Object.assign({}, defaultOptions.params, options.params);
+    op.params = Object.assign({}, defaultOptions.params, options.params)
   }
-  let { data } = await request(op);
-  return filtering(data);
+  let { data } = await get(op.url, op.params)
+  return filtering(data)
 }

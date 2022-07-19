@@ -18,4 +18,4 @@ export const images = [
   'https://goose.redgoose.me/data/upload/original/202011/rg-20180519-000096.jpg',
   'https://goose.redgoose.me/data/upload/original/201904/rg3322.jpg',
   'https://goose.redgoose.me/data/upload/original/201908/rg-20190820-000021.jpg',
-];
+]

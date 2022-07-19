@@ -45,7 +45,7 @@ export function getByte(bytes: number): string
   return String(Math.round(bytes / Math.pow(1024, i))) + sizes[i]
 }
 
-export function serialize(obj?: AnyObject, usePrefix: boolean = false): string
+export function serialize(obj?: any, usePrefix: boolean = false): string
 {
   let str: string[] = []
   let res: string

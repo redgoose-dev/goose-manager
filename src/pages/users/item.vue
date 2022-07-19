@@ -55,8 +55,8 @@ import Loading from '../../components/etc/loading.vue'
 
 const route = useRoute()
 const auth = authStore()
-const loading = ref<boolean>(false)
-const item = ref<AnyObject>({})
+const loading = ref<boolean>(true)
+const item = ref<any>()
 const self = computed<boolean>(() => (auth.user?.srl === Number(route.params.srl)))
 
 onMounted(async (): Promise<void> => {
