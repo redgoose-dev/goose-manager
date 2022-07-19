@@ -32,7 +32,7 @@
         :size="preference.checklist.pageCount"
         :range="preference.checklist.pageRange"
         class="checklist-list__paginate"
-        @update:modelValue="onChangePage"/>
+        @update:modelValue="onClickPageItem"/>
       <Controller>
         <template #left>
           <ButtonBasic href="../" icon-left="sun" color="key">
@@ -58,6 +58,7 @@ import { preferenceStore } from '../../store/preference'
 import { err } from '../../libs/error'
 import { serialize } from '../../libs/string'
 import { getData } from '../../structure/checklist/list'
+import { scrollTo } from '../../libs/util'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card, Mark } from '../../components/item'
 import { Controller } from '../../components/navigation'
@@ -83,31 +84,33 @@ const data = reactive<Data>({
 })
 const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
 
-function onChangePage(page: number): void
+async function onChangePage(page: number): Promise<void>
 {
   let params = {
     ...route.query,
     page: page > 1 ? page : undefined,
   }
-  router.push(`./${serialize(params, true)}`)
+  await router.push(`./${serialize(params, true)}`)
+}
+
+async function onClickPageItem(n: number): Promise<void>
+{
+  await onChangePage(n)
+  page.value = n
+  await loadData()
 }
 
 async function onUpdateFilter(): Promise<void>
 {
   try
   {
-    if (Number(route.query.page) > 1)
-    {
-      await router.push('./')
-    }
-    else
-    {
-      loading.value = true
-      let res = await getData()
-      data.total = res.total
-      data.index = res.index
-      loading.value = false
-    }
+    await onChangePage(1)
+    page.value = 1
+    loading.value = true
+    let res = await getData()
+    data.total = res.total
+    data.index = res.index
+    loading.value = false
   }
   catch (e: any)
   {
@@ -116,9 +119,12 @@ async function onUpdateFilter(): Promise<void>
   }
 }
 
-onMounted(async () => {
+async function loadData(): Promise<void>
+{
   try
   {
+    scrollTo()
+    loading.value = true
     const { total, index } = await getData()
     data.total = total
     data.index = index
@@ -129,6 +135,10 @@ onMounted(async () => {
     err(['/pages/checklist/list.vue', 'onMounted()'], 'error', e.message)
     throw e.message
   }
+}
+
+onMounted(() => {
+  loadData().then()
 })
 </script>
 

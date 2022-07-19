@@ -84,3 +84,8 @@ export function getImageSize(type: string, set_w: number, set_h: number, img_w: 
   }
   return size
 }
+
+export function scrollTo(y: number = 0): void
+{
+  window.scroll(0, y)
+}

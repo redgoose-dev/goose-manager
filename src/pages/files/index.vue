@@ -18,7 +18,7 @@
     :total="total"
     :size="preference.files.pagePerSize"
     :range="10"
-    @update:modelValue="onChangePage"/>
+    @update:modelValue="onClickPageItem"/>
 </article>
 </template>
 
@@ -29,6 +29,7 @@ import { preferenceStore } from '../../store/preference'
 import { err } from '../../libs/error'
 import { getItems } from '../../structure/files'
 import { serialize } from '../../libs/string'
+import { scrollTo } from '../../libs/util'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Thumbnail } from '../../components/item'
 import Pagination from '../../components/etc/pagination.vue'
@@ -43,18 +44,28 @@ const index = ref<any>([])
 const total = ref<number>(0)
 const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
 
-function onChangePage(page: number): void
+async function onChangePage(n: number): Promise<void>
 {
   const params = {
     ...route.query,
-    page: page > 1 ? page : undefined,
+    page: n > 1 ? n : undefined,
   }
-  router.push(`./${serialize(params, true)}`)
+  await router.push(`./${serialize(params, true)}`)
 }
 
-onMounted(async () => {
+async function onClickPageItem(n: number): Promise<void>
+{
+  await onChangePage(n)
+  page.value = n
+  await loadData()
+}
+
+async function loadData(): Promise<void>
+{
   try
   {
+    scrollTo()
+    loading.value = true
     let res = await getItems()
     total.value = res.total
     index.value = res.index
@@ -62,9 +73,13 @@ onMounted(async () => {
   }
   catch (e: any)
   {
-    err(['/pages/files/index.vue', 'onMounted()'], 'error', e.message)
+    err(['/pages/files/index.vue', 'loadData()'], 'error', e.message)
     throw e.message
   }
+}
+
+onMounted(() => {
+  loadData().then()
 })
 </script>
 

@@ -38,7 +38,7 @@
         :size="preference.articles.pageCount"
         :range="preference.articles.pageRange"
         class="articles__pagination"
-        @update:modelValue="onChangePage"/>
+        @update:modelValue="onClickPageItem"/>
       <Controller class="articles__controller">
         <template #left>
           <ButtonBasic href="../../" icon-left="cloud">
@@ -62,7 +62,7 @@
       <ArticleFilter
         :total="data.total"
         :loading="loading"
-        @update="onUpdateData"/>
+        @update="onUpdateFilter"/>
     </aside>
   </div>
 </article>
@@ -75,6 +75,7 @@ import { preferenceStore } from '../../../store/preference'
 import { filtersStore } from '../../../store/filters'
 import { err } from '../../../libs/error'
 import { serialize } from '../../../libs/string'
+import { scrollTo } from '../../../libs/util'
 import { createQueries } from '../../../components/pages/articles/libs'
 import { getData, requestArticles, requestCategories } from '../../../structure/articles'
 import PageHeader from '../../../components/page/header/index.vue'
@@ -121,19 +122,29 @@ const itemComponent = computed<any>(() => {
   return Card
 })
 
-function onChangePage(page: number): void
+async function onChangePage(page: number): Promise<void>
 {
   let params = {
     ...route.query,
     page: page > 1 ? page : undefined,
   }
-  router.push(`./${serialize(params, true)}`)
+  await router.push(`./${serialize(params, true)}`)
 }
 
-async function onUpdateData(): Promise<void>
+async function onClickPageItem(n: number): Promise<void>
+{
+  await onChangePage(n)
+  page.value = n
+  await onUpdateArticles()
+}
+
+async function onUpdateFilter(): Promise<void>
 {
   try
   {
+    await onChangePage(1)
+    page.value = 1
+    scrollTo()
     loading.value = true
     let [ articles, categories ] = await Promise.all([
       requestArticles(),
@@ -146,14 +157,35 @@ async function onUpdateData(): Promise<void>
   }
   catch (e: any)
   {
-    err(['/pages/nests/articles/index.vue', 'onUpdateData()'], 'error', e.message)
+    err(['/pages/nests/articles/index.vue', 'onUpdateFilter()'], 'error', e.message)
     loading.value = false
   }
 }
 
-onMounted(async () => {
+async function onUpdateArticles(): Promise<void>
+{
   try
   {
+    scrollTo()
+    loading.value = true
+    const articles = await requestArticles()
+    data.total = articles.total
+    data.index = articles.index
+    loading.value = false
+  }
+  catch (e: any)
+  {
+    err(['/pages/nests/articles/index.vue', 'onUpdateArticles()'], 'error', e.message)
+    loading.value = false
+  }
+}
+
+async function onUpdateAll(): Promise<void>
+{
+  try
+  {
+    scrollTo()
+    loading.value = true
     let res = await getData()
     data.total = res.total
     data.index = res.articles
@@ -163,12 +195,41 @@ onMounted(async () => {
   }
   catch (e: any)
   {
-    err(['/pages/nests/articles/index.vue', 'onMounted()'], 'error', e.message)
+    err(['/pages/nests/articles/index.vue', 'onUpdateAll()'], 'error', e.message)
     throw e.message
   }
+}
+
+onMounted(() => {
+  onUpdateAll().then()
 })
 
-watch(() => route.query.category, onUpdateData)
+watch(() => route.query.category, async () => {
+  try
+  {
+    page.value = 1
+    scrollTo()
+    loading.value = true
+    let [ articles, categories ] = await Promise.all([
+      requestArticles(),
+      requestCategories(),
+    ])
+    data.total = articles.total
+    data.index = articles.index
+    data.categories = categories
+    loading.value = false
+  }
+  catch (e: any)
+  {
+    err(['/pages/nests/articles/index.vue', 'watch:route.query.category'], 'error', e.message)
+    loading.value = false
+  }
+})
+watch(() => route.params.nestSrl, (value) => {
+  if (!value) return
+  page.value = 1
+  onUpdateAll().then()
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

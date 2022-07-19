@@ -1,14 +1,16 @@
-import { useRoute } from 'vue-router'
+import { useRoute, RouteLocationNormalized } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
 import { get } from '../../libs/api'
 import { createFullPath } from './util'
 import { getByte } from '../../libs/string'
 import { getDate } from '../../libs/date'
 
+let route: RouteLocationNormalized
+
 export async function getItems()
 {
+  if (!route) route = useRoute()
   const preference = preferenceStore()
-  const route = useRoute()
   let res = await get('/files/', {
     order: 'srl',
     sort: 'desc',

@@ -32,7 +32,7 @@
         :size="preference.articles.pageCount"
         :range="preference.articles.pageRange"
         class="articles__pagination"
-        @update:modelValue="onChangePage"/>
+        @update:modelValue="onClickPageItem"/>
     </div>
     <aside class="articles__filter">
       <ArticleFilter
@@ -45,12 +45,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
 import { filtersStore } from '../../store/filters'
 import { err } from '../../libs/error'
 import { serialize } from '../../libs/string'
+import { scrollTo } from '../../libs/util'
 import { getData, requestArticles } from '../../structure/articles'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card, Thumbnail, Mark } from '../../components/item'
@@ -79,19 +80,28 @@ const itemComponent = computed<any>(() => {
   return Card
 })
 
-function onChangePage(page: number): void
+async function onClickPageItem(n: number): Promise<void>
+{
+  await onChangePage(n)
+  page.value = n
+  await loadData()
+}
+
+async function onChangePage(n: number): Promise<void>
 {
   let params = {
     ...route.query,
-    page: page > 1 ? page : undefined,
+    page: n > 1 ? n : undefined,
   }
-  router.push(`./${serialize(params, true)}`)
+  await router.push(`./${serialize(params, true)}`)
 }
 
 async function onUpdateFilter(): Promise<void>
 {
   try
   {
+    await onChangePage(1)
+    page.value = 1
     loading.value = true
     let res = await requestArticles()
     data.total = res.total
@@ -105,9 +115,11 @@ async function onUpdateFilter(): Promise<void>
   }
 }
 
-onMounted(async () => {
+async function loadData(): Promise<void>
+{
   try
   {
+    scrollTo()
     loading.value = true
     const res = await getData()
     data.total = res.total
@@ -116,9 +128,13 @@ onMounted(async () => {
   }
   catch (e: any)
   {
-    err(['/pages/articles/index.vue', 'onMounted()'], 'error', e.message)
-    loading.value = false
+    err(['/pages/articles/index.vue', 'loadData()'], 'error', e.message)
+    throw e.message
   }
+}
+
+onMounted(() => {
+  loadData().then()
 })
 </script>
 
