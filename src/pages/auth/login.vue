@@ -66,65 +66,71 @@
 </article>
 </template>
 
-<script setup>
-/** @var {string} TITLE */
-/** @var {string} DESCRIPTION */
-/** @var {string} BASE_URL */
+<script lang="ts" setup>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { $fetch } from 'ohmyfetch'
+import { authStore } from '../../store/auth'
+import { preferenceStore } from '../../store/preference'
+import { toast } from '../../modules/toast'
+import { err } from '../../libs/error'
+import { getPath } from '../../libs/string'
+import FormCheckbox from '../../components/forms/checkbox.vue'
+import { ButtonBasic } from '../../components/button'
 
-import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
-import { setup } from '../../libs/service';
-import { toast } from '../../modules/toast';
-import { err } from '../../libs/error';
-import { getPath } from '../../libs/string';
-import FormCheckbox from '../../components/forms/checkbox.vue';
-import ButtonBasic from '../../components/button/basic.vue';
+interface Forms {
+  email: string
+  password: string
+  save: boolean
+}
 
-const router = useRouter();
-const loading = ref(false);
-const title = ref(TITLE || 'manager');
-const description = ref(DESCRIPTION || 'manager description');
-const processing = ref(false);
-const forms = reactive({
+const router = useRouter()
+const auth = authStore()
+const loading = ref<boolean>(false)
+const title = ref<string>(TITLE || 'manager')
+const description = ref<string>(DESCRIPTION || 'manager description')
+const processing = ref<boolean>(false)
+const forms = reactive<Forms>({
   email: '',
   password: '',
   save: true,
-});
+})
 
-/**
- * on submit
- * @return {Promise<void>}
- */
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
   try
   {
     // on loading
-    loading.value = true;
+    loading.value = true
     // request api
-    let res = await axios.post(getPath(`${BASE_URL}/local/login/`), {
-      email: forms.email,
-      password: forms.password,
-      save: forms.save,
-    });
+    const { success, message, data } = await $fetch(getPath(`${BASE_URL}/local/login/`), {
+      method: 'post',
+      responseType: 'json',
+      body: {
+        email: forms.email,
+        password: forms.password,
+        save: forms.save,
+      },
+    })
     // check and set values
-    const { success, message, data } = res.data;
-    if (!success) throw new Error(message);
+    if (!success) throw new Error(message)
     // setup service
-    const { user, token } = data;
-    if (!(user && token)) throw new Error('not user or token');
-    await setup(token, user);
+    const { user, token } = data
+    if (!(user && token)) throw new Error('not user or token')
+    // setup store
+    const preference = preferenceStore()
+    auth.setup(token, user)
+    await preference.setup()
     // off loading
-    loading.value = false;
+    loading.value = false
     // redirect url
-    await router.replace('/');
+    await router.replace('/')
   }
-  catch(e)
+  catch(e: any)
   {
-    err(['/pages/auth/login.vue', 'onSubmit()'], 'error', e.message);
-    loading.value = false;
-    toast.add('Failed login.', 'error');
+    err(['/pages/auth/login.vue', 'onSubmit()'], 'error', e.message)
+    loading.value = false
+    toast.add('Failed login.', 'error')
   }
 }
 </script>

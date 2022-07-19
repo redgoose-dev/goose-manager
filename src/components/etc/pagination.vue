@@ -10,7 +10,7 @@
   </button>
   <button
     type="button"
-    :title="`to ${props.range} page prev`"
+    :title="`to ${range.value} page prev`"
     :disabled="pageBlock <= 0"
     :class="[ 'pagination-item', 'pagination-item--range' ]"
     @click="onPrevRange">
@@ -46,7 +46,7 @@
   </template>
   <button
     type="button"
-    :title="`to ${props.range} page next`"
+    :title="`to ${range.value} page next`"
     :disabled="pageBlock >= pageBlockTotal"
     :class="[ 'pagination-item', 'pagination-item--range' ]"
     @click="onNextRange">
@@ -63,74 +63,78 @@
 </nav>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import Icon from '../icons/index.vue';
+<script lang="ts" setup>
+import { ref, computed } from 'vue'
+import Icon from '../icons/index.vue'
 
-const props = defineProps({
-  modelValue: { type: Number, default: 1 },
-  total: { type: Number, default: 0 },
-  size: { type: Number, default: 10 },
-  range: { type: Number, default: 5 },
-});
-const emits = defineEmits([ 'update:modelValue' ]);
-const page = computed(() => (Number(props.modelValue) > 1 ? Number(props.modelValue) : 1));
-const pageCount = computed(() => (Math.ceil(props.total / props.size)));
-const pageBlock = computed(() => (Math.floor((page.value - 1) / props.range)));
-const pageBlockTotal = computed(() => (Math.floor((pageCount.value - 1) / props.range)));
-const pages = computed(() => {
-  let items = [];
-  let startPage = pageBlock.value * props.range + 1;
-  for (let i = 1; i < props.range + 1 && startPage <= pageCount.value; i++, startPage++)
+interface Props {
+  modelValue: number // 1
+  total: number // 0
+  size: number // 10
+  range: number // 5
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits([ 'update:modelValue' ])
+const size = ref<number>(props.size || 10)
+const range = ref<number>(props.range || 5)
+const page = computed<number>(() => (Number(props.modelValue) > 1 ? Number(props.modelValue) : 1))
+const pageCount = computed<number>(() => (Math.ceil(props.total / size.value)))
+const pageBlock = computed<number>(() => (Math.floor((page.value - 1) / range.value)))
+const pageBlockTotal = computed<number>(() => (Math.floor((pageCount.value - 1) / range.value)))
+const pages = computed<any[]>(() => {
+  let items: any[] = []
+  let startPage = pageBlock.value * range.value + 1
+  for (let i = 1; i < range.value + 1 && startPage <= pageCount.value; i++, startPage++)
   {
     items[i - 1] = {
       key: startPage,
       active: (startPage === page.value),
-    };
+    }
   }
   // check empty item
-  let checkEmpty = false;
+  let checkEmpty = false
   items.forEach(o => {
-    if (o.active) checkEmpty = true;
-  });
-  return checkEmpty ? items : [];
-});
-const disabledFirstArrow = computed(() => {
-  return pageBlock.value === 0;
-});
-const disabledLastArrow = computed(() => {
-  return page.value >= pageCount.value || pageBlock.value === pageBlockTotal.value;
-});
+    if (o.active) checkEmpty = true
+  })
+  return checkEmpty ? items : []
+})
+const disabledFirstArrow = computed<boolean>(() => {
+  return pageBlock.value === 0
+})
+const disabledLastArrow = computed<boolean>(() => {
+  return page.value >= pageCount.value || pageBlock.value === pageBlockTotal.value
+})
 
-function onPrevRange()
+function onPrevRange(): void
 {
   if (page.value > 1)
   {
-    let n = page.value - props.range;
-    go((n > 1) ? n : 1);
+    let n = page.value - range.value
+    go((n > 1) ? n : 1)
   }
 }
-function onNextRange()
+function onNextRange(): void
 {
   if (pageBlock.value < pageBlockTotal.value)
   {
-    let n = page.value + props.range;
-    go(n > pageCount.value ? pageCount.value : n);
+    let n = page.value + range.value
+    go(n > pageCount.value ? pageCount.value : n)
   }
 }
 
-function onFirstPage()
+function onFirstPage(): void
 {
-  if (page.value > 1) go(1);
+  if (page.value > 1) go(1)
 }
-function onLastPage()
+function onLastPage(): void
 {
-  if (page.value < pageCount.value) go(pageCount.value);
+  if (page.value < pageCount.value) go(pageCount.value)
 }
 
-function go(page)
+function go(n: number): void
 {
-  if (page.value !== page) emits('update:modelValue', page);
+  if (page.value !== n) emits('update:modelValue', n)
 }
 </script>
 

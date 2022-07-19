@@ -28,7 +28,7 @@
     </li>
   </ul>
   <nav class="guide__nav">
-    <ButtonBasic color="key" @click="emits('close')">
+    <ButtonBasic type="button" color="key" @click="emits('close')">
       Close
     </ButtonBasic>
   </nav>
@@ -38,7 +38,7 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import { controlWindow } from './util';
-import ButtonBasic from '../button/basic.vue';
+import { ButtonBasic } from '../button';
 
 const emits = defineEmits([ 'close' ]);
 

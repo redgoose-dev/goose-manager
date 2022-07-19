@@ -10,24 +10,24 @@
 </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+<script lang="ts" setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 
-const props = defineProps({
-  move: Boolean,
-});
-let mounted = false;
-const show = ref(false);
+const props = defineProps<{
+  move?: boolean
+}>()
+let mounted = false
+const show = ref<boolean>(false)
 
 onMounted(() => {
-  mounted = true;
+  mounted = true
   setTimeout(() => {
-    if (mounted) show.value = true;
-  }, 240);
-});
+    if (mounted) show.value = true
+  }, 240)
+})
 onUnmounted(() => {
-  mounted = false;
-});
+  mounted = false
+})
 </script>
 
 <style src="./loading.scss" lang="scss" scoped></style>

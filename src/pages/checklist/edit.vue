@@ -47,9 +47,9 @@
       <ModalBody type="full">
         <FilesManager
           tab="post"
-          :global="{ path: store.state.preference.files.globalPath }"
+          :global="{ path: preference.files.globalPath }"
           :post="fileManagerOptions"
-          :accept-file-type="store.state.preference.files.acceptFileType"
+          :accept-file-type="preference.files.acceptFileType"
           :full-size="true"
           :use-thumbnail="false"
           @custom-event="onFilesManagerEvent"
@@ -60,189 +60,167 @@
 </article>
 </template>
 
-<script setup>
-import { ref, reactive, computed, onMounted, nextTick } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { marked } from 'marked';
-import store from '../../store';
-import { err } from '../../libs/error';
-import { toast } from '../../modules/toast';
-import { printf } from '../../libs/string';
-import { message } from '../../message';
-import { dateFormat } from '../../libs/date';
-import { getData, submit } from '../../structure/checklist/edit';
-import PageHeader from '../../components/page/header/index.vue';
-import { Modal, ModalBody } from '../../components/modal';
-import { FormTextarea } from '../../components/forms';
-import { Controller } from '../../components/navigation';
-import ButtonBasic from '../../components/button/basic.vue';
-import PostToolbar from '../../components/navigation/post-toolbar.vue';
-import Preview from '../../components/content/preview.vue';
-import FilesManager from '../../components/files-manager/index.vue';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted, nextTick } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { marked } from 'marked'
+import { preferenceStore } from '../../store/preference'
+import { err } from '../../libs/error'
+import { toast } from '../../modules/toast'
+import { printf } from '../../libs/string'
+import { message } from '../../message'
+import { dateFormat } from '../../libs/date'
+import { getData, submit } from '../../structure/checklist/edit'
+import PageHeader from '../../components/page/header/index.vue'
+import { Modal, ModalBody } from '../../components/modal'
+import { FormTextarea } from '../../components/forms'
+import { Controller } from '../../components/navigation'
+import { ButtonBasic } from '../../components/button'
+import PostToolbar from '../../components/navigation/post-toolbar.vue'
+import Preview from '../../components/content/preview.vue'
+import FilesManager from '../../components/files-manager/index.vue'
 
-const $content = ref();
-const router = useRouter();
-const route = useRoute();
-const loading = ref(true);
-const processing = ref(false);
-const forms = reactive({
+const router = useRouter()
+const route = useRoute()
+const preference = preferenceStore()
+const $content = ref<any>()
+const loading = ref<boolean>(true)
+const processing = ref<boolean>(false)
+const forms = reactive<any>({
   srl: Number(route.params.srl),
   date: '',
   content: { value: '', error: null },
-});
-const position = ref({ start: 0, end: 0 });
-const showPreview = ref(false);
-const preview = ref('');
-const showFilesManager = ref(false);
-const fileManagerOptions = computed(() => {
-  const { limitUploadFilesCount, limitUploadFileSize } = store.state.preference.checklist;
+})
+const position = ref<{ start: number, end: number }>({ start: 0, end: 0 })
+const showPreview = ref<boolean>(false)
+const preview = ref<string>('')
+const showFilesManager = ref<boolean>(false)
+const fileManagerOptions = computed<any>(() => {
+  const { limitUploadFilesCount, limitUploadFileSize } = preference.checklist
   return {
     module: 'checklist',
     targetSrl: forms.srl,
     limitCount: limitUploadFilesCount,
     limitSize: limitUploadFileSize,
-  };
-});
+  }
+})
 
-/**
- * insert text
- * @param {string} text
- * @param {number} cursor
- * @return {Promise<void>}
- */
-async function insertText(text, cursor)
+async function insertText(text: string, cursor?: number): Promise<void>
 {
-  if (!text) return;
-  let content = forms.content.value + '';
-  const { start } = position.value;
-  if (start === 0) text = text.replace(/^\n/g, '');
-  content = content.substr(0, start) + text + content.substr(start);
-  forms.content.value = content;
-  let last = start + (cursor || text.length);
-  position.value.start = last;
-  position.value.end = last;
-  await nextTick();
-  $content.value.changeHeight();
-  $content.value.changeCursor(position.value.start, position.value.end);
-  $content.value.focus();
+  if (!text) return
+  let content = forms.content.value + ''
+  const { start } = position.value
+  if (start === 0) text = text.replace(/^\n/g, '')
+  content = content.substr(0, start) + text + content.substr(start)
+  forms.content.value = content
+  let last = start + (cursor || text.length)
+  position.value.start = last
+  position.value.end = last
+  await nextTick()
+  $content.value.changeHeight()
+  $content.value.changeCursor(position.value.start, position.value.end)
+  $content.value.focus()
 }
 
-/**
- * on select toolbar item
- * @param {string} code
- */
-function onSelectToolbarItem(code)
+function onSelectToolbarItem(code: string): void
 {
   switch (code)
   {
     case 'insert-space':
-      insertText(`<p><br/></p>\n`, undefined);
-      break;
+      insertText(`<p><br/></p>\n`)
+      break
     case 'insert-iframe':
-      insertText(`<div class="iframe"></div>\n`, 20);
-      break;
+      insertText(`<div class="iframe"></div>\n`, 20)
+      break
     case 'insert-grid-group':
-      insertText(`<div class="grid-group">\n\n</div>\n`, 25);
-      break;
+      insertText(`<div class="grid-group">\n\n</div>\n`, 25)
+      break
     case 'insert-grid-item':
-      insertText(`<figure class="grid-item" data-mobile="3" data-tablet="" data-desktop="" data-desktop-large="">\n\n</figure>\n`, 96);
-      break;
+      insertText(`<figure class="grid-item" data-mobile="3" data-tablet="" data-desktop="" data-desktop-large="">\n\n</figure>\n`, 96)
+      break
     case 'insert-picture':
-      insertText(`<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>\n`, undefined);
-      break;
+      insertText(`<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>\n`)
+      break
     case 'open-file-manager':
-      showFilesManager.value = true;
-      break;
+      showFilesManager.value = true
+      break
     case 'preview':
-      controlPreview(true);
-      break;
+      controlPreview(true)
+      break
   }
 }
 
-/**
- * on update position
- * @param {{start, end}} o
- */
-function onUpdatePosition(o)
+function onUpdatePosition(o: { start: number, end: number }): void
 {
-  position.value.start = o.start;
-  position.value.end = o.end;
+  position.value.start = o.start
+  position.value.end = o.end
 }
 
-/**
- * control preview
- * @param {boolean} sw
- */
-function controlPreview(sw)
+function controlPreview(sw: boolean): void
 {
   if (sw && !forms.content.value)
   {
-    toast.add(printf(message.error.emptyContent, message.word.content), 'error');
-    return;
+    toast.add(printf(message.error.emptyContent, message.word.content), 'error')
+    return
   }
   if (sw)
   {
-    preview.value = marked(forms.content.value);
+    preview.value = marked(forms.content.value)
   }
   else
   {
-    preview.value = '';
+    preview.value = ''
   }
-  showPreview.value = sw;
+  showPreview.value = sw
 }
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
   try
   {
-    processing.value = true;
-    if (!forms.srl) throw new Error('no srl');
-    if (!forms.content.value) throw new Error('no content');
-    await submit(forms.srl, forms.content.value);
-    await router.push(route.params.srl ? `/checklist/${forms.srl}/` : `/checklist/`);
+    processing.value = true
+    if (!forms.srl) throw new Error('no srl')
+    if (!forms.content.value) throw new Error('no content')
+    await submit(forms.srl, forms.content.value)
+    await router.push(route.params.srl ? `/checklist/${forms.srl}/` : `/checklist/`)
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/pages/checklist/edit.vue', 'onSubmit()' ], 'error', e.message);
-    processing.value = false;
-    toast.add(printf(message.fail.edit, message.word.board), 'error');
+    err([ '/pages/checklist/edit.vue', 'onSubmit()' ], 'error', e.message)
+    processing.value = false
+    toast.add(printf(message.fail.edit, message.word.board), 'error')
   }
 }
 
-/**
- * FilesManager event
- * @param {string} key
- * @param {any} value
- */
-function onFilesManagerEvent({ key, value })
+function onFilesManagerEvent({ key, value }: any): void
 {
   switch (key)
   {
     case 'insert-text':
-      insertText(value, undefined);
-      showFilesManager.value = false;
-      break;
+      insertText(value)
+      showFilesManager.value = false
+      break
   }
 }
 
 onMounted(async () => {
   try
   {
-    const res = await getData(forms.srl);
-    forms.srl = res.srl;
-    forms.content.value = res.content;
-    const regdate = res.date.split(' ')[0].split('-').map(o => Number(o));
-    forms.date = dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), store.state.preference.checklist.dateFormat);
-    await nextTick();
-    $content.value.changeHeight();
-    loading.value = false;
+    const res = await getData(forms.srl)
+    forms.srl = res.srl
+    forms.content.value = res.content
+    const regdate = res.date.split(' ')[0].split('-').map((o: any) => Number(o))
+    forms.date = dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.dateFormat)
+    await nextTick()
+    $content.value.changeHeight()
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/pages/checklist/edit.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/pages/checklist/edit.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style src="./edit.scss" lang="scss" scoped></style>

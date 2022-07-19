@@ -6,65 +6,67 @@
 </component>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import ButtonBody from './button-body.vue';
+<script lang="ts" setup>
+import { computed } from 'vue'
+import ButtonBody from './button-body.vue'
 
-const props = defineProps({
-  type: { type: String, default: 'button' }, // label,button,submit,reset
-  label: String,
-  href: String,
-  target: String,
-  title: String,
-  disabled: Boolean,
-  size: String, // small
-  color: String, // key,sub,error,weak
-  inline: Boolean,
-  rotateIcon: Boolean,
-  iconLeft: String,
-  iconRight: String,
-  className: String,
-  styles: [ Object, Array ],
-});
-const type = computed(() => {
-  if (props.href) return /^http/.test(props.href) ? 'a' : 'router';
-  else return props.type || null;
-});
-const bodyProps = computed(() => {
+interface Props {
+  type?: 'label' | 'button' | 'submit' | 'reset'
+  label?: string
+  href?: string
+  target?: string
+  title?: string
+  disabled?: boolean
+  size?: 'small'
+  color?: 'key' | 'sub' | 'error' | 'weak'
+  inline?: boolean
+  rotateIcon?: boolean
+  iconLeft?: string
+  iconRight?: string
+  className?: string
+  styles?: any
+}
+
+const props = defineProps<Props>()
+const type = computed<any>(() => {
+  if (props.href) return /^http/.test(props.href) ? 'a' : 'router'
+  else return props.type || 'button'
+})
+const bodyProps = computed<any>(() => {
   return {
     iconLeft: props.iconLeft,
     iconRight: props.iconRight,
     rotateIcon: props.rotateIcon,
-  };
-});
-const tag = computed(() => {
+  }
+})
+const tag = computed<string>(() => {
   switch (type.value)
   {
-    case 'a': return 'a';
-    case 'router': return 'router-link';
-    case 'label': return 'label';
-    default: return 'button';
+    case 'a': return 'a'
+    case 'router': return 'router-link'
+    case 'label': return 'label'
+    default: return 'button'
   }
-});
-const rootProps = computed(() => {
-  let attr = {};
-  if (props.title) attr.title = props.title;
+})
+const rootProps = computed<any>(() => {
+  let attr: any = {}
+  if (props.title) attr.title = props.title
   switch (type.value)
   {
     case 'a':
-      attr.href = props.href || '#';
-      if (props.target) attr.target = props.target;
-      break;
+      attr.href = props.href || '#'
+      if (props.target) attr.target = props.target
+      break
     case 'router':
-      attr.to = props.href || '#';
-      break;
+      attr.to = props.href || '#'
+      break
     case 'label':
-      if (props.disabled) attr.disabled = props.disabled;
-      break;
+      if (props.disabled) attr.disabled = props.disabled
+      break
     default:
-      attr.type = props.type;
-      if (props.disabled) attr.disabled = props.disabled;
-      break;
+      attr.type = props.type || 'button'
+      if (props.disabled) attr.disabled = props.disabled
+      break
   }
   attr.class = [
     'button',
@@ -73,10 +75,10 @@ const rootProps = computed(() => {
     props.inline && `button--inline`,
     props.rotateIcon && `button--animation`,
     props.className,
-  ];
-  attr.style = props.styles;
-  return attr;
-});
+  ]
+  attr.style = props.styles
+  return attr
+})
 </script>
 
 <style src="./basic.scss" lang="scss" scoped/>

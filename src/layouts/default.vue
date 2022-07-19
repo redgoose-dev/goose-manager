@@ -1,10 +1,10 @@
 <template>
-<div v-if="!!store.state.user" class="layout">
+<div v-if="!!auth.user" class="layout">
   <header class="layout-header">
     <div class="layout-header__wrap">
       <h1 class="layout-header__logo">
-        <router-link to="/" :title="store.state.header.title">
-          {{store.state.header.shortName}}
+        <router-link to="/" :title="head.title">
+          {{head.shortName}}
         </router-link>
       </h1>
       <nav class="layout-header__gnb">
@@ -51,13 +51,13 @@
         <ul class="navigation">
           <li>
             <span>
-              <em>{{store.state.user.email}}</em>
+              <em>{{auth.user.email}}</em>
               <Icon name="chevron-down" class="ico-arrow"/>
             </span>
             <div>
               <ol>
                 <li>
-                  <router-link :to="`/users/${store.state.user.srl}/`">
+                  <router-link :to="`/users/${auth.user.srl}/`">
                     <Icon name="user" class="ico-custom"/>
                     <em>Account</em>
                   </router-link>
@@ -102,74 +102,69 @@
 </div>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import store from '../store';
-import { post } from '../libs/api';
-import { logout } from '../libs/auth';
-import { err } from '../libs/error';
-import { message } from '../message';
-import { toast } from '../modules/toast';
-import Icon from '../components/icons/index.vue';
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { preferenceStore } from '../store/preference'
+import { authStore } from '../store/auth'
+import { headStore } from '../store/head'
+import { post } from '../libs/api'
+import { err } from '../libs/error'
+import { message } from '../message'
+import { toast } from '../modules/toast'
+import Icon from '../components/icons/index.vue'
 
-const route = useRoute();
-const year = new Date().getFullYear();
-const gnb = computed(() => {
-  const { navigation } = store.state.preference;
-  return navigation.map(item => {
+const route = useRoute()
+const preference = preferenceStore()
+const auth = authStore()
+const head = headStore()
+const year: number = new Date().getFullYear()
+const gnb = computed<any>(() => {
+  const { navigation } = preference
+  return navigation.map((item: any) => {
     return {
       ...item,
-      show: item.admin === undefined || item.admin === true,
+      show: item.admin === undefined || item.admin,
     }
-  }).filter((item) => !!item.show);
-});
+  }).filter((item) => !!item.show)
+})
 
-// change theme
-store.dispatch('changeTheme');
-
-async function onClickClearTokens(e)
+async function onClickClearTokens(e: any): Promise<void>
 {
   if (!confirm(message.confirm.resetToken))
   {
-    e.currentTarget.blur();
-    return;
+    e.currentTarget.blur()
+    return
   }
   try
   {
-    e.currentTarget.blur();
-    let res = await post('/token/clear/');
-    if (!res.success) throw new Error(res.message);
-    toast.add(message.success.resetTokens, 'success');
+    e.currentTarget.blur()
+    let res = await post('/token/clear/')
+    if (!res.success) throw new Error(res.message)
+    toast.add(message.success.resetTokens, 'success').then()
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/layouts/default.vue', 'onClickClearTokens()' ], 'error', e.message);
-    toast.add(message.fail.resetTokens, 'error');
+    err([ '/layouts/default.vue', 'onClickClearTokens()' ], 'error', e.message)
+    toast.add(message.fail.resetTokens, 'error').then()
   }
 }
 
-/**
- * on click logout
- * @return {Promise<void>}
- */
-async function onClickLogout()
+async function onClickLogout(): Promise<void>
 {
-  if (!confirm(message.confirm.logout)) return;
-  await logout();
+  if (!confirm(message.confirm.logout)) return
+  await auth.logout()
 }
 
 /**
  * get navigation element name
  * 메뉴 상태에 따라 링크 엘리먼트 이름 설정하기
- * @param {object} item
- * @return {string}
  */
-function getNavigationElementName(item)
+function getNavigationElementName(item: any): string
 {
-  if (item.link) return 'router-link';
-  else if (item.href) return 'a';
-  else return 'span';
+  if (item.link) return 'router-link'
+  else if (item.href) return 'a'
+  else return 'span'
 }
 </script>
 

@@ -7,8 +7,8 @@
     v-if="props.index.length > 0"
     class="attachments">
     <ul class="attachments__index">
-      <li v-for="(item,key) in props.index" @click.stop="">
-        <FileProgress v-if="item.ready" :percent="item.percent"/>
+      <li v-for="(item, key) in props.index" @click.stop="">
+        <FileProgress v-if="item.ready"/>
         <Item
           v-else
           :image="item.pathFull"
@@ -32,38 +32,41 @@
 </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import localStore from '../store';
-import { selectItem, selectAll } from '../selectItems';
-import Icon from '../../icons/index.vue';
-import Item from './item.vue';
-import FileProgress from '../file-progress.vue';
+<script lang="ts" setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { fileManagerStore } from '../../../store/tool-manager'
+import { selectItem, selectAll } from '../selectItems'
+import Icon from '../../icons/index.vue'
+import Item from './item.vue'
+import FileProgress from '../file-progress.vue'
 
-const props = defineProps({
-  index: Array,
-  processing: Boolean,
-});
-const emits = defineEmits([ 'change-select', 'select-context-item', 'upload' ]);
-const $root = ref();
-const selected = ref(new Array(props.index.length).fill(false));
-const post = computed(() => (localStore.state.post));
+interface Props {
+  index: []
+  processing: boolean
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits([ 'change-select', 'select-context-item', 'upload' ])
+const localStore = fileManagerStore()
+const $root = ref()
+const selected = ref<boolean[]>(new Array(props.index.length).fill(false))
+const post = computed(() => (localStore.post));
 let dragEvent = false;
 let dragOver = ref(false);
 
-function onSelectItem(key, event)
+function onSelectItem(key: number, event: PointerEvent)
 {
   selected.value = selectItem(selected.value, key, event);
   exportSelected();
 }
 
-function onSelectAll(sw)
+function onSelectAll(sw: boolean|undefined = undefined)
 {
   selected.value = selectAll(selected.value, sw);
   exportSelected();
 }
 
-function exportSelected()
+function exportSelected(): void
 {
   let tree = selected.value.map((o, key) => (!!o ? key : undefined)).filter(o => (o !== undefined));
   emits('change-select', tree);
@@ -74,22 +77,22 @@ function onReset()
   selected.value = new Array(props.index.length).fill(false);
 }
 
-function onOverFiles(e)
+function onOverFiles(e: DragEvent)
 {
   e.preventDefault();
   if (dragOver.value) return;
   dragOver.value = true;
 }
-function onLeaveFiles(e)
+function onLeaveFiles(e: DragEvent)
 {
   e.preventDefault();
   if ($root.value === e.target) dragOver.value = false;
 }
-function onDropFiles(e)
+function onDropFiles(e: DragEvent)
 {
   e.preventDefault();
   dragOver.value = false;
-  const files = (e.dataTransfer) ? e.dataTransfer.files : null;
+  const files: any = (e.dataTransfer) ? e.dataTransfer.files : undefined;
   if (files?.length > 0) emits('upload', files);
 }
 
@@ -104,7 +107,7 @@ onMounted(() => {
       $root.value.addEventListener('drop', onDropFiles, false);
     }
   }
-});
+})
 onUnmounted(() => {
   if (dragEvent)
   {
@@ -116,12 +119,12 @@ onUnmounted(() => {
       $root.value.removeEventListener('drop', onDropFiles, false);
     }
   }
-});
+})
 
 defineExpose({
   selectAll: onSelectAll,
   reset: onReset,
-});
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

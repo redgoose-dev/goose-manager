@@ -1,0 +1,14 @@
+.information {
+  margin-bottom: 24px;
+  background-color: var(--color-invert);
+  padding: 10px;
+  box-shadow: 0 0 0 1px rgb(var(--color-base-rgb) / 10%), 0 1px 20px rgb(var(--color-base-rgb) / 10%);
+  border-radius: 2px;
+  &__card {
+    box-shadow: none;
+    background-color: transparent;
+    &:deep(.item__thumbnail) {
+      border-radius: var(--size-radius);
+    }
+  }
+}

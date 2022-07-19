@@ -1,12 +1,11 @@
 <template>
-<article :class="[ 'files-manager', localStore.state.fullSize && 'files-manager--full' ]">
+<article :class="[ 'files-manager', localStore.fullSize && 'files-manager--full' ]">
   <Tabs
     ref="$tabs"
-    :active="localStore.state.tab"
+    :active="localStore.tab"
     :show="showTabButtons"
     class="files-manager__tabs"
-    @select-tab="selectTab"
-    @select-function="selectFunction"/>
+    @function="selectFunctionFromTabs"/>
   <div class="files-manager__body">
     <component
       ref="$module"
@@ -28,9 +27,9 @@
 </article>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import localStore from './store';
+import { fileManagerStore } from '../../store/tool-manager'
 import { controlWindow } from './util';
 import { Modal, ModalBody } from '../modal';
 import Tabs from './tabs.vue';
@@ -38,28 +37,33 @@ import ModulePost from './modules/post.vue';
 import ModuleGlobal from './modules/global.vue';
 import Guide from './guide.vue';
 
-const $tabs = ref();
-const $module = ref();
-const props = defineProps({
-  tab: { type: String, default: 'global' }, // post,global
-  post: {
-    module: String, // articles,comments
-    targetSrl: Number,
-    cropper: Object,
-    thumbnail: Object,
-    selectedThumbnail: undefined,
+interface Props {
+  tab: string
+  post?: {
+    module: 'articles' | 'comments'
+    targetSrl: number
+    cropper: {}
+    thumbnail: {}
+    limitCount: number
+    limitSize: number
+    thumbnailType: string
+  }
+  global?: {
+    path: string
   },
-  global: {
-    path: { type: String, default: 'assets' },
-  },
-  acceptFileType: { type: String, default: 'image/*' },
-  fullSize: Boolean,
-  useThumbnail: Boolean,
-});
-const emits = defineEmits([ 'close', 'custom-event' ]);
-const guide = ref(false);
-const contentBody = computed(() => {
-  switch (localStore.state.tab)
+  acceptFileType?: string
+  fullSize?: boolean
+  useThumbnail?: boolean
+}
+
+const $tabs = ref<any>()
+const $module = ref<any>()
+const props = defineProps<Props>()
+const emits = defineEmits([ 'close', 'custom-event' ])
+const localStore = fileManagerStore()
+const guide = ref<boolean>(false)
+const contentBody = computed<any>(() => {
+  switch (localStore.tab)
   {
     case 'post':
       return ModulePost;
@@ -68,72 +72,54 @@ const contentBody = computed(() => {
     default:
       return null;
   }
-});
-const showTabButtons = computed(() => {
-  const { module } = localStore.state.post;
+})
+const showTabButtons = computed<any>(() => {
+  const { module } = localStore.post
   return {
     post: module === 'articles' || module === 'comments' || module === 'checklist',
     global: true,
     guide: true,
-    close: localStore.state.fullSize,
-  };
-});
-
-initialize();
-
-/**
- * initialize
- */
-function initialize()
-{
-  localStore.commit('initialize');
-  if (props.tab) localStore.state.tab = props.tab;
-  localStore.state.acceptFileType = props.acceptFileType || 'image/*';
-  localStore.state.fullSize = props.fullSize;
-  localStore.state.useThumbnail = props.useThumbnail;
-  if (props.global)
-  {
-    localStore.state.global.path = props.global.path || 'assets';
+    close: localStore.fullSize,
   }
+})
+
+function initialize(): void
+{
+  localStore.setup()
+  localStore.tab = props.tab || 'global'
+  localStore.acceptFileType = props.acceptFileType || 'image/*'
+  localStore.fullSize = props.fullSize || false
+  localStore.useThumbnail = props.useThumbnail || false
   if (props.post)
   {
-    localStore.state.post = {
-      module: props.post.module,
-      targetSrl: props.post.targetSrl,
-      index: [],
-      idx: 0,
-      selected: [],
-      limitCount: props.post.limitCount,
-      limitSize: props.post.limitSize,
-    };
+    localStore.post.module = props.post.module
+    localStore.post.targetSrl = props.post.targetSrl
+    localStore.post.limitCount = props.post.limitCount
+    localStore.post.limitSize = props.post.limitSize
     if (props.useThumbnail)
     {
-      localStore.state.post.thumbnail = props.post.thumbnail || {};
-      localStore.state.post.cropper = props.post.cropper;
-      localStore.state.post.thumbnailType = props.post.thumbnailType;
+      localStore.post.thumbnail = props.post.thumbnail || {}
+      localStore.post.cropper = props.post.cropper
+      localStore.post.thumbnailType = props.post.thumbnailType
     }
   }
-  localStore.state.window = [];
+  localStore.window = [];
 }
 
-function selectTab({ key })
-{
-  localStore.state.tab = key;
-}
-function selectFunction(key)
+function selectFunctionFromTabs(key: string): void
 {
   switch (key)
   {
     case 'guide':
-      guide.value = true;
-      break;
+      guide.value = true
+      break
     case 'close':
-      emits('close');
-      break;
+      emits('close')
+      break
   }
 }
 
-function onCustomEvent({ key, value })
+function onCustomEvent({ key, value }: { key: string, value: any })
 {
   switch (key)
   {
@@ -144,7 +130,7 @@ function onCustomEvent({ key, value })
   }
 }
 
-function shortcuts(e, type)
+function shortcuts(e: KeyboardEvent, type: string): void
 {
   switch (type)
   {
@@ -171,9 +157,9 @@ function shortcuts(e, type)
 }
 function pushEscKey()
 {
-  if (localStore.state.window.length > 0)
+  if (localStore.window.length > 0)
   {
-    let key = localStore.state.window[localStore.state.window.length - 1];
+    let key = localStore.window[localStore.window.length - 1];
     controlWindow(false);
     switch (key)
     {
@@ -190,18 +176,20 @@ function pushEscKey()
   }
   else
   {
-    emits('close');
+    emits('close')
   }
 }
 
+initialize()
+
 onMounted(() => {
-  window.on('keyup.file-manager', (e) => shortcuts(e, 'keyup'));
-  window.on('keydown.file-manager', (e) => shortcuts(e, 'keydown'));
-});
+  window.on('keyup.file-manager', (e: any) => shortcuts(e, 'keyup'))
+  window.on('keydown.file-manager', (e: any) => shortcuts(e, 'keydown'))
+})
 onUnmounted(() => {
-  window.off('keyup.file-manager');
-  window.off('keydown.file-manager');
-});
+  window.off('keyup.file-manager')
+  window.off('keydown.file-manager')
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

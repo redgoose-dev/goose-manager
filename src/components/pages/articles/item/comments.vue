@@ -1,8 +1,7 @@
 <template>
 <section v-if="!loading" class="comments">
   <h1 class="comments__title">Comments</h1>
-  <Loading v-if="loading"/>
-  <ul v-else-if="index.length > 0" class="comments__index">
+  <ul v-if="index.length > 0" class="comments__index">
     <li v-for="(comment, key) in index">
       <Comment
         :srl="comment.srl"
@@ -20,63 +19,46 @@
 </section>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
-import { getComments } from '../../../../structure/comments';
-import { err } from '../../../../libs/error';
-import Loading from '../../../etc/loading.vue';
-import Comment from './comment.vue';
-import CreateComment from './create-comment.vue';
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue'
+import { getComments } from '../../../../structure/comments'
+import { err } from '../../../../libs/error'
+import Comment from './comment.vue'
+import CreateComment from './create-comment.vue'
 
-const props = defineProps({
-  articleSrl: { type: Number, required: true },
-});
-const index = ref([]);
-const loading = ref(false);
+const props = defineProps<{
+  articleSrl: number
+}>()
+const index = ref<any[]>([])
+const loading = ref<boolean>(false)
 
-function onSubmitCreateComment(item)
+function onSubmitCreateComment(item: any): void
 {
-  index.value.push(item);
+  index.value.push(item)
 }
 
-function onEditComment(key, content)
+function onEditComment(key: number, content: string): void
 {
-  index.value[key].content = content;
+  index.value[key].content = content
 }
-function onDeleteComment(key)
+function onDeleteComment(key: number): void
 {
-  index.value.splice(key, 1);
+  index.value.splice(key, 1)
 }
 
 onMounted(async () => {
   try
   {
-    loading.value = true;
-    index.value = await getComments(props.articleSrl);
-    loading.value = false;
+    loading.value = true
+    index.value = await getComments(props.articleSrl)
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    loading.value = false;
-    err(['/components/pages/articles/item/comments.vue', 'onMounted()'], 'error', e.message);
+    loading.value = false
+    err(['/components/pages/articles/item/comments.vue', 'onMounted()'], 'error', e.message)
   }
-});
+})
 </script>
 
-<style lang="scss" scoped>
-.comments {
-  position: relative;
-  &__title {
-    margin: 0;
-    font-size: 0;
-    padding: 0;
-  }
-  &__index {
-    display: grid;
-    margin: 0 0 20px;
-    padding: 0;
-    list-style: none;
-    gap: 20px;
-  }
-}
-</style>
+<style src="./comments.scss" lang="scss" scoped></style>

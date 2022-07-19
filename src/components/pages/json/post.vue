@@ -54,104 +54,105 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { get, post, formData, checkForms } from '../../../libs/api';
-import { err } from '../../../libs/error';
-import { printf } from '../../../libs/string';
-import { message } from '../../../message';
-import { toast } from '../../../modules/toast';
-import { Fieldset, Field, Help } from '../../forms/fieldset';
-import { Controller } from '../../navigation';
-import { FormInput, FormTextarea } from '../../forms';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { get, post, formData, checkForms } from '../../../libs/api'
+import { err } from '../../../libs/error'
+import { printf } from '../../../libs/string'
+import { message } from '../../../message'
+import { toast } from '../../../modules/toast'
+import { Fieldset, Field, Help } from '../../forms/fieldset'
+import { Controller } from '../../navigation'
+import { FormInput, FormTextarea } from '../../forms'
+import { ButtonBasic } from '../../button'
 
-const root = ref();
-const router = useRouter();
-const props = defineProps({
-  mode: { type: String, required: true },
-  srl: Number,
-});
-const forms = reactive({
+interface Props {
+  mode: string
+  srl?: number
+}
+
+const router = useRouter()
+const root = ref<any>()
+const props = defineProps<Props>()
+const forms = reactive<any>({
   name: { value: '', error: null },
   description: { value: '', error: null },
   json: { value: '', error: null },
-});
-const loading = ref(false);
-const processing = ref(false);
-const isEdit = computed(() => (props.mode === 'edit'));
+})
+const loading = ref<boolean>(false)
+const processing = ref<boolean>(false)
+const isEdit = computed<boolean>(() => (props.mode === 'edit'))
 
-function validateForms()
+function validateForms(): void
 {
-  forms.json.error = null;
-  // check json data
+  forms.json.error = null
   try
   {
-    JSON.parse(forms.json.value);
+    JSON.parse(forms.json.value)
   }
-  catch (e)
+  catch (_)
   {
-    forms.json.error = message.error.parsingJSON;
+    forms.json.error = message.error.parsingJSON
   }
 }
 
-function getStringJson(src)
+function getStringJson(src: any): string
 {
   try
   {
-    return JSON.stringify(src, null, 2);
+    return JSON.stringify(src, null, 2)
   }
   catch (e)
   {
-    return '{}';
+    return '{}'
   }
 }
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
   try
   {
-    processing.value = true;
-    validateForms();
-    checkForms(forms);
+    processing.value = true
+    validateForms()
+    checkForms(forms)
     const data = formData({
       name: forms.name.value,
       description: forms.description.value,
       json: forms.json.value,
-    });
-    let url = props.mode === 'edit' ? `/json/${props.srl}/edit/` : '/json/';
-    let res = await post(url, data);
-    processing.value = false;
-    const srl = res.srl || props.srl || null;
-    await router.push(srl ? `/json/${srl}/` : '/json/');
-    toast.add(printf(message.success[props.mode], 'JSON'), 'success');
+    })
+    const url = props.mode === 'edit' ? `/json/${props.srl}/edit/` : '/json/'
+    const res = await post(url, data)
+    processing.value = false
+    const srl: number = res.srl || props.srl || NaN
+    await router.push(srl ? `/json/${srl}/` : '/json/')
+    toast.add(printf(message.success[props.mode], 'JSON'), 'success')
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/json/post.vue', 'onSubmit()' ], 'error', e.message);
-    processing.value = false;
-    toast.add(printf(message.fail[props.mode], 'JSON'), 'error');
+    err([ '/components/pages/json/post.vue', 'onSubmit()' ], 'error', e.message)
+    processing.value = false
+    toast.add(printf(message.fail[props.mode], 'JSON'), 'error')
   }
 }
 
 onMounted(async () => {
-  if (props.mode !== 'edit') return;
+  if (props.mode !== 'edit') return
   try
   {
-    loading.value = true;
-    const res = await get(`/json/${props.srl}/`);
-    forms.name.value = res.data.name;
-    forms.description.value = res.data.description;
-    forms.json.value = getStringJson(res.data.json);
-    loading.value = false;
+    loading.value = true
+    const { data } = await get(`/json/${props.srl}/`)
+    forms.name.value = data?.name
+    forms.description.value = data?.description
+    forms.json.value = getStringJson(data?.json)
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/json/post.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/components/pages/json/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

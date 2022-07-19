@@ -1,7 +1,7 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
-    <Field label="ID" for="id">
+    <Field :label="$msg('word.id')" for="id">
       <FormInput
         v-model="forms.id.value"
         name="id"
@@ -18,7 +18,7 @@
         Please enter only alphanumeric characters `-` and `_`.
       </Help>
     </Field>
-    <Field label="Name" for="name">
+    <Field :label="$msg('word.name')" for="name">
       <FormInput
         v-model="forms.name.value"
         name="name"
@@ -29,7 +29,7 @@
         :required="true"
         class="fields__name"/>
     </Field>
-    <Field label="Description" for="description">
+    <Field :label="$msg('word.description')" for="description">
       <FormInput
         v-model="forms.description.value"
         name="description"
@@ -44,8 +44,8 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">
-        Back
+      <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
+        {{$msg('word.back')}}
       </ButtonBasic>
     </template>
     <template #right>
@@ -61,34 +61,40 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { validateId, printf } from '../../../libs/string';
-import { get, post, formData, checkForms } from '../../../libs/api';
-import { toast } from '../../../modules/toast';
-import { err } from '../../../libs/error';
-import { message } from '../../../message';
-import { Fieldset, Field, Help } from '../../forms/fieldset';
-import { Controller } from '../../navigation';
-import { FormInput } from '../../forms';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { validateId, printf } from '../../../libs/string'
+import { get, post, formData, checkForms } from '../../../libs/api'
+import { toast } from '../../../modules/toast'
+import { err } from '../../../libs/error'
+import { message, $msg } from '../../../message'
+import { Fieldset, Field, Help } from '../../forms/fieldset'
+import { Controller } from '../../navigation'
+import { FormInput } from '../../forms'
+import { ButtonBasic } from '../../button'
 
-const router = useRouter();
-const props = defineProps({
-  srl: Number,
-  mode: String,
-});
-const forms = reactive({
+interface Forms {
+  id: { value: string, error: any }
+  name: { value: string, error: any }
+  description: { value: string, error: any }
+}
+
+const router = useRouter()
+const props = defineProps<{
+  mode: string
+  srl?: number
+}>()
+const forms = reactive<Forms>({
   id: { value: '', error: null },
   name: { value: '', error: null },
   description: { value: '', error: null },
-});
-const loading = ref(false);
-const processing = ref(false);
-const isEdit = computed(() => (props.mode === 'edit'));
+})
+const loading = ref<boolean>(false)
+const processing = ref<boolean>(false)
+const isEdit = computed<boolean>(() => (props.mode === 'edit'));
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
   forms.id.error = null;
   if (!validateId(forms.id.value)) forms.id.error = printf(message.words.pleaseCheck, 'ID');
@@ -106,7 +112,7 @@ async function onSubmit()
     await router.push('/apps/');
     toast.add(printf(message.success[props.mode], message.word.app), 'success');
   }
-  catch (e)
+  catch (e: any)
   {
     err([ '/components/pages/apps/post.vue', 'onSubmit()' ], 'error', e.message);
     processing.value = false;
@@ -114,18 +120,18 @@ async function onSubmit()
   }
 }
 
-onMounted(async () => {
+onMounted(async (): Promise<void> => {
   if (props.mode !== 'edit') return;
   try
   {
     loading.value = true;
     const res = await get(`/apps/${props.srl}/`);
-    forms.id.value = res.data.id;
-    forms.name.value = res.data.name;
-    forms.description.value = res.data.description;
+    forms.id.value = res.data?.id;
+    forms.name.value = res.data?.name;
+    forms.description.value = res.data?.description;
     loading.value = false;
   }
-  catch (e)
+  catch (e: any)
   {
     err([ '/components/pages/apps/post.vue', 'onMounted()' ], 'error', e.message);
     throw e.message;

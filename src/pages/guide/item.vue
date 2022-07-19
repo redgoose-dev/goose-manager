@@ -99,7 +99,7 @@
       <p>theme - list</p>
       <Items theme="list">
         <Card
-          v-for="o in Array(2)"
+          v-for="_ in Array(2)"
           href="/"
           image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
           title="card title"
@@ -115,7 +115,7 @@
       <p>theme - card</p>
       <Items theme="card">
         <Card
-          v-for="o in Array(5)"
+          v-for="_ in Array(5)"
           href="/"
           image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
           title="card title"
@@ -138,7 +138,7 @@
     <div class="example">
       <Items theme="thumbnail">
         <Thumbnail
-          v-for="o in Array(6)"
+          v-for="_ in Array(6)"
           href="/"
           image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
           title="card title"
@@ -173,13 +173,13 @@
 </article>
 </template>
 
-<script setup>
-import { images } from './resource';
-import { Card, Thumbnail, Items } from '../../components/item';
+<script lang="ts" setup>
+import { images } from './resource'
+import { Card, Thumbnail, Items } from '../../components/item'
 
-function callAlert()
+function callAlert(): void
 {
-  alert('call alert');
+  alert('call alert')
 }
 </script>
 

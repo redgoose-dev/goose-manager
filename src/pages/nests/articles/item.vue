@@ -4,9 +4,9 @@
   :nest-srl="Number(route.params.nestSrl)"/>
 </template>
 
-<script setup>
-import Item from '../../../components/pages/articles/item/index.vue';
-import { useRoute } from 'vue-router';
+<script lang="ts" setup>
+import { useRoute } from 'vue-router'
+import Item from '../../../components/pages/articles/item/index.vue'
 
-const route = useRoute();
+const route = useRoute()
 </script>

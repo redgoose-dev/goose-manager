@@ -15,7 +15,7 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+      <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic
@@ -30,72 +30,72 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { get, post, formData, checkForms } from '../../../libs/api';
-import { err } from '../../../libs/error';
-import { printf } from '../../../libs/string';
-import { message } from '../../../message';
-import { toast } from '../../../modules/toast';
-import { Fieldset, Field } from '../../forms/fieldset';
-import { Controller } from '../../navigation';
-import { FormInput } from '../../forms';
-import ButtonBasic from '../../button/basic.vue';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { get, post, formData, checkForms } from '../../../libs/api'
+import { err } from '../../../libs/error'
+import { printf } from '../../../libs/string'
+import { message } from '../../../message'
+import { toast } from '../../../modules/toast'
+import { Fieldset, Field } from '../../forms/fieldset'
+import { Controller } from '../../navigation'
+import { FormInput } from '../../forms'
+import { ButtonBasic } from '../../button'
 
-const root = ref();
-const router = useRouter();
-const props = defineProps({
-  mode: { type: String, required: true },
-  nestSrl: Number,
-  srl: Number,
-});
-const forms = reactive({
+interface Props {
+  mode: string
+  nestSrl?: number
+  srl?: number
+}
+
+const root = ref()
+const router = useRouter()
+const props = defineProps<Props>()
+const forms = reactive<any>({
   name: { value: '', error: null },
-});
-const loading = ref(false);
-const processing = ref(false);
-const isEdit = computed(() => (props.mode === 'edit'));
+})
+const loading = ref<boolean>(false)
+const processing = ref<boolean>(false)
+const isEdit = computed<boolean>(() => (props.mode === 'edit'))
 
-async function onSubmit()
+async function onSubmit():Promise<void>
 {
   try
   {
-    // TODO: 데이터 처리 부분을 스트럭쳐 영역으로 분리해야겠다.
-    processing.value = true;
-    checkForms(forms);
+    processing.value = true
+    checkForms(forms)
     await post(isEdit.value ? `/categories/${props.srl}/edit/` : '/categories/', formData({
       nest_srl: props.nestSrl,
       name: forms.name.value,
-    }));
-    processing.value = false;
-    await router.push(isEdit.value ? `../../` : '../');
-    toast.add(printf(message.success[props.mode], 'category'), 'success');
+    }))
+    processing.value = false
+    await router.push(isEdit.value ? `../../` : '../')
+    toast.add(printf(message.success[props.mode], 'category'), 'success')
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/categories/post.vue', 'onSubmit()' ], 'error', e.message);
-    processing.value = false;
-    toast.add(printf(message.fail[props.mode], 'categories'), 'error');
+    err([ '/components/pages/categories/post.vue', 'onSubmit()' ], 'error', e.message)
+    processing.value = false
+    toast.add(printf(message.fail[props.mode], 'categories'), 'error')
   }
 }
 
 onMounted(async () => {
-  if ( props.mode !== 'edit' ) return;
+  if ( props.mode !== 'edit' ) return
   try
   {
-    // TODO: 데이터 가져오는 부분을 스트럭쳐 영역으로 분리해야겠다.
-    loading.value = true;
-    const res = await get(`/categories/${props.srl}/`);
-    forms.name.value = res.data.name;
-    loading.value = false;
+    loading.value = true
+    const res = await get(`/categories/${props.srl}/`)
+    forms.name.value = res.data.name
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/categories/post.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/components/pages/categories/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

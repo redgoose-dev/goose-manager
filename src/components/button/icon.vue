@@ -4,58 +4,60 @@
 </component>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import Icon from '../icons/index.vue';
+<script lang="ts" setup>
+import { computed } from 'vue'
+import Icon from '../icons/index.vue'
 
-const props = defineProps({
-  type: String,
-  iconName: { type: String, default: 'menu' },
-  href: String,
-  target: String,
-  title: String,
-  disabled: Boolean,
-  color: String, // key,sub,error,weak
-});
-const type = computed(() => {
-  if (props.href) return /^http/.test(props.href) ? 'a' : 'router';
-  else return props.type || null;
-});
-const tag = computed(() => {
+interface Props {
+  type?: string
+  iconName?: string
+  href?: string
+  target?: string
+  title?: string
+  disabled?: boolean
+  color?: string | 'key' | 'sub' | 'error' | 'weak'
+}
+
+const props = defineProps<Props>()
+const type = computed<string>(() => {
+  if (props.href) return /^http/.test(props.href) ? 'a' : 'router'
+  else return props.type || ''
+})
+const tag = computed<string>(() => {
   switch (type.value)
   {
-    case 'a': return 'a';
-    case 'router': return 'router-link';
-    case 'label': return 'label';
-    default: return 'button';
+    case 'a': return 'a'
+    case 'router': return 'router-link'
+    case 'label': return 'label'
+    default: return 'button'
   }
-});
-const rootProps = computed(() => {
-  let attr = {};
-  if (props.title) attr.title = props.title;
+})
+const rootProps = computed<any>(() => {
+  let attr: any = {}
+  if (props.title) attr.title = props.title
   switch (type.value)
   {
     case 'a':
-      attr.href = props.href || '#';
-      if (props.target) attr.target = props.target;
-      break;
+      attr.href = props.href || '#'
+      if (props.target) attr.target = props.target
+      break
     case 'router':
-      attr.to = props.href || '#';
-      break;
+      attr.to = props.href || '#'
+      break
     case 'label':
-      break;
+      break
     default:
-      attr.type = props.type;
-      if (props.disabled) attr.disabled = props.disabled;
-      break;
+      attr.type = props.type
+      if (props.disabled) attr.disabled = props.disabled
+      break
   }
   attr.class = [
     'button-icon',
     props.color && `button-icon--color-${props.color}`,
     props.disabled && 'button-icon--disabled',
-  ];
-  return attr;
-});
+  ]
+  return attr
+})
 </script>
 
 <style src="./icon.scss" lang="scss" scoped></style>

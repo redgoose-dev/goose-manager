@@ -14,12 +14,12 @@
   </div>
   <nav class="thumbnail-editor__nav">
     <div>
-      <ButtonBasic icon-left="x" @click="emits('close')">
+      <ButtonBasic type="button" icon-left="x" @click="emits('close')">
         Close
       </ButtonBasic>
     </div>
     <div>
-      <ButtonBasic color="key" icon-left="check" @click="onSubmit">
+      <ButtonBasic type="button" color="key" icon-left="check" @click="onSubmit">
         Set thumbnail
       </ButtonBasic>
     </div>
@@ -32,7 +32,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { pureObject } from '../../../libs/object';
 import { controlWindow } from '../util';
 import { loadImage, getImageSize } from '../../../libs/util';
-import ButtonBasic from '../../button/basic.vue';
+import { ButtonBasic } from '../../button';
 import Cropper from '../../etc/cropper/index.vue';
 
 const $cropper = ref();

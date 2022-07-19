@@ -12,7 +12,7 @@
     </p>
     <nav class="error__nav">
       <div>
-        <ButtonBasic color="key" @click="$router.back()">
+        <ButtonBasic color="key" @click="router.back()">
           페이지 뒤로가기
         </ButtonBasic>
       </div>
@@ -21,12 +21,14 @@
 </article>
 </template>
 
-<script setup>
-import { iconRandomPick } from '../../components/icons/assets';
-import ButtonBasic from '../../components/button/basic.vue';
-import Icon from '../../components/icons/index.vue';
+<script lang="ts" setup>
+import { useRouter } from 'vue-router'
+import { iconRandomPick } from '../../components/icons/assets'
+import { ButtonBasic } from '../../components/button'
+import Icon from '../../components/icons/index.vue'
 
-const iconName = iconRandomPick();
+const router = useRouter()
+const iconName = iconRandomPick()
 </script>
 
 <style src="./error.scss" lang="scss" scoped></style>

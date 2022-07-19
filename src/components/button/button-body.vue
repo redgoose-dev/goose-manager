@@ -17,48 +17,13 @@
 </template>
 
 <script setup>
-import Icon from '../icons/index.vue';
+import Icon from '../icons/index.vue'
 
 const props = defineProps({
   iconLeft: String,
   iconRight: String,
   rotateIcon: Boolean,
-});
+})
 </script>
 
-<style lang="scss" scoped>
-.button-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  height: 100%;
-  gap: 2px;
-  &__icon {
-    box-sizing: border-box;
-    @-webkit-keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-    animation: var(--icon-animation, none);
-    &:is(:first-child) {
-      margin-right: 4px;
-      margin-left: -4px;
-    }
-    &:is(:last-child) {
-      margin-left: 4px;
-      margin-right: -4px;
-    }
-  }
-  &__label {
-    display: block;
-    font-style: normal;
-    font-weight: 500;
-    font-size: var(--font-size);
-    line-height: 1.15;
-    letter-spacing: -.25px;
-    & + i {
-      margin-left: 6px;
-    }
-  }
-}
-</style>
+<style src="./button-body.scss" lang="scss" scoped></style>

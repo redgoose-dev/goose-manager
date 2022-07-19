@@ -72,100 +72,98 @@
 </article>
 </template>
 
-<script setup>
-import { ref, reactive, onMounted, computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import store from '../../store';
-import getData from '../../structure/users/item';
-import { post, checkForms, formData } from '../../libs/api';
-import { logout } from '../../libs/auth';
-import { err } from '../../libs/error';
-import { printf } from '../../libs/string';
-import { message } from '../../message';
-import { toast } from '../../modules/toast';
-import PageHeader from '../../components/page/header/index.vue';
-import { FormInput } from '../../components/forms';
-import { Fieldset, Field, Help } from '../../components/forms/fieldset';
-import { Controller } from '../../components/navigation';
-import ButtonBasic from '../../components/button/basic.vue';
+<script lang="ts" setup>
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { authStore } from '../../store/auth'
+import getData from '../../structure/users/item'
+import { post, checkForms, formData } from '../../libs/api'
+import { err } from '../../libs/error'
+import { printf } from '../../libs/string'
+import { message } from '../../message'
+import { toast } from '../../modules/toast'
+import PageHeader from '../../components/page/header/index.vue'
+import { FormInput } from '../../components/forms'
+import { Fieldset, Field, Help } from '../../components/forms/fieldset'
+import { Controller } from '../../components/navigation'
+import { ButtonBasic } from '../../components/button'
 
-const root = ref();
-const router = useRouter();
-const route = useRoute();
-const forms = reactive({
+const root = ref()
+const router = useRouter()
+const route = useRoute()
+const auth = authStore()
+const forms = reactive<any>({
   srl: '',
   email: '',
   password: { value: '', error: null },
   password_new: { value: '', error: null },
   password_new2: { value: '', error: null },
-});
-const processing = ref(false);
-const loading = ref(false);
-const self = computed(() => (store.state.user.srl === Number(route.params.srl)));
+})
+const processing = ref<boolean>(false)
+const loading = ref<boolean>(false)
+const self = computed<boolean>(() => (auth.user?.srl === Number(route.params.srl)))
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
-  forms.password_new.error = null;
-  forms.password_new2.error = null;
+  forms.password_new.error = null
+  forms.password_new2.error = null
   if (forms.password_new.value !== forms.password_new2.value)
   {
-    forms.password_new2.error = message.words.guideVerifyPassword;
-    root.value.password_new2.focus();
-    return;
+    forms.password_new2.error = message.words.guideVerifyPassword
+    root.value.password_new2.focus()
+    return
   }
   if (forms.password.value === forms.password_new.value)
   {
-    forms.password_new.error = message.words.guideSamePassword;
-    root.value.password_new.focus();
-    return;
+    forms.password_new.error = message.words.guideSamePassword
+    root.value.password_new.focus()
+    return
   }
-
   try
   {
-    processing.value = true;
-    checkForms(forms);
-    const data = formData({
+    processing.value = true
+    checkForms(forms)
+    await post(`/users/${route.params.srl}/change-password/`, formData({
       password: forms.password.value,
       new_password: forms.password_new.value,
       confirm_password: forms.password_new2.value,
-    });
-    await post(`/users/${route.params.srl}/change-password/`, data);
-    processing.value = false;
+    }))
+    processing.value = false
     if (self.value)
     {
-      if (!confirm(`${printf(message.success.change, message.word.password)} ${message.confirm.logout}`)) return;
-      await logout();
+      if (!confirm(`${printf(message.success.change, message.word.password)} ${message.confirm.logout}`)) return
+      await auth.logout()
     }
     else
     {
-      await router.push(`/users/${route.params.srl}/`);
-      toast.add(printf(message.success.change, message.word.password), 'success');
+      await router.push(`/users/${route.params.srl}/`)
+      toast.add(printf(message.success.change, message.word.password), 'success')
     }
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/pages/users/change-password.vue', 'onSubmit()' ], 'error', e.message);
-    processing.value = false;
-    toast.add(printf(message.fail.change, message.word.password), 'error');
+    err([ '/pages/users/change-password.vue', 'onSubmit()' ], 'error', e.message)
+    processing.value = false
+    toast.add(printf(message.fail.change, message.word.password), 'error')
   }
 }
 
 onMounted(async () => {
   try
   {
-    if (!route.params.srl) throw new Error('no srl');
-    loading.value = true;
-    let res = await getData({ url: `/users/${route.params.srl}/` });
-    forms.srl = res.srl;
-    forms.email = res.email;
-    loading.value = false;
+    if (!route.params.srl) throw new Error('no srl')
+    loading.value = true
+    const res = await getData({ url: `/users/${route.params.srl}/` })
+    forms.srl = res.srl
+    forms.email = res.email
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/pages/users/change-password.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/pages/users/change-password.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

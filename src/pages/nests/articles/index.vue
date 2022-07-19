@@ -12,7 +12,7 @@
       <Loading v-if="loading"/>
       <Items
         v-else-if="data.index?.length > 0"
-        :theme="store.state.filters.articles.theme"
+        :theme="filters.articles.theme"
         class="articles__index">
         <component
           :is="itemComponent"
@@ -31,12 +31,12 @@
           </template>
         </component>
       </Items>
-      <Empty v-else/>
+      <Empty v-else title="no item"/>
       <Pagination
         v-model="page"
         :total="data.total"
-        :size="store.state.preference.articles.pageCount"
-        :range="store.state.preference.articles.pageRange"
+        :size="preference.articles.pageCount"
+        :range="preference.articles.pageRange"
         class="articles__pagination"
         @update:modelValue="onChangePage"/>
       <Controller class="articles__controller">
@@ -62,105 +62,113 @@
       <ArticleFilter
         :total="data.total"
         :loading="loading"
-        @update="onUpdateFilter"/>
+        @update="onUpdateData"/>
     </aside>
   </div>
 </article>
 </template>
 
-<script setup>
-import { ref, reactive, onMounted, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import store from '../../../store';
-import { err } from '../../../libs/error';
-import { serialize } from '../../../libs/string';
-import { createQueries } from '../../../components/pages/articles/libs';
-import { getData, requestArticles, requestCategories } from '../../../structure/articles';
-import PageHeader from '../../../components/page/header/index.vue';
-import { Items, Card, Thumbnail, Mark } from '../../../components/item';
-import { Controller } from '../../../components/navigation';
-import ButtonBasic from '../../../components/button/basic.vue';
-import Loading from '../../../components/etc/loading.vue';
-import Empty from '../../../components/error/empty.vue';
-import Categories from '../../../components/pages/articles/categories.vue';
-import Pagination from '../../../components/etc/pagination.vue';
-import ArticleFilter from '../../../components/pages/articles/article-filter.vue';
+<script lang="ts" setup>
+import { ref, reactive, onMounted, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { preferenceStore } from '../../../store/preference'
+import { filtersStore } from '../../../store/filters'
+import { err } from '../../../libs/error'
+import { serialize } from '../../../libs/string'
+import { createQueries } from '../../../components/pages/articles/libs'
+import { getData, requestArticles, requestCategories } from '../../../structure/articles'
+import PageHeader from '../../../components/page/header/index.vue'
+import { Items, Card, Thumbnail, Mark } from '../../../components/item'
+import { Controller } from '../../../components/navigation'
+import { ButtonBasic } from '../../../components/button'
+import Loading from '../../../components/etc/loading.vue'
+import Empty from '../../../components/error/empty.vue'
+import Categories from '../../../components/pages/articles/categories.vue'
+import Pagination from '../../../components/etc/pagination.vue'
+import ArticleFilter from '../../../components/pages/articles/article-filter.vue'
 
-const route = useRoute();
-const router = useRouter();
-const data = reactive({
+interface Data {
+  total: number
+  index: any
+  nest: any
+  categories: any
+}
+
+const route = useRoute()
+const router = useRouter()
+const preference = preferenceStore()
+const filters = filtersStore()
+const data = reactive<Data>({
   total: 0,
   index: null,
   nest: null,
   categories: null,
-});
-const title = computed(() => (data.nest ? `[${data.nest.id}] Articles` : undefined));
-const description = computed(() => (data.nest ? data.nest.description : undefined));
-const loading = ref(true);
-const page = ref(route.query.page ? Number(route.query.page) : 1);
-const itemComponent = computed(() => {
-  switch (store.state.filters.articles.theme)
+})
+const title = computed<string>(() => (data.nest ? `[${data.nest.id}] Articles` : ''))
+const description = computed<string>(() => (data.nest ? data.nest.description : ''))
+const loading = ref<boolean>(true)
+const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
+const itemComponent = computed<any>(() => {
+  switch (filters.articles.theme)
   {
     case 'list':
     case 'card':
-      return Card;
+      return Card
     case 'thumbnail':
     case 'brick':
-      return Thumbnail;
+      return Thumbnail
   }
-  return Card;
-});
+  return Card
+})
 
-/**
- * on change page
- * @param {number} page
- */
-function onChangePage(page)
+function onChangePage(page: number): void
 {
   let params = {
     ...route.query,
     page: page > 1 ? page : undefined,
-  };
-  router.push(`./${serialize(params, true)}`);
+  }
+  router.push(`./${serialize(params, true)}`)
 }
 
-async function onUpdateFilter()
+async function onUpdateData(): Promise<void>
 {
   try
   {
-    loading.value = true;
+    loading.value = true
     let [ articles, categories ] = await Promise.all([
       requestArticles(),
       requestCategories(),
-    ]);
-    data.total = articles.total;
-    data.index = articles.index;
-    data.categories = categories;
-    loading.value = false;
+    ])
+    data.total = articles.total
+    data.index = articles.index
+    data.categories = categories
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/nests/articles/index.vue', 'onUpdateFilter()'], 'error', e.message);
-    loading.value = false;
+    err(['/pages/nests/articles/index.vue', 'onUpdateData()'], 'error', e.message)
+    loading.value = false
   }
 }
 
 onMounted(async () => {
   try
   {
-    let res = await getData();
-    data.total = res.total;
-    data.index = res.articles;
-    data.nest = res.nest;
-    data.categories = res.categories;
-    loading.value = false;
+    let res = await getData()
+    data.total = res.total
+    data.index = res.articles
+    data.nest = res.nest
+    data.categories = res.categories
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err(['/pages/nests/articles/index.vue', 'onMounted()'], 'error', e.message);
-    throw e.message;
+    err(['/pages/nests/articles/index.vue', 'onMounted()'], 'error', e.message)
+    throw e.message
   }
-});
+})
+
+watch(() => route.query.category, onUpdateData)
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

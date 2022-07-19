@@ -1,0 +1,33 @@
+@use '../../../assets/scss/mixins';
+
+.page-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin: 0 0 30px;
+  user-select: none;
+  &__title {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.25;
+    letter-spacing: -1px;
+    font-weight: 600;
+    font-family: var(--font-eng);
+    color: rgb(0 0 0);
+  }
+  &__description {
+    margin: -2px 0 0;
+    font-size: 11px;
+    letter-spacing: -.25px;
+    color: var(--color-weak);
+  }
+  &__nav {
+    display: flex;
+    align-items: center;
+  }
+  @include mixins.dark-mode() {
+    &__title {
+      color: rgb(255 255 255);
+    }
+  }
+}

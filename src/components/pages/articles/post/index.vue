@@ -70,7 +70,7 @@
     @open-file-manager="showFilesManager = true"/>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">
+      <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
         Back
       </ButtonBasic>
     </template>
@@ -109,9 +109,9 @@
       <ModalBody type="full">
         <FilesManager
           tab="post"
-          :global="{ path: store.state.preference.files.globalPath }"
+          :global="{ path: preference.files.globalPath }"
           :post="fileManagerOptions"
-          :accept-file-type="store.state.preference.files.acceptFileType"
+          :accept-file-type="preference.files.acceptFileType"
           :full-size="true"
           :use-thumbnail="true"
           @custom-event="onFilesManagerEvent"
@@ -122,41 +122,42 @@
 </form>
 </template>
 
-<script setup>
-import { ref, computed, reactive, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import store from '../../../../store';
-import { getData, deleteThumbnail, uploadThumbnail } from '../../../../structure/articles/post';
-import { post, formData } from '../../../../libs/api';
-import { err } from '../../../../libs/error';
-import { dateFormat, checkOrderDate } from '../../../../libs/date';
-import { printf } from '../../../../libs/string';
-import { getTypeArticle, createQueries } from '../libs';
-import { message } from '../../../../message';
-import { toast } from '../../../../modules/toast';
-import { FormInput, FormSelect, FormRadio } from '../../../forms';
-import { Fieldset, Field, Label, Labels, Help, Columns } from '../../../forms/fieldset';
-import { Controller } from '../../../navigation';
-import { Modal, ModalBody } from '../../../modal';
-import ButtonBasic from '../../../button/basic.vue';
-import Editor from './editor.vue';
-import FilesManager from '../../../files-manager/index.vue';
+<script lang="ts" setup>
+import { ref, computed, reactive, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { preferenceStore } from '../../../../store/preference'
+import { getData, deleteThumbnail, uploadThumbnail } from '../../../../structure/articles/post'
+import { post, formData } from '../../../../libs/api'
+import { err } from '../../../../libs/error'
+import { dateFormat, checkOrderDate } from '../../../../libs/date'
+import { printf } from '../../../../libs/string'
+import { getTypeArticle, createQueries } from '../libs'
+import { message } from '../../../../message'
+import { toast } from '../../../../modules/toast'
+import { FormInput, FormSelect, FormRadio } from '../../../forms'
+import { Fieldset, Field, Label, Labels, Help, Columns } from '../../../forms/fieldset'
+import { Controller } from '../../../navigation'
+import { Modal, ModalBody } from '../../../modal'
+import { ButtonBasic } from '../../../button'
+import Editor from './editor.vue'
+import FilesManager from '../../../files-manager/index.vue'
 
-const route = useRoute();
-const router = useRouter();
-const $root = ref();
-const $editor = ref();
-const props = defineProps({
-  mode: { type: String, required: true },
-  nestSrl: Number,
-  articleSrl: Number,
-});
-const data = reactive({
+const route = useRoute()
+const router = useRouter()
+const $root = ref<any>()
+const $editor = ref<any>()
+const props = defineProps<{
+  mode: string
+  nestSrl?: number
+  articleSrl?: number
+}>()
+const preference = preferenceStore()
+const data = reactive<any>({
   nest: null,
   categories: null,
   article: null,
-});
-const forms = reactive({
+})
+const forms = reactive<any>({
   app_srl: null,
   nest_srl: props.nestSrl,
   category_srl: (!route.query.category || route.query.category === 'null') ? null : route.query.category,
@@ -176,12 +177,12 @@ const forms = reactive({
   json: {
     thumbnail: {},
   },
-});
-const loading = ref(true);
-const processing = ref(false);
-const showFilesManager = ref(false);
-const fileManagerOptions = computed(() => {
-  const { thumbnail, files } = data.nest.json;
+})
+const loading = ref(true)
+const processing = ref(false)
+const showFilesManager = ref(false)
+const fileManagerOptions = computed<any>(() => {
+  const { thumbnail, files } = data.nest.json
   return {
     module: 'articles',
     targetSrl: data.article?.srl,
@@ -196,21 +197,21 @@ const fileManagerOptions = computed(() => {
     },
     thumbnail: forms.json.thumbnail || undefined,
     thumbnailType: thumbnail.type || 'crop',
-  };
-});
+  }
+})
 
-async function save(type)
+async function save(type: string): Promise<void>
 {
-  let json = Object.assign({}, forms.json);
+  let json = Object.assign({}, forms.json)
 
   // check error
-  forms.order.error = null;
+  forms.order.error = null
 
   // check order
   if (!checkOrderDate(forms.order.value))
   {
-    forms.order.error = message.fail.checkOrderDate;
-    throw new Error(message.fail.checkOrderDate);
+    forms.order.error = message.fail.checkOrderDate
+    throw new Error(message.fail.checkOrderDate)
   }
 
   // update thumbnail image
@@ -219,15 +220,15 @@ async function save(type)
     // delete current image
     if (forms.json.thumbnail?.path)
     {
-      await deleteThumbnail(forms.json.thumbnail.path);
+      await deleteThumbnail(forms.json.thumbnail.path)
     }
     // upload new image
-    forms.json.thumbnail.path = await uploadThumbnail(forms.json.thumbnail.image);
-    delete forms.json.thumbnail.image;
+    forms.json.thumbnail.path = await uploadThumbnail(forms.json.thumbnail.image)
+    delete forms.json.thumbnail.image
   }
   else if (forms.json.thumbnail?.path)
   {
-    forms.json.thumbnail = {};
+    forms.json.thumbnail = {}
   }
 
   // save article
@@ -241,74 +242,71 @@ async function save(type)
     content: forms.content.value || '',
     json: encodeURIComponent(JSON.stringify(json)),
     order: forms.order.value,
-  }));
-  if (!res.success) throw new Error(res.message);
+  }))
+  if (!res.success) throw new Error(res.message)
 }
-async function saveDraft()
+async function saveDraft(): Promise<void>
 {
-  if (props.mode !== 'create') return;
-  if (processing.value) return;
+  if (props.mode !== 'create') return
+  if (processing.value) return
   try
   {
-    processing.value = true;
-    await save('draft');
-    processing.value = false;
-    toast.add(message.success.draftSave, 'success');
+    processing.value = true
+    await save('draft')
+    processing.value = false
+    toast.add(message.success.draftSave, 'success')
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/articles/post/index.vue', 'saveDraft()' ], 'error', e.message);
-    toast.add(message.fail.draftSave, 'error');
-    processing.value = false;
+    err([ '/components/pages/articles/post/index.vue', 'saveDraft()' ], 'error', e.message)
+    toast.add(message.fail.draftSave, 'error')
+    processing.value = false
   }
 }
-async function publishing()
+async function publishing(): Promise<void>
 {
-  if (processing.value) return;
+  if (processing.value) return
   try
   {
-    processing.value = true;
-    if (forms.type === 'ready') forms.type = 'public';
-    await save('publishing');
-    processing.value = false;
+    processing.value = true
+    if (forms.type === 'ready') forms.type = 'public'
+    await save('publishing')
+    processing.value = false
     // redirection
     switch (props.mode)
     {
       case 'edit':
       case 'create':
         await router.push(`../${createQueries(['category','page'], route.query)}`)
-        break;
+        break
       default:
-        await router.push(`/articles/${createQueries(['category','page'], route.query)}`);
-        break;
+        await router.push(`/articles/${createQueries(['category','page'], route.query)}`)
+        break
     }
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/articles/post/index.vue', 'publishing()' ], 'error', e.message);
-    toast.add(printf(message.fail[props.mode], message.word.article), 'error');
-    processing.value = false;
+    err([ '/components/pages/articles/post/index.vue', 'publishing()' ], 'error', e.message)
+    toast.add(printf(message.fail[props.mode], message.word.article), 'error')
+    processing.value = false
   }
 }
-function onSubmit()
+function onSubmit(): void
 {
-  publishing().then();
+  publishing().then()
 }
 
 /**
  * on FilesManager event
- * custom event
- * @param {string} key
- * @param {any} value
  */
-function onFilesManagerEvent({ key, value })
+function onFilesManagerEvent({ key, value }: { key: string, value: any }): void
 {
   switch (key)
   {
     case 'insert-text':
-      insertTextToEditor(value);
-      showFilesManager.value = false;
-      break;
+      insertTextToEditor(value)
+      showFilesManager.value = false
+      break
     case 'update-thumbnail':
       forms.json.thumbnail = value ? {
         srl: value.srl,
@@ -316,54 +314,53 @@ function onFilesManagerEvent({ key, value })
         points: value.points,
         zoom: value.zoom,
         orientation: value.orientation,
-      } : undefined;
-      break;
+      } : undefined
+      break
   }
 }
 
 /**
  * insert text to editor
  * 에디터 입력창에 문자를 넣는다.
- * @param {string} keyword
- * @param {number} position
  */
-function insertTextToEditor(keyword, position = 0)
+function insertTextToEditor(keyword: string, position: number = 0): void
 {
-  if (!keyword) return;
-  let content = forms.content.value + '';
-  let start = $editor.value.position.start;
-  if (start === 0) keyword = keyword.replace(/^\n/g, '');
-  forms.content.value = content.substr(0, start) + keyword + content.substr(start);
+  if (!keyword) return
+  let content = forms.content.value + ''
+  let start = $editor.value.position.start
+  if (start === 0) keyword = keyword.replace(/^\n/g, '')
+  // TODO: 메서드 조정 필요하다.
+  forms.content.value = content.substr(0, start) + keyword + content.substr(start)
   // change cursor
-  let endPosition = start + (position ? position : keyword.length);
-  $editor.value.changeCursor(endPosition, endPosition);
+  let endPosition = start + (position ? position : keyword.length)
+  $editor.value.changeCursor(endPosition, endPosition)
 }
 
-onMounted(async () => {
+onMounted(async (): Promise<void> => {
   try
   {
-    loading.value = true;
-    let { nest, categories, article } = await getData(props.nestSrl, props.articleSrl);
-    data.nest = nest;
-    data.categories = categories;
-    data.article = article;
+    loading.value = true
+    let { nest, categories, article } = await getData(props.nestSrl, props.articleSrl)
+    data.nest = nest
+    data.categories = categories
+    data.article = article
     if (article.category_srl)
     {
-      forms.category_srl = article.category_srl === 'null' ? null : article.category_srl;
+      forms.category_srl = article.category_srl === 'null' ? null : article.category_srl
     }
-    forms.title.value = article.title || '';
-    forms.content.value = article.content || '';
-    forms.order.value = article.order;
-    forms.type = article.type || 'ready';
-    forms.json = article.json || { thumbnail: {} };
-    loading.value = false;
+    forms.title.value = article.title || ''
+    forms.content.value = article.content || ''
+    forms.order.value = article.order
+    forms.type = article.type || 'ready'
+    forms.json = article.json || { thumbnail: {} }
+    loading.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    err([ '/components/pages/articles/post/index.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
+    err([ '/components/pages/articles/post/index.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
   }
-});
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

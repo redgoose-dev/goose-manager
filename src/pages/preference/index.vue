@@ -13,7 +13,7 @@
 </article>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import PageHeader from '../../components/page/header/index.vue';
@@ -21,7 +21,7 @@ import Tabs from '../../components/pages/preference/tabs.vue';
 import General from './general.vue';
 
 const route = useRoute();
-const isHome = computed(() => (route.name === 'Preference'));
+const isHome = computed<boolean>(() => (route.name === 'Preference'));
 </script>
 
 <style lang="scss" scoped>

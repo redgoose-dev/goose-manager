@@ -8,6 +8,7 @@ dist/
 .env.local
 package-lock.json
 yarn.lock
+bun.lockb
 .DS_Store
 yarn-error.log
 0

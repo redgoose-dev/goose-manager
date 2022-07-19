@@ -5,7 +5,7 @@
     :src="props.src"
     :alt="props.alt"
     class="thumbnail__image">
-  <Empty v-else class="thumbnail__empty"/>
+  <Empty v-else title="no item" class="thumbnail__empty"/>
 </component>
 </template>
 

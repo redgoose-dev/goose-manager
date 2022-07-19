@@ -29,65 +29,48 @@
 </form>
 </template>
 
-<script setup>
-import { ref, reactive, nextTick } from 'vue';
-import { createComment } from '../../../../structure/comments';
-import { printf } from '../../../../libs/string';
-import { err } from '../../../../libs/error';
-import { toast } from '../../../../modules/toast';
-import { message } from '../../../../message';
-import { FormTextarea } from '../../../forms';
-import ButtonBasic from '../../../button/basic.vue';
+<script lang="ts" setup>
+import { ref, reactive, nextTick } from 'vue'
+import { createComment } from '../../../../structure/comments'
+import { printf } from '../../../../libs/string'
+import { err } from '../../../../libs/error'
+import { toast } from '../../../../modules/toast'
+import { message } from '../../../../message'
+import { FormTextarea } from '../../../forms'
+import { ButtonBasic } from '../../../button'
 
-const $comment = ref();
-const $form = ref();
-const props = defineProps({
-  articleSrl: Number,
-});
-const emits = defineEmits([ 'submit' ]);
-const forms = reactive({
+const $comment = ref<any>()
+const $form = ref<any>()
+const props = defineProps<{
+  articleSrl: number
+}>()
+const emits = defineEmits([ 'submit' ])
+const forms = reactive<any>({
   content: { value: '', error: null },
-});
-const processing = ref(false);
+})
+const processing = ref<boolean>(false)
 
-async function onSubmit()
+async function onSubmit(): Promise<void>
 {
   try
   {
-    processing.value = true;
-    let res = await createComment(props.articleSrl, forms);
-    forms.content.value = '';
-    emits('submit', res);
-    await nextTick();
-    $form.value.changeHeight();
-    window.scrollBy(0, $comment.value.getBoundingClientRect().top);
-    processing.value = false;
+    processing.value = true
+    let res = await createComment(props.articleSrl, forms)
+    forms.content.value = ''
+    emits('submit', res)
+    await nextTick()
+    $form.value.changeHeight()
+    window.scrollBy(0, $comment.value.getBoundingClientRect().top)
+    processing.value = false
   }
-  catch (e)
+  catch (e: any)
   {
-    processing.value = false;
-    err(['/components/pages/articles/item/create-comment.vue', 'onSubmit()'], 'error', e.message);
-    processing.value = false;
-    toast.add(printf(message.fail.create, message.word.comment), 'error');
+    processing.value = false
+    err(['/components/pages/articles/item/create-comment.vue', 'onSubmit()'], 'error', e.message)
+    processing.value = false
+    toast.add(printf(message.fail.create, message.word.comment), 'error')
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.create-comment {
-  padding: 16px;
-  border-radius: 4px;
-  border: 1px solid rgb(var(--color-base-rgb) / 20%);
-  background: rgb(var(--color-base-rgb) / 5%);
-  &__body {
-    .textarea {
-      max-height: 200px;
-    }
-  }
-  &__submit {
-    display: flex;
-    justify-content: flex-end;
-    margin: 10px 0 0;
-  }
-}
-</style>
+<style src="./create-comment.scss" lang="scss" scoped></style>

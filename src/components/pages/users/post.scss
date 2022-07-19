@@ -1,0 +1,11 @@
+.fields {
+  &__email {
+    --input-width: 400px;
+  }
+  &__name {
+    --input-width: 200px;
+  }
+  &__password {
+    --input-width: 300px;
+  }
+}

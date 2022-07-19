@@ -1,0 +1,36 @@
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import router from './router'
+import * as toast from './modules/toast'
+import { initCustomEvent } from './libs/util'
+import { messagesPlugin } from './message'
+import App from './app.vue'
+
+// set stylesheet
+import './assets/scss/main.scss'
+
+// set global values
+window.DEBUG = DEBUG
+window.DEVELOPMENT = DEVELOPMENT
+
+// set index.html
+document.title = TITLE
+;(<any>document).querySelector('meta[name=description]').setAttribute('content', DESCRIPTION)
+
+// setup pinia
+const pinia = createPinia()
+
+// set modules
+toast.setup()
+
+// set custom events
+initCustomEvent()
+
+// set component
+const app = createApp(App, {})
+  .use(router)
+  .use(pinia)
+  .use(messagesPlugin)
+  .mount('#app')
+
+export default app

@@ -27,7 +27,10 @@ async function server()
     // set vite
     const vite = await createServer({
       mode: dev ? 'development' : 'production',
-      server: { middlewareMode: 'ssr' },
+      server: {
+        middlewareMode: true,
+      },
+      appType: 'custom',
     });
     app.use(vite.middlewares);
     // extend routes

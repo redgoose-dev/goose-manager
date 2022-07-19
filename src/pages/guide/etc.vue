@@ -36,7 +36,7 @@
     </header>
     <div class="example">
       <div class="flex flex--h-center flex--v-center">
-        <ProgressDonut :label="true" :percent="progress"/>
+        <ProgressDonut :label="true" :percent="Number(progress)"/>
         <input type="range" v-model="progress" :min="0" :max="100" :step="10">
         <span style="width: 44px">{{progress}}%</span>
       </div>
@@ -64,32 +64,34 @@
       <p>파일을 업로드하고 관리하는 컴포넌트</p>
     </header>
     <div class="example example--file-manager">
-      <FilesManager :post="{}"/>
+      <FilesManager tab="global"/>
     </div>
   </section>
 </article>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { toast } from '../../modules/toast';
-import ButtonBasic from '../../components/button/basic.vue';
-import Loading from '../../components/etc/loading.vue';
-import ProgressDonut from '../../components/etc/progress-donut.vue';
-import Pagination from '../../components/etc/pagination.vue';
-import FilesManager from '../../components/files-manager/index.vue';
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { preferenceStore } from '../../store/preference'
+import { toast } from '../../modules/toast'
+import { ButtonBasic } from '../../components/button'
+import Loading from '../../components/etc/loading.vue'
+import ProgressDonut from '../../components/etc/progress-donut.vue'
+import Pagination from '../../components/etc/pagination.vue'
+import FilesManager from '../../components/files-manager/index.vue'
 
-const progress = ref(30);
-const page = ref(1);
+const preference = preferenceStore()
+const progress = ref<number>(30)
+const page = ref<number>(1)
 
-function addToast(color)
+function addToast(color?: string): void
 {
-  toast.add('hello toast', color);
+  toast.add('hello toast', color)
 }
 
-function onUpdatePage(page)
+function onUpdatePage(page: number): void
 {
-  console.log('onUpdatePage()', page);
+  console.log('onUpdatePage()', page)
 }
 </script>
 
