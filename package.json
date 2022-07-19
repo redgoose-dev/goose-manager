@@ -26,7 +26,6 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "axios": "^0.27.2",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.1",
     "ohmyfetch": "^0.4.18"
@@ -46,7 +45,6 @@
     "vite": "^3.0.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2",
-    "vuedraggable": "^4.1.0",
-    "vuex": "^4.0.2"
+    "vuedraggable": "^4.1.0"
   }
 }
