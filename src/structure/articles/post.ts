@@ -96,7 +96,11 @@ export async function getData(nestSrl?: number, articleSrl?: number): Promise<an
 
 export async function deleteThumbnail(path: string): Promise<void>
 {
-  await post('/files/remove-file/', formData({ path }))
+  try
+  {
+    await post('/files/remove-file/', formData({ path }))
+  }
+  catch (_) {}
 }
 
 export async function uploadThumbnail(base64: string): Promise<string>

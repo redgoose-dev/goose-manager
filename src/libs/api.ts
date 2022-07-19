@@ -16,7 +16,7 @@ interface Response {
 }
 
 let instance: $Fetch
-let headers: { [key: string]: any }
+let headers: any
 let timer: any
 
 function setup(): void

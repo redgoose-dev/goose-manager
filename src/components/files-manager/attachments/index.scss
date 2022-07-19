@@ -5,6 +5,7 @@
     content: 'Drop files here.';
     display: grid;
     position: absolute;
+    z-index: 2;
     left: 0;
     right: 0;
     top: calc(var(--tab-height) + var(--files-header-height));

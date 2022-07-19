@@ -132,6 +132,7 @@ import { err } from '../../../../libs/error'
 import { dateFormat, checkOrderDate } from '../../../../libs/date'
 import { printf } from '../../../../libs/string'
 import { getTypeArticle, createQueries } from '../libs'
+import { pureObject } from '../../../../libs/object'
 import { message } from '../../../../message'
 import { toast } from '../../../../modules/toast'
 import { FormInput, FormSelect, FormRadio } from '../../../forms'
@@ -218,17 +219,17 @@ async function save(type: string): Promise<void>
   if (forms.json.thumbnail?.image)
   {
     // delete current image
-    if (forms.json.thumbnail?.path)
+    if (data.article.json?.thumbnail?.path)
     {
-      await deleteThumbnail(forms.json.thumbnail.path)
+      await deleteThumbnail(data.article.json.thumbnail.path)
     }
     // upload new image
     forms.json.thumbnail.path = await uploadThumbnail(forms.json.thumbnail.image)
     delete forms.json.thumbnail.image
   }
-  else if (forms.json.thumbnail?.path)
+  if (!forms.json.thumbnail && data.article.json?.thumbnail?.path)
   {
-    forms.json.thumbnail = {}
+    await deleteThumbnail(data.article.json.thumbnail.path)
   }
 
   // save article
@@ -240,7 +241,7 @@ async function save(type: string): Promise<void>
     type: type === 'publishing' ? getTypeArticle(forms.type) : 'ready',
     title: forms.title.value || '',
     content: forms.content.value || '',
-    json: encodeURIComponent(JSON.stringify(json)),
+    json: encodeURIComponent(JSON.stringify(forms.json)),
     order: forms.order.value,
   }))
   if (!res.success) throw new Error(res.message)
@@ -254,12 +255,12 @@ async function saveDraft(): Promise<void>
     processing.value = true
     await save('draft')
     processing.value = false
-    toast.add(message.success.draftSave, 'success')
+    toast.add(message.success.draftSave, 'success').then()
   }
   catch (e: any)
   {
     err([ '/components/pages/articles/post/index.vue', 'saveDraft()' ], 'error', e.message)
-    toast.add(message.fail.draftSave, 'error')
+    toast.add(message.fail.draftSave, 'error').then()
     processing.value = false
   }
 }
@@ -287,7 +288,7 @@ async function publishing(): Promise<void>
   catch (e: any)
   {
     err([ '/components/pages/articles/post/index.vue', 'publishing()' ], 'error', e.message)
-    toast.add(printf(message.fail[props.mode], message.word.article), 'error')
+    toast.add(printf(message.fail[props.mode], message.word.article), 'error').then()
     processing.value = false
   }
 }
@@ -310,6 +311,7 @@ function onFilesManagerEvent({ key, value }: { key: string, value: any }): void
     case 'update-thumbnail':
       forms.json.thumbnail = value ? {
         srl: value.srl,
+        path: forms.json.thumbnail?.path || undefined,
         image: value.image,
         points: value.points,
         zoom: value.zoom,
@@ -344,15 +346,16 @@ onMounted(async (): Promise<void> => {
     data.nest = nest
     data.categories = categories
     data.article = article
-    if (article.category_srl)
+    const newArticle = pureObject(article)
+    if (newArticle.category_srl)
     {
-      forms.category_srl = article.category_srl === 'null' ? null : article.category_srl
+      forms.category_srl = newArticle.category_srl === 'null' ? null : newArticle.category_srl
     }
-    forms.title.value = article.title || ''
-    forms.content.value = article.content || ''
-    forms.order.value = article.order
-    forms.type = article.type || 'ready'
-    forms.json = article.json || { thumbnail: {} }
+    forms.title.value = newArticle.title || ''
+    forms.content.value = newArticle.content || ''
+    forms.order.value = newArticle.order
+    forms.type = newArticle.type || 'ready'
+    forms.json = newArticle.json || { thumbnail: {} }
     loading.value = false
   }
   catch (e: any)

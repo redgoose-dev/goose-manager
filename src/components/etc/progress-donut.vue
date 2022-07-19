@@ -20,40 +20,22 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 
 interface Props {
   radius?: number
   stroke?: number
-  percent?: number
+  percent: number|string
 }
 
 const props = defineProps<Props>()
-const radius = ref<number>(props.radius || 40)
-const stroke = ref<number>(props.stroke || 8)
-const percent = ref<number>(props.percent || 0)
+const radius = computed<number>(() => (props.radius || 40))
+const stroke = computed<number>(() => (props.stroke || 8))
 const normalizedRadius = computed<number>(() => (radius.value - stroke.value * 2))
 const circumference = computed<number>(() => (normalizedRadius.value * 2 * Math.PI))
 const computedStrokeDashOffset = computed<number>(() => {
-  return circumference.value - Math.min(percent.value, 100) / 100 * circumference.value
+  return circumference.value - Math.min(Number(props.percent as 0), 100) / 100 * circumference.value
 })
 </script>
 
-<style lang="scss" scoped>
-.progress-donut {
-  circle {
-    &:nth-child(1) {
-      fill: transparent;
-      stroke: var(--progress-donut-color-back, rgb(230 230 230));
-    }
-    &:nth-child(2) {
-      fill: transparent;
-      stroke: var(--progress-donut-color-fill, var(--color-key));
-      transition: stroke-dashoffset 200ms ease-out;
-      transform: rotate(-90deg);
-      transform-origin: 50% 50%;
-      stroke-dashoffset: var(--progress-donut-dash-offset);
-    }
-  }
-}
-</style>
+<style src="./progress-donut.scss" lang="scss" scoped></style>

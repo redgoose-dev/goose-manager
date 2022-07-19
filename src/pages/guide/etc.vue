@@ -36,7 +36,7 @@
     </header>
     <div class="example">
       <div class="flex flex--h-center flex--v-center">
-        <ProgressDonut :label="true" :percent="Number(progress)"/>
+        <ProgressDonut :percent="progress"/>
         <input type="range" v-model="progress" :min="0" :max="100" :step="10">
         <span style="width: 44px">{{progress}}%</span>
       </div>
