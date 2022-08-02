@@ -32,7 +32,7 @@ export function setDate(src: string): Date
 
 /**
  * convert date format
- * format guide: `{yyyy}-{mm}-{dd} / {month},{week},{weekShort} / {hh}:{mm}:{ss}`
+ * format guide: `{yyyy}-{MM}-{dd} / {month},{week},{weekShort} / {hh}:{mm}:{ss}`
  */
 export function dateFormat(date: Date, format: string): string
 {
