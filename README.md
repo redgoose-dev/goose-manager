@@ -65,3 +65,31 @@ $ /usr/bin/pm2 start -l 0 npm --name "goose-manager" -- start
 ```
 
 open in browser `http://0.0.0.0:3000`
+
+
+## Docker
+
+### make image
+
+이미지 만들기
+
+```shell
+# Mac M1
+docker buildx build --platform=linux/amd64 -t redgoose/goose-manager:latest .
+# Mac Intel
+docker build -t redgoose/goose-manager:latest .
+```
+
+### docker-compose.yml
+
+```yaml
+version: '3.9'
+
+services:
+  goose-manager-local:
+    container_name: goose-manager-local
+    image: redgoose/goose-manager:latest
+    restart: always
+    ports:
+      - '80:3000'
+```

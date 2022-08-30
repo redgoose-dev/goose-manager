@@ -11,4 +11,6 @@ yarn.lock
 bun.lockb
 .DS_Store
 yarn-error.log
+docker-compose.yml
 0
+
