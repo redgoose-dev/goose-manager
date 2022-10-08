@@ -1,11 +1,14 @@
+# directories
 .idea/
 node_modules/
+.AppleDouble/
 dist/
 
+# files
 .DS_Store
 .env.local
-yarn.lock
 package-lock.json
+yarn.lock
 bun.lockb
 cmd.sh
 0

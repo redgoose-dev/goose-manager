@@ -5,12 +5,13 @@ node_modules/
 dist/
 
 # files
+.DS_Store
 .env.local
 package-lock.json
 yarn.lock
 bun.lockb
-.DS_Store
+cmd.sh
+0
 yarn-error.log
 docker-compose.yml
-0
 

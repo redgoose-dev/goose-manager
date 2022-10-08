@@ -74,8 +74,10 @@ open in browser `http://0.0.0.0:3000`
 이미지 만들기
 
 ```shell
-# Mac M1
+# Mac M1 for linux
 docker buildx build --platform=linux/amd64 -t redgoose/goose-manager:latest .
+# Mac M1 for macos
+docker buildx build --platform=linux/arm64/v8 -t redgoose/goose-manager:latest .
 # Mac Intel
 docker build -t redgoose/goose-manager:latest .
 ```
