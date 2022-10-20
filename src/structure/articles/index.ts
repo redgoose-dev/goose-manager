@@ -18,26 +18,26 @@ export function setOrder(order: string = 'srl', sort: string = 'desc'): string
       return `\`order\` ${sort}, \`srl\` ${sort}`;
     case 'srl':
     default:
-      return `\`srl\` ${sort}`;
+      return `\`srl\` ${sort}`
   }
 }
 
 async function requestNest(): Promise<any>
 {
-  if (!route.params.nestSrl) return null;
+  if (!route.params.nestSrl) return null
   let res = await get(`/nests/${route.params.nestSrl}/`, {
     field: 'srl,id,description',
-  });
-  if (!res.success) throw new Error(res.message);
-  return res.data;
+  })
+  if (!res.success) throw new Error(res.message)
+  return res.data
 }
 
 export async function requestArticles(): Promise<any>
 {
-  const { nestSrl } = route.params;
-  const { category, page } = route.query;
-  const { displayDateField, pageCount } = preference.articles;
-  const { type, order, sort, keyword } = filters.articles;
+  const { nestSrl } = route.params
+  const { category, page } = route.query
+  const { displayDateField, pageCount } = preference.articles
+  const { type, order, sort, keyword } = filters.articles
   let res: any = await get('/articles/', {
     nest: nestSrl || undefined,
     category: category || undefined,
@@ -48,19 +48,19 @@ export async function requestArticles(): Promise<any>
     page: Number(page) > 1 ? Number(page) : undefined,
     order: setOrder(order, sort),
     q: keyword || undefined,
-  });
-  if (!res.success) throw new Error(res.message);
+  })
+  if (!res.success) throw new Error(res.message)
   return {
     total: res.data.total,
     index: res.data.index.map((item: any) => {
-      let title = item.title;
+      let title = item.title
       if (item.nest_id)
       {
-        title = `[${item.nest_id}] ${item.title}`;
+        title = `[${item.nest_id}] ${item.title}`
       }
       else if (!route.query.category && item.category_name)
       {
-        title = `[${item.category_name}] ${item.title}`;
+        title = `[${item.category_name}] ${item.title}`
       }
       return {
         srl: item.srl,
@@ -72,16 +72,16 @@ export async function requestArticles(): Promise<any>
         ].filter(Boolean),
         image: item.json.thumbnail?.path ? createFullPath(item.json.thumbnail?.path) : '',
         private: item.type === 'private',
-      };
+      }
     }),
-  };
+  }
 }
 
 export async function requestCategories(): Promise<[]>
 {
-  if (!route.params.nestSrl) return [];
-  const { category, q } = route.query;
-  const { type } = filters.articles;
+  if (!route.params.nestSrl) return []
+  const { category, q } = route.query
+  const { type } = filters.articles
   let res = await get(`/categories/`, {
     nest: route.params.nestSrl,
     field: 'srl,name,turn',
@@ -91,39 +91,39 @@ export async function requestCategories(): Promise<[]>
     visible_type: type || 'all',
     q: q || undefined,
     strict: 1,
-  });
-  if (!res.success) throw new Error(res.message);
+  })
+  if (!res.success) throw new Error(res.message)
   let params: any = {
     ...route.query,
     page: undefined,
     category: undefined,
-  };
+  }
   return res.data?.index.map((item: any) => {
-    let link, active;
+    let link, active
     switch (item.srl)
     {
       case '':
-        link = serialize(params, true);
-        active = !category;
-        break;
+        link = serialize(params, true)
+        active = !category
+        break
       case 'null':
-        params.category = 'null';
-        link = serialize(params, true);
-        active = category === 'null';
-        break;
+        params.category = 'null'
+        link = serialize(params, true)
+        active = category === 'null'
+        break
       default:
-        params.category = item.srl;
-        link = item.srl ? serialize(params, true) : '';
-        active = Number(category) === item.srl;
-        break;
+        params.category = item.srl
+        link = item.srl ? serialize(params, true) : ''
+        active = Number(category) === item.srl
+        break
     }
     return {
       link,
       label: item.name,
       count: item.count_article,
       active,
-    };
-  });
+    }
+  })
 }
 
 export async function getData(): Promise<any>
