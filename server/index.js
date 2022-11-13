@@ -1,6 +1,7 @@
 import { $fetch } from 'ohmyfetch'
 import { Router } from 'express'
 import { filteringHostname } from './libs/api.js'
+import { isDev } from './libs/entry-assets.js'
 
 let cookie, app, env, api
 
@@ -10,6 +11,7 @@ let cookie, app, env, api
 function localRoutes()
 {
   const router = Router()
+  const dev = isDev()
 
   // auth
   router.post('/auth/', async (req, res) => {
@@ -69,7 +71,7 @@ function localRoutes()
     {
       res.json({
         success: false,
-        message: e.message || 'Failed login',
+        message: dev ? (e.message || 'Failed login') : 'Failed login',
       })
     }
   })
