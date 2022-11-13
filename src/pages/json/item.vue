@@ -12,7 +12,10 @@
     <Field label="Description">
       {{item.description}}
     </Field>
-    <pre class="json-code"><code>{{item.json}}</code></pre>
+    <Field v-if="item.categoryName" label="Category name">
+      {{item.categoryName}}
+    </Field>
+    <pre class="json-code"><code>{{json}}</code></pre>
   </Fieldset>
   <Controller>
     <template #left>
@@ -33,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { err } from '../../libs/error'
 import getData from '../../structure/json/item'
@@ -46,13 +49,14 @@ import Loading from '../../components/etc/loading.vue'
 const route = useRoute()
 const loading = ref<boolean>(false)
 const item = ref<any>({})
+const json = computed<string>(() => JSON.stringify(item.value.json, null, 2))
 
 onMounted(async () => {
   try
   {
     if (!route.params.srl) throw new Error('no srl')
     loading.value = true
-    item.value = await getData({ url: `/json/${route.params.srl}/` })
+    item.value = await getData()
     loading.value = false
   }
   catch (e: any)

@@ -6,15 +6,13 @@ interface ResponseNest {
   id: string
   name: string
 }
-
 interface ResponseCategory {
   srl: string
   title: string
   meta: string[]
 }
-
 interface Response {
-  nest: ResponseNest
+  nest?: ResponseNest
   categories: ResponseCategory[]
 }
 
@@ -31,10 +29,11 @@ async function requestNest(nestSrl: number): Promise<ResponseNest>
   }
 }
 
-async function requestCategories(nestSrl: number): Promise<ResponseCategory[]>
+async function requestCategoriesForArticles(nestSrl: number): Promise<ResponseCategory[]>
 {
   let res = await get('/categories/', {
-    nest: nestSrl,
+    module: 'article',
+    target: nestSrl,
     order: 'turn',
     sort: 'asc',
   })
@@ -50,12 +49,39 @@ async function requestCategories(nestSrl: number): Promise<ResponseCategory[]>
   })
 }
 
-export default async function getData(srl: number): Promise<Response>
+async function requestCategoriesForJson(): Promise<ResponseCategory[]>
+{
+  let res = await get('/categories/', {
+    module: 'json',
+    order: 'turn',
+    sort: 'asc',
+  })
+  if (!res.success) throw new Error(res.message)
+  return res.data.index.map((item: any) => {
+    return {
+      srl: item.srl,
+      title: item.name,
+      meta: [
+        getDate(item.regdate),
+      ],
+    }
+  })
+}
+
+export async function getDataForArticles(srl: number): Promise<Response>
 {
   if (!srl) throw new Error('no srl')
   const [ nest, categories ] = await Promise.all([
     requestNest(srl),
-    requestCategories(srl),
+    requestCategoriesForArticles(srl),
   ])
   return { nest, categories }
+}
+
+export async function getDataForJson()
+{
+  const categories = await requestCategoriesForJson()
+  return {
+    categories,
+  }
 }

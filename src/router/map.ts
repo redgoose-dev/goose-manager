@@ -192,6 +192,31 @@ const json = [
     component: () => import('../pages/json/delete.vue'),
     meta: { active: 'json' },
   },
+  // categories
+  {
+    path: '/json/categories/',
+    name: 'JSONCategories',
+    component: () => import('../pages/json/categories/index.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/categories/create/',
+    name: 'JSONCreateCategory',
+    component: () => import('../pages/json/categories/create.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/categories/:categorySrl/edit/',
+    name: 'JSONEditCategory',
+    component: () => import('../pages/json/categories/edit.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/categories/:categorySrl/delete/',
+    name: 'JSONDeleteCategory',
+    component: () => import('../pages/json/categories/delete.vue'),
+    meta: { active: 'json' },
+  },
 ]
 const users = [
   {

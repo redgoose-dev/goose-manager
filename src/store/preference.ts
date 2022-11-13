@@ -178,10 +178,10 @@ export const preferenceStore = defineStore('preference', {
       if (user.data?.json) userPref = user.data.json
       // update user
       let { success, message } = await post(`/users/${auth.user?.srl}/edit/`, formData({
-        json: encodeURIComponent(JSON.stringify({
+        json: JSON.stringify({
           ...userPref,
           manager: this.pure,
-        })),
+        }),
       }))
       if (!success) throw new Error(message)
     },

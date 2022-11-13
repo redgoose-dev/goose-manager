@@ -56,7 +56,8 @@ async function requestNests(appSrl: number): Promise<any>
 export async function requestCategories(srl: string): Promise<any>
 {
   let params = {
-    nest: srl,
+    module: 'article',
+    target: srl,
     field: 'srl,name,turn',
     order: 'turn',
     sort: 'asc',

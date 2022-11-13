@@ -170,6 +170,7 @@ import { useRouter } from 'vue-router'
 import { post, formData, checkForms } from '../../../libs/api'
 import { err } from '../../../libs/error'
 import { printf, validateId, getByte } from '../../../libs/string'
+import { pureObject } from '../../../libs/object'
 import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import getData, { setJson, NestJSON } from '../../../structure/nests/post'
@@ -222,18 +223,18 @@ async function onSubmit(): Promise<void>
       id: forms.id.value,
       name: forms.name.value,
       description: forms.description.value,
-      json: encodeURIComponent(JSON.stringify(forms.json)),
+      json: JSON.stringify(pureObject(forms.json)),
     })
     await post((props.mode === 'edit') ? `/nests/${props.srl}/edit/` : '/nests/', data)
     processing.value = false
     await router.push('/nests/')
-    toast.add(printf(message.success[props.mode], message.word.nest), 'success')
+    toast.add(printf(message.success[props.mode], message.word.nest), 'success').then()
   }
   catch (e: any)
   {
     err([ '/components/pages/nests/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], message.word.nest), 'error')
+    toast.add(printf(message.fail[props.mode], message.word.nest), 'error').then()
   }
 }
 

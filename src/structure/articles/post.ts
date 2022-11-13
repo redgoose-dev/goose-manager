@@ -9,7 +9,8 @@ async function requestNest(nestSrl: number): Promise<any>
 async function requestCategories(nestSrl: number): Promise<any>
 {
   let res = await get(`/categories/`, {
-    nest: nestSrl,
+    module: 'article',
+    target: nestSrl,
     field: 'srl,name,turn',
     order: 'turn',
     sort: 'asc',
@@ -53,7 +54,7 @@ async function requestReadyArticle(nest: any): Promise<any>
       app_srl: Number(nest.app_srl),
       nest_srl: Number(nest.srl),
       type: 'ready',
-      json: encodeURIComponent(JSON.stringify(json)),
+      json: JSON.stringify(json),
     }))
     if (res.success)
     {
@@ -91,7 +92,11 @@ export async function getData(nestSrl?: number, articleSrl?: number): Promise<an
       requestCategories(article.nest_srl),
     ])
   }
-  return { nest, categories, article }
+  return {
+    nest,
+    categories,
+    article,
+  }
 }
 
 export async function deleteThumbnail(path: string): Promise<void>

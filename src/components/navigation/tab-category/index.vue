@@ -17,4 +17,4 @@ const props = defineProps<{
 }>()
 </script>
 
-<style src="./categories.scss" lang="scss" scoped></style>
+<style src="./index.scss" lang="scss" scoped></style>

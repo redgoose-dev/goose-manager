@@ -1,5 +1,6 @@
 import { $fetch } from 'ohmyfetch'
 import { Router } from 'express'
+import { filteringHostname } from './libs/api.js'
 
 let cookie, app, env, api
 
@@ -38,13 +39,14 @@ function localRoutes()
     {
       const { email, password, save } = req.body
       // request to api
-      const { success, message, data } = await api('/auth/login/', {
+      const _res = await api('/auth/login/', {
         method: 'post',
         body: {
           email,
           password,
         },
       })
+      const { success, message, data } = _res
       // check response values
       if (!(success && !!data)) throw new Error(message)
       let user = data
@@ -74,6 +76,18 @@ function localRoutes()
 
   // logout
   router.post('/logout/', async (req, res) => {
+    let token = req.cookies[cookie.prefix + '-token'] || undefined
+    if (token)
+    {
+      try
+      {
+        const _res = await api('/auth/logout/', {
+          method: 'post',
+          headers: { 'Authorization': `Bearer ${token}` },
+        })
+      }
+      catch (_) {}
+    }
     res.clearCookie(cookie.prefix + '-token')
     res.clearCookie(cookie.prefix + '-user')
     res.json({ success: true })
@@ -89,6 +103,70 @@ function localRoutes()
 
   // TODO: 로그를 기록하는 기능 만들기
 
+  return router
+}
+
+/**
+ * service api routes
+ */
+function apiRoutes()
+{
+  const router = Router()
+
+  // TODO: 프록시 기능에 대하여 테스트 (파일 첨부에 대하여 막혔다)
+  // TODO: `multer`라는 모듈을 꼭 써줘야 할거같아 보인다.
+
+  function errorHandler(msg)
+  {
+    let _err = {}
+    switch (msg)
+    {
+      case 'NO-TOKEN':
+        _err.code = 403
+        _err.message = 'Failed authorization.'
+        break
+      default:
+        _err.code = 500
+        _err.message = 'Unknown error'
+        break
+    }
+    return _err
+  }
+
+  router.get('*', async (req, res, next) => {
+    try
+    {
+      let token = req.cookies[cookie.prefix + '-token'] || undefined
+      if (!token) throw new Error('NO-TOKEN')
+      const _res = await api(req.path, {
+        method: 'get',
+        headers: { 'Authorization': `Bearer ${token}` },
+        query: req.query,
+      })
+      res.json(_res)
+    }
+    catch (e)
+    {
+      res.json(errorHandler(e.message))
+    }
+  })
+  router.post('*', async (req, res, next) => {
+    try
+    {
+      let token = req.cookies[cookie.prefix + '-token'] || undefined
+      if (!token) throw new Error('NO-TOKEN')
+      const _res = await api(req.path, {
+        method: 'post',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: req.body,
+      })
+      res.json(_res)
+    }
+    catch (e)
+    {
+      res.json(errorHandler(e.message))
+    }
+  })
   return router
 }
 
@@ -115,8 +193,8 @@ function setup(_app, _env)
   }
   // set api instance
   api = $fetch.create({
-    baseURL: VITE_API_URL,
-    retry: 0,
+    baseURL: filteringHostname(VITE_API_URL),
+    retry: 1,
     responseType: 'json',
     headers: { 'Authorization': `Bearer ${VITE_TOKEN_PUBLIC}` },
   })
@@ -132,9 +210,9 @@ function server(_app, _env)
 {
   setup(_app, _env)
   // set local routes
-  let path = `${env.VITE_BASE_URL}/local/`
-  path = path.replace(/\/\//gi, '/')
-  app.use(path, localRoutes())
+  app.use(`${env.VITE_BASE_URL}/local/`.replace(/\/\//gi, '/'), localRoutes())
+  // set service api routes
+  // app.use(`${env.VITE_BASE_URL}/api`.replace(/\/\//gi, '/'), apiRoutes())
 }
 
 export default server

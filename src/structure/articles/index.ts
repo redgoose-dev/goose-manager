@@ -83,11 +83,11 @@ export async function requestCategories(): Promise<[]>
   const { category, q } = route.query
   const { type } = filters.articles
   let res = await get(`/categories/`, {
-    nest: route.params.nestSrl,
-    field: 'srl,name,turn',
+    module: 'article',
+    target: route.params.nestSrl,
     order: 'turn',
     sort: 'asc',
-    ext_field: 'count_article,item_all,none',
+    ext_field: 'count,all,none',
     visible_type: type || 'all',
     q: q || undefined,
     strict: 1,

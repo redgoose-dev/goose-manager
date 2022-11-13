@@ -1,6 +1,16 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
+    <Field label="Category" for="category">
+      <FormSelect
+        id="category"
+        name="category"
+        v-model="forms.category_srl"
+        :options="data.categories"
+        value-type="string"
+        :placeholder="message.words.selectCategory"
+        class="category"/>
+    </Field>
     <Field label="Name" for="name">
       <FormInput
         v-model="forms.name.value"
@@ -39,7 +49,9 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+      <ButtonBasic icon-left="arrow-left" @click="router.back()">
+        {{message.word.back}}
+      </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic
@@ -47,7 +59,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        {{isEdit ? 'Edit JSON' : 'Create JSON'}}
+        {{isEdit ? printf(message.word.edit2, 'JSON') : printf(message.word.isCreate, 'JSON')}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -56,15 +68,17 @@
 
 <script lang="ts" setup>
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { get, post, formData, checkForms } from '../../../libs/api'
+import { getData } from '../../../structure/json/post'
 import { err } from '../../../libs/error'
 import { printf } from '../../../libs/string'
+import { pureObject } from '../../../libs/object'
 import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { Fieldset, Field, Help } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
-import { FormInput, FormTextarea } from '../../forms'
+import { FormInput, FormTextarea, FormSelect } from '../../forms'
 import { ButtonBasic } from '../../button'
 
 interface Props {
@@ -73,9 +87,15 @@ interface Props {
 }
 
 const router = useRouter()
+const route = useRoute()
 const root = ref<any>()
 const props = defineProps<Props>()
+const data = reactive<any>({
+  json: null,
+  categories: null,
+})
 const forms = reactive<any>({
+  category_srl: (!route.query.category || route.query.category === 'null') ? null : route.query.category,
   name: { value: '', error: null },
   description: { value: '', error: null },
   json: { value: '', error: null },
@@ -117,6 +137,7 @@ async function onSubmit(): Promise<void>
     validateForms()
     checkForms(forms)
     const data = formData({
+      category_srl: forms.category_srl || 'null',
       name: forms.name.value,
       description: forms.description.value,
       json: forms.json.value,
@@ -126,25 +147,31 @@ async function onSubmit(): Promise<void>
     processing.value = false
     const srl: number = res.srl || props.srl || NaN
     await router.push(srl ? `/json/${srl}/` : '/json/')
-    toast.add(printf(message.success[props.mode], 'JSON'), 'success')
+    toast.add(printf(message.success[props.mode], 'JSON'), 'success').then()
   }
   catch (e: any)
   {
     err([ '/components/pages/json/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], 'JSON'), 'error')
+    toast.add(printf(message.fail[props.mode], 'JSON'), 'error').then()
   }
 }
 
 onMounted(async () => {
-  if (props.mode !== 'edit') return
   try
   {
     loading.value = true
-    const { data } = await get(`/json/${props.srl}/`)
-    forms.name.value = data?.name
-    forms.description.value = data?.description
-    forms.json.value = getStringJson(data?.json)
+    const { json, categories } = await getData(props.srl)
+    data.json = json
+    data.categories = categories
+    if (props.srl)
+    {
+      const newJson = pureObject(json)
+      forms.category_srl = newJson?.category_srl
+      forms.name.value = newJson?.name
+      forms.description.value = newJson?.description
+      forms.json.value = getStringJson(newJson?.json)
+    }
     loading.value = false
   }
   catch (e: any)
@@ -160,5 +187,9 @@ onMounted(async () => {
   &__name {
     --input-width: 320px;
   }
+}
+.category {
+  display: inline-block;
+  --select-width: auto;
 }
 </style>

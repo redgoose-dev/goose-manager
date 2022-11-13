@@ -1,11 +1,10 @@
 <template>
 <article>
-  <PageHeader module="categories" title="Edit category" prefix="[Article]"/>
+  <PageHeader module="categories" title="Create category" prefix="[JSON]"/>
   <Post
-    mode="edit"
-    module="article"
-    :nest-srl="Number(route.params.nestSrl)"
-    :srl="Number(route.params.categorySrl)"/>
+    mode="create"
+    module="json"
+    :nest-srl="Number(route.params.nestSrl)"/>
 </article>
 </template>
 

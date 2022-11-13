@@ -1,41 +1,31 @@
+import { useRoute, RouteLocationNormalized } from 'vue-router'
 import { get } from '../../libs/api'
 
-interface Options {
-  url: string
-  params?: any
-}
+let route: RouteLocationNormalized
 
-interface Response {
-  srl: number
-  name?: string
-  description?: string
-  json?: any
-  regdate?: string
-}
-
-const defaultOptions: Options = {
-  url: '',
-  params: {},
-}
-
-function filtering(res: any): Response
+export async function requestJson(): Promise<any>
 {
+  const { category } = route.query
+  const { srl } = route.params
+  const res = await get(`/json/${srl}/`, {
+    ext_field: 'category_name',
+  })
+  if (!res.success) throw new Error(res.message)
   return {
-    srl: Number(res.srl),
-    name: res.name,
-    description: res.description,
-    json: JSON.stringify(res.json, null, 2),
-    regdate: res.regdate,
+    srl: Number(res.data.srl),
+    name: res.data.name,
+    description: res.data.description,
+    categoryName: res.data.category_name,
+    json: res.data.json,
+    regdate: res.data.regdate,
   }
 }
 
-export default async function getData(options: Options): Promise<Response>
+export default async function getData(): Promise<any>
 {
-  let op: Options = Object.assign({}, defaultOptions, options)
-  if (options.params)
-  {
-    op.params = Object.assign({}, defaultOptions.params, options.params)
+  if (!route) route = useRoute()
+  const json = await requestJson()
+  return {
+    ...json,
   }
-  const res = await get(op.url, op.params)
-  return filtering(res.data)
 }

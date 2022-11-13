@@ -15,7 +15,9 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+      <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
+        {{message.word.back}}
+      </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic
@@ -45,7 +47,8 @@ import { ButtonBasic } from '../../button'
 
 interface Props {
   mode: string
-  nestSrl?: number
+  module: 'article'|'json'
+  targetSrl?: number
   srl?: number
 }
 
@@ -65,19 +68,27 @@ async function onSubmit():Promise<void>
   {
     processing.value = true
     checkForms(forms)
+    let data: any = {}
+    switch (props.module)
+    {
+      case 'article':
+        data.target_srl = props.targetSrl || 'null'
+        break
+    }
     await post(isEdit.value ? `/categories/${props.srl}/edit/` : '/categories/', formData({
-      nest_srl: props.nestSrl,
+      module: props.module,
       name: forms.name.value,
+      ...data,
     }))
     processing.value = false
     await router.push(isEdit.value ? `../../` : '../')
-    toast.add(printf(message.success[props.mode], 'category'), 'success')
+    toast.add(printf(message.success[props.mode], 'category'), 'success').then()
   }
   catch (e: any)
   {
     err([ '/components/pages/categories/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], 'categories'), 'error')
+    toast.add(printf(message.fail[props.mode], 'categories'), 'error').then()
   }
 }
 

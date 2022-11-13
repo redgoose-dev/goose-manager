@@ -1,8 +1,6 @@
 <template>
 <article>
-  <PageHeader
-    module="categories"
-    :prefix="data.nest.id ? `[${data.nest.id}]` : ''"/>
+  <PageHeader module="categories" prefix="[JSON]"/>
   <Loading v-if="loading"/>
   <Items v-else-if="data.index?.length > 0" theme="card" class="items">
     <Draggable
@@ -16,8 +14,8 @@
           :title="element.title"
           :meta="element.meta"
           :nav="[
-            { label: 'Edit', href: `./${element.srl}/edit/` },
-            { label: 'Delete', href: `./${element.srl}/delete/` },
+            { label: message.word.edit, href: `./${element.srl}/edit/` },
+            { label: message.word.delete, href: `./${element.srl}/delete/` },
           ]"
           class="card">
           <template #before>
@@ -32,16 +30,13 @@
   <Empty v-else title="no item"/>
   <Controller>
     <template #left>
-      <ButtonBasic href="../../" icon-left="cloud">
-        Nests
-      </ButtonBasic>
-      <ButtonBasic href="../articles/" icon-left="droplet">
-        Articles
+      <ButtonBasic href="../" icon-left="code">
+        JSON
       </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        Create category
+        {{printf(message.word.isCreate, message.word.category)}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -52,7 +47,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Draggable from 'vuedraggable'
-import { getDataForArticles } from '../../../structure/categories'
+import { getDataForJson } from '../../../structure/categories'
 import { err } from '../../../libs/error'
 import { post, formData } from '../../../libs/api'
 import { toast } from '../../../modules/toast'
@@ -69,7 +64,6 @@ import Icon from '../../../components/icons/index.vue'
 const route = useRoute()
 const loading = ref<boolean>(false)
 const data = reactive<any>({
-  nest: {},
   index: [],
 })
 
@@ -77,11 +71,9 @@ async function onChangeIndex()
 {
   try
   {
-    if (!route.params.nestSrl) throw new Error('no nestSrl')
     const srls = data.index.map((o: any) => (o.srl)).join(',')
     const res = await post('/categories/sort/', formData({
-      module: 'article',
-      target_srl: Number(route.params.nestSrl),
+      module: 'json',
       srls,
     }))
     if (!res.success) throw new Error(res.message)
@@ -89,7 +81,7 @@ async function onChangeIndex()
   }
   catch (e: any)
   {
-    err(['/pages/nests/categories/index.vue', 'onChangeIndex()'], 'error', e.message)
+    err(['/pages/json/categories/index.vue', 'onChangeIndex()'], 'error', e.message)
     toast.add(printf(message.fail.change, message.word.order), 'error').then()
   }
 }
@@ -98,14 +90,13 @@ onMounted(async () => {
   try
   {
     loading.value = true
-    const { nest, categories } = await getDataForArticles(Number(route.params.nestSrl))
-    data.nest = nest
+    const { categories } = await getDataForJson()
     data.index = categories
     loading.value = false
   }
   catch (e: any)
   {
-    err(['/pages/nests/categories/index.vue', 'onMounted()'], 'error', e.message)
+    err(['/pages/json/categories/index.vue', 'onMounted()'], 'error', e.message)
     throw e.message
   }
 })

@@ -68,7 +68,7 @@ async function onSubmit(): Promise<void>
     processing.value = false
     err(['/components/pages/articles/item/create-comment.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.create, message.word.comment), 'error')
+    toast.add(printf(message.fail.create, message.word.comment), 'error').then()
   }
 }
 </script>

@@ -1,5 +1,7 @@
+import { useRoute, RouteLocationNormalized } from 'vue-router'
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
+import { serialize } from '../../libs/string'
 
 interface Options {
   url: string
@@ -9,47 +11,89 @@ interface Options {
   }
 }
 
-interface Response {
-  total: number
-  index?: {
-    srl?: number
-    title?: string
-    description?: string
-    meta?: string[]
-  }[]
-}
+let route: RouteLocationNormalized
 
-const defaultOptions: Options = {
-  url: '/json/',
-  params: {
+export async function requestJson(): Promise<any>
+{
+  const { category } = route.query
+  const res: any = await get('/json/', {
     order: 'srl',
     sort: 'desc',
-  },
-}
-
-function filtering(res: any): Response
-{
+    category: category || undefined,
+    ext_field: 'category_name',
+  })
+  if (!res.success) throw new Error(res.message)
   return {
-    total: res.total,
-    index: res.index.map((item: any) => ({
-      srl: item.srl,
-      title: item.name,
-      description: item.description,
-      meta: [
-        `srl: ${item.srl}`,
-        `regdate: ${getDate(item.regdate)}`,
-      ],
-    })),
+    total: res.data.total,
+    items: res.data.index.map((item: any) => {
+      return {
+        srl: item.srl,
+        title: item.name,
+        description: item.description,
+        meta: [
+          `srl: ${item.srl}`,
+          item.category_srl && `category: ${item.category_name}`,
+          `regdate: ${getDate(item.regdate)}`,
+        ].filter(Boolean),
+      }
+    }),
   }
 }
 
-export default async function getData(options?: any): Promise<Response>
+export async function requestCategories(): Promise<[]>
 {
-  let op: Options = Object.assign({}, defaultOptions, options)
-  if (options?.params)
-  {
-    op.params = Object.assign({}, defaultOptions.params, options.params)
+  const { category } = route.query
+  let res = await get(`/categories/`, {
+    module: 'json',
+    order: 'turn',
+    sort: 'asc',
+    ext_field: 'count,all,none',
+    unlimit: 1,
+    strict: 1,
+  })
+  if (!res.success) throw new Error(res.message)
+  let params: any = {
+    ...route.query,
+    category: undefined,
   }
-  const { data } = await get(op.url, op.params)
-  return filtering(data)
+  return res.data?.index.map((item: any) => {
+    let link, active
+    switch (item.srl)
+    {
+      case '':
+        link = serialize(params, true)
+        active = !category
+        break
+      case 'null':
+        params.category = 'null'
+        link = serialize(params, true)
+        active = category === 'null'
+        break
+      default:
+        params.category = item.srl
+        link = item.srl ? serialize(params, true) : ''
+        active = Number(category) === item.srl
+        break
+    }
+    return {
+      link,
+      label: item.name,
+      count: item.count_json,
+      active,
+    }
+  })
+}
+
+export async function getData(): Promise<any>
+{
+  if (!route) route = useRoute()
+  let [ json, categories ] = await Promise.all([
+    requestJson(),
+    requestCategories(),
+  ])
+  return {
+    total: json.total,
+    json: json.items,
+    categories,
+  }
 }

@@ -59,25 +59,25 @@
                 <li>
                   <router-link :to="`/users/${auth.user.srl}/`">
                     <Icon name="user" class="ico-custom"/>
-                    <em>Account</em>
+                    <em>{{message.word.account}}</em>
                   </router-link>
                 </li>
                 <li>
                   <router-link to="/preference/">
                     <Icon name="settings" class="ico-custom"/>
-                    <em>Preference</em>
+                    <em>{{message.word.preference}}</em>
                   </router-link>
                 </li>
                 <li>
                   <button type="button" @click="onClickClearTokens">
                     <Icon name="trash" class="ico-custom"/>
-                    <em>Clear tokens</em>
+                    <em>{{message.word.clearTokens}}</em>
                   </button>
                 </li>
                 <li>
                   <button type="button" @click="onClickLogout">
                     <Icon name="log-out" class="ico-custom"/>
-                    <em>Logout</em>
+                    <em>{{message.word.logout}}</em>
                   </button>
                 </li>
               </ol>

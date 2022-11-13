@@ -24,8 +24,8 @@
             :alt="item.title"
             :meta="item.meta"
             :nav="[
-              { label: 'Edit', href: `/articles/${item.srl}/edit/` },
-              { label: 'Delete', href: `/articles/${item.srl}/delete/` },
+              { label: message.word.edit, href: `/articles/${item.srl}/edit/` },
+              { label: message.word.delete, href: `/articles/${item.srl}/delete/` },
             ]"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -47,8 +47,8 @@
             :meta="item.meta"
             :nav="[
               item.useCategory && { label: 'Category', href: `/nests/${item.srl}/categories/` },
-              { label: 'Edit', href: `/nests/${item.srl}/edit/` },
-              { label: 'Delete', href: `/nests/${item.srl}/delete/` },
+              { label: message.word.edit, href: `/nests/${item.srl}/edit/` },
+              { label: message.word.delete, href: `/nests/${item.srl}/delete/` },
             ].filter(Boolean)"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -68,8 +68,8 @@
             :title="item.title"
             :meta="item.meta"
             :nav="[
-              { label: 'Edit', href: `/apps/${item.srl}/edit/` },
-              { label: 'Delete', href: `/apps/${item.srl}/delete/` },
+              { label: message.word.edit, href: `/apps/${item.srl}/edit/` },
+              { label: message.word.delete, href: `/apps/${item.srl}/delete/` },
             ]"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -90,8 +90,8 @@
             :title="item.title"
             :meta="item.meta"
             :nav="[
-              { label: 'Edit', href: `/json/${item.srl}/edit/` },
-              { label: 'Delete', href: `/json/${item.srl}/delete/` },
+              { label: message.word.edit, href: `/json/${item.srl}/edit/` },
+              { label: message.word.delete, href: `/json/${item.srl}/delete/` },
             ]"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -102,19 +102,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive } from 'vue'
 import { preferenceStore } from '../../store/preference'
-import { err } from '../../libs/error';
-import { getData } from '../../structure/dashboard';
-import { Items, Card, Thumbnail } from '../../components/item';
-import PageHeader from '../../components/page/header/index.vue';
-import Loading from '../../components/etc/loading.vue';
-import Empty from '../../components/pages/dashboard/empty.vue';
-import Icon from '../../components/icons/index.vue';
+import { err } from '../../libs/error'
+import { getData } from '../../structure/dashboard'
+import { message } from '../../message'
+import { Items, Card, Thumbnail } from '../../components/item'
+import PageHeader from '../../components/page/header/index.vue'
+import Loading from '../../components/etc/loading.vue'
+import Empty from '../../components/pages/dashboard/empty.vue'
+import Icon from '../../components/icons/index.vue'
 
 const preference = preferenceStore()
-const loading = ref<boolean>(true);
-const contents = reactive<any>([]);
+const loading = ref<boolean>(true)
+const contents = reactive<any>([])
 
 onMounted(async () => {
   try

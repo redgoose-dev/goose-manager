@@ -2,7 +2,7 @@
 <article>
   <PageHeader
     module="categories"
-    prefix="[Article]"
+    prefix="[JSON]"
     title="Delete category"/>
   <Loading v-if="loading"/>
   <ConfirmDelete
@@ -10,7 +10,7 @@
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete category"
+    :button-label="printf(message.word.isDelete, message.word.category)"
     :processing="processing"
     @cancel="router.back()"
     @submit="onSubmit"/>
@@ -57,7 +57,7 @@ async function onSubmit(): Promise<void>
   }
   catch (e: any)
   {
-    err(['/pages/nests/categories/delete.vue', 'onSubmit()'], 'error', e.message)
+    err(['/pages/json/categories/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
     toast.add(printf(message.fail.delete, message.word.category), 'error').then()
   }
@@ -68,12 +68,12 @@ onMounted(async () => {
   {
     loading.value = true
     const res = await getItem(Number(route.params.categorySrl))
-    fields.name = `${message.words.deleteItem}: ${res.srl}`
+    fields.name = `${message.words.deleteItem}: [${res.srl}] ${res.name}`
     loading.value = false
   }
   catch (e: any)
   {
-    err(['/pages/nests/categories/delete.vue', 'onMounted()'], 'error', e.message)
+    err(['/pages/json/categories/delete.vue', 'onMounted()'], 'error', e.message)
     throw e.message
   }
 })

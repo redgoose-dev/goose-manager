@@ -34,7 +34,6 @@ const props = defineProps({
     padding: 0 0 0 12px;
     box-sizing: border-box;
     font-size: 13px;
-    color: var(--color-weak);
     font-weight: 600;
     letter-spacing: -.5px;
     line-height: 1.15;

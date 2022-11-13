@@ -87,14 +87,14 @@ async function onSubmit(): Promise<void>
       categorySrl: String(forms.categorySrl.value),
     })
     processing.value = true
-    toast.add(printf(message.success.change, message.word.nest), 'success')
+    toast.add(printf(message.success.change, message.word.nest), 'success').then()
     let url = route.params.nestSrl ? `/nests/${forms.nestSrl.value}/articles/${route.params.articleSrl}/` : '../'
     await router.push(url)
   }
   catch (_)
   {
     processing.value = false
-    toast.add(printf(message.fail.change, message.word.nest), 'error')
+    toast.add(printf(message.fail.change, message.word.nest), 'error').then()
   }
 }
 

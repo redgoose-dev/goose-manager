@@ -237,11 +237,11 @@ async function save(type: string): Promise<void>
     mode: props.mode === 'create' ? 'add' : 'edit',
     app_srl: data.nest.app_srl,
     nest_srl: data.nest.srl,
-    category_srl: forms.category_srl || '',
+    category_srl: forms.category_srl || null,
     type: type === 'publishing' ? getTypeArticle(forms.type) : 'ready',
     title: forms.title.value || '',
     content: forms.content.value || '',
-    json: encodeURIComponent(JSON.stringify(forms.json)),
+    json: '{}',
     order: forms.order.value,
   }))
   if (!res.success) throw new Error(res.message)
