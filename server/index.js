@@ -87,8 +87,11 @@ function localRoutes()
       }
       catch (_) {}
     }
-    res.clearCookie(cookie.prefix + '-token')
-    res.clearCookie(cookie.prefix + '-user')
+    // cookie.options
+    const options = { ...cookie.options, maxAge: 0 }
+    res.cookie(cookie.prefix + '-token', '', options)
+    res.cookie(cookie.prefix + '-user', '', options)
+    // response
     res.json({ success: true })
   })
 
