@@ -31,6 +31,6 @@ export function openServerMessage(host, port, dev)
   const colorText = (message, color) => (`${assets[color]}${message}${assets.reset}`);
   console.log(assets.line);
   console.log(`| ${colorText(dev ? assets.development : assets.production, 'yellow')} server running at:`);
-  console.log(`| >> Local: ${colorText(`http://localhost:${port}`, 'cyan')}`);
+  console.log(`| >> Local: ${colorText(`http(s)://${host}:${port}`, 'cyan')}`);
   console.log(assets.line);
 }
