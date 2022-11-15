@@ -19,7 +19,7 @@
     "delay": 500
   },
   "engines": {
-    "node": "19"
+    "node": "16"
   },
   "browserslist": [
     "> 1%",
