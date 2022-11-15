@@ -8,6 +8,7 @@ async function requestJson(srl: number): Promise<any>
     name: res.data?.name,
     description: res.data?.description,
     json: res.data?.json,
+    path: res.data?.path,
   }
 }
 

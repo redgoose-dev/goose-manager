@@ -5,7 +5,7 @@
       <FormSelect
         id="category"
         name="category"
-        v-model="forms.category_srl"
+        v-model="forms.category_srl.value"
         :options="data.categories"
         value-type="string"
         :placeholder="message.words.selectCategory"
@@ -46,6 +46,16 @@
         {{forms.json.error}}
       </Help>
     </Field>
+    <Field label="Path" for="path">
+      <FormInput
+        v-model="forms.path.value"
+        name="path"
+        id="path"
+        :maxlength="255"
+        placeholder="https://"
+        :error="!!forms.path.error"
+        class="fields__path"/>
+    </Field>
   </Fieldset>
   <Controller>
     <template #left>
@@ -69,7 +79,7 @@
 <script lang="ts" setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { get, post, formData, checkForms } from '../../../libs/api'
+import { post, formData, checkForms } from '../../../libs/api'
 import { getData } from '../../../structure/json/post'
 import { err } from '../../../libs/error'
 import { printf } from '../../../libs/string'
@@ -95,10 +105,14 @@ const data = reactive<any>({
   categories: null,
 })
 const forms = reactive<any>({
-  category_srl: (!route.query.category || route.query.category === 'null') ? null : route.query.category,
+  category_srl: {
+    value: (!route.query.category || route.query.category === 'null') ? null : route.query.category,
+    error: null,
+  },
   name: { value: '', error: null },
   description: { value: '', error: null },
   json: { value: '', error: null },
+  path: { value: '', error: null },
 })
 const loading = ref<boolean>(false)
 const processing = ref<boolean>(false)
@@ -137,10 +151,11 @@ async function onSubmit(): Promise<void>
     validateForms()
     checkForms(forms)
     const data = formData({
-      category_srl: forms.category_srl || 'null',
+      category_srl: forms.category_srl.value || '',
       name: forms.name.value,
       description: forms.description.value,
       json: forms.json.value,
+      path: forms.path.value,
     })
     const url = props.mode === 'edit' ? `/json/${props.srl}/edit/` : '/json/'
     const res = await post(url, data)
@@ -167,10 +182,11 @@ onMounted(async () => {
     if (props.srl)
     {
       const newJson = pureObject(json)
-      forms.category_srl = newJson?.category_srl
+      forms.category_srl.value = newJson?.category_srl
       forms.name.value = newJson?.name
       forms.description.value = newJson?.description
       forms.json.value = getStringJson(newJson?.json)
+      forms.path.value = newJson?.path
     }
     loading.value = false
   }

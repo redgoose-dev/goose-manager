@@ -17,6 +17,7 @@ export async function requestJson(): Promise<any>
     description: res.data.description,
     categoryName: res.data.category_name,
     json: res.data.json,
+    path: res.data.path,
     regdate: res.data.regdate,
   }
 }

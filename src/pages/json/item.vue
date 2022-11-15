@@ -16,6 +16,9 @@
       {{item.categoryName}}
     </Field>
     <pre class="json-code"><code>{{json}}</code></pre>
+    <Field v-if="!!item.path" label="Path">
+      {{item.path}}
+    </Field>
   </Fieldset>
   <Controller>
     <template #left>
