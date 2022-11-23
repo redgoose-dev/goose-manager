@@ -241,7 +241,7 @@ async function save(type: string): Promise<void>
     type: type === 'publishing' ? getTypeArticle(forms.type) : 'ready',
     title: forms.title.value || '',
     content: forms.content.value || '',
-    json: '{}',
+    json: JSON.stringify(forms.json),
     order: forms.order.value,
   }))
   if (!res.success) throw new Error(res.message)
