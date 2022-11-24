@@ -153,9 +153,9 @@ async function onSubmit(): Promise<void>
     const data = formData({
       category_srl: forms.category_srl.value || '',
       name: forms.name.value,
-      description: forms.description.value,
+      description: forms.description.value || '',
       json: forms.json.value,
-      path: forms.path.value,
+      path: forms.path.value || '',
     })
     const url = props.mode === 'edit' ? `/json/${props.srl}/edit/` : '/json/'
     const res = await post(url, data)
