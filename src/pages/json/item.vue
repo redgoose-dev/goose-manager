@@ -16,8 +16,9 @@
       {{item.categoryName}}
     </Field>
     <pre class="json-code"><code>{{json}}</code></pre>
-    <Field v-if="!!item.path" label="Path">
-      {{item.path}}
+    <Field v-if="!!item.path" label="Path" class="path">
+      <a v-if="isPathLink" :href="item.path" target="_blank">{{item.path}}</a>
+      <template v-else>{{item.path}}</template>
     </Field>
   </Fieldset>
   <Controller>
@@ -53,6 +54,10 @@ const route = useRoute()
 const loading = ref<boolean>(false)
 const item = ref<any>({})
 const json = computed<string>(() => JSON.stringify(item.value.json, null, 2))
+const isPathLink = computed<boolean>(() => {
+  if (!item.value.path) return false
+  return /^http/.test(item.value.path)
+})
 
 onMounted(async () => {
   try

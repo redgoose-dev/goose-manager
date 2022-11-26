@@ -8,4 +8,11 @@
   line-height: 1.42;
   font-size: 15px;
   font-family: var(--font-console);
+  word-break: break-all;
+  white-space: break-spaces;
+}
+
+.path {
+  word-break: break-all;
+  white-space: break-spaces;
 }
