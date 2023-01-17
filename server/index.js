@@ -187,7 +187,7 @@ function setup(_app, _env)
   cookie = {
     prefix: VITE_COOKIE_PREFIX,
     options: {
-      maxAge: 60 * 60 * 24 * Number(VITE_COOKIE_EXPIRY), // days
+      maxAge: 1000 * 60 * 60 * 24 * Number(VITE_COOKIE_EXPIRY), // days
       httpOnly: (VITE_COOKIE_HTTPONLY === 'true'),
       secure: (VITE_COOKIE_SECURE === 'true'),
       path: VITE_COOKIE_PATH || '/',
