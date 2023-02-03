@@ -10,7 +10,6 @@ interface Config {
 const config = defineConfig(async ({ mode }: Config) => {
   const env = loadEnv(mode, process.cwd())
   return {
-    // base: env.VITE_BASE_URL,
     base: env.VITE_BASE_URL,
     server: {
       // https://vitejs.dev/config/#server-options

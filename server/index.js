@@ -1,3 +1,4 @@
+import https from 'https'
 import { $fetch } from 'ohmyfetch'
 import { Router } from 'express'
 import { filteringHostname } from './libs/api.js'
@@ -182,24 +183,32 @@ function setup(_app, _env)
 {
   app = _app
   env = _env
-  const { VITE_COOKIE_PREFIX, VITE_COOKIE_EXPIRY, VITE_TOKEN_PUBLIC, VITE_API_URL, VITE_COOKIE_DOMAIN, VITE_COOKIE_PATH, VITE_COOKIE_HTTPONLY, VITE_COOKIE_SECURE } = env
-  // set cookie assets
-  cookie = {
-    prefix: VITE_COOKIE_PREFIX,
-    options: {
-      maxAge: 1000 * 60 * 60 * 24 * Number(VITE_COOKIE_EXPIRY), // days
-      httpOnly: (VITE_COOKIE_HTTPONLY === 'true'),
-      secure: (VITE_COOKIE_SECURE === 'true'),
-      path: VITE_COOKIE_PATH || '/',
-      domain: VITE_COOKIE_DOMAIN || undefined,
+  app.use(function(req, res, next) {
+    const { VITE_COOKIE_PREFIX, VITE_COOKIE_EXPIRY, VITE_TOKEN_PUBLIC, VITE_API_URL, VITE_COOKIE_DOMAIN, VITE_COOKIE_PATH, VITE_COOKIE_HTTPONLY } = env
+    // set cookie assets
+    cookie = {
+      prefix: VITE_COOKIE_PREFIX,
+      options: {
+        maxAge: 1000 * 60 * 60 * 24 * Number(VITE_COOKIE_EXPIRY), // days
+        httpOnly: (VITE_COOKIE_HTTPONLY === 'true'),
+        secure: req.secure,
+        path: VITE_COOKIE_PATH || '/',
+        domain: VITE_COOKIE_DOMAIN || undefined,
+      }
     }
-  }
-  // set api instance
-  api = $fetch.create({
-    baseURL: filteringHostname(VITE_API_URL),
-    retry: 1,
-    responseType: 'json',
-    headers: { 'Authorization': `Bearer ${VITE_TOKEN_PUBLIC}` },
+    // https
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: req.secure,
+    })
+    // set api instance
+    api = $fetch.create({
+      baseURL: filteringHostname(VITE_API_URL),
+      retry: 1,
+      responseType: 'json',
+      headers: { 'Authorization': `Bearer ${VITE_TOKEN_PUBLIC}` },
+      agent: httpsAgent,
+    })
+    next()
   })
 }
 
