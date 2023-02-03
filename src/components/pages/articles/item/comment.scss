@@ -73,7 +73,15 @@
   &:hover {
     box-shadow: 0 0 0 1px rgb(var(--color-base-rgb) / 25%);
   }
-
+  @include mixins.responsive(tablet) {
+    &__body {
+      .redgoose-body {
+        &:deep(:is(h1, h2, h3, h4, h5, h6) .anchor) {
+          display: none;
+        }
+      }
+    }
+  }
   @include mixins.dark-mode() {
     box-shadow: 0 0 0 1px rgb(64 64 64);
     &__bottom {

@@ -59,7 +59,8 @@ import { editComment, deleteComment } from '../../../../structure/comments'
 import { message } from '../../../../message'
 import { printf } from '../../../../libs/string'
 import { toast } from '../../../../modules/toast'
-import { err } from "../../../../libs/error"
+import { err } from '../../../../libs/error'
+import { baseRenderer } from '../../../../modules/marked'
 import { FormTextarea } from '../../../forms'
 import { ButtonBasic } from '../../../button'
 
@@ -70,8 +71,9 @@ const props = defineProps<{
   regdate: string
 }>()
 const emits = defineEmits([ 'edit', 'delete' ])
+const renderer = baseRenderer()
 const editMode = ref<boolean>(false)
-const content = computed<string>(() => marked(props.content))
+const content = computed<string>(() => marked.parse(props.content, { renderer }))
 const editContent = ref<string>('')
 const editProcessing = ref<boolean>(false)
 const deleteProcessing = ref<boolean>(false)
@@ -116,7 +118,7 @@ async function onDelete(): Promise<void>
   catch (e: any)
   {
     err(['/components/pages/articles/item/comment.vue', 'onDelete()'], 'error', e.message)
-    toast.add(printf(message.fail.delete, message.word.comment), 'error')
+    toast.add(printf(message.fail.delete, message.word.comment), 'error').then()
     deleteProcessing.value = false
   }
 }

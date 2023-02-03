@@ -21,10 +21,11 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
-import { marked, Renderer } from 'marked'
+import { marked } from 'marked'
 import { preferenceStore } from '../../../store/preference'
 import { dateFormat } from '../../../libs/date'
 import { replaceMark } from '../../../structure/checklist/lib'
+import { baseRenderer, checklistRenderer } from '../../../modules/marked'
 import { Modal, ModalBody } from '../../modal'
 import PreviewImage from '../articles/item/preview-image.vue'
 import Files from '../articles/item/files.vue'
@@ -67,19 +68,9 @@ onMounted(async () => {
   // clear content
   $body.value.innerHTML = ''
   // set marked renderer
-  const renderer = new Renderer()
-  renderer.listitem = (text, task) => {
-    if (task)
-    {
-      text = text.replace(`disabled="" `, ``)
-      return `<li class="checkbox-item"><label>${text}</label></li>`
-    }
-    else
-    {
-      return `<li>${text}</li>`
-    }
-  }
-  const parsed = marked(props.modelValue, { renderer })
+  let renderer = baseRenderer()
+  renderer = checklistRenderer(renderer)
+  const parsed = marked.parse(props.modelValue, { renderer })
   if (!parsed) return
   // input content
   $body.value.innerHTML = parsed

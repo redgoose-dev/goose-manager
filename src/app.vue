@@ -12,6 +12,7 @@ import { authStore } from './store/auth'
 import { headStore } from './store/head'
 import { filtersStore } from './store/filters'
 import { err } from './libs/error'
+import { markedSetup } from './modules/marked'
 import ErrorService from './pages/error/500.vue'
 import LayoutBlank from './layouts/blank.vue'
 import LayoutDefault from './layouts/default.vue'
@@ -50,6 +51,9 @@ if (!DEVELOPMENT)
     }
   })
 }
+
+// setup markdown parser
+markedSetup()
 
 // change theme
 head.changeTheme()

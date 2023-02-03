@@ -27,6 +27,7 @@
       line-height: 1.05;
       font-weight: 700;
       word-break: break-all;
+      color: var(--color-edge);
     }
     p {
       margin: 4px 0 0;
@@ -50,7 +51,6 @@
   &__comments {
     margin: 40px 0 0;
   }
-
   @include mixins.responsive(desktop) {
     &__header {
       position: relative;

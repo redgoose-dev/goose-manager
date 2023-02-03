@@ -32,6 +32,7 @@ import { marked } from 'marked'
 import { toast } from '../../../../modules/toast'
 import { printf } from '../../../../libs/string'
 import { message } from '../../../../message'
+import { baseRenderer } from '../../../../modules/marked'
 import PostToolbar from '../../../navigation/post-toolbar.vue'
 import Preview from '../../../content/preview.vue'
 
@@ -137,7 +138,8 @@ function controlPreview(sw: boolean): void
   }
   if (sw)
   {
-    preview.value = marked(props.modelValue)
+    const renderer = baseRenderer()
+    preview.value = marked.parse(props.modelValue, { renderer })
   }
   else
   {

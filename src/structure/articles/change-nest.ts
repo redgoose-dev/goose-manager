@@ -2,10 +2,12 @@ import { marked } from 'marked'
 import { authStore } from '../../store/auth'
 import { createFullPath } from '../files/util'
 import { get, post, formData } from '../../libs/api'
+import { baseRenderer } from '../../modules/marked'
 
 function getDescription(content: string): string
 {
-  content = marked(content)
+  const renderer = baseRenderer()
+  content = marked.parse(content, { renderer })
   content = content.replace(/(<([^>]+)>)/ig, '')
   content = content.replace(/\n/ig, '')
   content = content.substring(0, 75)

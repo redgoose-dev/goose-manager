@@ -1,6 +1,7 @@
 import { marked } from 'marked'
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
+import { baseRenderer } from '../../modules/marked'
 
 async function requestArticle(srl: number, root: boolean): Promise<any>
 {
@@ -8,12 +9,13 @@ async function requestArticle(srl: number, root: boolean): Promise<any>
     ext_field: `category_name${root ? ',nest_name' : ''}`,
   })
   if (!success) throw new Error(message)
+  const renderer = baseRenderer()
   return {
     srl: data.srl,
     nestSrl: data.nest_srl,
     title: data.title,
     type: data.type,
-    content: marked(data.content),
+    content: marked.parse(data.content, { renderer }),
     categoryName: data.category_name,
     nestName: data.nest_name,
     hit: data.hit,

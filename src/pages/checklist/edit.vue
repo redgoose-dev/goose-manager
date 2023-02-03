@@ -70,6 +70,7 @@ import { toast } from '../../modules/toast'
 import { printf } from '../../libs/string'
 import { message } from '../../message'
 import { dateFormat } from '../../libs/date'
+import { baseRenderer } from '../../modules/marked'
 import { getData, submit } from '../../structure/checklist/edit'
 import PageHeader from '../../components/page/header/index.vue'
 import { Modal, ModalBody } from '../../components/modal'
@@ -165,7 +166,8 @@ function controlPreview(sw: boolean): void
   }
   if (sw)
   {
-    preview.value = marked(forms.content.value)
+    const renderer = baseRenderer()
+    preview.value = marked.parse(forms.content.value, { renderer })
   }
   else
   {
