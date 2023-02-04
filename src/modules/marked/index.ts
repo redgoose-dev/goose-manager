@@ -7,7 +7,6 @@ export function markedSetup(): void
   marked.setOptions({
     gfm: true,
     breaks: true,
-    // headerIds: true,
   })
 }
 
