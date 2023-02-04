@@ -11,6 +11,7 @@ package-lock.json
 yarn.lock
 bun.lockb
 cmd.sh
+action.sh
 0
 yarn-error.log
 docker-compose.yml
