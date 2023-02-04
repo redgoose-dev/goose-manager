@@ -15,7 +15,7 @@
   border: none;
   @include mixins.button-touch-options(false);
   --icon-size: 20px;
-  --icon-stroke-width: 1.5;
+  --icon-stroke: 1.5;
   --icon-color: var(--color-weak);
   svg {
     display: block;

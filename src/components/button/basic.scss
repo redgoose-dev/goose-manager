@@ -21,7 +21,7 @@
     var(--button-shadow-2, 0 0 0 0 rgb(0 0 0 / 0%)),
     var(--button-shadow-3, 0 0 0 1px rgb(180 180 180 / 100%));
   --icon-size: var(--button-icon-size, 18px);
-  --icon-stroke-width: 2.2;
+  --icon-stroke: 2.2;
   --icon-color: var(--button-text-color, var(--color-base));
   --font-size: 15px;
   &:not(label) {

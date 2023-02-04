@@ -18,7 +18,7 @@
     background: rgb(222 222 222);
     @include mixins.button-touch-options(false);
     --icon-size: 15px;
-    --icon-stroke-width: 2;
+    --icon-stroke: 2;
     --icon-color: var(--color-base);
     span {
       display: flex;

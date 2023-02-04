@@ -3,6 +3,7 @@
 node_modules/
 .AppleDouble/
 dist/
+public/user/
 
 # files
 .DS_Store

@@ -32,7 +32,7 @@
     box-shadow: 0 0 0 1px rgb(255 255 255 / 50%), 0 3px 15px rgb(var(--color-base-rgb) / 50%);
     @include mixins.button-touch-options(false);
     --icon-color: rgb(255 255 255);
-    --icon-stroke-width: 1.5;
+    --icon-stroke: 1.5;
     --icon-size: 30px;
     transition: filter 120ms ease-out;
     svg {

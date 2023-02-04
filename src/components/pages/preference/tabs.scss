@@ -37,7 +37,7 @@
       pointer-events: none;
       --icon-color: rgb(255 255 255);
       --icon-size: 20px;
-      --icon-stroke-width: 2.4;
+      --icon-stroke: 2.4;
     }
     &:hover:not(.router-link-exact-active) {
       filter: brightness(90%);

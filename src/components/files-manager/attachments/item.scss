@@ -49,7 +49,7 @@
         margin: 0 auto;
         --icon-color: var(--color-base);
         --icon-size: 36px;
-        --icon-stroke-width: 1;
+        --icon-stroke: 1;
       }
       strong {
         display: block;
@@ -99,7 +99,7 @@
         margin: 0 auto;
         --icon-color: var(--color-base);
         --icon-size: 20px;
-        --icon-stroke-width: 2.4;
+        --icon-stroke: 2.4;
       }
     }
     ul {
@@ -177,7 +177,7 @@
       border-radius: var(--size-radius);
       --icon-size: 20px;
       --icon-color: rgb(255 255 255 / 100%);
-      --icon-stroke-width: 2;
+      --icon-stroke: 2;
       svg {
         display: block;
       }

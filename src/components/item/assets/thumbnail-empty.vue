@@ -27,7 +27,7 @@ const iconName = iconRandomPick();
   box-shadow: inset 0 -10px 30px rgb(0 0 0 / 5%);
   --icon-size: 32px;
   --icon-color: var(--color-invert);
-  --icon-stroke-width: 1.25;
+  --icon-stroke: 1.25;
   &__icon {
     display: block;
   }

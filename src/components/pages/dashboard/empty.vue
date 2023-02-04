@@ -28,7 +28,7 @@ import Icon from '../../icons/index.vue';
     display: block;
     margin: 0 auto;
     --icon-size: 28px;
-    --icon-stroke-width: 1;
+    --icon-stroke: 1;
     --icon-color: rgb(var(--color-base-rgb) / 100%);
   }
   &__message {

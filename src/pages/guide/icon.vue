@@ -32,9 +32,8 @@
         <div>
           <Icon
             name="target"
-            color="#ff235d"
             class="icon color"
-            style="--icon-color: #ff235d;"/>
+            style="--icon-color:#ff235d;"/>
           <em>#ff235d</em>
         </div>
       </li>
@@ -124,7 +123,7 @@
           <Icon
             name="target"
             class="icon"
-            style="--icon-size: 36px; --icon-stroke-width: .5;"/>
+            style="--icon-size: 36px; --icon-stroke: .5;"/>
           <em>.5</em>
         </div>
       </li>
@@ -133,7 +132,7 @@
           <Icon
             name="twitter"
             class="icon"
-            style="--icon-size: 36px; --icon-stroke-width: 1;"/>
+            style="--icon-size: 36px; --icon-stroke: 1;"/>
           <em>1</em>
         </div>
       </li>
@@ -142,7 +141,7 @@
           <Icon
             name="cloud-snow"
             class="icon"
-            style="--icon-size: 36px; --icon-stroke-width: 2;"/>
+            style="--icon-size: 36px; --icon-stroke: 2;"/>
           <em>2</em>
         </div>
       </li>
@@ -151,7 +150,7 @@
           <Icon
             name="radio"
             class="icon"
-            style="--icon-size: 36px; --icon-stroke-width: 2.5;"/>
+            style="--icon-size: 36px; --icon-stroke: 2.5;"/>
           <em>2.5</em>
         </div>
       </li>
