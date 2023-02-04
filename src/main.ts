@@ -13,10 +13,6 @@ import './assets/scss/main.scss'
 window.DEBUG = DEBUG
 window.DEVELOPMENT = DEVELOPMENT
 
-// set index.html
-document.title = TITLE
-;(<any>document).querySelector('meta[name=description]').setAttribute('content', DESCRIPTION)
-
 // setup pinia
 const pinia = createPinia()
 
