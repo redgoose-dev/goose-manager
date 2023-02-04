@@ -3,7 +3,7 @@ import path from 'path'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import { createServer, loadEnv } from 'vite'
-import { openServerMessage, isDev } from './libs/entry-assets.js'
+import { openServerMessage, isDev, staticOptions } from './libs/entry-assets.js'
 import serviceServer from './index.js'
 
 const __dirname = path.resolve()
@@ -61,8 +61,7 @@ async function server()
       if (req.path.indexOf('.') > -1)
       {
         // https://expressjs.com/en/5x/api.html#express.static
-        app.use('/', express.static(outDir))
-        app.use(env.VITE_BASE_URL, express.static(outDir))
+        app.use(env.VITE_BASE_URL, express.static(outDir, staticOptions))
         next()
       }
       else

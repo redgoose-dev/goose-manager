@@ -34,3 +34,10 @@ export function openServerMessage(host, port, dev)
   console.log(`| >> Local: ${colorText(`http(s)://${host}:${port}`, 'cyan')}`);
   console.log(assets.line);
 }
+
+export const staticOptions = {
+  dotfiles: 'ignore',
+  maxAge: '7d',
+  redirect: false,
+  index: false,
+}
