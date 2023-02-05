@@ -37,7 +37,7 @@ export function openServerMessage(host, port, dev)
 
 export const staticOptions = {
   dotfiles: 'ignore',
-  maxAge: '7d',
+  maxAge: '30d',
   redirect: false,
   index: false,
 }
