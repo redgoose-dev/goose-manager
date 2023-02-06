@@ -208,8 +208,8 @@
       }
       > a {
         &.router-link-active {
-          background-color: transparent;
-          color: var(--color-key);
+          background-color: rgb(var(--color-key-rgb) / 100%);
+          //color: red;
         }
       }
       &:hover {
@@ -234,8 +234,8 @@
         }
         > a {
           &.router-link-active {
-            background-color: transparent;
-            color: var(--color-key);
+            background-color: rgb(var(--color-key-rgb) / 100%);
+            color: hsl(0 0% 100%);
           }
         }
       }

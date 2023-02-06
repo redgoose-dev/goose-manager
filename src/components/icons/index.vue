@@ -30,7 +30,7 @@ const props = defineProps<Props>()
 .icon {
   display: block;
   margin: var(--icon-margin, 0);
-  color: var(--icon-color, var(--color-base));
+  color: var(--icon-color);
   width: var(--icon-size, 24px);
   height: var(--icon-size, 24px);
   stroke-width: var(--icon-stroke, 2);

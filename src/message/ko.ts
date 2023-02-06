@@ -69,6 +69,13 @@ export default {
     account: '계정',
     clearTokens: '토큰 정리하기',
     logout: '로그아웃',
+    list: '목록',
+    'public': '공개',
+    'private': '비공개',
+    hit: '조회수',
+    like: '좋아요',
+    createNest: '둥지 만들기',
+    editNest: '둥지 수정하기',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',
@@ -84,4 +91,7 @@ export default {
     deleteItem: '삭제되는 요소',
     selectCategory: '분류를 선택해주세요.',
   },
+  monthNames: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
+  weekNames: [ '일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일' ],
+  weekShortNames: [ '일', '월', '화', '수', '목', '금', '토' ],
 }

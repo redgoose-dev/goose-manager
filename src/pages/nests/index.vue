@@ -20,10 +20,10 @@
           :description="nest.description"
           :meta="nest.meta"
           :nav="[
-            { label: 'Edit', href: `./${nest.srl}/edit/` },
-            { label: 'Delete', href: `./${nest.srl}/delete/` },
+            { label: message.word.edit, href: `./${nest.srl}/edit/` },
+            { label: message.word.delete, href: `./${nest.srl}/delete/` },
             nest.useCategory && {
-              label: 'Category',
+              label: message.word.category,
               href: `./${nest.srl}/categories/`,
             },
           ].filter(Boolean)"
@@ -38,7 +38,7 @@
   <Controller>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        Create Nest
+        {{message.word.createNest}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -48,6 +48,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { err } from '../../libs/error'
+import { message } from '../../message'
 import getData, { SectionItem } from '../../structure/nests'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card } from '../../components/item'

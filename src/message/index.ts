@@ -8,6 +8,9 @@ interface Structure {
   fail: any
   word: any
   words: any
+  monthNames: string[]
+  weekNames: string[]
+  weekShortNames: string[]
 }
 
 const fallback: Structure = ko

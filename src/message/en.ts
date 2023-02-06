@@ -69,6 +69,13 @@ export default {
     account: 'Account',
     clearTokens: 'Clear tokens',
     logout: 'Logout',
+    list: 'List',
+    'public': 'Public',
+    'private': 'Private',
+    hit: 'Hit',
+    like: 'Like',
+    createNest: 'Create Nest',
+    editNest: 'Edit Nest',
   },
   words: {
     warningDeleteItem: 'If this {0} is deleted, it cannot be recovered.',
@@ -84,4 +91,7 @@ export default {
     deleteItem: 'element being deleted.',
     selectCategory: 'Please select category.',
   },
+  monthNames: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+  weekNames: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
+  weekShortNames: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ],
 }

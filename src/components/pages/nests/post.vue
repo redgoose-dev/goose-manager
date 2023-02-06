@@ -149,7 +149,9 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+      <ButtonBasic icon-left="arrow-left" @click="router.back()">
+        {{message.word.back}}
+      </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic
@@ -157,7 +159,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        {{isEdit ? 'Edit nest' : 'Create nest'}}
+        {{isEdit ? message.word.editNest : message.word.createNest}}
       </ButtonBasic>
     </template>
   </Controller>

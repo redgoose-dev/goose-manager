@@ -1,6 +1,7 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 import { createFullPath } from '../files/util'
+import { message } from '../../message'
 
 interface Module {
   module: string
@@ -11,26 +12,26 @@ interface Module {
 
 async function requestArticles({ size }: any = {}): Promise<any>
 {
-  let { success, message, data } = await get('/articles/', {
+  let res = await get('/articles/', {
     field: 'srl,category_srl,title,hit,star,type,json,`order`',
     order: 'srl',
     sort: 'desc',
     size,
     visible_type: 'all',
   })
-  if (!success) throw new Error(message)
+  if (!res.success) throw new Error(res.message)
   return {
     module: 'articles',
-    index: (data as any).index.map((item: any) => {
+    index: (res.data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.title,
         href: `/articles/${item.srl}/`,
         meta: [
-          item.type.charAt(0).toUpperCase() + item.type.slice(1),
+          message.word[item.type],
           item.order,
-          `Hit: ${item.hit}`,
-          `Like: ${item.star}`,
+          `${message.word.hit}: ${item.hit}`,
+          `${message.word.like}: ${item.star}`,
         ],
         image: createFullPath(item.json?.thumbnail?.path),
       };
