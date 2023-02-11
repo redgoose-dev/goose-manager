@@ -17,8 +17,8 @@
           :alt="item.title"
           :image="item.image"
           :nav="[
-            { label: 'Edit', href: `./${item.srl}/edit/` },
-            { label: 'Delete', href: `./${item.srl}/delete/` },
+            { label: message.word.edit, href: `./${item.srl}/edit/` },
+            { label: message.word.delete, href: `./${item.srl}/delete/` },
           ]">
           <template #after v-if="item.private">
             <Mark/>
@@ -52,6 +52,7 @@ import { filtersStore } from '../../store/filters'
 import { err } from '../../libs/error'
 import { serialize } from '../../libs/string'
 import { scrollTo } from '../../libs/util'
+import { message } from '../../message'
 import { getData, requestArticles } from '../../structure/articles'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card, Thumbnail, Mark } from '../../components/item'
@@ -78,6 +79,10 @@ const itemComponent = computed<any>(() => {
       return Thumbnail
   }
   return Card
+})
+
+onMounted(() => {
+  loadData().then()
 })
 
 async function onClickPageItem(n: number): Promise<void>
@@ -132,10 +137,6 @@ async function loadData(): Promise<void>
     throw e.message
   }
 }
-
-onMounted(() => {
-  loadData().then()
-})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

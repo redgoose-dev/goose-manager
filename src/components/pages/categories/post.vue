@@ -1,13 +1,13 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset :disabled="loading">
-    <Field label="Name" for="name">
+    <Field :label="message.word.name" for="name">
       <FormInput
         v-model="forms.name.value"
         name="name"
         id="name"
         :maxlength="40"
-        placeholder="Please type name"
+        :placeholder="printf(message.words.pleaseInput, message.word.name)"
         :error="!!forms.name.error"
         :required="true"
         class="input-name"/>
@@ -25,7 +25,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        {{isEdit ? 'Edit category' : 'Create category'}}
+        {{submitLabel}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -61,6 +61,26 @@ const forms = reactive<any>({
 const loading = ref<boolean>(false)
 const processing = ref<boolean>(false)
 const isEdit = computed<boolean>(() => (props.mode === 'edit'))
+const submitLabel = computed<string>(() => {
+  const code = props.mode === 'edit' ? message.word.isEdit : message.word.isCreate
+  return printf(code, message.word.category)
+})
+
+onMounted(async () => {
+  if ( props.mode !== 'edit' ) return
+  try
+  {
+    loading.value = true
+    const res = await get(`/categories/${props.srl}/`)
+    forms.name.value = res.data.name
+    loading.value = false
+  }
+  catch (e: any)
+  {
+    err([ '/components/pages/categories/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
+  }
+})
 
 async function onSubmit():Promise<void>
 {
@@ -91,22 +111,6 @@ async function onSubmit():Promise<void>
     toast.add(printf(message.fail[props.mode], 'categories'), 'error').then()
   }
 }
-
-onMounted(async () => {
-  if ( props.mode !== 'edit' ) return
-  try
-  {
-    loading.value = true
-    const res = await get(`/categories/${props.srl}/`)
-    forms.name.value = res.data.name
-    loading.value = false
-  }
-  catch (e: any)
-  {
-    err([ '/components/pages/categories/post.vue', 'onMounted()' ], 'error', e.message)
-    throw e.message
-  }
-})
 </script>
 
 <style lang="scss" scoped>

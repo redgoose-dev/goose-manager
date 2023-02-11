@@ -6,6 +6,6 @@
 </template>
 
 <script lang="ts" setup>
-import PageHeader from '../../components/page/header/index.vue';
-import Post from '../../components/pages/nests/post.vue';
+import PageHeader from '../../components/page/header/index.vue'
+import Post from '../../components/pages/nests/post.vue'
 </script>

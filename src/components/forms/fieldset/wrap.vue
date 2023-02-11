@@ -33,10 +33,9 @@ const props = defineProps({
     display: block;
     margin: var(--fieldset-header-margin, 0 0 10px);
     padding: 0 0 0 12px;
-    font-family: var(--font-eng);
     font-size: 20px;
     line-height: 1.15;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -.25px;
     user-select: none;
   }

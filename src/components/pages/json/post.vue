@@ -1,7 +1,7 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
-    <Field label="Category" for="category">
+    <Field :label="message.word.category" for="category">
       <FormSelect
         id="category"
         name="category"
@@ -11,24 +11,24 @@
         :placeholder="message.words.selectCategory"
         class="category"/>
     </Field>
-    <Field label="Name" for="name">
+    <Field :label="message.word.name" for="name">
       <FormInput
         v-model="forms.name.value"
         name="name"
         id="name"
         :maxlength="50"
-        placeholder="goose's navigation"
+        placeholder="goose navigation"
         :error="!!forms.name.error"
         :required="true"
         class="fields__name"/>
     </Field>
-    <Field label="Description" for="description">
+    <Field :label="message.word.description" for="description">
       <FormInput
         v-model="forms.description.value"
         name="description"
         id="description"
         :maxlength="150"
-        placeholder="note comment.."
+        placeholder="comment.."
         :error="!!forms.name.error"
         class="fields__description"/>
     </Field>
@@ -46,7 +46,7 @@
         {{forms.json.error}}
       </Help>
     </Field>
-    <Field label="Path" for="path">
+    <Field :label="message.word.path" for="path">
       <FormInput
         v-model="forms.path.value"
         name="path"
@@ -69,7 +69,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        {{isEdit ? printf(message.word.edit2, 'JSON') : printf(message.word.isCreate, 'JSON')}}
+        {{submitLabel}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -116,7 +116,35 @@ const forms = reactive<any>({
 })
 const loading = ref<boolean>(false)
 const processing = ref<boolean>(false)
-const isEdit = computed<boolean>(() => (props.mode === 'edit'))
+const submitLabel = computed<string>(() => {
+  const code = props.mode === 'edit' ? message.word.isEdit : message.word.isCreate
+  return printf(code, 'JSON')
+})
+
+onMounted(async () => {
+  try
+  {
+    loading.value = true
+    const { json, categories } = await getData(props.srl)
+    data.json = json
+    data.categories = categories
+    if (props.srl)
+    {
+      const newJson = pureObject(json)
+      forms.category_srl.value = newJson?.category_srl
+      forms.name.value = newJson?.name
+      forms.description.value = newJson?.description
+      forms.json.value = getStringJson(newJson?.json)
+      forms.path.value = newJson?.path
+    }
+    loading.value = false
+  }
+  catch (e: any)
+  {
+    err([ '/components/pages/json/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
+  }
+})
 
 function validateForms(): void
 {
@@ -171,31 +199,6 @@ async function onSubmit(): Promise<void>
     toast.add(printf(message.fail[props.mode], 'JSON'), 'error').then()
   }
 }
-
-onMounted(async () => {
-  try
-  {
-    loading.value = true
-    const { json, categories } = await getData(props.srl)
-    data.json = json
-    data.categories = categories
-    if (props.srl)
-    {
-      const newJson = pureObject(json)
-      forms.category_srl.value = newJson?.category_srl
-      forms.name.value = newJson?.name
-      forms.description.value = newJson?.description
-      forms.json.value = getStringJson(newJson?.json)
-      forms.path.value = newJson?.path
-    }
-    loading.value = false
-  }
-  catch (e: any)
-  {
-    err([ '/components/pages/json/post.vue', 'onMounted()' ], 'error', e.message)
-    throw e.message
-  }
-})
 </script>
 
 <style lang="scss" scoped>

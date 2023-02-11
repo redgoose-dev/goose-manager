@@ -1,16 +1,16 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
-  <Fieldset legend="Basic fields" class="basic" :disabled="loading">
-    <Field label="Apps" for="apps">
+  <Fieldset :legend="message.word.basicFields" class="basic" :disabled="loading">
+    <Field :label="message.word.appSrl" for="apps">
       <FormSelect
         id="apps"
         name="apps"
         v-model="forms.app_srl.value"
         :options="apps"
-        placeholder="Select app_srl"
+        :placeholder="message.words.selectAppSrl"
         style="--select-width: 240px"/>
     </Field>
-    <Field label="ID" for="id">
+    <Field :label="message.word.id" for="id">
       <FormInput
         type="text"
         name="id"
@@ -22,41 +22,45 @@
         :required="true"
         style="--input-width: 200px"/>
       <Help v-if="!!forms.id.error" color="error">{{forms.id.error}}</Help>
-      <Help>영문과 숫자 `-`, `_`만 입력 가능합니다.</Help>
+      <Help>
+        {{printf(message.words.pleaseInputOnly, `"${message.word.alphanumeric}, \`-\` and \`_\`"`)}}
+      </Help>
     </Field>
-    <Field label="Name" for="name">
+    <Field :label="message.word.name" for="name">
       <FormInput
         type="text"
         name="name"
         id="name"
         v-model="forms.name.value"
-        placeholder="Nest name"
+        placeholder="Goose's nest"
         :maxlength="40"
         :required="true"
         style="--input-width: 320px"/>
-      <Help>이 "Nest"에 대한 설명을 입력합니다.</Help>
+      <Help>
+        {{printf(message.words.inputDescription, message.word.nest)}}
+      </Help>
     </Field>
-    <Field label="Description" for="description">
+    <Field :label="message.word.description" for="description">
       <FormInput
         type="text"
         name="description"
         id="description"
         v-model="forms.description.value"
-        placeholder="Description text"
+        placeholder="Description text.."
         :maxlength="200"/>
     </Field>
   </Fieldset>
-  <Fieldset legend="Extra fields" class="extra" :disabled="loading">
-    <Field label="Using category" for="useCategory">
+  <Fieldset :legend="message.word.extraFields" class="extra" :disabled="loading">
+    <Field :label="message.word.usingCategory" for="useCategory">
       <FormSwitch v-model="forms.json.useCategory" :values="[ '0', '1' ]"/>
     </Field>
-    <Field label="Using comment" for="useComment">
+    <Field :label="message.word.usingComment" for="useComment">
       <FormSwitch v-model="forms.json.useComment" :values="[ '0', '1' ]"/>
     </Field>
-    <Field label="Thumbnail size" for="thumbnailWidth">
+    <Field :label="message.word.thumbnailSize" for="thumbnailWidth">
       <Labels>
         <Label>
-          <span>Width:</span>
+          <span>{{message.word.width}}:</span>
           <FormInput
             type="number"
             name="thumbnailWidth"
@@ -70,7 +74,7 @@
           <span>px</span>
         </Label>
         <Label>
-          <span>Height:</span>
+          <span>{{message.word.height}}:</span>
           <FormInput
             type="number"
             name="thumbnailHeight"
@@ -85,7 +89,7 @@
         </Label>
       </Labels>
     </Field>
-    <Field label="Thumbnail size type" for="thumbnailType">
+    <Field :label="message.word.thumbnailType" for="thumbnailType">
       <Labels>
         <Label>
           <FormRadio
@@ -93,32 +97,32 @@
             id="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="crop"/>
-          <span>crop</span>
+          <span>{{message.word.crop}}</span>
         </Label>
         <Label>
           <FormRadio
             name="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="resize"/>
-          <span>resize</span>
+          <span>{{message.word.resize}}</span>
         </Label>
         <Label>
           <FormRadio
             name="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="resizeWidth"/>
-          <span>resize(width)</span>
+          <span>{{message.word.resize}}({{message.word.width}})</span>
         </Label>
         <Label>
           <FormRadio
             name="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="resizeHeight"/>
-          <span>resize(height)</span>
+          <span>{{message.word.resize}}({{message.word.height}})</span>
         </Label>
       </Labels>
     </Field>
-    <Field label="Files count" for="filesCount">
+    <Field :label="message.word.uploadFilesCount" for="filesCount">
       <FormInput
         type="number"
         name="filesCount"
@@ -129,9 +133,9 @@
         :max="99"
         size="small"
         style="--input-width: 70px"/>
-      <Help>업로드 할 수 있는 파일의 갯수를 설정합니다.</Help>
+      <Help>{{message.words.uploadFilesCount}}</Help>
     </Field>
-    <Field label="Upload file size" for="filesSize">
+    <Field :label="message.word.uploadFilesSize" for="filesSize">
       <Label>
         <FormInput
           type="number"
@@ -159,7 +163,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        {{isEdit ? message.word.editNest : message.word.createNest}}
+        {{submitLabel}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -205,8 +209,33 @@ const forms = reactive<Forms>({
 const apps = ref()
 const loading = ref<boolean>(true)
 const processing = ref<boolean>(false)
-const isEdit = computed<boolean>(() => (props.mode === 'edit'))
 const limitUploadFileSize = computed<string>(() => getByte(forms.json.files?.sizeSingle || 0))
+const submitLabel = computed<string>(() => {
+  const code = props.mode === 'edit' ? message.word.isEdit : message.word.isCreate
+  return printf(code, message.word.nest)
+})
+
+onMounted(async () => {
+  try
+  {
+    const res = await getData(props.mode, Number(props.srl))
+    if (props.mode === 'edit')
+    {
+      forms.app_srl.value = res.nest.app_srl
+      forms.id.value = res.nest.id
+      forms.name.value = res.nest.name
+      forms.description.value = res.nest.description
+    }
+    apps.value = res.apps
+    forms.json = res.nest.json
+    loading.value = false
+  }
+  catch (e: any)
+  {
+    err([ '/components/pages/nests/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
+  }
+})
 
 async function onSubmit(): Promise<void>
 {
@@ -239,28 +268,6 @@ async function onSubmit(): Promise<void>
     toast.add(printf(message.fail[props.mode], message.word.nest), 'error').then()
   }
 }
-
-onMounted(async () => {
-  try
-  {
-    const res = await getData(props.mode, Number(props.srl))
-    if (props.mode === 'edit')
-    {
-      forms.app_srl.value = res.nest.app_srl
-      forms.id.value = res.nest.id
-      forms.name.value = res.nest.name
-      forms.description.value = res.nest.description
-    }
-    apps.value = res.apps
-    forms.json = res.nest.json
-    loading.value = false
-  }
-  catch (e: any)
-  {
-    err([ '/components/pages/nests/post.vue', 'onMounted()' ], 'error', e.message)
-    throw e.message
-  }
-})
 </script>
 
 <style src="./post.scss" lang="scss" scoped></style>

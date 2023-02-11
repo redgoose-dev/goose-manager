@@ -45,10 +45,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import Icon from '../icons/index.vue';
+import { ref, computed } from 'vue'
+import { printf } from '../../libs/string'
+import { message } from '../../message'
+import Icon from '../icons/index.vue'
 
-const $input = ref();
+const $input = ref()
 const props = defineProps({
   type: { type: String, default: 'text' },
   name: String,
@@ -59,22 +61,25 @@ const props = defineProps({
   readonly: Boolean,
   minlength: Number,
   maxlength: Number,
-  placeholder: { type: String, default: 'Please input keyword.' },
+  placeholder: {
+    type: String,
+    default: printf(message.words.pleaseInput, message.word.keyword),
+  },
   processing: Boolean,
   useClear: Boolean,
   useSubmit: Boolean,
-});
-const emits = defineEmits([ 'update:modelValue', 'clear', 'submit' ]);
+})
+const emits = defineEmits([ 'update:modelValue', 'clear', 'submit' ])
 const keywordDisabled = computed(() => {
-  return props.disabled || props.processing;
-});
+  return props.disabled || props.processing
+})
 const clearDisabled = computed(() => {
-  return !(props.modelValue?.length > 0);
-});
+  return !(props.modelValue?.length > 0)
+})
 
 defineExpose({
   $input,
-});
+})
 </script>
 
 <style src="./keyword.scss" lang="scss" scoped></style>

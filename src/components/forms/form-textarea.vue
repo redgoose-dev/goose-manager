@@ -22,14 +22,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
+import { printf } from '../../libs/string'
+import { message } from '../../message'
 
-const $root = ref();
+const $root = ref()
 const props = defineProps({
   name: String,
   id: String,
   modelValue: String,
-  placeholder: String,
+  placeholder: {
+    type: String,
+    default: printf(message.words.pleaseInput, message.word.keyword),
+  },
   maxlength: Number,
   required: Boolean,
   disabled: Boolean,
@@ -38,33 +43,43 @@ const props = defineProps({
   size: String, // small
   error: Boolean,
   autoSize: Boolean,
-});
-const emits = defineEmits([ 'update:modelValue', 'position', 'submit' ]);
+})
+const emits = defineEmits([ 'update:modelValue', 'position', 'submit' ])
+
+onMounted(() => {
+  if (props.autoSize) changeHeight()
+})
+
+defineExpose({
+  changeHeight,
+  changeCursor,
+  focus,
+})
 
 function onChangePosition(e)
 {
-  if (!('selectionStart' in e.target)) return;
+  if (!('selectionStart' in e.target)) return
   emits('position', {
     start: e.target.selectionStart,
     end: e.target.selectionEnd
-  });
+  })
 }
 function onChangeText(e)
 {
-  if (props.autoSize) changeHeight();
-  emits('update:modelValue', e.target.value);
+  if (props.autoSize) changeHeight()
+  emits('update:modelValue', e.target.value)
 }
 
 function changeHeight()
 {
-  const { style } = $root.value;
-  style.setProperty('--textarea-height', `auto`);
-  style.setProperty('--textarea-height', `${$root.value.scrollHeight}px`);
+  const { style } = $root.value
+  style.setProperty('--textarea-height', `auto`)
+  style.setProperty('--textarea-height', `${$root.value.scrollHeight}px`)
 }
 
 function focus()
 {
-  $root.value.focus();
+  $root.value.focus()
 }
 
 /**
@@ -74,18 +89,8 @@ function focus()
  */
 function changeCursor(start, end)
 {
-  $root.value.setSelectionRange(start, end);
+  $root.value.setSelectionRange(start, end)
 }
-
-onMounted(() => {
-  if (props.autoSize) changeHeight();
-});
-
-defineExpose({
-  changeHeight,
-  changeCursor,
-  focus,
-});
 </script>
 
 <style src="./form-textarea.scss" lang="scss" scoped></style>

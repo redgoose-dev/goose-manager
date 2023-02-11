@@ -69,7 +69,7 @@ async function onSubmit(): Promise<void>
   await preference.save()
   head.updateStorage({ theme: fields.theme.value })
   head.changeTheme()
-  changeLanguage(preference.general.lang)
+  await changeLanguage(preference.general.lang)
   head.blink = true
   await nextTick()
   head.blink = false

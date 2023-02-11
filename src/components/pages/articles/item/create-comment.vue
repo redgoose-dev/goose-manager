@@ -7,7 +7,7 @@
     <FormTextarea
       ref="$form"
       v-model="forms.content.value"
-      placeholder="Please input comment."
+      :placeholder="printf(message.words.pleaseInput, message.word.comment)"
       :required="true"
       :auto-size="true"
       :rows="3"
@@ -22,7 +22,7 @@
         :disabled="processing"
         :icon-right="processing ? `loader` : 'check'"
         :rotate-icon="processing">
-        Write Comment
+        {{message.word.writeComment}}
       </ButtonBasic>
     </div>
   </nav>
@@ -34,8 +34,8 @@ import { ref, reactive, nextTick } from 'vue'
 import { createComment } from '../../../../structure/comments'
 import { printf } from '../../../../libs/string'
 import { err } from '../../../../libs/error'
-import { toast } from '../../../../modules/toast'
 import { message } from '../../../../message'
+import { toast } from '../../../../modules/toast'
 import { FormTextarea } from '../../../forms'
 import { ButtonBasic } from '../../../button'
 

@@ -1,5 +1,6 @@
-import { get } from '../../libs/api';
-import { getDate } from '../../libs/date';
+import { get } from '../../libs/api'
+import { getDate } from '../../libs/date'
+import { message } from '../../message'
 
 interface Options {
   url: string
@@ -41,9 +42,9 @@ function filtering(res: any): Result
       title: item.name,
       description: item.description,
       meta: [
-        `srl: ${item.srl}`,
-        `id: ${item.id}`,
-        `date: ${getDate(item.regdate)}`,
+        `${message.word.srl}: ${item.srl}`,
+        `${message.word.id}: ${item.id}`,
+        `${message.word.date}: ${getDate(item.regdate)}`,
       ],
     })),
   };

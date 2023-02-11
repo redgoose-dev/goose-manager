@@ -1,13 +1,13 @@
 <template>
 <article>
-  <PageHeader module="articles" title="Delete article"/>
+  <PageHeader module="articles" title="Delete Article"/>
   <Loading v-if="loading"/>
   <ConfirmDelete
     v-else
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete article"
+    :button-label="printf(message.word.isDelete, message.word.article)"
     :processing="processing"
     @cancel="router.back()"
     @submit="onSubmit"/>
@@ -55,13 +55,13 @@ async function onSubmit()
     await submit(props.srl)
     processing.value = false
     await router.push(`../../${createQueries(['category','page'], route.query)}`)
-    toast.add(printf(message.success.delete, message.word.article), 'success')
+    toast.add(printf(message.success.delete, message.word.article), 'success').then()
   }
   catch (e: any)
   {
     err(['/components/pages/articles/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.delete, message.word.article), 'error')
+    toast.add(printf(message.fail.delete, message.word.article), 'error').then()
   }
 }
 

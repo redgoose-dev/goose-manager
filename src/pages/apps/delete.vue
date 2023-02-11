@@ -7,7 +7,7 @@
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete app"
+    :button-label="printf(message.word.isDelete, message.word.app)"
     :processing="processing"
     @cancel="$router.back()"
     @submit="onSubmit"/>
@@ -50,13 +50,13 @@ async function onSubmit(): Promise<void>
     await submit(Number(route.params.srl))
     processing.value = false
     await router.push('../../')
-    toast.add(printf(message.success.delete, message.word.app), 'success')
+    toast.add(printf(message.success.delete, message.word.app), 'success').then()
   }
   catch (e: any)
   {
     err(['/pages/apps/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.delete, message.word.app), 'error')
+    toast.add(printf(message.fail.delete, message.word.app), 'error').then()
   }
 }
 

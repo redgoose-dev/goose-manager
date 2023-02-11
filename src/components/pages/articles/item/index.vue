@@ -8,10 +8,10 @@
     <h1>{{data.article.title}}</h1>
     <p>
       <span>{{data.article.type}}</span>
-      <span>regdate: {{data.article.regdate}}</span>
-      <span v-if="data.article.order">order: {{data.article.order}}</span>
-      <span>hit: {{data.article.hit}}</span>
-      <span>star: {{data.article.star}}</span>
+      <span>{{message.word.regdate}}: {{data.article.regdate}}</span>
+      <span v-if="data.article.order">{{message.word.order}}: {{data.article.order}}</span>
+      <span>{{message.word.hit}}: {{data.article.hit}}</span>
+      <span>{{message.word.like}}: {{data.article.star}}</span>
     </p>
   </header>
   <div class="article__body">
@@ -27,7 +27,7 @@
         type="button"
         :href="`../${createQueries(['category','page'], route.query)}`"
         icon-left="list">
-        Index
+        {{message.word.list}}
       </ButtonBasic>
     </template>
     <template #right>
@@ -37,22 +37,22 @@
         :href="`../create/${createQueries(['category'], route.query)}`"
         color="key"
         icon-left="plus">
-        Create
+        {{message.word.create}}
       </ButtonBasic>
       <ButtonBasic href="./change-nest/">
-        Change nest
+        {{message.word.changeNest}}
       </ButtonBasic>
       <ButtonBasic
         :href="`./edit/${createQueries(['category','page'], route.query)}`"
         color="weak"
         icon-left="edit-3">
-        Edit
+        {{message.word.edit}}
       </ButtonBasic>
       <ButtonBasic
         :href="`./delete/${createQueries(['category','page'], route.query)}`"
         color="error"
         icon-left="trash">
-        Delete
+        {{message.word.delete}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -77,6 +77,7 @@ import { useRoute } from 'vue-router'
 import getData from '../../../../structure/articles/item'
 import { err } from '../../../../libs/error'
 import { createQueries } from '../libs'
+import { message } from '../../../../message'
 import Loading from '../../../etc/loading.vue'
 import { Controller } from '../../../navigation'
 import { Modal, ModalBody } from '../../../modal'
@@ -106,15 +107,6 @@ const loading = ref<boolean>(true)
 const previewImage = ref<string>('')
 const useComments = computed<boolean>(() => (Number(data.nest.json.useComment) === 1))
 
-function initContentEvents()
-{
-  $content.value?.querySelectorAll('img').forEach((el: HTMLElement) => {
-    el.addEventListener('click', (e: any) => {
-      previewImage.value = e.currentTarget.src
-    })
-  })
-}
-
 onMounted(async () => {
   try
   {
@@ -132,6 +124,15 @@ onMounted(async () => {
     throw e.message
   }
 })
+
+function initContentEvents()
+{
+  $content.value?.querySelectorAll('img').forEach((el: HTMLElement) => {
+    el.addEventListener('click', (e: any) => {
+      previewImage.value = e.currentTarget.src
+    })
+  })
+}
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

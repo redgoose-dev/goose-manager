@@ -38,7 +38,7 @@
   <Controller>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        {{message.word.createNest}}
+        {{printf(message.word.isCreate, message.word.nest)}}
       </ButtonBasic>
     </template>
   </Controller>
@@ -49,6 +49,7 @@
 import { ref, onMounted } from 'vue'
 import { err } from '../../libs/error'
 import { message } from '../../message'
+import { printf } from '../../libs/string'
 import getData, { SectionItem } from '../../structure/nests'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card } from '../../components/item'

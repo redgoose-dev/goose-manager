@@ -7,7 +7,7 @@
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete JSON"
+    :button-label="printf(message.word.isDelete, 'JSON')"
     :processing="processing"
     @cancel="router.back()"
     @submit="onSubmit"/>
@@ -50,13 +50,13 @@ async function onSubmit(): Promise<void>
     await submit(Number(route.params.srl))
     processing.value = false
     await router.push('../../')
-    toast.add(printf(message.success.delete, message.word.json), 'success')
+    toast.add(printf(message.success.delete, message.word.json), 'success').then()
   }
   catch (e: any)
   {
     err(['/pages/json/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.delete, message.word.json), 'error')
+    toast.add(printf(message.fail.delete, message.word.json), 'error').then()
   }
 }
 

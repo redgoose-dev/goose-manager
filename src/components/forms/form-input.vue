@@ -26,15 +26,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { printf } from '../../libs/string'
+import { message } from '../../message'
 
-const $root = ref();
+const $root = ref()
 const props = defineProps({
   type: { type: String, default: 'text' }, // text,number,date,time
   name: String,
   id: String,
   modelValue: [ String, Number ],
-  placeholder: { type: String, default: 'Please input text' },
+  placeholder: {
+    type: String,
+    default: printf(message.words.pleaseInput, message.word.keyword),
+  },
   maxlength: Number,
   required: Boolean,
   disabled: Boolean,
@@ -44,37 +49,37 @@ const props = defineProps({
   max: Number,
   size: String, // small
   error: Boolean,
-});
-const emits = defineEmits([ 'update:modelValue', 'position', 'submit' ]);
+})
+const emits = defineEmits([ 'update:modelValue', 'position', 'submit' ])
+
+defineExpose({
+  focus,
+})
 
 function onChangePosition(e)
 {
-  if (!('selectionStart' in e.target)) return;
+  if (!('selectionStart' in e.target)) return
   emits('position', {
     start: e.target.selectionStart,
     end: e.target.selectionEnd
-  });
+  })
 }
 function onChangeText(e)
 {
-  let value = e.target.value;
+  let value = e.target.value
   switch (props.type)
   {
     case 'number':
-      value = Number(value);
-      break;
+      value = Number(value)
+      break
   }
-  emits('update:modelValue', value);
+  emits('update:modelValue', value)
 }
 
 function focus()
 {
-  $root.value.focus();
+  $root.value.focus()
 }
-
-defineExpose({
-  focus,
-});
 </script>
 
 <style src="./form-input.scss" lang="scss" scoped></style>

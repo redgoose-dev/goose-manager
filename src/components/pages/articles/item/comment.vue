@@ -4,14 +4,14 @@
     <template v-if="editMode">
       <FormTextarea
         v-model="editContent"
-        placeholder="Please input comment."
+        :placeholder="printf(message.words.pleaseInput, message.word.comment)"
         :auto-size="true"
         :rows="3"
         @submit="onEdit"/>
       <nav>
         <div>
           <ButtonBasic type="button" size="small" @click="toggleEditMode(false)">
-            Cancel
+            {{message.word.cancel}}
           </ButtonBasic>
         </div>
         <div>
@@ -21,7 +21,7 @@
             color="key"
             :disabled="editProcessing"
             @click="onEdit">
-            {{editProcessing ? 'Processing..' : 'Edit comment'}}
+            {{editProcessing ? message.words.processing : printf(message.word.isEdit, message.word.comment)}}
           </ButtonBasic>
         </div>
       </nav>
@@ -29,7 +29,7 @@
     <article v-else v-html="content" class="redgoose-body redgoose-body--dark"/>
   </div>
   <div class="comment__bottom">
-    <p><strong>{{props.userName}}</strong> commented <em>{{regdate}}</em></p>
+    <p><strong>{{props.userName}}</strong> <em>{{regdate}}</em></p>
     <nav>
       <button
         type="button"
@@ -37,7 +37,7 @@
         :disabled="editMode"
         class="edit"
         @click="toggleEditMode(true)">
-        Edit
+        {{message.word.edit}}
       </button>
       <button
         type="button"
@@ -45,7 +45,7 @@
         :disabled="deleteProcessing"
         class="delete"
         @click="onDelete">
-        Delete
+        {{message.word.delete}}
       </button>
     </nav>
   </div>
@@ -92,13 +92,13 @@ async function onEdit(): Promise<void>
     await editComment(props.srl, editContent.value)
     emits('edit', editContent.value)
     toggleEditMode(false)
-    toast.add(printf(message.success.edit, message.word.comment), 'success')
+    toast.add(printf(message.success.edit, message.word.comment), 'success').then()
     editProcessing.value = false
   }
   catch (e: any)
   {
     err(['/components/pages/articles/item/comment.vue', 'onEdit()'], 'error', e.message)
-    toast.add(printf(message.fail.edit, message.word.comment), 'error')
+    toast.add(printf(message.fail.edit, message.word.comment), 'error').then()
     editProcessing.value = false
   }
 }
@@ -112,7 +112,7 @@ async function onDelete(): Promise<void>
     deleteProcessing.value = true
     await deleteComment(props.srl)
     emits('delete')
-    toast.add(printf(message.success.delete, message.word.comment), 'success')
+    toast.add(printf(message.success.delete, message.word.comment), 'success').then()
     deleteProcessing.value = false
   }
   catch (e: any)

@@ -1,5 +1,4 @@
 import ko from './ko'
-import en from './en'
 
 interface Structure {
   error: any
@@ -8,6 +7,7 @@ interface Structure {
   fail: any
   word: any
   words: any
+  header: any
   monthNames: string[]
   weekNames: string[]
   weekShortNames: string[]
@@ -30,16 +30,16 @@ export function $msg(key: string): string
   return msg
 }
 
-export function changeLanguage(lang: string): void
+export async function changeLanguage(lang: string): Promise<void>
 {
   switch (lang)
   {
     case 'ko':
     default:
-      message = ko
+      message = (await import('./ko')).default
       break
     case 'en':
-      message = en
+      message = (await import('./en')).default
       break
   }
 }

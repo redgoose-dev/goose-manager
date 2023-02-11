@@ -46,7 +46,7 @@
             :title="item.title"
             :meta="item.meta"
             :nav="[
-              item.useCategory && { label: 'Category', href: `/nests/${item.srl}/categories/` },
+              item.useCategory && { label: message.word.category, href: `/nests/${item.srl}/categories/` },
               { label: message.word.edit, href: `/nests/${item.srl}/edit/` },
               { label: message.word.delete, href: `/nests/${item.srl}/delete/` },
             ].filter(Boolean)"/>

@@ -23,8 +23,14 @@
           :alt="item.title"
           :image="item.image"
           :nav="[
-            { label: 'Edit', href: `./${item.srl}/edit/${createQueries(['category','page'], route.query)}` },
-            { label: 'Delete', href: `./${item.srl}/delete/${createQueries(['category','page'], route.query)}` },
+            {
+              label: message.word.edit,
+              href: `./${item.srl}/edit/${createQueries(['category','page'], route.query)}`,
+            },
+            {
+              label: message.word.delete,
+              href: `./${item.srl}/delete/${createQueries(['category','page'], route.query)}`,
+            },
           ]">
           <template v-if="item.private" #after>
             <Mark/>
@@ -42,10 +48,10 @@
       <Controller class="articles__controller">
         <template #left>
           <ButtonBasic href="../../" icon-left="cloud">
-            Nests
+            {{message.word.nests}}
           </ButtonBasic>
           <ButtonBasic href="../categories/" icon-left="server">
-            Categories
+            {{message.word.categories}}
           </ButtonBasic>
         </template>
         <template #right>
@@ -53,7 +59,7 @@
             :href="`./create/${createQueries(['category'], route.query)}`"
             color="key"
             icon-left="plus">
-            Create article
+            {{printf(message.word.isCreate, message.word.article)}}
           </ButtonBasic>
         </template>
       </Controller>
@@ -74,9 +80,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../../store/preference'
 import { filtersStore } from '../../../store/filters'
 import { err } from '../../../libs/error'
-import { serialize } from '../../../libs/string'
+import { serialize, printf } from '../../../libs/string'
 import { scrollTo } from '../../../libs/util'
 import { createQueries } from '../../../components/pages/articles/libs'
+import { message } from '../../../message'
 import { getData, requestArticles, requestCategories } from '../../../structure/articles'
 import PageHeader from '../../../components/page/header/index.vue'
 import { Items, Card, Thumbnail, Mark } from '../../../components/item'
@@ -120,6 +127,37 @@ const itemComponent = computed<any>(() => {
       return Thumbnail
   }
   return Card
+})
+
+onMounted(() => {
+  onUpdateAll().then()
+})
+
+watch(() => route.query.category, async () => {
+  try
+  {
+    page.value = 1
+    scrollTo()
+    loading.value = true
+    let [ articles, categories ] = await Promise.all([
+      requestArticles(),
+      requestCategories(),
+    ])
+    data.total = articles.total
+    data.index = articles.index
+    data.categories = categories
+    loading.value = false
+  }
+  catch (e: any)
+  {
+    err(['/pages/nests/articles/index.vue', 'watch:route.query.category'], 'error', e.message)
+    loading.value = false
+  }
+})
+watch(() => route.params.nestSrl, (value) => {
+  if (!value) return
+  page.value = 1
+  onUpdateAll().then()
 })
 
 async function onChangePage(page: number): Promise<void>
@@ -199,37 +237,6 @@ async function onUpdateAll(): Promise<void>
     throw e.message
   }
 }
-
-onMounted(() => {
-  onUpdateAll().then()
-})
-
-watch(() => route.query.category, async () => {
-  try
-  {
-    page.value = 1
-    scrollTo()
-    loading.value = true
-    let [ articles, categories ] = await Promise.all([
-      requestArticles(),
-      requestCategories(),
-    ])
-    data.total = articles.total
-    data.index = articles.index
-    data.categories = categories
-    loading.value = false
-  }
-  catch (e: any)
-  {
-    err(['/pages/nests/articles/index.vue', 'watch:route.query.category'], 'error', e.message)
-    loading.value = false
-  }
-})
-watch(() => route.params.nestSrl, (value) => {
-  if (!value) return
-  page.value = 1
-  onUpdateAll().then()
-})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

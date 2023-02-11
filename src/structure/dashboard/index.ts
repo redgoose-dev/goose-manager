@@ -41,23 +41,23 @@ async function requestArticles({ size }: any = {}): Promise<any>
 
 async function requestNests({ size }: any = {}): Promise<any>
 {
-  let { success, message, data } = await get('/nests/', {
+  let res = await get('/nests/', {
     field: 'srl,id,name,regdate,json',
     order: 'srl',
     sort: 'desc',
     size,
   })
-  if (!success) throw new Error(message)
+  if (!res.success) throw new Error(res.message)
   return {
     module: 'nests',
-    index: (data as any).index.map((item: any) => {
+    index: (res.data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.name,
         href: `/nests/${item.srl}/articles/`,
         meta: [
-          `srl: ${item.srl}`,
-          `id: ${item.id}`,
+          `${message.word.srl}: ${item.srl}`,
+          `${message.word.id}: ${item.id}`,
           getDate(item.regdate),
         ],
         useCategory: Number(item.json.useCategory) === 1,
@@ -68,22 +68,22 @@ async function requestNests({ size }: any = {}): Promise<any>
 
 async function requestApps({ size }: any = {}): Promise<any>
 {
-  let { success, message, data } = await get('/apps/', {
+  let res = await get('/apps/', {
     field: 'srl,id,name,regdate',
     order: 'srl',
     sort: 'desc',
     size,
   })
-  if (!success) throw new Error(message)
+  if (!res.success) throw new Error(res.message)
   return {
     module: 'apps',
-    index: (data as any).index.map((item: any) => {
+    index: (res.data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.name,
         meta: [
-          `srl: ${item.srl}`,
-          `id: ${item.id}`,
+          `${message.word.srl}: ${item.srl}`,
+          `${message.word.id}: ${item.id}`,
           getDate(item.regdate),
         ],
       }
@@ -93,22 +93,22 @@ async function requestApps({ size }: any = {}): Promise<any>
 
 async function requestJSON({ size }: any = {}): Promise<any>
 {
-  let { success, message, data } = await get('/json/', {
+  let res = await get('/json/', {
     field: 'srl,name,regdate',
     order: 'srl',
     sort: 'desc',
     size,
   })
-  if (!success) throw new Error(message)
+  if (!res.success) throw new Error(res.message)
   return {
     module: 'json',
-    index: (data as any).index.map((item: any) => {
+    index: (res.data as any).index.map((item: any) => {
       return {
         srl: item.srl,
         title: item.name,
         href: `/json/${item.srl}/`,
         meta: [
-          `srl: ${item.srl}`,
+          `${message.word.srl}: ${item.srl}`,
           getDate(item.regdate),
         ],
       }

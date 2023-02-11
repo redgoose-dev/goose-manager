@@ -166,7 +166,7 @@ export const preferenceStore = defineStore('preference', {
         if (files) this.files = files
         if (checklist) this.checklist = checklist
       }
-      changeLanguage(this.general.lang)
+      await changeLanguage(this.general.lang)
     },
     async save(): Promise<void>
     {

@@ -27,7 +27,7 @@
       </template>
     </Draggable>
   </Items>
-  <Empty v-else title="no item"/>
+  <Empty v-else :title="message.words.noItem"/>
   <Controller>
     <template #left>
       <ButtonBasic href="../" icon-left="code">

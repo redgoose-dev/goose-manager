@@ -4,26 +4,26 @@
     <legend>filter of articles</legend>
     <div class="filter__fields">
       <p class="total">
-        <span>Total</span>
+        <span>{{message.word.total}}</span>
         <em>{{total}}</em>
       </p>
       <hr class="filter__line">
       <div class="filter__field type">
-        <label for="filter_type">Type</label>
+        <label for="filter_type">{{message.word.type}}</label>
         <FormSelect
           id="filter_type"
           name="filter_type"
           v-model="forms.type"
           :options="[
-            { label: 'all', value: 'all' },
-            { label: 'public', value: 'public' },
-            { label: 'private', value: 'private' },
+            { label: message.word.all, value: 'all' },
+            { label: message.word.public, value: 'public' },
+            { label: message.word.private, value: 'private' },
           ]"
           :placeholder="null"
           size="small"/>
       </div>
       <div class="filter__field sort">
-        <label for="filter_order">Sort</label>
+        <label for="filter_order">{{message.word.sort}}</label>
         <FormSelect
           id="filter_order"
           name="filter_order"
@@ -46,25 +46,26 @@
           size="small"/>
       </div>
       <div class="filter__field theme">
-        <label for="filter_theme">Theme</label>
+        <label for="filter_theme">{{message.word.theme}}</label>
         <FormSelect
           id="filter_theme"
           name="filter_theme"
           v-model="forms.theme"
           :options="[
-            { label: 'List', value: 'list' },
-            { label: 'Card', value: 'card' },
-            { label: 'Thumbnail', value: 'thumbnail' },
-            { label: 'Brick', value: 'brick' },
+            { label: message.word.list, value: 'list' },
+            { label: message.word.card, value: 'card' },
+            { label: message.word.thumbnail, value: 'thumbnail' },
+            { label: message.word.brick, value: 'brick' },
           ]"
           :placeholder="null"
           size="small"/>
       </div>
       <div class="filter__field keyword">
-        <label for="filter_keyword">Keyword</label>
+        <label for="filter_keyword">{{message.word.keyword}}</label>
         <Keyword
           ref="$keyword"
           v-model="forms.keyword"
+          id="filter_keyword"
           :minlength="3"
           :maxlength="20"
           placeholder="keyword text"
@@ -82,7 +83,7 @@
       icon-left="rotate-ccw"
       :disabled="props.loading"
       @click="onReset">
-      Reset
+      {{message.word.reset}}
     </ButtonBasic>
     <ButtonBasic
       type="submit"
@@ -90,7 +91,7 @@
       size="small"
       icon-left="check"
       :disabled="props.loading">
-      Update filter
+      {{message.word.updateFilter}}
     </ButtonBasic>
   </nav>
 </form>
@@ -101,6 +102,7 @@ import { ref, computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { filtersStore } from '../../../store/filters'
 import { withCommas } from '../../../libs/number'
+import { message } from '../../../message'
 import { FormSelect, Keyword } from '../../forms'
 import { ButtonBasic } from '../../button'
 

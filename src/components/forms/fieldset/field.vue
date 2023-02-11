@@ -27,7 +27,7 @@ const props = defineProps({
   grid-auto-flow: column;
   align-items: center;
   margin: 0;
-  padding: 10px 0;
+  padding: 12px 0;
   box-sizing: border-box;
   min-height: 54px;
   &__label {

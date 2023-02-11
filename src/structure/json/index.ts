@@ -2,6 +2,7 @@ import { useRoute, RouteLocationNormalized } from 'vue-router'
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 import { serialize } from '../../libs/string'
+import { message } from '../../message'
 
 interface Options {
   url: string
@@ -31,9 +32,9 @@ export async function requestJson(): Promise<any>
         title: item.name,
         description: item.description,
         meta: [
-          `srl: ${item.srl}`,
-          item.category_srl && `category: ${item.category_name}`,
-          `regdate: ${getDate(item.regdate)}`,
+          `${message.word.srl}: ${item.srl}`,
+          item.category_srl && `${message.word.category}: ${item.category_name}`,
+          `${message.word.regdate}: ${getDate(item.regdate)}`,
         ].filter(Boolean),
       }
     }),

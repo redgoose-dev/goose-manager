@@ -1,14 +1,14 @@
 <template>
 <article class="confirm">
   <div class="confirm__body">
-    <h1 class="confirm__title">{{props.title}}</h1>
+    <h2 class="confirm__title">{{props.title}}</h2>
     <p class="confirm__description">{{props.description}}</p>
     <p class="confirm__name">{{props.name}}</p>
   </div>
   <Controller>
     <template #left>
       <ButtonBasic type="button" icon-left="arrow-left" @click="emits('cancel')">
-        {{$msg('word.back')}}
+        {{message.word.back}}
       </ButtonBasic>
     </template>
     <template #right>
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $msg } from '../../../message'
+import { message } from '../../../message'
 import { Controller } from '../../navigation'
 import { ButtonBasic } from '../../button'
 
