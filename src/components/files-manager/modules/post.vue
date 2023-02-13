@@ -24,6 +24,14 @@
       <ButtonBasic
         type="button"
         size="small"
+        color="sub"
+        icon-left="link-2"
+        @click="showUploadUrl = true">
+        Input URL
+      </ButtonBasic>
+      <ButtonBasic
+        type="button"
+        size="small"
         icon-left="minus-square"
         :disabled="disabledAssets"
         @click="onSelectAll()">
@@ -122,7 +130,9 @@
     </nav>
   </footer>
   <teleport to="#modals">
-    <Modal :show="showThumbnailEditor" @close="controlThumbnailEditor(false)">
+    <Modal
+      :show="showThumbnailEditor"
+      @close="controlThumbnailEditor(false)">
       <ModalBody type="full">
         <ThumbnailEditor
           :srl="thumbnail.srl"
@@ -131,6 +141,15 @@
           :cropper="thumbnail.cropper"
           @close="controlThumbnailEditor(false)"
           @submit="onSubmitThumbnailEditor"/>
+      </ModalBody>
+    </Modal>
+    <Modal
+      :show="showUploadUrl"
+      @close="showUploadUrl = false">
+      <ModalBody type="window">
+        <UrlUploader
+          @close="showUploadUrl = false"
+          @submit="submitUploadUrl"/>
       </ModalBody>
     </Modal>
     <Modal
@@ -163,6 +182,7 @@ import Attachments from '../attachments/index.vue'
 import Loading from '../../etc/loading.vue'
 import ThumbnailEditor from '../thumbnail/editor.vue'
 import ThumbnailPreview from '../thumbnail/preview.vue'
+import UrlUploader from '../url-uploader/index.vue'
 
 const $file = ref<any>()
 const $attachments = ref<any>()
@@ -170,6 +190,7 @@ const emits = defineEmits([ 'close', 'custom-event' ])
 const localStore = fileManagerStore()
 const showThumbnailEditor = ref<boolean>(false)
 const showThumbnailPreview = ref<boolean>(false)
+const showUploadUrl = ref<boolean>(false)
 const thumbnail = reactive<any>({ srl: NaN, data: {}, cropper: {} })
 const loading = ref<boolean>(true)
 const processing = ref<boolean>(false)
@@ -189,32 +210,45 @@ const previewThumbnail = computed<string>(() => {
   else return ''
 })
 
+onMounted(async () => {
+  try
+  {
+    const { module, targetSrl } = localStore.post
+    localStore.post.index = await getItemsPost(module, targetSrl)
+    localStore.post.idx = localStore.post.index.length
+    loading.value = false
+  }
+  catch (e: any)
+  {
+    err([ '/components/files-manager/modules/post.vue', 'onMounted()' ], 'error', e.message)
+    throw e.message
+  }
+})
+defineExpose({
+  selectAll: onSelectAll,
+  func: onClickFunction,
+})
+
 /**
  * Upload files area
  */
 
-/**
- * 버튼을 눌렀을때 인풋폼을 트리거하는 역할을 한다.
- */
 function onClickUploadFiles(): void
 {
+  // 버튼을 눌렀을때 인풋폼을 트리거하는 역할을 한다.
   $file.value.click()
 }
-/**
- * 파일 인풋폼에서 첨부파일이 업데이트 되었을때 일어나는 이벤트
- */
 async function onChangeFiles(e: InputEvent): Promise<void>
 {
+  // 파일 인풋폼에서 첨부파일이 업데이트 되었을때 일어나는 이벤트
   const files: FileList = (e.target as any).files
   if (processing.value || files.length <= 0) return
   processing.value = true
   await uploadFile(files, 0)
 }
-/**
- * 파일 하나 올리기, 목록에서 더 올라가야할 파일이 생기면 재귀함수로 실행
- */
 async function uploadFile(files: FileList, n: number): Promise<void>
 {
+  // 파일 하나 올리기, 목록에서 더 올라가야할 파일이 생기면 재귀함수로 실행
   let idx: any
   const { module, targetSrl, index, limitCount, limitSize }: any = localStore.post
   // check files count
@@ -245,7 +279,7 @@ async function uploadFile(files: FileList, n: number): Promise<void>
     if (files.length <= n)
     {
       completeUploadFiles()
-      return;
+      return
     }
     if (files.length > n)
     {
@@ -272,7 +306,16 @@ function errorUploadFiles(e: any, message: string): void
   {
     err([ '/components/files-manager/modules/post.vue', 'errorUploadFiles()' ], 'error', e.message)
   }
-  toast.add(message || e.message, 'error')
+  toast.add(message || e.message, 'error').then()
+}
+
+/**
+ * Upload url
+ */
+
+async function submitUploadUrl(): Promise<void>
+{
+  // TODO: submit
 }
 
 /**
@@ -297,7 +340,7 @@ async function deleteItems(items: any[]): Promise<void>
   })
   localStore.post.index = newIndex.filter(Boolean)
   $attachments.value.reset()
-  toast.add(printf(message.success.delete, message.word.file), 'success')
+  toast.add(printf(message.success.delete, message.word.file), 'success').then()
 }
 function onDeleteItem(key: number|undefined): void
 {
@@ -381,11 +424,10 @@ function onResetThumbnail(): void
  * ETC area
  */
 
-function onSelectAll(sw: boolean): void
+function onSelectAll(sw: boolean|undefined = undefined): void
 {
   $attachments.value.selectAll(sw)
 }
-
 function onClickFunction(key: undefined|string): void
 {
   if (key === undefined) return
@@ -432,9 +474,11 @@ function onClickFunction(key: undefined|string): void
     case 'close-thumbnail-preview':
       showThumbnailPreview.value = false
       break
+    case 'close-url-uploader':
+      showUploadUrl.value = false
+      break
   }
 }
-
 function onSelectContextItem(key: number, type: string): void
 {
   const src = localStore.post.index[key]
@@ -477,26 +521,6 @@ function onSelectContextItem(key: number, type: string): void
       break
   }
 }
-
-onMounted(async () => {
-  try
-  {
-    const { module, targetSrl } = localStore.post;
-    localStore.post.index = await getItemsPost(module, targetSrl);
-    localStore.post.idx = localStore.post.index.length;
-    loading.value = false;
-  }
-  catch (e: any)
-  {
-    err([ '/components/files-manager/modules/post.vue', 'onMounted()' ], 'error', e.message);
-    throw e.message;
-  }
-});
-
-defineExpose({
-  selectAll: onSelectAll,
-  func: onClickFunction,
-});
 </script>
 
 <style src="./modules.scss" lang="scss" scoped></style>

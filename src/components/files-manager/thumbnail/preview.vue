@@ -12,20 +12,20 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue';
-import { controlWindow } from '../util';
-import Icon from '../../icons/index.vue';
+import { onMounted, onUnmounted } from 'vue'
+import { controlWindow } from '../util'
+import Icon from '../../icons/index.vue'
 
 const props = defineProps<{
   image: string
-}>();
-const emits = defineEmits([ 'close' ]);
+}>()
+const emits = defineEmits([ 'close' ])
 
 onMounted(() => {
-  controlWindow(true, 'thumbnail-preview');
-});
+  controlWindow(true, 'thumbnail-preview')
+})
 onUnmounted(() => {
-  controlWindow(false, 'thumbnail-preview');
+  controlWindow(false, 'thumbnail-preview')
 });
 </script>
 

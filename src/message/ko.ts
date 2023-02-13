@@ -111,6 +111,7 @@ export default {
     height: '세로',
     crop: '자르기',
     resize: '리사이즈',
+    close: '닫기',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',
@@ -146,7 +147,8 @@ export default {
       checklist: '체크리스트를 관리하는 모듈입니다.',
       preference: '환경설정 값들을 관리합니다.',
       guide: '개발용 컴포넌트와 도구들을 모아두는 페이지입니다.',
-    }
+    },
+    uploadFilesUrl: 'URL 주소로 파일 업로드',
   },
   monthNames: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
   weekNames: [ '일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일' ],

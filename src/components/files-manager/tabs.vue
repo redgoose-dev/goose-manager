@@ -64,6 +64,7 @@ let tabNames: (false | string)[]
 
 function changeTab()
 {
+  if (localStore.window.length > 0) return
   let idx = tabNames.indexOf(props.active)
   idx = idx + 1
   if (idx >= tabNames.length) idx = 0

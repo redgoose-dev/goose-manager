@@ -10,10 +10,10 @@
 </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  type: String, // full,window
-});
+<script lang="ts" setup>
+const props = defineProps<{
+  type: string | 'full' | 'window'
+}>()
 </script>
 
 <style lang="scss" scoped>
@@ -21,7 +21,7 @@ const props = defineProps({
 .body {
   position: relative;
   cursor: auto;
-  background: var(--color-bg);
+  background: var(--modal-window-background, var(--color-bg));
   box-sizing: border-box;
   &--window {
     border-radius: 2px;

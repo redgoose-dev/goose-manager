@@ -28,14 +28,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
 import { fileManagerStore } from '../../store/tool-manager'
-import { controlWindow } from './util';
-import { Modal, ModalBody } from '../modal';
-import Tabs from './tabs.vue';
-import ModulePost from './modules/post.vue';
-import ModuleGlobal from './modules/global.vue';
-import Guide from './guide.vue';
+import { controlWindow } from './util'
+import { Modal, ModalBody } from '../modal'
+import Tabs from './tabs.vue'
+import Guide from './guide.vue'
 
 interface Props {
   tab: string
@@ -66,11 +64,11 @@ const contentBody = computed<any>(() => {
   switch (localStore.tab)
   {
     case 'post':
-      return ModulePost;
+      return defineAsyncComponent(() => import('./modules/post.vue'))
     case 'global':
-      return ModuleGlobal;
+      return defineAsyncComponent(() => import('./modules/global.vue'))
     default:
-      return null;
+      return null
   }
 })
 const showTabButtons = computed<any>(() => {
@@ -82,6 +80,17 @@ const showTabButtons = computed<any>(() => {
     close: localStore.fullSize,
   }
 })
+
+onMounted(() => {
+  window.on('keyup.file-manager', (e: any) => shortcuts(e, 'keyup'))
+  window.on('keydown.file-manager', (e: any) => shortcuts(e, 'keydown'))
+})
+onUnmounted(() => {
+  window.off('keyup.file-manager')
+  window.off('keydown.file-manager')
+})
+
+initialize()
 
 function initialize(): void
 {
@@ -103,7 +112,7 @@ function initialize(): void
       localStore.post.thumbnailType = props.post.thumbnailType
     }
   }
-  localStore.window = [];
+  localStore.window = []
 }
 
 function selectFunctionFromTabs(key: string): void
@@ -119,14 +128,14 @@ function selectFunctionFromTabs(key: string): void
   }
 }
 
-function onCustomEvent({ key, value }: { key: string, value: any })
+function onCustomEvent({ key, value }: { key: string, value: any }): void
 {
   switch (key)
   {
     case 'insert-text':
     case 'update-thumbnail':
-      emits('custom-event', { key, value });
-      break;
+      emits('custom-event', { key, value })
+      break
   }
 }
 
@@ -135,43 +144,47 @@ function shortcuts(e: KeyboardEvent, type: string): void
   switch (type)
   {
     case 'keyup':
-      e.preventDefault();
-      if (e.key === 'Escape') pushEscKey();
-      if (e.key === 'Tab') $tabs.value.changeTab();
-      break;
+      e.preventDefault()
+      if (e.key === 'Escape') pushEscKey()
+      if (e.key === 'Tab') $tabs.value.changeTab()
+      break
     case 'keydown':
       if (e.metaKey || e.ctrlKey)
       {
         switch (e.key)
         {
           case 'Enter':
-            $module.value.func('insert-markdown');
-            break;
+            $module.value.func('insert-markdown')
+            break
           case 'a':
-            $module.value.selectAll();
-            break;
+            $module.value.selectAll()
+            break
         }
       }
-      break;
+      break
   }
 }
-function pushEscKey()
+
+function pushEscKey(): void
 {
   if (localStore.window.length > 0)
   {
-    let key = localStore.window[localStore.window.length - 1];
-    controlWindow(false);
+    let key = localStore.window[localStore.window.length - 1]
+    controlWindow(false)
     switch (key)
     {
       case 'guide':
-        guide.value = false;
-        break;
+        guide.value = false
+        break
       case 'thumbnail-preview':
-        $module.value.func('close-thumbnail-preview');
-        break;
+        $module.value.func('close-thumbnail-preview')
+        break
       case 'thumbnail-editor':
-        $module.value.func('close-thumbnail-editor');
-        break;
+        $module.value.func('close-thumbnail-editor')
+        break
+      case 'url-uploader':
+        $module.value.func('close-url-uploader')
+        break
     }
   }
   else
@@ -179,17 +192,6 @@ function pushEscKey()
     emits('close')
   }
 }
-
-initialize()
-
-onMounted(() => {
-  window.on('keyup.file-manager', (e: any) => shortcuts(e, 'keyup'))
-  window.on('keydown.file-manager', (e: any) => shortcuts(e, 'keydown'))
-})
-onUnmounted(() => {
-  window.off('keyup.file-manager')
-  window.off('keydown.file-manager')
-})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

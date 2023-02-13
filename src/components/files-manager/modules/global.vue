@@ -125,6 +125,24 @@ const selectedAssets = computed<boolean>(() => {
   return localStore.global.selected.length <= 0
 })
 
+onMounted(async () => {
+  try
+  {
+    localStore.global.index = await getItemsGlobal(preference.files.globalPath)
+    localStore.global.idx = localStore.global.index.length
+    loading.value = false
+  }
+  catch (err: any)
+  {
+    err([ '/components/files-manager/modules/global.vue', 'onMounted()' ], 'error', err.message)
+    throw err.message
+  }
+})
+defineExpose({
+  selectAll: onSelectAll,
+  func: onClickFunction,
+})
+
 // upload files
 function onClickUploadFiles(): void
 {
@@ -298,25 +316,6 @@ function onSelectContextItem(key: number, type: string): void
       break
   }
 }
-
-onMounted(async () => {
-  try
-  {
-    localStore.global.index = await getItemsGlobal(preference.files.globalPath)
-    localStore.global.idx = localStore.global.index.length
-    loading.value = false
-  }
-  catch (err: any)
-  {
-    err([ '/components/files-manager/modules/global.vue', 'onMounted()' ], 'error', err.message)
-    throw err.message
-  }
-})
-
-defineExpose({
-  selectAll: onSelectAll,
-  func: onClickFunction,
-})
 </script>
 
 <style src="./modules.scss" lang="scss" scoped></style>

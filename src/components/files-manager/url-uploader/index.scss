@@ -1,0 +1,60 @@
+@use '../../../assets/scss/mixins';
+
+.upload-url {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  width: 75vw;
+  min-width: 480px;
+  max-width: 800px;
+  box-sizing: border-box;
+  &__wrap {
+    overflow: auto;
+    padding: 24px;
+    box-sizing: border-box;
+    height: 64vh;
+    max-height: 640px;
+  }
+  &__header {
+    margin: 0 0 20px;
+    h3 {
+      margin: 0;
+      line-height: 1.05;
+      font-size: 24px;
+      letter-spacing: -.5px;
+      font-weight: 700;
+    }
+    p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      line-height: 1.25;
+      color: var(--color-weak);
+    }
+  }
+  &__tab {
+    margin: 0 0 12px;
+  }
+  &__form-input-url {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    button[type=submit] {
+      position: absolute;
+      display: block;
+      font-size: 0;
+      width: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+    }
+  }
+  &__submit {
+    background: var(--color-bg);
+    margin: 0;
+    padding: 16px;
+    box-shadow: 0 -.5px 0 rgb(var(--color-edge-rgb) / 15%);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+}

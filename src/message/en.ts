@@ -111,6 +111,7 @@ export default {
     height: 'Height',
     crop: 'Crop',
     resize: 'Resize',
+    close: 'Close',
   },
   words: {
     warningDeleteItem: 'If this {0} is deleted, it cannot be recovered.',
@@ -146,7 +147,8 @@ export default {
       checklist: 'This module manages checklists.',
       preference: 'Manage configuration values.',
       guide: 'This page collects components and tools for development.',
-    }
+    },
+    uploadFilesUrl: 'Upload files by URL',
   },
   monthNames: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
   weekNames: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
