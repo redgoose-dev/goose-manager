@@ -14,6 +14,8 @@
   --color-invert: #{variables.$color-light-invert};
   --color-weak-rgb: #{variables.$color-light-weak-rgb};
   --color-weak: #{variables.$color-light-weak};
+  --color-light-hsl: 0 0% 85%;
+  --color-light: hsl(--color-light-hsl);
   --color-edge-rgb: #{variables.$color-light-edge-rgb};
   --color-edge: #{variables.$color-light-edge};
   --color-key-rgb: #{variables.$color-light-key-rgb};
@@ -45,6 +47,7 @@
     --color-invert-rgb: #{variables.$color-dark-invert-rgb};
     --color-weak: #{variables.$color-dark-weak};
     --color-weak-rgb: #{variables.$color-dark-weak-rgb};
+    --color-light-hsl: 0 0% 20%;
     --color-edge: #{variables.$color-dark-edge};
     --color-edge-rgb: #{variables.$color-dark-edge-rgb};
     --color-key: #{variables.$color-dark-key};

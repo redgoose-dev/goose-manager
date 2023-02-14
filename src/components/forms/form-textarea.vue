@@ -17,8 +17,8 @@
   @input="onChangeText"
   @click="onChangePosition"
   @keyup="onChangePosition"
-  @keyup.ctrl.enter="emits('submit')"
-  @keydown.meta.enter="emits('submit')"/>
+  @keyup.ctrl.enter.stop="emits('submit')"
+  @keydown.meta.enter.stop="emits('submit')"/>
 </template>
 
 <script setup>

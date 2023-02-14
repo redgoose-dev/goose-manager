@@ -318,4 +318,6 @@ function onSelectContextItem(key: number, type: string): void
 }
 </script>
 
-<style src="./modules.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import './modules.scss';
+</style>

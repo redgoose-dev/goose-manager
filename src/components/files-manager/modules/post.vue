@@ -313,9 +313,11 @@ function errorUploadFiles(e: any, message: string): void
  * Upload url
  */
 
-async function submitUploadUrl(): Promise<void>
+async function submitUploadUrl(files: any[]): Promise<void>
 {
-  // TODO: submit
+  // TODO: File 형식으로 된 배열로 받아서 업로드하기
+  console.log('submitUploadUrl', files)
+  // await uploadFile(files, 0)
 }
 
 /**
@@ -523,4 +525,6 @@ function onSelectContextItem(key: number, type: string): void
 }
 </script>
 
-<style src="./modules.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import './modules.scss';
+</style>

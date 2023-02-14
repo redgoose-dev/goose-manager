@@ -4,9 +4,9 @@
   position: relative;
   display: grid;
   grid-template-rows: 1fr auto;
-  width: 75vw;
+  width: 72vw;
   min-width: 480px;
-  max-width: 800px;
+  max-width: 640px;
   box-sizing: border-box;
   &__wrap {
     overflow: auto;
@@ -33,21 +33,6 @@
   }
   &__tab {
     margin: 0 0 12px;
-  }
-  &__form-input-url {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    button[type=submit] {
-      position: absolute;
-      display: block;
-      font-size: 0;
-      width: 0;
-      height: 0;
-      padding: 0;
-      margin: 0;
-      opacity: 0;
-    }
   }
   &__submit {
     background: var(--color-bg);

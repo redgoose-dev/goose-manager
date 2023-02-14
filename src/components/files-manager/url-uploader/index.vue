@@ -1,5 +1,5 @@
 <template>
-<article ref="$root" class="upload-url">
+<article class="upload-url">
   <div class="upload-url__wrap">
     <header class="upload-url__header">
       <h3>{{message.header.uploadFilesUrl}}</h3>
@@ -8,22 +8,9 @@
         텍스트 입력창에 주소를 입력하고 "검사하기" 버튼을 눌러서 올바른 파일인지 검사하고 업로드 버튼을 누릅니다.
       </p>
     </header>
-    <Tab
-      v-model="tab"
-      class="upload-url__tab"/>
-    <component
-      v-if="tab === 'verify'"
-      :is="bodyComponent"/>
-    <form
-      v-else
-      ref="$formInputUrl"
-      class="upload-url__form-input-url"
-      @submit.prevent="submitInputUrl">
-      <component
-        :is="bodyComponent"
-        @submit="submitInputUrlInComponent"/>
-      <button type="submit">submit</button>
-    </form>
+    <Items
+      :src="verifyItems"
+      @remove-item="removeVerifyItem"/>
   </div>
   <Controller class="upload-url__submit">
     <template #left>
@@ -36,109 +23,50 @@
     </template>
     <template #right>
       <ButtonBasic
-        type="submit"
         color="sub"
-        :icon-left="processingVerify ? 'loader' : 'check-circle'"
-        :rotate-icon="processingVerify"
-        :disabled="processingVerify"
-        @click="submitInputUrlInComponent">
-        검증하기
+        icon-left="link-2"
+        @click="openAddUrl">
+        URL 추가하기
       </ButtonBasic>
       <ButtonBasic
         color="key"
         icon-left="upload"
-        :disabled="true"
+        :disabled="disabledSubmitButton"
         @click="submitUpload">
         파일 업로드
       </ButtonBasic>
     </template>
   </Controller>
 </article>
+<teleport to="#modals">
+  <Modal :show="windowAddUrl" @close="windowAddUrl = false">
+    <ModalBody type="window">
+      <InputUrl
+        @submit="onSubmitInputUrl"
+        @close="windowAddUrl = false"/>
+    </ModalBody>
+  </Modal>
+</teleport>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineAsyncComponent, onMounted, onUnmounted } from 'vue'
-import { ofetch } from 'ofetch'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import type { VerifyItem } from './types'
 import { message } from '../../../message'
 import { controlWindow } from '../util'
 import { ButtonBasic } from '../../button'
-import Tab from './tab.vue'
 import { Controller } from '../../navigation'
+import Items from './items.vue'
+import { Modal, ModalBody } from '../../modal'
+import InputUrl from './input-url.vue'
 
-const $root = ref()
-const $formInputUrl = ref()
 const emits = defineEmits([ 'close', 'submit' ])
-const tab = ref<string>('')
-const processingVerify = ref(false)
 const processingSub = ref<boolean>(false)
-const bodyComponent = computed<any>(() => {
-  switch (tab.value) {
-    case 'verify':
-      return defineAsyncComponent(() => import('./check-verify.vue'))
-    default:
-      return defineAsyncComponent(() => import('./input-url.vue'))
-  }
+const verifyItems = ref<VerifyItem[]>([])
+const windowAddUrl = ref<boolean>(false)
+const disabledSubmitButton = computed<boolean>(() => {
+  return !(verifyItems.value.length > 0)
 })
-
-function submitInputUrlInComponent(): void
-{
-  if (!$formInputUrl.value) return
-  const $button = $formInputUrl.value.querySelector('button[type=submit]')
-  $button.click()
-}
-async function submitInputUrl(): Promise<void>
-{
-  if (!$formInputUrl.value) return
-  const $address = $formInputUrl.value.address
-  const address = $address.value
-  const addressIndex = address.split('\n')
-  try
-  {
-    processingVerify.value = true
-    let res = await Promise.all(addressIndex.map((o: string) => uploadImageUrl(o)))
-    res = res.filter(Boolean)
-    // console.log(res)
-    processingVerify.value = false
-    // TODO: 입력한 URL들을 검사해보고 파일 형식으로 가져온게 완료되면 verify 탭으로 이동한다.
-  }
-  catch (e)
-  {
-    //
-  }
-  finally
-  {
-    processingVerify.value = false
-    // tab.value = 'verify'
-  }
-}
-
-async function uploadImageUrl(path: string): Promise<any>
-{
-  if (!path) return false
-  try
-  {
-    const url = new URL(path)
-    if (!url.host) throw new Error('invalid url')
-    if (!/^http(s)/.test(url.protocol)) throw new Error(`invalid url`)
-    const res = await ofetch(url.href, {
-      responseType: 'blob',
-    })
-    console.log(res)
-    return {}
-  }
-  catch (e: any)
-  {
-    console.log(e)
-    // console.error(e.message)
-    return false
-  }
-}
-
-async function submitUpload(): Promise<void>
-{
-  console.log('submitUploadFiles()')
-  emits('submit')
-}
 
 onMounted(() => {
   controlWindow(true, 'url-uploader')
@@ -146,6 +74,32 @@ onMounted(() => {
 onUnmounted(() => {
   controlWindow(false, 'url-uploader')
 })
+
+function openAddUrl()
+{
+  windowAddUrl.value = true
+}
+
+function onSubmitInputUrl(items: VerifyItem[]): void
+{
+  verifyItems.value = [
+    ...verifyItems.value,
+    ...items,
+  ]
+  windowAddUrl.value = false
+}
+
+function removeVerifyItem(idx: number): void
+{
+  verifyItems.value.splice(idx, 1)
+}
+
+async function submitUpload(): Promise<void>
+{
+  console.log('submitUploadFiles()', verifyItems.value)
+  // TODO: File 배열 형태로 변환하고 submit 이벤트 보내기
+  emits('submit', [])
+}
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>
