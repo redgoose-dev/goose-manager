@@ -12,8 +12,8 @@
     overflow: auto;
     padding: 24px;
     box-sizing: border-box;
-    height: 64vh;
-    max-height: 640px;
+    min-height: 320px;
+    max-height: 64vh;
   }
   &__header {
     margin: 0 0 20px;

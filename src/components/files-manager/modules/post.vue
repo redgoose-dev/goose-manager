@@ -246,7 +246,7 @@ async function onChangeFiles(e: InputEvent): Promise<void>
   processing.value = true
   await uploadFile(files, 0)
 }
-async function uploadFile(files: FileList, n: number): Promise<void>
+async function uploadFile(files: FileList|File[], n: number): Promise<void>
 {
   // 파일 하나 올리기, 목록에서 더 올라가야할 파일이 생기면 재귀함수로 실행
   let idx: any
@@ -313,11 +313,10 @@ function errorUploadFiles(e: any, message: string): void
  * Upload url
  */
 
-async function submitUploadUrl(files: any[]): Promise<void>
+async function submitUploadUrl(files: File[]): Promise<void>
 {
-  // TODO: File 형식으로 된 배열로 받아서 업로드하기
-  console.log('submitUploadUrl', files)
-  // await uploadFile(files, 0)
+  showUploadUrl.value = false
+  await uploadFile(files, 0)
 }
 
 /**

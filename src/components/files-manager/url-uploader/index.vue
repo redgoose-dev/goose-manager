@@ -96,9 +96,15 @@ function removeVerifyItem(idx: number): void
 
 async function submitUpload(): Promise<void>
 {
-  console.log('submitUploadFiles()', verifyItems.value)
-  // TODO: File 배열 형태로 변환하고 submit 이벤트 보내기
-  emits('submit', [])
+  let uploadItems: File[] = []
+  verifyItems.value.forEach((o,k) => {
+    let file = new File([o.blob], o.name, {
+      type: o.type,
+      lastModified: o.date.getTime(),
+    })
+    uploadItems.push(file)
+  })
+  emits('submit', uploadItems)
 }
 </script>
 
