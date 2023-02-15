@@ -24,6 +24,14 @@
       <ButtonBasic
         type="button"
         size="small"
+        color="sub"
+        icon-left="link-2"
+        @click="showUploadUrl = true">
+        Upload URL
+      </ButtonBasic>
+      <ButtonBasic
+        type="button"
+        size="small"
         icon-left="minus-square"
         :disabled="disabledAssets"
         @click="onSelectAll()">
@@ -94,6 +102,17 @@
       </div>
     </nav>
   </footer>
+  <teleport to="#modals">
+    <Modal
+      :show="showUploadUrl"
+      @close="showUploadUrl = false">
+      <ModalBody type="window">
+        <UrlUploader
+          @close="showUploadUrl = false"
+          @submit="submitUploadUrl"/>
+      </ModalBody>
+    </Modal>
+  </teleport>
 </article>
 </template>
 
@@ -108,9 +127,11 @@ import { printf } from '../../../libs/string'
 import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil'
+import { Modal, ModalBody } from '../../modal'
 import { ButtonBasic } from '../../button'
 import Attachments from '../attachments/index.vue'
 import Loading from '../../etc/loading.vue'
+import UrlUploader from '../url-uploader/index.vue'
 
 const $file = ref<any>()
 const $attachments = ref<any>()
@@ -119,6 +140,7 @@ const preference = preferenceStore()
 const localStore = fileManagerStore()
 const loading = ref<boolean>(true)
 const processing = ref<boolean>(false)
+const showUploadUrl = ref<boolean>(false)
 const disabledAssets = computed<boolean>(() => (loading.value || processing.value))
 const selectedAssets = computed<boolean>(() => {
   if (disabledAssets.value) return true
@@ -143,6 +165,10 @@ defineExpose({
   func: onClickFunction,
 })
 
+/**
+ * Upload files area
+ */
+
 // upload files
 function onClickUploadFiles(): void
 {
@@ -155,7 +181,7 @@ async function onChangeFiles(e: any): Promise<void>
   processing.value = true
   await uploadFile(files, 0)
 }
-async function uploadFile(files: FileList, n: number): Promise<void>
+async function uploadFile(files: FileList|File[], n: number): Promise<void>
 {
   let idx: any
   try
@@ -198,6 +224,20 @@ function errorUploadFiles(e: ErrorEvent)
   toast.add('Failed upload files.', 'error')
 }
 
+/**
+ * Upload url
+ */
+
+async function submitUploadUrl(files: File[]): Promise<void>
+{
+  showUploadUrl.value = false
+  await uploadFile(files, 0)
+}
+
+/**
+ * delete files area
+ */
+
 async function deleteItems(paths: {}[])
 {
   onSelectAll(false)
@@ -217,7 +257,7 @@ async function deleteItems(paths: {}[])
   localStore.global.index = newIndex.filter(Boolean)
   await nextTick()
   $attachments.value.reset()
-  toast.add('첨부파일을 삭제했습니다.', 'success')
+  toast.add('첨부파일을 삭제했습니다.', 'success').then()
 }
 function onDeleteItem(key: number|undefined): void
 {
@@ -237,6 +277,10 @@ function onClickDeleteItems()
   }).filter(Boolean)
   deleteItems(paths).then()
 }
+
+/**
+ * ETC area
+ */
 
 function onSelectAll(sw?: boolean): void
 {

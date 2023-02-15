@@ -50,14 +50,8 @@ import { ButtonBasic } from '../../button'
 import { Help } from '../../forms/fieldset'
 import { VerifyItem } from './types'
 
-// TODO: 나중에 값 비우기
-const mockupUrl = 'https://goose.redgoose.me/data/upload/original/202211/infra-structure.webp\n' +
-  'https://goose.redgoose.me/data/upload/original/202301/eye-test-001.jpg\n' +
-  'https://goose.redgoose.me/data/upload/original/202205/scan-works-008.webp\n' +
-  'https://goose.redgoose.me/data/upload/original/202003/the-war-of-genesis-3-002.jpg\n' +
-  'https://api.goose.me/data/upload/original/201906/motor_example_1xc4d.zip'
 const emits = defineEmits([ 'submit', 'close' ])
-const address = ref<string>(mockupUrl)
+const address = ref<string>('')
 const processingVerify = ref(false)
 const disabledSubmitButton = computed<boolean>(() => {
   if (processingVerify.value) return true
@@ -96,6 +90,8 @@ async function uploadImageUrl(path: string): Promise<VerifyItem|boolean>
     let blob = await ofetch(url.href, {
       responseType: 'blob',
     })
+    console.log(url)
+    console.log(url.pathname.substring(url.pathname.lastIndexOf('/') + 1))
     return {
       blob,
       name: url.pathname.substring(url.pathname.lastIndexOf('/') + 1),

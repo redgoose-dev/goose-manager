@@ -27,7 +27,7 @@
         color="sub"
         icon-left="link-2"
         @click="showUploadUrl = true">
-        Input URL
+        Upload URL
       </ButtonBasic>
       <ButtonBasic
         type="button"

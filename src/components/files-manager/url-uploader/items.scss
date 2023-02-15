@@ -20,6 +20,7 @@
   min-width: 0;
   &__asset {
     width: 100px;
+    height: 100px;
     aspect-ratio: 1 / 1;
     margin: 0;
     user-select: none;
@@ -50,13 +51,15 @@
   }
   &__body {
     flex: 1;
-    padding: 0 0 0 16px;
+    padding: 0 20px 0 16px;
+    min-width: 0;
     h4 {
       margin: 0;
       font-size: 15px;
       line-height: 1.05;
       letter-spacing: -.25px;
-      @include mixins.text-single-line();
+      word-break:keep-all;
+      overflow-wrap:break-word;
     }
     p {
       margin: 2px 0 0;
