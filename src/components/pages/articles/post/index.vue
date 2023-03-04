@@ -17,7 +17,8 @@
         :maxlength="120"
         placeholder="Article title"
         :error="!!forms.title.error"
-        :required="true"/>
+        :required="true"
+        pattern="\S(.*\S)?"/>
     </Field>
     <Columns style="--columns-template: .75fr 1fr">
       <Field label="Order date" for="order">
@@ -208,6 +209,9 @@ async function save(type: string): Promise<void>
   // check error
   forms.order.error = null
 
+  // check title
+  if (!forms.title.value.trim()) throw new Error('no title')
+
   // check order
   if (!checkOrderDate(forms.order.value))
   {
@@ -239,7 +243,7 @@ async function save(type: string): Promise<void>
     nest_srl: data.nest.srl,
     category_srl: forms.category_srl || null,
     type: type === 'publishing' ? getTypeArticle(forms.type) : 'ready',
-    title: forms.title.value || '',
+    title: forms.title.value?.trim() || '',
     content: forms.content.value || '',
     json: JSON.stringify(forms.json),
     order: forms.order.value,

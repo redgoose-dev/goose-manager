@@ -13,6 +13,7 @@
   :min="props.min"
   :max="props.max"
   :step="props.step"
+  :pattern="props.pattern"
   :class="[
     'input',
     props.size && `input--size-${props.size}`,
@@ -49,6 +50,7 @@ const props = defineProps({
   max: Number,
   size: String, // small
   error: Boolean,
+  pattern: String,
 })
 const emits = defineEmits([ 'update:modelValue', 'position', 'submit' ])
 
