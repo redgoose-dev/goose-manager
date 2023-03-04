@@ -439,13 +439,14 @@ function onClickFunction(key: undefined|string): void
     case 'insert-html':
     case 'insert-address':
       items = localStore.post.selected.map(key => {
+        if (!localStore.post.index[key]) return false
         const { name, pathFull, type } = localStore.post.index[key]
         return {
           type,
           name,
           path: pathFull,
         }
-      })
+      }).filter(Boolean)
       break
   }
   switch (key)
