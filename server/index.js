@@ -1,5 +1,5 @@
 import https from 'https'
-import { $fetch } from 'ohmyfetch'
+import { $fetch } from 'ofetch'
 import { Router } from 'express'
 import { filteringHostname } from './libs/api.js'
 import { isDev } from './libs/entry-assets.js'
