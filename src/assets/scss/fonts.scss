@@ -43,8 +43,7 @@ $dir: '../fonts';
     font-display: swap;
     src:
       local('Pretendard #{$weight-name}'),
-      url('#{$dir}/pretendard/Pretendard-#{$weight-name}.subset.woff2') format('woff2'),
-      url('#{$dir}/pretendard/Pretendard-#{$weight-name}.subset.woff') format('woff');
+      url('#{$dir}/pretendard/Pretendard-#{$weight-name}.subset.woff2') format('woff2');
   }
 }
 

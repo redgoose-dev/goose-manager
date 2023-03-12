@@ -1,8 +1,8 @@
 @use 'normalize';
-@use 'fonts';
 @use 'mixins';
 @use 'variables';
 @use 'keyframes';
+@import 'fonts';
 
 :root {
   // color
