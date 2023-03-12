@@ -10,7 +10,8 @@
     </header>
     <Items
       :src="verifyItems"
-      @remove-item="removeVerifyItem"/>
+      @remove-item="removeVerifyItem"
+      @update-item="updateVerifyItem"/>
   </div>
   <Controller class="upload-url__submit">
     <template #left>
@@ -53,6 +54,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import type { VerifyItem } from './types'
 import { message } from '../../../message'
+import { pureObject } from '../../../libs/object'
 import { controlWindow } from '../util'
 import { ButtonBasic } from '../../button'
 import { Controller } from '../../navigation'
@@ -89,6 +91,10 @@ function onSubmitInputUrl(items: VerifyItem[]): void
   windowAddUrl.value = false
 }
 
+function updateVerifyItem(idx: number, item: VerifyItem): void
+{
+  verifyItems.value = Object.assign([], verifyItems.value, { [idx]: item })
+}
 function removeVerifyItem(idx: number): void
 {
   verifyItems.value.splice(idx, 1)

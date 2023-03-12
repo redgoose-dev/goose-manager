@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
-  type: string | 'full' | 'window'
+  type?: string | 'full' | 'window'
 }>()
 </script>
 

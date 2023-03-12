@@ -69,7 +69,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { $fetch } from 'ohmyfetch'
+import { $fetch } from 'ofetch'
 import { authStore } from '../../store/auth'
 import { preferenceStore } from '../../store/preference'
 import { toast } from '../../modules/toast'

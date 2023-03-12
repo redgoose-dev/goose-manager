@@ -134,6 +134,8 @@ export default {
     selectAppSrl: 'Select app-srl',
     inputDescription: 'Input a description for this "{0}".',
     uploadFilesCount: 'Set the number of files that can be uploaded.',
+    convert: 'Convert to {0}',
+    noFiles: 'No files.',
   },
   header: {
     description: {

@@ -22,6 +22,7 @@ export default {
     change: '{0}을(를) 변경했습니다.',
     draftSave: '임시저장했습니다.',
     resetTokens: '토큰을 재설정했습니다.',
+    convertFile: '파일변환을 성공했습니다.',
   },
   fail: {
     get: '{0}을(를) 가져오지 못했습니다.',
@@ -32,6 +33,7 @@ export default {
     draftSave: '임시저장하지 못했습니다.',
     checkOrderDate: 'OrderDate 검사 실패했습니다.',
     resetTokens: '토큰 재설정에 실패했습니다.',
+    convertFile: '파일변환을 실패했습니다.',
   },
   word: {
     srl: '번호',
@@ -134,6 +136,8 @@ export default {
     selectAppSrl: '앱 번호 선택',
     inputDescription: '이 "{0}"에 대한 설명을 입력합니다.',
     uploadFilesCount: '업로드 할 수 있는 파일의 갯수를 설정합니다.',
+    convert: '{0}로 변환',
+    noFiles: '등록된 파일이 없습니다',
   },
   header: {
     description: {

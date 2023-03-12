@@ -1,5 +1,5 @@
-import { $fetch } from 'ohmyfetch'
-import type { $Fetch, FetchOptions } from 'ohmyfetch'
+import { $fetch } from 'ofetch'
+import type { $Fetch, FetchOptions } from 'ofetch'
 import { authStore } from '../store/auth'
 import { getPath, serialize } from './string'
 

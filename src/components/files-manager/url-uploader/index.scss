@@ -4,9 +4,9 @@
   position: relative;
   display: grid;
   grid-template-rows: 1fr auto;
-  width: 72vw;
+  width: 75vw;
   min-width: 480px;
-  max-width: 640px;
+  max-width: 820px;
   box-sizing: border-box;
   &__wrap {
     overflow: auto;

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { $fetch } from 'ohmyfetch'
+import { $fetch } from 'ofetch'
 import { preferenceStore } from './preference'
 import { getPath } from '../libs/string'
 

@@ -3,8 +3,9 @@
   margin: 0;
   padding: 24px;
   box-sizing: border-box;
-  width: 75vw;
-  max-width: 640px;
+  width: 85vw;
+  min-width: 480px;
+  max-width: 1000px;
   fieldset {
     margin: 0;
     padding: 0;

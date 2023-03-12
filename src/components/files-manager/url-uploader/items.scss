@@ -83,6 +83,8 @@
   }
   &__nav {
     padding: 0 20px 0 0;
+    display: flex;
+    gap: 0;
     button {
       display: block;
       margin: 0 auto;

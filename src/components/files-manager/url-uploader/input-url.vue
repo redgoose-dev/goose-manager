@@ -13,7 +13,7 @@
       name="address"
       placeholder="https://example.com/example-image.jpg"
       :required="true"
-      :rows="12"
+      :rows="15"
       class="input-url__text-input"
       @submit="onSubmit"/>
     <Help>파일 여러개를 업로드 하려면 줄바꿈을 이용하여 주소를 입력합니다.</Help>
@@ -90,8 +90,6 @@ async function uploadImageUrl(path: string): Promise<VerifyItem|boolean>
     let blob = await ofetch(url.href, {
       responseType: 'blob',
     })
-    console.log(url)
-    console.log(url.pathname.substring(url.pathname.lastIndexOf('/') + 1))
     return {
       blob,
       name: url.pathname.substring(url.pathname.lastIndexOf('/') + 1),
