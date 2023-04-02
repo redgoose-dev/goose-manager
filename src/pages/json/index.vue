@@ -13,20 +13,20 @@
       :meta="item.meta"
       :href="`./${item.srl}/`"
       :nav="[
-        { label: message.word.edit, href: `./${item.srl}/edit/` },
-        { label: message.word.delete, href: `./${item.srl}/delete/` },
+        { label: '수정', href: `./${item.srl}/edit/` },
+        { label: '삭제', href: `./${item.srl}/delete/` },
       ]"/>
   </Items>
   <Empty v-else title="no item"/>
   <Controller>
     <template #left>
       <ButtonBasic href="./categories/" icon-left="server">
-        {{message.word.categories}}
+        분류들
       </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        {{printf(message.word.isCreate, 'JSON')}}
+        JSON 만들기
       </ButtonBasic>
     </template>
   </Controller>
@@ -38,9 +38,7 @@ import { ref, onMounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { err } from '../../libs/error'
 import { scrollTo } from '../../libs/util'
-import { printf } from '../../libs/string'
 import { getData } from '../../structure/json'
-import { message } from '../../message'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card } from '../../components/item'
 import { Controller } from '../../components/navigation'

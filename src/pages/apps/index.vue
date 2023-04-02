@@ -9,8 +9,8 @@
       :description="item.description"
       :meta="item.meta"
       :nav="[
-        { label: message.word.edit, href: `./${item.srl}/edit/` },
-        { label: message.word.delete, href: `./${item.srl}/delete/` },
+        { label: '수정', href: `./${item.srl}/edit/` },
+        { label: '삭제', href: `./${item.srl}/delete/` },
       ].filter(Boolean)"
       class="item"/>
   </Items>
@@ -18,7 +18,7 @@
   <Controller>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        {{printf(message.word.isCreate, message.word.app)}}
+        앱 만들기
       </ButtonBasic>
     </template>
   </Controller>
@@ -29,8 +29,6 @@
 import { ref, onMounted } from 'vue'
 import getData from '../../structure/apps'
 import { err } from '../../libs/error'
-import { printf } from '../../libs/string'
-import { message } from '../../message'
 import { Items, Card } from '../../components/item'
 import PageHeader from '../../components/page/header/index.vue'
 import { Controller } from '../../components/navigation'

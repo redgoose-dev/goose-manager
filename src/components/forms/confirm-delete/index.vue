@@ -8,7 +8,7 @@
   <Controller>
     <template #left>
       <ButtonBasic type="button" icon-left="arrow-left" @click="emits('cancel')">
-        {{message.word.back}}
+        뒤로가기
       </ButtonBasic>
     </template>
     <template #right>
@@ -27,7 +27,6 @@
 </template>
 
 <script lang="ts" setup>
-import { message } from '../../../message'
 import { Controller } from '../../navigation'
 import { ButtonBasic } from '../../button'
 

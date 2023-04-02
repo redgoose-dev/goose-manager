@@ -35,11 +35,11 @@
 </template>
 
 <script setup>
-import ThumbnailImage from './assets/thumbnail-image.vue';
-import ItemTitle from './assets/item-title.vue';
-import Description from './assets/description.vue';
-import ItemMeta from './assets/item-meta.vue';
-import ItemNav from './assets/item-nav.vue';
+import ThumbnailImage from './assets/thumbnail-image.vue'
+import ItemTitle from './assets/item-title.vue'
+import Description from './assets/description.vue'
+import ItemMeta from './assets/item-meta.vue'
+import ItemNav from './assets/item-nav.vue'
 
 const props = defineProps({
   image: String,
@@ -50,7 +50,7 @@ const props = defineProps({
   nav: Array,
   href: String,
   target: String,
-});
+})
 </script>
 
 <style src="./thumbnail.scss" lang="scss" scoped></style>

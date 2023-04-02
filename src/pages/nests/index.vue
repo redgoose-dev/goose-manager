@@ -20,10 +20,10 @@
           :description="nest.description"
           :meta="nest.meta"
           :nav="[
-            { label: message.word.edit, href: `./${nest.srl}/edit/` },
-            { label: message.word.delete, href: `./${nest.srl}/delete/` },
+            { label: '수정', href: `./${nest.srl}/edit/` },
+            { label: '삭제', href: `./${nest.srl}/delete/` },
             nest.useCategory && {
-              label: message.word.category,
+              label: '분류',
               href: `./${nest.srl}/categories/`,
             },
           ].filter(Boolean)"
@@ -38,7 +38,7 @@
   <Controller>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        {{printf(message.word.isCreate, message.word.nest)}}
+        둥지 만들기
       </ButtonBasic>
     </template>
   </Controller>
@@ -48,8 +48,6 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { err } from '../../libs/error'
-import { message } from '../../message'
-import { printf } from '../../libs/string'
 import getData, { SectionItem } from '../../structure/nests'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card } from '../../components/item'

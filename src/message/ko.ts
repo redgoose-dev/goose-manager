@@ -114,6 +114,10 @@ export default {
     crop: '자르기',
     resize: '리사이즈',
     close: '닫기',
+    files: '첨부파일',
+    preview: '미리보기',
+    dateRange: '날짜범위',
+    page: '페이지',
   },
   words: {
     warningDeleteItem: '이 {0}을(를) 삭제하면 복구할 수 없습니다.',
@@ -138,6 +142,10 @@ export default {
     uploadFilesCount: '업로드 할 수 있는 파일의 갯수를 설정합니다.',
     convert: '{0}로 변환',
     noFiles: '등록된 파일이 없습니다',
+    gotoToday: '오늘로 이동',
+    updateFilter: '필터 업데이트',
+    toFirstPage: '첫 페이지로 이동',
+    toLastPage: '마지막 페이지로 이동',
   },
   header: {
     description: {

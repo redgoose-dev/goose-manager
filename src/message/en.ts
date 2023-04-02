@@ -112,6 +112,10 @@ export default {
     crop: 'Crop',
     resize: 'Resize',
     close: 'Close',
+    files: 'Files',
+    preview: 'Preview',
+    dateRange: 'Date range',
+    page: 'Page',
   },
   words: {
     warningDeleteItem: 'If this {0} is deleted, it cannot be recovered.',
@@ -136,6 +140,10 @@ export default {
     uploadFilesCount: 'Set the number of files that can be uploaded.',
     convert: 'Convert to {0}',
     noFiles: 'No files.',
+    gotoToday: 'Go to today',
+    updateFilter: 'Update filter',
+    toFirstPage: 'To first page',
+    toLastPage: 'To last page',
   },
   header: {
     description: {

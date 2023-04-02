@@ -1,66 +1,66 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
-  <Fieldset :legend="message.word.basicFields" class="basic" :disabled="loading">
-    <Field :label="message.word.appSrl" for="apps">
+  <Fieldset legend="기본 필드" class="basic" :disabled="loading">
+    <Field label="앱 번호" for="apps">
       <FormSelect
         id="apps"
         name="apps"
         v-model="forms.app_srl.value"
         :options="apps"
-        :placeholder="message.words.selectAppSrl"
+        placeholder="앱 번호 선택"
         style="--select-width: 240px"/>
     </Field>
-    <Field :label="message.word.id" for="id">
+    <Field label="아이디" for="id">
       <FormInput
         type="text"
         name="id"
         id="id"
         v-model="forms.id.value"
-        placeholder="Nest ID"
+        placeholder="둥지 아이디"
         :maxlength="24"
         :error="!!forms.id.error"
         :required="true"
         style="--input-width: 200px"/>
       <Help v-if="!!forms.id.error" color="error">{{forms.id.error}}</Help>
       <Help>
-        {{printf(message.words.pleaseInputOnly, `"${message.word.alphanumeric}, \`-\` and \`_\`"`)}}
+        아이디를 "알파벳과 숫자형식의 글자, `-` and `_`"으로만 입력해주세요.
       </Help>
     </Field>
-    <Field :label="message.word.name" for="name">
+    <Field label="이름" for="name">
       <FormInput
         type="text"
         name="name"
         id="name"
         v-model="forms.name.value"
-        placeholder="Goose's nest"
+        placeholder="둥지이름.."
         :maxlength="40"
         :required="true"
         style="--input-width: 320px"/>
-      <Help>
-        {{printf(message.words.inputDescription, message.word.nest)}}
-      </Help>
     </Field>
-    <Field :label="message.word.description" for="description">
+    <Field label="설명" for="description">
       <FormInput
         type="text"
         name="description"
         id="description"
         v-model="forms.description.value"
-        placeholder="Description text.."
+        placeholder="둥지설명 내용.."
         :maxlength="200"/>
+      <Help>
+        이 "둥지"에 대한 설명을 입력합니다.
+      </Help>
     </Field>
   </Fieldset>
-  <Fieldset :legend="message.word.extraFields" class="extra" :disabled="loading">
-    <Field :label="message.word.usingCategory" for="useCategory">
+  <Fieldset legend="엑스트라 필드" class="extra" :disabled="loading">
+    <Field label="분류 사용하기" for="useCategory">
       <FormSwitch v-model="forms.json.useCategory" :values="[ '0', '1' ]"/>
     </Field>
-    <Field :label="message.word.usingComment" for="useComment">
+    <Field label="댓글 사용하기" for="useComment">
       <FormSwitch v-model="forms.json.useComment" :values="[ '0', '1' ]"/>
     </Field>
-    <Field :label="message.word.thumbnailSize" for="thumbnailWidth">
+    <Field label="썸네일 이미지 사이즈" for="thumbnailWidth">
       <Labels>
         <Label>
-          <span>{{message.word.width}}:</span>
+          <span>가로:</span>
           <FormInput
             type="number"
             name="thumbnailWidth"
@@ -74,7 +74,7 @@
           <span>px</span>
         </Label>
         <Label>
-          <span>{{message.word.height}}:</span>
+          <span>세로:</span>
           <FormInput
             type="number"
             name="thumbnailHeight"
@@ -89,7 +89,7 @@
         </Label>
       </Labels>
     </Field>
-    <Field :label="message.word.thumbnailType" for="thumbnailType">
+    <Field label="썸네일 이미지 타입" for="thumbnailType">
       <Labels>
         <Label>
           <FormRadio
@@ -97,32 +97,32 @@
             id="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="crop"/>
-          <span>{{message.word.crop}}</span>
+          <span>자르기</span>
         </Label>
         <Label>
           <FormRadio
             name="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="resize"/>
-          <span>{{message.word.resize}}</span>
+          <span>리사이즈</span>
         </Label>
         <Label>
           <FormRadio
             name="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="resizeWidth"/>
-          <span>{{message.word.resize}}({{message.word.width}})</span>
+          <span>리사이즈(가로)</span>
         </Label>
         <Label>
           <FormRadio
             name="thumbnailType"
             v-model="forms.json.thumbnail.type"
             value="resizeHeight"/>
-          <span>{{message.word.resize}}({{message.word.height}})</span>
+          <span>리사이즈(세로)</span>
         </Label>
       </Labels>
     </Field>
-    <Field :label="message.word.uploadFilesCount" for="filesCount">
+    <Field label="업로드 파일갯수" for="filesCount">
       <FormInput
         type="number"
         name="filesCount"
@@ -133,9 +133,9 @@
         :max="99"
         size="small"
         style="--input-width: 70px"/>
-      <Help>{{message.words.uploadFilesCount}}</Help>
+      <Help>업로드 할 수 있는 파일의 갯수를 설정합니다.</Help>
     </Field>
-    <Field :label="message.word.uploadFilesSize" for="filesSize">
+    <Field label="업로드 파일사이즈" for="filesSize">
       <Label>
         <FormInput
           type="number"
@@ -154,7 +154,7 @@
   <Controller>
     <template #left>
       <ButtonBasic icon-left="arrow-left" @click="router.back()">
-        {{message.word.back}}
+        뒤로가기
       </ButtonBasic>
     </template>
     <template #right>
@@ -175,9 +175,8 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { post, formData, checkForms } from '../../../libs/api'
 import { err } from '../../../libs/error'
-import { printf, validateId, getByte } from '../../../libs/string'
+import { validateId, getByte } from '../../../libs/string'
 import { pureObject } from '../../../libs/object'
-import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import getData, { setJson, NestJSON } from '../../../structure/nests/post'
 import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset'
@@ -211,8 +210,7 @@ const loading = ref<boolean>(true)
 const processing = ref<boolean>(false)
 const limitUploadFileSize = computed<string>(() => getByte(forms.json.files?.sizeSingle || 0))
 const submitLabel = computed<string>(() => {
-  const code = props.mode === 'edit' ? message.word.isEdit : message.word.isCreate
-  return printf(code, message.word.nest)
+  return props.mode === 'edit' ? '둥지 수정하기' : '둥지 만들기'
 })
 
 onMounted(async () => {
@@ -242,7 +240,7 @@ async function onSubmit(): Promise<void>
   forms.id.error = null
   if (!validateId(forms.id.value))
   {
-    forms.id.error = printf(message.words.pleaseCheck, 'ID')
+    forms.id.error = '아이디를 확인해주세요.'
     root.value.id.focus()
   }
   try
@@ -259,13 +257,15 @@ async function onSubmit(): Promise<void>
     await post((props.mode === 'edit') ? `/nests/${props.srl}/edit/` : '/nests/', data)
     processing.value = false
     await router.push('/nests/')
-    toast.add(printf(message.success[props.mode], message.word.nest), 'success').then()
+    const message = props.mode === 'edit' ? '둥지를 수정했습니다.' : '둥지를 만들었습니다.'
+    toast.add(message, 'success').then()
   }
   catch (e: any)
   {
     err([ '/components/pages/nests/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], message.word.nest), 'error').then()
+    const message = props.mode === 'edit' ? '둥지를 수정하지 못했습니다.' : '둥지를 만들지 못했습니다.'
+    toast.add(message, 'error').then()
   }
 }
 </script>

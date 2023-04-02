@@ -76,3 +76,9 @@ export function compareDate(date1: Date, date2: Date, compare: string = '<'): bo
       return d1 === d2
   }
 }
+
+export function formatting(date: string, _option?: object): string
+{
+  const _date = new Intl.DateTimeFormat('ko', _option || {})
+  return _date.format(new Date(date))
+}

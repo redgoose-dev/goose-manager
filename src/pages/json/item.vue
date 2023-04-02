@@ -3,20 +3,12 @@
   <PageHeader module="json" :title="`JSON / ${item.name}`"/>
   <Loading v-if="loading"/>
   <Fieldset v-else tag="section">
-    <Field :label="message.word.srl">
-      {{item.srl}}
-    </Field>
-    <Field :label="message.word.name">
-      <strong>{{item.name}}</strong>
-    </Field>
-    <Field :label="message.word.description">
-      {{item.description}}
-    </Field>
-    <Field v-if="item.categoryName" :label="message.word.categoryName">
-      {{item.categoryName}}
-    </Field>
+    <Field label="번호">{{item.srl}}</Field>
+    <Field label="이름"><strong>{{item.name}}</strong></Field>
+    <Field label="설명">{{item.description}}</Field>
+    <Field v-if="item.categoryName" label="분류이름">{{item.categoryName}}</Field>
     <pre class="json-code"><code>{{json}}</code></pre>
-    <Field v-if="!!item.path" :label="message.word.path" class="path">
+    <Field v-if="!!item.path" label="URL주소" class="path">
       <a v-if="isPathLink" :href="item.path" target="_blank">{{item.path}}</a>
       <template v-else>{{item.path}}</template>
     </Field>
@@ -24,15 +16,15 @@
   <Controller>
     <template #left>
       <ButtonBasic href="../" icon-left="list">
-        {{message.word.list}}
+        목록
       </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic href="./edit/" icon-left="edit">
-        {{message.word.edit}}
+        수정
       </ButtonBasic>
       <ButtonBasic href="./delete/" color="key" icon-left="trash">
-        {{message.word.delete}}
+        삭제
       </ButtonBasic>
     </template>
   </Controller>
@@ -43,7 +35,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { err } from '../../libs/error'
-import { message } from '../../message'
 import getData from '../../structure/json/item'
 import PageHeader from '../../components/page/header/index.vue'
 import { Fieldset, Field } from '../../components/forms/fieldset'

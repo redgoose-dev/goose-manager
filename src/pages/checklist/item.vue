@@ -1,6 +1,6 @@
 <template>
 <article class="checklist">
-  <PageHeader module="checklist" title="Checklist board"/>
+  <PageHeader module="checklist" title="Checklist item"/>
   <div class="checklist__body">
     <Loading v-if="loading"/>
     <ChecklistItem
@@ -13,18 +13,18 @@
     <Controller>
       <template #left>
         <ButtonBasic href="../list/" icon-left="list">
-          List
+          목록
         </ButtonBasic>
         <ButtonBasic color="key" href="../" icon-left="check">
-          Go to Today
+          오늘로 이동
         </ButtonBasic>
       </template>
       <template #right>
         <ButtonBasic color="weak" href="./edit/" icon-left="edit">
-          Edit
+          수정
         </ButtonBasic>
         <ButtonBasic color="error" href="./delete/" icon-left="trash">
-          Delete
+          삭제
         </ButtonBasic>
       </template>
     </Controller>

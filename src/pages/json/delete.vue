@@ -7,7 +7,7 @@
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    :button-label="printf(message.word.isDelete, 'JSON')"
+    button-label="JSON 삭제하기"
     :processing="processing"
     @cancel="router.back()"
     @submit="onSubmit"/>
@@ -18,9 +18,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { err } from '../../libs/error'
-import { printf } from '../../libs/string'
 import { toast } from '../../modules/toast'
-import { message } from '../../message'
 import { getItem, submit } from '../../structure/json/delete'
 import PageHeader from '../../components/page/header/index.vue'
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue'
@@ -36,7 +34,7 @@ const router = useRouter()
 const route = useRoute()
 const fields = reactive<Fields>({
   title: '',
-  description: printf(message.words.warningDeleteItem, message.word.json),
+  description: `이 JSON을 삭제하면 복구할 수 없습니다.`,
   name: '',
 })
 const loading = ref<boolean>(true)
@@ -50,13 +48,13 @@ async function onSubmit(): Promise<void>
     await submit(Number(route.params.srl))
     processing.value = false
     await router.push('../../')
-    toast.add(printf(message.success.delete, message.word.json), 'success').then()
+    toast.add('JSON을 삭제했습니다.', 'success').then()
   }
   catch (e: any)
   {
     err(['/pages/json/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.delete, message.word.json), 'error').then()
+    toast.add('JSON을 삭제하지 못했습니다.', 'error').then()
   }
 }
 
@@ -64,8 +62,8 @@ onMounted(async () => {
   try
   {
     let res = await getItem(Number(route.params.srl))
-    fields.title = printf(message.confirm.deleteItem, res.name)
-    fields.name = `${message.words.deleteItem}: ${res.name}`
+    fields.title = `이 JSON을 삭제할까요?`
+    fields.name = `삭제되는 요소: [${res.srl}] ${res.name}`
     loading.value = false
   }
   catch (e: any)

@@ -10,7 +10,7 @@
       class="information__card"/>
   </div>
   <Fieldset :disabled="processing" class="fields">
-    <Field label="Nest" for="nest">
+    <Field label="둥지" for="nest">
       <FormSelect
         id="nest"
         name="nest"
@@ -20,7 +20,7 @@
         value-type="number"/>
       <Help>같은 앱에속한 둥지를 선택해주세요.</Help>
     </Field>
-    <Field v-if="data.categories?.length > 0" label="Category" for="category">
+    <Field v-if="data.categories?.length > 0" label="분류" for="category">
       <FormSelect
         id="category"
         name="category"
@@ -32,7 +32,7 @@
   <Controller>
     <template #left>
       <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
-        Back
+        뒤로가기
       </ButtonBasic>
     </template>
     <template #right>
@@ -41,7 +41,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        Change nest
+        둥지 변경하기
       </ButtonBasic>
     </template>
   </Controller>
@@ -53,8 +53,6 @@ import { ref, reactive, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getData, requestCategories, submit } from '../../../structure/articles/change-nest'
 import { err } from '../../../libs/error'
-import { printf } from '../../../libs/string'
-import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { Card } from '../../item'
 import { FormSelect } from '../../forms'
@@ -87,14 +85,14 @@ async function onSubmit(): Promise<void>
       categorySrl: String(forms.categorySrl.value),
     })
     processing.value = true
-    toast.add(printf(message.success.change, message.word.nest), 'success').then()
+    toast.add('둥지를 변경했습니다.', 'success').then()
     let url = route.params.nestSrl ? `/nests/${forms.nestSrl.value}/articles/${route.params.articleSrl}/` : '../'
     await router.push(url)
   }
   catch (_)
   {
     processing.value = false
-    toast.add(printf(message.fail.change, message.word.nest), 'error').then()
+    toast.add('둥지를 변경하지 못했습니다.', 'error').then()
   }
 }
 

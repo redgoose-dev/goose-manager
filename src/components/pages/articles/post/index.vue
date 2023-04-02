@@ -1,27 +1,28 @@
 <template>
 <form ref="$root" v-if="!loading" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="processing">
-    <Field v-if="data.categories?.length > 0" label="Category" for="category">
+    <Field v-if="data.categories?.length > 0" label="분류" for="category">
       <FormSelect
         id="category"
         name="category"
         v-model="forms.category_srl"
         :options="data.categories"
+        placeholder="분류선택"
         class="category"/>
     </Field>
-    <Field label="Title" for="title">
+    <Field label="제목" for="title">
       <FormInput
         name="title"
         id="title"
         v-model="forms.title.value"
         :maxlength="120"
-        placeholder="Article title"
+        placeholder="아티클 제목.."
         :error="!!forms.title.error"
         :required="true"
         pattern="\S(.*\S)?"/>
     </Field>
     <Columns style="--columns-template: .75fr 1fr">
-      <Field label="Order date" for="order">
+      <Field label="아티클 날짜" for="order">
         <FormInput
           name="order"
           id="order"
@@ -35,7 +36,7 @@
           {{forms.order.error}}
         </Help>
       </Field>
-      <Field label="Article type" for="type">
+      <Field label="아티클 타입" for="type">
         <Labels class="types">
           <Label class="types__label ready">
             <FormRadio
@@ -44,15 +45,15 @@
               v-model="forms.type"
               :disabled="true"
               value="ready"/>
-            <span>ready</span>
+            <span>대기</span>
           </Label>
           <Label class="types__label public">
             <FormRadio name="type" v-model="forms.type" value="public"/>
-            <span>public</span>
+            <span>공개</span>
           </Label>
           <Label class="types__label private">
             <FormRadio name="type" v-model="forms.type" value="private"/>
-            <span>private</span>
+            <span>비공개</span>
           </Label>
         </Labels>
       </Field>
@@ -63,7 +64,7 @@
     name="content"
     id="content"
     v-model="forms.content.value"
-    placeholder="Article content body"
+    placeholder="아티클 내용.."
     :required="true"
     :disabled="loading"
     class="editor"
@@ -72,7 +73,7 @@
   <Controller>
     <template #left>
       <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
-        Back
+        뒤로가기
       </ButtonBasic>
     </template>
     <template v-if="props.mode === 'edit'" #right>
@@ -81,7 +82,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        Edit article
+        이티클 수정
       </ButtonBasic>
     </template>
     <template #right>
@@ -90,14 +91,14 @@
         :icon-left="processing ? 'loader' : 'save'"
         :rotate-icon="processing"
         @click="saveDraft">
-        Save draft
+        임시저장
       </ButtonBasic>
       <ButtonBasic
         type="submit"
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        Publishing article
+        아티클 퍼블리싱
       </ButtonBasic>
     </template>
   </Controller>
@@ -131,10 +132,8 @@ import { getData, deleteThumbnail, uploadThumbnail } from '../../../../structure
 import { post, formData } from '../../../../libs/api'
 import { err } from '../../../../libs/error'
 import { dateFormat, checkOrderDate } from '../../../../libs/date'
-import { printf } from '../../../../libs/string'
 import { getTypeArticle, createQueries } from '../libs'
 import { pureObject } from '../../../../libs/object'
-import { message } from '../../../../message'
 import { toast } from '../../../../modules/toast'
 import { FormInput, FormSelect, FormRadio } from '../../../forms'
 import { Fieldset, Field, Label, Labels, Help, Columns } from '../../../forms/fieldset'
@@ -215,8 +214,8 @@ async function save(type: string): Promise<void>
   // check order
   if (!checkOrderDate(forms.order.value))
   {
-    forms.order.error = message.fail.checkOrderDate
-    throw new Error(message.fail.checkOrderDate)
+    forms.order.error = '"orderdate" 검사 실패했습니다.'
+    throw new Error(forms.order.error)
   }
 
   // update thumbnail image
@@ -259,12 +258,12 @@ async function saveDraft(): Promise<void>
     processing.value = true
     await save('draft')
     processing.value = false
-    toast.add(message.success.draftSave, 'success').then()
+    toast.add('임시저장을 성공했습니다.', 'success').then()
   }
   catch (e: any)
   {
     err([ '/components/pages/articles/post/index.vue', 'saveDraft()' ], 'error', e.message)
-    toast.add(message.fail.draftSave, 'error').then()
+    toast.add('임시저장을 실패했습니다.', 'error').then()
     processing.value = false
   }
 }
@@ -292,7 +291,15 @@ async function publishing(): Promise<void>
   catch (e: any)
   {
     err([ '/components/pages/articles/post/index.vue', 'publishing()' ], 'error', e.message)
-    toast.add(printf(message.fail[props.mode], message.word.article), 'error').then()
+    switch (props.mode)
+    {
+      case 'create':
+        toast.add('아티클을 만들지 못했습니다.', 'error').then()
+        break
+      case 'edit':
+        toast.add('아티클을 수정하지 못했습니다.', 'error').then()
+        break
+    }
     processing.value = false
   }
 }

@@ -8,10 +8,10 @@
     <h1>{{data.article.title}}</h1>
     <p>
       <span>{{data.article.type}}</span>
-      <span>{{message.word.regdate}}: {{data.article.regdate}}</span>
-      <span v-if="data.article.order">{{message.word.order}}: {{data.article.order}}</span>
-      <span>{{message.word.hit}}: {{data.article.hit}}</span>
-      <span>{{message.word.like}}: {{data.article.star}}</span>
+      <span>등록일: {{data.article.regdate}}</span>
+      <span v-if="data.article.order">정렬날짜: {{data.article.order}}</span>
+      <span>조회수: {{data.article.hit}}</span>
+      <span>좋아요: {{data.article.star}}</span>
     </p>
   </header>
   <div class="article__body">
@@ -27,7 +27,7 @@
         type="button"
         :href="`../${createQueries(['category','page'], route.query)}`"
         icon-left="list">
-        {{message.word.list}}
+        목록
       </ButtonBasic>
     </template>
     <template #right>
@@ -37,22 +37,22 @@
         :href="`../create/${createQueries(['category'], route.query)}`"
         color="key"
         icon-left="plus">
-        {{message.word.create}}
+        만들기
       </ButtonBasic>
       <ButtonBasic href="./change-nest/">
-        {{message.word.changeNest}}
+        둥지변경
       </ButtonBasic>
       <ButtonBasic
         :href="`./edit/${createQueries(['category','page'], route.query)}`"
         color="weak"
         icon-left="edit-3">
-        {{message.word.edit}}
+        수정
       </ButtonBasic>
       <ButtonBasic
         :href="`./delete/${createQueries(['category','page'], route.query)}`"
         color="error"
         icon-left="trash">
-        {{message.word.delete}}
+        삭제
       </ButtonBasic>
     </template>
   </Controller>
@@ -77,7 +77,6 @@ import { useRoute } from 'vue-router'
 import getData from '../../../../structure/articles/item'
 import { err } from '../../../../libs/error'
 import { createQueries } from '../libs'
-import { message } from '../../../../message'
 import Loading from '../../../etc/loading.vue'
 import { Controller } from '../../../navigation'
 import { Modal, ModalBody } from '../../../modal'

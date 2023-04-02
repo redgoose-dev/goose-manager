@@ -22,7 +22,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { iconRandomPick } from '../../components/icons/assets'
-import { message } from '../../message'
 import { ButtonBasic } from '../../components/button'
 import Icon from '../../components/icons/index.vue'
 
@@ -31,7 +30,7 @@ const props = defineProps({
 })
 const iconName = iconRandomPick()
 const description = computed(() => {
-  return (window.DEBUG && props.error?.message) ? props.error.message : message.words.unknownError
+  return (window.DEBUG && props.error?.message) ? props.error.message : '알 수 없는 오류가 발생했습니다.'
 })
 </script>
 

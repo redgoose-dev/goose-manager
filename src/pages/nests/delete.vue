@@ -7,7 +7,7 @@
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    :button-label="printf(message.word.isDelete, message.word.nest)"
+    button-label="둥지 삭제하기"
     :processing="processing"
     @cancel="router.back()"
     @submit="onSubmit"/>
@@ -19,8 +19,6 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { err } from '../../libs/error'
 import { toast } from '../../modules/toast'
-import { printf } from '../../libs/string'
-import { message } from '../../message'
 import { getItem, submit } from '../../structure/nests/delete'
 import PageHeader from '../../components/page/header/index.vue'
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue'
@@ -36,7 +34,7 @@ const router = useRouter()
 const route = useRoute()
 const fields = reactive<Fields>({
   title: '',
-  description: message.words.deleteNest,
+  description: '이 둥지를 삭제하면 하위의 "아티클", "분류", "첨부파일" 데이터들이 전부 삭제됩니다.',
   name: '',
 })
 const loading = ref<boolean>(false)
@@ -47,8 +45,8 @@ onMounted(async () => {
   {
     loading.value = true
     let res = await getItem(Number(route.params.srl))
-    fields.title = printf(message.confirm.deleteItem, message.word.nest)
-    fields.name = `${message.words.deleteItem}: ${res.srl}`
+    fields.title = '이 둥지를 삭제할까요?'
+    fields.name = `삭제되는 요소: [${res.srl}] ${res.name}`
     loading.value = false
   }
   catch (e: any)
@@ -66,13 +64,13 @@ async function onSubmit(): Promise<void>
     await submit(Number(route.params.srl))
     processing.value = false
     await router.push('../../')
-    toast.add(printf(message.success.delete, message.word.nest), 'success').then()
+    toast.add('둥지를 삭제했습니다.', 'success').then()
   }
   catch (e: any)
   {
     err(['/pages/nests/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.delete, message.word.nest), 'error').then()
+    toast.add('둥지를 삭제하지 못했습니다.', 'error').then()
   }
 }
 </script>

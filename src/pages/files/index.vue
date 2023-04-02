@@ -12,7 +12,7 @@
       :alt="item.title"
       :meta="item.meta"/>
   </Items>
-  <Empty v-else title="no item"/>
+  <Empty v-else title="파일이 없습니다."/>
   <Pagination
     v-model="page"
     :total="total"

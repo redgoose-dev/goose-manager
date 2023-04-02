@@ -4,12 +4,12 @@
     <legend>filter of checklist</legend>
     <div class="filter__fields">
       <p class="total">
-        <span>Total</span>
+        <span>모두</span>
         <em>{{total}}</em>
       </p>
       <hr class="filter__line">
       <div class="filter__field range">
-        <label for="filter-range">Date range</label>
+        <label for="filter-range">날짜범위</label>
         <FormInput
           type="date"
           name="filter-range"
@@ -22,7 +22,7 @@
           size="small"/>
       </div>
       <div class="filter__field sort">
-        <label for="filter-sort">Sort</label>
+        <label for="filter-sort">정렬</label>
         <FormSelect
           name="filter-sort"
           id="filter-sort"
@@ -35,12 +35,12 @@
           ]"/>
       </div>
       <div class="filter__field keyword">
-        <label for="filter-keyword">Keyword</label>
+        <label for="filter-keyword">키워드</label>
         <Keyword
           name="filter-keyword"
           id="filter-keyword"
           v-model="forms.keyword"
-          placeholder="keyword text"
+          placeholder="keyword.."
           :use-clear="true"
           :minlength="3"
           :maxlength="20"
@@ -56,7 +56,7 @@
       icon-left="rotate-ccw"
       :disabled="props.loading"
       @click="onReset">
-      Reset
+      재설정
     </ButtonBasic>
     <ButtonBasic
       type="submit"
@@ -64,7 +64,7 @@
       size="small"
       icon-left="check"
       :disabled="props.loading">
-      Update filter
+      필터 업데이트
     </ButtonBasic>
   </nav>
 </form>

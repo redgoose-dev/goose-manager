@@ -4,19 +4,19 @@
     <ToolbarGroup>
       <ToolbarItem
         type="dropdown"
-        title="Add elements"
+        title="엘리먼트 추가"
         icon="box"
         :context="[
           {
-            label: 'Empty space',
+            label: '공백',
             click: () => onClickToolbarItem('insert-space'),
           },
           {
-            label: 'Iframe',
+            label: '아이프레임',
             click: () => onClickToolbarItem('insert-iframe'),
           },
           {
-            label: 'Picture',
+            label: '이미지',
             click: () => onClickToolbarItem('insert-picture'),
           },
         ]"/>
@@ -58,15 +58,15 @@
     <ToolbarGroup>
       <ToolbarItem
         type="button"
-        title="Open file manager"
-        label="Files"
+        title="open file manager"
+        label="첨부파일"
         icon="archive"
         color="key"
         @click="onClickToolbarItem('open-file-manager')"/>
       <ToolbarItem
         type="button"
-        title="Open preview"
-        label="Preview"
+        title="open preview"
+        label="미리보기"
         icon="eye"
         @click="onClickToolbarItem('preview')"/>
     </ToolbarGroup>
@@ -75,12 +75,12 @@
 </template>
 
 <script setup>
-import { ToolbarWrap, ToolbarGroup, ToolbarItem } from './toolbar';
+import { ToolbarWrap, ToolbarGroup, ToolbarItem } from './toolbar'
 
-const emits = defineEmits([ 'select-item' ]);
+const emits = defineEmits([ 'select-item' ])
 
 function onClickToolbarItem(code)
 {
-  emits('select-item', code);
+  emits('select-item', code)
 }
 </script>

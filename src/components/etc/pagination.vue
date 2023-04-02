@@ -2,7 +2,7 @@
 <nav class="pagination">
   <button
     type="button"
-    title="to first page"
+    :title="!disabledFirstArrow ? '첫 페이지로 이동' : ''"
     :disabled="disabledFirstArrow"
     :class="[ 'pagination-item', 'pagination-item--far' ]"
     @click="onFirstPage">
@@ -10,7 +10,7 @@
   </button>
   <button
     type="button"
-    :title="`to ${range.value} page prev`"
+    :title="!(pageBlock <= 0) ? `${range}페이지 이전으로 이동` : ''"
     :disabled="pageBlock <= 0"
     :class="[ 'pagination-item', 'pagination-item--range' ]"
     @click="onPrevRange">
@@ -21,7 +21,7 @@
       v-for="item in pages"
       type="button"
       :disabled="item.active"
-      :title="`${item.key} page`"
+      :title="`${item.key}페이지`"
       :class="[
         'pagination-item',
         'pagination-item--number',
@@ -34,7 +34,7 @@
   <template v-else>
     <button
       type="button"
-      :title="`${page || 1} page`"
+      :title="`${page || 1}페이지`"
       :disabled="true"
       :class="[
         'pagination-item',
@@ -46,7 +46,7 @@
   </template>
   <button
     type="button"
-    :title="`to ${range.value} page next`"
+    :title="!(pageBlock >= pageBlockTotal) ? `${range}페이지 다음으로 이동` : ''"
     :disabled="pageBlock >= pageBlockTotal"
     :class="[ 'pagination-item', 'pagination-item--range' ]"
     @click="onNextRange">
@@ -54,7 +54,7 @@
   </button>
   <button
     type="button"
-    title="to last page"
+    :title="!disabledLastArrow ? '마지막 페이지로 이동' : ''"
     :disabled="disabledLastArrow"
     :class="[ 'pagination-item', 'pagination-item--far' ]"
     @click="onLastPage">

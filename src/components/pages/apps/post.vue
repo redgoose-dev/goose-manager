@@ -1,13 +1,13 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
-    <Field :label="message.word.id" for="id">
+    <Field label="아이디" for="id">
       <FormInput
         v-model="forms.id.value"
         name="id"
         id="id"
         :maxlength="20"
-        :placeholder="printf(message.words.pleaseInput, 'ID')"
+        placeholder="아이디를 입력해주세요."
         :error="!!forms.id.error"
         :required="true"
         class="fields__id"/>
@@ -15,35 +15,35 @@
         {{forms.id.error}}
       </Help>
       <Help v-else>
-        {{printf(message.words.pleaseInputOnly, `"${message.word.alphanumeric}, \`-\` and \`_\`"`)}}
+        "알파벳과 숫자형식의 글자, `-` and `_`"형식으로 입력해주세요.
       </Help>
     </Field>
-    <Field :label="message.word.name" for="name">
+    <Field label="이름" for="name">
       <FormInput
         v-model="forms.name.value"
         name="name"
         id="name"
         :maxlength="50"
-        :placeholder="printf(message.words.pleaseInput, message.word.name)"
+        placeholder="이름을 입력해주세요."
         :error="!!forms.name.error"
         :required="true"
         class="fields__name"/>
     </Field>
-    <Field :label="message.word.description" for="description">
+    <Field label="설명" for="description">
       <FormInput
         v-model="forms.description.value"
         name="description"
         id="description"
         :maxlength="120"
-        :placeholder="printf(message.words.pleaseInput, message.word.description)"
+        placeholder="설명을 입력해주세요."
         :error="!!forms.description.error"/>
-      <Help>{{printf(message.words.descriptionOf, message.word.app)}}</Help>
+      <Help>앱의 설명입니다.</Help>
     </Field>
   </Fieldset>
   <Controller>
     <template #left>
       <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
-        {{message.word.back}}
+        뒤로가기
       </ButtonBasic>
     </template>
     <template #right>
@@ -66,7 +66,6 @@ import { validateId, printf } from '../../../libs/string'
 import { get, post, formData, checkForms } from '../../../libs/api'
 import { toast } from '../../../modules/toast'
 import { err } from '../../../libs/error'
-import { message } from '../../../message'
 import { Fieldset, Field, Help } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
 import { FormInput } from '../../forms'
@@ -91,14 +90,7 @@ const forms = reactive<Forms>({
 const loading = ref<boolean>(false)
 const processing = ref<boolean>(false)
 const submitLabel = computed<string>(() => {
-  if (props.mode === 'edit')
-  {
-    return printf(message.word.isEdit, message.word.app)
-  }
-  else
-  {
-    return printf(message.word.isCreate, message.word.app)
-  }
+  return (props.mode === 'edit') ? '앱 수정하기' : '앱 만들기'
 })
 
 onMounted(async (): Promise<void> => {
@@ -122,7 +114,7 @@ onMounted(async (): Promise<void> => {
 async function onSubmit(): Promise<void>
 {
   forms.id.error = null
-  if (!validateId(forms.id.value)) forms.id.error = printf(message.words.pleaseCheck, 'ID')
+  if (!validateId(forms.id.value)) forms.id.error = '아이디를 확인해주세요.'
   try
   {
     processing.value = true
@@ -135,13 +127,27 @@ async function onSubmit(): Promise<void>
     await post(props.srl ? `/apps/${props.srl}/edit/` : '/apps/', data)
     processing.value = false
     await router.push('/apps/')
-    toast.add(printf(message.success[props.mode], message.word.app), 'success').then()
+    switch (props.mode) {
+      case 'create':
+        toast.add('앱을 만들었습니다.', 'success').then()
+        break
+      case 'edit':
+        toast.add('앱을 수정했습니다.', 'success').then()
+        break
+    }
   }
   catch (e: any)
   {
     err([ '/components/pages/apps/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], message.word.app), 'error').then()
+    switch (props.mode) {
+      case 'create':
+        toast.add('앱을 만들지 못했습니다.', 'error').then()
+        break
+      case 'edit':
+        toast.add('앱을 수정하지 못했습니다.', 'error').then()
+        break
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="checklist" title="Edit board"/>
+  <PageHeader module="checklist" title="Edit checklist"/>
   <form class="checklist-post" @submit.prevent="onSubmit">
     <header class="checklist-post__header">
       <h2>{{forms.date}}</h2>
@@ -21,7 +21,7 @@
     </div>
     <Controller>
       <template #left>
-        <ButtonBasic icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+        <ButtonBasic icon-left="arrow-left" @click="router.back()">뒤로가기</ButtonBasic>
       </template>
       <template #right>
         <ButtonBasic
@@ -29,7 +29,7 @@
           color="key"
           :icon-left="processing ? 'loader' : 'check'"
           :rotate-icon="processing">
-          Edit item
+          수정하기
         </ButtonBasic>
       </template>
     </Controller>
@@ -67,8 +67,6 @@ import { marked } from 'marked'
 import { preferenceStore } from '../../store/preference'
 import { err } from '../../libs/error'
 import { toast } from '../../modules/toast'
-import { printf } from '../../libs/string'
-import { message } from '../../message'
 import { dateFormat } from '../../libs/date'
 import { baseRenderer } from '../../modules/marked'
 import { getData, submit } from '../../structure/checklist/edit'
@@ -161,7 +159,7 @@ function controlPreview(sw: boolean): void
 {
   if (sw && !forms.content.value)
   {
-    toast.add(printf(message.error.emptyContent, message.word.content), 'error')
+    toast.add('이 내용은 비어있습니다.', 'error').then()
     return
   }
   if (sw)
@@ -190,7 +188,7 @@ async function onSubmit(): Promise<void>
   {
     err([ '/pages/checklist/edit.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.edit, message.word.board), 'error')
+    toast.add('체크리스트를 수정하지 못했습니다.', 'error').then()
   }
 }
 

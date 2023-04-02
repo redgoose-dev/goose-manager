@@ -1,34 +1,34 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
-    <Field :label="message.word.category" for="category">
+    <Field label="분류" for="category">
       <FormSelect
         id="category"
         name="category"
         v-model="forms.category_srl.value"
         :options="data.categories"
         value-type="string"
-        :placeholder="message.words.selectCategory"
+        placeholder="분류선택"
         class="category"/>
     </Field>
-    <Field :label="message.word.name" for="name">
+    <Field label="이름" for="name">
       <FormInput
         v-model="forms.name.value"
         name="name"
         id="name"
         :maxlength="50"
-        placeholder="goose navigation"
+        placeholder="JSON 이름.."
         :error="!!forms.name.error"
         :required="true"
         class="fields__name"/>
     </Field>
-    <Field :label="message.word.description" for="description">
+    <Field label="설명" for="description">
       <FormInput
         v-model="forms.description.value"
         name="description"
         id="description"
         :maxlength="150"
-        placeholder="comment.."
+        placeholder="설명내용.."
         :error="!!forms.name.error"
         class="fields__description"/>
     </Field>
@@ -46,13 +46,13 @@
         {{forms.json.error}}
       </Help>
     </Field>
-    <Field :label="message.word.path" for="path">
+    <Field label="URL 주소" for="path">
       <FormInput
         v-model="forms.path.value"
         name="path"
         id="path"
         :maxlength="255"
-        placeholder="https://"
+        placeholder="https://hostname/image.jpg"
         :error="!!forms.path.error"
         class="fields__path"/>
     </Field>
@@ -60,7 +60,7 @@
   <Controller>
     <template #left>
       <ButtonBasic icon-left="arrow-left" @click="router.back()">
-        {{message.word.back}}
+        뒤로가기
       </ButtonBasic>
     </template>
     <template #right>
@@ -82,9 +82,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { post, formData, checkForms } from '../../../libs/api'
 import { getData } from '../../../structure/json/post'
 import { err } from '../../../libs/error'
-import { printf } from '../../../libs/string'
 import { pureObject } from '../../../libs/object'
-import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { Fieldset, Field, Help } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
@@ -117,8 +115,13 @@ const forms = reactive<any>({
 const loading = ref<boolean>(false)
 const processing = ref<boolean>(false)
 const submitLabel = computed<string>(() => {
-  const code = props.mode === 'edit' ? message.word.isEdit : message.word.isCreate
-  return printf(code, 'JSON')
+  switch (props.mode)
+  {
+    case 'edit':
+      return 'JSON 수정하기'
+    default:
+      return 'JSON 만들기'
+  }
 })
 
 onMounted(async () => {
@@ -155,7 +158,7 @@ function validateForms(): void
   }
   catch (_)
   {
-    forms.json.error = message.error.parsingJSON
+    forms.json.error = 'JSON 파싱하는데 오류가 발생했습니다.'
   }
 }
 
@@ -190,13 +193,27 @@ async function onSubmit(): Promise<void>
     processing.value = false
     const srl: number = res.srl || props.srl || NaN
     await router.push(srl ? `/json/${srl}/` : '/json/')
-    toast.add(printf(message.success[props.mode], 'JSON'), 'success').then()
+    switch (props.mode) {
+      case 'edit':
+        toast.add('JSON을 수정했습니다.', 'success').then()
+        break
+      case 'create':
+        toast.add('JSON을 만들었습니다.', 'success').then()
+        break
+    }
   }
   catch (e: any)
   {
     err([ '/components/pages/json/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], 'JSON'), 'error').then()
+    switch (props.mode) {
+      case 'edit':
+        toast.add('JSON을 수정하지 못했습니다.', 'error').then()
+        break
+      case 'create':
+        toast.add('JSON을 만들지 못했습니다.', 'error').then()
+        break
+    }
   }
 }
 </script>

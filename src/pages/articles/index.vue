@@ -17,8 +17,8 @@
           :alt="item.title"
           :image="item.image"
           :nav="[
-            { label: message.word.edit, href: `./${item.srl}/edit/` },
-            { label: message.word.delete, href: `./${item.srl}/delete/` },
+            { label: '수정', href: `./${item.srl}/edit/` },
+            { label: '삭제', href: `./${item.srl}/delete/` },
           ]">
           <template #after v-if="item.private">
             <Mark/>
@@ -52,7 +52,6 @@ import { filtersStore } from '../../store/filters'
 import { err } from '../../libs/error'
 import { serialize } from '../../libs/string'
 import { scrollTo } from '../../libs/util'
-import { message } from '../../message'
 import { getData, requestArticles } from '../../structure/articles'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card, Thumbnail, Mark } from '../../components/item'

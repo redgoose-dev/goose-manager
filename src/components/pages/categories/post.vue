@@ -1,13 +1,13 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset :disabled="loading">
-    <Field :label="message.word.name" for="name">
+    <Field label="이름" for="name">
       <FormInput
         v-model="forms.name.value"
         name="name"
         id="name"
         :maxlength="40"
-        :placeholder="printf(message.words.pleaseInput, message.word.name)"
+        placeholder="분류이름.."
         :error="!!forms.name.error"
         :required="true"
         class="input-name"/>
@@ -16,7 +16,7 @@
   <Controller>
     <template #left>
       <ButtonBasic type="button" icon-left="arrow-left" @click="router.back()">
-        {{message.word.back}}
+        뒤로가기
       </ButtonBasic>
     </template>
     <template #right>
@@ -37,8 +37,6 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { get, post, formData, checkForms } from '../../../libs/api'
 import { err } from '../../../libs/error'
-import { printf } from '../../../libs/string'
-import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { Fieldset, Field } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
@@ -62,8 +60,14 @@ const loading = ref<boolean>(false)
 const processing = ref<boolean>(false)
 const isEdit = computed<boolean>(() => (props.mode === 'edit'))
 const submitLabel = computed<string>(() => {
-  const code = props.mode === 'edit' ? message.word.isEdit : message.word.isCreate
-  return printf(code, message.word.category)
+  switch (props.mode)
+  {
+    case 'edit':
+      return '분류 수정하기'
+    case 'create':
+    default:
+      return '분류 만들기'
+  }
 })
 
 onMounted(async () => {
@@ -102,13 +106,15 @@ async function onSubmit():Promise<void>
     }))
     processing.value = false
     await router.push(isEdit.value ? `../../` : '../')
-    toast.add(printf(message.success[props.mode], 'category'), 'success').then()
+    const message = (props.mode === 'edit') ? '분류를 수정했습니다.' : '분류를 만들었습니다.'
+    toast.add(message, 'success').then()
   }
   catch (e: any)
   {
     err([ '/components/pages/categories/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], 'categories'), 'error').then()
+    const message = (props.mode === 'edit') ? '분류를 수정하지 못했습니다.' : '분류를 만들지 못했습니다.'
+    toast.add(message, 'error').then()
   }
 }
 </script>

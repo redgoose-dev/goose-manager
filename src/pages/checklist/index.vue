@@ -13,12 +13,12 @@
     <Controller>
       <template #left>
         <ButtonBasic href="./list/" icon-left="list">
-          {{message.word.list}}
+          목록
         </ButtonBasic>
       </template>
       <template #right>
         <ButtonBasic color="key" href="./edit/" icon-left="edit">
-          {{message.word.edit}}
+          수정
         </ButtonBasic>
       </template>
     </Controller>
@@ -33,7 +33,6 @@ import { preferenceStore } from '../../store/preference'
 import { getLastItem, editItem } from '../../structure/checklist/item'
 import { checkTime, countingCheckbox } from '../../structure/checklist/lib'
 import { err } from '../../libs/error'
-import { message } from '../../message'
 import PageHeader from '../../components/page/header/index.vue'
 import { ButtonBasic } from '../../components/button'
 import { Controller } from '../../components/navigation'

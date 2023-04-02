@@ -1,17 +1,17 @@
 <template>
 <article>
-  <PageHeader module="checklist" title="Checklist boards"/>
+  <PageHeader module="checklist" title="Checklist items"/>
   <div class="checklist-list">
     <div class="checklist-list__body">
       <Loading v-if="loading" class="checklist-list__loading"/>
-      <Items v-else-if="data.index?.length > 0" theme="card">
+      <Items v-else-if="(data.index?.length > 0)" theme="card">
         <Card
           v-for="item in data.index"
           :title="item.title"
           :href="`/checklist/${item.srl}/`"
           :nav="[
-            { label: 'Edit', href: `/checklist/${item.srl}/edit/` },
-            { label: 'Delete', href: `/checklist/${item.srl}/delete/` },
+            { label: '수정', href: `/checklist/${item.srl}/edit/` },
+            { label: '삭제', href: `/checklist/${item.srl}/delete/` },
           ]">
           <template #after>
             <div :class="[
@@ -25,7 +25,7 @@
           </template>
         </Card>
       </Items>
-      <Empty v-else title="no item"/>
+      <Empty v-else title="체크리스트가 없습니다."/>
       <Pagination
         v-model="page"
         :total="data.total"
@@ -36,7 +36,7 @@
       <Controller>
         <template #left>
           <ButtonBasic href="../" icon-left="sun" color="key">
-            Go to Today
+            오늘로 이동
           </ButtonBasic>
         </template>
       </Controller>

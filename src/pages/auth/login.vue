@@ -7,10 +7,10 @@
     </header>
     <form class="login__body" @submit.prevent="onSubmit">
       <fieldset>
-        <legend>login fields</legend>
+        <legend>로그인 필드</legend>
         <div class="login-field login-field--id">
           <p class="login-field__label">
-            <label for="email">E-Mail</label>
+            <label for="email">이메일 주소</label>
           </p>
           <div class="login-field__body">
             <input
@@ -26,7 +26,7 @@
         </div>
         <div class="login-field login-field--password">
           <p class="login-field__label">
-            <label for="password">Password</label>
+            <label for="password">비밀번호</label>
           </p>
           <div class="login-field__body">
             <input
@@ -35,7 +35,7 @@
               id="password"
               v-model="forms.password"
               maxlength="30"
-              placeholder="Please input password"
+              placeholder="비밀번호를 입력해주세요."
               required/>
             <i/>
           </div>
@@ -46,7 +46,7 @@
               name="save_auth"
               v-model="forms.save"
               size="small"/>
-            <span>Keep me signed in.</span>
+            <span>로그인정보 저장</span>
           </label>
         </div>
       </fieldset>
@@ -58,7 +58,7 @@
           size="large"
           color="key"
           :disabled="processing">
-          Sign in
+          로그인
         </ButtonBasic>
       </nav>
     </form>
@@ -87,8 +87,8 @@ interface Forms {
 const router = useRouter()
 const auth = authStore()
 const loading = ref<boolean>(false)
-const title = ref<string>(TITLE || 'manager')
-const description = ref<string>(DESCRIPTION || 'manager description')
+const title = ref<string>(TITLE || '매니저')
+const description = ref<string>(DESCRIPTION || '매니저 설명')
 const processing = ref<boolean>(false)
 const forms = reactive<Forms>({
   email: '',
@@ -116,7 +116,7 @@ async function onSubmit(): Promise<void>
     if (!success) throw new Error(message)
     // setup service
     const { user, token } = data
-    if (!(user && token)) throw new Error('not user or token')
+    if (!(user && token)) throw new Error('유저나 토큰이 없습니다.')
     // setup store
     const preference = preferenceStore()
     auth.setup(token, user)
@@ -130,7 +130,7 @@ async function onSubmit(): Promise<void>
   {
     err(['/pages/auth/login.vue', 'onSubmit()'], 'error', e.message)
     loading.value = false
-    toast.add('Failed login.', 'error')
+    toast.add('로그인 실패', 'error').then()
   }
 }
 </script>

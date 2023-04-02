@@ -25,6 +25,7 @@
     v-if="props.useClear"
     type="button"
     :disabled="clearDisabled"
+    title="Clear"
     class="keyword-text__clear"
     @click="emits('clear')">
     <Icon name="x-circle"/>
@@ -44,10 +45,8 @@
 </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { printf } from '../../libs/string'
-import { message } from '../../message'
 import Icon from '../icons/index.vue'
 
 const $input = ref()
@@ -63,7 +62,7 @@ const props = defineProps({
   maxlength: Number,
   placeholder: {
     type: String,
-    default: printf(message.words.pleaseInput, message.word.keyword),
+    default: '키워드를 입력해주세요.',
   },
   processing: Boolean,
   useClear: Boolean,
@@ -74,7 +73,7 @@ const keywordDisabled = computed(() => {
   return props.disabled || props.processing
 })
 const clearDisabled = computed(() => {
-  return !(props.modelValue?.length > 0)
+  return !((props.modelValue as string)?.length > 0)
 })
 
 defineExpose({

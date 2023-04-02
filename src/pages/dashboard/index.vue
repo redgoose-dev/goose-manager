@@ -24,8 +24,8 @@
             :alt="item.title"
             :meta="item.meta"
             :nav="[
-              { label: message.word.edit, href: `/articles/${item.srl}/edit/` },
-              { label: message.word.delete, href: `/articles/${item.srl}/delete/` },
+              { label: '수정', href: `/articles/${item.srl}/edit/` },
+              { label: '삭제', href: `/articles/${item.srl}/delete/` },
             ]"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -46,9 +46,9 @@
             :title="item.title"
             :meta="item.meta"
             :nav="[
-              item.useCategory && { label: message.word.category, href: `/nests/${item.srl}/categories/` },
-              { label: message.word.edit, href: `/nests/${item.srl}/edit/` },
-              { label: message.word.delete, href: `/nests/${item.srl}/delete/` },
+              item.useCategory && { label: '분류', href: `/nests/${item.srl}/categories/` },
+              { label: '수정', href: `/nests/${item.srl}/edit/` },
+              { label: '삭제', href: `/nests/${item.srl}/delete/` },
             ].filter(Boolean)"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -68,8 +68,8 @@
             :title="item.title"
             :meta="item.meta"
             :nav="[
-              { label: message.word.edit, href: `/apps/${item.srl}/edit/` },
-              { label: message.word.delete, href: `/apps/${item.srl}/delete/` },
+              { label: '수정', href: `/apps/${item.srl}/edit/` },
+              { label: '삭제', href: `/apps/${item.srl}/delete/` },
             ]"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -90,8 +90,8 @@
             :title="item.title"
             :meta="item.meta"
             :nav="[
-              { label: message.word.edit, href: `/json/${item.srl}/edit/` },
-              { label: message.word.delete, href: `/json/${item.srl}/delete/` },
+              { label: '수정', href: `/json/${item.srl}/edit/` },
+              { label: '삭제', href: `/json/${item.srl}/delete/` },
             ]"/>
         </Items>
         <Empty v-else title="no item"/>
@@ -106,7 +106,6 @@ import { ref, onMounted, reactive } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { err } from '../../libs/error'
 import { getData } from '../../structure/dashboard'
-import { message } from '../../message'
 import { Items, Card, Thumbnail } from '../../components/item'
 import PageHeader from '../../components/page/header/index.vue'
 import Loading from '../../components/etc/loading.vue'
