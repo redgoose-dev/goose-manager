@@ -16,8 +16,8 @@
           :title="element.title"
           :meta="element.meta"
           :nav="[
-            { label: 'Edit', href: `./${element.srl}/edit/` },
-            { label: 'Delete', href: `./${element.srl}/delete/` },
+            { label: '수정', href: `./${element.srl}/edit/` },
+            { label: '삭제', href: `./${element.srl}/delete/` },
           ]"
           class="card">
           <template #before>
@@ -33,15 +33,15 @@
   <Controller>
     <template #left>
       <ButtonBasic href="../../" icon-left="cloud">
-        Nests
+        둥지
       </ButtonBasic>
       <ButtonBasic href="../articles/" icon-left="droplet">
-        Articles
+        아티클
       </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        Create category
+        분류 만들기
       </ButtonBasic>
     </template>
   </Controller>
@@ -56,8 +56,6 @@ import { getDataForArticles } from '../../../structure/categories'
 import { err } from '../../../libs/error'
 import { post, formData } from '../../../libs/api'
 import { toast } from '../../../modules/toast'
-import { message } from '../../../message'
-import { printf } from '../../../libs/string'
 import { Items, Card } from '../../../components/item'
 import PageHeader from '../../../components/page/header/index.vue'
 import { Controller } from '../../../components/navigation'
@@ -85,12 +83,12 @@ async function onChangeIndex()
       srls,
     }))
     if (!res.success) throw new Error(res.message)
-    toast.add(printf(message.success.change, message.word.order), 'success').then()
+    toast.add('순서를 변경했습니다.', 'success').then()
   }
   catch (e: any)
   {
     err(['/pages/nests/categories/index.vue', 'onChangeIndex()'], 'error', e.message)
-    toast.add(printf(message.fail.change, message.word.order), 'error').then()
+    toast.add('순서를 변경하지 못했습니다.', 'error').then()
   }
 }
 

@@ -4,26 +4,26 @@
     <legend>filter of articles</legend>
     <div class="filter__fields">
       <p class="total">
-        <span>{{message.word.total}}</span>
+        <span>모두</span>
         <em>{{total}}</em>
       </p>
       <hr class="filter__line">
       <div class="filter__field type">
-        <label for="filter_type">{{message.word.type}}</label>
+        <label for="filter_type">타입</label>
         <FormSelect
           id="filter_type"
           name="filter_type"
           v-model="forms.type"
           :options="[
-            { label: message.word.all, value: 'all' },
-            { label: message.word.public, value: 'public' },
-            { label: message.word.private, value: 'private' },
+            { label: '모두', value: 'all' },
+            { label: '공개', value: 'public' },
+            { label: '비공개', value: 'private' },
           ]"
           :placeholder="null"
           size="small"/>
       </div>
       <div class="filter__field sort">
-        <label for="filter_order">{{message.word.sort}}</label>
+        <label for="filter_order">정렬</label>
         <FormSelect
           id="filter_order"
           name="filter_order"
@@ -46,22 +46,22 @@
           size="small"/>
       </div>
       <div class="filter__field theme">
-        <label for="filter_theme">{{message.word.theme}}</label>
+        <label for="filter_theme">테마</label>
         <FormSelect
           id="filter_theme"
           name="filter_theme"
           v-model="forms.theme"
           :options="[
-            { label: message.word.list, value: 'list' },
-            { label: message.word.card, value: 'card' },
-            { label: message.word.thumbnail, value: 'thumbnail' },
-            { label: message.word.brick, value: 'brick' },
+            { label: '목록', value: 'list' },
+            { label: '카드', value: 'card' },
+            { label: '썸네일', value: 'thumbnail' },
+            { label: '벽돌', value: 'brick' },
           ]"
           :placeholder="null"
           size="small"/>
       </div>
       <div class="filter__field keyword">
-        <label for="filter_keyword">{{message.word.keyword}}</label>
+        <label for="filter_keyword">키워드</label>
         <Keyword
           ref="$keyword"
           v-model="forms.keyword"
@@ -83,7 +83,7 @@
       icon-left="rotate-ccw"
       :disabled="props.loading"
       @click="onReset">
-      {{message.word.reset}}
+      재설정
     </ButtonBasic>
     <ButtonBasic
       type="submit"
@@ -91,7 +91,7 @@
       size="small"
       icon-left="check"
       :disabled="props.loading">
-      {{message.word.updateFilter}}
+      필터 업데이트
     </ButtonBasic>
   </nav>
 </form>
@@ -102,7 +102,6 @@ import { ref, computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { filtersStore } from '../../../store/filters'
 import { withCommas } from '../../../libs/number'
-import { message } from '../../../message'
 import { FormSelect, Keyword } from '../../forms'
 import { ButtonBasic } from '../../button'
 

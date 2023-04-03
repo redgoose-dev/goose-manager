@@ -24,11 +24,11 @@
           :image="item.image"
           :nav="[
             {
-              label: message.word.edit,
+              label: '수정',
               href: `./${item.srl}/edit/${createQueries(['category','page'], route.query)}`,
             },
             {
-              label: message.word.delete,
+              label: '삭제',
               href: `./${item.srl}/delete/${createQueries(['category','page'], route.query)}`,
             },
           ]">
@@ -48,10 +48,10 @@
       <Controller class="articles__controller">
         <template #left>
           <ButtonBasic href="../../" icon-left="cloud">
-            {{message.word.nests}}
+            둥지
           </ButtonBasic>
           <ButtonBasic href="../categories/" icon-left="server">
-            {{message.word.categories}}
+            분류
           </ButtonBasic>
         </template>
         <template #right>
@@ -59,7 +59,7 @@
             :href="`./create/${createQueries(['category'], route.query)}`"
             color="key"
             icon-left="plus">
-            {{printf(message.word.isCreate, message.word.article)}}
+            아티클 만들기
           </ButtonBasic>
         </template>
       </Controller>
@@ -80,10 +80,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../../store/preference'
 import { filtersStore } from '../../../store/filters'
 import { err } from '../../../libs/error'
-import { serialize, printf } from '../../../libs/string'
+import { serialize } from '../../../libs/string'
 import { scrollTo } from '../../../libs/util'
 import { createQueries } from '../../../components/pages/articles/libs'
-import { message } from '../../../message'
 import { getData, requestArticles, requestCategories } from '../../../structure/articles'
 import PageHeader from '../../../components/page/header/index.vue'
 import { Items, Card, Thumbnail, Mark } from '../../../components/item'
