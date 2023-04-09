@@ -28,8 +28,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import { printf } from '../../libs/string'
-import { message } from '../../message'
 
 const $root = ref()
 const props = defineProps({
@@ -39,7 +37,7 @@ const props = defineProps({
   modelValue: [ String, Number ],
   placeholder: {
     type: String,
-    default: printf(message.words.pleaseInput, message.word.keyword),
+    default: '키워드를 입력해주세요.',
   },
   maxlength: Number,
   required: Boolean,

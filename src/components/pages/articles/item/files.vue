@@ -1,6 +1,6 @@
 <template>
 <section class="files">
-  <h1 class="files__title">{{message.word.attachmentFiles}}</h1>
+  <h1 class="files__title">첨부파일</h1>
   <ul class="files__index">
     <li v-for="item in props.items" class="files__item">
       <a :href="createFullPath(item.path)" target="_blank">
@@ -15,7 +15,6 @@
 <script lang="ts" setup>
 import { getByte } from '../../../../libs/string'
 import { createFullPath } from '../../../../structure/files/util'
-import { message } from '../../../../message'
 
 const props = defineProps<{
   items: any[]

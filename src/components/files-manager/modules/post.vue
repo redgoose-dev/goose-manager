@@ -19,7 +19,7 @@
         :rotate-icon="processing"
         :disabled="disabledUploadButton"
         @click="onClickUploadFiles">
-        Upload files
+        파일 업로드
       </ButtonBasic>
       <ButtonBasic
         type="button"
@@ -27,7 +27,7 @@
         color="sub"
         icon-left="link-2"
         @click="showUploadUrl = true">
-        Upload URL
+        URL 업로드
       </ButtonBasic>
       <ButtonBasic
         type="button"
@@ -35,7 +35,7 @@
         icon-left="minus-square"
         :disabled="disabledAssets"
         @click="onSelectAll()">
-        Select all
+        모두선택
       </ButtonBasic>
       <ButtonBasic
         type="button"
@@ -44,11 +44,11 @@
         icon-left="trash-2"
         :disabled="selectedAssets"
         @click="onClickDeleteItems">
-        Delete
+        삭제
       </ButtonBasic>
     </div>
     <p class="files-total">
-      Count:
+      업로드 갯수:
       <em>{{localStore.post.index.length}} / {{localStore.post.limitCount}}</em>
     </p>
   </header>
@@ -69,18 +69,18 @@
           icon-left="image"
           :disabled="!localStore.post.thumbnail.srl"
           class="dropdown__button">
-          Thumbnail
+          썸네일 이미지
         </ButtonBasic>
         <div class="dropdown__context">
           <ul>
             <li>
               <button type="button" @click="onResetThumbnail">
-                Reset
+                리셋
               </button>
             </li>
             <li>
               <button type="button" @click="showThumbnailPreview = true">
-                Preview
+                프리뷰
               </button>
             </li>
           </ul>
@@ -96,7 +96,7 @@
           :disabled="selectedAssets"
           class="dropdown__button"
           @click="onClickFunction('insert-markdown')">
-          Insert assets
+          첨부파일 삽입
         </ButtonBasic>
         <div class="dropdown__context">
           <ul>
@@ -105,7 +105,7 @@
                 type="button"
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-markdown')">
-                Insert markdown
+                마크다운 삽입
               </button>
             </li>
             <li>
@@ -113,7 +113,7 @@
                 type="button"
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-html')">
-                Insert html
+                HTML 삽입
               </button>
             </li>
             <li>
@@ -121,7 +121,7 @@
                 type="button"
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-address')">
-                Insert address
+                주소 삽입
               </button>
             </li>
           </ul>
@@ -167,13 +167,12 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-import { fileManagerStore } from '../../../store/tool-manager'
+import { fileManagerStore } from '../../../store/files-manager'
 import { getItemsPost, removeFilesPost, uploadFilePost } from '../../../structure/files/manager'
 import { createFullPath } from '../../../structure/files/util'
 import { err } from '../../../libs/error'
 import { pureObject } from '../../../libs/object'
 import { printf, getByte } from '../../../libs/string'
-import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil'
 import { Modal, ModalBody } from '../../modal'
@@ -341,19 +340,19 @@ async function deleteItems(items: any[]): Promise<void>
   })
   localStore.post.index = newIndex.filter(Boolean)
   $attachments.value.reset()
-  toast.add(printf(message.success.delete, message.word.file), 'success').then()
+  toast.add('첨부파일을 삭제했습니다.', 'success').then()
 }
 function onDeleteItem(key: number|undefined): void
 {
   if (key === undefined) return
-  if (!confirm(message.confirm.deleteFile)) return
+  if (!confirm('이 항목을 삭제할까요?\n이 데이터를 삭제하면 복구할 수 없습니다.')) return
   onSelectAll(false)
   deleteItems([localStore.post.index[key] ? { key, srl: localStore.post.index[key]?.srl } : false].filter(Boolean)).then()
 }
 async function onClickDeleteItems(): Promise<void>
 {
   if (localStore.post.selected.length <= 0) return
-  if (!confirm(printf(message.confirm.deleteFileItems, String(localStore.post.selected.length)))) return
+  if (!confirm(printf('정말 {0}개의 항목들을 삭제할까요?', String(localStore.post.selected.length)))) return
   let items = localStore.post.selected.map(key => {
     if (!localStore.post.index[key]) return false
     return { key, srl: localStore.post.index[key]?.srl }

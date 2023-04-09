@@ -1,6 +1,5 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
-import { message } from '../../message'
 
 interface Options {
   url: string
@@ -42,9 +41,9 @@ function filtering(res: any): Result
       title: item.name,
       description: item.description,
       meta: [
-        `${message.word.srl}: ${item.srl}`,
-        `${message.word.id}: ${item.id}`,
-        `${message.word.date}: ${getDate(item.regdate)}`,
+        `번호:${item.srl}`,
+        `아이디:${item.id}`,
+        `날짜:${getDate(item.regdate)}`,
       ],
     })),
   };

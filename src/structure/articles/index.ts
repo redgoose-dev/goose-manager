@@ -5,7 +5,6 @@ import { get } from '../../libs/api'
 import { createFullPath } from '../files/util'
 import { getDate } from '../../libs/date'
 import { serialize } from '../../libs/string'
-import { message } from '../../message'
 
 const preference = preferenceStore()
 const filters = filtersStore()
@@ -68,8 +67,8 @@ export async function requestArticles(): Promise<any>
         title,
         meta: [
           getDate(displayDateField === 'order' ? item.order : item.regdate),
-          `${message.word.hit}:${item.hit}`,
-          `${message.word.like}:${item.star}`,
+          `조회수:${item.hit}`,
+          `좋아요:${item.star}`,
         ].filter(Boolean),
         image: item.json.thumbnail?.path ? createFullPath(item.json.thumbnail?.path) : '',
         private: item.type === 'private',

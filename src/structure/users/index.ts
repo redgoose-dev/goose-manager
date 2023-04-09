@@ -37,10 +37,10 @@ function filtering(res: any): Response
       srl: item.srl,
       title: item.email,
       meta: [
-        `srl: ${item.srl}`,
-        `name: ${item.name}`,
+        `번호:${item.srl}`,
+        `이름:${item.name}`,
         getDate(item.regdate),
-        item.admin && `Admin`,
+        item.admin && '관리자',
       ].filter(Boolean),
       self: auth.user?.srl === Number(item.srl),
     })),

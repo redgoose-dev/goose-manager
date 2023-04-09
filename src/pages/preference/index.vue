@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import PageHeader from '../../components/page/header/index.vue';
-import Tabs from '../../components/pages/preference/tabs.vue';
-import General from './general.vue';
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import PageHeader from '../../components/page/header/index.vue'
+import Tabs from '../../components/pages/preference/tabs.vue'
+import General from './general.vue'
 
-const route = useRoute();
-const isHome = computed<boolean>(() => (route.name === 'Preference'));
+const route = useRoute()
+const isHome = computed<boolean>(() => (route.name === 'Preference'))
 </script>
 
 <style lang="scss" scoped>
@@ -29,7 +29,6 @@ const isHome = computed<boolean>(() => (route.name === 'Preference'));
   display: grid;
   grid-template-columns: minmax(0, 1fr) 160px;
   gap: 40px;
-  &__body {}
   &__side {
     position: relative;
   }

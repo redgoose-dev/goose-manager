@@ -8,7 +8,7 @@
       @click="localStore.tab = 'post'">
       <span>
         <Icon name="archive"/>
-        <em>Post</em>
+        <em>아티클 포스트</em>
       </span>
     </button>
     <button
@@ -18,7 +18,7 @@
       @click="localStore.tab = 'global'">
       <span>
         <Icon name="folder"/>
-        <em>Global</em>
+        <em>글로벌</em>
       </span>
     </button>
   </div>
@@ -26,14 +26,14 @@
     <button
       v-if="props.show.guide"
       type="button"
-      title="Guide"
+      title="가이드"
       @click="emits('function', 'guide')">
       <Icon name="command"/>
     </button>
     <button
       v-if="!!localStore.fullSize"
       type="button"
-      title="Close"
+      title="닫기"
       class="close"
       @click="emits('function', 'close')">
       <Icon name="x"/>
@@ -44,7 +44,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { fileManagerStore } from '../../store/tool-manager'
+import { fileManagerStore } from '../../store/files-manager'
 import Icon from '../icons/index.vue'
 
 interface Props {

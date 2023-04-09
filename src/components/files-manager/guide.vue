@@ -1,35 +1,35 @@
 <template>
 <article class="guide">
-  <h1 class="guide__title">Command guide</h1>
+  <h1 class="guide__title">커멘드 가이드</h1>
   <ul class="guide__body">
     <li>
       <p class="shortcut">
         <code>ESC</code>
       </p>
-      <p class="description">close window</p>
+      <p class="description">윈도우를 닫습니다.</p>
     </li>
     <li>
       <p class="shortcut">
         <code>Ctrl(Cmd)</code> + <code>A</code>
       </p>
-      <p class="description">Select all items</p>
+      <p class="description">모든파일을 선택합니다.</p>
     </li>
     <li>
       <p class="shortcut">
         <code>Ctrl(Cmd)</code> + <code>Enter</code>
       </p>
-      <p class="description">Insert the selected item into the editor</p>
+      <p class="description">선택된 파일을 에디터에 삽입합니다.</p>
     </li>
     <li>
       <p class="shortcut">
         <code>Tab</code>
       </p>
-      <p class="description">Change next tab</p>
+      <p class="description">다음 탭으로 이동합니다.</p>
     </li>
   </ul>
   <nav class="guide__nav">
     <ButtonBasic type="button" color="key" @click="emits('close')">
-      Close
+      닫기
     </ButtonBasic>
   </nav>
 </article>

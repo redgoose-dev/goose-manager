@@ -1,7 +1,7 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 import { createFullPath } from '../files/util'
-import { message } from '../../message'
+import { ARTICLE_TYPE } from '../../libs/consts'
 
 interface Module {
   module: string
@@ -28,10 +28,10 @@ async function requestArticles({ size }: any = {}): Promise<any>
         title: item.title,
         href: `/articles/${item.srl}/`,
         meta: [
-          message.word[item.type],
+          ARTICLE_TYPE[item.type],
           item.order,
-          `${message.word.hit}: ${item.hit}`,
-          `${message.word.like}: ${item.star}`,
+          `조회수: ${item.hit}`,
+          `좋아요: ${item.star}`,
         ],
         image: createFullPath(item.json?.thumbnail?.path),
       };
@@ -56,8 +56,8 @@ async function requestNests({ size }: any = {}): Promise<any>
         title: item.name,
         href: `/nests/${item.srl}/articles/`,
         meta: [
-          `${message.word.srl}: ${item.srl}`,
-          `${message.word.id}: ${item.id}`,
+          `번호: ${item.srl}`,
+          `아이디: ${item.id}`,
           getDate(item.regdate),
         ],
         useCategory: Number(item.json.useCategory) === 1,
@@ -82,8 +82,8 @@ async function requestApps({ size }: any = {}): Promise<any>
         srl: item.srl,
         title: item.name,
         meta: [
-          `${message.word.srl}: ${item.srl}`,
-          `${message.word.id}: ${item.id}`,
+          `번호: ${item.srl}`,
+          `아이디: ${item.id}`,
           getDate(item.regdate),
         ],
       }
@@ -108,7 +108,7 @@ async function requestJSON({ size }: any = {}): Promise<any>
         title: item.name,
         href: `/json/${item.srl}/`,
         meta: [
-          `${message.word.srl}: ${item.srl}`,
+          `번호: ${item.srl}`,
           getDate(item.regdate),
         ],
       }

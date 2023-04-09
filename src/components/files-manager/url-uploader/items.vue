@@ -26,21 +26,18 @@
       <button
         v-if="o.typeName === 'image' && o.type !== 'image/webp'"
         type="button"
-        :title="printf(message.words.convert, 'WebP')"
+        title="WebP로 변환"
         @click="onClickChangeFormat(k)">
         <Icons name="minimize-2"/>
       </button>
-      <button
-        type="button"
-        :title="message.word.delete"
-        @click="onClickRemoveItem(k)">
+      <button type="button" title="삭제" @click="onClickRemoveItem(k)">
         <Icons name="trash-2"/>
       </button>
     </nav>
   </li>
 </ul>
 <div v-else class="verify-empty">
-  <p>{{message.words.noFiles}}</p>
+  <p>등록된 파일이 없습니다.</p>
 </div>
 </template>
 
@@ -50,7 +47,6 @@ import ImageResize from 'image-resize'
 import { getByte, printf } from '../../../libs/string'
 import { loadImage } from '../../../libs/util'
 import type { VerifyItem } from './types'
-import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { err } from '../../../libs/error'
 import Icons from '../../icons/index.vue'
@@ -114,12 +110,12 @@ async function onClickChangeFormat(idx: number): Promise<void>
       name: props.src[idx].name.replace(/\.[^/.]+$/, `.${format}`),
       type: output.type,
     })
-    toast.add(message.success.convertFile, 'success').then()
+    toast.add('파일변환을 성공했습니다.', 'success').then()
   }
   catch (e: any)
   {
     err(['/components/files-manager/url-uploader/items.vue', 'onClickChangeFormat()'], 'error', e.message)
-    toast.add(message.fail.convertFile, 'error').then()
+    toast.add('파일변환을 실패했습니다.', 'error').then()
   }
 }
 </script>

@@ -2,7 +2,7 @@
 <article class="upload-url">
   <div class="upload-url__wrap">
     <header class="upload-url__header">
-      <h3>{{message.header.uploadFilesUrl}}</h3>
+      <h3>URL 주소로 파일 업로드</h3>
       <p>
         URL 주소로 파일을 업로드할 수 있습니다.<br/>
         텍스트 입력창에 주소를 입력하고 "검사하기" 버튼을 눌러서 올바른 파일인지 검사하고 업로드 버튼을 누릅니다.
@@ -15,11 +15,8 @@
   </div>
   <Controller class="upload-url__submit">
     <template #left>
-      <ButtonBasic
-        type="button"
-        icon-left="x"
-        @click="$emit('close')">
-        {{message.word.close}}
+      <ButtonBasic type="button" icon-left="x" @click="$emit('close')">
+        닫기
       </ButtonBasic>
     </template>
     <template #right>
@@ -53,8 +50,6 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import type { VerifyItem } from './types'
-import { message } from '../../../message'
-import { pureObject } from '../../../libs/object'
 import { controlWindow } from '../util'
 import { ButtonBasic } from '../../button'
 import { Controller } from '../../navigation'

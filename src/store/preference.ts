@@ -2,13 +2,10 @@ import { defineStore } from 'pinia'
 import { authStore } from './auth'
 import { get, post, formData } from '../libs/api'
 import { pureObject } from '../libs/object'
-import { changeLanguage } from '../message'
 import type { Preference } from './preference.d'
 
 const defaultPreference: Preference = {
-  general: {
-    lang: 'ko',
-  },
+  general: {},
   dashboard: {
     title: 'Dashboard',
     description: 'Welcome to goose manager',
@@ -166,7 +163,6 @@ export const preferenceStore = defineStore('preference', {
         if (files) this.files = files
         if (checklist) this.checklist = checklist
       }
-      await changeLanguage(this.general.lang)
     },
     async save(): Promise<void>
     {

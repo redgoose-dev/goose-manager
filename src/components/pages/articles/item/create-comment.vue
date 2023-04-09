@@ -7,7 +7,7 @@
     <FormTextarea
       ref="$form"
       v-model="forms.content.value"
-      :placeholder="printf(message.words.pleaseInput, message.word.comment)"
+      placeholder="댓글을 입력해주세요."
       :required="true"
       :auto-size="true"
       :rows="3"
@@ -22,7 +22,7 @@
         :disabled="processing"
         :icon-right="processing ? `loader` : 'check'"
         :rotate-icon="processing">
-        {{message.word.writeComment}}
+        댓글쓰기
       </ButtonBasic>
     </div>
   </nav>
@@ -32,9 +32,7 @@
 <script lang="ts" setup>
 import { ref, reactive, nextTick } from 'vue'
 import { createComment } from '../../../../structure/comments'
-import { printf } from '../../../../libs/string'
 import { err } from '../../../../libs/error'
-import { message } from '../../../../message'
 import { toast } from '../../../../modules/toast'
 import { FormTextarea } from '../../../forms'
 import { ButtonBasic } from '../../../button'
@@ -68,7 +66,7 @@ async function onSubmit(): Promise<void>
     processing.value = false
     err(['/components/pages/articles/item/create-comment.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.create, message.word.comment), 'error').then()
+    toast.add('댓글을 만들지 못했습니다.', 'error').then()
   }
 }
 </script>

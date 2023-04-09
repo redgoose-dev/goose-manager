@@ -22,15 +22,15 @@
         ]"/>
       <ToolbarItem
         type="dropdown"
-        title="Add layout assets"
+        title="레이아웃 에셋 추가"
         icon="grid"
         :context="[
           {
-            label: 'Grid group',
+            label: '그리드 그룹',
             click: () => onClickToolbarItem('insert-grid-group'),
           },
           {
-            label: 'Grid image',
+            label: '그리드 이미지',
             click: () => onClickToolbarItem('insert-grid-item'),
           },
         ]"/>

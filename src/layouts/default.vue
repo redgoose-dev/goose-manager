@@ -59,25 +59,25 @@
                 <li>
                   <router-link :to="`/users/${auth.user.srl}/`">
                     <Icon name="user" class="ico-custom"/>
-                    <em>{{message.word.account}}</em>
+                    <em>계정</em>
                   </router-link>
                 </li>
                 <li>
                   <router-link to="/preference/">
                     <Icon name="settings" class="ico-custom"/>
-                    <em>{{message.word.preference}}</em>
+                    <em>환경설정</em>
                   </router-link>
                 </li>
                 <li>
                   <button type="button" @click="onClickClearTokens">
                     <Icon name="trash" class="ico-custom"/>
-                    <em>{{message.word.clearTokens}}</em>
+                    <em>토큰 정리하기</em>
                   </button>
                 </li>
                 <li>
                   <button type="button" @click="onClickLogout">
                     <Icon name="log-out" class="ico-custom"/>
-                    <em>{{message.word.logout}}</em>
+                    <em>로그아웃</em>
                   </button>
                 </li>
               </ol>
@@ -110,7 +110,6 @@ import { authStore } from '../store/auth'
 import { headStore } from '../store/head'
 import { post } from '../libs/api'
 import { err } from '../libs/error'
-import { message } from '../message'
 import { toast } from '../modules/toast'
 import Icon from '../components/icons/index.vue'
 
@@ -131,7 +130,7 @@ const gnb = computed<any>(() => {
 
 async function onClickClearTokens(e: any): Promise<void>
 {
-  if (!confirm(message.confirm.resetToken))
+  if (!confirm('토큰 데이터들을 리셋할까요?'))
   {
     e.currentTarget.blur()
     return
@@ -141,18 +140,18 @@ async function onClickClearTokens(e: any): Promise<void>
     e.currentTarget.blur()
     let res = await post('/token/clear/')
     if (!res.success) throw new Error(res.message)
-    toast.add(message.success.resetTokens, 'success').then()
+    toast.add('토큰을 재설정했습니다.', 'success').then()
   }
   catch (e: any)
   {
     err([ '/layouts/default.vue', 'onClickClearTokens()' ], 'error', e.message)
-    toast.add(message.fail.resetTokens, 'error').then()
+    toast.add('토큰 재설정에 실패했습니다.', 'error').then()
   }
 }
 
 async function onClickLogout(): Promise<void>
 {
-  if (!confirm(message.confirm.logout)) return
+  if (!confirm('정말 로그아웃 할까요?')) return
   await auth.logout()
 }
 

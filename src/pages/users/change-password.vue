@@ -16,7 +16,7 @@
           :error="!!forms.password.error"
           :required="true"
           class="fields__password"/>
-        <Help>{{message.words.guideCurrentPassword}}</Help>
+        <Help>사용하고 있는 비밀번호를 입력해주세요.</Help>
       </Field>
       <Field label="New password" for="password_new">
         <FormInput
@@ -32,7 +32,7 @@
         <Help v-if="forms.password_new.error" color="error">
           {{forms.password_new.error}}
         </Help>
-        <Help v-else>{{message.words.guideNewPassword}}</Help>
+        <Help v-else>새로운 비밀번호를 입력해주세요.</Help>
       </Field>
       <Field label="Confirm password" for="password_new2">
         <FormInput
@@ -48,7 +48,7 @@
         <Help v-if="forms.password_new2.error" color="error">
           {{forms.password_new2.error}}
         </Help>
-        <Help v-else>{{message.words.guideVerifyPassword}}</Help>
+        <Help v-else>새로운 비밀번호와 같은 비밀번호를 입력해주세요.</Help>
       </Field>
     </Fieldset>
     <Controller>
@@ -79,8 +79,6 @@ import { authStore } from '../../store/auth'
 import getData from '../../structure/users/item'
 import { post, checkForms, formData } from '../../libs/api'
 import { err } from '../../libs/error'
-import { printf } from '../../libs/string'
-import { message } from '../../message'
 import { toast } from '../../modules/toast'
 import PageHeader from '../../components/page/header/index.vue'
 import { FormInput } from '../../components/forms'
@@ -109,13 +107,13 @@ async function onSubmit(): Promise<void>
   forms.password_new2.error = null
   if (forms.password_new.value !== forms.password_new2.value)
   {
-    forms.password_new2.error = message.words.guideVerifyPassword
+    forms.password_new2.error = '새로운 비밀번호와 같은 비밀번호를 입력해주세요.'
     root.value.password_new2.focus()
     return
   }
   if (forms.password.value === forms.password_new.value)
   {
-    forms.password_new.error = message.words.guideSamePassword
+    forms.password_new.error = '현재 비밀번호와 새로운 비밀번호가 같습니다.'
     root.value.password_new.focus()
     return
   }
@@ -131,20 +129,20 @@ async function onSubmit(): Promise<void>
     processing.value = false
     if (self.value)
     {
-      if (!confirm(`${printf(message.success.change, message.word.password)} ${message.confirm.logout}`)) return
+      if (!confirm(`비밀번호를 변경했습니다. 정말 로그아웃 할까요?`)) return
       await auth.logout()
     }
     else
     {
       await router.push(`/users/${route.params.srl}/`)
-      toast.add(printf(message.success.change, message.word.password), 'success')
+      toast.add('비밀번호를 변경했습니다.', 'success').then()
     }
   }
   catch (e: any)
   {
     err([ '/pages/users/change-password.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail.change, message.word.password), 'error')
+    toast.add('비밀번호를 변경하지 못했습니다.', 'error').then()
   }
 }
 

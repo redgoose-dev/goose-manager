@@ -4,14 +4,14 @@
     <template v-if="editMode">
       <FormTextarea
         v-model="editContent"
-        :placeholder="printf(message.words.pleaseInput, message.word.comment)"
+        placeholder="댓글을 입력해주세요."
         :auto-size="true"
         :rows="3"
         @submit="onEdit"/>
       <nav>
         <div>
           <ButtonBasic type="button" size="small" @click="toggleEditMode(false)">
-            {{message.word.cancel}}
+            취소
           </ButtonBasic>
         </div>
         <div>
@@ -21,7 +21,7 @@
             color="key"
             :disabled="editProcessing"
             @click="onEdit">
-            {{editProcessing ? message.words.processing : printf(message.word.isEdit, message.word.comment)}}
+            {{editProcessing ? '처리중입니다..' : '댓글 수정하기'}}
           </ButtonBasic>
         </div>
       </nav>
@@ -37,7 +37,7 @@
         :disabled="editMode"
         class="edit"
         @click="toggleEditMode(true)">
-        {{message.word.edit}}
+        수정
       </button>
       <button
         type="button"
@@ -45,7 +45,7 @@
         :disabled="deleteProcessing"
         class="delete"
         @click="onDelete">
-        {{message.word.delete}}
+        삭제
       </button>
     </nav>
   </div>
@@ -56,8 +56,6 @@
 import { ref, computed } from 'vue'
 import { marked } from 'marked'
 import { editComment, deleteComment } from '../../../../structure/comments'
-import { message } from '../../../../message'
-import { printf } from '../../../../libs/string'
 import { toast } from '../../../../modules/toast'
 import { err } from '../../../../libs/error'
 import { baseRenderer } from '../../../../modules/marked'
@@ -92,13 +90,13 @@ async function onEdit(): Promise<void>
     await editComment(props.srl, editContent.value)
     emits('edit', editContent.value)
     toggleEditMode(false)
-    toast.add(printf(message.success.edit, message.word.comment), 'success').then()
+    toast.add('댓글을 수정했습니다.', 'success').then()
     editProcessing.value = false
   }
   catch (e: any)
   {
     err(['/components/pages/articles/item/comment.vue', 'onEdit()'], 'error', e.message)
-    toast.add(printf(message.fail.edit, message.word.comment), 'error').then()
+    toast.add('댓글을 수정하지 못했습니다.', 'error').then()
     editProcessing.value = false
   }
 }
@@ -107,18 +105,18 @@ async function onDelete(): Promise<void>
 {
   try
   {
-    if (!confirm(printf(message.confirm.deleteItem, message.word.comment))) return
+    if (!confirm('이 댓글을 삭제할까요?')) return
     toggleEditMode(false)
     deleteProcessing.value = true
     await deleteComment(props.srl)
     emits('delete')
-    toast.add(printf(message.success.delete, message.word.comment), 'success').then()
+    toast.add('댓글을 삭제했습니다.', 'success').then()
     deleteProcessing.value = false
   }
   catch (e: any)
   {
     err(['/components/pages/articles/item/comment.vue', 'onDelete()'], 'error', e.message)
-    toast.add(printf(message.fail.delete, message.word.comment), 'error').then()
+    toast.add('댓글을 삭제하지 못했습니다.', 'error').then()
     deleteProcessing.value = false
   }
 }

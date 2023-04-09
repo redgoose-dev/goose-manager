@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
-import { fileManagerStore } from '../../store/tool-manager'
+import { fileManagerStore } from '../../store/files-manager'
 import { controlWindow } from './util'
 import { Modal, ModalBody } from '../modal'
 import Tabs from './tabs.vue'

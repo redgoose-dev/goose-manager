@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { fileManagerStore } from '../../../store/tool-manager'
+import { fileManagerStore } from '../../../store/files-manager'
 import { selectItem, selectAll } from '../selectItems'
 import Icon from '../../icons/index.vue'
 import Item from './item.vue'

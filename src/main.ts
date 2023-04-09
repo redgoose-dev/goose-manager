@@ -3,7 +3,6 @@ import { createPinia } from 'pinia'
 import router from './router'
 import * as toast from './modules/toast'
 import { initCustomEvent } from './libs/util'
-import { messagesPlugin } from './message'
 import App from './app.vue'
 
 // set stylesheet
@@ -26,7 +25,6 @@ initCustomEvent()
 const app = createApp(App, {})
   .use(router)
   .use(pinia)
-  .use(messagesPlugin)
   .mount('#app')
 
 export default app

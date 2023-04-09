@@ -27,10 +27,10 @@ export async function getItems()
       image: /^image/.test(item.type) ? createFullPath(item.path) : null,
       meta: [
         item.type,
-        `Size: ${getByte(item.size)}`,
-        `Date: ${getDate(item.regdate)}`,
-        `Module: ${item.module}`,
-        `srl: ${item.target_srl}`,
+        `사이즈:${getByte(item.size)}`,
+        `날짜:${getDate(item.regdate)}`,
+        `모듈: ${item.module}`,
+        `번호: ${item.target_srl}`,
       ].filter(Boolean),
     })),
   }

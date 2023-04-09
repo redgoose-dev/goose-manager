@@ -1,6 +1,5 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
-import { message } from '../../message'
 
 export interface App {
   srl: number
@@ -67,7 +66,7 @@ function filteringNests(res: []): Nest[]
       title: `${item.name}(${item.count_article || 0})`,
       meta: [
         getDate(item.regdate),
-        `${message.word.id}: ${item.id}`,
+        `아이디:${item.id}`,
       ],
       useCategory: item.json?.useCategory === '1',
     }

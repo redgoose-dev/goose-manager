@@ -19,7 +19,7 @@
         :rotate-icon="processing"
         :disabled="disabledAssets"
         @click="onClickUploadFiles">
-        Upload files
+        파일 업로드
       </ButtonBasic>
       <ButtonBasic
         type="button"
@@ -27,7 +27,7 @@
         color="sub"
         icon-left="link-2"
         @click="showUploadUrl = true">
-        Upload URL
+        URL 업로드
       </ButtonBasic>
       <ButtonBasic
         type="button"
@@ -35,7 +35,7 @@
         icon-left="minus-square"
         :disabled="disabledAssets"
         @click="onSelectAll()">
-        Select all
+        모두선택
       </ButtonBasic>
       <ButtonBasic
         type="button"
@@ -44,7 +44,7 @@
         icon-left="trash-2"
         :disabled="selectedAssets"
         @click="onClickDeleteItems">
-        Delete
+        삭제
       </ButtonBasic>
     </div>
     <p class="files-total">Count: <em>{{localStore.global.index.length}}</em></p>
@@ -69,7 +69,7 @@
           :disabled="selectedAssets"
           class="dropdown__button"
           @click="onClickFunction('insert-markdown')">
-          Insert assets
+          첨부파일 삽입
         </ButtonBasic>
         <div class="dropdown__context">
           <ul>
@@ -78,7 +78,7 @@
                 type="button"
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-markdown')">
-                Insert markdown
+                마크다운 삽입
               </button>
             </li>
             <li>
@@ -86,7 +86,7 @@
                 type="button"
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-html')">
-                Insert html
+                HTML 삽입
               </button>
             </li>
             <li>
@@ -94,7 +94,7 @@
                 type="button"
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-address')">
-                Insert address
+                주소 삽입
               </button>
             </li>
           </ul>
@@ -119,12 +119,11 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { preferenceStore } from '../../../store/preference'
-import { fileManagerStore } from '../../../store/tool-manager'
+import { fileManagerStore } from '../../../store/files-manager'
 import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager'
 import { err } from '../../../libs/error'
 import { pureObject } from '../../../libs/object'
 import { printf } from '../../../libs/string'
-import { message } from '../../../message'
 import { toast } from '../../../modules/toast'
 import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil'
 import { Modal, ModalBody } from '../../modal'
@@ -270,7 +269,7 @@ function onDeleteItem(key: number|undefined): void
 function onClickDeleteItems()
 {
   if (localStore.global.selected.length <= 0) return
-  if (!confirm(printf(message.confirm.deleteFiles, String(localStore.global.selected.length)))) return
+  if (!confirm(printf('정말 {0}개의 파일을 삭제할까요?', String(localStore.global.selected.length)))) return
   let paths = localStore.global.selected.map(key => {
     if (!localStore.global.index[key]) return false
     return { key, path: localStore.global.index[key].path }

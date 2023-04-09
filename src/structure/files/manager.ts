@@ -1,5 +1,5 @@
-import { get, post, formData } from '../../libs/api';
-import { createFullPath } from './util';
+import { get, post, formData } from '../../libs/api'
+import { createFullPath } from './util'
 
 function filteringItemGlobal(src: any): any
 {
@@ -17,7 +17,7 @@ function filteringItemGlobal(src: any): any
       'insert-address',
       'delete',
     ],
-  };
+  }
 }
 function filteringItemPost(src: any): any
 {
@@ -37,7 +37,7 @@ function filteringItemPost(src: any): any
       'set-thumbnail',
       'delete',
     ],
-  };
+  }
 }
 
 export async function getItemsGlobal(path: string): Promise<any[]>

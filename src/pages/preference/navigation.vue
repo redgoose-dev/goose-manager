@@ -35,9 +35,7 @@ import { reactive } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { validateForms, getStringJson } from './libs'
 import { toast } from '../../modules/toast'
-import { printf } from '../../libs/string'
 import { err } from '../../libs/error'
-import { $msg } from '../../message'
 import { FormTextarea } from '../../components/forms'
 import { Help } from '../../components/forms/fieldset'
 import { Controller } from '../../components/navigation'
@@ -60,12 +58,12 @@ async function onSubmit()
       ...(JSON.parse(fields.code.value)),
     ]
     await preference.save()
-    toast.add(printf($msg('success.edit'), $msg('word.preference')), 'success')
+    toast.add('환경설정을 수정했습니다.', 'success').then()
   }
   catch (e: any)
   {
     err(['/pages/preference/navigation.vue', 'onSubmit()'], 'error', e.message)
-    toast.add(printf($msg('fail.edit'), $msg('word.preference')), 'error')
+    toast.add('환경설정을 수정하지 못했습니다.', 'error').then()
   }
 }
 </script>

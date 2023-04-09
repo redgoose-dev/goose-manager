@@ -2,25 +2,14 @@
 <article>
   <form @submit.prevent="onSubmit">
     <Fieldset>
-      <Field :label="$msg('word.language')">
-        <FormSelect
-          v-model="fields.language.value"
-          :placeholder="null"
-          :options="[
-            { label: '한국어', value: 'ko' },
-            { label: 'English', value: 'en' },
-          ]"
-          style="--select-width: 160px"/>
-        <Help>매니저에서 표시되는 언어를 선택합니다.</Help>
-      </Field>
-      <Field :label="$msg('word.theme')">
+      <Field label="테마">
         <FormSelect
           v-model="fields.theme.value"
           :placeholder="null"
           :options="[
-            { label: $msg('word.system'), value: 'system' },
-            { label: $msg('word.light'), value: 'light' },
-            { label: $msg('word.dark'), value: 'dark' },
+            { label: '시스템', value: 'system' },
+            { label: '라이트', value: 'light' },
+            { label: '다크', value: 'dark' },
           ]"
           style="--select-width: 160px"/>
         <Help>색상 테마를 변경합니다.</Help>
@@ -29,7 +18,7 @@
     <Controller>
       <template #right>
         <ButtonBasic type="submit" icon-left="check" color="key">
-          {{$msg('word.apply')}}
+          적용하기
         </ButtonBasic>
       </template>
     </Controller>
@@ -42,8 +31,7 @@ import { reactive, nextTick } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { headStore } from '../../store/head'
 import { toast } from '../../modules/toast'
-import { printf } from '../../libs/string'
-import { $msg, changeLanguage } from '../../message'
+import { err } from '../../libs/error'
 import { Fieldset, Field, Help } from '../../components/forms/fieldset'
 import { FormSelect } from '../../components/forms'
 import { Controller } from '../../components/navigation'
@@ -52,10 +40,6 @@ import { ButtonBasic } from '../../components/button'
 const preference = preferenceStore()
 const head = headStore()
 const fields = reactive({
-  language: {
-    value: preference.general.lang,
-    error: null,
-  },
   theme: {
     value: head.theme,
     error: null,
@@ -64,16 +48,22 @@ const fields = reactive({
 
 async function onSubmit(): Promise<void>
 {
-  preference.general.lang = fields.language.value
-  head.theme = fields.theme.value
-  await preference.save()
-  head.updateStorage({ theme: fields.theme.value })
-  head.changeTheme()
-  await changeLanguage(preference.general.lang)
-  head.blink = true
-  await nextTick()
-  head.blink = false
-  toast.add(printf($msg('success.edit'), $msg('word.preference')), 'success')
+  try
+  {
+    head.theme = fields.theme.value
+    await preference.save()
+    head.updateStorage({ theme: fields.theme.value })
+    head.changeTheme()
+    head.blink = true
+    await nextTick()
+    head.blink = false
+    toast.add('환경설정을 수정했습니다.', 'success').then()
+  }
+  catch (e: any)
+  {
+    err(['/pages/preference/general.vue', 'onSubmit()'], 'error', e.message)
+    toast.add('환경설정을 수정하지 못했습니다.', 'error').then()
+  }
 }
 </script>
 

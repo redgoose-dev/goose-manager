@@ -30,8 +30,6 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { marked } from 'marked'
 import { toast } from '../../../../modules/toast'
-import { printf } from '../../../../libs/string'
-import { message } from '../../../../message'
 import { baseRenderer } from '../../../../modules/marked'
 import PostToolbar from '../../../navigation/post-toolbar.vue'
 import Preview from '../../../content/preview.vue'
@@ -133,7 +131,7 @@ function controlPreview(sw: boolean): void
 {
   if (sw && !props.modelValue)
   {
-    toast.add(printf(message.error.emptyContent, message.word.content), 'error')
+    toast.add('이 내용은 비어있습니다.', 'error')
     return
   }
   if (sw)

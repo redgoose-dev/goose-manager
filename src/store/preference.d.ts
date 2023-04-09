@@ -1,7 +1,5 @@
 export declare interface Preference {
-  general: {
-    lang: string
-  }
+  general: {}
   dashboard: {
     title: string
     description: string

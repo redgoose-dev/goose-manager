@@ -82,8 +82,6 @@ import { useRouter } from 'vue-router'
 import { authStore } from '../../../store/auth'
 import { get, post, formData, checkForms } from '../../../libs/api'
 import { err } from '../../../libs/error'
-import { message } from '../../../message'
-import { printf } from '../../../libs/string'
 import { toast } from '../../../modules/toast'
 import { Fieldset, Field, FieldCheck, Help } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
@@ -127,7 +125,7 @@ async function onSubmit(): Promise<void>
     forms.password2.error = null
     if (forms.password.value !== forms.password2.value)
     {
-      forms.password2.error = message.error.samePassword
+      forms.password2.error = '확인용 비밀번호가 다릅니다.'
       root.value.password2.focus()
     }
   }
@@ -150,13 +148,27 @@ async function onSubmit(): Promise<void>
     processing.value = false
     const srl: number = res.srl || props.srl || NaN
     await router.push(srl ? `/users/${String(srl)}/` : '/users/')
-    toast.add(printf(message.success[props.mode], message.word.user), 'success')
+    switch (props.mode) {
+      case 'create':
+        toast.add('사용자를 만들었습니다.', 'success').then()
+        break
+      case 'edit':
+        toast.add('사용자를 수정했습니다.', 'success').then()
+        break
+    }
   }
   catch (e: any)
   {
     err([ '/components/pages/users/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
-    toast.add(printf(message.fail[props.mode], message.word.user), 'error')
+    switch (props.mode) {
+      case 'create':
+        toast.add('사용자를 만들지 못했습니다.', 'error').then()
+        break
+      case 'edit':
+        toast.add('사용자를 수정하지 못했습니다.', 'error').then()
+        break
+    }
   }
 }
 
