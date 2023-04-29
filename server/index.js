@@ -1,5 +1,5 @@
 import https from 'https'
-import { $fetch } from 'ofetch'
+import { $fetch, ofetch } from 'ofetch'
 import { Router } from 'express'
 import { filteringHostname } from './libs/api.js'
 import { isDev } from './libs/entry-assets.js'
@@ -196,16 +196,19 @@ function setup(_app, _env)
         domain: VITE_COOKIE_DOMAIN || undefined,
       }
     }
+    const baseURL = filteringHostname(VITE_API_URL)
     // https
-    const httpsAgent = new https.Agent({
-      rejectUnauthorized: req.secure,
-    })
+    const httpsAgent = /^https:\/\//.test(baseURL) ? new https.Agent({
+      rejectUnauthorized: false,
+    }) : undefined
     // set api instance
     api = $fetch.create({
-      baseURL: filteringHostname(VITE_API_URL),
-      retry: 1,
+      baseURL: VITE_API_URL,
+      retry: 0,
       responseType: 'json',
-      headers: { 'Authorization': `Bearer ${VITE_TOKEN_PUBLIC}` },
+      headers: {
+        'Authorization': `Bearer ${VITE_TOKEN_PUBLIC}`,
+      },
       agent: httpsAgent,
     })
     next()
@@ -223,8 +226,6 @@ function server(_app, _env)
   setup(_app, _env)
   // set local routes
   app.use(`${env.VITE_BASE_URL}/local/`.replace(/\/\//gi, '/'), localRoutes())
-  // set service api routes
-  // app.use(`${env.VITE_BASE_URL}/api`.replace(/\/\//gi, '/'), apiRoutes())
 }
 
 export default server

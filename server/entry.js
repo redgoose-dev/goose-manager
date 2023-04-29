@@ -16,6 +16,11 @@ async function server()
   const outDir = env.VITE_OUT_DIR || 'dist'
   const clientPath = dev ? __dirname : path.resolve(outDir)
 
+  // if (dev)
+  // {
+  //   process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
+  // }
+
   // setup
   app.use(express.urlencoded({ extended: false }))
   app.use(express.json())

@@ -15,12 +15,12 @@
   <nav class="thumbnail-editor__nav">
     <div>
       <ButtonBasic type="button" icon-left="x" @click="emits('close')">
-        Close
+        닫기
       </ButtonBasic>
     </div>
     <div>
       <ButtonBasic type="button" color="key" icon-left="check" @click="onSubmit">
-        Set thumbnail
+        썸네일 설정
       </ButtonBasic>
     </div>
   </nav>

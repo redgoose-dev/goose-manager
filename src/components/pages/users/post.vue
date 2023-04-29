@@ -1,7 +1,7 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset class="fields" :disabled="loading">
-    <Field label="E-Mail" for="email">
+    <Field label="이메일 주소" for="email">
       <FormInput
         type="email"
         v-model="forms.email.value"
@@ -17,7 +17,7 @@
         이메일 주소는 수정할 수 없습니다.
       </Help>
     </Field>
-    <Field label="Name" for="name">
+    <Field label="이름" for="name">
       <FormInput
         v-model="forms.name.value"
         name="name"
@@ -28,26 +28,26 @@
         :required="true"
         class="fields__name"/>
     </Field>
-    <Field v-if="!isEdit" label="Password" for="password">
+    <Field v-if="!isEdit" label="비밀번호" for="password">
       <FormInput
         type="password"
         v-model="forms.password.value"
         name="password"
         id="password"
         :maxlength="24"
-        placeholder="Please input password."
+        placeholder="비밀번호를 입력해주세요."
         :error="!!forms.password.error"
         :required="true"
         class="fields__password"/>
     </Field>
-    <Field v-if="!isEdit" label="Confirm password" for="password2">
+    <Field v-if="!isEdit" label="비밀번호 확인" for="password2">
       <FormInput
         type="password"
         v-model="forms.password2.value"
         name="password2"
         id="password2"
         :maxlength="24"
-        placeholder="Please enter the same password."
+        placeholder="같은 비밀번호를 입력해주세요."
         :error="!!forms.password2.error"
         :required="true"
         class="fields__password"/>
@@ -55,13 +55,15 @@
         {{forms.password2.error}}
       </Help>
     </Field>
-    <FieldCheck label="Admin" description="관리자 권한으로 사용합니다." for="admin">
+    <FieldCheck label="관리자" description="관리자 권한으로 사용합니다." for="admin">
       <FormSwitch v-model="forms.admin.value" :disabled="!useAdminField"/>
     </FieldCheck>
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic icon-left="arrow-left" @click="router.back()">Back</ButtonBasic>
+      <ButtonBasic icon-left="arrow-left" @click="router.back()">
+        뒤로가기
+      </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic
@@ -69,7 +71,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        {{isEdit ? 'Edit User' : 'Create User'}}
+        {{isEdit ? '사용자 수정' : '사용자 추가'}}
       </ButtonBasic>
     </template>
   </Controller>

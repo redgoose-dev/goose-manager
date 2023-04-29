@@ -3,37 +3,37 @@
   <PageHeader module="users" title="User"/>
   <Loading v-if="loading"/>
   <Fieldset v-else tag="section">
-    <Field label="srl">
+    <Field label="번호">
       {{item.srl}}
     </Field>
-    <Field label="Email">
+    <Field label="이메일 주소">
       <strong>{{item.email}}</strong>
     </Field>
-    <Field label="Name">
+    <Field label="이름">
       {{item.name}}
     </Field>
-    <Field label="Register date">
+    <Field label="등록일">
       {{item.regdate}}
     </Field>
-    <Field label="Admin">
+    <Field label="관리자">
       <FormSwitch :model-value="item.admin" :readonly="true"/>
     </Field>
   </Fieldset>
   <Controller>
     <template #left>
       <ButtonBasic href="../" icon-left="list">
-        Index
+        목록
       </ButtonBasic>
     </template>
     <template #right>
       <ButtonBasic href="./edit/" icon-left="edit">
-        Edit
+        수정
       </ButtonBasic>
       <ButtonBasic href="./change-password/" icon-left="key">
-        Change password
+        비밀번호 변경
       </ButtonBasic>
       <ButtonBasic v-if="!self" href="./delete/" color="key" icon-left="trash">
-        Delete
+        삭제
       </ButtonBasic>
     </template>
   </Controller>
