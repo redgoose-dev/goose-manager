@@ -7,7 +7,6 @@ declare global {
   // env
   const DEBUG: boolean
   const DEVELOPMENT: boolean
-  const TITLE: string
   const DESCRIPTION: string
   const STORAGE_PREFIX: string
   const BASE_URL: string

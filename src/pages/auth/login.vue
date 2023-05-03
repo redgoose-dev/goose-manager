@@ -87,7 +87,7 @@ interface Forms {
 const router = useRouter()
 const auth = authStore()
 const loading = ref<boolean>(false)
-const title = ref<string>(TITLE || '매니저')
+const title = ref<string>(import.meta.env.VITE_TITLE || '매니저')
 const description = ref<string>(DESCRIPTION || '매니저 설명')
 const processing = ref<boolean>(false)
 const forms = reactive<Forms>({

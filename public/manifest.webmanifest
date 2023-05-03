@@ -1,0 +1,24 @@
+{
+  "short_name": "redgoose-manager",
+  "name": "redgoose-manager",
+  "description": "붉은거위 관리 프로그램",
+  "icons": [
+    {
+      "src": "/images/icons-512x512.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icons-512x512-mask.png",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "/?sw=1",
+  "start_url": "/?sw=1",
+  "display": "standalone",
+  "theme_color": "#111111",
+  "background_color": "#fafbfc"
+}

@@ -3,9 +3,9 @@ import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 import { baseRenderer } from '../../modules/marked'
 
-async function requestArticle(srl: number, root: boolean): Promise<any>
+async function requestArticle(srl, root)
 {
-  const { success, message, data }: any = await get(`/articles/${srl}/`, {
+  const { success, message, data } = await get(`/articles/${srl}/`, {
     ext_field: `category_name${root ? ',nest_name' : ''}`,
   })
   if (!success) throw new Error(message)
@@ -26,29 +26,29 @@ async function requestArticle(srl: number, root: boolean): Promise<any>
   }
 }
 
-async function requestNest(srl: number): Promise<any>
+async function requestNest(srl)
 {
   let res = await get(`/nests/${srl}/`)
   if (!res.success) throw new Error(res.message)
   return res.data
 }
 
-async function requestFiles(articleSrl: number): Promise<[]>
+async function requestFiles(articleSrl)
 {
-  const { success, message, data }: any = await get('/files/', {
+  const { success, message, data } = await get('/files/', {
     module: 'articles',
     target: articleSrl,
     unlimit: 1,
   })
   if (!success) throw new Error(message)
-  return data.index.map((item: any) => {
+  return data.index.map((item) => {
     return {
       ...item,
     }
   })
 }
 
-export default async function getData(srl: number, root: boolean): Promise<any>
+export default async function getData(srl, root)
 {
   let article = await requestArticle(srl, root)
   let [ nest, files ] = await Promise.all([

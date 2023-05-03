@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import router from './router'
 import * as toast from './modules/toast'
 import { initCustomEvent } from './libs/util'
+import registerServiceWorker from './registerServiceWorker'
 import App from './app.vue'
 
 // set stylesheet
@@ -26,5 +27,8 @@ const app = createApp(App, {})
   .use(router)
   .use(pinia)
   .mount('#app')
+
+// setup service worker
+registerServiceWorker().then()
 
 export default app

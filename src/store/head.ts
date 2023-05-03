@@ -11,7 +11,7 @@ export declare interface Head {
 }
 
 const defaultHead: Head = {
-  title: TITLE || 'Goose Manager',
+  title: import.meta.env.VITE_TITLE || 'Goose Manager',
   description: DESCRIPTION || '',
   shortName: SHORT_NAME || 'GOOSE',
   theme: storage.get('head')?.theme || 'system',
