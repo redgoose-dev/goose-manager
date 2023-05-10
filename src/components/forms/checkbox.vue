@@ -23,8 +23,8 @@ const props = defineProps({
   required: Boolean,
   disabled: Boolean,
   size: String, // small
-});
-const emits = defineEmits([ 'update:modelValue' ]);
+})
+const emits = defineEmits([ 'update:modelValue' ])
 </script>
 
 <style src="./checkbox.scss" lang="scss" scoped></style>

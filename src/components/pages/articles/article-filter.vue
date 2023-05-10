@@ -97,7 +97,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { filtersStore } from '../../../store/filters'
@@ -105,34 +105,26 @@ import { withCommas } from '../../../libs/number'
 import { FormSelect, Keyword } from '../../forms'
 import { ButtonBasic } from '../../button'
 
-interface Forms {
-  type: string
-  order: string
-  sort: string
-  theme: string
-  keyword: string
-}
-
-const $keyword = ref<any>()
+const $keyword = ref()
 const route = useRoute()
 const router = useRouter()
 const filters = filtersStore()
-const props = defineProps<{
-  total: number
-  loading: boolean
-}>()
+const props = defineProps({
+  total: Number,
+  loading: Boolean,
+})
 const emits = defineEmits([ 'update' ])
-const forms = reactive<Forms>({
+const forms = reactive({
   type: filters.articles.type || '',
   order: filters.articles.order || '',
   sort: filters.articles.sort || 'desc',
   theme: filters.articles.theme || 'card',
   keyword: filters.articles.keyword || '',
 })
-const keyword = ref<any>(route.query.q)
-const total = computed<string>(() => withCommas(props.total))
+const keyword = ref(route.query.q)
+const total = computed(() => withCommas(props.total))
 
-function onReset(): void
+function onReset()
 {
   forms.type = 'all'
   forms.order = 'srl'
@@ -149,7 +141,7 @@ function onReset(): void
   emits('update')
 }
 
-function onSubmit(): void
+function onSubmit()
 {
   filters.save('articles', {
     type: forms.type,

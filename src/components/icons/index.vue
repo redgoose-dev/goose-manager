@@ -17,13 +17,11 @@
 </svg>
 </template>
 
-<script lang="ts" setup>
-interface Props {
-  name: string
-  rotate?: boolean
-}
-
-const props = defineProps<Props>()
+<script setup>
+const props = defineProps({
+  name: { type: String, required: true },
+  rotate: Boolean,
+})
 </script>
 
 <style lang="scss" scoped>

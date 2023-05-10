@@ -4,26 +4,24 @@
 </component>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 import Icon from '../icons/index.vue'
 
-interface Props {
-  type?: string
-  iconName?: string
-  href?: string
-  target?: string
-  title?: string
-  disabled?: boolean
-  color?: string | 'key' | 'sub' | 'error' | 'weak'
-}
-
-const props = defineProps<Props>()
-const type = computed<string>(() => {
+const props = defineProps({
+  type: String,
+  iconName: String,
+  href: String,
+  target: String,
+  title: String,
+  disabled: Boolean,
+  color: String, // key,sub,error,weak
+})
+const type = computed(() => {
   if (props.href) return /^http/.test(props.href) ? 'a' : 'router'
   else return props.type || ''
 })
-const tag = computed<string>(() => {
+const tag = computed(() => {
   switch (type.value)
   {
     case 'a': return 'a'
@@ -32,8 +30,8 @@ const tag = computed<string>(() => {
     default: return 'button'
   }
 })
-const rootProps = computed<any>(() => {
-  let attr: any = {}
+const rootProps = computed(() => {
+  let attr = {}
   if (props.title) attr.title = props.title
   switch (type.value)
   {

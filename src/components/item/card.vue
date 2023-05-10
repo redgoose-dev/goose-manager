@@ -34,25 +34,23 @@
 </section>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import ThumbnailImage from './assets/thumbnail-image.vue'
 import ItemTitle from './assets/item-title.vue'
 import Description from './assets/description.vue'
 import ItemMeta from './assets/item-meta.vue'
 import ItemNav from './assets/item-nav.vue'
 
-interface Props {
-  title: string
-  description?: string
-  image?: string
-  alt?: string
-  meta?: string[]
-  nav?: any[]
-  href?: any,
-  target?: string,
-}
-
-const props = defineProps<Props>()
+const props = defineProps({
+  title: { type: String, required: true },
+  description: String,
+  image: String,
+  alt: String,
+  meta: Array,
+  nav: Array,
+  href: undefined,
+  target: String,
+})
 </script>
 
 <style src="./card.scss" lang="scss" scoped></style>

@@ -11,7 +11,7 @@ const router = createRouter({
 })
 
 // 라우트 업데이트 전 후크
-router.beforeEach(async (to: any, _from: any) => {
+router.beforeEach(async (to, _from) => {
   const auth = authStore()
   const checkAuth = await auth.check()
   // redirect screen

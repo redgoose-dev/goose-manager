@@ -63,27 +63,25 @@
 </nav>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed } from 'vue'
 import Icon from '../icons/index.vue'
 
-interface Props {
-  modelValue: number // 1
-  total: number // 0
-  size: number // 10
-  range: number // 5
-}
-
-const props = defineProps<Props>()
+const props = defineProps({
+  modelValue: { type: Number, required: true }, // 1
+  total: { type: Number, required: true }, // 0
+  size: { type: Number, required: true }, // 10
+  range: { type: Number, required: true }, // 5
+})
 const emits = defineEmits([ 'update:modelValue' ])
-const size = ref<number>(props.size || 10)
-const range = ref<number>(props.range || 5)
-const page = computed<number>(() => (Number(props.modelValue) > 1 ? Number(props.modelValue) : 1))
-const pageCount = computed<number>(() => (Math.ceil(props.total / size.value)))
-const pageBlock = computed<number>(() => (Math.floor((page.value - 1) / range.value)))
-const pageBlockTotal = computed<number>(() => (Math.floor((pageCount.value - 1) / range.value)))
-const pages = computed<any[]>(() => {
-  let items: any[] = []
+const size = ref(props.size || 10)
+const range = ref(props.range || 5)
+const page = computed(() => (Number(props.modelValue) > 1 ? Number(props.modelValue) : 1))
+const pageCount = computed(() => (Math.ceil(props.total / size.value)))
+const pageBlock = computed(() => (Math.floor((page.value - 1) / range.value)))
+const pageBlockTotal = computed(() => (Math.floor((pageCount.value - 1) / range.value)))
+const pages = computed(() => {
+  let items = []
   let startPage = pageBlock.value * range.value + 1
   for (let i = 1; i < range.value + 1 && startPage <= pageCount.value; i++, startPage++)
   {
@@ -99,14 +97,14 @@ const pages = computed<any[]>(() => {
   })
   return checkEmpty ? items : []
 })
-const disabledFirstArrow = computed<boolean>(() => {
+const disabledFirstArrow = computed(() => {
   return pageBlock.value === 0
 })
-const disabledLastArrow = computed<boolean>(() => {
+const disabledLastArrow = computed(() => {
   return page.value >= pageCount.value || pageBlock.value === pageBlockTotal.value
 })
 
-function onPrevRange(): void
+function onPrevRange()
 {
   if (page.value > 1)
   {
@@ -114,7 +112,7 @@ function onPrevRange(): void
     go((n > 1) ? n : 1)
   }
 }
-function onNextRange(): void
+function onNextRange()
 {
   if (pageBlock.value < pageBlockTotal.value)
   {
@@ -123,16 +121,16 @@ function onNextRange(): void
   }
 }
 
-function onFirstPage(): void
+function onFirstPage()
 {
   if (page.value > 1) go(1)
 }
-function onLastPage(): void
+function onLastPage()
 {
   if (page.value < pageCount.value) go(pageCount.value)
 }
 
-function go(n: number): void
+function go(n)
 {
   if (page.value !== n) emits('update:modelValue', n)
 }

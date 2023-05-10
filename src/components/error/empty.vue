@@ -14,16 +14,14 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { iconRandomPick } from '../icons/assets'
 import Icon from '../icons/index.vue'
 
-interface Props {
-  title: string
-  message?: string
-}
-
-const props = defineProps<Props>()
+const props = defineProps({
+  title: { type: String, required: true },
+  message: String,
+})
 const iconName = iconRandomPick()
 </script>
 

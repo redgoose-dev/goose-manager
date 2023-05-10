@@ -5,8 +5,8 @@
 </component>
 </template>
 
-<script lang="ts" setup>
-import { computed, ref, watch, onErrorCaptured, DefineComponent } from 'vue'
+<script setup>
+import { computed, ref, watch, onErrorCaptured } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { authStore } from './store/auth'
 import { headStore } from './store/head'
@@ -22,8 +22,8 @@ const route = useRoute()
 const auth = authStore()
 const head = headStore()
 const filters = filtersStore()
-const error = ref<undefined|Error>(undefined)
-const layout = computed<DefineComponent>(() => {
+const error = ref(undefined)
+const layout = computed(() => {
   let layoutName = route.meta.layout || 'default'
   if (!route.name) return null
   if (!auth.user) layoutName = 'blank'
@@ -39,10 +39,10 @@ const layout = computed<DefineComponent>(() => {
 // children component error
 if (!DEVELOPMENT)
 {
-  onErrorCaptured((e: any): void => {
+  onErrorCaptured((e) => {
     if (typeof e === 'string')
     {
-      error.value = new Error((e as any).message)
+      error.value = new Error(e.message)
     }
     else
     {

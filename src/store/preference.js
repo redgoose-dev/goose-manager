@@ -2,9 +2,8 @@ import { defineStore } from 'pinia'
 import { authStore } from './auth'
 import { get, post, formData } from '../libs/api'
 import { pureObject } from '../libs/object'
-import type { Preference } from './preference.d'
 
-const defaultPreference: Preference = {
+const defaultPreference = {
   general: {},
   dashboard: {
     title: 'Dashboard',
@@ -128,7 +127,7 @@ const defaultPreference: Preference = {
 }
 
 export const preferenceStore = defineStore('preference', {
-  state(): Preference
+  state()
   {
     return pureObject(defaultPreference)
   },
@@ -146,7 +145,7 @@ export const preferenceStore = defineStore('preference', {
     },
   },
   actions: {
-    async setup(): Promise<void>
+    async setup()
     {
       const auth = authStore()
       if (!auth.user) throw new Error('no user')
@@ -164,7 +163,7 @@ export const preferenceStore = defineStore('preference', {
         if (checklist) this.checklist = checklist
       }
     },
-    async save(): Promise<void>
+    async save()
     {
       const auth = authStore()
       let userPref

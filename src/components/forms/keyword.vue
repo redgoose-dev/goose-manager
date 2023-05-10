@@ -45,7 +45,7 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed } from 'vue'
 import Icon from '../icons/index.vue'
 
@@ -60,10 +60,7 @@ const props = defineProps({
   readonly: Boolean,
   minlength: Number,
   maxlength: Number,
-  placeholder: {
-    type: String,
-    default: '키워드를 입력해주세요.',
-  },
+  placeholder: { type: String, default: '키워드를 입력해주세요.' },
   processing: Boolean,
   useClear: Boolean,
   useSubmit: Boolean,
@@ -73,7 +70,7 @@ const keywordDisabled = computed(() => {
   return props.disabled || props.processing
 })
 const clearDisabled = computed(() => {
-  return !((props.modelValue as string)?.length > 0)
+  return !(props.modelValue?.length > 0)
 })
 
 defineExpose({

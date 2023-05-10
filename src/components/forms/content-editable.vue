@@ -16,30 +16,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue'
 
-const $root = ref();
+const $root = ref()
 const props = defineProps({
   tag: { type: String, default: 'div' },
   modelValue: String,
   placeholder: String,
   disabled: Boolean,
-});
-const emits = defineEmits([ 'submit', 'update:modelValue' ]);
+})
+const emits = defineEmits([ 'submit', 'update:modelValue' ])
 
 onMounted(() => {
-  $root.value.innerText = props.modelValue;
-});
+  $root.value.innerText = props.modelValue
+})
 watch(() => props.modelValue, text => {
-  if (text !== $root.innerText) $root.innerText = text;
-});
+  if (text !== $root.innerText) $root.innerText = text
+})
 
 function onPasteText(e)
 {
-  e.preventDefault();
-  if (!window) return;
-  let text = (e.originalEvent || e).clipboardData.getData('text/plain');
-  document.execCommand('insertText', false, text);
+  e.preventDefault()
+  if (!window) return
+  let text = (e.originalEvent || e).clipboardData.getData('text/plain')
+  document.execCommand('insertText', false, text)
 }
 </script>
 

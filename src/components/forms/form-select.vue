@@ -26,8 +26,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import Icon from '../icons/index.vue';
+import { computed } from 'vue'
+import Icon from '../icons/index.vue'
 
 const props = defineProps({
   name: String,
@@ -40,24 +40,24 @@ const props = defineProps({
   inline: { type: Boolean, default: false },
   size: String, // small
   placeholder: { type: String, default: 'Please select' },
-});
-const emits = defineEmits([ 'update:modelValue' ]);
-const placeholder = computed(() => (!props.modelValue && props.placeholder));
+})
+const emits = defineEmits([ 'update:modelValue' ])
+const placeholder = computed(() => (!props.modelValue && props.placeholder))
 
 function onUpdate(e)
 {
-  let value;
+  let value
   switch (props.valueType)
   {
     case 'number':
-      value = Number(e.target.value);
-      break;
+      value = Number(e.target.value)
+      break
     case 'text':
     default:
-      value = e.target.value;
-      break;
+      value = e.target.value
+      break
   }
-  emits('update:modelValue', value);
+  emits('update:modelValue', value)
 }
 </script>
 

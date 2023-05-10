@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps({
   name: String,
@@ -28,24 +28,24 @@ const props = defineProps({
   disabled: Boolean,
   readonly: Boolean,
   required: Boolean,
-});
-const emits = defineEmits([ 'update:modelValue' ]);
+})
+const emits = defineEmits([ 'update:modelValue' ])
 const sw = computed(() => {
   if (props.values?.length > 1)
   {
-    return props.modelValue === props.values[1];
+    return props.modelValue === props.values[1]
   }
   else
   {
-    return Boolean(props.modelValue);
+    return Boolean(props.modelValue)
   }
-});
+})
 
 function onChange(e)
 {
-  let sw = Boolean(e.target.checked);
-  let value = (props.values?.length > 1) ? props.values[sw ? 1 : 0] : sw;
-  emits('update:modelValue', value);
+  let sw = Boolean(e.target.checked)
+  let value = (props.values?.length > 1) ? props.values[sw ? 1 : 0] : sw
+  emits('update:modelValue', value)
 }
 </script>
 

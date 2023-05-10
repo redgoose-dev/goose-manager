@@ -12,15 +12,13 @@
 </Modal>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { Modal, ModalBody } from '../modal'
 
-interface Props {
-  show?: boolean
-  content?: string
-}
-
-const props = defineProps<Props>()
+const props = defineProps({
+  show: Boolean,
+  content: String,
+})
 const emits = defineEmits([ 'close' ])
 </script>
 

@@ -6,40 +6,38 @@
 </component>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 import ButtonBody from './button-body.vue'
 
-interface Props {
-  type?: 'label' | 'button' | 'submit' | 'reset'
-  label?: string
-  href?: string
-  target?: string
-  title?: string
-  disabled?: boolean
-  size?: 'small'
-  color?: 'key' | 'sub' | 'error' | 'weak'
-  inline?: boolean
-  rotateIcon?: boolean
-  iconLeft?: string
-  iconRight?: string
-  className?: string
-  styles?: any
-}
-
-const props = defineProps<Props>()
-const type = computed<any>(() => {
+const props = defineProps({
+  type: String, // label,button,submit,reset
+  label: String,
+  href: String,
+  target: String,
+  title: String,
+  disabled: Boolean,
+  size: String, // small
+  color: String, // key,sub,error,weak
+  inline: Boolean,
+  rotateIcon: Boolean,
+  iconLeft: String,
+  iconRight: String,
+  className: String,
+  styles: undefined,
+})
+const type = computed(() => {
   if (props.href) return /^http/.test(props.href) ? 'a' : 'router'
   else return props.type || 'button'
 })
-const bodyProps = computed<any>(() => {
+const bodyProps = computed(() => {
   return {
     iconLeft: props.iconLeft,
     iconRight: props.iconRight,
     rotateIcon: props.rotateIcon,
   }
 })
-const tag = computed<string>(() => {
+const tag = computed(() => {
   switch (type.value)
   {
     case 'a': return 'a'
@@ -48,8 +46,8 @@ const tag = computed<string>(() => {
     default: return 'button'
   }
 })
-const rootProps = computed<any>(() => {
-  let attr: any = {}
+const rootProps = computed(() => {
+  let attr = {}
   if (props.title) attr.title = props.title
   switch (type.value)
   {

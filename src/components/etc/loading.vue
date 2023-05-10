@@ -10,14 +10,14 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const props = defineProps<{
-  move?: boolean
-}>()
+const props = defineProps({
+  move: Boolean,
+})
 let mounted = false
-const show = ref<boolean>(false)
+const show = ref(false)
 
 onMounted(() => {
   mounted = true

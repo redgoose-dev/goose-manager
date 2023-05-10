@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import Icon from '../../icons/index.vue';
+import Icon from '../../icons/index.vue'
 
 const props = defineProps({
   type: { type: String, default: 'button' }, // button,dropdown
@@ -40,8 +40,8 @@ const props = defineProps({
   color: String,
   context: Array,
   contextAlign: String,
-});
-const emits = defineEmits([ 'click' ]);
+})
+const emits = defineEmits([ 'click' ])
 </script>
 
 <style src="./item.scss" lang="scss" scoped></style>

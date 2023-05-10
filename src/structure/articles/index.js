@@ -1,4 +1,4 @@
-import { useRoute, RouteLocationNormalized } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
 import { filtersStore } from '../../store/filters'
 import { get } from '../../libs/api'
@@ -8,9 +8,9 @@ import { serialize } from '../../libs/string'
 
 const preference = preferenceStore()
 const filters = filtersStore()
-let route: RouteLocationNormalized
+let route
 
-export function setOrder(order: string = 'srl', sort: string = 'desc'): string
+export function setOrder(order = 'srl', sort = 'desc')
 {
   switch (order)
   {
@@ -22,7 +22,7 @@ export function setOrder(order: string = 'srl', sort: string = 'desc'): string
   }
 }
 
-async function requestNest(): Promise<any>
+async function requestNest()
 {
   if (!route.params.nestSrl) return null
   let res = await get(`/nests/${route.params.nestSrl}/`, {
@@ -32,13 +32,13 @@ async function requestNest(): Promise<any>
   return res.data
 }
 
-export async function requestArticles(): Promise<any>
+export async function requestArticles()
 {
   const { nestSrl } = route.params
   const { category, page } = route.query
   const { displayDateField, pageCount } = preference.articles
   const { type, order, sort, keyword } = filters.articles
-  let res: any = await get('/articles/', {
+  let res = await get('/articles/', {
     nest: nestSrl || undefined,
     category: category || undefined,
     field: 'srl,type,title,hit,star,regdate,nest_srl,category_srl,json,`order`',
@@ -52,7 +52,7 @@ export async function requestArticles(): Promise<any>
   if (!res.success) throw new Error(res.message)
   return {
     total: res.data.total,
-    index: res.data.index.map((item: any) => {
+    index: res.data.index.map(item => {
       let title = item.title
       if (item.nest_id)
       {
@@ -77,7 +77,7 @@ export async function requestArticles(): Promise<any>
   }
 }
 
-export async function requestCategories(): Promise<[]>
+export async function requestCategories()
 {
   if (!route.params.nestSrl) return []
   const { category, q } = route.query
@@ -93,12 +93,12 @@ export async function requestCategories(): Promise<[]>
     strict: 1,
   })
   if (!res.success) throw new Error(res.message)
-  let params: any = {
+  let params = {
     ...route.query,
     page: undefined,
     category: undefined,
   }
-  return res.data?.index.map((item: any) => {
+  return res.data?.index.map(item => {
     let link, active
     switch (item.srl)
     {
@@ -126,7 +126,7 @@ export async function requestCategories(): Promise<[]>
   })
 }
 
-export async function getData(): Promise<any>
+export async function getData()
 {
   if (!route) route = useRoute()
   let [ nest, articles, categories ] = await Promise.all([

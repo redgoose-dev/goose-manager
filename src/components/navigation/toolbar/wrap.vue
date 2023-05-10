@@ -1,12 +1,12 @@
 <template>
-  <nav class="toolbar">
-    <div class="toolbar__column">
-      <slot name="left"/>
-    </div>
-    <div class="toolbar__column">
-      <slot name="right"/>
-    </div>
-  </nav>
+<nav class="toolbar">
+  <div class="toolbar__column">
+    <slot name="left"/>
+  </div>
+  <div class="toolbar__column">
+    <slot name="right"/>
+  </div>
+</nav>
 </template>
 
 <style lang="scss" scoped>

@@ -11,10 +11,10 @@
 </nav>
 </template>
 
-<script lang="ts" setup>
-const props = defineProps<{
-  items: any
-}>()
+<script setup>
+const props = defineProps({
+  items: { type: undefined, required: true },
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>

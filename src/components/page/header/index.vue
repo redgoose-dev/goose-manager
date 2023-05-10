@@ -15,16 +15,16 @@
 </header>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 
-const props = defineProps<{
-  title?: string
-  description?: string
-  module?: string
-  prefix?: string
-}>()
-const messages = computed<any>(() => {
+const props = defineProps({
+  title: String,
+  description: String,
+  module: String,
+  prefix: String,
+})
+const messages = computed(() => {
   switch(props.module)
   {
     case 'dashboard':

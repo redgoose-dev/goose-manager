@@ -7,10 +7,10 @@
 </div>
 </template>
 
-<script lang="ts" setup>
-const props = defineProps<{
-  theme: string | 'list' | 'card' | 'thumbnail' | 'brick'
-}>()
+<script setup>
+const props = defineProps({
+  theme: { type: String }, // list,card,thumbnail,brick
+})
 </script>
 
 <style src="./items.scss" lang="scss" scoped></style>

@@ -19,22 +19,20 @@
 </svg>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 
-interface Props {
-  radius?: number
-  stroke?: number
-  percent: number|string
-}
-
-const props = defineProps<Props>()
-const radius = computed<number>(() => (props.radius || 40))
-const stroke = computed<number>(() => (props.stroke || 8))
-const normalizedRadius = computed<number>(() => (radius.value - stroke.value * 2))
-const circumference = computed<number>(() => (normalizedRadius.value * 2 * Math.PI))
-const computedStrokeDashOffset = computed<number>(() => {
-  return circumference.value - Math.min(Number(props.percent as 0), 100) / 100 * circumference.value
+const props = defineProps({
+  radius: Number,
+  stroke: Number,
+  percent: { type: [ Number, String ], required: true },
+})
+const radius = computed(() => (props.radius || 40))
+const stroke = computed(() => (props.stroke || 8))
+const normalizedRadius = computed(() => (radius.value - stroke.value * 2))
+const circumference = computed(() => (normalizedRadius.value * 2 * Math.PI))
+const computedStrokeDashOffset = computed(() => {
+  return circumference.value - Math.min(Number(props.percent), 100) / 100 * circumference.value
 })
 </script>
 

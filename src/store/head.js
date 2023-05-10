@@ -2,15 +2,7 @@ import { defineStore } from 'pinia'
 import * as storage from '../libs/storage'
 import { pureObject } from '../libs/object'
 
-export declare interface Head {
-  title: string
-  description: string
-  shortName: string
-  theme: string
-  blink: boolean
-}
-
-const defaultHead: Head = {
+const defaultHead = {
   title: import.meta.env.VITE_TITLE || 'Goose Manager',
   description: DESCRIPTION || '',
   shortName: SHORT_NAME || 'GOOSE',
@@ -19,17 +11,17 @@ const defaultHead: Head = {
 }
 
 export const headStore = defineStore('head', {
-  state(): Head
+  state()
   {
     return pureObject(defaultHead)
   },
   getters: {},
   actions: {
-    updateStorage(obj: any): void
+    updateStorage(obj)
     {
       storage.set('head', obj)
     },
-    changeTheme(value?: string): void
+    changeTheme(value)
     {
       value = value || this.theme
       switch(value)
@@ -42,7 +34,7 @@ export const headStore = defineStore('head', {
           this.theme = 'system'
           break
       }
-      const $html = document.querySelector('html') as HTMLHtmlElement
+      const $html = document.querySelector('html')
       $html.dataset['theme'] = this.theme
     },
   },

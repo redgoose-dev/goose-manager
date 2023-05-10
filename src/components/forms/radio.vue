@@ -22,8 +22,8 @@ const props = defineProps({
   required: Boolean,
   disabled: Boolean,
   size: String, // large
-});
-const emits = defineEmits([ 'update:modelValue' ]);
+})
+const emits = defineEmits([ 'update:modelValue' ])
 </script>
 
 <style src="./radio.scss" lang="scss" scoped></style>

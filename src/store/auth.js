@@ -3,20 +3,8 @@ import { $fetch } from 'ofetch'
 import { preferenceStore } from './preference'
 import { getPath } from '../libs/string'
 
-interface AuthUser {
-  srl: number
-  email: string
-  name: string
-  admin: boolean
-}
-interface Auth {
-  token: string
-  user?: AuthUser
-}
-
-
 export const authStore = defineStore('auth', {
-  state(): Auth
+  state()
   {
     return {
       token: '',
@@ -25,12 +13,12 @@ export const authStore = defineStore('auth', {
   },
   getters: {},
   actions: {
-    setup(token: string, user: AuthUser): void
+    setup(token, user)
     {
       this.token = token
       this.user = user
     },
-    async check(): Promise<boolean>
+    async check()
     {
       try
       {
@@ -55,7 +43,7 @@ export const authStore = defineStore('auth', {
         return false
       }
     },
-    async logout(): Promise<void>
+    async logout()
     {
       let { success } = await $fetch(getPath(`${BASE_URL}/local/logout/`), {
         method: 'post',

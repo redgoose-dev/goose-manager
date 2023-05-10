@@ -10,10 +10,10 @@
 </div>
 </template>
 
-<script lang="ts" setup>
-const props = defineProps<{
-  type?: string | 'full' | 'window'
-}>()
+<script setup>
+const props = defineProps({
+  type: String, // full,window
+})
 </script>
 
 <style lang="scss" scoped>

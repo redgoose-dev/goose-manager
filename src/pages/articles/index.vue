@@ -44,8 +44,8 @@
 </article>
 </template>
 
-<script lang="ts" setup>
-import { ref, reactive, onMounted, computed, watch } from 'vue'
+<script setup>
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
 import { filtersStore } from '../../store/filters'
@@ -64,10 +64,10 @@ const route = useRoute()
 const router = useRouter()
 const preference = preferenceStore()
 const filters = filtersStore()
-const data = reactive<any>({ total: 0, index: null })
-const loading = ref<boolean>(false)
-const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
-const itemComponent = computed<any>(() => {
+const data = reactive({ total: 0, index: null })
+const loading = ref(false)
+const page = ref(route.query.page ? Number(route.query.page) : 1)
+const itemComponent = computed(() => {
   switch (filters.articles.theme)
   {
     case 'list':
@@ -84,14 +84,14 @@ onMounted(() => {
   loadData().then()
 })
 
-async function onClickPageItem(n: number): Promise<void>
+async function onClickPageItem(n)
 {
   await onChangePage(n)
   page.value = n
   await loadData()
 }
 
-async function onChangePage(n: number): Promise<void>
+async function onChangePage(n)
 {
   let params = {
     ...route.query,
@@ -100,7 +100,7 @@ async function onChangePage(n: number): Promise<void>
   await router.push(`./${serialize(params, true)}`)
 }
 
-async function onUpdateFilter(): Promise<void>
+async function onUpdateFilter()
 {
   try
   {
@@ -112,14 +112,14 @@ async function onUpdateFilter(): Promise<void>
     data.index = res.index
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/articles/index.vue', 'onUpdateFilter()'], 'error', e.message)
     loading.value = false
   }
 }
 
-async function loadData(): Promise<void>
+async function loadData()
 {
   try
   {
@@ -130,7 +130,7 @@ async function loadData(): Promise<void>
     data.index = res.articles
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/articles/index.vue', 'loadData()'], 'error', e.message)
     throw e.message
