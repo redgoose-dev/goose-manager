@@ -8,7 +8,7 @@ const weekShortNames = [ '일', '월', '화', '수', '목', '금', '토' ]
  * get date
  * convert `yyyy-mm-dd hh:mm:ss` to `yyyy-mm-dd`
  */
-export function getDate(date: string): string
+export function getDate(date)
 {
   return date.split(' ')[0]
 }
@@ -17,7 +17,7 @@ export function getDate(date: string): string
  * get time
  * convert `yyyy-mm-dd hh:mm:ss` to `hh:mm:ss`
  */
-export function getTime(date: string): string
+export function getTime(date)
 {
   return date.split(' ')[1]
 }
@@ -25,7 +25,7 @@ export function getTime(date: string): string
 /**
  * set date
  */
-export function setDate(src: string): Date
+export function setDate(src)
 {
   return new Date(src)
 }
@@ -34,7 +34,7 @@ export function setDate(src: string): Date
  * convert date format
  * format guide: `{yyyy}-{MM}-{dd} / {month},{week},{weekShort} / {hh}:{mm}:{ss}`
  */
-export function dateFormat(date: Date, format: string): string
+export function dateFormat(date, format)
 {
   let mix = format.replace(/\{yyyy\}/, String(date.getFullYear()))
   mix = mix.replace(/\{MM\}/, twoDigit(date.getMonth() + 1))
@@ -52,7 +52,7 @@ export function dateFormat(date: Date, format: string): string
  * check order date
  * `0000-00-00`형식이거나 올바른 날짜인지 검사한다.
  */
-export function checkOrderDate(str: string = ''): boolean
+export function checkOrderDate(str = '')
 {
   if (str.length !== 10) return false
   if (!/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.test(str)) return false
@@ -63,9 +63,11 @@ export function checkOrderDate(str: string = ''): boolean
  * compare date
  * 시간을 0으로 변경하고 `년,월,일`로 날짜를 비교한다.
  */
-export function compareDate(date1: Date, date2: Date, compare: string = '<'): boolean
+export function compareDate(date1, date2, compare = '<')
 {
   if (!(date1 && date2)) throw new Error('no date1 or date2')
+  date1 = new Date(date1)
+  date2 = new Date(date2)
   let d1 = date1.setHours(0,0,0,0)
   let d2 = date2.setHours(0,0,0,0)
   switch (compare)
@@ -80,7 +82,7 @@ export function compareDate(date1: Date, date2: Date, compare: string = '<'): bo
   }
 }
 
-export function formatting(date: string, _option?: object): string
+export function formatting(date, _option)
 {
   const _date = new Intl.DateTimeFormat('ko', _option || {})
   return _date.format(new Date(date))

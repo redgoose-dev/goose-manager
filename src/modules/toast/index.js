@@ -2,38 +2,21 @@ import { sleep } from '../../libs/util'
 import { htmlToElement } from '../../libs/string'
 import './index.scss'
 
-interface Options {
-  message: string
-  speed?: number
-  delay?: number
-  color?: string | 'success' | 'error'
-  max?: number
-}
-
-interface Toast {
-  options: Options
-  elementClassName: string
-  index: any
-  key: number
-  $container: HTMLDivElement
-  $index: HTMLUListElement
-}
-
-const defaultOptions: Options = {
+const defaultOptions = {
   message: 'toast message',
   speed: 300,
   delay: 3000,
   color: '', // success,error
   max: 5,
 }
-export let toast: Toast
+export let toast
 
 /**
  * Toast class
  */
-class Toast implements Toast {
+class Toast {
 
-  constructor (options: Options)
+  constructor (options)
   {
     // set member values
     this.options = mergeOptions(defaultOptions, options)
@@ -51,14 +34,14 @@ class Toast implements Toast {
     document.body.appendChild(this.$container)
   }
 
-  async add (src: string|Options, color?: string): Promise<void>
+  async add (src, color)
   {
     // set values
     if (typeof src === 'string') src = { message: src }
     if (color) src.color = color
-    const op: Options = mergeOptions(this.options, src)
+    const op = mergeOptions(this.options, src)
     // set element
-    let $li: any = htmlToElement(`<li class="rg-toast__item">` +
+    let $li = htmlToElement(`<li class="rg-toast__item">` +
       `<div class="rg-toast__item-body">` +
       `<span class="rg-toast__message">${op.message}</span>` +
       `</div>` +
@@ -71,7 +54,7 @@ class Toast implements Toast {
     // set color
     if (op.color) $li.classList.add(op.color)
     // set event
-    $li.addEventListener('click', (e: any) => {
+    $li.addEventListener('click', e => {
       this.remove(Number(e.currentTarget.dataset.key))
     })
     // push item
@@ -87,7 +70,7 @@ class Toast implements Toast {
     // append content
     this.$index.insertBefore($li, this.$index.firstChild)
     // toast 갯수가 특정갯수가 넘어가면 오래된것부터 삭제한다.
-    if ((this.options.max as 0) < Object.keys(this.index).length)
+    if ((this.options.max || 0) < Object.keys(this.index).length)
     {
       let removeItems = Object.keys(this.index)
         .reverse()
@@ -99,9 +82,9 @@ class Toast implements Toast {
     $li.style.transitionDuration = `${op.speed}ms`
     $li.classList.add('rg-toast__item-show')
     // check delay (`delay`값이 20보다 작으면 항상 떠있도록..)
-    if (op.delay as 0 < 20) return
+    if ((op.delay || 0) < 20) return
     // transition end
-    let e: any = await transitionEnd($li, '')
+    let e = await transitionEnd($li, '')
     // set progress
     let progress = e.target.querySelector('.rg-toast__progress')
     progress.style.animationDuration = `${e.target.dataset.delay}ms`
@@ -111,7 +94,7 @@ class Toast implements Toast {
     this.remove(Number(e.target.parentNode.dataset.key)).then()
   }
 
-  async remove (key: number): Promise<void>
+  async remove (key)
   {
     // check
     if (!this.index[key]) return
@@ -124,14 +107,14 @@ class Toast implements Toast {
     el.style.transitionDuration = `${speed}ms`
     el.classList.remove('rg-toast__item-show')
     // transition end
-    const e: any = await transitionEnd(el, '')
+    const e = await transitionEnd(el, '')
     // remove element
     this.$index.removeChild(e.target)
   }
 
 }
 
-function transitionEnd(dom: HTMLElement, type: string): Promise<unknown>
+function transitionEnd(dom, type)
 {
   return new Promise(resolve => {
     if (!dom) return
@@ -147,7 +130,7 @@ function transitionEnd(dom: HTMLElement, type: string): Promise<unknown>
         event.webkit = 'webkitTransitionEnd'
         break
     }
-    function callback(e: any): void
+    function callback(e)
     {
       dom.removeEventListener(event.base, callback)
       dom.removeEventListener(event.webkit, callback)
@@ -158,7 +141,7 @@ function transitionEnd(dom: HTMLElement, type: string): Promise<unknown>
   })
 }
 
-function mergeOptions(options: Options, newOptions: Options): Options
+function mergeOptions(options, newOptions)
 {
   return {
     ...options,
@@ -169,7 +152,7 @@ function mergeOptions(options: Options, newOptions: Options): Options
   }
 }
 
-export function setup(options: Options = { message: '' }): void
+export function setup(options = { message: '' })
 {
   toast = new Toast(options)
 }

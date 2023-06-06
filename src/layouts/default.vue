@@ -102,7 +102,7 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { preferenceStore } from '../store/preference'
@@ -117,10 +117,10 @@ const route = useRoute()
 const preference = preferenceStore()
 const auth = authStore()
 const head = headStore()
-const year: number = new Date().getFullYear()
-const gnb = computed<any>(() => {
+const year = new Date().getFullYear()
+const gnb = computed(() => {
   const { navigation } = preference
-  return navigation.map((item: any) => {
+  return navigation.map(item => {
     return {
       ...item,
       show: item.admin === undefined || item.admin,
@@ -128,7 +128,7 @@ const gnb = computed<any>(() => {
   }).filter((item) => !!item.show)
 })
 
-async function onClickClearTokens(e: any): Promise<void>
+async function onClickClearTokens(e)
 {
   if (!confirm('토큰 데이터들을 리셋할까요?'))
   {
@@ -142,14 +142,14 @@ async function onClickClearTokens(e: any): Promise<void>
     if (!res.success) throw new Error(res.message)
     toast.add('토큰을 재설정했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/layouts/default.vue', 'onClickClearTokens()' ], 'error', e.message)
     toast.add('토큰 재설정에 실패했습니다.', 'error').then()
   }
 }
 
-async function onClickLogout(): Promise<void>
+async function onClickLogout()
 {
   if (!confirm('정말 로그아웃 할까요?')) return
   await auth.logout()
@@ -159,7 +159,7 @@ async function onClickLogout(): Promise<void>
  * get navigation element name
  * 메뉴 상태에 따라 링크 엘리먼트 이름 설정하기
  */
-function getNavigationElementName(item: any): string
+function getNavigationElementName(item)
 {
   if (item.link) return 'router-link'
   else if (item.href) return 'a'

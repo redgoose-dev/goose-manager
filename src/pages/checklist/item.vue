@@ -6,6 +6,7 @@
     <ChecklistItem
       v-if="!loading"
       v-model="state.content"
+      v-model:checkboxes="checkboxes"
       :date="state.date"
       :today="false"
       :percent="state.percent"
@@ -32,7 +33,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { getItem } from '../../structure/checklist/item'
@@ -43,23 +44,16 @@ import { Controller } from '../../components/navigation'
 import ChecklistItem from '../../components/pages/checklist/item.vue'
 import Loading from '../../components/etc/loading.vue'
 
-interface State {
-  srl: number
-  content: string
-  date: string
-  percent: number
-  files: string[]
-}
-
 const route = useRoute()
-const loading = ref<boolean>(true)
-const state = reactive<State>({
+const loading = ref(true)
+const state = reactive({
   srl: NaN,
   content: '',
   date: '',
   percent: NaN,
   files: [],
 })
+const checkboxes = ref(0)
 
 onMounted(async () => {
   try
@@ -72,7 +66,7 @@ onMounted(async () => {
     state.files = res.files
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/pages/checklist/item.vue', 'onMounted()' ], 'error', e.message)
     throw e.message

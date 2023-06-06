@@ -38,6 +38,9 @@
     &.complete {
       --progress-donut-color-fill: var(--color-success);
     }
+    &.zero {
+      opacity: .25;
+    }
   }
   @include mixins.dark-mode() {
     &__graph {
@@ -51,4 +54,7 @@
 .filter {
   position: sticky;
   top: calc(var(--size-header-height, 42px) + 16px);
+  &__today {
+    margin: 0 0 24px;
+  }
 }

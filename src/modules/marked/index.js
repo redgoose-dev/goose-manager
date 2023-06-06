@@ -7,6 +7,7 @@ export function markedSetup()
   marked.setOptions({
     gfm: true,
     breaks: true,
+    silent: true,
   })
 }
 

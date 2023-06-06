@@ -17,6 +17,7 @@
             <div :class="[
               'checklist-list__graph',
               item.percent === 100 && 'complete',
+              item.percent === 0 && 'zero',
             ]">
               <ProgressDonut :radius="30" :stroke="8" :percent="item.percent"/>
               <p>{{item.percent}}%</p>
@@ -33,19 +34,22 @@
         :range="preference.checklist.pageRange"
         class="checklist-list__paginate"
         @update:modelValue="onClickPageItem"/>
-      <Controller>
-        <template #left>
-          <ButtonBasic href="../" icon-left="sun" color="key">
-            오늘로 이동
-          </ButtonBasic>
-        </template>
-      </Controller>
     </div>
     <aside class="checklist-list__filter">
-      <ChecklistFilter
-        :total="data.total"
-        :loading="loading"
-        @update="onUpdateFilter"/>
+      <div class="filter">
+        <ButtonBasic
+          href="../"
+          icon-left="sun"
+          color="key"
+          size="small"
+          class="filter__today">
+          오늘로 이동
+        </ButtonBasic>
+        <ChecklistFilter
+          :total="data.total"
+          :loading="loading"
+          @update="onUpdateFilter"/>
+      </div>
     </aside>
   </div>
 </article>

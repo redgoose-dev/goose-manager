@@ -7,6 +7,10 @@
       display: none;
     }
   }
+  img {
+    word-break: break-all;
+    font-size: 9px;
+  }
   .grid-item {
     display: grid;
     grid-template-columns: repeat(var(--grid-item-columns, 1), 1fr);

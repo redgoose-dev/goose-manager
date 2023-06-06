@@ -28,21 +28,21 @@ export async function getLastItem(): Promise<any>
 {
   const preference = preferenceStore()
   let result, files
-  let params = { order: 'srl', sort: 'desc', size: 1 }
+  const params = { order: 'srl', sort: 'desc', size: 1 }
   let res = await get(`/checklist/`, params)
-  let item = res.data?.index[0]
-  if (!item || (!!item && checkTime(item.regdate, preference.checklist.resetTime)))
+  const lastItem = res.data?.index[0]
+  if (checkTime(lastItem?.regdate, preference.checklist.resetTime))
   {
     // add item
     res = await post('/checklist/?return=1', formData({
-      content: (item?.content) ? item.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
+      content: (lastItem?.content) ? lastItem.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
     }))
     if (!res?.data) throw new Error('Not found add data.')
     result = res.data
   }
   else
   {
-    result = item
+    result = lastItem
   }
   // get files
   try
@@ -72,7 +72,7 @@ export async function getItem(srl: number): Promise<any>
       unlimit: 1,
     }),
   ])
-  if (!items.success) throw new Error(items.message)
+  if (!items.success) throw new Error(items.message || 'Unknown error')
   return {
     ...filteringItem(items.data),
     files: filteringFiles(files.data?.index),
@@ -86,5 +86,5 @@ export async function editItem(srl: number, content: string): Promise<void>
   const { success, message } = await post(`/checklist/${srl}/edit/`, formData({
     content,
   }))
-  if (!success) throw new Error(message)
+  if (!success) throw new Error(message || 'Unknown error')
 }
