@@ -1,9 +1,9 @@
 import { post, formData } from '../../libs/api'
 import { getLastItem, getItem } from './item'
 
-export async function getData(srl: number = NaN): Promise<any>
+export async function getData(srl = NaN)
 {
-  let res;
+  let res
   if (srl)
   {
     res = await getItem(srl)
@@ -19,8 +19,8 @@ export async function getData(srl: number = NaN): Promise<any>
   }
 }
 
-export async function submit(srl: number, content: string): Promise<void>
+export async function submit(srl, content)
 {
-  let res = await post(`/checklist/${srl}/edit/`, formData({ content }));
-  if (!res.success) throw new Error(res.message);
+  let res = await post(`/checklist/${srl}/edit/`, formData({ content }))
+  if (!res.success) throw new Error(res.message)
 }

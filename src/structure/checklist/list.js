@@ -1,18 +1,18 @@
-import { useRoute, RouteLocationNormalized } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
 import { filtersStore } from '../../store/filters'
 import { get } from '../../libs/api'
 import { dateFormat } from '../../libs/date'
 import { checkTime } from './lib'
 
-let route: RouteLocationNormalized
+let route
 
-export async function getData(): Promise<any>
+export async function getData()
 {
   if (!route) route = useRoute()
   const preference = preferenceStore()
   const filters = filtersStore()
-  let params: any = {
+  let params = {
     field: 'srl,percent,regdate',
     order: 'srl',
     size: preference.checklist.pageCount,
@@ -29,8 +29,8 @@ export async function getData(): Promise<any>
   if (!success) throw new Error(message)
   return {
     total: data?.total,
-    index: data?.index.map((item: any) => {
-      const regdate = item.regdate.split(' ')[0].split('-').map((o: any) => Number(o))
+    index: data?.index.map(item => {
+      const regdate = item.regdate.split(' ')[0].split('-').map(o => Number(o))
       const date = new Date(regdate[0], regdate[1] - 1, regdate[2])
       return {
         ...item,

@@ -2,7 +2,7 @@ import { get, post, formData } from '../../libs/api'
 import { defaultContent, checkTime } from './lib'
 import { preferenceStore } from '../../store/preference'
 
-function filteringItem(src: any): any
+function filteringItem(src)
 {
   return {
     srl: src.srl,
@@ -12,7 +12,7 @@ function filteringItem(src: any): any
   }
 }
 
-function filteringFiles(src: any[]): any[]
+function filteringFiles(src)
 {
   if (!src) return []
   return src.map(o => {
@@ -24,18 +24,22 @@ function filteringFiles(src: any[]): any[]
   })
 }
 
-export async function getLastItem(): Promise<any>
+export async function getLastItem()
 {
   const preference = preferenceStore()
-  let result, files
+  let result, files, postDate
   const params = { order: 'srl', sort: 'desc', size: 1 }
   let res = await get(`/checklist/`, params)
   const lastItem = res.data?.index[0]
-  if (checkTime(lastItem?.regdate, preference.checklist.resetTime))
+  postDate = checkTime(lastItem?.regdate, preference.checklist.resetTime)
+  // console.log(postDate)
+  // return
+  if (postDate)
   {
     // add item
     res = await post('/checklist/?return=1', formData({
       content: (lastItem?.content) ? lastItem.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
+      regdate: postDate,
     }))
     if (!res?.data) throw new Error('Not found add data.')
     result = res.data
@@ -61,7 +65,7 @@ export async function getLastItem(): Promise<any>
   }
 }
 
-export async function getItem(srl: number): Promise<any>
+export async function getItem(srl)
 {
   if (!srl) throw new Error('no srl')
   let [ items, files ] = await Promise.all([
@@ -79,7 +83,7 @@ export async function getItem(srl: number): Promise<any>
   }
 }
 
-export async function editItem(srl: number, content: string): Promise<void>
+export async function editItem(srl, content)
 {
   if (!srl) throw new Error('no srl')
   if (!content) throw new Error('no content')
