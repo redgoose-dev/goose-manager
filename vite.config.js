@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import createServiceWorkerPlugin from './plugins/create-service-worker'
+import pkg from './package.json'
 
 const config = defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd())
@@ -24,6 +25,7 @@ const config = defineConfig(async ({ mode }) => {
       'BASE_URL': JSON.stringify(env.VITE_BASE_URL),
       'STORAGE_PREFIX': JSON.stringify(env.VITE_STORAGE_PREFIX),
       'DEVELOPMENT': JSON.stringify(mode === 'development'),
+      'VERSION': JSON.stringify(pkg.version),
     },
     css: {},
     plugins: [

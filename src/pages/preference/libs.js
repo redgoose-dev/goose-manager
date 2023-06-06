@@ -1,4 +1,4 @@
-export function validateForms(src: any): void
+export function validateForms(src)
 {
   try
   {
@@ -10,7 +10,7 @@ export function validateForms(src: any): void
   }
 }
 
-export function getStringJson(src: any): any
+export function getStringJson(src)
 {
   try
   {

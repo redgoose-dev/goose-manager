@@ -2,6 +2,12 @@
 <article>
   <form @submit.prevent="onSubmit">
     <Fieldset>
+      <Field label="타이틀">
+        <p>{{fields.title}}</p>
+      </Field>
+      <Field label="버전">
+        <p>{{fields.version}}</p>
+      </Field>
       <Field label="테마">
         <FormSelect
           v-model="fields.theme.value"
@@ -26,7 +32,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { reactive, nextTick } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { headStore } from '../../store/head'
@@ -37,16 +43,20 @@ import { FormSelect } from '../../components/forms'
 import { Controller } from '../../components/navigation'
 import { ButtonBasic } from '../../components/button'
 
+const version = VERSION || undefined
+
 const preference = preferenceStore()
 const head = headStore()
 const fields = reactive({
+  title: import.meta.env.VITE_TITLE,
+  version,
   theme: {
     value: head.theme,
     error: null,
   },
 })
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -59,7 +69,7 @@ async function onSubmit(): Promise<void>
     head.blink = false
     toast.add('환경설정을 수정했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/preference/general.vue', 'onSubmit()'], 'error', e.message)
     toast.add('환경설정을 수정하지 못했습니다.', 'error').then()
