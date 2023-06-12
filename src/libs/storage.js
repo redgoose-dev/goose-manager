@@ -3,7 +3,7 @@ const prefix = STORAGE_PREFIX || 'goose'
 /**
  * check localStorage
  */
-function checkObject(): boolean
+function checkObject()
 {
   return !!window.localStorage
 }
@@ -11,12 +11,12 @@ function checkObject(): boolean
 /**
  * get value in localStorage
  */
-export function get(key: string): any
+export function get(key)
 {
   if (!(checkObject() && key)) return undefined
   try
   {
-    return JSON.parse((window as any).localStorage.getItem(`${prefix}-${key}`))
+    return JSON.parse(window.localStorage.getItem(`${prefix}-${key}`))
   }
   catch(e)
   {
@@ -27,7 +27,7 @@ export function get(key: string): any
 /**
  * set value in localStorage
  */
-export function set(key: string, value: any): void
+export function set(key, value)
 {
   if (!(checkObject() && key && value)) return
   window.localStorage.setItem(`${prefix}-${key}`, JSON.stringify(value))

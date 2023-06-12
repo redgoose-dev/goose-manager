@@ -1,28 +1,15 @@
-import { $fetch } from 'ofetch'
-import type { $Fetch, FetchOptions } from 'ofetch'
+import { ofetch } from 'ofetch'
 import { authStore } from '../store/auth'
 import { getPath, serialize } from './string'
 
-interface Response {
-  success: boolean
-  code: number
-  message?: string
-  data?: any
-  query?: string
-  time?: string
-  url?: string
-  srl?: number
-  _token?: string
-}
+let instance
+let headers
+let timer
 
-let instance: $Fetch
-let headers: any
-let timer: any
-
-function setup(): void
+function setup()
 {
   const auth = authStore()
-  instance = $fetch.create(<FetchOptions>{
+  instance = ofetch.create({
     baseURL: API_URL,
     retry: 0,
     responseType: 'json',
@@ -30,10 +17,10 @@ function setup(): void
   headers = { 'Authorization': `Bearer ${auth.token}` }
 }
 
-export async function get(url: string, params?: any): Promise<Response>
+export async function get(url, params)
 {
   if (!instance) setup()
-  let res: Response = await instance(`${url}${serialize(params, true)}`, {
+  let res = await instance(`${url}${serialize(params, true)}`, {
     method: 'get',
     headers: headers,
   })
@@ -42,10 +29,10 @@ export async function get(url: string, params?: any): Promise<Response>
   return res
 }
 
-export async function post(url: string, data?: any, _options?: any): Promise<Response>
+export async function post(url, data, _options)
 {
   if (!instance) setup()
-  let res: Response = await instance(url, {
+  let res = await instance(url, {
     method: 'post',
     headers: headers,
     ...(_options || {}),
@@ -62,12 +49,12 @@ export async function post(url: string, data?: any, _options?: any): Promise<Res
  * Utility Area
  */
 
-function checkStatus(src: Response): void
+function checkStatus(src)
 {
   if (!src.success) throw new Error(src.message || 'An unknown error has occurred.')
 }
 
-export function formData(src?: any): FormData|null
+export function formData(src)
 {
   if (!src) return null
   let data = new FormData()
@@ -75,20 +62,20 @@ export function formData(src?: any): FormData|null
   return data
 }
 
-export function checkForms(src: any): void
+export function checkForms(src)
 {
-  Object.keys(src).forEach((key: string|number) => {
+  Object.keys(src).forEach(key => {
     if (!!src[key].error) throw new Error(src[key].error)
   })
 }
 
-function refreshToken(token: string): void
+function refreshToken(token)
 {
   const auth = authStore()
   const delay = 2000
   if (timer) clearTimeout(timer)
   timer = setTimeout(async () => {
-    let res = await $fetch(getPath(`${BASE_URL}/local/refresh-token/`), {
+    let res = await ofetch(getPath(`${BASE_URL}/local/refresh-token/`), {
       method: 'post',
       responseType: 'json',
       retry: 0,

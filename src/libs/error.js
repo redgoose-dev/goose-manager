@@ -1,4 +1,4 @@
-export function err(path: string[], type: string = 'warning', message: string): void
+export function err(path, type = 'warning', message)
 {
   if (!window.DEBUG) return
   console.error(path.join('/'), `${type.toUpperCase()}`, message)

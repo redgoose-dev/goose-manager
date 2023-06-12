@@ -1,7 +1,7 @@
 /**
  * sleep (delay tool)
  */
-export function sleep(ms: number = 1000): Promise<void>
+export function sleep(ms = 1000)
 {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -10,10 +10,10 @@ export function sleep(ms: number = 1000): Promise<void>
  * initial custom event
  * 중복되는 `dom`에다 여러 이벤트를 넣고 싶을때(특히 window) 유니크한 이름으로 이벤트를 만들 수 있도록 커스텀 이벤트를 만들어서 사용할때 사용한다.
  */
-export function initCustomEvent(): void
+export function initCustomEvent()
 {
-  const events: any = {
-    on(event: string, cb: Function, opts: any = undefined)
+  const events = {
+    on(event, cb, opts = undefined)
     {
       if (!this.namespaces) this.namespaces = {}
       this.namespaces[event] = cb
@@ -21,7 +21,7 @@ export function initCustomEvent(): void
       this.addEventListener(event.split('.')[0], cb, options)
       return this
     },
-    off(event: string)
+    off(event)
     {
       if (!(this.namespaces && this.namespaces[event])) return
       this.removeEventListener(event.split('.')[0], this.namespaces[event])
@@ -29,14 +29,14 @@ export function initCustomEvent(): void
       return this
     },
   }
-  ;(window as any).on = (document as any).on = (Element.prototype as any).on = events.on
-  ;(window as any).off = (document as any).off = (Element.prototype as any).off = events.off
+  window.on = document.on = Element.prototype.on = events.on
+  window.off = document.off = Element.prototype.off = events.off
 }
 
 /**
  * load image
  */
-export function loadImage(src: string): Promise<HTMLImageElement>
+export function loadImage(src)
 {
   return new Promise((resolve => {
     const image = new Image()
@@ -48,13 +48,9 @@ export function loadImage(src: string): Promise<HTMLImageElement>
 /**
  * get image size
  */
-interface Size {
-  width: number
-  height: number
-}
-export function getImageSize(type: string, set_w: number, set_h: number, img_w: number, img_h: number): Size
+export function getImageSize(type, set_w, set_h, img_w, img_h)
 {
-  let size: Size = { width: NaN, height: NaN }
+  let size = { width: NaN, height: NaN }
   switch(type)
   {
     case 'resize':
@@ -85,7 +81,7 @@ export function getImageSize(type: string, set_w: number, set_h: number, img_w: 
   return size
 }
 
-export function scrollTo(y: number = 0): void
+export function scrollTo(y = 0)
 {
   window.scroll(0, y)
 }
