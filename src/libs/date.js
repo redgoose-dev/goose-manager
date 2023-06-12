@@ -55,7 +55,7 @@ export function dateFormat(date, format)
 export function checkOrderDate(str = '')
 {
   if (str.length !== 10) return false
-  if (!/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.test(str)) return false
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false
   return !isNaN(new Date(str).getTime())
 }
 

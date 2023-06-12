@@ -1,5 +1,5 @@
 <template>
-<form class="filter" @submit.prevent="onSubmit">
+<form class="filter" @submit.prevent="">
   <fieldset :disabled="props.loading">
     <legend>filter of articles</legend>
     <div class="filter__fields">
@@ -20,7 +20,8 @@
             { label: '비공개', value: 'private' },
           ]"
           :placeholder="null"
-          size="small"/>
+          size="small"
+          @update:model-value="onUpdateFilter"/>
       </div>
       <div class="filter__field sort">
         <label for="filter_order">정렬</label>
@@ -33,7 +34,8 @@
             { label: 'order', value: 'order' },
           ]"
           :placeholder="null"
-          size="small"/>
+          size="small"
+          @update:model-value="onUpdateFilter"/>
         <FormSelect
           id="filter_sort"
           name="filter_sort"
@@ -43,7 +45,8 @@
             { label: 'Z to A', value: 'desc' },
           ]"
           :placeholder="null"
-          size="small"/>
+          size="small"
+          @update:model-value="onUpdateFilter"/>
       </div>
       <div class="filter__field theme">
         <label for="filter_theme">테마</label>
@@ -58,21 +61,23 @@
             { label: '벽돌', value: 'brick' },
           ]"
           :placeholder="null"
-          size="small"/>
+          size="small"
+          @update:model-value="onUpdateFilter"/>
       </div>
       <div class="filter__field keyword">
         <label for="filter_keyword">키워드</label>
         <Keyword
           ref="$keyword"
-          v-model="forms.keyword"
+          v-model="keyword"
           id="filter_keyword"
           :minlength="3"
           :maxlength="20"
-          placeholder="keyword text"
+          placeholder="keyword.."
           size="small"
           :use-clear="true"
-          @clear="forms.keyword = ''"
-          @submit="onSubmit"/>
+          :use-submit="true"
+          @clear="onClearKeyword"
+          @submit="onSubmitKeyword"/>
       </div>
     </div>
   </fieldset>
@@ -85,23 +90,16 @@
       @click="onReset">
       재설정
     </ButtonBasic>
-    <ButtonBasic
-      type="submit"
-      color="key"
-      size="small"
-      icon-left="check"
-      :disabled="props.loading">
-      필터 업데이트
-    </ButtonBasic>
   </nav>
 </form>
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { filtersStore } from '../../../store/filters'
 import { withCommas } from '../../../libs/number'
+import { serialize } from '../../../libs/string'
 import { FormSelect, Keyword } from '../../forms'
 import { ButtonBasic } from '../../button'
 
@@ -119,7 +117,6 @@ const forms = reactive({
   order: filters.articles.order || '',
   sort: filters.articles.sort || 'desc',
   theme: filters.articles.theme || 'card',
-  keyword: filters.articles.keyword || '',
 })
 const keyword = ref(route.query.q)
 const total = computed(() => withCommas(props.total))
@@ -130,14 +127,13 @@ function onReset()
   forms.order = 'srl'
   forms.sort = 'desc'
   forms.theme = 'card'
-  forms.keyword = ''
   filters.save('articles', {
     type: forms.type,
     order: forms.order,
     sort: forms.sort,
     theme: forms.theme,
-    keyword: forms.keyword,
   })
+  if (keyword.value) onClearKeyword()
   emits('update')
 }
 
@@ -148,10 +144,40 @@ function onSubmit()
     order: forms.order,
     sort: forms.sort,
     theme: forms.theme,
-    keyword: forms.keyword,
   })
   emits('update')
 }
+
+function onClearKeyword()
+{
+  keyword.value = ''
+  onSubmitKeyword()
+}
+function onSubmitKeyword()
+{
+  const query = serialize({
+    ...route.query,
+    q: keyword.value || undefined,
+  }, true)
+  router.push(`./${query}`)
+}
+
+function onUpdateFilter()
+{
+  filters.save('articles', {
+    type: forms.type,
+    order: forms.order,
+    sort: forms.sort,
+    theme: forms.theme,
+  })
+  emits('update')
+}
+
+watch(() => route.query.q, (value, oldValue) => {
+  if (value === oldValue) return
+  keyword.value = value
+  emits('update')
+})
 </script>
 
 <style src="./article-filter.scss" lang="scss" scoped></style>

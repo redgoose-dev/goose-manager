@@ -39,7 +39,7 @@ const props = defineProps({
   disabled: Boolean,
   inline: { type: Boolean, default: false },
   size: String, // small
-  placeholder: { type: String, default: 'Please select' },
+  placeholder: { type: [String,null], default: 'Please select' },
 })
 const emits = defineEmits([ 'update:modelValue' ])
 const placeholder = computed(() => (!props.modelValue && props.placeholder))

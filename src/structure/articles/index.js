@@ -35,9 +35,9 @@ async function requestNest()
 export async function requestArticles()
 {
   const { nestSrl } = route.params
-  const { category, page } = route.query
+  const { category, page, q } = route.query
   const { displayDateField, pageCount } = preference.articles
-  const { type, order, sort, keyword } = filters.articles
+  const { type, order, sort } = filters.articles
   let res = await get('/articles/', {
     nest: nestSrl || undefined,
     category: category || undefined,
@@ -47,7 +47,7 @@ export async function requestArticles()
     visible_type: type || 'all',
     page: Number(page) > 1 ? Number(page) : undefined,
     order: setOrder(order, sort),
-    q: keyword || undefined,
+    q,
   })
   if (!res.success) throw new Error(res.message)
   return {

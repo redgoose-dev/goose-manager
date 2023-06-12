@@ -55,7 +55,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
@@ -73,22 +73,17 @@ import Pagination from '../../components/etc/pagination.vue'
 import ProgressDonut from '../../components/etc/progress-donut.vue'
 import ChecklistFilter from '../../components/pages/checklist/checklist-filter.vue'
 
-interface Data {
-  total: number
-  index: any[]
-}
-
 const route = useRoute()
 const router = useRouter()
 const preference = preferenceStore()
-const loading = ref<boolean>(true)
-const data = reactive<Data>({
+const loading = ref(true)
+const data = reactive({
   total: 0,
   index: [],
 })
-const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
+const page = ref(route.query.page ? Number(route.query.page) : 1)
 
-async function onChangePage(page: number): Promise<void>
+async function onChangePage(page)
 {
   let params = {
     ...route.query,
@@ -97,14 +92,14 @@ async function onChangePage(page: number): Promise<void>
   await router.push(`./${serialize(params, true)}`)
 }
 
-async function onClickPageItem(n: number): Promise<void>
+async function onClickPageItem(n)
 {
   await onChangePage(n)
   page.value = n
   await loadData()
 }
 
-async function onUpdateFilter(): Promise<void>
+async function onUpdateFilter()
 {
   try
   {
@@ -116,14 +111,14 @@ async function onUpdateFilter(): Promise<void>
     data.index = res.index
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/checklist/list.vue', 'onUpdateFilter()'], 'error', e.message)
     loading.value = false
   }
 }
 
-async function loadData(): Promise<void>
+async function loadData()
 {
   try
   {
@@ -134,16 +129,14 @@ async function loadData(): Promise<void>
     data.index = index
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/checklist/list.vue', 'onMounted()'], 'error', e.message)
     throw e.message
   }
 }
 
-onMounted(() => {
-  loadData().then()
-})
+onMounted(() => loadData().then())
 </script>
 
 <style src="./list.scss" lang="scss" scoped></style>

@@ -8,13 +8,11 @@ const defaultFilters = {
     order: 'srl',
     sort: 'desc',
     theme: 'card',
-    keyword: '',
   },
   checklist: {
     dateStart: '',
     dateEnd: '',
     sort: 'desc',
-    keyword: '',
   },
 }
 
@@ -39,23 +37,19 @@ export const filtersStore = defineStore('filters', {
           this.articles.order = src.order
           this.articles.sort = src.sort
           this.articles.theme = src.theme
-          this.articles.keyword = src.keyword
           break
         case 'checklist':
           this.checklist.dateStart = src.dateStart
           this.checklist.dateEnd = src.dateEnd
           this.checklist.sort = src.sort
-          this.checklist.keyword = src.keyword
           break
       }
       storage.set('filters', pureObject({
         articles: {
           ...this.articles,
-          keyword: undefined,
         },
         checklist: {
           ...this.checklist,
-          keyword: undefined,
         },
       }))
     },

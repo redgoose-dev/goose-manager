@@ -24,7 +24,7 @@ export async function getData()
     params.start = filters.checklist.dateStart
     params.end = filters.checklist.dateEnd
   }
-  if (filters.checklist.keyword) params.q = filters.checklist.keyword
+  if (route.query?.q) params.q = route.query.q
   const { success, message, data } = await get('/checklist/', params)
   if (!success) throw new Error(message)
   return {
