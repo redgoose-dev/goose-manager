@@ -5,6 +5,7 @@ import { get } from '../../libs/api'
 import { createFullPath } from '../files/util'
 import { getDate } from '../../libs/date'
 import { serialize } from '../../libs/string'
+import { getFilterKey } from '../../libs/util'
 
 const preference = preferenceStore()
 const filters = filtersStore()
@@ -34,10 +35,11 @@ async function requestNest()
 
 export async function requestArticles()
 {
+  const filterKey = getFilterKey()
   const { nestSrl } = route.params
   const { category, page, q } = route.query
   const { displayDateField, pageCount } = preference.articles
-  const { type, order, sort } = filters.articles
+  const { type, order, sort } = filters.getFilter(filterKey) || {}
   let res = await get('/articles/', {
     nest: nestSrl || undefined,
     category: category || undefined,
@@ -80,8 +82,9 @@ export async function requestArticles()
 export async function requestCategories()
 {
   if (!route.params.nestSrl) return []
+  const filterKey = getFilterKey()
   const { category, q } = route.query
-  const { type } = filters.articles
+  const { type } = filters.getFilter(filterKey) || {}
   let res = await get(`/categories/`, {
     module: 'article',
     target: route.params.nestSrl,

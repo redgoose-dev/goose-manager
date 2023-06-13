@@ -85,3 +85,8 @@ export function scrollTo(y = 0)
 {
   window.scroll(0, y)
 }
+
+export function getFilterKey()
+{
+  return location.pathname
+}

@@ -12,7 +12,7 @@
       <Loading v-if="loading"/>
       <Items
         v-else-if="data.index?.length > 0"
-        :theme="filters.articles.theme"
+        :theme="theme"
         class="articles__index">
         <component
           :is="itemComponent"
@@ -68,20 +68,21 @@
       <ArticleFilter
         :total="data.total"
         :loading="loading"
+        :storage-key="filterKey"
         @update="onUpdateFilter"/>
     </aside>
   </div>
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../../store/preference'
 import { filtersStore } from '../../../store/filters'
 import { err } from '../../../libs/error'
 import { serialize } from '../../../libs/string'
-import { scrollTo } from '../../../libs/util'
+import { scrollTo, getFilterKey } from '../../../libs/util'
 import { createQueries } from '../../../components/pages/articles/libs'
 import { getData, requestArticles, requestCategories } from '../../../structure/articles'
 import PageHeader from '../../../components/page/header/index.vue'
@@ -94,41 +95,40 @@ import TabCategory from '../../../components/navigation/tab-category/index.vue'
 import Pagination from '../../../components/etc/pagination.vue'
 import ArticleFilter from '../../../components/pages/articles/article-filter.vue'
 
-interface Data {
-  total: number
-  index: any
-  nest: any
-  categories: any
-}
-
 const route = useRoute()
 const router = useRouter()
 const preference = preferenceStore()
 const filters = filtersStore()
-const data = reactive<Data>({
+const filterKey = ref(getFilterKey())
+const data = reactive({
   total: 0,
   index: null,
   nest: null,
   categories: null,
 })
-const title = computed<string>(() => (data.nest ? `[${data.nest.id}] Articles` : ''))
-const description = computed<string>(() => (data.nest ? data.nest.description : ''))
-const loading = ref<boolean>(true)
-const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
-const itemComponent = computed<any>(() => {
-  switch (filters.articles.theme)
+const title = computed(() => (data.nest ? `[${data.nest.id}] Articles` : ''))
+const description = computed(() => (data.nest ? data.nest.description : ''))
+const loading = ref(true)
+const page = ref(route.query.page ? Number(route.query.page) : 1)
+const theme = computed(() => {
+  const { theme } = filters.getFilter(filterKey) || {}
+  return theme || 'card'
+})
+const itemComponent = computed(() => {
+  switch (theme.value)
   {
     case 'list':
     case 'card':
+    default:
       return Card
     case 'thumbnail':
     case 'brick':
       return Thumbnail
   }
-  return Card
 })
 
 onMounted(() => {
+  filterKey.value = getFilterKey()
   onUpdateAll().then()
 })
 
@@ -147,7 +147,7 @@ watch(() => route.query.category, async () => {
     data.categories = categories
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/articles/index.vue', 'watch:route.query.category'], 'error', e.message)
     loading.value = false
@@ -159,7 +159,7 @@ watch(() => route.params.nestSrl, (value) => {
   onUpdateAll().then()
 })
 
-async function onChangePage(page: number): Promise<void>
+async function onChangePage(page)
 {
   let params = {
     ...route.query,
@@ -168,14 +168,14 @@ async function onChangePage(page: number): Promise<void>
   await router.push(`./${serialize(params, true)}`)
 }
 
-async function onClickPageItem(n: number): Promise<void>
+async function onClickPageItem(n)
 {
   await onChangePage(n)
   page.value = n
   await onUpdateArticles()
 }
 
-async function onUpdateFilter(): Promise<void>
+async function onUpdateFilter()
 {
   try
   {
@@ -192,14 +192,14 @@ async function onUpdateFilter(): Promise<void>
     data.categories = categories
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/articles/index.vue', 'onUpdateFilter()'], 'error', e.message)
     loading.value = false
   }
 }
 
-async function onUpdateArticles(): Promise<void>
+async function onUpdateArticles()
 {
   try
   {
@@ -210,14 +210,14 @@ async function onUpdateArticles(): Promise<void>
     data.index = articles.index
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/articles/index.vue', 'onUpdateArticles()'], 'error', e.message)
     loading.value = false
   }
 }
 
-async function onUpdateAll(): Promise<void>
+async function onUpdateAll()
 {
   try
   {
@@ -230,7 +230,7 @@ async function onUpdateAll(): Promise<void>
     data.categories = res.categories
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/articles/index.vue', 'onUpdateAll()'], 'error', e.message)
     throw e.message

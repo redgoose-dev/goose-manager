@@ -3,17 +3,7 @@ import { pureObject } from '../libs/object'
 import * as storage from '../libs/storage'
 
 const defaultFilters = {
-  articles: {
-    type: 'all',
-    order: 'srl',
-    sort: 'desc',
-    theme: 'card',
-  },
-  checklist: {
-    dateStart: '',
-    dateEnd: '',
-    sort: 'desc',
-  },
+  data: {},
 }
 
 export const filtersStore = defineStore('filters', {
@@ -25,38 +15,16 @@ export const filtersStore = defineStore('filters', {
   actions: {
     setup()
     {
-      let src = storage.get('filters')
-      if (src?.articles) this.articles = src.articles
-      if (src?.checklist) this.checklist = src.checklist
+      this.data = storage.get('filters') || pureObject(defaultFilters.data)
     },
     save(type, src)
     {
-      switch (type) {
-        case 'articles':
-          this.articles.type = src.type
-          this.articles.order = src.order
-          this.articles.sort = src.sort
-          this.articles.theme = src.theme
-          break
-        case 'checklist':
-          this.checklist.dateStart = src.dateStart
-          this.checklist.dateEnd = src.dateEnd
-          this.checklist.sort = src.sort
-          break
-      }
-      storage.set('filters', pureObject({
-        articles: {
-          ...this.articles,
-        },
-        checklist: {
-          ...this.checklist,
-        },
-      }))
+      this.data[type] = src
+      storage.set('filters', pureObject(this.data))
     },
-    getFilters()
+    getFilter(key)
     {
-      let filters = storage.get('filters')
-      return filters || pureObject(defaultFilters)
+      return this.data[key] || null
     },
   },
 })

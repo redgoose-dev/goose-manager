@@ -81,13 +81,14 @@ const router = useRouter()
 const props = defineProps({
   total: Number,
   loading: Boolean,
+  storageKey: String,
 })
 const emits = defineEmits([ 'update' ])
 const filters = filtersStore()
 const forms = reactive({
-  dateStart: filters.checklist.dateStart || '',
-  dateEnd: filters.checklist.dateEnd || '',
-  sort: filters.checklist.sort || 'desc',
+  dateStart: filters.data[props.storageKey]?.dateStart || '',
+  dateEnd: filters.data[props.storageKey]?.dateEnd || '',
+  sort: filters.data[props.storageKey]?.sort || 'desc',
 })
 const keyword = ref(route.query.q)
 const total = computed(() => withCommas(props.total))
@@ -97,7 +98,7 @@ function onReset()
   forms.dateStart = ''
   forms.dateEnd = ''
   forms.sort = 'desc'
-  filters.save('checklist', {
+  filters.save(props.storageKey, {
     dateStart: forms.dateStart,
     dateEnd: forms.dateEnd,
     sort: forms.sort,
@@ -108,7 +109,7 @@ function onReset()
 
 function onUpdateFilter()
 {
-  filters.save('checklist', {
+  filters.save(props.storageKey, {
     dateStart: forms.dateStart,
     dateEnd: forms.dateEnd,
     sort: forms.sort,

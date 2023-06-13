@@ -6,7 +6,7 @@
       <Loading v-if="loading"/>
       <Items
         v-else-if="data.index?.length > 0"
-        :theme="filters.articles.theme"
+        :theme="theme"
         class="articles__index">
         <component
           :is="itemComponent"
@@ -38,6 +38,7 @@
       <ArticleFilter
         :total="data.total"
         :loading="loading"
+        :storage-key="filterKey"
         @update="onUpdateFilter"/>
     </aside>
   </div>
@@ -51,7 +52,7 @@ import { preferenceStore } from '../../store/preference'
 import { filtersStore } from '../../store/filters'
 import { err } from '../../libs/error'
 import { serialize } from '../../libs/string'
-import { scrollTo } from '../../libs/util'
+import { scrollTo, getFilterKey } from '../../libs/util'
 import { getData, requestArticles } from '../../structure/articles'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card, Thumbnail, Mark } from '../../components/item'
@@ -64,23 +65,29 @@ const route = useRoute()
 const router = useRouter()
 const preference = preferenceStore()
 const filters = filtersStore()
+const filterKey = ref(getFilterKey())
 const data = reactive({ total: 0, index: null })
 const loading = ref(false)
 const page = ref(route.query.page ? Number(route.query.page) : 1)
+const theme = computed(() => {
+  const { theme } = filters.getFilter(filterKey) || {}
+  return theme || 'card'
+})
 const itemComponent = computed(() => {
-  switch (filters.articles.theme)
+  switch (theme.value)
   {
     case 'list':
     case 'card':
+    default:
       return Card
     case 'thumbnail':
     case 'brick':
       return Thumbnail
   }
-  return Card
 })
 
 onMounted(() => {
+  filterKey.value = getFilterKey()
   loadData().then()
 })
 
@@ -107,7 +114,7 @@ async function onUpdateFilter()
     await onChangePage(1)
     page.value = 1
     loading.value = true
-    let res = await requestArticles()
+    let res = await requestArticles({ filterKey })
     data.total = res.total
     data.index = res.index
     loading.value = false
@@ -125,7 +132,7 @@ async function loadData()
   {
     scrollTo()
     loading.value = true
-    const res = await getData()
+    const res = await getData({ filterKey })
     data.total = res.total
     data.index = res.articles
     loading.value = false

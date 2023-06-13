@@ -48,6 +48,7 @@
         <ChecklistFilter
           :total="data.total"
           :loading="loading"
+          :storage-key="filterKey"
           @update="onUpdateFilter"/>
       </div>
     </aside>
@@ -62,7 +63,7 @@ import { preferenceStore } from '../../store/preference'
 import { err } from '../../libs/error'
 import { serialize } from '../../libs/string'
 import { getData } from '../../structure/checklist/list'
-import { scrollTo } from '../../libs/util'
+import { getFilterKey, scrollTo } from '../../libs/util'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card, Mark } from '../../components/item'
 import { Controller } from '../../components/navigation'
@@ -76,12 +77,18 @@ import ChecklistFilter from '../../components/pages/checklist/checklist-filter.v
 const route = useRoute()
 const router = useRouter()
 const preference = preferenceStore()
+const filterKey = ref(getFilterKey())
 const loading = ref(true)
 const data = reactive({
   total: 0,
   index: [],
 })
 const page = ref(route.query.page ? Number(route.query.page) : 1)
+
+onMounted(() => {
+  filterKey.value = getFilterKey()
+  loadData().then()
+})
 
 async function onChangePage(page)
 {
@@ -135,8 +142,6 @@ async function loadData()
     throw e.message
   }
 }
-
-onMounted(() => loadData().then())
 </script>
 
 <style src="./list.scss" lang="scss" scoped></style>

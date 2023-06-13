@@ -110,13 +110,14 @@ const filters = filtersStore()
 const props = defineProps({
   total: Number,
   loading: Boolean,
+  storageKey: String,
 })
 const emits = defineEmits([ 'update' ])
 const forms = reactive({
-  type: filters.articles.type || '',
-  order: filters.articles.order || '',
-  sort: filters.articles.sort || 'desc',
-  theme: filters.articles.theme || 'card',
+  type: filters.data[props.storageKey]?.type || 'all',
+  order: filters.data[props.storageKey]?.order || 'order',
+  sort: filters.data[props.storageKey]?.sort || 'desc',
+  theme: filters.data[props.storageKey]?.theme || 'card',
 })
 const keyword = ref(route.query.q)
 const total = computed(() => withCommas(props.total))
@@ -127,7 +128,7 @@ function onReset()
   forms.order = 'srl'
   forms.sort = 'desc'
   forms.theme = 'card'
-  filters.save('articles', {
+  filters.save(props.storageKey, {
     type: forms.type,
     order: forms.order,
     sort: forms.sort,
@@ -139,7 +140,7 @@ function onReset()
 
 function onSubmit()
 {
-  filters.save('articles', {
+  filters.save(props.storageKey, {
     type: forms.type,
     order: forms.order,
     sort: forms.sort,
@@ -164,7 +165,7 @@ function onSubmitKeyword()
 
 function onUpdateFilter()
 {
-  filters.save('articles', {
+  filters.save(props.storageKey, {
     type: forms.type,
     order: forms.order,
     sort: forms.sort,
