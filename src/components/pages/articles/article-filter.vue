@@ -124,10 +124,7 @@ const total = computed(() => withCommas(props.total))
 
 function onReset()
 {
-  forms.type = 'all'
-  forms.order = 'srl'
-  forms.sort = 'desc'
-  forms.theme = 'card'
+  setForms()
   filters.save(props.storageKey, {
     type: forms.type,
     order: forms.order,
@@ -173,12 +170,20 @@ function onUpdateFilter()
   })
   emits('update')
 }
+function setForms(key)
+{
+  forms.type = filters.data[key]?.type || 'all'
+  forms.order = filters.data[key]?.order || 'order'
+  forms.sort = filters.data[key]?.sort || 'desc'
+  forms.theme = filters.data[key]?.theme || 'card'
+}
 
 watch(() => route.query.q, (value, oldValue) => {
   if (value === oldValue) return
   keyword.value = value
   emits('update')
 })
+watch(() => props.storageKey, value => setForms(value))
 </script>
 
 <style src="./article-filter.scss" lang="scss" scoped></style>
