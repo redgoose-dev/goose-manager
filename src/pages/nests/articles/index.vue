@@ -156,6 +156,7 @@ watch(() => route.query.category, async () => {
 watch(() => route.params.nestSrl, (value) => {
   if (!value) return
   page.value = 1
+  filterKey.value = getFilterKey()
   onUpdateAll().then()
 })
 
