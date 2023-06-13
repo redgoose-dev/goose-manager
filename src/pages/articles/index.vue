@@ -70,7 +70,7 @@ const data = reactive({ total: 0, index: null })
 const loading = ref(false)
 const page = ref(route.query.page ? Number(route.query.page) : 1)
 const theme = computed(() => {
-  const { theme } = filters.getFilter(filterKey) || {}
+  const { theme } = filters.getFilter(filterKey.value) || {}
   return theme || 'card'
 })
 const itemComponent = computed(() => {
@@ -114,7 +114,7 @@ async function onUpdateFilter()
     await onChangePage(1)
     page.value = 1
     loading.value = true
-    let res = await requestArticles({ filterKey })
+    let res = await requestArticles()
     data.total = res.total
     data.index = res.index
     loading.value = false
@@ -132,7 +132,7 @@ async function loadData()
   {
     scrollTo()
     loading.value = true
-    const res = await getData({ filterKey })
+    const res = await getData()
     data.total = res.total
     data.index = res.articles
     loading.value = false

@@ -111,7 +111,7 @@ const description = computed(() => (data.nest ? data.nest.description : ''))
 const loading = ref(true)
 const page = ref(route.query.page ? Number(route.query.page) : 1)
 const theme = computed(() => {
-  const { theme } = filters.getFilter(filterKey) || {}
+  const { theme } = filters.getFilter(filterKey.value) || {}
   return theme || 'card'
 })
 const itemComponent = computed(() => {
