@@ -51,6 +51,11 @@
             href: 'https://gist.github.com/ihoneymon/652be052a0727ad59601',
             target: '_blank',
           },
+          {
+            label: '붉은거위 마크다운 스타일',
+            href: 'https://github.com/redgoose-dev/markdown-style/tree/main/guide',
+            target: '_blank',
+          },
         ]"/>
     </ToolbarGroup>
   </template>

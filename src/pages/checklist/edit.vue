@@ -60,7 +60,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, computed, onMounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { marked } from 'marked'
@@ -82,19 +82,19 @@ import FilesManager from '../../components/files-manager/index.vue'
 const router = useRouter()
 const route = useRoute()
 const preference = preferenceStore()
-const $content = ref<any>()
-const loading = ref<boolean>(true)
-const processing = ref<boolean>(false)
-const forms = reactive<any>({
+const $content = ref()
+const loading = ref(true)
+const processing = ref(false)
+const forms = reactive({
   srl: Number(route.params.srl),
   date: '',
   content: { value: '', error: null },
 })
-const position = ref<{ start: number, end: number }>({ start: 0, end: 0 })
-const showPreview = ref<boolean>(false)
-const preview = ref<string>('')
-const showFilesManager = ref<boolean>(false)
-const fileManagerOptions = computed<any>(() => {
+const position = ref({ start: 0, end: 0 })
+const showPreview = ref(false)
+const preview = ref('')
+const showFilesManager = ref(false)
+const fileManagerOptions = computed(() => {
   const { limitUploadFilesCount, limitUploadFileSize } = preference.checklist
   return {
     module: 'checklist',
@@ -104,7 +104,7 @@ const fileManagerOptions = computed<any>(() => {
   }
 })
 
-async function insertText(text: string, cursor?: number): Promise<void>
+async function insertText(text, cursor)
 {
   if (!text) return
   let content = forms.content.value + ''
@@ -121,7 +121,7 @@ async function insertText(text: string, cursor?: number): Promise<void>
   $content.value.focus()
 }
 
-function onSelectToolbarItem(code: string): void
+function onSelectToolbarItem(code)
 {
   switch (code)
   {
@@ -135,7 +135,7 @@ function onSelectToolbarItem(code: string): void
       insertText(`<div class="grid-group">\n\n</div>\n`, 25)
       break
     case 'insert-grid-item':
-      insertText(`<figure class="grid-item" data-mobile="3" data-tablet="" data-desktop="" data-desktop-large="">\n\n</figure>\n`, 96)
+      insertText(`<figure class="grid-item" data-mobile="3" data-ratio="">\n\n</figure>\n`, 57)
       break
     case 'insert-picture':
       insertText(`<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>\n`)
@@ -149,13 +149,13 @@ function onSelectToolbarItem(code: string): void
   }
 }
 
-function onUpdatePosition(o: { start: number, end: number }): void
+function onUpdatePosition(o)
 {
   position.value.start = o.start
   position.value.end = o.end
 }
 
-function controlPreview(sw: boolean): void
+function controlPreview(sw)
 {
   if (sw && !forms.content.value)
   {
@@ -174,7 +174,7 @@ function controlPreview(sw: boolean): void
   showPreview.value = sw
 }
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -184,7 +184,7 @@ async function onSubmit(): Promise<void>
     await submit(forms.srl, forms.content.value)
     await router.push(route.params.srl ? `/checklist/${forms.srl}/` : `/checklist/`)
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/pages/checklist/edit.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
@@ -192,7 +192,7 @@ async function onSubmit(): Promise<void>
   }
 }
 
-function onFilesManagerEvent({ key, value }: any): void
+function onFilesManagerEvent({ key, value })
 {
   switch (key)
   {
@@ -209,13 +209,13 @@ onMounted(async () => {
     const res = await getData(forms.srl)
     forms.srl = res.srl
     forms.content.value = res.content
-    const regdate = res.date.split(' ')[0].split('-').map((o: any) => Number(o))
+    const regdate = res.date.split(' ')[0].split('-').map(o => Number(o))
     forms.date = dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.dateFormat)
     await nextTick()
     $content.value.changeHeight()
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/pages/checklist/edit.vue', 'onMounted()' ], 'error', e.message)
     throw e.message

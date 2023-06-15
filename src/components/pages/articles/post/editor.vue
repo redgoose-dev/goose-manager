@@ -26,7 +26,7 @@
 </fieldset>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted, nextTick } from 'vue'
 import { marked } from 'marked'
 import { toast } from '../../../../modules/toast'
@@ -34,28 +34,28 @@ import { baseRenderer } from '../../../../modules/marked'
 import PostToolbar from '../../../navigation/post-toolbar.vue'
 import Preview from '../../../content/preview.vue'
 
-const $textarea = ref<any>()
-const props = defineProps<{
-  name: string
-  id: string
-  modelValue: string
-  placeholder: string
-  required: boolean
-  disabled: boolean
-}>()
+const $textarea = ref()
+const props = defineProps({
+  name: String,
+  id: String,
+  modelValue: String,
+  placeholder: String,
+  required: Boolean,
+  disabled: Boolean,
+})
 const emits = defineEmits([ 'update:modelValue', 'submit', 'open-file-manager' ])
-const showPreview = ref<boolean>(false)
-const preview = ref<string>('')
-const position = ref<{ start: number, end: number }>({ start: 0, end: 0 })
-const textareaHeight = ref<string>('')
+const showPreview = ref(false)
+const preview = ref('')
+const position = ref({ start: 0, end: 0 })
+const textareaHeight = ref('')
 
-function onInputTextarea(e: any): void
+function onInputTextarea(e)
 {
   emits('update:modelValue', e.target.value)
   resize()
 }
 
-function onSelectToolbarItem(key: string): void
+function onSelectToolbarItem(key)
 {
   switch (key)
   {
@@ -69,7 +69,7 @@ function onSelectToolbarItem(key: string): void
       insertText(`<div class="grid-group">\n\n</div>\n`, 25)
       break
     case 'insert-grid-item':
-      insertText(`<figure class="grid-item" data-mobile="3" data-tablet="" data-desktop="" data-desktop-large="">\n\n</figure>\n`, 96)
+      insertText(`<figure class="grid-item" data-mobile="3" data-ratio="">\n\n</figure>\n`, 57)
       break
     case 'insert-picture':
       insertText(`<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>\n`)
@@ -83,7 +83,7 @@ function onSelectToolbarItem(key: string): void
   }
 }
 
-function insertText(text: string, cursor?: number): void
+function insertText(text, cursor)
 {
   if (!text) return
   let content = props.modelValue + ''
@@ -97,7 +97,7 @@ function insertText(text: string, cursor?: number): void
   nextTick().then(() => updateCursor())
 }
 
-function changePosition(e: any): void
+function changePosition(e)
 {
   if (!('selectionStart' in e.target)) return
   if (e.target.selectionStart > e.target.selectionEnd)
@@ -112,13 +112,13 @@ function changePosition(e: any): void
   }
 }
 
-function updateCursor(): void
+function updateCursor()
 {
   $textarea.value.setSelectionRange(position.value.start, position.value.end)
   $textarea.value.focus()
 }
 
-function resize(): void
+function resize()
 {
   textareaHeight.value = 'unset'
   nextTick().then(() => {
@@ -127,7 +127,7 @@ function resize(): void
   })
 }
 
-function controlPreview(sw: boolean): void
+function controlPreview(sw)
 {
   if (sw && !props.modelValue)
   {
@@ -146,7 +146,7 @@ function controlPreview(sw: boolean): void
   showPreview.value = sw
 }
 
-async function changeCursor(start: number, end: number): Promise<void>
+async function changeCursor(start, end)
 {
   position.value.start = start
   position.value.end = end
