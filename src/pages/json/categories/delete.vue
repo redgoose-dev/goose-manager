@@ -4,7 +4,7 @@
     module="categories"
     prefix="[JSON]"
     title="Delete category"/>
-  <Loading v-if="loading"/>
+  <Loading v-if="_loading"/>
   <ConfirmDelete
     v-else
     :title="fields.title"
@@ -17,7 +17,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { err } from '../../../libs/error'
@@ -27,23 +27,17 @@ import PageHeader from '../../../components/page/header/index.vue'
 import ConfirmDelete from '../../../components/forms/confirm-delete/index.vue'
 import Loading from '../../../components/etc/loading.vue'
 
-interface Fields {
-  title: string
-  description: string
-  name: string
-}
-
 const router = useRouter()
 const route = useRoute()
-const fields = reactive<Fields>({
+const fields = reactive({
   title: '이 분류를 삭제할까요?',
   description: '이 분류를 삭제하면 복구할 수 없습니다.',
   name: '',
 })
-const loading = ref<boolean>(true)
-const processing = ref<boolean>(false)
+const _loading = ref(true)
+const processing = ref(false)
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -53,7 +47,7 @@ async function onSubmit(): Promise<void>
     await router.push('../../')
     toast.add('분류를 삭제했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/json/categories/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
@@ -64,12 +58,12 @@ async function onSubmit(): Promise<void>
 onMounted(async () => {
   try
   {
-    loading.value = true
+    _loading.value = true
     const res = await getItem(Number(route.params.categorySrl))
     fields.name = `삭제되는 요소: [${res.srl}] ${res.name}`
-    loading.value = false
+    _loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/json/categories/delete.vue', 'onMounted()'], 'error', e.message)
     throw e.message

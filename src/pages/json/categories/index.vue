@@ -1,7 +1,7 @@
 <template>
 <article>
   <PageHeader module="categories" prefix="[JSON]"/>
-  <Loading v-if="loading"/>
+  <Loading v-if="_loading"/>
   <Items v-else-if="data.index?.length > 0" theme="card" class="items">
     <Draggable
       v-model="data.index"
@@ -43,7 +43,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Draggable from 'vuedraggable'
@@ -60,8 +60,8 @@ import Empty from '../../../components/error/empty.vue'
 import Icon from '../../../components/icons/index.vue'
 
 const route = useRoute()
-const loading = ref<boolean>(false)
-const data = reactive<any>({
+const _loading = ref(false)
+const data = reactive({
   index: [],
 })
 
@@ -69,7 +69,7 @@ async function onChangeIndex()
 {
   try
   {
-    const srls = data.index.map((o: any) => (o.srl)).join(',')
+    const srls = data.index.map(o => (o.srl)).join(',')
     const res = await post('/categories/sort/', formData({
       module: 'json',
       srls,
@@ -77,7 +77,7 @@ async function onChangeIndex()
     if (!res.success) throw new Error(res.message)
     toast.add('순서를 변경했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/json/categories/index.vue', 'onChangeIndex()'], 'error', e.message)
     toast.add('순서를 변경하지 못했습니다.', 'error').then()
@@ -87,12 +87,12 @@ async function onChangeIndex()
 onMounted(async () => {
   try
   {
-    loading.value = true
+    _loading.value = true
     const { categories } = await getDataForJson()
     data.index = categories
-    loading.value = false
+    _loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/json/categories/index.vue', 'onMounted()'], 'error', e.message)
     throw e.message

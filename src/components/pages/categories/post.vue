@@ -32,7 +32,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { get, post, formData, checkForms } from '../../../libs/api'
@@ -43,23 +43,21 @@ import { Controller } from '../../navigation'
 import { FormInput } from '../../forms'
 import { ButtonBasic } from '../../button'
 
-interface Props {
-  mode: string
-  module: 'article'|'json'
-  targetSrl?: number
-  srl?: number
-}
-
 const root = ref()
 const router = useRouter()
-const props = defineProps<Props>()
-const forms = reactive<any>({
+const props = defineProps({
+  mode: { type: String, required: true },
+  module: { type: String, required: true },
+  targetSrl: Number,
+  srl: Number,
+})
+const forms = reactive({
   name: { value: '', error: null },
 })
-const loading = ref<boolean>(false)
-const processing = ref<boolean>(false)
-const isEdit = computed<boolean>(() => (props.mode === 'edit'))
-const submitLabel = computed<string>(() => {
+const loading = ref(false)
+const processing = ref(false)
+const isEdit = computed(() => (props.mode === 'edit'))
+const submitLabel = computed(() => {
   switch (props.mode)
   {
     case 'edit':
@@ -79,20 +77,20 @@ onMounted(async () => {
     forms.name.value = res.data.name
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/categories/post.vue', 'onMounted()' ], 'error', e.message)
     throw e.message
   }
 })
 
-async function onSubmit():Promise<void>
+async function onSubmit()
 {
   try
   {
     processing.value = true
     checkForms(forms)
-    let data: any = {}
+    let data = {}
     switch (props.module)
     {
       case 'article':
@@ -109,7 +107,7 @@ async function onSubmit():Promise<void>
     const message = (props.mode === 'edit') ? '분류를 수정했습니다.' : '분류를 만들었습니다.'
     toast.add(message, 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/categories/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
