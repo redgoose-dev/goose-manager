@@ -5,15 +5,6 @@
 `goose-manager`를 사용하려면 `goose-api`가 사용하고 있어야 합니다.
 
 
-## Demo
-
-이 프로그램이 어떤 역할을 하는지 데모를 통하여 체험해볼 수 있습니다.
-
-- url: https://projects.redgoose.me/goose/manager/
-- email: `demo@goose`
-- password: `46Eq>jB3@(>)#<~8`
-
-
 ## Setup
 
 다음 명령어들을 실행하여 `.env`파일을 복제해 줍니다.
