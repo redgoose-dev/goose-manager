@@ -9,10 +9,10 @@
   stroke-linecap="round"
   stroke-linejoin="round"
   :class="[
-  'icon',
-  `icon--${props.name}`,
-  props.rotate && 'rotate',
-]">
+    'icon',
+    `icon--${props.name}`,
+    props.rotate && 'rotate',
+  ]">
   <use :href="`/images/feather-sprite.svg#${props.name}`"/>
 </svg>
 </template>
