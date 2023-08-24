@@ -4,7 +4,7 @@
   <Post
     mode="edit"
     module="article"
-    :nest-srl="Number(route.params.nestSrl)"
+    :target-srl="Number(route.params.nestSrl)"
     :srl="Number(route.params.categorySrl)"/>
 </article>
 </template>
