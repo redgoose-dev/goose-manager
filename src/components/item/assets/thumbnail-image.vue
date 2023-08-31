@@ -61,7 +61,6 @@ const rootProps = computed(() => {
     display: block;
     width: 100%;
     height: 100%;
-    min-height: 120px;
     box-sizing: border-box;
     background-color: var(--item-thumbnail-bg, rgb(220 220 220));
   }
