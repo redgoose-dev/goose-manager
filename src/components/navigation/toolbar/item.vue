@@ -6,6 +6,7 @@
   <button
     type="button"
     :title="props.title"
+    :disabled="disabled"
     :class="[
       'toolbar-item__button',
       props.color && `color--${props.color}`,
@@ -40,6 +41,7 @@ const props = defineProps({
   color: String,
   context: Array,
   contextAlign: String,
+  disabled: Boolean,
 })
 const emits = defineEmits([ 'click' ])
 </script>

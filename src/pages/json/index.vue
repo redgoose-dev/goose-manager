@@ -33,7 +33,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { err } from '../../libs/error'
@@ -47,21 +47,15 @@ import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
 import TabCategory from '../../components/navigation/tab-category/index.vue'
 
-interface Data {
-  total: number
-  index: any[]
-  categories: any[]
-}
-
 const route = useRoute()
-const loading = ref<boolean>(false)
-const data = reactive<Data>({
+const loading = ref(false)
+const data = reactive({
   total: 0,
   index: [],
   categories: [],
 })
 
-async function onUpdateAll(): Promise<void>
+async function onUpdateAll()
 {
   try
   {
@@ -73,7 +67,7 @@ async function onUpdateAll(): Promise<void>
     data.categories = res.categories
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/json/index.vue', 'onMounted()'], 'error', e.message)
     loading.value = false

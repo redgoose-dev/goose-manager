@@ -1,0 +1,30 @@
+@use '../../../../assets/scss/mixins';
+
+.fields {
+  &__name {
+    --input-width: 320px;
+  }
+}
+
+.category {
+  display: inline-block;
+  --select-width: auto;
+}
+
+.json {
+  margin: 16px 0;
+  &__help {
+    margin: 12px 0 0;
+  }
+}
+
+.path {
+  display: flex;
+  gap: 0 12px;
+  &__input {
+    flex: 1;
+  }
+  &__upload {
+    //
+  }
+}

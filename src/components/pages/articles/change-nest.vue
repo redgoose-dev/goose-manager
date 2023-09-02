@@ -48,7 +48,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getData, requestCategories, submit } from '../../../structure/articles/change-nest'
@@ -62,19 +62,19 @@ import { ButtonBasic } from '../../button'
 
 const route = useRoute()
 const router = useRouter()
-const loading = ref<boolean>(true)
-const processing = ref<boolean>(false)
-const data = reactive<any>({
+const loading = ref(true)
+const processing = ref(false)
+const data = reactive({
   article: null,
   nests: [],
   categories: [],
 })
-const forms = reactive<any>({
+const forms = reactive({
   nestSrl: { value: null, error: null },
   categorySrl: { value: null, error: null },
 })
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -106,7 +106,7 @@ onMounted(async () => {
     forms.categorySrl.value = res.article.categorySrl
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/articles/change-nest.vue', 'onMounted()' ], 'error', e.message)
     throw e.message

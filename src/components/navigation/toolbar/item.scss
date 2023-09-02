@@ -20,6 +20,9 @@
     --icon-size: 15px;
     --icon-stroke: 2;
     --icon-color: var(--color-base);
+    &:disabled {
+      cursor: default;
+    }
     span {
       display: flex;
       align-items: center;
@@ -85,7 +88,7 @@
       box-sizing: border-box;
       transition: filter 160ms ease-out;
       color: var(--color-base);
-      &:hover {
+      &:not(:disabled):hover {
         background: rgb(0 0 0 / 8%);
       }
     }
@@ -101,7 +104,7 @@
     }
   }
   &:hover {
-    .toolbar-item__button {
+    .toolbar-item__button:not(:disabled) {
       filter: brightness(105%);
     }
   }
@@ -155,13 +158,13 @@
         }
       }
       button, a {
-        &:hover {
+        &:not(:disabled):hover {
           background: rgb(0 0 0 / 20%);
         }
       }
     }
     &:hover {
-      .toolbar-item__button {
+      .toolbar-item__button:not(:disabled) {
         filter: brightness(125%);
       }
     }

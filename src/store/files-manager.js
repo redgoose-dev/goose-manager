@@ -11,7 +11,7 @@ const defaultStructure = {
     index: [],
     idx: 0,
     selected: [],
-    thumbnailType: undefined
+    thumbnailType: undefined,
   },
   global: {
     path: 'assets',
@@ -23,6 +23,8 @@ const defaultStructure = {
   fullSize: false,
   window: [],
   useThumbnail: false,
+  markdown: false,
+  limitSelect: 0,
 }
 
 export const fileManagerStore = defineStore('file-manager', {

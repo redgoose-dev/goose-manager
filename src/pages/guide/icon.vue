@@ -159,7 +159,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import icons from '../../components/icons/svg-index.json'
 import Icon from '../../components/icons/index.vue'
 </script>

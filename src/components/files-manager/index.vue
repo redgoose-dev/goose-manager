@@ -1,5 +1,9 @@
 <template>
-<article :class="[ 'files-manager', localStore.fullSize && 'files-manager--full' ]">
+<article
+  :class="[
+    'files-manager',
+    localStore.fullSize && 'files-manager--full'
+  ]">
   <Tabs
     ref="$tabs"
     :active="localStore.tab"
@@ -27,40 +31,55 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
 import { fileManagerStore } from '../../store/files-manager'
-import { controlWindow } from './util'
+import { controlWindow, arrayToTextForReturn } from './util'
 import { Modal, ModalBody } from '../modal'
 import Tabs from './tabs.vue'
 import Guide from './guide.vue'
 
-interface Props {
-  tab: string
-  post?: {
-    module: 'articles' | 'comments'
-    targetSrl: number
-    cropper: {}
-    thumbnail: {}
-    limitCount: number
-    limitSize: number
-    thumbnailType: string
-  }
-  global?: {
-    path: string
-  },
-  acceptFileType?: string
-  fullSize?: boolean
-  useThumbnail?: boolean
-}
+/**
+ * props guide
+ *
+ * tab: string
+ * post?: {
+ *   module: 'articles' | 'comments' | 'checklist' | 'json'
+ *   targetSrl: number
+ *   cropper: {}
+ *   thumbnail: {}
+ *   limitCount: number
+ *   limitSize: number
+ *   thumbnailType: string
+ * }
+ * global?: {
+ *   path: string
+ * },
+ * acceptFileType?: string
+ * fullSize?: boolean
+ * useThumbnail?: boolean
+ * markdown?: boolean
+ * limitSelect?: number
+ */
 
-const $tabs = ref<any>()
-const $module = ref<any>()
-const props = defineProps<Props>()
+const $tabs = ref()
+const $module = ref()
+const props = defineProps({
+  tab: { type: String, required: true },
+  post: Object,
+  global: Object,
+  acceptFileType: String,
+  fullSize: Boolean,
+  useThumbnail: Boolean,
+  markdown: Boolean,
+  output: 'raw', // text,raw
+  limitSelect: { type: Number, default: 0 },
+})
 const emits = defineEmits([ 'close', 'custom-event' ])
 const localStore = fileManagerStore()
-const guide = ref<boolean>(false)
-const contentBody = computed<any>(() => {
+const allowPostModules = [ 'articles', 'comments', 'checklist', 'json' ]
+const guide = ref(false)
+const contentBody = computed(() => {
   switch (localStore.tab)
   {
     case 'post':
@@ -71,10 +90,10 @@ const contentBody = computed<any>(() => {
       return null
   }
 })
-const showTabButtons = computed<any>(() => {
+const showTabButtons = computed(() => {
   const { module } = localStore.post
   return {
-    post: module === 'articles' || module === 'comments' || module === 'checklist',
+    post: allowPostModules.includes(module),
     global: true,
     guide: true,
     close: localStore.fullSize,
@@ -82,8 +101,8 @@ const showTabButtons = computed<any>(() => {
 })
 
 onMounted(() => {
-  window.on('keyup.file-manager', (e: any) => shortcuts(e, 'keyup'))
-  window.on('keydown.file-manager', (e: any) => shortcuts(e, 'keydown'))
+  window.on('keyup.file-manager', e => shortcuts(e, 'keyup'))
+  window.on('keydown.file-manager', e => shortcuts(e, 'keydown'))
 })
 onUnmounted(() => {
   window.off('keyup.file-manager')
@@ -92,13 +111,15 @@ onUnmounted(() => {
 
 initialize()
 
-function initialize(): void
+function initialize()
 {
   localStore.setup()
   localStore.tab = props.tab || 'global'
   localStore.acceptFileType = props.acceptFileType || 'image/*'
   localStore.fullSize = props.fullSize || false
   localStore.useThumbnail = props.useThumbnail || false
+  localStore.markdown = props.markdown || false
+  localStore.limitSelect = props.limitSelect || 0
   if (props.post)
   {
     localStore.post.module = props.post.module
@@ -115,7 +136,7 @@ function initialize(): void
   localStore.window = []
 }
 
-function selectFunctionFromTabs(key: string): void
+function selectFunctionFromTabs(key)
 {
   switch (key)
   {
@@ -128,18 +149,24 @@ function selectFunctionFromTabs(key: string): void
   }
 }
 
-function onCustomEvent({ key, value }: { key: string, value: any }): void
+function onCustomEvent({ key, value })
 {
   switch (key)
   {
+    case 'insert-raw':
     case 'insert-text':
+      emits('custom-event', {
+        key,
+        value: props.output === 'text' ? arrayToTextForReturn(value) : value,
+      })
+      break
     case 'update-thumbnail':
       emits('custom-event', { key, value })
       break
   }
 }
 
-function shortcuts(e: KeyboardEvent, type: string): void
+function shortcuts(e, type)
 {
   switch (type)
   {
@@ -154,10 +181,12 @@ function shortcuts(e: KeyboardEvent, type: string): void
         switch (e.key)
         {
           case 'Enter':
-            $module.value.func('insert-markdown')
+            $module.value.func()
+            e.preventDefault()
             break
           case 'a':
             $module.value.selectAll()
+            e.preventDefault()
             break
         }
       }
@@ -165,7 +194,7 @@ function shortcuts(e: KeyboardEvent, type: string): void
   }
 }
 
-function pushEscKey(): void
+function pushEscKey()
 {
   if (localStore.window.length > 0)
   {

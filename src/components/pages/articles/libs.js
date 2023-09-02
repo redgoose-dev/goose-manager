@@ -1,6 +1,6 @@
 import { serialize } from '../../../libs/string'
 
-export function getTypeArticle(type: string): string
+export function getTypeArticle(type)
 {
   switch (type)
   {
@@ -12,7 +12,7 @@ export function getTypeArticle(type: string): string
   }
 }
 
-export function getTypeLabelArticle(type: string): string
+export function getTypeLabelArticle(type)
 {
   switch (type)
   {
@@ -27,10 +27,10 @@ export function getTypeLabelArticle(type: string): string
   }
 }
 
-export function createQueries(keys: string[], query: any): string
+export function createQueries(keys, query)
 {
   if (!(keys?.length > 0)) return ''
-  let obj: any = {}
+  let obj = {}
   if (keys.includes('category')) obj.category = query.category || undefined
   if (keys.includes('page')) obj.page = Number(query.page) > 1 ? Number(query.page) : undefined
   return serialize(obj, true)

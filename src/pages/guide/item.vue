@@ -173,11 +173,11 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { images } from './resource'
 import { Card, Thumbnail, Items } from '../../components/item'
 
-function callAlert(): void
+function callAlert()
 {
   alert('call alert')
 }

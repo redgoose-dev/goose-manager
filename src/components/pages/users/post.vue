@@ -78,7 +78,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { authStore } from '../../../store/auth'
@@ -90,25 +90,23 @@ import { Controller } from '../../navigation'
 import { FormInput, FormSwitch } from '../../forms'
 import { ButtonBasic } from '../../button'
 
-interface Props {
-  mode: string
-  srl?: number
-}
-
 const router = useRouter()
-const props = defineProps<Props>()
+const props = defineProps({
+  mode: { type: String, required: true },
+  srl: Number,
+})
 const auth = authStore()
-const root = ref<any>()
-const forms = reactive<any>({
+const root = ref()
+const forms = reactive({
   email: { value: '', error: null },
   name: { value: '', error: null },
   password: { value: '', error: null },
   password2: { value: '', error: null },
   admin: { value: false, error: null },
 })
-const loading = ref<boolean>(false)
-const processing = ref<boolean>(false)
-const useAdminField = computed<boolean>(() => {
+const loading = ref(false)
+const processing = ref(false)
+const useAdminField = computed(() => {
   if (props.mode === 'create')
   {
     return Boolean(auth.user?.admin)
@@ -120,7 +118,7 @@ const useAdminField = computed<boolean>(() => {
 })
 const isEdit = computed<boolean>(() => (props.mode === 'edit'))
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   if (props.mode === 'create')
   {
@@ -148,7 +146,7 @@ async function onSubmit(): Promise<void>
     const url = props.srl ? `/users/${props.srl}/edit/` : '/users/'
     const res = await post(url, data)
     processing.value = false
-    const srl: number = res.srl || props.srl || NaN
+    const srl = res.srl || props.srl || NaN
     await router.push(srl ? `/users/${String(srl)}/` : '/users/')
     switch (props.mode) {
       case 'create':
@@ -159,7 +157,7 @@ async function onSubmit(): Promise<void>
         break
     }
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/users/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
@@ -185,7 +183,7 @@ onMounted(async () => {
     forms.admin.value = res.data.admin > 0
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/users/post.vue', 'onMounted()' ], 'error', e.message)
     throw e.message

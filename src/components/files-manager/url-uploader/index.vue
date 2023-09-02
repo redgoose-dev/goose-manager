@@ -47,9 +47,8 @@
 </teleport>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import type { VerifyItem } from './types'
 import { controlWindow } from '../util'
 import { ButtonBasic } from '../../button'
 import { Controller } from '../../navigation'
@@ -58,10 +57,9 @@ import { Modal, ModalBody } from '../../modal'
 import InputUrl from './input-url.vue'
 
 const emits = defineEmits([ 'close', 'submit' ])
-const processingSub = ref<boolean>(false)
-const verifyItems = ref<VerifyItem[]>([])
-const windowAddUrl = ref<boolean>(false)
-const disabledSubmitButton = computed<boolean>(() => {
+const verifyItems = ref([])
+const windowAddUrl = ref(false)
+const disabledSubmitButton = computed(() => {
   return !(verifyItems.value.length > 0)
 })
 
@@ -77,7 +75,7 @@ function openAddUrl()
   windowAddUrl.value = true
 }
 
-function onSubmitInputUrl(items: VerifyItem[]): void
+function onSubmitInputUrl(items)
 {
   verifyItems.value = [
     ...verifyItems.value,
@@ -86,18 +84,18 @@ function onSubmitInputUrl(items: VerifyItem[]): void
   windowAddUrl.value = false
 }
 
-function updateVerifyItem(idx: number, item: VerifyItem): void
+function updateVerifyItem(idx, item)
 {
   verifyItems.value = Object.assign([], verifyItems.value, { [idx]: item })
 }
-function removeVerifyItem(idx: number): void
+function removeVerifyItem(idx)
 {
   verifyItems.value.splice(idx, 1)
 }
 
-async function submitUpload(): Promise<void>
+async function submitUpload()
 {
-  let uploadItems: File[] = []
+  let uploadItems = []
   verifyItems.value.forEach((o,k) => {
     let file = new File([o.blob], o.name, {
       type: o.type,

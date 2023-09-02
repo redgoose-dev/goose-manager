@@ -40,7 +40,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { authStore } from '../../store/auth'
@@ -55,11 +55,11 @@ import Loading from '../../components/etc/loading.vue'
 
 const route = useRoute()
 const auth = authStore()
-const loading = ref<boolean>(true)
-const item = ref<any>()
-const self = computed<boolean>(() => (auth.user?.srl === Number(route.params.srl)))
+const loading = ref(true)
+const item = ref()
+const self = computed(() => (auth.user?.srl === Number(route.params.srl)))
 
-onMounted(async (): Promise<void> => {
+onMounted(async () => {
   try
   {
     if (!route.params.srl) throw new Error('no srl')
@@ -67,7 +67,7 @@ onMounted(async (): Promise<void> => {
     item.value = await getData({ url: `/users/${route.params.srl}/` })
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/pages/users/item.vue', 'onMounted()' ], 'error', e.message)
     throw e.message

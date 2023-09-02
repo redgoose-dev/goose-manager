@@ -52,6 +52,8 @@
           :accept-file-type="preference.files.acceptFileType"
           :full-size="true"
           :use-thumbnail="false"
+          :markdown="true"
+          output="text"
           @custom-event="onFilesManagerEvent"
           @close="showFilesManager = false"/>
       </ModalBody>
@@ -99,8 +101,8 @@ const fileManagerOptions = computed(() => {
   return {
     module: 'checklist',
     targetSrl: forms.srl,
-    limitCount: limitUploadFilesCount,
-    limitSize: limitUploadFileSize,
+    limitCount: limitUploadFilesCount || preference.files.limitCount || 32,
+    limitSize: limitUploadFileSize || preference.files.limitSize || 2000000,
   }
 })
 

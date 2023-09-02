@@ -11,14 +11,14 @@
 </figure>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { onMounted, onUnmounted } from 'vue'
 import { controlWindow } from '../util'
 import Icon from '../../icons/index.vue'
 
-const props = defineProps<{
-  image: string
-}>()
+const props = defineProps({
+  image: String,
+})
 const emits = defineEmits([ 'close' ])
 
 onMounted(() => {
@@ -26,7 +26,7 @@ onMounted(() => {
 })
 onUnmounted(() => {
   controlWindow(false, 'thumbnail-preview')
-});
+})
 </script>
 
 <style src="./preview.scss" lang="scss" scoped></style>

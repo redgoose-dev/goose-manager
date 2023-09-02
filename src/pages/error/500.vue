@@ -19,7 +19,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 import { iconRandomPick } from '../../components/icons/assets'
 import { ButtonBasic } from '../../components/button'

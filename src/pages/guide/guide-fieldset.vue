@@ -140,18 +140,18 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref } from 'vue'
 import { Fieldset, Field, FieldCheck, Columns, Labels, Label, Help } from '../../components/forms/fieldset'
 import { Controller } from '../../components/navigation'
 import { FormInput, FormSelect, Checkbox, FormRadio, FormSwitch } from '../../components/forms'
 import { ButtonBasic } from '../../components/button'
 
-const text = ref<string>('')
-const select = ref<string>('')
-const radio = ref<string>('apple')
-const checkbox = ref<boolean[]>([ true, false, false ])
-const switchValue = ref<boolean>(false)
+const text = ref('')
+const select = ref('')
+const radio = ref('apple')
+const checkbox = ref([ true, false, false ])
+const switchValue = ref(false)
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>

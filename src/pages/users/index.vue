@@ -30,7 +30,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted } from 'vue'
 import { authStore } from '../../store/auth'
 import { getData } from '../../structure/users'
@@ -43,9 +43,9 @@ import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
 
 const auth = authStore()
-const loading = ref<boolean>(true)
-const index = ref<any>()
-const total = ref<number>(0)
+const loading = ref(true)
+const index = ref()
+const total = ref(0)
 
 onMounted(async () => {
   try
@@ -56,7 +56,7 @@ onMounted(async () => {
     index.value = res.index
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/users/index.vue', 'onMounted()'], 'error', e.message)
     loading.value = false

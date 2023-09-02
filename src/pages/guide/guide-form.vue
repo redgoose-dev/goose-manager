@@ -230,7 +230,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref } from 'vue'
 import { sleep } from '../../libs/util'
 import { FormSelect, FormTextarea, FormInput, FormSwitch } from '../../components/forms'
@@ -240,23 +240,23 @@ import FormContentEditable from '../../components/forms/content-editable.vue'
 import FormKeyword from '../../components/forms/keyword.vue'
 import { ButtonBasic } from '../../components/button'
 
-const text = ref<string>('')
-const textarea = ref<string>('')
-const select = ref<string>('')
-const checkbox = ref<boolean>(false)
-const sw = ref<boolean>(false)
-const customSwitch = ref<string>('apple')
-const radio = ref<string>('radio1')
-const contentEditable = ref<string>('hello content-editable')
-const keywordMessage = ref<string>('hello keyword')
-const keywordProcessing = ref<boolean>(false)
-const selectOptions: any = [
+const text = ref('')
+const textarea = ref('')
+const select = ref('')
+const checkbox = ref(false)
+const sw = ref(false)
+const customSwitch = ref('apple')
+const radio = ref('radio1')
+const contentEditable = ref('hello content-editable')
+const keywordMessage = ref('hello keyword')
+const keywordProcessing = ref(false)
+const selectOptions = [
   { label: 'Apple', value: 'apple' },
   { label: 'Banana', value: 'banana' },
   { label: 'Mango', value: 'mango' },
 ]
 
-async function onSubmitKeyword(): Promise<void>
+async function onSubmitKeyword()
 {
   keywordProcessing.value = true
   await sleep(2000)

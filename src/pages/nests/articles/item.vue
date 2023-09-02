@@ -4,7 +4,7 @@
   :nest-srl="Number(route.params.nestSrl)"/>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { useRoute } from 'vue-router'
 import Item from '../../../components/pages/articles/item/index.vue'
 

@@ -5,14 +5,14 @@
 </article>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted, nextTick, DefineComponent } from 'vue'
+<script setup>
+import { ref, onMounted, nextTick } from 'vue'
 import PageHeader from '../../components/page/header/index.vue'
 import Post from '../../components/pages/apps/post.vue'
 
-const $post = ref<any>()
+const $post = ref()
 
 onMounted(() => {
-  nextTick().then(() => ($post.value as DefineComponent).$refs.root.id.focus())
+  nextTick().then(() => $post.value.$refs.root.id.focus())
 })
 </script>

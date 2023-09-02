@@ -14,7 +14,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { err } from '../../libs/error'
@@ -25,19 +25,15 @@ import PageHeader from '../../components/page/header/index.vue'
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue'
 import Loading from '../../components/etc/loading.vue'
 
-interface Fields {
-  name: string
-}
-
 const router = useRouter()
 const route = useRoute()
-const fields = reactive<Fields>({
+const fields = reactive({
   name: '',
 })
-const loading = ref<boolean>(true)
-const processing = ref<boolean>(false)
+const loading = ref(true)
+const processing = ref(false)
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -47,7 +43,7 @@ async function onSubmit(): Promise<void>
     await router.push('../../list/')
     toast.add('체크리스트를 삭제했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/checklist/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
@@ -65,7 +61,7 @@ onMounted(async () => {
     })
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/checklist/delete.vue', 'onMounted()'], 'error', e.message)
     throw e.message

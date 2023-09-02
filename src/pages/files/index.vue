@@ -22,7 +22,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
@@ -39,12 +39,12 @@ import Empty from '../../components/error/empty.vue'
 const route = useRoute()
 const router = useRouter()
 const preference = preferenceStore()
-const loading = ref<boolean>(true)
-const index = ref<any>([])
-const total = ref<number>(0)
-const page = ref<number>(route.query.page ? Number(route.query.page) : 1)
+const loading = ref(true)
+const index = ref([])
+const total = ref(0)
+const page = ref(route.query.page ? Number(route.query.page) : 1)
 
-async function onChangePage(n: number): Promise<void>
+async function onChangePage(n)
 {
   const params = {
     ...route.query,
@@ -53,14 +53,14 @@ async function onChangePage(n: number): Promise<void>
   await router.push(`./${serialize(params, true)}`)
 }
 
-async function onClickPageItem(n: number): Promise<void>
+async function onClickPageItem(n)
 {
   await onChangePage(n)
   page.value = n
   await loadData()
 }
 
-async function loadData(): Promise<void>
+async function loadData()
 {
   try
   {
@@ -71,7 +71,7 @@ async function loadData(): Promise<void>
     index.value = res.index
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/files/index.vue', 'loadData()'], 'error', e.message)
     throw e.message

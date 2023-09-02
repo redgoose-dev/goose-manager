@@ -25,7 +25,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted } from 'vue'
 import getData from '../../structure/apps'
 import { err } from '../../libs/error'
@@ -36,9 +36,9 @@ import { ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
 
-const loading = ref<boolean>(false)
-const index = ref<any>()
-const total = ref<number>(0)
+const loading = ref(false)
+const index = ref()
+const total = ref(0)
 
 onMounted(async () => {
   try
@@ -49,7 +49,7 @@ onMounted(async () => {
     index.value = res.index
     loading.value = false
   }
-  catch(e: any)
+  catch(e)
   {
     err(['/pages/apps/index.vue', 'onMounted()'], 'error', e.message)
     throw e.message

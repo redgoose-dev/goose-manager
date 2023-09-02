@@ -35,7 +35,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { onMounted, onUnmounted } from 'vue'
 import { controlWindow } from './util'
 import { ButtonBasic } from '../button'

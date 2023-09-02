@@ -144,7 +144,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ButtonBasic } from '../../components/button'
 import ButtonIcon from '../../components/button/icon.vue'
 </script>

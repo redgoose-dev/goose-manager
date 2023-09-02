@@ -11,13 +11,13 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 
-const props = defineProps<{
-  percent: number
-}>()
-const complete = computed<boolean>(() => (props.percent === 100));
+const props = defineProps({
+  percent: { type: Number, required: true },
+})
+const complete = computed(() => (props.percent === 100))
 </script>
 
 <style src="./checklist-progress.scss" lang="scss" scoped></style>

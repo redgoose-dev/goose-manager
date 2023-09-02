@@ -72,7 +72,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { authStore } from '../../store/auth'
@@ -90,18 +90,18 @@ const root = ref()
 const router = useRouter()
 const route = useRoute()
 const auth = authStore()
-const forms = reactive<any>({
+const forms = reactive({
   srl: '',
   email: '',
   password: { value: '', error: null },
   password_new: { value: '', error: null },
   password_new2: { value: '', error: null },
 })
-const processing = ref<boolean>(false)
-const loading = ref<boolean>(false)
-const self = computed<boolean>(() => (auth.user?.srl === Number(route.params.srl)))
+const processing = ref(false)
+const loading = ref(false)
+const self = computed(() => (auth.user?.srl === Number(route.params.srl)))
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   forms.password_new.error = null
   forms.password_new2.error = null
@@ -138,7 +138,7 @@ async function onSubmit(): Promise<void>
       toast.add('비밀번호를 변경했습니다.', 'success').then()
     }
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/pages/users/change-password.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
@@ -156,7 +156,7 @@ onMounted(async () => {
     forms.email = res.email
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/pages/users/change-password.vue', 'onMounted()' ], 'error', e.message)
     throw e.message

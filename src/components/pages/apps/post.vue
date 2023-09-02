@@ -59,7 +59,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { validateId, printf } from '../../../libs/string'
@@ -71,29 +71,23 @@ import { Controller } from '../../navigation'
 import { FormInput } from '../../forms'
 import { ButtonBasic } from '../../button'
 
-interface Forms {
-  id: { value: string, error: any }
-  name: { value: string, error: any }
-  description: { value: string, error: any }
-}
-
 const router = useRouter()
-const props = defineProps<{
-  mode: string
-  srl?: number
-}>()
-const forms = reactive<Forms>({
+const props = defineProps({
+  mode: { type: String, required: true },
+  srl: Number,
+})
+const forms = reactive({
   id: { value: '', error: null },
   name: { value: '', error: null },
   description: { value: '', error: null },
 })
-const loading = ref<boolean>(false)
-const processing = ref<boolean>(false)
-const submitLabel = computed<string>(() => {
+const loading = ref(false)
+const processing = ref(false)
+const submitLabel = computed(() => {
   return (props.mode === 'edit') ? '앱 수정하기' : '앱 만들기'
 })
 
-onMounted(async (): Promise<void> => {
+onMounted(async () => {
   if (props.mode !== 'edit') return
   try
   {
@@ -104,14 +98,14 @@ onMounted(async (): Promise<void> => {
     forms.description.value = res.data?.description
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/apps/post.vue', 'onMounted()' ], 'error', e.message)
     throw e.message
   }
 })
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   forms.id.error = null
   if (!validateId(forms.id.value)) forms.id.error = '아이디를 확인해주세요.'
@@ -136,7 +130,7 @@ async function onSubmit(): Promise<void>
         break
     }
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/apps/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false

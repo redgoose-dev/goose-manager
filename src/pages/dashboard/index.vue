@@ -101,7 +101,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted, reactive } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { err } from '../../libs/error'
@@ -113,8 +113,8 @@ import Empty from '../../components/pages/dashboard/empty.vue'
 import Icon from '../../components/icons/index.vue'
 
 const preference = preferenceStore()
-const loading = ref<boolean>(true)
-const contents = reactive<any>([])
+const loading = ref(true)
+const contents = reactive([])
 
 onMounted(async () => {
   try
@@ -123,7 +123,7 @@ onMounted(async () => {
     res.forEach(o => contents.push(o))
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/dashboard/index.vue', 'onMounted()'], 'error', e.message)
     throw e.message

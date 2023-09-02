@@ -29,7 +29,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, nextTick } from 'vue'
 import { createComment } from '../../../../structure/comments'
 import { err } from '../../../../libs/error'
@@ -37,18 +37,18 @@ import { toast } from '../../../../modules/toast'
 import { FormTextarea } from '../../../forms'
 import { ButtonBasic } from '../../../button'
 
-const $comment = ref<any>()
-const $form = ref<any>()
-const props = defineProps<{
-  articleSrl: number
-}>()
+const $comment = ref()
+const $form = ref()
+const props = defineProps({
+  articleSrl: { type: Number, required: true },
+})
 const emits = defineEmits([ 'submit' ])
-const forms = reactive<any>({
+const forms = reactive({
   content: { value: '', error: null },
 })
-const processing = ref<boolean>(false)
+const processing = ref(false)
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -61,7 +61,7 @@ async function onSubmit(): Promise<void>
     window.scrollBy(0, $comment.value.getBoundingClientRect().top)
     processing.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     processing.value = false
     err(['/components/pages/articles/item/create-comment.vue', 'onSubmit()'], 'error', e.message)

@@ -70,7 +70,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { toast } from '../../modules/toast'
@@ -81,15 +81,15 @@ import Pagination from '../../components/etc/pagination.vue'
 import FilesManager from '../../components/files-manager/index.vue'
 
 const preference = preferenceStore()
-const progress = ref<number>(30)
-const page = ref<number>(1)
+const progress = ref(30)
+const page = ref(1)
 
-function addToast(color?: string): void
+function addToast(color)
 {
   toast.add('hello toast', color)
 }
 
-function onUpdatePage(page: number): void
+function onUpdatePage(page)
 {
   console.log('onUpdatePage()', page)
 }

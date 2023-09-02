@@ -30,7 +30,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { reactive } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { validateForms, getStringJson } from './libs'
@@ -60,7 +60,7 @@ async function onSubmit()
     await preference.save()
     toast.add('환경설정을 수정했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/preference/nests.vue', 'onSubmit()'], 'error', e.message)
     toast.add('환경설정을 수정하지 못했습니다.', 'error').then()

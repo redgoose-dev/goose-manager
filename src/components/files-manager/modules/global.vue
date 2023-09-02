@@ -68,25 +68,17 @@
           icon-left="download"
           :disabled="selectedAssets"
           class="dropdown__button"
-          @click="onClickFunction('insert-markdown')">
+          @click="onClickFunction()">
           첨부파일 삽입
         </ButtonBasic>
-        <div class="dropdown__context">
+        <div v-if="localStore.markdown" class="dropdown__context">
           <ul>
             <li>
               <button
                 type="button"
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-markdown')">
-                마크다운 삽입
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                :disabled="disabledAssets"
-                @click="onClickFunction('insert-html')">
-                HTML 삽입
+                마크다운 코드삽입
               </button>
             </li>
             <li>
@@ -95,6 +87,14 @@
                 :disabled="disabledAssets"
                 @click="onClickFunction('insert-address')">
                 주소 삽입
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                :disabled="disabledAssets"
+                @click="onClickFunction('insert-html')">
+                HTML 삽입
               </button>
             </li>
           </ul>
@@ -116,7 +116,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { preferenceStore } from '../../../store/preference'
 import { fileManagerStore } from '../../../store/files-manager'
@@ -125,25 +125,28 @@ import { err } from '../../../libs/error'
 import { pureObject } from '../../../libs/object'
 import { printf } from '../../../libs/string'
 import { toast } from '../../../modules/toast'
-import { createMarkdownItems, createHtmlItems, createAddressItems } from '../itemsUtil'
+import { createMarkdownItems, createHtmlItems } from '../itemsUtil'
 import { Modal, ModalBody } from '../../modal'
 import { ButtonBasic } from '../../button'
 import Attachments from '../attachments/index.vue'
 import Loading from '../../etc/loading.vue'
 import UrlUploader from '../url-uploader/index.vue'
 
-const $file = ref<any>()
-const $attachments = ref<any>()
+const $file = ref()
+const $attachments = ref()
 const emits = defineEmits([ 'close', 'custom-event' ])
 const preference = preferenceStore()
 const localStore = fileManagerStore()
-const loading = ref<boolean>(true)
-const processing = ref<boolean>(false)
-const showUploadUrl = ref<boolean>(false)
-const disabledAssets = computed<boolean>(() => (loading.value || processing.value))
-const selectedAssets = computed<boolean>(() => {
+const loading = ref(true)
+const processing = ref(false)
+const showUploadUrl = ref(false)
+const disabledAssets = computed(() => (loading.value || processing.value))
+const selectedAssets = computed(() => {
+  const limit = localStore.limitSelect
+  const length = localStore.global.selected.length
   if (disabledAssets.value) return true
-  return localStore.global.selected.length <= 0
+  if (length <= 0) return true
+  return limit > 0 && limit < length
 })
 
 onMounted(async () => {
@@ -153,7 +156,7 @@ onMounted(async () => {
     localStore.global.idx = localStore.global.index.length
     loading.value = false
   }
-  catch (err: any)
+  catch (err)
   {
     err([ '/components/files-manager/modules/global.vue', 'onMounted()' ], 'error', err.message)
     throw err.message
@@ -169,20 +172,20 @@ defineExpose({
  */
 
 // upload files
-function onClickUploadFiles(): void
+function onClickUploadFiles()
 {
   $file.value.click()
 }
-async function onChangeFiles(e: any): Promise<void>
+async function onChangeFiles(e)
 {
   const { files } = e.target
   if (processing.value || files.length <= 0) return
   processing.value = true
   await uploadFile(files, 0)
 }
-async function uploadFile(files: FileList|File[], n: number): Promise<void>
+async function uploadFile(files, n)
 {
-  let idx: any
+  let idx
   try
   {
     idx = localStore.global.index.push({ ready: true })
@@ -203,7 +206,7 @@ async function uploadFile(files: FileList|File[], n: number): Promise<void>
     }
     if (files.length > n) await uploadFile(files, n)
   }
-  catch (err: any)
+  catch (err)
   {
     if (localStore.global.index[idx].ready) localStore.global.index.pop()
     errorUploadFiles(err)
@@ -215,7 +218,7 @@ function completeUploadFiles()
   $file.value.value = ''
   processing.value = false
 }
-function errorUploadFiles(e: ErrorEvent)
+function errorUploadFiles(e)
 {
   $attachments.value.reset()
   processing.value = false
@@ -227,7 +230,7 @@ function errorUploadFiles(e: ErrorEvent)
  * Upload url
  */
 
-async function submitUploadUrl(files: File[]): Promise<void>
+async function submitUploadUrl(files)
 {
   showUploadUrl.value = false
   await uploadFile(files, 0)
@@ -237,7 +240,7 @@ async function submitUploadUrl(files: File[]): Promise<void>
  * delete files area
  */
 
-async function deleteItems(paths: {}[])
+async function deleteItems(paths)
 {
   onSelectAll(false)
   let res = await removeFilesGlobal(paths)
@@ -258,7 +261,7 @@ async function deleteItems(paths: {}[])
   $attachments.value.reset()
   toast.add('첨부파일을 삭제했습니다.', 'success').then()
 }
-function onDeleteItem(key: number|undefined): void
+function onDeleteItem(key)
 {
   if (key === undefined) return
   if (!confirm(`이 항목을 삭제할까요?\n파일을 삭제하면 복구할 수 없습니다.`)) return
@@ -281,25 +284,35 @@ function onClickDeleteItems()
  * ETC area
  */
 
-function onSelectAll(sw?: boolean): void
+function onSelectAll(sw)
 {
   $attachments.value.selectAll(sw)
 }
 
-function onClickFunction(key: string|undefined)
+function onClickFunction(key)
 {
-  if (key === undefined) return
+  if (!key) key = localStore.markdown ? 'insert-markdown' : 'insert-raw'
+  if (localStore.limitSelect > 0 && localStore.global.selected.length > localStore.limitSelect) return
   let items = localStore.global.selected.map(key => {
+    if (!localStore.global.index[key]) return false
     const { name, pathFull, type } = localStore.global.index[key]
     return {
+      type,
       name,
       path: pathFull,
-      type,
     }
-  })
+  }).filter(Boolean)
   switch (key)
   {
+    case 'insert-raw':
+      if (items.length <= 0) return
+      emits('custom-event', {
+        key: 'insert-raw',
+        value: items,
+      })
+      break
     case 'insert-markdown':
+      if (items.length <= 0) return
       emits('custom-event', {
         key: 'insert-text',
         value: createMarkdownItems(items),
@@ -314,13 +327,13 @@ function onClickFunction(key: string|undefined)
     case 'insert-address':
       emits('custom-event', {
         key: 'insert-text',
-        value: createAddressItems(items),
+        value: items.map(o => (o.path)),
       })
       break
   }
 }
 
-function onSelectContextItem(key: number, type: string): void
+function onSelectContextItem(key, type)
 {
   const src = localStore.global.index[key]
   if (!src) return
@@ -329,17 +342,23 @@ function onSelectContextItem(key: number, type: string): void
     path: src.pathFull,
     type: src.type,
   }
-  let path: string
+  let path
   switch (type)
   {
     case 'open-new-window':
       path = localStore.global.index[key]?.pathFull
       if (path) window.open(path)
       break
-    case 'insert':
+    case 'insert-markdown':
       emits('custom-event', {
         key: 'insert-text',
         value: createMarkdownItems([item]),
+      })
+      break
+    case 'insert-raw':
+      emits('custom-event', {
+        key: 'insert-raw',
+        value: [item],
       })
       break
     case 'insert-html':
@@ -351,7 +370,7 @@ function onSelectContextItem(key: number, type: string): void
     case 'insert-address':
       emits('custom-event', {
         key: 'insert-text',
-        value: createAddressItems([item]),
+        value: [item].map(o => (o.path)),
       })
       break
     case 'delete':

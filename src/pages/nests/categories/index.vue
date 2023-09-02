@@ -48,7 +48,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Draggable from 'vuedraggable'
@@ -65,8 +65,8 @@ import Empty from '../../../components/error/empty.vue'
 import Icon from '../../../components/icons/index.vue'
 
 const route = useRoute()
-const loading = ref<boolean>(false)
-const data = reactive<any>({
+const loading = ref(false)
+const data = reactive({
   nest: {},
   index: [],
 })
@@ -76,7 +76,7 @@ async function onChangeIndex()
   try
   {
     if (!route.params.nestSrl) throw new Error('no nestSrl')
-    const srls = data.index.map((o: any) => (o.srl)).join(',')
+    const srls = data.index.map((o) => (o.srl)).join(',')
     const res = await post('/categories/sort/', formData({
       module: 'article',
       target_srl: Number(route.params.nestSrl),
@@ -85,7 +85,7 @@ async function onChangeIndex()
     if (!res.success) throw new Error(res.message)
     toast.add('순서를 변경했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/categories/index.vue', 'onChangeIndex()'], 'error', e.message)
     toast.add('순서를 변경하지 못했습니다.', 'error').then()
@@ -101,7 +101,7 @@ onMounted(async () => {
     data.index = categories
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/categories/index.vue', 'onMounted()'], 'error', e.message)
     throw e.message

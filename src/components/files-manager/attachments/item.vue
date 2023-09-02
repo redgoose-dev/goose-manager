@@ -17,25 +17,25 @@
       <Icon v-if="o === 'thumbnail'" name="image"/>
     </li>
   </ul>
-  <div v-if="props.context?.length > 0" class="attachment__context">
+  <div v-if="context?.length > 0" class="attachment__context">
     <button type="button">
       <Icon name="menu"/>
     </button>
     <ul>
-      <template v-for="o in props.context">
+      <template v-for="o in context">
         <li v-if="o === 'open-new-window'">
           <button type="button" @click="onClickContextItem(o)">
             새창으로 열기
           </button>
         </li>
-        <li v-else-if="o === 'insert'">
+        <li v-else-if="o === 'insert-markdown'">
           <button type="button" @click="onClickContextItem(o)">
-            삽입하기
+            마크다운 코드삽입
           </button>
         </li>
-        <li v-else-if="o === 'insert-html'">
+        <li v-else-if="o === 'insert-raw'">
           <button type="button" @click="onClickContextItem(o)">
-            HTML 삽입하기
+            첨부파일 삽입
           </button>
         </li>
         <li v-else-if="o === 'insert-address'">
@@ -43,7 +43,12 @@
             주소 삽입하기
           </button>
         </li>
-        <li v-else-if="o === 'set-thumbnail' && localStore.useThumbnail">
+        <li v-else-if="o === 'insert-html'">
+          <button type="button" @click="onClickContextItem(o)">
+            HTML 삽입하기
+          </button>
+        </li>
+        <li v-else-if="o === 'set-thumbnail'">
           <button type="button" @click="onClickContextItem(o)">
             썸네일 이미지 설정
           </button>
@@ -59,26 +64,23 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 import { fileManagerStore } from '../../../store/files-manager'
 import { getByte } from '../../../libs/string'
 import Icon from '../../icons/index.vue'
 
-interface Props {
-  image?: string
-  name?: string
-  type?: string
-  size?: number
-  context?: string[]
-  badge?: string[]
-  selected?: boolean
-}
-
-const props = defineProps<Props>()
+const props = defineProps({
+  image: String,
+  name: String,
+  type: String,
+  size: Number,
+  badge: Array,
+  selected: Boolean,
+})
 const emits = defineEmits([ 'select-item', 'select-context-item' ])
 const localStore = fileManagerStore()
-const type = computed<string>(() => {
+const type = computed(() => {
   if (!props.type) return ''
   const type = props.type.split('/')[0]
   switch (type)
@@ -89,7 +91,7 @@ const type = computed<string>(() => {
       return 'file'
   }
 })
-const fileType = computed<string>(() => {
+const fileType = computed(() => {
   if (/^audio/.test(props.type || ''))
   {
     return 'music'
@@ -104,8 +106,19 @@ const fileType = computed<string>(() => {
   }
   return 'file'
 })
+const context = computed(() => {
+  return [
+    'open-new-window',
+    localStore.markdown && 'insert-markdown',
+    !localStore.markdown && 'insert-raw',
+    localStore.markdown && 'insert-html',
+    localStore.markdown && 'insert-address',
+    (localStore.tab === 'post' && localStore.useThumbnail) && 'set-thumbnail',
+    'delete',
+  ].filter(Boolean)
+})
 
-function onClickContextItem(key: string): any
+function onClickContextItem(key)
 {
   emits('select-context-item', key)
 }

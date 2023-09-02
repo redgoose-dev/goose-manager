@@ -37,7 +37,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 const classes = {
   light: [
     'color-light-bg',

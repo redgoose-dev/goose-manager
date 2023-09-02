@@ -66,7 +66,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { $fetch } from 'ofetch'
@@ -78,25 +78,19 @@ import { getPath } from '../../libs/string'
 import FormCheckbox from '../../components/forms/checkbox.vue'
 import { ButtonBasic } from '../../components/button'
 
-interface Forms {
-  email: string
-  password: string
-  save: boolean
-}
-
 const router = useRouter()
 const auth = authStore()
-const loading = ref<boolean>(false)
-const title = ref<string>(import.meta.env.VITE_TITLE || '매니저')
-const description = ref<string>(DESCRIPTION || '매니저 설명')
-const processing = ref<boolean>(false)
-const forms = reactive<Forms>({
+const loading = ref(false)
+const title = ref(import.meta.env.VITE_TITLE || '매니저')
+const description = ref(DESCRIPTION || '매니저 설명')
+const processing = ref(false)
+const forms = reactive({
   email: '',
   password: '',
   save: true,
 })
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -126,7 +120,7 @@ async function onSubmit(): Promise<void>
     // redirect url
     await router.replace('/')
   }
-  catch(e: any)
+  catch(e)
   {
     err(['/pages/auth/login.vue', 'onSubmit()'], 'error', e.message)
     loading.value = false

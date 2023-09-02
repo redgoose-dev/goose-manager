@@ -12,13 +12,13 @@
 </section>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { getByte } from '../../../../libs/string'
 import { createFullPath } from '../../../../structure/files/util'
 
-const props = defineProps<{
-  items: any[]
-}>()
+const props = defineProps({
+  items: { type: Array, required: true },
+})
 </script>
 
 <style src="./files.scss" lang="scss" scoped></style>

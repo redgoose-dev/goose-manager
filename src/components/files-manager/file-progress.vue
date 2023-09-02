@@ -4,7 +4,7 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import Spinner from '../etc/spinner.vue'
 </script>
 

@@ -10,13 +10,6 @@ function filteringItemGlobal(src: any): any
     size: src.size,
     type: src.type,
     badge: [],
-    context: [
-      'open-new-window',
-      'insert',
-      'insert-html',
-      'insert-address',
-      'delete',
-    ],
   }
 }
 function filteringItemPost(src: any): any
@@ -29,14 +22,6 @@ function filteringItemPost(src: any): any
     size: src.size,
     type: src.type,
     badge: [],
-    context: [
-      'open-new-window',
-      'insert',
-      'insert-html',
-      'insert-address',
-      'set-thumbnail',
-      'delete',
-    ],
   }
 }
 

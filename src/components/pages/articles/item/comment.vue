@@ -52,7 +52,7 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed } from 'vue'
 import { marked } from 'marked'
 import { editComment, deleteComment } from '../../../../structure/comments'
@@ -62,27 +62,27 @@ import { baseRenderer } from '../../../../modules/marked'
 import { FormTextarea } from '../../../forms'
 import { ButtonBasic } from '../../../button'
 
-const props = defineProps<{
-  srl: number
-  userName: string
-  content: string
-  regdate: string
-}>()
+const props = defineProps({
+  srl: { type: Number, required: true },
+  userName: { type: String, required: true },
+  content: { type: String, required: true },
+  regdate: { type: String, required: true },
+})
 const emits = defineEmits([ 'edit', 'delete' ])
 const renderer = baseRenderer()
-const editMode = ref<boolean>(false)
-const content = computed<string>(() => marked.parse(props.content, { renderer }))
-const editContent = ref<string>('')
-const editProcessing = ref<boolean>(false)
-const deleteProcessing = ref<boolean>(false)
+const editMode = ref(false)
+const content = computed(() => marked.parse(props.content, { renderer }))
+const editContent = ref('')
+const editProcessing = ref(false)
+const deleteProcessing = ref(false)
 
-function toggleEditMode(sw: boolean): void
+function toggleEditMode(sw)
 {
   editContent.value = sw ? props.content : ''
   editMode.value = sw
 }
 
-async function onEdit(): Promise<void>
+async function onEdit()
 {
   try
   {
@@ -93,7 +93,7 @@ async function onEdit(): Promise<void>
     toast.add('댓글을 수정했습니다.', 'success').then()
     editProcessing.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/components/pages/articles/item/comment.vue', 'onEdit()'], 'error', e.message)
     toast.add('댓글을 수정하지 못했습니다.', 'error').then()
@@ -101,7 +101,7 @@ async function onEdit(): Promise<void>
   }
 }
 
-async function onDelete(): Promise<void>
+async function onDelete()
 {
   try
   {
@@ -113,7 +113,7 @@ async function onDelete(): Promise<void>
     toast.add('댓글을 삭제했습니다.', 'success').then()
     deleteProcessing.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/components/pages/articles/item/comment.vue', 'onDelete()'], 'error', e.message)
     toast.add('댓글을 삭제하지 못했습니다.', 'error').then()

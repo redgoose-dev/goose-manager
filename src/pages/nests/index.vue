@@ -45,10 +45,10 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted } from 'vue'
 import { err } from '../../libs/error'
-import getData, { SectionItem } from '../../structure/nests'
+import getData from '../../structure/nests'
 import PageHeader from '../../components/page/header/index.vue'
 import { Items, Card } from '../../components/item'
 import { Controller } from '../../components/navigation'
@@ -56,8 +56,8 @@ import { ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
 
-const processing = ref<boolean>(false)
-const index = ref<SectionItem[]>()
+const processing = ref(false)
+const index = ref()
 
 onMounted(async () => {
   try
@@ -66,7 +66,7 @@ onMounted(async () => {
     index.value = await getData()
     processing.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/index.vue', 'onMounted()'], 'error', e.message)
     processing.value = false

@@ -1,9 +1,10 @@
 <template>
-<div :class="[
-  'keyword-text',
-  props.disabled && `keyword-text--disabled`,
-  props.size && `keyword-text--size-${props.size}`,
-]">
+<div
+  :class="[
+    'keyword-text',
+    props.disabled && `keyword-text--disabled`,
+    props.size && `keyword-text--size-${props.size}`,
+  ]">
   <p class="keyword-text__input">
     <input
       ref="$input"

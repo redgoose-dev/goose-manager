@@ -1,3 +1,10 @@
+.json-content {
+  padding: 24px 12px;
+  &__body {
+    margin: 12px 0 0;
+  }
+}
+
 .json-code {
   display: block;
   margin: 0;
@@ -5,7 +12,7 @@
   box-sizing: border-box;
   background-color: rgb(var(--color-base-rgb) / 5%);
   border-radius: 2px;
-  line-height: 1.42;
+  line-height: 1.62;
   font-size: 15px;
   font-family: var(--font-console);
   word-break: break-all;

@@ -21,7 +21,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { useRouter } from 'vue-router'
 import { iconRandomPick } from '../../components/icons/assets'
 import { ButtonBasic } from '../../components/button'

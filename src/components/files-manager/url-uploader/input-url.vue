@@ -41,31 +41,30 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed } from 'vue'
 import { ofetch } from 'ofetch'
 import { toast } from '../../../modules/toast'
 import { FormTextarea } from '../../forms'
 import { ButtonBasic } from '../../button'
 import { Help } from '../../forms/fieldset'
-import { VerifyItem } from './types'
 
 const emits = defineEmits([ 'submit', 'close' ])
-const address = ref<string>('')
+const address = ref('')
 const processingVerify = ref(false)
-const disabledSubmitButton = computed<boolean>(() => {
+const disabledSubmitButton = computed(() => {
   if (processingVerify.value) return true
   if (!(address.value.length > 2)) return true
   return false
 })
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   if (!address.value) return
-  let verifyItems: Awaited<VerifyItem | boolean>[] = []
-  const addressIndex = address.value.split('\n').filter((o: string) => (!!o))
+  let verifyItems = []
+  const addressIndex = address.value.split('\n').filter((o) => (!!o))
   processingVerify.value = true
-  let res = await Promise.all(addressIndex.map((o: string) => uploadImageUrl(o)))
+  let res = await Promise.all(addressIndex.map((o) => uploadImageUrl(o)))
   res = res.filter(Boolean)
   processingVerify.value = false
   if (res.length > 0)
@@ -79,7 +78,7 @@ async function onSubmit(): Promise<void>
   }
 }
 
-async function uploadImageUrl(path: string): Promise<VerifyItem|boolean>
+async function uploadImageUrl(path)
 {
   if (!path) return false
   try
@@ -97,7 +96,7 @@ async function uploadImageUrl(path: string): Promise<VerifyItem|boolean>
       date: new Date(),
     }
   }
-  catch (e: any)
+  catch (e)
   {
     return false
   }

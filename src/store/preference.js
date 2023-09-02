@@ -102,9 +102,9 @@ const defaultPreference = {
     }
   ],
   nests: {
-    uploadFileCount: 20,
+    uploadFileCount: 100,
     limitUploadFile: 5242880,
-    limitUploadFiles: 20971520,
+    limitUploadFiles: 31457280,
   },
   articles: {
     pageCount: 24,
@@ -115,14 +115,16 @@ const defaultPreference = {
     pagePerSize: 24,
     acceptFileType: 'image/*,audio/*,video/*,text/*,.pdf',
     globalPath: 'assets',
+    limitCount: 100,
+    limitSize: 5242880,
   },
   checklist: {
     resetTime: '05:00',
     dateFormat: '{yyyy}-{MM}-{dd} ({week})',
     pageCount: 24,
     pageRange: 10,
-    limitUploadFilesCount: 20,
-    limitUploadFileSize: 5242880,
+    limitUploadFilesCount: 100,
+    limitUploadFileSize: 31457280,
   },
 }
 

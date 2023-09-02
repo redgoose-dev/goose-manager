@@ -61,9 +61,9 @@
     :article-srl="props.srl"
     class="article__comments"/>
   <teleport to="#modals">
-    <Modal :show="!!previewImage" @close="previewImage = null">
+    <Modal :show="!!previewImage" @close="previewImage = ''">
       <ModalBody>
-        <PreviewImage :src="previewImage" @close="previewImage = null"/>
+        <PreviewImage :src="previewImage" @close="previewImage = ''"/>
       </ModalBody>
     </Modal>
   </teleport>
@@ -71,8 +71,8 @@
 <Loading v-else class="loading"/>
 </template>
 
-<script lang="ts" setup>
-import { ref, reactive, computed, onMounted, nextTick, DefineComponent } from 'vue'
+<script setup>
+import { ref, reactive, computed, onMounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import getData from '../../../../structure/articles/item'
 import { err } from '../../../../libs/error'
@@ -85,26 +85,20 @@ import Files from './files.vue'
 import Comments from './comments.vue'
 import PreviewImage from './preview-image.vue'
 
-interface Data {
-  article: any
-  nest: any
-  files: any
-}
-
 const route = useRoute()
-const $content = ref<DefineComponent>()
-const props = defineProps<{
-  srl: number
-  nestSrl?: number
-}>()
-const data = reactive<Data>({
+const $content = ref()
+const props = defineProps({
+  srl: { type: Number, required: true },
+  nestSrl: Number,
+})
+const data = reactive({
   article: undefined,
   nest: undefined,
   files: undefined,
 })
-const loading = ref<boolean>(true)
-const previewImage = ref<string>('')
-const useComments = computed<boolean>(() => (Number(data.nest.json.useComment) === 1))
+const loading = ref(true)
+const previewImage = ref('')
+const useComments = computed(() => (Number(data.nest.json.useComment) === 1))
 
 onMounted(async () => {
   try
@@ -117,7 +111,7 @@ onMounted(async () => {
     await nextTick()
     initContentEvents()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/components/pages/articles/item/index.vue', 'onMounted()'], 'error', e.message)
     throw e.message
@@ -126,8 +120,8 @@ onMounted(async () => {
 
 function initContentEvents()
 {
-  $content.value?.querySelectorAll('img').forEach((el: HTMLElement) => {
-    el.addEventListener('click', (e: any) => {
+  $content.value?.querySelectorAll('img').forEach(el => {
+    el.addEventListener('click', e => {
       previewImage.value = e.currentTarget.src
     })
   })

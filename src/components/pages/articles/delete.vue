@@ -14,7 +14,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getItem, submit } from '../../../structure/articles/delete'
@@ -25,25 +25,18 @@ import PageHeader from '../../page/header/index.vue'
 import ConfirmDelete from '../../forms/confirm-delete/index.vue'
 import Loading from '../../etc/loading.vue'
 
-interface Props {
-  srl: number
-}
-interface Fields {
-  title: string
-  name: string
-  description: string
-}
-
 const router = useRouter()
 const route = useRoute()
-const props = defineProps<Props>()
-const fields = reactive<Fields>({
+const props = defineProps({
+  srl: { type: Number, required: true },
+})
+const fields = reactive({
   title: '',
   description: '이 아티클을 삭제하면 관련된 첨부파일, 댓글들을 삭제하며 복구할 수 없습니다.',
   name: '',
 })
-const loading = ref<boolean>(false)
-const processing = ref<boolean>(false)
+const loading = ref(false)
+const processing = ref(false)
 
 async function onSubmit()
 {
@@ -55,7 +48,7 @@ async function onSubmit()
     await router.push(`../../${createQueries(['category','page'], route.query)}`)
     toast.add('아티클을 삭제했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/components/pages/articles/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false
@@ -72,7 +65,7 @@ onMounted(async () => {
     fields.name = `삭제되는 요소: ${srl}`
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/components/pages/articles/delete.vue', 'onMounted()'], 'error', e.message)
     throw e.message

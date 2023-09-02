@@ -26,17 +26,17 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { Controller } from '../../navigation'
 import { ButtonBasic } from '../../button'
 
-const props = defineProps<{
-  title: string
-  description: string
-  name: string
-  buttonLabel: string
-  processing: boolean
-}>()
+const props = defineProps({
+  title: String,
+  description: String,
+  name: String,
+  buttonLabel: String,
+  processing: Boolean,
+})
 const emits = defineEmits([ 'cancel', 'submit' ])
 </script>
 

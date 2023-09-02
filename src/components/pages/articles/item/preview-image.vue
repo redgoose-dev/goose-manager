@@ -4,10 +4,10 @@
 </figure>
 </template>
 
-<script lang="ts" setup>
-const props = defineProps<{
-  src: string
-}>()
+<script setup>
+const props = defineProps({
+  src: { type: String, required: true },
+})
 const emits = defineEmits([ 'close' ])
 </script>
 

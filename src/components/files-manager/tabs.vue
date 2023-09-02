@@ -8,7 +8,7 @@
       @click="localStore.tab = 'post'">
       <span>
         <Icon name="archive"/>
-        <em>아티클 포스트</em>
+        <em>모듈 포스트</em>
       </span>
     </button>
     <button
@@ -42,25 +42,27 @@
 </nav>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { onMounted } from 'vue'
 import { fileManagerStore } from '../../store/files-manager'
 import Icon from '../icons/index.vue'
 
-interface Props {
-  active: string
+const props = defineProps({
+  active: { type: String, required: true },
   show: {
-    post: boolean
-    global: boolean
-    guide: boolean
-    close: boolean
-  }
-}
-
-const props = defineProps<Props>();
-const emits = defineEmits([ 'function' ]);
+    type: Object,
+    required: true,
+    default: {
+      post: false,
+      global: false,
+      guide: false,
+      close: false,
+    },
+  },
+})
+const emits = defineEmits([ 'function' ])
 const localStore = fileManagerStore()
-let tabNames: (false | string)[]
+let tabNames
 
 function changeTab()
 {
@@ -75,7 +77,7 @@ onMounted(() => {
   tabNames = [
     props.show.post && 'post',
     props.show.global && 'global',
-  ].filter(Boolean);
+  ].filter(Boolean)
 })
 
 defineExpose({

@@ -44,16 +44,6 @@ const props = defineProps({
 })
 const emits = defineEmits([ 'update:modelValue', 'position', 'submit' ])
 
-onMounted(() => {
-  if (props.autoSize) changeHeight()
-})
-
-defineExpose({
-  changeHeight,
-  changeCursor,
-  focus,
-})
-
 function onChangePosition(e)
 {
   if (!('selectionStart' in e.target)) return
@@ -89,6 +79,16 @@ function changeCursor(start, end)
 {
   $root.value.setSelectionRange(start, end)
 }
+
+onMounted(() => {
+  if (props.autoSize) changeHeight()
+})
+
+defineExpose({
+  changeHeight,
+  changeCursor,
+  focus,
+})
 </script>
 
 <style src="./form-textarea.scss" lang="scss" scoped></style>

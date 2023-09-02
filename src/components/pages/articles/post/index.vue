@@ -116,6 +116,8 @@
           :accept-file-type="preference.files.acceptFileType"
           :full-size="true"
           :use-thumbnail="true"
+          :markdown="true"
+          output="text"
           @custom-event="onFilesManagerEvent"
           @close="showFilesManager = false"/>
       </ModalBody>
@@ -124,7 +126,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../../../store/preference'
@@ -145,20 +147,20 @@ import FilesManager from '../../../files-manager/index.vue'
 
 const route = useRoute()
 const router = useRouter()
-const $root = ref<any>()
-const $editor = ref<any>()
-const props = defineProps<{
-  mode: string
-  nestSrl?: number
-  articleSrl?: number
-}>()
+const $root = ref()
+const $editor = ref()
+const props = defineProps({
+  mode: { type: String, required: true },
+  nestSrl: Number,
+  articleSrl: Number,
+})
 const preference = preferenceStore()
-const data = reactive<any>({
+const data = reactive({
   nest: null,
   categories: null,
   article: null,
 })
-const forms = reactive<any>({
+const forms = reactive({
   app_srl: null,
   nest_srl: props.nestSrl,
   category_srl: (!route.query.category || route.query.category === 'null') ? null : route.query.category,
@@ -182,13 +184,13 @@ const forms = reactive<any>({
 const loading = ref(true)
 const processing = ref(false)
 const showFilesManager = ref(false)
-const fileManagerOptions = computed<any>(() => {
+const fileManagerOptions = computed(() => {
   const { thumbnail, files } = data.nest.json
   return {
     module: 'articles',
     targetSrl: data.article?.srl,
-    limitCount: files.count,
-    limitSize: files.sizeSingle,
+    limitCount: files.count || preference.files.limitCount || 32,
+    limitSize: files.sizeSingle || preference.files.limitSize || 2000000,
     cropper: {
       viewport: {
         width: thumbnail?.width || 320,
@@ -201,7 +203,7 @@ const fileManagerOptions = computed<any>(() => {
   }
 })
 
-async function save(type: string): Promise<void>
+async function save(type)
 {
   let json = Object.assign({}, forms.json)
 
@@ -249,7 +251,7 @@ async function save(type: string): Promise<void>
   }))
   if (!res.success) throw new Error(res.message)
 }
-async function saveDraft(): Promise<void>
+async function saveDraft()
 {
   if (props.mode !== 'create') return
   if (processing.value) return
@@ -260,14 +262,14 @@ async function saveDraft(): Promise<void>
     processing.value = false
     toast.add('임시저장을 성공했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/articles/post/index.vue', 'saveDraft()' ], 'error', e.message)
     toast.add('임시저장을 실패했습니다.', 'error').then()
     processing.value = false
   }
 }
-async function publishing(): Promise<void>
+async function publishing()
 {
   if (processing.value) return
   try
@@ -288,7 +290,7 @@ async function publishing(): Promise<void>
         break
     }
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/articles/post/index.vue', 'publishing()' ], 'error', e.message)
     switch (props.mode)
@@ -303,7 +305,7 @@ async function publishing(): Promise<void>
     processing.value = false
   }
 }
-function onSubmit(): void
+function onSubmit()
 {
   publishing().then()
 }
@@ -311,7 +313,7 @@ function onSubmit(): void
 /**
  * on FilesManager event
  */
-function onFilesManagerEvent({ key, value }: { key: string, value: any }): void
+function onFilesManagerEvent({ key, value })
 {
   switch (key)
   {
@@ -336,20 +338,19 @@ function onFilesManagerEvent({ key, value }: { key: string, value: any }): void
  * insert text to editor
  * 에디터 입력창에 문자를 넣는다.
  */
-function insertTextToEditor(keyword: string, position: number = 0): void
+function insertTextToEditor(keyword, position = 0)
 {
   if (!keyword) return
   let content = forms.content.value + ''
   let start = $editor.value.position.start
   if (start === 0) keyword = keyword.replace(/^\n/g, '')
-  // TODO: 메서드 조정 필요하다.
-  forms.content.value = content.substr(0, start) + keyword + content.substr(start)
+  forms.content.value = content.substring(0, start) + keyword + content.substring(start)
   // change cursor
   let endPosition = start + (position ? position : keyword.length)
   $editor.value.changeCursor(endPosition, endPosition)
 }
 
-onMounted(async (): Promise<void> => {
+onMounted(async () => {
   try
   {
     loading.value = true
@@ -369,7 +370,7 @@ onMounted(async (): Promise<void> => {
     forms.json = newArticle.json || { thumbnail: {} }
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/articles/post/index.vue', 'onMounted()' ], 'error', e.message)
     throw e.message

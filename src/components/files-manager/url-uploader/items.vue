@@ -41,32 +41,20 @@
 </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, computed } from 'vue'
 import ImageResize from 'image-resize'
 import { getByte, printf } from '../../../libs/string'
 import { loadImage } from '../../../libs/util'
-import type { VerifyItem } from './types'
 import { toast } from '../../../modules/toast'
 import { err } from '../../../libs/error'
 import Icons from '../../icons/index.vue'
 
-const props = defineProps<{
-  src: VerifyItem[]
-}>()
+const props = defineProps({
+  src: Array
+})
 const emits = defineEmits([ 'remove-item', 'update-item' ])
-const checks = ref<{ [key: number]: boolean }>((() => {
-  let checks: { [key: number]: boolean } = {}
-  if (props.src.length > 0)
-  {
-    for (let i: number = 0; i < props.src.length; i++)
-    {
-      checks[i] = true
-    }
-  }
-  return checks
-})())
-const items = computed<any[]>(() => {
+const items = computed(() => {
   if (!(props.src.length > 0)) return []
   return props.src.map(o => {
     return {
@@ -79,12 +67,12 @@ const items = computed<any[]>(() => {
   })
 })
 
-function onClickRemoveItem(idx: number): void
+function onClickRemoveItem(idx)
 {
   emits('remove-item', idx)
 }
 
-async function onClickChangeFormat(idx: number): Promise<void>
+async function onClickChangeFormat(idx)
 {
   try
   {
@@ -103,7 +91,7 @@ async function onClickChangeFormat(idx: number): Promise<void>
       reSample: 1,
       sharpen: 0,
     })
-    let output: any = await resize.play(props.src[idx].blob)
+    let output = await resize.play(props.src[idx].blob)
     emits('update-item', idx, {
       blob: output,
       date: props.src[idx].date,
@@ -112,7 +100,7 @@ async function onClickChangeFormat(idx: number): Promise<void>
     })
     toast.add('파일변환을 성공했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/components/files-manager/url-uploader/items.vue', 'onClickChangeFormat()'], 'error', e.message)
     toast.add('파일변환을 실패했습니다.', 'error').then()

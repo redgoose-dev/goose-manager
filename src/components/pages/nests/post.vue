@@ -170,7 +170,7 @@
 </form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { post, formData, checkForms } from '../../../libs/api'
@@ -178,27 +178,19 @@ import { err } from '../../../libs/error'
 import { validateId, getByte } from '../../../libs/string'
 import { pureObject } from '../../../libs/object'
 import { toast } from '../../../modules/toast'
-import getData, { setJson, NestJSON } from '../../../structure/nests/post'
+import getData, { setJson } from '../../../structure/nests/post'
 import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset'
 import { Controller } from '../../navigation'
 import { FormInput, FormSelect, FormRadio, FormSwitch } from '../../forms'
 import { ButtonBasic } from '../../button'
 
-interface Forms {
-  app_srl: { value: string, error: any }
-  id: { value: string, error: any }
-  name: { value: string, error: any }
-  description: { value: string, error: any }
-  json: NestJSON
-}
-
 const root = ref()
 const router = useRouter()
-const props = defineProps<{
-  mode: string
-  srl?: number
-}>()
-const forms = reactive<Forms>({
+const props = defineProps({
+  mode: { type: String, required: true },
+  srl: Number,
+})
+const forms = reactive({
   app_srl: { value: '', error: null },
   id: { value: '', error: null },
   name: { value: '', error: null },
@@ -206,10 +198,10 @@ const forms = reactive<Forms>({
   json: setJson(),
 })
 const apps = ref()
-const loading = ref<boolean>(true)
-const processing = ref<boolean>(false)
-const limitUploadFileSize = computed<string>(() => getByte(forms.json.files?.sizeSingle || 0))
-const submitLabel = computed<string>(() => {
+const loading = ref(true)
+const processing = ref(false)
+const limitUploadFileSize = computed(() => getByte(forms.json.files?.sizeSingle || 0))
+const submitLabel = computed(() => {
   return props.mode === 'edit' ? '둥지 수정하기' : '둥지 만들기'
 })
 
@@ -228,14 +220,14 @@ onMounted(async () => {
     forms.json = res.nest.json
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/nests/post.vue', 'onMounted()' ], 'error', e.message)
     throw e.message
   }
 })
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   forms.id.error = null
   if (!validateId(forms.id.value))
@@ -260,7 +252,7 @@ async function onSubmit(): Promise<void>
     const message = props.mode === 'edit' ? '둥지를 수정했습니다.' : '둥지를 만들었습니다.'
     toast.add(message, 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err([ '/components/pages/nests/post.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false

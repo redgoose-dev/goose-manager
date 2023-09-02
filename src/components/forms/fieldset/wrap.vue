@@ -31,7 +31,7 @@ const props = defineProps({
   border: none;
   &__legend {
     display: block;
-    margin: var(--fieldset-header-margin, 0 0 10px);
+    margin: var(--fieldset-header-margin, (0 0 10px));
     padding: 0 0 0 12px;
     font-size: 20px;
     line-height: 1.15;

@@ -14,7 +14,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { err } from '../../libs/error'
@@ -24,21 +24,15 @@ import PageHeader from '../../components/page/header/index.vue'
 import ConfirmDelete from '../../components/forms/confirm-delete/index.vue'
 import Loading from '../../components/etc/loading.vue'
 
-interface Fields {
-  title: string
-  description: string
-  name: string
-}
-
 const router = useRouter()
 const route = useRoute()
-const fields = reactive<Fields>({
+const fields = reactive({
   title: '',
   description: '이 둥지를 삭제하면 하위의 "아티클", "분류", "첨부파일" 데이터들이 전부 삭제됩니다.',
   name: '',
 })
-const loading = ref<boolean>(false)
-const processing = ref<boolean>(false)
+const loading = ref(false)
+const processing = ref(false)
 
 onMounted(async () => {
   try
@@ -49,14 +43,14 @@ onMounted(async () => {
     fields.name = `삭제되는 요소: [${res.srl}] ${res.name}`
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/delete.vue', 'onMounted()'], 'error', e.message)
     throw e.message
   }
 })
 
-async function onSubmit(): Promise<void>
+async function onSubmit()
 {
   try
   {
@@ -66,7 +60,7 @@ async function onSubmit(): Promise<void>
     await router.push('../../')
     toast.add('둥지를 삭제했습니다.', 'success').then()
   }
-  catch (e: any)
+  catch (e)
   {
     err(['/pages/nests/delete.vue', 'onSubmit()'], 'error', e.message)
     processing.value = false

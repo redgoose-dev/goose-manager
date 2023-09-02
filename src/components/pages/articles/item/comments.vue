@@ -19,29 +19,29 @@
 </section>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted } from 'vue'
 import { getComments } from '../../../../structure/comments'
 import { err } from '../../../../libs/error'
 import Comment from './comment.vue'
 import CreateComment from './create-comment.vue'
 
-const props = defineProps<{
-  articleSrl: number
-}>()
-const index = ref<any[]>([])
-const loading = ref<boolean>(false)
+const props = defineProps({
+  articleSrl: { type: Number, required: true },
+})
+const index = ref([])
+const loading = ref(false)
 
-function onSubmitCreateComment(item: any): void
+function onSubmitCreateComment(item)
 {
   index.value.push(item)
 }
 
-function onEditComment(key: number, content: string): void
+function onEditComment(key, content)
 {
   index.value[key].content = content
 }
-function onDeleteComment(key: number): void
+function onDeleteComment(key)
 {
   index.value.splice(key, 1)
 }
@@ -53,7 +53,7 @@ onMounted(async () => {
     index.value = await getComments(props.articleSrl)
     loading.value = false
   }
-  catch (e: any)
+  catch (e)
   {
     loading.value = false
     err(['/components/pages/articles/item/comments.vue', 'onMounted()'], 'error', e.message)

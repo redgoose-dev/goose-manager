@@ -5,7 +5,7 @@
 </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import PageHeader from '../../components/page/header/index.vue'
-import Post from '../../components/pages/json/post.vue'
+import Post from '../../components/pages/json/post/index.vue'
 </script>
