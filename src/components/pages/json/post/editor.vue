@@ -158,7 +158,7 @@ async function insert(src)
 function onInitJsonEditor(instance)
 {
   jsonEditor = instance
-  $editor.value.expandFolder(3)
+  $editor.value.expandFolder(2)
 }
 
 function onClickFold(sw)
