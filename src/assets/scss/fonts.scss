@@ -24,13 +24,13 @@ $dir: '../fonts';
 }
 @include font-loader-ortsa('30', 300); // light
 @include font-loader-ortsa('45', 400); // regular
-@include font-loader-ortsa('60', 500); // medium
-@include font-loader-ortsa('75', 600); // bold
+@include font-loader-ortsa('60', 600); // medium
+@include font-loader-ortsa('75', 700); // bold
 @include font-loader-ortsa('90', 900); // black
 @include font-loader-ortsa-italic('30', 300); // light italic
 @include font-loader-ortsa-italic('45', 400); // regular italic
-@include font-loader-ortsa-italic('60', 500); // medium italic
-@include font-loader-ortsa-italic('75', 600); // bold italic
+@include font-loader-ortsa-italic('60', 600); // medium italic
+@include font-loader-ortsa-italic('75', 700); // bold italic
 @include font-loader-ortsa-italic('90', 900); // black italic
 
 // Pretendard

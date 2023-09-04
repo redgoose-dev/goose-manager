@@ -7,6 +7,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import JsonEditor from '@redgoose/json-editor'
+import { headStore } from '../../store/head.js'
 import '@redgoose/json-editor/css'
 
 let jsonEditor
@@ -14,9 +15,10 @@ const $body = ref()
 const props = defineProps({
   modelValue: [ Object, Array, String ],
   disabled: Boolean,
-  theme: { type: String, default: 'system' }, // system,light,dark
+  edit: { type: String, default: 'all' }, // all,value,none
 })
 const emits = defineEmits([ 'init', 'update:modelValue', 'context' ])
+const head = headStore()
 
 function updateData(value, useUpdate)
 {
@@ -50,10 +52,42 @@ function updateValue(node, value)
   jsonEditor.changeValue(node, value)
 }
 
+function foldAll(sw)
+{
+  let $nodes
+  if (sw)
+  {
+    $nodes = jsonEditor.el.tree.find('.node.open:not(.root)')
+    $nodes.removeClass('open')
+  }
+  else
+  {
+    $nodes = jsonEditor.el.tree.find('.node[data-type=object],.node[data-type=array]')
+    $nodes.addClass('open')
+  }
+}
+
+function expandFolder(depth = 0, node = undefined)
+{
+  if (depth === 0) return
+  const $ = jsonEditor.$
+  const $node = node ? $(node) : jsonEditor.el.tree.find('.root')
+  let selector = []
+  for (let i=0; i<depth; i++)
+  {
+    selector.push(`.node[data-depth='${i+1}']`)
+  }
+  let $nodes = $node
+    .find(selector.join(','))
+    .filter('[data-type=object],[data-type=array]')
+    .addClass('open')
+}
+
 onMounted(() => {
   jsonEditor = new JsonEditor($body.value, {
     live: true,
-    theme: props.theme,
+    theme: head.theme,
+    edit: props.edit,
   })
   $body.value.addEventListener('update', onUpdateEditor)
   $body.value.addEventListener('context', onContextEditor)
@@ -68,14 +102,16 @@ onBeforeUnmount(() => {
   jsonEditor = undefined
 })
 
-watch(() => props.theme, value => {
-  jsonEditor.options.theme = value
+watch(() => props.edit, value => {
+  jsonEditor.options.edit = value
 })
 
 defineExpose({
   closeContext,
   updateValue,
   updateData,
+  foldAll,
+  expandFolder,
 })
 </script>
 

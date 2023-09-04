@@ -10,13 +10,46 @@
     <fieldset class="code-form__fieldset">
       <legend>Articles forms</legend>
       <div class="field">
-        <FormTextarea
-          v-model="fields.code.value"
-          placeholder="Please input code"
-          :auto-size="false"
-          :rows="8"
-          @submit="onSubmit"/>
-        <Help>JSON 형식의 소스코드이니 코드 작성에 주의해 주세요.</Help>
+        <div class="content-editor">
+          <ToolbarWrap>
+            <template #right>
+              <ToolbarGroup>
+                <ToolbarItem
+                  type="button"
+                  title="Editor"
+                  label="에디터"
+                  icon="server"
+                  :color="mode === 'editor' ? 'key' : ''"
+                  :disabled="mode === 'editor'"
+                  @click="mode = 'editor'"/>
+                <ToolbarItem
+                  type="button"
+                  title="Source code"
+                  label="소스코드"
+                  icon="code"
+                  :color="mode === 'source' ? 'key' : ''"
+                  :disabled="mode === 'source'"
+                  @click="mode = 'source'"/>
+              </ToolbarGroup>
+            </template>
+          </ToolbarWrap>
+          <div class="content-editor__body">
+            <JsonEditor
+              v-if="mode === 'editor'"
+              ref="$jsonEditor"
+              v-model="fields.code.value"
+              @init="onInitJsonEditor"/>
+            <template v-else>
+              <FormTextarea
+                v-model="fields.code.value"
+                placeholder="Please input code"
+                :auto-size="false"
+                :rows="16"
+                @submit="onSubmit"/>
+              <Help>JSON 형식의 소스코드이니 코드 작성에 주의해 주세요.</Help>
+            </template>
+          </div>
+        </div>
       </div>
     </fieldset>
     <Controller>
@@ -31,7 +64,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { preferenceStore } from '../../store/preference'
 import { validateForms, getStringJson } from './libs'
 import { toast } from '../../modules/toast'
@@ -40,7 +73,10 @@ import { FormTextarea } from '../../components/forms'
 import { Help } from '../../components/forms/fieldset'
 import { Controller } from '../../components/navigation'
 import { ButtonBasic } from '../../components/button'
+import { ToolbarWrap, ToolbarGroup, ToolbarItem } from '../../components/navigation/toolbar'
+import JsonEditor from '../../components/json-editor/index.vue'
 
+const $jsonEditor = ref()
 const preference = preferenceStore()
 const fields = reactive({
   code: {
@@ -48,6 +84,7 @@ const fields = reactive({
     error: null,
   },
 })
+const mode = ref('editor')
 
 async function onSubmit()
 {
@@ -65,6 +102,11 @@ async function onSubmit()
     err(['/pages/preference/articles.vue', 'onSubmit()'], 'error', e.message)
     toast.add('환경설정을 수정하지 못했습니다.', 'error').then()
   }
+}
+
+function onInitJsonEditor()
+{
+  $jsonEditor.value.expandFolder(3)
 }
 </script>
 

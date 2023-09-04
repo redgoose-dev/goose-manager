@@ -13,7 +13,23 @@
           <ToolbarGroup>
             <ToolbarItem
               type="button"
-              title="Editor sytle"
+              title="Expand"
+              label="모두 펼치기"
+              icon="plus-square"
+              @click="onClickFold(false)"/>
+            <ToolbarItem
+              type="button"
+              title="Fold"
+              label="접기"
+              icon="minus-square"
+              @click="onClickFold(true)"/>
+          </ToolbarGroup>
+        </template>
+        <template #right>
+          <ToolbarGroup>
+            <ToolbarItem
+              type="button"
+              title="Editor style"
               label="에디터 스타일"
               icon="server"
               :color="mode === 'editor' ? 'key' : ''"
@@ -33,8 +49,10 @@
       <div class="json-content__body">
         <JsonEditor
           v-if="mode === 'editor'"
+          ref="$jsonEditor"
           :model-value="json"
-          :theme="head.theme"/>
+          edit="none"
+          @init="onInitJsonEditor"/>
         <pre v-if="mode === 'source'" class="json-code"><code>{{json}}</code></pre>
       </div>
     </div>
@@ -66,7 +84,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { err } from '../../libs/error'
 import getData from '../../structure/json/item'
-import { headStore } from '../../store/head.js'
 import PageHeader from '../../components/page/header/index.vue'
 import { Fieldset, Field } from '../../components/forms/fieldset'
 import { Controller } from '../../components/navigation'
@@ -75,8 +92,8 @@ import Loading from '../../components/etc/loading.vue'
 import JsonEditor from '../../components/json-editor/index.vue'
 import { ToolbarWrap, ToolbarGroup, ToolbarItem } from '../../components/navigation/toolbar'
 
+const $jsonEditor = ref()
 const route = useRoute()
-const head = headStore()
 const loading = ref(true)
 const mode = ref('editor') // editor,source
 const item = ref({})
@@ -87,6 +104,21 @@ const isPathLink = computed(() => {
   if (!item.value.path) return false
   return /^http/.test(item.value.path)
 })
+
+function changeMode(newValue)
+{
+  mode.value = newValue
+}
+
+function onInitJsonEditor(instance)
+{
+  $jsonEditor.value.expandFolder(2)
+}
+
+function onClickFold(sw)
+{
+  $jsonEditor.value.foldAll(sw)
+}
 
 onMounted(async () => {
   try
@@ -102,11 +134,6 @@ onMounted(async () => {
     throw e.message
   }
 })
-
-function changeMode(newValue)
-{
-  mode.value = newValue
-}
 </script>
 
 <style src="./item.scss" lang="scss" scoped></style>

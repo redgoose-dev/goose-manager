@@ -19,7 +19,7 @@
     line-height: 1.05;
     font-size: 20px;
     font-family: var(--font-eng);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -.25px;
   }
   &__description {
@@ -27,5 +27,11 @@
     font-size: 12px;
     line-height: 1.15;
     color: var(--color-weak);
+  }
+}
+
+.content-editor {
+  &__body {
+    margin: 12px 0 0;
   }
 }

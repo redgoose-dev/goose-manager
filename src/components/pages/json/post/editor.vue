@@ -3,6 +3,31 @@
   <legend>JSON Editor</legend>
   <ToolbarWrap>
     <template #left>
+      <ToolbarGroup v-if="mode === 'editor'">
+        <ToolbarItem
+          type="button"
+          title="Expand"
+          label="모두 펼치기"
+          icon="plus-square"
+          @click="onClickFold(false)"/>
+        <ToolbarItem
+          type="button"
+          title="Fold"
+          label="접기"
+          icon="minus-square"
+          @click="onClickFold(true)"/>
+      </ToolbarGroup>
+      <ToolbarGroup v-if="mode === 'source'">
+        <ToolbarItem
+          type="button"
+          title="open file manager"
+          label="첨부파일"
+          icon="archive"
+          color="key"
+          @click="openFileManager('source')"/>
+      </ToolbarGroup>
+    </template>
+    <template #right>
       <ToolbarGroup>
         <ToolbarItem
           type="button"
@@ -20,17 +45,6 @@
           :color="mode === 'source' ? 'key' : ''"
           :disabled="mode === 'source'"
           @click="changeMode('source')"/>
-      </ToolbarGroup>
-    </template>
-    <template #right>
-      <ToolbarGroup v-if="mode === 'source'">
-        <ToolbarItem
-          type="button"
-          title="open file manager"
-          label="첨부파일"
-          icon="archive"
-          color="key"
-          @click="openFileManager('source')"/>
       </ToolbarGroup>
     </template>
   </ToolbarWrap>
@@ -52,6 +66,7 @@
       ref="$editor"
       :model-value="props.modelValue"
       :theme="head.theme"
+      @init="onInitJsonEditor"
       @update:modelValue="emits('update:modelValue', $event)"
       @context="onContextEditor"/>
   </div>
@@ -138,6 +153,17 @@ async function insert(src)
       $editor.value.updateValue(editor.node, src)
       break
   }
+}
+
+function onInitJsonEditor(instance)
+{
+  jsonEditor = instance
+  $editor.value.expandFolder(3)
+}
+
+function onClickFold(sw)
+{
+  $editor.value.foldAll(sw)
 }
 
 defineExpose({

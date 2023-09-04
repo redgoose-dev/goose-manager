@@ -22,10 +22,10 @@
     padding: 0;
     font-family: var(--font-eng);
     font-size: 2.25rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -1.5px;
     text-align: center;
-    line-height: 1.15;
+    line-height: 1.05;
     color: var(--login-color-title, unset);
     user-select: none;
   }
@@ -33,7 +33,7 @@
     text-align: center;
     margin: 2px 0 0;
     box-sizing: border-box;
-    font-size: .75rem;
+    font-size: 12px;
     font-family: var(--font-eng);
     color: var(--color-weak);
     font-weight: 400;
