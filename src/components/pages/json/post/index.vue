@@ -1,5 +1,5 @@
 <template>
-<form ref="$root" @submit.prevent="onSubmit">
+<form ref="$root" @submit.prevent="onSubmit(false)">
   <Fieldset :disabled="loading" class="fields">
     <Field label="분류" for="category">
       <FormSelect
@@ -39,7 +39,7 @@
       ref="$editor"
       :use-attach-files="props.mode !== 'create'"
       v-model="forms.json.value"
-      @submit="onSubmit"
+      @submit="onSubmit(false)"
       @open-file-manager="visibleFileManager($event)"/>
     <Help v-if="!!forms.json.error" color="error" class="json__help">
       {{forms.json.error}}
