@@ -1,12 +1,12 @@
 import { get, post, formData } from '../../libs/api'
 
-async function requestNest(nestSrl: number): Promise<any>
+async function requestNest(nestSrl)
 {
   let res = await get(`/nests/${nestSrl}/`)
   return res.success ? res.data : null
 }
 
-async function requestCategories(nestSrl: number): Promise<any>
+async function requestCategories(nestSrl)
 {
   let res = await get(`/categories/`, {
     module: 'article',
@@ -16,7 +16,7 @@ async function requestCategories(nestSrl: number): Promise<any>
     sort: 'asc',
     strict: 1,
   })
-  return res.data?.index?.length > 0 ? res.data?.index.map((o: any) => {
+  return res.data?.index?.length > 0 ? res.data?.index.map(o => {
     return {
       label: o.name,
       value: o.srl,
@@ -24,7 +24,7 @@ async function requestCategories(nestSrl: number): Promise<any>
   }) : []
 }
 
-async function requestArticle(articleSrl: number): Promise<any>
+async function requestArticle(articleSrl)
 {
   let res = await get(`/articles/${articleSrl}/`, {
     ext_field: 'category_name',
@@ -33,7 +33,7 @@ async function requestArticle(articleSrl: number): Promise<any>
   if (!res.success) throw new Error(res.message)
   return res.data
 }
-async function requestReadyArticle(nest: any): Promise<any>
+async function requestReadyArticle(nest)
 {
   let article
   let res = await get('/articles/', {
@@ -72,9 +72,9 @@ async function requestReadyArticle(nest: any): Promise<any>
   return article
 }
 
-export async function getData(nestSrl?: number, articleSrl?: number): Promise<any>
+export async function getData(nestSrl, articleSrl)
 {
-  let nest: any, categories: any, article: any
+  let nest, categories, article
   if (nestSrl)
   {
     nest = await requestNest(nestSrl)
@@ -99,7 +99,7 @@ export async function getData(nestSrl?: number, articleSrl?: number): Promise<an
   }
 }
 
-export async function deleteThumbnail(path: string): Promise<void>
+export async function deleteThumbnail(path)
 {
   try
   {
@@ -108,7 +108,7 @@ export async function deleteThumbnail(path: string): Promise<void>
   catch (_) {}
 }
 
-export async function uploadThumbnail(base64: string): Promise<string>
+export async function uploadThumbnail(base64)
 {
   let res = await post('/files/upload-file/', formData({
     sub_dir: 'thumbnail',

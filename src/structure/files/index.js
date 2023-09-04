@@ -1,11 +1,11 @@
-import { useRoute, RouteLocationNormalized } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { preferenceStore } from '../../store/preference'
 import { get } from '../../libs/api'
 import { createFullPath } from './util'
 import { getByte } from '../../libs/string'
 import { getDate } from '../../libs/date'
 
-let route: RouteLocationNormalized
+let route
 
 export async function getItems()
 {
@@ -20,7 +20,7 @@ export async function getItems()
   if (!res.success) throw new Error(res.message)
   return {
     total: res.data?.total,
-    index: res.data?.index.map((item: any) => ({
+    index: res.data?.index.map(item => ({
       srl: item.srl,
       title: item.name,
       href: createFullPath(item.path),

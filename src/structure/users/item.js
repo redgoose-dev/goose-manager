@@ -1,26 +1,12 @@
 import { authStore } from '../../store/auth'
 import { get } from '../../libs/api'
 
-interface Options {
-  url: string
-  params?: any
-}
-
-interface Response {
-  srl: number
-  email: string
-  name: string
-  regdate: string
-  admin: boolean
-  self: boolean
-}
-
-const defaultOptions: Options = {
+const defaultOptions = {
   url: '',
   params: {},
 }
 
-function filtering(res: any): Response
+function filtering(res)
 {
   const auth = authStore()
   return {
@@ -33,9 +19,9 @@ function filtering(res: any): Response
   }
 }
 
-export default async function getData(options?: Options): Promise<Response>
+export default async function getData(options)
 {
-  let op: Options = Object.assign({}, defaultOptions, options)
+  let op = Object.assign({}, defaultOptions, options)
   if (options?.params)
   {
     op.params = Object.assign({}, defaultOptions.params, options.params)

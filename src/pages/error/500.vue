@@ -25,12 +25,13 @@ import { iconRandomPick } from '../../components/icons/assets'
 import { ButtonBasic } from '../../components/button'
 import Icon from '../../components/icons/index.vue'
 
+const { VITE_DEBUG } = import.meta.env
 const props = defineProps({
   error: Error,
 })
 const iconName = iconRandomPick()
 const description = computed(() => {
-  return (window.DEBUG && props.error?.message) ? props.error.message : '알 수 없는 오류가 발생했습니다.'
+  return ((VITE_DEBUG === 'true') && props.error?.message) ? props.error.message : '알 수 없는 오류가 발생했습니다.'
 })
 </script>
 

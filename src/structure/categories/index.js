@@ -1,22 +1,7 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 
-interface ResponseNest {
-  srl: number
-  id: string
-  name: string
-}
-interface ResponseCategory {
-  srl: string
-  title: string
-  meta: string[]
-}
-interface Response {
-  nest?: ResponseNest
-  categories: ResponseCategory[]
-}
-
-async function requestNest(nestSrl: number): Promise<ResponseNest>
+async function requestNest(nestSrl)
 {
   let res = await get(`/nests/${nestSrl}/`, {
     field: 'srl,id,name',
@@ -29,7 +14,7 @@ async function requestNest(nestSrl: number): Promise<ResponseNest>
   }
 }
 
-async function requestCategoriesForArticles(nestSrl: number): Promise<ResponseCategory[]>
+async function requestCategoriesForArticles(nestSrl)
 {
   let res = await get('/categories/', {
     module: 'article',
@@ -38,7 +23,7 @@ async function requestCategoriesForArticles(nestSrl: number): Promise<ResponseCa
     sort: 'asc',
   })
   if (!res.success) throw new Error(res.message)
-  return res.data.index.map((item: any) => {
+  return res.data.index.map(item => {
     return {
       srl: item.srl,
       title: item.name,
@@ -49,7 +34,7 @@ async function requestCategoriesForArticles(nestSrl: number): Promise<ResponseCa
   })
 }
 
-async function requestCategoriesForJson(): Promise<ResponseCategory[]>
+async function requestCategoriesForJson()
 {
   let res = await get('/categories/', {
     module: 'json',
@@ -57,7 +42,7 @@ async function requestCategoriesForJson(): Promise<ResponseCategory[]>
     sort: 'asc',
   })
   if (!res.success) throw new Error(res.message)
-  return res.data.index.map((item: any) => {
+  return res.data.index.map(item => {
     return {
       srl: item.srl,
       title: item.name,
@@ -68,7 +53,7 @@ async function requestCategoriesForJson(): Promise<ResponseCategory[]>
   })
 }
 
-export async function getDataForArticles(srl: number): Promise<Response>
+export async function getDataForArticles(srl)
 {
   if (!srl) throw new Error('no srl')
   const [ nest, categories ] = await Promise.all([

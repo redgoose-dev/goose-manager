@@ -1,5 +1,7 @@
+const { VITE_DEBUG } = import.meta.env
+
 export function err(path, type = 'warning', message)
 {
-  if (!window.DEBUG) return
+  if (VITE_DEBUG !== 'true') return
   console.error(path.join('/'), `${type.toUpperCase()}`, message)
 }

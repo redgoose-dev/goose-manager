@@ -4,7 +4,7 @@ import { createFullPath } from '../files/util'
 import { get, post, formData } from '../../libs/api'
 import { baseRenderer } from '../../modules/marked'
 
-function getDescription(content: string): string
+function getDescription(content)
 {
   const renderer = baseRenderer()
   content = marked.parse(content, { renderer })
@@ -14,7 +14,7 @@ function getDescription(content: string): string
   return content
 }
 
-async function requestArticle(srl: number): Promise<any>
+async function requestArticle(srl)
 {
   const { success, message, data } = await get(`/articles/${srl}/`, {
     field: 'srl,app_srl,nest_srl,category_srl,title,content,json,regdate',
@@ -37,10 +37,10 @@ async function requestArticle(srl: number): Promise<any>
   }
 }
 
-async function requestNests(appSrl: number): Promise<any>
+async function requestNests(appSrl)
 {
   const auth = authStore()
-  let params: any = {
+  let params = {
     app: appSrl,
     field: 'srl,app_srl,user_srl,id,name,json',
     ext_field: 'app_name',
@@ -49,13 +49,13 @@ async function requestNests(appSrl: number): Promise<any>
   if (!auth.user?.admin) params.user = auth.user?.srl
   const res = await get('/nests/', params)
   if (!res.success) throw new Error(res.message)
-  return res.data?.index.map((o: any) => ({
+  return res.data?.index.map(o => ({
     value: Number(o.srl),
     label: `[${o.id}] ${o.name}`,
   }))
 }
 
-export async function requestCategories(srl: string): Promise<any>
+export async function requestCategories(srl)
 {
   let params = {
     module: 'article',
@@ -66,13 +66,13 @@ export async function requestCategories(srl: string): Promise<any>
     unlimit: 1,
   }
   const res = await get('/categories/', params)
-  return res.data?.index.map((item: any) => ({
+  return res.data?.index.map(item => ({
     value: String(item.srl),
     label: item.name,
   }))
 }
 
-export async function getData(srl: number): Promise<any>
+export async function getData(srl)
 {
   const article = await requestArticle(srl)
   const nests = await requestNests(article.appSrl)
@@ -82,7 +82,7 @@ export async function getData(srl: number): Promise<any>
   }
 }
 
-export async function submit({ srl, nestSrl, categorySrl }: any): Promise<void>
+export async function submit({ srl, nestSrl, categorySrl })
 {
   let res = await post(`/articles/${srl}/change-nest/`, formData({
     nest_srl: nestSrl,

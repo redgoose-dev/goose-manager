@@ -1,21 +1,7 @@
 import { get } from '../../libs/api'
 import { preferenceStore } from '../../store/preference'
 
-export declare interface NestJSON {
-  useCategory: string
-  useComment: string
-  thumbnail: {
-    width: number
-    height: number
-    type: string
-  }
-  files: {
-    count: number
-    sizeSingle: number
-  }
-}
-
-async function requestApps(): Promise<[]>
+async function requestApps()
 {
   let res = await get('/apps/', {
     field: 'srl,id,name',
@@ -23,27 +9,27 @@ async function requestApps(): Promise<[]>
   })
   return res.data?.index || []
 }
-function filteringApps(src: any): []
+function filteringApps(src)
 {
-  return src.map((item: any) => ({
+  return src.map(item => ({
     value: item.srl,
     label: `[${item.id}] ${item.name}`,
   }))
 }
 
-async function requestNest(srl: number): Promise<any>
+async function requestNest(srl)
 {
   let res = await get(`/nests/${srl}/`)
   return res.data
 }
-function filteringNest(src: any): any
+function filteringNest(src)
 {
   return {
     ...src,
     json: setJson(src.json || {}),
   }
 }
-export function setJson(src: any = {}): NestJSON
+export function setJson(src = {})
 {
   const preference = preferenceStore()
   return {
@@ -61,7 +47,7 @@ export function setJson(src: any = {}): NestJSON
   }
 }
 
-export default async function getData(mode: string, srl: number): Promise<any>
+export default async function getData(mode, srl)
 {
   if (!mode) return { apps: [], nest: null }
   const queue = [

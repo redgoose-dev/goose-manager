@@ -2,11 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import map from './map'
 import { authStore } from '../store/auth'
 
-/** @var {string} BASE_URL */
-
 /** @var {Router} router */
 const router = createRouter({
-  history: createWebHistory(BASE_URL || '/'),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL || '/'),
   routes: map,
 })
 

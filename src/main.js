@@ -9,10 +9,6 @@ import App from './app.vue'
 // set stylesheet
 import './assets/scss/main.scss'
 
-// set global values
-window.DEBUG = DEBUG
-window.DEVELOPMENT = DEVELOPMENT
-
 // setup pinia
 const pinia = createPinia()
 

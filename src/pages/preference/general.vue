@@ -42,13 +42,15 @@ import { Fieldset, Field, Help } from '../../components/forms/fieldset'
 import { FormSelect } from '../../components/forms'
 import { Controller } from '../../components/navigation'
 import { ButtonBasic } from '../../components/button'
+import pkg from '../../../package.json'
 
-const version = VERSION || undefined
+const { VITE_TITLE } = import.meta.env
+const version = pkg.version || undefined
 
 const preference = preferenceStore()
 const head = headStore()
 const fields = reactive({
-  title: import.meta.env.VITE_TITLE,
+  title: VITE_TITLE,
   version,
   theme: {
     value: head.theme,

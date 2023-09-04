@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "main": "index.js",
   "private": false,
   "license": "MIT",
@@ -28,21 +28,19 @@
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
-    "ofetch": "^1.3.2"
+    "ofetch": "^1.3.3"
   },
   "devDependencies": {
-    "@redgoose/json-editor": "^1.0.7",
+    "@redgoose/json-editor": "^1.0.10",
     "@redgoose/markdown-style": "^1.1.6",
-    "@types/node": "^20.5.4",
-    "@vitejs/plugin-vue": "^4.3.3",
+    "@vitejs/plugin-vue": "^4.3.4",
     "croppie": "^2.6.5",
     "esbuild": "^0.19.2",
     "image-resize": "^1.3.2",
-    "marked": "^7.0.4",
+    "marked": "^8.0.0",
     "nodemon": "^3.0.1",
     "pinia": "^2.1.6",
     "sass": "^1.66.1",
-    "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",

@@ -2,10 +2,11 @@ import { defineStore } from 'pinia'
 import * as storage from '../libs/storage'
 import { pureObject } from '../libs/object'
 
+const { VITE_TITLE, VITE_DESCRIPTION, VITE_SHORT_NAME  } = import.meta.env
 const defaultHead = {
-  title: import.meta.env.VITE_TITLE || 'Goose Manager',
-  description: DESCRIPTION || '',
-  shortName: SHORT_NAME || 'GOOSE',
+  title: VITE_TITLE || 'Goose Manager',
+  description: VITE_DESCRIPTION || '',
+  shortName: VITE_SHORT_NAME || 'GOOSE',
   theme: storage.get('head')?.theme || 'system',
   blink: false,
 }

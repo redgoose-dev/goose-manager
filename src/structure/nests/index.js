@@ -1,31 +1,6 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 
-export interface App {
-  srl: number
-  name: string
-  id: string
-  countNests: number
-  description: string
-}
-
-export interface Nest {
-  srl: number
-  appSrl: number
-  title: string
-  meta?: string[]
-  useCategory?: boolean
-}
-
-export interface SectionItem {
-  srl: number
-  id: string
-  name: string
-  countNests?: number
-  description?: string
-  nests?: Nest[]
-}
-
 // apps data
 async function requestApps()
 {
@@ -36,9 +11,9 @@ async function requestApps()
   })
   return (data?.index?.length > 0) ? data?.index : []
 }
-function filteringApps(res: any): App[]
+function filteringApps(res)
 {
-  return res.map((item: any) => ({
+  return res.map(item => ({
     srl: item.srl,
     name: item.name,
     id: item.id,
@@ -57,9 +32,9 @@ async function requestNests()
   })
   return (data?.index?.length > 0) ? data?.index : []
 }
-function filteringNests(res: []): Nest[]
+function filteringNests(res)
 {
-  return res.map((item: any) => {
+  return res.map(item => {
     return {
       srl: item.srl,
       appSrl: item.app_srl,
@@ -78,7 +53,7 @@ function filteringNests(res: []): Nest[]
  * @return {Promise<array>}
  * @throws {Error}
  */
-export default async function getData(): Promise<SectionItem[]>
+export default async function getData()
 {
   // get data
   let [ apps, nests ] = await Promise.all([
@@ -91,9 +66,9 @@ export default async function getData(): Promise<SectionItem[]>
   nests = filteringNests(nests)
 
   // combine items
-  return apps.map((app: any) => {
+  return apps.map(app => {
     let item = Object.assign({}, app)
-    item.nests = nests.filter((nest: Nest) => (item.srl === nest.appSrl))
+    item.nests = nests.filter(nest => (item.srl === nest.appSrl))
     delete item.appSrl
     return item
   })

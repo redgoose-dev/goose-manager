@@ -25,7 +25,7 @@ export const authStore = defineStore('auth', {
         // check store
         if (this.token && this.user?.srl) return true
         // request server for get cookie
-        const { success, data } = await $fetch(getPath(`${BASE_URL}/local/auth/`), {
+        const { success, data } = await $fetch(getPath(`${import.meta.env.VITE_BASE_URL}/local/auth/`), {
           method: 'post',
           responseType: 'json',
           retry: 0,
@@ -45,13 +45,13 @@ export const authStore = defineStore('auth', {
     },
     async logout()
     {
-      let { success } = await $fetch(getPath(`${BASE_URL}/local/logout/`), {
+      let { success } = await $fetch(getPath(`${import.meta.env.VITE_BASE_URL}/local/logout/`), {
         method: 'post',
         responseType: 'json',
         retry: 0,
       })
       if (!success) throw new Error('Failed request')
-      location.href = getPath(`${BASE_URL}/auth/login/`)
+      location.href = getPath(`${import.meta.env.VITE_BASE_URL}/auth/login/`)
     },
   },
 })

@@ -78,11 +78,12 @@ import { getPath } from '../../libs/string'
 import FormCheckbox from '../../components/forms/checkbox.vue'
 import { ButtonBasic } from '../../components/button'
 
+const { VITE_TITLE, VITE_DESCRIPTION, VITE_BASE_URL } = import.meta.env
 const router = useRouter()
 const auth = authStore()
 const loading = ref(false)
-const title = ref(import.meta.env.VITE_TITLE || '매니저')
-const description = ref(DESCRIPTION || '매니저 설명')
+const title = ref(VITE_TITLE || '매니저')
+const description = ref(VITE_DESCRIPTION || '매니저 설명')
 const processing = ref(false)
 const forms = reactive({
   email: '',
@@ -97,7 +98,7 @@ async function onSubmit()
     // on loading
     loading.value = true
     // request api
-    const { success, message, data } = await $fetch(getPath(`${BASE_URL}/local/login/`), {
+    const { success, message, data } = await $fetch(getPath(`${VITE_BASE_URL}/local/login/`), {
       method: 'post',
       responseType: 'json',
       body: {

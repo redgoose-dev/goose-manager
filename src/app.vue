@@ -37,7 +37,7 @@ const layout = computed(() => {
 })
 
 // children component error
-if (!DEVELOPMENT)
+if (!import.meta.env.DEV)
 {
   onErrorCaptured((e) => {
     if (typeof e === 'string')

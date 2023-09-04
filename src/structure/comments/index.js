@@ -1,6 +1,6 @@
 import { get, post, checkForms } from '../../libs/api'
 
-export async function getComments(articleSrl: number): Promise<any>
+export async function getComments(articleSrl)
 {
   const { success, message, data } = await get('/comments/', {
     article: articleSrl,
@@ -11,10 +11,10 @@ export async function getComments(articleSrl: number): Promise<any>
   return data?.index || []
 }
 
-export async function createComment(articleSrl: number, forms: any): Promise<any>
+export async function createComment(articleSrl, forms)
 {
   checkForms(forms)
-  let res: any = await post('/comments/', {
+  let res = await post('/comments/', {
     article_srl: articleSrl,
     content: forms.content.value,
     get: 1,
@@ -27,13 +27,13 @@ export async function createComment(articleSrl: number, forms: any): Promise<any
   return res.data
 }
 
-export async function editComment(srl: number, content: string): Promise<void>
+export async function editComment(srl, content)
 {
-  const { success, message } = await post(`/comments/${srl}/edit/`, { content });
+  const { success, message } = await post(`/comments/${srl}/edit/`, { content })
   if (!success) throw new Error(message);
 }
 
-export async function deleteComment(srl: number): Promise<void>
+export async function deleteComment(srl)
 {
   const { success, message } = await post(`/comments/${srl}/delete/`);
   if (!success) throw new Error(message);

@@ -1,12 +1,12 @@
 import { get, post } from '../../libs/api'
 
-export async function submit(srl: number): Promise<void>
+export async function submit(srl)
 {
   const { success, message } = await post(`/categories/${srl}/delete/`)
   if (!success) throw new Error(message)
 }
 
-export async function getItem(srl: number): Promise<any>
+export async function getItem(srl)
 {
   let res = await get(`/categories/${srl}/`, {
     field: 'srl,name',

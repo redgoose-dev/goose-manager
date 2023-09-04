@@ -1,4 +1,5 @@
-const prefix = STORAGE_PREFIX || 'goose'
+const { VITE_STORAGE_PREFIX } = import.meta.env
+const prefix = VITE_STORAGE_PREFIX || 'goose'
 
 /**
  * check localStorage

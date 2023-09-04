@@ -1,11 +1,11 @@
-import { useRoute, RouteLocationNormalized } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { get } from '../../libs/api'
 
-let route: RouteLocationNormalized
+let route
 
-export async function requestJson(): Promise<any>
+export async function requestJson()
 {
-  const { category } = route.query
+  // const { category } = route.query
   const { srl } = route.params
   const res = await get(`/json/${srl}/`, {
     ext_field: 'category_name',
@@ -22,7 +22,7 @@ export async function requestJson(): Promise<any>
   }
 }
 
-export default async function getData(): Promise<any>
+export default async function getData()
 {
   if (!route) route = useRoute()
   const json = await requestJson()

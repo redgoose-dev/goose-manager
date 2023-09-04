@@ -1,6 +1,6 @@
 import { get } from '../../libs/api'
 
-async function requestJson(srl: number): Promise<any>
+async function requestJson(srl)
 {
   const res = await get(`/json/${srl}/`)
   return {
@@ -12,7 +12,7 @@ async function requestJson(srl: number): Promise<any>
   }
 }
 
-async function requestCategories(): Promise<any>
+async function requestCategories()
 {
   const res = await get('/categories/', {
     module: 'json',
@@ -21,7 +21,7 @@ async function requestCategories(): Promise<any>
     sort: 'asc',
     strict: 1,
   })
-  return res.data?.index?.length > 0 ? res.data?.index.map((o: any) => {
+  return res.data?.index?.length > 0 ? res.data?.index.map(o => {
     return {
       label: o.name,
       value: o.srl,
@@ -29,9 +29,9 @@ async function requestCategories(): Promise<any>
   }) : []
 }
 
-export async function getData(srl?: number): Promise<any>
+export async function getData(srl)
 {
-  let json: any, categories: any
+  let json, categories
   if (srl)
   {
     ;[ json, categories ] = await Promise.all([

@@ -1,22 +1,14 @@
-import { useRoute, RouteLocationNormalized } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 import { serialize } from '../../libs/string'
 
-interface Options {
-  url: string
-  params?: {
-    order?: string
-    sort?: string
-  }
-}
+let route
 
-let route: RouteLocationNormalized
-
-export async function requestJson(): Promise<any>
+export async function requestJson()
 {
   const { category } = route.query
-  const res: any = await get('/json/', {
+  const res = await get('/json/', {
     order: 'srl',
     sort: 'desc',
     category: category || undefined,
@@ -25,7 +17,7 @@ export async function requestJson(): Promise<any>
   if (!res.success) throw new Error(res.message)
   return {
     total: res.data.total,
-    items: res.data.index.map((item: any) => {
+    items: res.data.index.map(item => {
       return {
         srl: item.srl,
         title: item.name,
@@ -40,7 +32,7 @@ export async function requestJson(): Promise<any>
   }
 }
 
-export async function requestCategories(): Promise<[]>
+export async function requestCategories()
 {
   const { category } = route.query
   let res = await get(`/categories/`, {
@@ -52,12 +44,13 @@ export async function requestCategories(): Promise<[]>
     strict: 1,
   })
   if (!res.success) throw new Error(res.message)
-  let params: any = {
+  let params = {
     ...route.query,
     category: undefined,
   }
-  return res.data?.index.map((item: any) => {
-    let link, active
+  return res.data?.index.map(item => {
+    let link
+    let active
     switch (item.srl)
     {
       case '':
@@ -84,7 +77,7 @@ export async function requestCategories(): Promise<[]>
   })
 }
 
-export async function getData(): Promise<any>
+export async function getData()
 {
   if (!route) route = useRoute()
   let [ json, categories ] = await Promise.all([

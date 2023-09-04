@@ -3,14 +3,7 @@ import { getDate } from '../../libs/date'
 import { createFullPath } from '../files/util'
 import { ARTICLE_TYPE } from '../../libs/consts'
 
-interface Module {
-  module: string
-  options?: {
-    size?: number
-  }
-}
-
-async function requestArticles({ size }: any = {}): Promise<any>
+async function requestArticles({ size } = {})
 {
   let res = await get('/articles/', {
     field: 'srl,category_srl,title,hit,star,type,json,`order`',
@@ -22,7 +15,7 @@ async function requestArticles({ size }: any = {}): Promise<any>
   if (!res.success) throw new Error(res.message)
   return {
     module: 'articles',
-    index: (res.data as any).index.map((item: any) => {
+    index: res.data.index.map(item => {
       return {
         srl: item.srl,
         title: item.title,
@@ -34,12 +27,12 @@ async function requestArticles({ size }: any = {}): Promise<any>
           `좋아요: ${item.star}`,
         ],
         image: createFullPath(item.json?.thumbnail?.path),
-      };
+      }
     }),
   }
 }
 
-async function requestNests({ size }: any = {}): Promise<any>
+async function requestNests({ size } = {})
 {
   let res = await get('/nests/', {
     field: 'srl,id,name,regdate,json',
@@ -50,7 +43,7 @@ async function requestNests({ size }: any = {}): Promise<any>
   if (!res.success) throw new Error(res.message)
   return {
     module: 'nests',
-    index: (res.data as any).index.map((item: any) => {
+    index: res.data.index.map(item => {
       return {
         srl: item.srl,
         title: item.name,
@@ -66,7 +59,7 @@ async function requestNests({ size }: any = {}): Promise<any>
   }
 }
 
-async function requestApps({ size }: any = {}): Promise<any>
+async function requestApps({ size } = {})
 {
   let res = await get('/apps/', {
     field: 'srl,id,name,regdate',
@@ -77,7 +70,7 @@ async function requestApps({ size }: any = {}): Promise<any>
   if (!res.success) throw new Error(res.message)
   return {
     module: 'apps',
-    index: (res.data as any).index.map((item: any) => {
+    index: res.data.index.map(item => {
       return {
         srl: item.srl,
         title: item.name,
@@ -91,7 +84,7 @@ async function requestApps({ size }: any = {}): Promise<any>
   }
 }
 
-async function requestJSON({ size }: any = {}): Promise<any>
+async function requestJSON({ size } = {})
 {
   let res = await get('/json/', {
     field: 'srl,name,regdate',
@@ -102,7 +95,7 @@ async function requestJSON({ size }: any = {}): Promise<any>
   if (!res.success) throw new Error(res.message)
   return {
     module: 'json',
-    index: (res.data as any).index.map((item: any) => {
+    index: res.data.index.map(item => {
       return {
         srl: item.srl,
         title: item.name,
@@ -116,20 +109,20 @@ async function requestJSON({ size }: any = {}): Promise<any>
   }
 }
 
-export async function getData(modules: Module[])
+export async function getData(modules)
 {
-  const queue = modules.map((o: Module) => {
+  const queue = modules.map(o => {
     switch (o.module)
     {
       case 'articles':
-        return requestArticles(o.options);
+        return requestArticles(o.options)
       case 'nests':
-        return requestNests(o.options);
+        return requestNests(o.options)
       case 'apps':
         return requestApps(o.options)
       case 'json':
         return requestJSON(o.options)
     }
-  }).filter(Boolean);
-  return await Promise.all(queue);
+  }).filter(Boolean)
+  return await Promise.all(queue)
 }

@@ -2,6 +2,7 @@ import { ofetch } from 'ofetch'
 import { authStore } from '../store/auth'
 import { getPath, serialize } from './string'
 
+const { VITE_API_URL } = import.meta.env
 let instance
 let headers
 let timer
@@ -10,7 +11,7 @@ function setup()
 {
   const auth = authStore()
   instance = ofetch.create({
-    baseURL: API_URL,
+    baseURL: VITE_API_URL,
     retry: 0,
     responseType: 'json',
   })
@@ -75,7 +76,7 @@ function refreshToken(token)
   const delay = 2000
   if (timer) clearTimeout(timer)
   timer = setTimeout(async () => {
-    let res = await ofetch(getPath(`${BASE_URL}/local/refresh-token/`), {
+    let res = await ofetch(getPath(`${import.meta.env.VITE_BASE_URL}/local/refresh-token/`), {
       method: 'post',
       responseType: 'json',
       retry: 0,

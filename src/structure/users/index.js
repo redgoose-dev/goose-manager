@@ -2,25 +2,7 @@ import { authStore } from '../../store/auth'
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 
-interface Options {
-  url: string
-  params?: {
-    order?: string
-    sort?: string
-  }
-}
-
-interface Response {
-  total: number
-  index: {
-    srl: number
-    title: string
-    meta: string[]
-    self: boolean
-  }[]
-}
-
-const defaultOptions: Options = {
+const defaultOptions = {
   url: '/users/',
   params: {
     order: 'srl',
@@ -28,12 +10,12 @@ const defaultOptions: Options = {
   },
 }
 
-function filtering(res: any): Response
+function filtering(res)
 {
   const auth = authStore()
   return {
     total: res.total,
-    index: res.index.map((item: any) => ({
+    index: res.index.map(item => ({
       srl: item.srl,
       title: item.email,
       meta: [
@@ -47,9 +29,9 @@ function filtering(res: any): Response
   }
 }
 
-export async function getData(options?: any): Promise<Response>
+export async function getData(options)
 {
-  let op: Options = Object.assign({}, defaultOptions, options)
+  let op = Object.assign({}, defaultOptions, options)
   if (options?.params)
   {
     op.params = Object.assign({}, defaultOptions.params, options.params)
