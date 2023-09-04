@@ -78,6 +78,13 @@
     </template>
     <template v-if="props.mode === 'edit'" #right>
       <ButtonBasic
+        type="button"
+        :icon-left="processing ? 'loader' : 'save'"
+        :rotate-icon="processing"
+        @click="publishing">
+        저장하기
+      </ButtonBasic>
+      <ButtonBasic
         type="submit"
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
@@ -85,10 +92,10 @@
         이티클 수정
       </ButtonBasic>
     </template>
-    <template #right>
+    <template v-else #right>
       <ButtonBasic
         type="button"
-        :icon-left="processing ? 'loader' : 'save'"
+        :icon-left="processing ? 'loader' : 'thermometer'"
         :rotate-icon="processing"
         @click="saveDraft">
         임시저장
@@ -98,7 +105,7 @@
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
         :rotate-icon="processing">
-        아티클 퍼블리싱
+        퍼블리싱
       </ButtonBasic>
     </template>
   </Controller>
@@ -278,15 +285,13 @@ async function publishing()
     if (forms.type === 'ready') forms.type = 'public'
     await save('publishing')
     processing.value = false
-    // redirection
     switch (props.mode)
     {
-      case 'edit':
       case 'create':
-        await router.push(`../${createQueries(['category','page'], route.query)}`)
+        toast.add('아티클을 만들었습니다.', 'success')
         break
-      default:
-        await router.push(`/articles/${createQueries(['category','page'], route.query)}`)
+      case 'edit':
+        toast.add('아티클을 수정했습니다.', 'success')
         break
     }
   }
@@ -305,9 +310,19 @@ async function publishing()
     processing.value = false
   }
 }
-function onSubmit()
+async function onSubmit()
 {
-  publishing().then()
+  await publishing()
+  switch (props.mode)
+  {
+    case 'edit':
+    case 'create':
+      await router.push(`../${createQueries(['category','page'], route.query)}`)
+      break
+    default:
+      await router.push(`/articles/${createQueries(['category','page'], route.query)}`)
+      break
+  }
 }
 
 /**

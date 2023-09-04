@@ -66,6 +66,7 @@
       ref="$editor"
       :model-value="props.modelValue"
       :theme="head.theme"
+      class="editor__manager"
       @init="onInitJsonEditor"
       @update:modelValue="emits('update:modelValue', $event)"
       @context="onContextEditor"/>

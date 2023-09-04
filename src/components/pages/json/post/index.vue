@@ -76,6 +76,14 @@
     </template>
     <template #right>
       <ButtonBasic
+        v-if="props.mode !== 'create'"
+        type="button"
+        :icon-left="processing ? 'loader' : 'save'"
+        :rotate-icon="processing"
+        @click="onSubmit(true)">
+        적용하기
+      </ButtonBasic>
+      <ButtonBasic
         type="submit"
         color="key"
         :icon-left="processing ? 'loader' : 'check'"
@@ -238,7 +246,7 @@ function onFilesManagerEvent({ value })
   visibleFileManager()
 }
 
-async function onSubmit()
+async function onSubmit(onlySave = false)
 {
   try
   {
@@ -256,7 +264,10 @@ async function onSubmit()
     const res = await post(url, data)
     processing.value = false
     const srl = res.srl || props.srl || NaN
-    await router.push(srl ? `/json/${srl}/` : '/json/')
+    if (!onlySave)
+    {
+      await router.push(srl ? `/json/${srl}/` : '/json/')
+    }
     switch (props.mode) {
       case 'edit':
         toast.add('JSON을 수정했습니다.', 'success').then()
