@@ -17,7 +17,7 @@
           icon="minus-square"
           @click="onClickFold(true)"/>
       </ToolbarGroup>
-      <ToolbarGroup v-if="mode === 'source'">
+      <ToolbarGroup v-if="props.useAttachFiles && mode === 'source'">
         <ToolbarItem
           type="button"
           title="open file manager"
@@ -84,6 +84,7 @@ const $source = ref()
 const $editor = ref()
 const props = defineProps({
   modelValue: String,
+  useAttachFiles: Boolean,
 })
 const emits = defineEmits([ 'update:modelValue', 'submit', 'open-file-manager' ])
 const head = headStore()
@@ -117,13 +118,16 @@ function onContextEditor(e)
   switch (type)
   {
     case 'string':
-      const $item = $(`<li><button type="button" data-mode="files"><em class="label">파일첨부 주소</em></button></li>`)
-      $item.on('click', () => {
-        editor = { node, $ }
-        openFileManager('editor')
-        $editor.value.closeContext()
-      })
-      $(body).find('li.remove').before($item)
+      if (props.useAttachFiles)
+      {
+        const $item = $(`<li><button type="button" data-mode="files"><em class="label">파일첨부 주소</em></button></li>`)
+        $item.on('click', () => {
+          editor = { node, $ }
+          openFileManager('editor')
+          $editor.value.closeContext()
+        })
+        $(body).find('li.remove').before($item)
+      }
       break
   }
 }

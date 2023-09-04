@@ -37,6 +37,7 @@
     <Editor
       v-if="!loading"
       ref="$editor"
+      :use-attach-files="props.mode !== 'create'"
       v-model="forms.json.value"
       @submit="onSubmit"
       @open-file-manager="visibleFileManager($event)"/>
@@ -145,7 +146,7 @@ const forms = reactive({
   },
   name: { value: '', error: null },
   description: { value: '', error: null },
-  json: { value: '', error: null },
+  json: { value: props.mode === 'create' ? '{}' : '', error: null },
   path: { value: '', error: null },
 })
 const loading = ref(true)
