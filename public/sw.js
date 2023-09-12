@@ -1,6 +1,6 @@
 const CACHE_NAME = 'dev-app-v13'
 const CACHE_RESOURCE = [
-  'http://localhost:4400/favicon.ico',
+  '/favicon.ico',
   '/images/icons-512x512.webp',
   '/images/icons-512x512-mask.png',
 ]

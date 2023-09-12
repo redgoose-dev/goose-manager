@@ -50,6 +50,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { controlWindow } from '../util'
+import { fileManagerStore } from '../../../store/files-manager'
 import { ButtonBasic } from '../../button'
 import { Controller } from '../../navigation'
 import Items from './items.vue'
@@ -57,6 +58,7 @@ import { Modal, ModalBody } from '../../modal'
 import InputUrl from './input-url.vue'
 
 const emits = defineEmits([ 'close', 'submit' ])
+const localStore = fileManagerStore()
 const verifyItems = ref([])
 const windowAddUrl = ref(false)
 const disabledSubmitButton = computed(() => {
@@ -64,9 +66,11 @@ const disabledSubmitButton = computed(() => {
 })
 
 onMounted(() => {
+  localStore.useShortcut = false
   controlWindow(true, 'url-uploader')
 })
 onUnmounted(() => {
+  localStore.useShortcut = true
   controlWindow(false, 'url-uploader')
 })
 

@@ -103,8 +103,10 @@ const showTabButtons = computed(() => {
 onMounted(() => {
   window.on('keyup.file-manager', e => shortcuts(e, 'keyup'))
   window.on('keydown.file-manager', e => shortcuts(e, 'keydown'))
+  localStore.useShortcut = true
 })
 onUnmounted(() => {
+  localStore.useShortcut = false
   window.off('keyup.file-manager')
   window.off('keydown.file-manager')
 })
@@ -168,6 +170,7 @@ function onCustomEvent({ key, value })
 
 function shortcuts(e, type)
 {
+  if (!localStore.useShortcut) return
   switch (type)
   {
     case 'keyup':

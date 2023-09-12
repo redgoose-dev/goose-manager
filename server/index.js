@@ -1,5 +1,5 @@
 import https from 'https'
-import { $fetch, ofetch } from 'ofetch'
+import { ofetch } from 'ofetch'
 import { Router } from 'express'
 import { filteringHostname } from './libs/api.js'
 import { isDev } from './libs/entry-assets.js'
@@ -202,7 +202,7 @@ function setup(_app, _env)
       rejectUnauthorized: false,
     }) : undefined
     // set api instance
-    api = $fetch.create({
+    api = ofetch.create({
       baseURL: VITE_API_URL,
       retry: 0,
       responseType: 'json',

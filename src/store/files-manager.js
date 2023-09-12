@@ -25,6 +25,7 @@ const defaultStructure = {
   useThumbnail: false,
   markdown: false,
   limitSelect: 0,
+  useShortcut: false,
 }
 
 export const fileManagerStore = defineStore('file-manager', {
