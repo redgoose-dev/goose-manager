@@ -2,7 +2,7 @@
 @use 'mixins';
 @use 'variables';
 @use 'keyframes';
-@import 'fonts';
+@import url('https://assets.redgoose.me/fonts/index.css');
 
 :root {
   // color
@@ -36,7 +36,7 @@
   // font
   --font-base: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-eng: 'ortsa', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-console: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  --font-console: 'Monaco', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   @include mixins.dark-mode(true) {
     color-scheme: dark;
     --color-bg: #{variables.$color-dark-bg};
@@ -92,4 +92,4 @@ code, kbd, pre, samp {
   color: #fff;
 }
 
-@import 'contents';
+@import 'content-body';
