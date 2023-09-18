@@ -16,15 +16,12 @@ const config = defineConfig(async ({ mode }) => {
       outDir: env.VITE_OUT_DIR || 'dist',
       rollupOptions: {},
     },
-    define: {
-      'VERSION': JSON.stringify(pkg.version),
-    },
     css: {},
     plugins: [
       vue({
         template: {
           compilerOptions: {
-            isCustomElement: tag => tag.startsWith('ext-'),
+            isCustomElement: tag => /^ext-|^goose-/.test(tag),
           },
         },
       }),

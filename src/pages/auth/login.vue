@@ -36,6 +36,7 @@
               v-model="forms.password"
               maxlength="30"
               placeholder="비밀번호를 입력해주세요."
+              autocomplete="on"
               required/>
             <i/>
           </div>

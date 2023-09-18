@@ -46,6 +46,7 @@ function localRoutes()
         method: 'post',
         body: { email, password },
       })
+      if (!_res) throw new Error('Invalid error')
       const { success, message, data } = _res
       // check response values
       if (!(success && !!data)) throw new Error(message)
