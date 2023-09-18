@@ -72,6 +72,7 @@ import { toast } from '../../modules/toast'
 import { dateFormat } from '../../libs/date'
 import { baseRenderer } from '../../modules/marked'
 import { getData, submit } from '../../structure/checklist/edit'
+import * as elementCodes from '../../libs/element-codes.js'
 import PageHeader from '../../components/page/header/index.vue'
 import { Modal, ModalBody } from '../../components/modal'
 import { FormTextarea } from '../../components/forms'
@@ -128,19 +129,19 @@ function onSelectToolbarItem(code)
   switch (code)
   {
     case 'insert-space':
-      insertText(`<p><br/></p>\n`)
+      insertText(elementCodes.space)
       break
     case 'insert-iframe':
-      insertText(`<div class="iframe"></div>\n`, 20)
+      insertText(elementCodes.iframe.code, elementCodes.iframe.cursor)
       break
     case 'insert-grid-group':
-      insertText(`<div class="grid-group">\n\n</div>\n`, 25)
+      insertText(elementCodes.gridGroup.code, elementCodes.gridGroup.cursor)
       break
     case 'insert-grid-item':
-      insertText(`<figure class="grid-item" data-mobile="3" data-ratio="">\n\n</figure>\n`, 57)
+      insertText(elementCodes.gridItem.code, elementCodes.gridItem.cursor)
       break
     case 'insert-picture':
-      insertText(`<picture>\n  <source srcset="" media="(prefers-color-scheme: dark)"/>\n  <source srcset="" media="(prefers-color-scheme: light)"/>\n  <img src="" alt=""/>\n</picture>\n`)
+      insertText(elementCodes.darkModeImage)
       break
     case 'open-file-manager':
       showFilesManager.value = true
