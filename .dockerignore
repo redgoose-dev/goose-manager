@@ -13,7 +13,6 @@ yarn.lock
 bun.lockb
 cmd.sh
 action.sh
-0
 .editorconfig
 README.md
 docker-compose.yml
