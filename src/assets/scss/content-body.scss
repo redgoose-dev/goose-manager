@@ -37,5 +37,12 @@
       margin-left: auto;
       margin-right: auto;
     }
+    :is(goose-dark-mode-image) {
+      --goose-dmi-position: static;
+      --goose-dmi-margin: 0 auto;
+      --goose-dmi-max-width: 100%;
+      --goose-dmi-max-height: none;
+      --goose-dmi-transform: none;
+    }
   }
 }
