@@ -101,7 +101,9 @@ async function submitUpload()
 {
   let uploadItems = []
   verifyItems.value.forEach((o,k) => {
-    let file = new File([o.blob], o.name, {
+    let name = o.name.replace(/\n/g, '')
+    name = name.replace(/[<>:"/\\|?*]+/g, '_')
+    let file = new File([o.blob], name, {
       type: o.type,
       lastModified: o.date.getTime(),
     })

@@ -16,7 +16,11 @@
       </a>
     </figure>
     <div class="verify-item__body">
-      <h4>{{o.name}}</h4>
+      <ContentEditable
+        tag="h4"
+        :model-value="o.name"
+        placeholder="filename.jpg"
+        @update:modelValue="onEditFilename(k, $event)"/>
       <p>
         <span>{{o.type}}</span>
         <span>{{o.size}}</span>
@@ -49,6 +53,7 @@ import { loadImage } from '../../../libs/util'
 import { toast } from '../../../modules/toast'
 import { err } from '../../../libs/error'
 import Icons from '../../icons/index.vue'
+import { ContentEditable } from '../../forms'
 
 const props = defineProps({
   src: Array
@@ -105,6 +110,15 @@ async function onClickChangeFormat(idx)
     err(['/components/files-manager/url-uploader/items.vue', 'onClickChangeFormat()'], 'error', e.message)
     toast.add('파일변환을 실패했습니다.', 'error').then()
   }
+}
+
+function onEditFilename(key, value)
+{
+  if (items.value[key].name === value) return
+  emits('update-item', key, {
+    ...props.src[key],
+    name: value,
+  })
 }
 </script>
 
