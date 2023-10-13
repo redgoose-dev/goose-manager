@@ -1,0 +1,92 @@
+@use '../../../../assets/scss/mixins';
+
+.list {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  user-select: none;
+  cursor: pointer;
+}
+
+.body {
+  min-width: 0;
+  padding: 0 0 0 12px;
+}
+
+.image {
+  width: 96px;
+  height: 96px;
+  --image-fit: cover;
+}
+
+.name {
+  display: block;
+  margin: 0;
+  font-size: 13px;
+  white-space: nowrap;
+  line-height: 1.15;
+  @include mixins.text-single-line();
+}
+
+.meta {
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  font-size: 10px;
+  line-height: 1.15;
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  --icon-size: 14px;
+  --icon-stroke: 2;
+}
+
+.context {
+  position: relative;
+  margin: 0 12px 0 0;
+  display: grid;
+  place-content: center;
+  > :is(button) {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    font-size: 0;
+    @include mixins.button-touch-options(false);
+    :is(svg) {
+      display: block;
+      margin: 0 auto;
+      --icon-color: var(--color-base);
+      --icon-size: 16px;
+      --icon-stroke: 2.5;
+    }
+  }
+  > :is(ul) {
+    opacity: 0;
+    pointer-events: none;
+    top: -36px;
+    right: calc(100% - 2px);
+  }
+  &:hover {
+    > :is(button) {
+      opacity: .5;
+    }
+    > :is(ul) {
+      pointer-events: auto;
+      opacity: 1;
+    }
+  }
+}

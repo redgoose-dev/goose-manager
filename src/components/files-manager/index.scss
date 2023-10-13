@@ -9,14 +9,6 @@
   &__body {
     box-sizing: border-box;
   }
-  &__tabs {
-    position: sticky;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 3;
-    border-bottom: 1px solid rgb(var(--color-base-rgb) / 15%);
-  }
   &__no-tab {
     display: grid;
     align-content: center;
@@ -27,17 +19,9 @@
     user-select: none;
   }
   &--full {
-    height: 100%;
-    .files-manager {
-      &__body {
-        height: calc(100% - var(--tab-height));
-      }
-    }
-    &:deep(.files) {
-      height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100%;
   }
   @include mixins.dark-mode() {
     --color-shape-bg: rgb(50 50 50);

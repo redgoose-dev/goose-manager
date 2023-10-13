@@ -30,35 +30,47 @@ export async function getLastItem()
   let result, files, postDate
   const params = { order: 'srl', sort: 'desc', size: 1 }
   let res = await get(`/checklist/`, params)
-  const lastItem = res.data?.index[0]
-  postDate = checkTime(lastItem?.regdate, preference.checklist.resetTime)
-  // console.log(postDate)
-  // return
-  if (postDate)
+  let lastItem = res.data?.index[0]
+  if (lastItem)
+  {
+    postDate = checkTime(lastItem?.regdate, preference.checklist.resetTime)
+    // return
+    if (postDate)
+    {
+      // add item
+      res = await post('/checklist/?return=1', formData({
+        content: (lastItem?.content) ? lastItem.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
+        regdate: postDate,
+      }))
+      if (!res?.data) throw new Error('Not found add data.')
+      result = res.data
+    }
+    else
+    {
+      result = lastItem
+    }
+    // get files
+    try
+    {
+      res = await get(`/files/`, {
+        module: 'checklist',
+        target: result.srl,
+        unlimit: 1,
+      })
+      files = filteringFiles(res.data?.index)
+    }
+    catch (_) {}
+  }
+  else
   {
     // add item
     res = await post('/checklist/?return=1', formData({
-      content: (lastItem?.content) ? lastItem.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
-      regdate: postDate,
+      content: defaultContent,
+      regDate: null,
     }))
     if (!res?.data) throw new Error('Not found add data.')
     result = res.data
   }
-  else
-  {
-    result = lastItem
-  }
-  // get files
-  try
-  {
-    res = await get(`/files/`, {
-      module: 'checklist',
-      target: result.srl,
-      unlimit: 1,
-    })
-    files = filteringFiles(res.data?.index)
-  }
-  catch (_) {}
   return {
     ...filteringItem(result),
     files,

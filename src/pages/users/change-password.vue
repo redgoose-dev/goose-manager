@@ -1,31 +1,31 @@
 <template>
-<article>
+<article class="change-password">
   <PageHeader module="users" title="Change user password"/>
   <form ref="root" @submit.prevent="onSubmit">
     <Fieldset class="fields">
-      <Field label="srl">{{forms.srl}}</Field>
-      <Field label="Email">{{forms.email}}</Field>
-      <Field label="Password" for="password">
+      <Field label="번호">{{forms.srl}}</Field>
+      <Field label="이메일주소">{{forms.email}}</Field>
+      <Field label="비밀번호" for="password">
         <FormInput
           type="password"
           v-model="forms.password.value"
           name="password"
           id="password"
           :maxlength="24"
-          placeholder="Current password"
+          placeholder="현재 비밀번호를 입력해주세요."
           :error="!!forms.password.error"
           :required="true"
           class="fields__password"/>
         <Help>사용하고 있는 비밀번호를 입력해주세요.</Help>
       </Field>
-      <Field label="New password" for="password_new">
+      <Field label="새로운 비밀번호" for="password_new">
         <FormInput
           type="password"
           v-model="forms.password_new.value"
           name="password_new"
           id="password_new"
           :maxlength="24"
-          placeholder="New password"
+          placeholder="변경할 비밀번호를 입력해주세요."
           :error="!!forms.password_new.error"
           :required="true"
           class="fields__password"/>
@@ -34,14 +34,14 @@
         </Help>
         <Help v-else>새로운 비밀번호를 입력해주세요.</Help>
       </Field>
-      <Field label="Confirm password" for="password_new2">
+      <Field label="비밀번호 재입력" for="password_new2">
         <FormInput
           type="password"
           v-model="forms.password_new2.value"
           name="password_new2"
           id="password_new2"
           :maxlength="24"
-          placeholder="Retype new password"
+          placeholder="변경할 비밀번호를 다시 입력해주세요."
           :error="!!forms.password_new2.error"
           :required="true"
           class="fields__password"/>
@@ -54,7 +54,7 @@
     <Controller>
       <template #left>
         <ButtonBasic icon-left="arrow-left" @click="router.back()">
-          Back
+          뒤로가기
         </ButtonBasic>
       </template>
       <template #right>
@@ -64,7 +64,7 @@
           :icon-left="processing ? 'loader' : 'check'"
           :rotate-icon="processing"
           :disabled="processing">
-          Change password
+          비밀번호 변경
         </ButtonBasic>
       </template>
     </Controller>
@@ -167,7 +167,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .fields {
   &__password {
-    --input-width: 300px;
+    --input-width: 360px;
   }
 }
 </style>

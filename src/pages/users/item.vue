@@ -26,15 +26,17 @@
       </ButtonBasic>
     </template>
     <template #right>
-      <ButtonBasic href="./edit/" icon-left="edit">
-        수정
-      </ButtonBasic>
-      <ButtonBasic href="./change-password/" icon-left="key">
-        비밀번호 변경
-      </ButtonBasic>
-      <ButtonBasic v-if="!self" href="./delete/" color="key" icon-left="trash">
-        삭제
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic href="./edit/" icon-left="edit">
+          수정
+        </ButtonBasic>
+        <ButtonBasic href="./change-password/" icon-left="key">
+          비밀번호 변경
+        </ButtonBasic>
+        <ButtonBasic v-if="!self" href="./delete/" color="key" icon-left="trash">
+          삭제
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
   </Controller>
 </article>
@@ -50,7 +52,7 @@ import PageHeader from '../../components/page/header/index.vue'
 import { Fieldset, Field } from '../../components/forms/fieldset'
 import { FormSwitch } from '../../components/forms'
 import { Controller } from '../../components/navigation'
-import { ButtonBasic } from '../../components/button'
+import { ButtonBasic, ButtonGroup } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 
 const route = useRoute()

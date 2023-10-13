@@ -130,9 +130,6 @@
       border-bottom-right-radius: 2px;
     }
   }
-  &:nth-child(n+2) {
-    border-left: 1px solid var(--group-color-line, rgb(180 180 180 / 100%));
-  }
 
   @include mixins.dark-mode() {
     &__button {
@@ -167,9 +164,6 @@
       .toolbar-item__button:not(:disabled) {
         filter: brightness(125%);
       }
-    }
-    &:nth-child(n+2) {
-      --group-color-line: rgb(80 80 80);
     }
   }
 }

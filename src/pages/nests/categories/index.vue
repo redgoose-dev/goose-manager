@@ -32,12 +32,14 @@
   <Empty v-else title="no item"/>
   <Controller>
     <template #left>
-      <ButtonBasic href="../../" icon-left="cloud">
-        둥지
-      </ButtonBasic>
-      <ButtonBasic href="../articles/" icon-left="droplet">
-        아티클
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic href="../../" icon-left="cloud">
+          둥지
+        </ButtonBasic>
+        <ButtonBasic href="../articles/" icon-left="droplet">
+          아티클
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
@@ -59,7 +61,7 @@ import { toast } from '../../../modules/toast'
 import { Items, Card } from '../../../components/item'
 import PageHeader from '../../../components/page/header/index.vue'
 import { Controller } from '../../../components/navigation'
-import { ButtonBasic } from '../../../components/button'
+import { ButtonBasic, ButtonGroup } from '../../../components/button'
 import Loading from '../../../components/etc/loading.vue'
 import Empty from '../../../components/error/empty.vue'
 import Icon from '../../../components/icons/index.vue'

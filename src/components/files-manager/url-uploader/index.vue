@@ -15,24 +15,29 @@
   </div>
   <Controller class="upload-url__submit">
     <template #left>
-      <ButtonBasic type="button" icon-left="x" @click="$emit('close')">
+      <ButtonBasic
+        type="button"
+        icon-left="x"
+        @click="$emit('close')">
         닫기
       </ButtonBasic>
     </template>
     <template #right>
-      <ButtonBasic
-        color="sub"
-        icon-left="link-2"
-        @click="openAddUrl">
-        URL 추가하기
-      </ButtonBasic>
-      <ButtonBasic
-        color="key"
-        icon-left="upload"
-        :disabled="disabledSubmitButton"
-        @click="submitUpload">
-        파일 업로드
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic
+          color="sub"
+          icon-left="link-2"
+          @click="openAddUrl">
+          URL 추가하기
+        </ButtonBasic>
+        <ButtonBasic
+          color="key"
+          icon-left="upload"
+          :disabled="disabledSubmitButton"
+          @click="submitUpload">
+          파일 업로드
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
   </Controller>
 </article>
@@ -51,7 +56,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { controlWindow } from '../util'
 import { fileManagerStore } from '../../../store/files-manager'
-import { ButtonBasic } from '../../button'
+import { ButtonBasic, ButtonGroup } from '../../button'
 import { Controller } from '../../navigation'
 import Items from './items.vue'
 import { Modal, ModalBody } from '../../modal'

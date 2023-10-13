@@ -1,5 +1,5 @@
 <template>
-<article class="dashboard">
+<article class="dashboard content-over">
   <PageHeader
     :title="preference.dashboard.title"
     :description="preference.dashboard.description"/>

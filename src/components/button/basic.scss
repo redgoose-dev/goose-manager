@@ -1,12 +1,13 @@
 @use '../../assets/scss/mixins';
 
 .button {
+  --button-radius: 2px;
   display: block;
   margin: 0;
-  padding: var(--button-padding, 0 20px);
+  padding: var(--button-padding, (0 20px));
   width: var(--button-width, unset);
-  height: var(--button-height, 38px);
-  border-radius: 2px;
+  height: var(--button-height, 40px);
+  border-radius: var(--button-radius);
   text-align: center;
   text-decoration: none;
   box-sizing: border-box;
@@ -18,15 +19,12 @@
   color: var(--button-text-color, var(--color-base));
   box-shadow:
     var(--button-shadow-1, inset 0 2px 15px rgb(0 0 0 / 0%)),
-    var(--button-shadow-2, 0 0 0 0 rgb(0 0 0 / 0%)),
-    var(--button-shadow-3, 0 0 0 1px rgb(180 180 180 / 100%));
+    var(--button-shadow-2, inset 0 0 0 0 rgb(0 0 0 / 0%));
   --icon-size: var(--button-icon-size, 18px);
   --icon-stroke: 2.2;
   --icon-color: var(--button-text-color, var(--color-base));
-  --font-size: 15px;
-  &:not(label) {
-    cursor: pointer;
-  }
+  --font-size: 14px;
+  cursor: pointer;
   &[type=button],
   &[type=submit],
   &[type=reset] {
@@ -37,21 +35,19 @@
     opacity: .5;
     cursor: not-allowed;
   }
-  &:hover:not([disabled],label) {
-    filter: brightness(95%);
+  &:hover:not([disabled],label,p) {
+    filter: brightness(92%);
   }
-  &:focus-visible:not([disabled],label) {
+  &:focus-visible:not([disabled],label,p) {
     outline: 0;
     box-shadow:
       var(--button-shadow-focus-1, inset 0 2px 15px rgb(0 0 0 / 10%)),
-      var(--button-shadow-focus-2, 0 0 0 4px rgb(0 0 0 / 8%)),
-      var(--button-shadow-focus-3, 0 0 0 1px rgb(150 150 150 / 100%));
+      var(--button-shadow-focus-2, 0 0 0 4px rgb(0 0 0 / 8%));
   }
-  &:active:not([disabled],label) {
+  &:active:not([disabled],label,p) {
     box-shadow:
       var(--button-shadow-active-1, inset 0 2px 15px rgb(0 0 0 / 10%)),
-      var(--button-shadow-active-2, 0 0 0 4px rgb(0 0 0 / 0%)),
-      var(--button-shadow-active-3, 0 0 0 1px rgb(150 150 150 / 100%));
+      0 0 0 4px rgb(0 0 0 / 0%);
   }
 
   // inline
@@ -66,10 +62,10 @@
   // size
   &--size {
     &-small {
-      --button-height: 28px;
+      --button-height: 32px;
       --button-padding: 0 12px;
       --icon-size: 13px;
-      --font-size: 13px;
+      --font-size: 12px;
     }
   }
 
@@ -78,42 +74,30 @@
     &-key {
       --button-color-bg: var(--color-key);
       --button-text-color: rgb(255 255 255);
-      --button-shadow-3: 0 0 0 1px rgb(var(--color-key-rgb) / 100%);
       --button-shadow-focus-1: inset 0 2px 15px rgb(0 0 0 / 0%);
       --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-key-rgb) / 30%);
-      --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-key-rgb) / 75%);
       --button-shadow-active-1: inset 0 2px 15px rgb(0 0 0 / 30%);
-      --button-shadow-active-3: 0 0 0 1px rgb(var(--color-key-rgb) / 100%);
     }
     &-sub {
       --button-color-bg: var(--color-sub);
       --button-text-color: rgb(255 255 255);
-      --button-shadow-3: 0 0 0 1px rgb(var(--color-sub-rgb) / 100%);
       --button-shadow-focus-1: inset 0 2px 15px rgb(0 0 0 / 0%);
       --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-sub-rgb) / 30%);
-      --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-sub-rgb) / 75%);
       --button-shadow-active-1: inset 0 2px 15px rgb(0 0 0 / 30%);
-      --button-shadow-active-3: 0 0 0 1px rgb(var(--color-sub-rgb) / 100%);
     }
     &-error {
       --button-color-bg: var(--color-error);
       --button-text-color: rgb(255 255 255);
-      --button-shadow-3: 0 0 0 1px rgb(var(--color-error-rgb) / 100%);
       --button-shadow-focus-1: inset 0 2px 15px rgb(0 0 0 / 0%);
       --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-error-rgb) / 30%);
-      --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-error-rgb) / 75%);
       --button-shadow-active-1: inset 0 2px 15px rgb(0 0 0 / 30%);
-      --button-shadow-active-3: 0 0 0 1px rgb(var(--color-error-rgb) / 100%);
     }
     &-weak {
       --button-color-bg: var(--color-weak);
       --button-text-color: rgb(255 255 255);
-      --button-shadow-3: 0 0 0 1px rgb(var(--color-weak-rgb));
       --button-shadow-focus-1: inset 0 2px 15px rgb(0 0 0 / 0%);
       --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-weak-rgb) / 30%);
-      --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-weak-rgb) / 75%);
       --button-shadow-active-1: inset 0 2px 15px rgb(0 0 0 / 30%);
-      --button-shadow-active-3: 0 0 0 1px rgb(var(--color-weak-rgb) / 100%);
     }
   }
 
@@ -125,37 +109,22 @@
   @include mixins.dark-mode() {
     color-scheme: dark;
     --button-color-bg: rgb(60 60 60);
-    --button-shadow-3: 0 0 0 1px rgb(255 255 255 / 15%);
-    --button-shadow-focus-3: 0 0 0 1px rgb(255 255 255 / 30%);
-    --button-shadow-active-3: 0 0 0 1px rgb(255 255 255 / 30%);
     &--color {
       &-key {
         --button-color-bg: rgb(var(--color-key-rgb) / 100%);
-        --button-shadow-3: 0 0 0 1px rgb(var(--color-key-rgb) / 100%);
         --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-key-rgb) / 30%);
-        --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-key-rgb) / 100%);
-        --button-shadow-active-3: 0 0 0 1px rgb(var(--color-key-rgb) / 100%);
       }
       &-sub {
         --button-color-bg: rgb(var(--color-sub-rgb) / 100%);
-        --button-shadow-3: 0 0 0 1px rgb(var(--color-sub-rgb) / 100%);
         --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-sub-rgb) / 30%);
-        --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-sub-rgb) / 100%);
-        --button-shadow-active-3: 0 0 0 1px rgb(var(--color-sub-rgb) / 100%);
       }
       &-error {
         --button-color-bg: rgb(var(--color-error-rgb) / 100%);
-        --button-shadow-3: 0 0 0 1px rgb(var(--color-error-rgb) / 100%);
         --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-error-rgb) / 30%);
-        --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-error-rgb) / 100%);
-        --button-shadow-active-3: 0 0 0 1px rgb(var(--color-error-rgb) / 100%);
       }
       &-weak {
         --button-color-bg: rgb(var(--color-weak-rgb) / 100%);
-        --button-shadow-3: 0 0 0 1px rgb(var(--color-weak-rgb) / 100%);
         --button-shadow-focus-2: 0 0 0 4px rgb(var(--color-weak-rgb) / 30%);
-        --button-shadow-focus-3: 0 0 0 1px rgb(var(--color-weak-rgb) / 100%);
-        --button-shadow-active-3: 0 0 0 1px rgb(var(--color-weak-rgb) / 100%);
       }
     }
   }

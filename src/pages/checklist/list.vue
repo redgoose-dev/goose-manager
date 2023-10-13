@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="content-over">
   <PageHeader module="checklist" title="Checklist items"/>
   <div class="checklist-list">
     <div class="checklist-list__body">

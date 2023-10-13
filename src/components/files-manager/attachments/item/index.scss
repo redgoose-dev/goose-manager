@@ -1,0 +1,39 @@
+@use '../../../../assets/scss/mixins';
+
+.attachment {
+  position: relative;
+  display: grid;
+  align-items: center;
+  background: rgb(var(--color-base-rgb) / 5%);
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 0 0 rgb(var(--color-key-rgb) / 0%);
+    pointer-events: none;
+    border-radius: 0;
+    transition: box-shadow 160ms ease-out;
+  }
+  &.selected {
+    &:after {
+      box-shadow: inset 0 0 0 4px rgb(var(--color-key-rgb) / 100%);
+    }
+  }
+  &:hover {
+    :deep(.image.type-image) {
+      > img {
+        display: block;
+      }
+      > svg {
+        display: none;
+      }
+      > figcaption {
+        display: none;
+      }
+    }
+  }
+}

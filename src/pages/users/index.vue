@@ -10,9 +10,9 @@
       :meta="item.meta"
       :href="`./${item.srl}/`"
       :nav="[
-        { label: 'Edit', href: `./${item.srl}/edit/` },
-        !item.self && { label: 'Delete', href: `./${item.srl}/delete/` },
-        { label: 'Change Password', href: `./${item.srl}/change-password/` },
+        { label: '수정', href: `./${item.srl}/edit/` },
+        !item.self && { label: '삭제', href: `./${item.srl}/delete/` },
+        { label: '비밀번호 변경', href: `./${item.srl}/change-password/` },
       ].filter(Boolean)">
       <template v-if="item.self" #after>
         <Mark/>
@@ -23,7 +23,7 @@
   <Controller v-if="auth.user.admin">
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
-        Create User
+        사용자 추가
       </ButtonBasic>
     </template>
   </Controller>

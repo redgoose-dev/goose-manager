@@ -1,5 +1,9 @@
 @use '../../assets/scss/mixins';
 
+.checklist-edit {
+  max-width: var(--);
+}
+
 .checklist-post {
   &__header {
     background-color: rgb(var(--color-base-rgb) / 10%);

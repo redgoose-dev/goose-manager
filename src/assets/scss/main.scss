@@ -29,7 +29,8 @@
   --color-error-rgb: #{variables.$color-light-error-rgb};
   --color-error: #{variables.$color-light-error};
   // size
-  --size-content-body: 1280px;
+  --size-content-body: 900px;
+  --size-content-over: 1280px;
   --size-radius: 2px;
   --size-header-height: 42px;
   --size-side-padding: 60px;
@@ -90,6 +91,16 @@ code, kbd, pre, samp {
 ::selection {
   background: var(--color-key);
   color: #fff;
+}
+
+// content
+.content-over {
+  position: relative;
+  left: 50%;
+  width: calc(100vw - (var(--size-side-padding) * 2));
+  max-width: var(--size-content-over);
+  transform: translateX(-50%);
+  box-sizing: border-box;
 }
 
 @import 'content-body';

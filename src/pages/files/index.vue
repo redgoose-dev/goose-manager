@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="content-over">
   <PageHeader module="files"/>
   <Loading v-if="loading"/>
   <Items v-else-if="index.length > 0" theme="brick" class="files-index">

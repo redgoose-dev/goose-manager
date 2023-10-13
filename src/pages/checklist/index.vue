@@ -1,30 +1,28 @@
 <template>
 <article class="checklist">
   <PageHeader module="checklist"/>
-  <div class="checklist__body">
-    <Loading v-if="ready"/>
-    <ChecklistItem
-      v-else
-      v-model="state.content"
-      v-model:checkboxes="checkboxes"
-      :date="state.date"
-      :today="today"
-      :files="state.files"
-      :percent="NaN"
-      @update:modelValue="onUpdateContent"/>
-    <Controller>
-      <template #left>
-        <ButtonBasic href="./list/" icon-left="list">
-          목록
-        </ButtonBasic>
-      </template>
-      <template #right>
-        <ButtonBasic color="key" href="./edit/" icon-left="edit">
-          수정
-        </ButtonBasic>
-      </template>
-    </Controller>
-  </div>
+  <Loading v-if="ready"/>
+  <ChecklistItem
+    v-else
+    v-model="state.content"
+    v-model:checkboxes="checkboxes"
+    :date="state.date"
+    :today="today"
+    :files="state.files"
+    :percent="NaN"
+    @update:modelValue="onUpdateContent"/>
+  <Controller>
+    <template #left>
+      <ButtonBasic href="./list/" icon-left="list">
+        목록
+      </ButtonBasic>
+    </template>
+    <template #right>
+      <ButtonBasic color="key" href="./edit/" icon-left="edit">
+        수정
+      </ButtonBasic>
+    </template>
+  </Controller>
   <ChecklistProgress v-if="showProgressBar" :percent="percent"/>
 </article>
 </template>

@@ -73,12 +73,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.checklist {
-  &__body {
-    margin: 0 auto;
-    max-width: 800px;
-  }
-}
-</style>

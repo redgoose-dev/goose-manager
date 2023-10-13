@@ -1,12 +1,16 @@
 <template>
 <div
   ref="$root"
-  :class="[ 'wrap', dragOver && 'wrap--drag-over' ]"
+  :class="[ 'wrap', dragOver && 'drag' ]"
   @click="onSelectAll(false)">
   <div
     v-if="props.index.length > 0"
     class="attachments">
-    <ul class="attachments__index">
+    <ul :class="[
+      'index',
+      localStore.attachmentTheme === 'thumbnail' && 'thumbnail',
+      localStore.attachmentTheme === 'list' && 'list',
+    ]">
       <li v-for="(item, key) in props.index" @click.stop="">
         <FileProgress v-if="item.ready"/>
         <Item
@@ -24,11 +28,16 @@
       </li>
     </ul>
   </div>
-  <div v-else class="attachments-empty">
+  <div v-else class="empty">
     <Icon name="paperclip"/>
     <p>There are no attachments.</p>
   </div>
 </div>
+<teleport to="#modals">
+  <div :class="[ 'drag-over', dragOver && 'active' ]">
+    <span>Drop files here.</span>
+  </div>
+</teleport>
 </template>
 
 <script setup>
@@ -36,14 +45,14 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { fileManagerStore } from '../../../store/files-manager'
 import { selectItem, selectAll } from '../selectItems'
 import Icon from '../../icons/index.vue'
-import Item from './item.vue'
+import Item from './item/index.vue'
 import FileProgress from '../file-progress.vue'
 
 const props = defineProps({
   index: { type: Array, required: true },
   processing: { type: Boolean, required: true },
 })
-const emits = defineEmits([ 'change-select', 'select-context-item', 'upload' ])
+const emits = defineEmits([ 'change-select', 'select-context-item', 'upload', 'drag-over' ])
 const localStore = fileManagerStore()
 const $root = ref()
 const selected = ref(new Array(props.index.length).fill(false))
@@ -79,16 +88,22 @@ function onOverFiles(e)
   e.preventDefault()
   if (dragOver.value) return
   dragOver.value = true
+  emits('drag-over', dragOver.value)
 }
 function onLeaveFiles(e)
 {
   e.preventDefault()
-  if ($root.value === e.target) dragOver.value = false
+  if ($root.value === e.target)
+  {
+    dragOver.value = false
+    emits('drag-over', dragOver.value)
+  }
 }
 function onDropFiles(e)
 {
   e.preventDefault()
   dragOver.value = false
+  emits('drag-over', dragOver.value)
   const files = (e.dataTransfer) ? e.dataTransfer.files : undefined
   if (files?.length > 0) emits('upload', files)
 }

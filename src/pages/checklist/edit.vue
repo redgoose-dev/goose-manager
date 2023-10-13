@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="checklist-edit">
   <PageHeader module="checklist" title="Edit checklist"/>
   <form class="checklist-post" @submit.prevent="onSubmit">
     <header class="checklist-post__header">

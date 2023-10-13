@@ -1,9 +1,6 @@
 <template>
-<article>
-  <PageHeader
-    module="articles"
-    :title="title"
-    :description="description"/>
+<article class="content-over">
+  <PageHeader module="articles" :title="title" :description="description"/>
   <TabCategory
     v-if="data.categories?.length > 0"
     :items="data.categories"/>
@@ -47,12 +44,14 @@
         @update:modelValue="onClickPageItem"/>
       <Controller class="articles__controller">
         <template #left>
-          <ButtonBasic href="../../" icon-left="cloud">
-            둥지
-          </ButtonBasic>
-          <ButtonBasic href="../categories/" icon-left="server">
-            분류
-          </ButtonBasic>
+          <ButtonGroup>
+            <ButtonBasic href="../../" icon-left="cloud">
+              둥지
+            </ButtonBasic>
+            <ButtonBasic href="../categories/" icon-left="server">
+              분류
+            </ButtonBasic>
+          </ButtonGroup>
         </template>
         <template #right>
           <ButtonBasic
@@ -88,7 +87,7 @@ import { getData, requestArticles, requestCategories } from '../../../structure/
 import PageHeader from '../../../components/page/header/index.vue'
 import { Items, Card, Thumbnail, Mark } from '../../../components/item'
 import { Controller } from '../../../components/navigation'
-import { ButtonBasic } from '../../../components/button'
+import { ButtonBasic, ButtonGroup } from '../../../components/button'
 import Loading from '../../../components/etc/loading.vue'
 import Empty from '../../../components/error/empty.vue'
 import TabCategory from '../../../components/navigation/tab-category/index.vue'

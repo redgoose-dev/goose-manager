@@ -1,11 +1,13 @@
 @use '../../assets/scss/mixins';
 
 .tabs {
+  position: relative;
   display: flex;
   justify-content: space-between;
   height: var(--tab-height, 44px);
   box-sizing: border-box;
   background: rgb(255 255 255);
+  z-index: 4;
   &__contents {
     display: flex;
     button {

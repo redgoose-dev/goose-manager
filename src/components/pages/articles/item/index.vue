@@ -31,29 +31,31 @@
       </ButtonBasic>
     </template>
     <template #right>
-      <ButtonBasic
-        v-if="props.nestSrl"
-        type="button"
-        :href="`../create/${createQueries(['category'], route.query)}`"
-        color="key"
-        icon-left="plus">
-        만들기
-      </ButtonBasic>
-      <ButtonBasic href="./change-nest/">
-        둥지변경
-      </ButtonBasic>
-      <ButtonBasic
-        :href="`./edit/${createQueries(['category','page'], route.query)}`"
-        color="weak"
-        icon-left="edit-3">
-        수정
-      </ButtonBasic>
-      <ButtonBasic
-        :href="`./delete/${createQueries(['category','page'], route.query)}`"
-        color="error"
-        icon-left="trash">
-        삭제
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic
+          v-if="props.nestSrl"
+          type="button"
+          :href="`../create/${createQueries(['category'], route.query)}`"
+          color="key"
+          icon-left="plus">
+          만들기
+        </ButtonBasic>
+        <ButtonBasic href="./change-nest/">
+          둥지변경
+        </ButtonBasic>
+        <ButtonBasic
+          :href="`./edit/${createQueries(['category','page'], route.query)}`"
+          color="weak"
+          icon-left="edit-3">
+          수정
+        </ButtonBasic>
+        <ButtonBasic
+          :href="`./delete/${createQueries(['category','page'], route.query)}`"
+          color="error"
+          icon-left="trash">
+          삭제
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
   </Controller>
   <Comments
@@ -80,7 +82,7 @@ import { createQueries } from '../libs'
 import Loading from '../../../etc/loading.vue'
 import { Controller } from '../../../navigation'
 import { Modal, ModalBody } from '../../../modal'
-import { ButtonBasic } from '../../../button'
+import { ButtonBasic, ButtonGroup } from '../../../button'
 import Files from './files.vue'
 import Comments from './comments.vue'
 import PreviewImage from './preview-image.vue'

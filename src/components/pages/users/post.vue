@@ -116,7 +116,7 @@ const useAdminField = computed(() => {
     return auth.user?.srl !== Number(props.srl)
   }
 })
-const isEdit = computed<boolean>(() => (props.mode === 'edit'))
+const isEdit = computed(() => (props.mode === 'edit'))
 
 async function onSubmit()
 {

@@ -7,7 +7,7 @@
     :title="fields.title"
     :description="fields.description"
     :name="fields.name"
-    button-label="Delete user"
+    button-label="사용자 삭제"
     :processing="processing"
     @cancel="router.back()"
     @submit="onSubmit"/>

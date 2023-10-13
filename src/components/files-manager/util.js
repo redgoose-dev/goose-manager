@@ -21,5 +21,5 @@ export function controlWindow(sw, key)
 
 export function arrayToTextForReturn(src)
 {
-  return src.join('\n\n') + `\n`
+  return src.join('\n') + `\n`
 }

@@ -1,0 +1,101 @@
+@use '../../../../assets/scss/mixins';
+
+.thumbnail {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  user-select: none;
+  min-width: 0;
+  cursor: pointer;
+  &:hover {
+    :is(.context) {
+      opacity: 1;
+    }
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  --image-fit: contain;
+}
+
+.badge {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+  box-sizing: border-box;
+  li {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    width: 30px;
+    aspect-ratio: 1 / 1;
+    background: hsla(0 0% 0% / 35%);
+    box-sizing: border-box;
+    border-radius: var(--size-radius);
+    --icon-size: 16px;
+    --icon-color: hsla(0 0% 100% / 100%);
+    --icon-stroke: 2;
+  }
+  svg {
+    display: block;
+  }
+}
+
+.context {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+  z-index: 2;
+  > :is(button) {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-color: rgb(255 255 255 / 100%);
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 2px;
+    font-size: 0;
+    box-shadow: 0 0 8px 2px hsl(0 0% 0% / 20%), 0 0 0 1px rgb(255 255 255 / 30%);
+    @include mixins.button-touch-options(false);
+    svg {
+      display: block;
+      margin: 0 auto;
+      --icon-color: var(--color-base);
+      --icon-size: 18px;
+      --icon-stroke: 2.5;
+    }
+  }
+  > :is(ul) {
+    opacity: 0;
+    pointer-events: none;
+    right: -16px;
+    margin-top: -2px;
+  }
+  &:hover {
+    > :is(button) {
+      opacity: .9;
+    }
+    > :is(ul) {
+      pointer-events: auto;
+      opacity: 1;
+    }
+  }
+  @include mixins.dark-mode() {
+    > :is(button) {
+      background-color: hsl(0 0% 15%);
+      box-shadow: 0 0 8px 2px hsl(0 0% 0% / 50%), 0 0 0 1px hsl(0 0% 100% / 15%);
+    }
+  }
+}

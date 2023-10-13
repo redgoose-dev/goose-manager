@@ -1,5 +1,5 @@
 <template>
-<form v-if="!loading" @submit.prevent="onSubmit">
+<form v-if="!loading" class="change-nest" @submit.prevent="onSubmit">
   <div class="information">
     <Card
       :title="data.article.title"

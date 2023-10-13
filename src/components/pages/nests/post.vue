@@ -130,7 +130,7 @@
         v-model="forms.json.files.count"
         placeholder="5"
         :min="1"
-        :max="99"
+        :max="999"
         size="small"
         style="--input-width: 70px"/>
       <Help>업로드 할 수 있는 파일의 갯수를 설정합니다.</Help>

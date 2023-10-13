@@ -1,9 +1,11 @@
 @use '../../../assets/scss/mixins';
 
 .files {
+  position: relative;
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  height: 100%;
   --files-header-height: 48px;
   --files-footer-height: 58px;
 }
@@ -21,7 +23,8 @@
   box-shadow: 0 1px 10px 0 rgb(var(--color-base-rgb) / 20%), 0 1px 0 rgb(var(--color-base-rgb) / 5%);
   &__left {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 16px;
   }
   @include mixins.dark-mode() {
     box-shadow: 0 1px 10px 0 rgb(0 0 0 / 30%), 0 1px 0 rgb(255 255 255 / 20%);
@@ -52,7 +55,6 @@
   justify-content: space-between;
   padding: 0 16px;
   background: var(--color-shape-bg);
-  box-shadow: 0 -1px 0 0 rgb(var(--color-base-rgb) / 15%);
   > * {
     display: flex;
     align-items: center;

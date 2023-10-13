@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="content-over">
   <PageHeader module="articles"/>
   <div class="articles">
     <div class="articles__body">

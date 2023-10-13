@@ -16,6 +16,7 @@ const props = defineProps({
   title: String,
   disabled: Boolean,
   color: String, // key,sub,error,weak
+  size: String, // small
 })
 const type = computed(() => {
   if (props.href) return /^http/.test(props.href) ? 'a' : 'router'
@@ -51,7 +52,8 @@ const rootProps = computed(() => {
   }
   attr.class = [
     'button-icon',
-    props.color && `button-icon--color-${props.color}`,
+    props.color && `color-${props.color}`,
+    props.size && `size-${props.size}`,
     props.disabled && 'button-icon--disabled',
   ]
   return attr

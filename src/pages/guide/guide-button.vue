@@ -15,6 +15,14 @@
     </div>
 
     <header>
+      <h2>disabled</h2>
+      <p>버튼 비활성화</p>
+    </header>
+    <div class="example">
+      <ButtonBasic type="button" :disabled="true">button</ButtonBasic>
+    </div>
+
+    <header>
       <h2>size</h2>
       <p>버튼의 사이즈 모음</p>
     </header>
@@ -101,11 +109,15 @@
     </div>
 
     <header>
-      <h2>disabled</h2>
-      <p>버튼 비활성화</p>
+      <h2>group</h2>
+      <p>여러개의 버튼그룹</p>
     </header>
     <div class="example">
-      <ButtonBasic type="button" :disabled="true">button</ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic>First</ButtonBasic>
+        <ButtonBasic color="key">Button Component</ButtonBasic>
+        <ButtonBasic color="sub">Last</ButtonBasic>
+      </ButtonGroup>
     </div>
   </section>
 
@@ -133,6 +145,15 @@
       </div>
     </div>
     <header>
+      <h2>size</h2>
+    </header>
+    <div class="example">
+      <div class="flex">
+        <ButtonIcon icon-name="twitter"/>
+        <ButtonIcon icon-name="twitter" size="small"/>
+      </div>
+    </div>
+    <header>
       <h2>disabled</h2>
     </header>
     <div class="example">
@@ -145,7 +166,7 @@
 </template>
 
 <script setup>
-import { ButtonBasic } from '../../components/button'
+import { ButtonBasic, ButtonGroup } from '../../components/button'
 import ButtonIcon from '../../components/button/icon.vue'
 </script>
 

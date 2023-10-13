@@ -68,12 +68,14 @@
       </ButtonBasic>
     </template>
     <template #right>
-      <ButtonBasic href="./edit/" icon-left="edit">
-        수정
-      </ButtonBasic>
-      <ButtonBasic href="./delete/" color="key" icon-left="trash">
-        삭제
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic href="./edit/" icon-left="edit">
+          수정
+        </ButtonBasic>
+        <ButtonBasic href="./delete/" color="key" icon-left="trash">
+          삭제
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
   </Controller>
 </article>
@@ -87,7 +89,7 @@ import getData from '../../structure/json/item'
 import PageHeader from '../../components/page/header/index.vue'
 import { Fieldset, Field } from '../../components/forms/fieldset'
 import { Controller } from '../../components/navigation'
-import { ButtonBasic } from '../../components/button'
+import { ButtonBasic, ButtonGroup } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import JsonEditor from '../../components/json-editor/index.vue'
 import { ToolbarWrap, ToolbarGroup, ToolbarItem } from '../../components/navigation/toolbar'

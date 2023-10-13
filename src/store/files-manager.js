@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia'
 import { pureObject } from '../libs/object'
+import * as storage from '../libs/storage'
 
+const STORAGE_KEY = 'file-manager'
+const defaultStorageStructure = {
+  attachmentTheme: 'thumbnail', // thumbnail,list
+  attachmentDisplayImage: false,
+}
 const defaultStructure = {
   tab: 'global',
   post: {
@@ -26,6 +32,7 @@ const defaultStructure = {
   markdown: false,
   limitSelect: 0,
   useShortcut: false,
+  ...defaultStorageStructure,
 }
 
 export const fileManagerStore = defineStore('file-manager', {
@@ -44,6 +51,33 @@ export const fileManagerStore = defineStore('file-manager', {
       this.acceptFileType = src.acceptFileType
       this.fullSize = src.fullSize
       this.window = src.window
+      // from storage
+      const storageResource = storage.get(STORAGE_KEY)
+      if (storageResource)
+      {
+        this.attachmentTheme = storageResource.attachmentTheme
+        this.attachmentDisplayImage = storageResource.attachmentDisplayImage
+      }
     },
+    changeAttachmentTheme(newTheme)
+    {
+      this.attachmentTheme = newTheme
+      updateStorage({ attachmentTheme: newTheme })
+    },
+    changeAttachmentDisplayImage(value)
+    {
+      this.attachmentDisplayImage = value
+      updateStorage({ attachmentDisplayImage: value })
+    }
   },
 })
+
+function updateStorage(src)
+{
+  const res = storage.get(STORAGE_KEY) || {}
+  storage.set(STORAGE_KEY, pureObject({
+    ...defaultStorageStructure,
+    ...res,
+    ...src,
+  }))
+}

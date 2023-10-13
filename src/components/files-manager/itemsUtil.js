@@ -17,7 +17,7 @@ export function createHtmlItems(src)
   return src.map(item => {
     if (/^image/.test(item.type))
     {
-      return `<p><img src="${item.path}" alt="${item.name}"/></p>`
+      return `<p><img src="${item.path}" loading="lazy" alt="${item.name}"/></p>`
     }
     else
     {

@@ -1,7 +1,10 @@
 <template>
 <form ref="$root" @submit.prevent="onSubmit(false)">
   <Fieldset :disabled="loading" class="fields">
-    <Field label="분류" for="category">
+    <Field
+      v-if="data.categories?.length > 0"
+      label="분류"
+      for="category">
       <FormSelect
         id="category"
         name="category"
@@ -57,7 +60,7 @@
             placeholder="https://hostname/image.jpg"
             :error="!!forms.path.error"/>
         </div>
-        <nav class="path__upload">
+        <nav v-if="props.mode !== 'create'" class="path__upload">
           <ButtonBasic
             color="key"
             icon-left="file-plus"
@@ -75,21 +78,23 @@
       </ButtonBasic>
     </template>
     <template #right>
-      <ButtonBasic
-        v-if="props.mode !== 'create'"
-        type="button"
-        :icon-left="processing ? 'loader' : 'save'"
-        :rotate-icon="processing"
-        @click="onSubmit(true)">
-        적용하기
-      </ButtonBasic>
-      <ButtonBasic
-        type="submit"
-        color="key"
-        :icon-left="processing ? 'loader' : 'check'"
-        :rotate-icon="processing">
-        {{submitLabel}}
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic
+          v-if="props.mode !== 'create'"
+          type="button"
+          :icon-left="processing ? 'loader' : 'save'"
+          :rotate-icon="processing"
+          @click="onSubmit(true)">
+          적용하기
+        </ButtonBasic>
+        <ButtonBasic
+          type="submit"
+          color="key"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing">
+          {{submitLabel}}
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
   </Controller>
   <teleport to="#modals">
@@ -129,7 +134,7 @@ import { preferenceStore } from '../../../../store/preference'
 import { Fieldset, Field, Help } from '../../../forms/fieldset'
 import { Controller } from '../../../navigation'
 import { FormInput, FormSelect } from '../../../forms'
-import { ButtonBasic } from '../../../button'
+import { ButtonBasic, ButtonGroup } from '../../../button'
 import { Modal, ModalBody } from '../../../modal'
 import Editor from './editor.vue'
 import FilesManager from '../../../files-manager/index.vue'
@@ -279,7 +284,8 @@ async function onSubmit(onlySave = false)
   }
   catch (e)
   {
-    err([ '/components/pages/json/post.vue', 'onSubmit()' ], 'error', e.message)
+    console.log(e)
+    err([ '/components/pages/json/post/index.vue', 'onSubmit()' ], 'error', e.message)
     processing.value = false
     switch (props.mode) {
       case 'edit':
@@ -312,7 +318,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    err([ '/components/pages/json/post.vue', 'onMounted()' ], 'error', e.message)
+    err([ '/components/pages/json/post/index.vue', 'onMounted()' ], 'error', e.message)
     throw e.message
   }
 })

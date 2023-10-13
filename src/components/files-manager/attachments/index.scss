@@ -1,66 +1,63 @@
 @use '../../../assets/scss/mixins';
 
 .wrap {
-  &:after {
-    content: 'Drop files here.';
-    display: grid;
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    right: 0;
-    top: calc(var(--tab-height) + var(--files-header-height));
-    height: calc(100% - var(--tab-height) - var(--files-header-height) - var(--files-footer-height));
-    box-sizing: border-box;
-    pointer-events: none;
-    background: rgb(var(--color-key-rgb) / 80%);
-    opacity: 0;
-    align-content: center;
-    justify-content: center;
-    color: rgb(255 255 255 / 75%);
-    font-size: 36px;
-    font-weight: 700;
-    font-family: var(--font-eng);
-    text-transform: uppercase;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    transition: opacity 150ms ease-out;
-    @include mixins.background-blur(24px);
-  }
-  &--drag-over {
-    * {
+  &.drag {
+    :is(*) {
       pointer-events: none;
     }
-    &:after {
-      opacity: 1;
-    }
-  }
-  @include mixins.dark-mode() {
-    //
   }
 }
 
 .attachments {
   position: relative;
   box-sizing: border-box;
-  &__index {
+  padding: 0 0 100px;
+  .index {
     margin: 0;
     padding: var(--attachments-gap, 16px);
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(var(--attachments-column, 4), 1fr);
     gap: var(--attachments-inner-gap, 12px);
+    grid-template-columns: repeat(var(--attachments-column), 1fr);
+    > li {
+      display: grid;
+    }
+  }
+  :is(.index.thumbnail) {
+    --attachments-column: 3;
+  }
+  :is(.index.list) {
+    --attachments-column: 1;
+  }
+  @include mixins.responsive(tablet) {
+    :is(.index.thumbnail) {
+      --attachments-column: 4;
+    }
+    :is(.index.list) {
+      --attachments-column: 2;
+    }
   }
   @include mixins.responsive(desktop) {
-    --attachments-column: 5;
-    --attachments-inner-gap: 16px;
+    --attachments-inner-gap: 12px;
+    :is(.index.thumbnail) {
+      --attachments-column: 5;
+    }
+    :is(.index.list) {
+      --attachments-column: 3;
+    }
   }
   @include mixins.responsive(desktop-large) {
-    --attachments-column: 7;
-    --attachments-inner-gap: 20px;
+    --attachments-inner-gap: 8px;
+    :is(.index.thumbnail) {
+      --attachments-column: 6;
+    }
+    :is(.index.list) {
+      --attachments-column: 4;
+    }
   }
 }
 
-.attachments-empty {
+.empty {
   display: grid;
   align-content: center;
   justify-content: center;
@@ -80,5 +77,38 @@
     font-size: 14px;
     line-height: 1.1;
     color: var(--color-weak);
+  }
+}
+
+.drag-over {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: grid;
+  place-content: center;
+  height: calc(100% - var(--tab-height) - var(--files-header-height) - var(--files-footer-height));
+  box-sizing: border-box;
+  pointer-events: none;
+  background: rgb(var(--color-key-rgb) / 80%);
+  opacity: 0;
+  align-content: center;
+  justify-content: center;
+  transition: opacity 150ms ease-out;
+  @include mixins.background-blur(24px);
+  :is(span) {
+    display: block;
+    font-size: 36px;
+    font-weight: 700;
+    font-family: var(--font-eng);
+    color: rgb(255 255 255 / 75%);
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+  &.active {
+    opacity: 1;
   }
 }

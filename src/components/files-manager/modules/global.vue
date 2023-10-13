@@ -11,43 +11,34 @@
   </div>
   <header class="files-header">
     <div class="files-header__left">
-      <ButtonBasic
-        type="button"
-        size="small"
-        color="key"
-        :icon-left="processing ? 'loader' : 'upload'"
-        :rotate-icon="processing"
-        :disabled="disabledAssets"
-        @click="onClickUploadFiles">
-        파일 업로드
-      </ButtonBasic>
-      <ButtonBasic
-        type="button"
-        size="small"
-        color="sub"
-        icon-left="link-2"
-        @click="showUploadUrl = true">
-        URL 업로드
-      </ButtonBasic>
-      <ButtonBasic
-        type="button"
-        size="small"
-        icon-left="minus-square"
-        :disabled="disabledAssets"
-        @click="onSelectAll()">
-        모두선택
-      </ButtonBasic>
-      <ButtonBasic
-        type="button"
-        size="small"
-        color="error"
-        icon-left="trash-2"
-        :disabled="selectedAssets"
-        @click="onClickDeleteItems">
-        삭제
-      </ButtonBasic>
+      <ButtonGroup>
+        <Upload
+          @upload-file="onClickUploadFiles"
+          @upload-url="showUploadUrl = true"/>
+        <ButtonBasic
+          type="button"
+          size="small"
+          color="sub"
+          icon-left="check-square"
+          :disabled="disabledAssets"
+          @click="onSelectAll()">
+          모두선택
+        </ButtonBasic>
+        <ButtonBasic
+          type="button"
+          size="small"
+          color="error"
+          icon-left="trash-2"
+          :disabled="selectedAssets"
+          @click="onClickDeleteItems">
+          삭제
+        </ButtonBasic>
+      </ButtonGroup>
+      <ControlTheme/>
     </div>
-    <p class="files-total">Count: <em>{{localStore.global.index.length}}</em></p>
+    <p class="files-total">
+      업로드: <em>{{localStore.global.index.length}}</em>
+    </p>
   </header>
   <Loading v-if="loading" class="files-loading"/>
   <Attachments
@@ -127,10 +118,12 @@ import { printf } from '../../../libs/string'
 import { toast } from '../../../modules/toast'
 import { createMarkdownItems, createHtmlItems } from '../itemsUtil'
 import { Modal, ModalBody } from '../../modal'
-import { ButtonBasic } from '../../button'
+import { ButtonBasic, ButtonGroup } from '../../button'
 import Attachments from '../attachments/index.vue'
 import Loading from '../../etc/loading.vue'
 import UrlUploader from '../url-uploader/index.vue'
+import ControlTheme from './assets/control-theme.vue'
+import Upload from './assets/upload.vue'
 
 const $file = ref()
 const $attachments = ref()

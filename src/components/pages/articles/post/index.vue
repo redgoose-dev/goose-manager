@@ -19,7 +19,8 @@
         placeholder="아티클 제목.."
         :error="!!forms.title.error"
         :required="true"
-        pattern="\S(.*\S)?"/>
+        pattern="\S(.*\S)?"
+        @submit="onSubmit"/>
     </Field>
     <Columns style="--columns-template: .75fr 1fr">
       <Field label="아티클 날짜" for="order">
@@ -31,7 +32,8 @@
           placeholder="0000-00-00"
           :error="!!forms.order.error"
           :required="true"
-          style="--input-width: 140px"/>
+          style="--input-width: 140px"
+          @submit="onSubmit"/>
         <Help v-if="!!forms.order.error" color="error">
           {{forms.order.error}}
         </Help>
@@ -77,36 +79,41 @@
       </ButtonBasic>
     </template>
     <template v-if="props.mode === 'edit'" #right>
-      <ButtonBasic
-        type="button"
-        :icon-left="processing ? 'loader' : 'save'"
-        :rotate-icon="processing"
-        @click="publishing">
-        저장하기
-      </ButtonBasic>
-      <ButtonBasic
-        type="submit"
-        color="key"
-        :icon-left="processing ? 'loader' : 'check'"
-        :rotate-icon="processing">
-        이티클 수정
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic
+          type="submit"
+          :icon-left="processing ? 'loader' : 'save'"
+          :rotate-icon="processing">
+          저장하기
+        </ButtonBasic>
+        <ButtonBasic
+          type="button"
+          color="key"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
+          @click="onPublishing">
+          이티클 수정
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
     <template v-else #right>
-      <ButtonBasic
-        type="button"
-        :icon-left="processing ? 'loader' : 'thermometer'"
-        :rotate-icon="processing"
-        @click="saveDraft">
-        임시저장
-      </ButtonBasic>
-      <ButtonBasic
-        type="submit"
-        color="key"
-        :icon-left="processing ? 'loader' : 'check'"
-        :rotate-icon="processing">
-        퍼블리싱
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic
+          type="button"
+          :icon-left="processing ? 'loader' : 'thermometer'"
+          :rotate-icon="processing"
+          @click="saveDraft">
+          임시저장
+        </ButtonBasic>
+        <ButtonBasic
+          type="button"
+          color="key"
+          :icon-left="processing ? 'loader' : 'check'"
+          :rotate-icon="processing"
+          @click="onPublishing">
+          퍼블리싱
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
   </Controller>
   <teleport to="#modals">
@@ -148,7 +155,7 @@ import { FormInput, FormSelect, FormRadio } from '../../../forms'
 import { Fieldset, Field, Label, Labels, Help, Columns } from '../../../forms/fieldset'
 import { Controller } from '../../../navigation'
 import { Modal, ModalBody } from '../../../modal'
-import { ButtonBasic } from '../../../button'
+import { ButtonBasic, ButtonGroup } from '../../../button'
 import Editor from './editor.vue'
 import FilesManager from '../../../files-manager/index.vue'
 
@@ -212,8 +219,6 @@ const fileManagerOptions = computed(() => {
 
 async function save(type)
 {
-  let json = Object.assign({}, forms.json)
-
   // check error
   forms.order.error = null
 
@@ -308,11 +313,32 @@ async function publishing()
         break
     }
     processing.value = false
+    throw new Error('error publishing')
   }
 }
 async function onSubmit()
 {
-  await publishing()
+  switch (props.mode)
+  {
+    case 'create':
+    default:
+      await saveDraft()
+      break
+    case 'edit':
+      await publishing()
+      break
+  }
+}
+async function onPublishing()
+{
+  try
+  {
+    await publishing()
+  }
+  catch (e)
+  {
+    return
+  }
   switch (props.mode)
   {
     case 'edit':
