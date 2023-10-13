@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="content-over">
   <PageHeader module="json"/>
   <TabCategory
     v-if="data.categories?.length > 0"
