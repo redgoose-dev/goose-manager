@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import Empty from './thumbnail-empty.vue';
+import { computed } from 'vue'
+import Empty from './thumbnail-empty.vue'
 
 const props = defineProps({
   src: String,
@@ -20,29 +20,35 @@ const props = defineProps({
   target: String,
   alt: String,
   type: { type: String, default: 'cover' }, // cover,contain
-});
+  width: Number,
+  height: Number,
+})
 const tag = computed(() => {
-  if (props.href) return /^http/.test(props.href) ? 'a' : 'router-link';
-  else return 'figure';
-});
+  if (props.href) return /^http/.test(props.href) ? 'a' : 'router-link'
+  else return 'figure'
+})
 const rootProps = computed(() => {
-  let attr = {};
+  let attr = {}
   switch (tag.value)
   {
     case 'a':
-      attr.href = props.href || '#';
+      attr.href = props.href || '#'
       if (props.target) attr.target = props.target;
-      break;
+      break
     case 'router-link':
-      attr.to = props.href || '#';
-      break;
+      attr.to = props.href || '#'
+      break
   }
   attr.class = [
     'thumbnail',
     `thumbnail--type-${props.type}`,
-  ];
-  return attr;
-});
+  ]
+  if (Boolean(props.width && props.height))
+  {
+    attr.style = { '--img-ratio': `${props.width}/${props.height}` }
+  }
+  return attr
+})
 </script>
 
 <style lang="scss" scoped>
@@ -53,6 +59,7 @@ const rootProps = computed(() => {
   margin: 0;
   user-select: none;
   overflow: hidden;
+  aspect-ratio: var(--img-ratio, unset);
   > * {
     transform-origin: 50% 50%;
     transition: transform 240ms ease-out;

@@ -32,6 +32,7 @@ export async function getItems()
         `모듈: ${item.module}`,
         `번호: ${item.target_srl}`,
       ].filter(Boolean),
+      json: item.json,
     })),
   }
 }

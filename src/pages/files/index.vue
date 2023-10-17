@@ -10,7 +10,8 @@
       :image="item.image"
       :title="item.title"
       :alt="item.title"
-      :meta="item.meta"/>
+      :meta="item.meta"
+      :json="item.json"/>
   </Items>
   <Empty v-else title="파일이 없습니다."/>
   <Pagination

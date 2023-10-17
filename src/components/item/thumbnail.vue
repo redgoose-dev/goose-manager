@@ -7,6 +7,8 @@
     :href="props.href"
     :target="props.target"
     :alt="props.alt"
+    :width="props.json?.width"
+    :height="props.json?.height"
     class="item__thumbnail"/>
   <div class="item__body">
     <ItemTitle
@@ -50,6 +52,7 @@ const props = defineProps({
   nav: Array,
   href: String,
   target: String,
+  json: { type: Object, default: {} },
 })
 </script>
 
