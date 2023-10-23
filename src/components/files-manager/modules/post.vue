@@ -13,6 +13,7 @@
     <div class="files-header__left">
       <ButtonGroup>
         <Upload
+          :disabled="disabledUploadButton"
           @upload-file="onClickUploadFiles"
           @upload-url="showUploadUrl = true"/>
         <ButtonBasic
@@ -34,7 +35,7 @@
           삭제
         </ButtonBasic>
       </ButtonGroup>
-      <ControlTheme/>
+      <IndexFilter/>
     </div>
     <p class="files-total">
       업로드: <em>{{localStore.post.index.length}} / {{localStore.post.limitCount}}</em>
@@ -155,7 +156,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-import { fileManagerStore } from '../../../store/files-manager'
+import { fileManagerStore } from '../store'
 import { getItemsPost, removeFilesPost, uploadFilePost } from '../../../structure/files/manager'
 import { createFullPath } from '../../../structure/files/util'
 import { err } from '../../../libs/error'
@@ -170,7 +171,7 @@ import Loading from '../../etc/loading.vue'
 import ThumbnailEditor from '../thumbnail/editor.vue'
 import ThumbnailPreview from '../thumbnail/preview.vue'
 import UrlUploader from '../url-uploader/index.vue'
-import ControlTheme from './assets/control-theme.vue'
+import IndexFilter from './assets/index-filter.vue'
 import Upload from './assets/upload.vue'
 
 const $file = ref()

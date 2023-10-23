@@ -44,7 +44,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { fileManagerStore } from '../../store/files-manager'
+import { fileManagerStore } from './store'
 import Icon from '../icons/index.vue'
 
 const props = defineProps({

@@ -55,7 +55,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { controlWindow } from '../util'
-import { fileManagerStore } from '../../../store/files-manager'
+import { fileManagerStore } from '../store'
 import { ButtonBasic, ButtonGroup } from '../../button'
 import { Controller } from '../../navigation'
 import Items from './items.vue'

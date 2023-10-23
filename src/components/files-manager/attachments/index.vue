@@ -42,7 +42,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { fileManagerStore } from '../../../store/files-manager'
+import { fileManagerStore } from '../store'
 import { selectItem, selectAll } from '../selectItems'
 import Icon from '../../icons/index.vue'
 import Item from './item/index.vue'

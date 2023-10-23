@@ -16,7 +16,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { fileManagerStore } from '../../../../store/files-manager'
+import { fileManagerStore } from '../../store'
 import ThemeThumbnail from './theme-thumbnail.vue'
 import ThemeList from './theme-list.vue'
 

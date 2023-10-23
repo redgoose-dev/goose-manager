@@ -110,7 +110,7 @@
 <script setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { preferenceStore } from '../../../store/preference'
-import { fileManagerStore } from '../../../store/files-manager'
+import { fileManagerStore } from '../store'
 import { getItemsGlobal, uploadFileGlobal, removeFilesGlobal } from '../../../structure/files/manager'
 import { err } from '../../../libs/error'
 import { pureObject } from '../../../libs/object'
@@ -122,7 +122,7 @@ import { ButtonBasic, ButtonGroup } from '../../button'
 import Attachments from '../attachments/index.vue'
 import Loading from '../../etc/loading.vue'
 import UrlUploader from '../url-uploader/index.vue'
-import ControlTheme from './assets/control-theme.vue'
+import ControlTheme from './assets/index-filter.vue'
 import Upload from './assets/upload.vue'
 
 const $file = ref()

@@ -33,7 +33,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
-import { fileManagerStore } from '../../store/files-manager'
+import { fileManagerStore } from './store'
 import { controlWindow, arrayToTextForReturn } from './util'
 import { Modal, ModalBody } from '../modal'
 import Tabs from './tabs.vue'
@@ -101,6 +101,7 @@ const showTabButtons = computed(() => {
 })
 
 onMounted(() => {
+  initialize()
   window.on('keyup.file-manager', e => shortcuts(e, 'keyup'))
   window.on('keydown.file-manager', e => shortcuts(e, 'keydown'))
   localStore.useShortcut = true
@@ -110,8 +111,6 @@ onUnmounted(() => {
   window.off('keyup.file-manager')
   window.off('keydown.file-manager')
 })
-
-initialize()
 
 function initialize()
 {

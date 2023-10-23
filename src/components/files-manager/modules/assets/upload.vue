@@ -5,6 +5,7 @@
     size="small"
     color="key"
     icon-left="upload"
+    :disabled="props.disabled"
     @click="emits('upload-file')">
     업로드
   </ButtonBasic>
@@ -31,6 +32,9 @@
 import { ButtonBasic } from '../../../button'
 import Icon from '../../../icons/index.vue'
 
+const props = defineProps({
+  disabled: Boolean,
+})
 const emits = defineEmits([ 'upload-file', 'upload-url' ])
 </script>
 
@@ -38,7 +42,7 @@ const emits = defineEmits([ 'upload-file', 'upload-url' ])
 @use '../../../../assets/scss/mixins';
 .dropdown {
   position: relative;
-  &:hover > :is(.context) {
+  &:hover:not(:has(:disabled)) > :is(.context) {
     opacity: 1;
     pointer-events: auto;
   }

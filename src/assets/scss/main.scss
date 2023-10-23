@@ -5,6 +5,7 @@
 @import url('https://assets.redgoose.me/fonts/index.css');
 
 :root {
+  color-scheme: light dark;
   // color
   --color-bg-rgb: #{variables.$color-light-bg-rgb};
   --color-bg: #{variables.$color-light-bg};

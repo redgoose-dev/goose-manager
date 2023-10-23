@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { pureObject } from '../libs/object'
-import * as storage from '../libs/storage'
+import { pureObject } from '../../libs/object'
+import * as storage from '../../libs/storage'
 
 const STORAGE_KEY = 'file-manager'
 const defaultStorageStructure = {
   attachmentTheme: 'thumbnail', // thumbnail,list
   attachmentDisplayImage: false,
+  attachmentGroup: '', // type,size,imageSize
 }
 const defaultStructure = {
   tab: 'global',
@@ -40,7 +41,11 @@ export const fileManagerStore = defineStore('file-manager', {
   {
     return pureObject(defaultStructure)
   },
-  getters: {},
+  getters: {
+    // TODO: 그룹타입에 따라 첨부파일 목록의 형태가 달라지는데 여기서 뽑아내는게 좋을거 같다.
+    // TODO: 그룹타입 값이 없으면 그대로 사용하지만 있으면 목록 구조가 달라진다.
+    // TODO: post,global 값이 따로따로 존재하는데 이걸 어떻게 풀어갈지 좀 고민이 필요하다.
+  },
   actions: {
     setup()
     {
@@ -57,6 +62,7 @@ export const fileManagerStore = defineStore('file-manager', {
       {
         this.attachmentTheme = storageResource.attachmentTheme
         this.attachmentDisplayImage = storageResource.attachmentDisplayImage
+        this.attachmentGroup = storageResource.attachmentGroup
       }
     },
     changeAttachmentTheme(newTheme)
@@ -68,7 +74,12 @@ export const fileManagerStore = defineStore('file-manager', {
     {
       this.attachmentDisplayImage = value
       updateStorage({ attachmentDisplayImage: value })
-    }
+    },
+    changeGroup(value = '')
+    {
+      this.attachmentGroup = value
+      updateStorage({ attachmentGroup: value })
+    },
   },
 })
 
