@@ -1,6 +1,8 @@
 @use '../../../assets/scss/mixins';
 
 .wrap {
+  --size-bottom-space: 100px;
+  padding: 0 0 var(--size-bottom-space);
   &.drag {
     :is(*) {
       pointer-events: none;
@@ -8,16 +10,43 @@
   }
 }
 
+.attachment-groups {
+  display: grid;
+  gap: 8px 0;
+  padding: 16px 0 0;
+  details {
+    summary {
+      margin: 0;
+      padding: 12px 16px;
+      line-height: 1.05;
+      user-select: none;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -.75px;
+      cursor: pointer;
+      em {
+        font-style: normal;
+        &:before {
+          content: '(';
+        }
+        &:after {
+          content: ')';
+        }
+      }
+    }
+    --attachments-gap: 4px 16px;
+  }
+}
+
 .attachments {
   position: relative;
   box-sizing: border-box;
-  padding: 0 0 100px;
   .index {
     margin: 0;
     padding: var(--attachments-gap, 16px);
     list-style: none;
     display: grid;
-    gap: var(--attachments-inner-gap, 12px);
+    gap: var(--attachments-inner-gap, 6px);
     grid-template-columns: repeat(var(--attachments-column), 1fr);
     > li {
       display: grid;
@@ -31,28 +60,35 @@
   }
   @include mixins.responsive(tablet) {
     :is(.index.thumbnail) {
-      --attachments-column: 4;
+      --attachments-column: 5;
     }
     :is(.index.list) {
       --attachments-column: 2;
     }
   }
   @include mixins.responsive(desktop) {
-    --attachments-inner-gap: 12px;
+    --attachments-inner-gap: 8px;
     :is(.index.thumbnail) {
-      --attachments-column: 5;
+      --attachments-column: 6;
     }
     :is(.index.list) {
       --attachments-column: 3;
     }
   }
   @include mixins.responsive(desktop-large) {
-    --attachments-inner-gap: 8px;
     :is(.index.thumbnail) {
-      --attachments-column: 6;
+      --attachments-column: 8;
     }
     :is(.index.list) {
       --attachments-column: 4;
+    }
+  }
+  @include mixins.responsive(desktop-max) {
+    :is(.index.thumbnail) {
+      --attachments-column: 10;
+    }
+    :is(.index.list) {
+      --attachments-column: 5;
     }
   }
 }

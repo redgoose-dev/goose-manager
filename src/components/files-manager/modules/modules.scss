@@ -20,14 +20,14 @@
   background-color: var(--color-shape-bg);
   height: var(--files-header-height, 48px);
   padding: 0 16px;
-  box-shadow: 0 1px 10px 0 rgb(var(--color-base-rgb) / 20%), 0 1px 0 rgb(var(--color-base-rgb) / 5%);
+  box-shadow: 0 2px 12px hsla(0 0% 0% / 15%), 0 .5px 0 hsla(0 0% 0% / 10%);
   &__left {
     display: flex;
     align-items: center;
     gap: 16px;
   }
   @include mixins.dark-mode() {
-    box-shadow: 0 1px 10px 0 rgb(0 0 0 / 30%), 0 1px 0 rgb(255 255 255 / 20%);
+    box-shadow: 0 1px 12px 0 hsla(0 0% 0% / 30%), 0 .5px 0 hsla(0 0% 100% / 20%);
   }
 }
 
@@ -54,11 +54,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  background: var(--color-shape-bg);
+  background: var(--color-bg);
+  box-shadow: 0 -2px 12px hsla(0 0% 0% / 15%), 0 -.5px 0 hsla(0 0% 0% / 10%);
   > * {
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+  @include mixins.dark-mode() {
+    box-shadow: 0 -2px 12px 0 hsla(0 0% 0% / 30%), 0 -.5px 0 hsla(0 0% 100% / 20%);
   }
 }
 

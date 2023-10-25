@@ -6,6 +6,7 @@
   @if ($range == tablet) { @media (min-width: 768px) { @content; } }
   @else if ($range == desktop) { @media (min-width: 1024px) { @content; } }
   @else if ($range == desktop-large) { @media (min-width: 1440px) { @content; } }
+  @else if ($range == desktop-max) { @media (min-width: 1920px) { @content; } }
 }
 
 // for retina

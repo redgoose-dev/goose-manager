@@ -10,6 +10,7 @@ function filteringItemGlobal(src)
     size: src.size,
     type: src.type,
     badge: [],
+    json: src.json || {},
   }
 }
 function filteringItemPost(src)
@@ -22,6 +23,7 @@ function filteringItemPost(src)
     size: src.size,
     type: src.type,
     badge: [],
+    json: src.json || {},
   }
 }
 

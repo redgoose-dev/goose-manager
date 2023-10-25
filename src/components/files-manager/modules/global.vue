@@ -44,7 +44,9 @@
   <Attachments
     v-else
     ref="$attachments"
-    :index="localStore.global.index"
+    :count="localStore.global.index.length"
+    :index="localStore.getGlobalIndex"
+    :grouping="!!localStore.attachmentGroup"
     :processing="processing"
     @change-select="localStore.global.selected = $event"
     @select-context-item="onSelectContextItem"

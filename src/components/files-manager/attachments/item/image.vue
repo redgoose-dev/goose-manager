@@ -49,7 +49,7 @@ const typeIcon = computed(() => {
   flex-direction: column;
   justify-content: center;
   margin: 0;
-  background: var(--color-image-bg, hsl(0 0% 90%));
+  background: var(--color-image-bg, hsl(0 0% 92%));
   min-width: 0;
   > svg {
     display: block;
