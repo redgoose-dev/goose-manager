@@ -38,7 +38,7 @@ const loading = ref(true)
 onMounted(async () => {
   try
   {
-    let { files } = await getData(Number(route.params.srl))
+    let { files } = await getData(Number(route.params.srl), 'json')
     index.value = files.index
     total.value = files.total
     loading.value = false

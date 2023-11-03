@@ -39,7 +39,7 @@ onMounted(async () => {
   try
   {
     const srl = Number(route.params.srl) || undefined
-    let { files } = await getData(srl)
+    let { files } = await getData(srl, 'checklist')
     index.value = files.index
     total.value = files.total
     loading.value = false

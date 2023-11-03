@@ -3,11 +3,11 @@ import { createFullPath } from './util'
 import { getByte, getResizePath } from '../../libs/string'
 import { getDate } from '../../libs/date'
 
-async function requestFiles(srl, module)
+async function requestFiles(targetSrl, module)
 {
   const { success, message, data } = await get('/files/', {
     module,
-    target: srl,
+    target: targetSrl,
     order: 'srl',
     sort: 'desc',
     unlimit: 1,
@@ -42,10 +42,10 @@ async function requestFiles(srl, module)
   }
 }
 
-export default async function getData(srl, module)
+export default async function getData(targetSrl, module)
 {
   let [ files ] = await Promise.all([
-    requestFiles(srl, module),
+    requestFiles(targetSrl, module),
   ])
   return {
     files,

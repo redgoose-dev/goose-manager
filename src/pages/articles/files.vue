@@ -38,7 +38,8 @@ const loading = ref(true)
 onMounted(async () => {
   try
   {
-    let { files } = await getData(Number(route.params.articleSrl))
+    const srl = Number(route.params.articleSrl)
+    let { files } = await getData(srl, 'articles')
     index.value = files.index
     total.value = files.total
     loading.value = false
