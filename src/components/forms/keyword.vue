@@ -19,6 +19,7 @@
       :minlength="props.minlength"
       :placeholder="props.placeholder"
       @input="$emit('update:modelValue', $event.target.value)"
+      @click="$emit('click-input', $event)"
       @keydown.enter.prevent="$emit('submit', props.modelValue)"
       @keydown.esc="$emit('clear')"/>
   </p>
@@ -29,7 +30,7 @@
     title="Clear"
     class="keyword-text__clear"
     @click="emits('clear')">
-    <Icon name="x-circle"/>
+    <Icon :name="props.iconClear"/>
   </button>
   <button
     v-if="props.useSubmit"
@@ -41,7 +42,7 @@
     ]"
     @click="$emit('submit', props.modelValue)">
     <Icon v-if="props.processing" name="loader"/>
-    <Icon v-else name="search"/>
+    <Icon v-else :name="props.iconSubmit"/>
   </button>
 </div>
 </template>
@@ -65,8 +66,10 @@ const props = defineProps({
   processing: Boolean,
   useClear: Boolean,
   useSubmit: Boolean,
+  iconSubmit: { type: String, default: 'search' },
+  iconClear: { type: String, default: 'x-circle' },
 })
-const emits = defineEmits([ 'update:modelValue', 'clear', 'submit' ])
+const emits = defineEmits([ 'update:modelValue', 'clear', 'submit', 'click-input' ])
 const keywordDisabled = computed(() => {
   return props.disabled || props.processing
 })

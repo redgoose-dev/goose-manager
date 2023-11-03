@@ -8,7 +8,7 @@
   border: none;
   border-radius: 2px;
   box-sizing: border-box;
-  padding: var(--input-padding, 0 12px);
+  padding: var(--input-padding, (0 12px));
   background: var(--input-bg, rgb(255 255 255));
   color: var(--input-text-color, var(--color-base));
   box-shadow:
@@ -21,7 +21,7 @@
     color: var(--input-placeholder, rgb(150 150 150 / 100%));
   }
   &:read-only {
-    background: var(--input-readonly, rgb(232 232 232));
+    background: var(--input-readonly, hsl(0 0% 94%));
   }
   &:disabled {
     cursor: not-allowed;
@@ -64,7 +64,7 @@
     --input-shadow-2: 0 0 0 1px rgb(160 160 160 / 100%);
     --input-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
     --input-placeholder: rgb(120 120 120 / 100%);
-    --input-readonly: rgb(38 38 38);
+    --input-readonly: hsl(0 0% 12%);
     &--error {
       --input-shadow-1: inset 0 1px 6px rgb(0 0 0 / 15%);
       --input-shadow-2: 0 0 0 1px var(--color-error);

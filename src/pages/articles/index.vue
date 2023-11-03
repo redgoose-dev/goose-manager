@@ -16,6 +16,7 @@
           :href="`./${item.srl}/`"
           :alt="item.title"
           :image="item.image"
+          thumbnail-type="cover"
           :nav="[
             { label: '수정', href: `./${item.srl}/edit/` },
             { label: '삭제', href: `./${item.srl}/delete/` },

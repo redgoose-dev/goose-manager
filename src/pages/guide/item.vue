@@ -57,6 +57,7 @@
         <Thumbnail
           href="/"
           image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+          thumbnail-type="cover"
           title="card title"
           alt="card title"
           description="description message"
@@ -73,6 +74,7 @@
         <Thumbnail
           href="/"
           image="https://goose.redgoose.me/data/upload/original/202107/rg-20210521-000009.jpg"
+          thumbnail-type="cover"
           title="card title"
           alt="card title"
           :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
@@ -141,6 +143,7 @@
           v-for="_ in Array(6)"
           href="/"
           image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+          thumbnail-type="cover"
           title="card title"
           alt="card title"
           :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
@@ -164,6 +167,7 @@
           v-for="(o,k) in images"
           href="/"
           :image="o"
+          thumbnail-type="cover"
           :title="`card title-${k}`"
           alt="card title"
           :meta="[ 'Public', '0000-00-00', 'hit:234' ]"/>

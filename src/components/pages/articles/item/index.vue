@@ -17,18 +17,22 @@
   <div class="article__body">
     <div ref="$content" v-html="data.article.content" class="redgoose-body redgoose-body--dark"/>
   </div>
-  <Files
-    v-if="data.files?.length > 0"
-    :items="data.files"
-    class="article__files"/>
   <Controller>
     <template #left>
-      <ButtonBasic
-        type="button"
-        :href="`../${createQueries(['category','page'], route.query)}`"
-        icon-left="list">
-        목록
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic
+          type="button"
+          :href="`../${createQueries(['category','page'], route.query)}`"
+          icon-left="list">
+          목록
+        </ButtonBasic>
+        <ButtonBasic
+          type="button"
+          :href="`./files/`"
+          icon-left="file">
+          첨부파일
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
     <template #right>
       <ButtonGroup>
@@ -40,7 +44,7 @@
           icon-left="plus">
           만들기
         </ButtonBasic>
-        <ButtonBasic href="./change-nest/">
+        <ButtonBasic href="./change-nest/" icon-left="package">
           둥지변경
         </ButtonBasic>
         <ButtonBasic
@@ -83,7 +87,6 @@ import Loading from '../../../etc/loading.vue'
 import { Controller } from '../../../navigation'
 import { Modal, ModalBody } from '../../../modal'
 import { ButtonBasic, ButtonGroup } from '../../../button'
-import Files from './files.vue'
 import Comments from './comments.vue'
 import PreviewImage from './preview-image.vue'
 
@@ -96,7 +99,6 @@ const props = defineProps({
 const data = reactive({
   article: undefined,
   nest: undefined,
-  files: undefined,
 })
 const loading = ref(true)
 const previewImage = ref('')
@@ -105,10 +107,9 @@ const useComments = computed(() => (Number(data.nest.json.useComment) === 1))
 onMounted(async () => {
   try
   {
-    let { article, nest, files } = await getData(props.srl, !props.nestSrl)
+    let { article, nest } = await getData(props.srl, !props.nestSrl)
     data.article = article
     data.nest = nest
-    data.files = files
     loading.value = false
     await nextTick()
     initContentEvents()

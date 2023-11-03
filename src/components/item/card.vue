@@ -7,6 +7,7 @@
     :href="props.href"
     :target="props.target"
     :alt="props.alt"
+    type="cover"
     class="item__thumbnail"/>
   <div class="item__body">
     <ItemTitle

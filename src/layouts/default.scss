@@ -19,7 +19,6 @@
     margin: 0 auto;
     align-items: center;
     height: 100%;
-    max-width: var(--size-content-body);
   }
   &__logo {
     margin: 0;
@@ -246,7 +245,7 @@
 
 // container
 .container {
-  margin: 40px 0 60px;
+  margin: 40px 0 80px;
   padding: 0 var(--size-side-padding);
   &__wrap {
     max-width: var(--size-content-body);
@@ -265,8 +264,16 @@
     margin: 0 auto;
   }
   &__address {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
     font-family: var(--font-eng);
     font-size: 11px;
     color: var(--color-weak);
+    line-height: 1.15;
+    > * {
+      display: block;
+    }
   }
 }

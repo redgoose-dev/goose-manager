@@ -5,7 +5,9 @@
     props.type === 'full' && 'body--full',
     props.type === 'window' && 'body--window',
   ]"
-  @click.stop="">
+  @click.stop
+  @pointerdown.stop
+  @pointerup.stop>
   <slot/>
 </div>
 </template>

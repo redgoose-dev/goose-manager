@@ -95,7 +95,8 @@
   <footer class="layout-footer">
     <div class="layout-footer__wrap">
       <address class="layout-footer__address">
-        Copyright © 2014-{{year}} <a href="https://redgoose.me" target="_blank">redgoose.me</a>
+        <span>Copyright © 2014-{{year}}</span>
+        <a href="https://redgoose.me" target="_blank">redgoose.me</a>
       </address>
     </div>
   </footer>

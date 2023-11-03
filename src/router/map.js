@@ -95,6 +95,12 @@ const nests = [
     component: () => import('../pages/nests/articles/change-nest.vue'),
     meta: { active: 'nests' },
   },
+  {
+    path: '/nests/:nestSrl/articles/:articleSrl/files/',
+    name: 'NestsArticleFiles',
+    component: () => import('../pages/articles/files.vue'),
+    meta: { active: 'nests' },
+  },
   // categories
   {
     path: '/nests/:nestSrl/categories/',
@@ -152,6 +158,12 @@ const articles = [
     component: () => import('../pages/articles/change-nest.vue'),
     meta: { active: 'articles' },
   },
+  {
+    path: '/articles/:articleSrl/files/',
+    name: 'ArticleFiles',
+    component: () => import('../pages/articles/files.vue'),
+    meta: { active: 'articles' },
+  },
 ]
 const files = [
   {
@@ -190,6 +202,12 @@ const json = [
     path: '/json/:srl/delete/',
     name: 'JsonDelete',
     component: () => import('../pages/json/delete.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/:srl/files/',
+    name: 'JsonFiles',
+    component: () => import('../pages/json/files.vue'),
     meta: { active: 'json' },
   },
   // categories
@@ -279,6 +297,12 @@ const checklist = [
     path: '/checklist/:srl/',
     name: 'ChecklistItem',
     component: () => import('../pages/checklist/item.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/:srl/files/',
+    name: 'ChecklistItemFiles',
+    component: () => import('../pages/checklist/files.vue'),
     meta: { active: 'checklist' },
   },
   {

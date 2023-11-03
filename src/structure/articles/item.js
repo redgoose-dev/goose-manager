@@ -33,31 +33,14 @@ async function requestNest(srl)
   return res.data
 }
 
-async function requestFiles(articleSrl)
-{
-  const { success, message, data } = await get('/files/', {
-    module: 'articles',
-    target: articleSrl,
-    unlimit: 1,
-  })
-  if (!success) throw new Error(message)
-  return data.index.map((item) => {
-    return {
-      ...item,
-    }
-  })
-}
-
 export default async function getData(srl, root)
 {
   let article = await requestArticle(srl, root)
-  let [ nest, files ] = await Promise.all([
+  let [ nest ] = await Promise.all([
     requestNest(article.nestSrl),
-    requestFiles(article.srl),
   ])
   return {
     article,
     nest,
-    files,
   }
 }

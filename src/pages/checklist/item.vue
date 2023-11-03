@@ -1,6 +1,6 @@
 <template>
 <article class="checklist">
-  <PageHeader module="checklist" title="Checklist item"/>
+  <PageHeader module="checklist" title="Checklist / Item"/>
   <div class="checklist__body">
     <Loading v-if="loading"/>
     <ChecklistItem
@@ -13,20 +13,27 @@
       :files="state.files"/>
     <Controller>
       <template #left>
-        <ButtonBasic href="../list/" icon-left="list">
-          목록
-        </ButtonBasic>
-        <ButtonBasic color="key" href="../" icon-left="check">
-          오늘로 이동
-        </ButtonBasic>
+        <ButtonGroup>
+          <ButtonBasic href="../list/" icon-left="list">
+            목록
+          </ButtonBasic>
+          <ButtonBasic href="./files/" icon-left="file">
+            첨부파일
+          </ButtonBasic>
+          <ButtonBasic color="key" href="../" icon-left="check">
+            오늘로 이동
+          </ButtonBasic>
+        </ButtonGroup>
       </template>
       <template #right>
-        <ButtonBasic color="weak" href="./edit/" icon-left="edit">
-          수정
-        </ButtonBasic>
-        <ButtonBasic color="error" href="./delete/" icon-left="trash">
-          삭제
-        </ButtonBasic>
+        <ButtonGroup>
+          <ButtonBasic color="weak" href="./edit/" icon-left="edit">
+            수정
+          </ButtonBasic>
+          <ButtonBasic color="error" href="./delete/" icon-left="trash">
+            삭제
+          </ButtonBasic>
+        </ButtonGroup>
       </template>
     </Controller>
   </div>
@@ -39,7 +46,7 @@ import { useRoute } from 'vue-router'
 import { getItem } from '../../structure/checklist/item'
 import { err } from '../../libs/error'
 import PageHeader from '../../components/page/header/index.vue'
-import { ButtonBasic } from '../../components/button'
+import { ButtonGroup, ButtonBasic } from '../../components/button'
 import { Controller } from '../../components/navigation'
 import ChecklistItem from '../../components/pages/checklist/item.vue'
 import Loading from '../../components/etc/loading.vue'

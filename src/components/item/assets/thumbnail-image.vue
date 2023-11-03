@@ -4,6 +4,8 @@
     v-if="props.src"
     :src="props.src"
     :alt="props.alt"
+    :width="props.width"
+    :height="props.height"
     loading="lazy"
     class="thumbnail__image">
   <Empty v-else title="no item" class="thumbnail__empty"/>
@@ -19,7 +21,7 @@ const props = defineProps({
   href: [ String, Object ],
   target: String,
   alt: String,
-  type: { type: String, default: 'cover' }, // cover,contain
+  type: String, // cover,contain
   width: Number,
   height: Number,
 })
@@ -41,7 +43,7 @@ const rootProps = computed(() => {
   }
   attr.class = [
     'thumbnail',
-    `thumbnail--type-${props.type}`,
+    props.type && `thumbnail--type-${props.type}`,
   ]
   if (Boolean(props.width && props.height))
   {
@@ -59,17 +61,17 @@ const rootProps = computed(() => {
   margin: 0;
   user-select: none;
   overflow: hidden;
-  aspect-ratio: var(--img-ratio, unset);
+  aspect-ratio: var(--item-img-ratio, unset);
   > * {
     transform-origin: 50% 50%;
     transition: transform 240ms ease-out;
   }
   &__image {
     display: block;
-    width: 100%;
-    height: 100%;
     box-sizing: border-box;
     background-color: var(--item-thumbnail-bg, rgb(220 220 220));
+    width: 100%;
+    height: auto;
   }
   &__empty {
     box-sizing: border-box;
@@ -77,11 +79,13 @@ const rootProps = computed(() => {
   &--type {
     &-cover {
       .thumbnail__image {
+        height: 100%;
         object-fit: cover;
       }
     }
     &-contain {
       .thumbnail__image {
+        height: 100%;
         object-fit: contain;
       }
     }

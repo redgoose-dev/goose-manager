@@ -1,24 +1,19 @@
 <template>
-<article class="content-over">
+<article>
   <PageHeader module="files"/>
-  <Loading v-if="loading"/>
-  <Items v-else-if="index.length > 0" theme="brick" class="files-index">
-    <Thumbnail
-      v-for="item in index"
-      :href="item.href"
-      target="_blank"
-      :image="item.image"
-      :title="item.title"
-      :alt="item.title"
-      :meta="item.meta"
-      :json="item.json"/>
-  </Items>
-  <Empty v-else title="파일이 없습니다."/>
+  <div class="content-over">
+    <Loading v-if="loading"/>
+    <Files
+      v-else-if="index?.length > 0"
+      :items="index"/>
+    <Empty v-else title="파일이 없습니다."/>
+  </div>
   <Pagination
     v-model="page"
     :total="total"
     :size="preference.files.pagePerSize"
     :range="10"
+    class="pagination"
     @update:modelValue="onClickPageItem"/>
 </article>
 </template>
@@ -32,7 +27,7 @@ import { getItems } from '../../structure/files'
 import { serialize } from '../../libs/string'
 import { scrollTo } from '../../libs/util'
 import PageHeader from '../../components/page/header/index.vue'
-import { Items, Thumbnail } from '../../components/item'
+import Files from '../../components/pages/files/index.vue'
 import Pagination from '../../components/etc/pagination.vue'
 import Loading from '../../components/etc/loading.vue'
 import Empty from '../../components/error/empty.vue'
@@ -84,4 +79,8 @@ onMounted(() => {
 })
 </script>
 
-<style src="./index.scss" lang="scss" scoped></style>
+<style scoped>
+.pagination {
+  margin: 40px 0 0;
+}
+</style>

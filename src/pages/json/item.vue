@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="json" :title="`JSON / ${item.name}`"/>
+  <PageHeader module="json" :title="item.name ? `JSON / ${item.name}` : ' '"/>
   <Loading v-if="loading"/>
   <Fieldset v-else tag="section">
     <Field label="번호">{{item.srl}}</Field>
@@ -63,18 +63,15 @@
   </Fieldset>
   <Controller>
     <template #left>
-      <ButtonBasic href="../" icon-left="list">
-        목록
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic href="../" icon-left="list">목록</ButtonBasic>
+        <ButtonBasic type="button" :href="`./files/`" icon-left="file">첨부파일</ButtonBasic>
+      </ButtonGroup>
     </template>
     <template #right>
       <ButtonGroup>
-        <ButtonBasic href="./edit/" icon-left="edit">
-          수정
-        </ButtonBasic>
-        <ButtonBasic href="./delete/" color="key" icon-left="trash">
-          삭제
-        </ButtonBasic>
+        <ButtonBasic href="./edit/" icon-left="edit">수정</ButtonBasic>
+        <ButtonBasic href="./delete/" color="key" icon-left="trash">삭제</ButtonBasic>
       </ButtonGroup>
     </template>
   </Controller>
@@ -89,7 +86,7 @@ import getData from '../../structure/json/item'
 import PageHeader from '../../components/page/header/index.vue'
 import { Fieldset, Field } from '../../components/forms/fieldset'
 import { Controller } from '../../components/navigation'
-import { ButtonBasic, ButtonGroup } from '../../components/button'
+import { ButtonGroup, ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import JsonEditor from '../../components/json-editor/index.vue'
 import { ToolbarWrap, ToolbarGroup, ToolbarItem } from '../../components/navigation/toolbar'

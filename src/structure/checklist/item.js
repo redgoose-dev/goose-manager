@@ -12,22 +12,10 @@ function filteringItem(src)
   }
 }
 
-function filteringFiles(src)
-{
-  if (!src) return []
-  return src.map(o => {
-    return {
-      name: o.name,
-      path: o.path,
-      size: o.size,
-    }
-  })
-}
-
 export async function getLastItem()
 {
   const preference = preferenceStore()
-  let result, files, postDate
+  let result, postDate
   const params = { order: 'srl', sort: 'desc', size: 1 }
   let res = await get(`/checklist/`, params)
   let lastItem = res.data?.index[0]
@@ -49,17 +37,6 @@ export async function getLastItem()
     {
       result = lastItem
     }
-    // get files
-    try
-    {
-      res = await get(`/files/`, {
-        module: 'checklist',
-        target: result.srl,
-        unlimit: 1,
-      })
-      files = filteringFiles(res.data?.index)
-    }
-    catch (_) {}
   }
   else
   {
@@ -73,25 +50,18 @@ export async function getLastItem()
   }
   return {
     ...filteringItem(result),
-    files,
   }
 }
 
 export async function getItem(srl)
 {
   if (!srl) throw new Error('no srl')
-  let [ items, files ] = await Promise.all([
+  let [ items ] = await Promise.all([
     get(`/checklist/${srl}/`),
-    get('/files/', {
-      module: 'checklist',
-      target: srl,
-      unlimit: 1,
-    }),
   ])
   if (!items.success) throw new Error(items.message || 'Unknown error')
   return {
     ...filteringItem(items.data),
-    files: filteringFiles(files.data?.index),
   }
 }
 

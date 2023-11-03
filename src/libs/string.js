@@ -1,3 +1,5 @@
+const { VITE_API_URL } = import.meta.env
+
 /**
  * convert html string to element
  * https://stackoverflow.com/a/494348
@@ -45,16 +47,16 @@ export function getByte(bytes)
   return String(Math.round(bytes / Math.pow(1024, i))) + sizes[i]
 }
 
-export function serialize(obj, usePrefix = false)
+export function serialize(obj, usePrefix = false, useEncode = true)
 {
   let str = []
   let res
   for (let p in obj)
   {
-    if (obj.hasOwnProperty(p) && obj[p] !== undefined)
-    {
-      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
-    }
+    if (!obj.hasOwnProperty(p) || obj[p] === undefined || obj[p] === null) continue
+    if (typeof obj[p] === 'number' && isNaN(obj[p])) continue
+    const value = useEncode ? encodeURIComponent(obj[p]) : obj[p]
+    str.push(encodeURIComponent(p) + '=' + value)
   }
   res = str.join('&')
   return (res && usePrefix ? '?' : '') + res
@@ -63,4 +65,17 @@ export function serialize(obj, usePrefix = false)
 export function getPath(path)
 {
   return path.replaceAll('//', '/')
+}
+
+/**
+ * get resize path
+ * @param {string} src
+ * @param {string} query
+ * @return {string}
+ */
+export function getResizePath(src, query = 'width=640&height=480')
+{
+  const regexp = new RegExp(`^data/upload`)
+  const path = src.replace(regexp, '')
+  return `${VITE_API_URL}/files/resize/?path=${path}&${query}`
 }

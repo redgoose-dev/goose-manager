@@ -8,14 +8,18 @@
     v-model:checkboxes="checkboxes"
     :date="state.date"
     :today="today"
-    :files="state.files"
     :percent="NaN"
     @update:modelValue="onUpdateContent"/>
   <Controller>
     <template #left>
-      <ButtonBasic href="./list/" icon-left="list">
-        목록
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic href="./list/" icon-left="list">
+          목록
+        </ButtonBasic>
+        <ButtonBasic :href="`./${state.srl}/files/`" icon-left="file">
+          첨부파일
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
     <template #right>
       <ButtonBasic color="key" href="./edit/" icon-left="edit">
@@ -35,7 +39,7 @@ import { checkTime, countingCheckbox } from '../../structure/checklist/lib'
 import { err } from '../../libs/error'
 import PageHeader from '../../components/page/header/index.vue'
 import Loading from '../../components/etc/loading.vue'
-import { ButtonBasic } from '../../components/button'
+import { ButtonGroup, ButtonBasic } from '../../components/button'
 import { Controller } from '../../components/navigation'
 import ChecklistItem from '../../components/pages/checklist/item.vue'
 import ChecklistProgress from '../../components/pages/checklist/checklist-progress.vue'
@@ -47,7 +51,6 @@ const state = reactive({
   content: '',
   date: '',
   percent: 0,
-  files: [],
 })
 const checkboxes = ref(0)
 const today = computed(() => {
@@ -75,7 +78,6 @@ onMounted(async () => {
     state.content = res.content
     state.date = res.date
     state.percent = res.percent
-    state.files = res.files
     ready.value = false
   }
   catch (e)

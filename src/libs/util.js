@@ -1,3 +1,5 @@
+import { toast } from '../modules/toast'
+
 /**
  * sleep (delay tool)
  */
@@ -89,4 +91,29 @@ export function scrollTo(y = 0)
 export function getFilterKey()
 {
   return location.pathname
+}
+
+/**
+ * copy clipboard
+ * @param {string} text
+ */
+export function copyClipboard(text)
+{
+  const textArea = document.createElement('textarea')
+  textArea.value = text
+  document.body.appendChild(textArea)
+  textArea.select()
+  try
+  {
+    document.execCommand('copy')
+    toast.add('클립보드로 복사했습니다.', 'success').then()
+  }
+  catch (e)
+  {
+    toast.add('클립보드로 복사하지 못했습니다.', 'error').then()
+  }
+  finally
+  {
+    textArea.remove()
+  }
 }

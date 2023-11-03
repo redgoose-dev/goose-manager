@@ -1,26 +1,21 @@
-import { useRoute } from 'vue-router'
-import { preferenceStore } from '../../store/preference'
 import { get } from '../../libs/api'
 import { createFullPath } from './util'
 import { getByte, getResizePath } from '../../libs/string'
 import { getDate } from '../../libs/date'
 
-let route
-
-export async function getItems()
+async function requestFiles(srl, module)
 {
-  if (!route) route = useRoute()
-  const preference = preferenceStore()
-  let res = await get('/files/', {
+  const { success, message, data } = await get('/files/', {
+    module,
+    target: srl,
     order: 'srl',
     sort: 'desc',
-    size: preference.files.pagePerSize,
-    page: Number(route.query.page) > 1 ? Number(route.query.page) : undefined,
+    unlimit: 1,
   })
-  if (!res.success) throw new Error(res.message)
+  if (!success) throw new Error(message)
   return {
-    total: res.data?.total,
-    index: res.data?.index.map(item => {
+    total: data.total,
+    index: data?.index.map(item => {
       let image = null
       if (Math.max(item.json?.width || 0, item.json?.height || 0) > 1000)
       {
@@ -38,13 +33,21 @@ export async function getItems()
         image,
         meta: [
           item.type,
-          `사이즈:${getByte(item.size)}`,
+          `용량:${getByte(item.size)}`,
           `날짜:${getDate(item.regdate)}`,
-          `모듈: ${item.module}`,
-          `번호: ${item.target_srl}`,
         ].filter(Boolean),
         json: item.json,
       }
     }),
+  }
+}
+
+export default async function getData(srl, module)
+{
+  let [ files ] = await Promise.all([
+    requestFiles(srl, module),
+  ])
+  return {
+    files,
   }
 }

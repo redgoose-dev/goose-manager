@@ -50,7 +50,7 @@ const props = defineProps({
   error: Boolean,
   pattern: String,
 })
-const emits = defineEmits([ 'update:modelValue', 'position', 'submit' ])
+const emits = defineEmits([ 'update:modelValue', 'position', 'submit', 'click' ])
 
 defineExpose({
   focus,
@@ -63,6 +63,7 @@ function onChangePosition(e)
     start: e.target.selectionStart,
     end: e.target.selectionEnd
   })
+  emits('click', e)
 }
 function onChangeText(e)
 {

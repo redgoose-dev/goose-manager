@@ -20,7 +20,7 @@ export async function getData()
     order: 'srl',
     size: preference.checklist.pageCount,
     page: Number(route?.query?.page || 1),
-    sort: sort,
+    sort: sort || 'desc',
   }
   if (dateStart && dateEnd)
   {

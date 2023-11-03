@@ -1,13 +1,13 @@
 <template>
 <article>
-  <PageHeader module="checklist" title="Delete checklist"/>
+  <PageHeader module="checklist" title="Checklist / Delete"/>
   <Loading v-if="loading"/>
   <ConfirmDelete
     v-else
     title="이 체크리스트를 삭제할까요?"
     description="이 체크리스트를 삭제하면 복구할 수 없습니다."
     :name="fields.name"
-    button-label="체크리스트를 삭제하기"
+    button-label="체크리스트 삭제하기"
     :processing="processing"
     @cancel="router.back()"
     @submit="onSubmit"/>

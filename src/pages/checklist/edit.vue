@@ -1,6 +1,6 @@
 <template>
 <article class="checklist-edit">
-  <PageHeader module="checklist" title="Edit checklist"/>
+  <PageHeader module="checklist" title="Checklist / Edit"/>
   <form class="checklist-post" @submit.prevent="onSubmit">
     <header class="checklist-post__header">
       <h2>{{forms.date}}</h2>

@@ -3,12 +3,13 @@
   <slot v-if="$slots.before" name="before"/>
   <ThumbnailImage
     v-if="props.alt"
-    :src="props.image"
+    :src="image"
     :href="props.href"
     :target="props.target"
     :alt="props.alt"
     :width="props.json?.width"
     :height="props.json?.height"
+    :type="props.thumbnailType"
     class="item__thumbnail"/>
   <div class="item__body">
     <ItemTitle
@@ -37,6 +38,8 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { getResizePath } from '../../libs/string.js'
 import ThumbnailImage from './assets/thumbnail-image.vue'
 import ItemTitle from './assets/item-title.vue'
 import Description from './assets/description.vue'
@@ -53,6 +56,11 @@ const props = defineProps({
   href: String,
   target: String,
   json: { type: Object, default: {} },
+  useThumbnail: Boolean,
+  thumbnailType: String,
+})
+const image = computed(() => {
+  return props.useThumbnail ? getResizePath(props.image, 'width=640&height=480&quality=80') : props.image
 })
 </script>
 

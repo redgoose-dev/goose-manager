@@ -5,10 +5,6 @@
     <em v-if="showPercentage">{{props.percent}}%</em>
   </h3>
   <div ref="$body" class="checklist-item__body redgoose-body redgoose-body--dark"/>
-  <Files
-    v-if="props.files?.length > 0"
-    :items="props.files"
-    class="checklist-item__files"/>
   <teleport to="#modals">
     <Modal :show="!!previewImage" @close="previewImage = null">
       <ModalBody>
@@ -28,7 +24,6 @@ import { replaceMark } from '../../../structure/checklist/lib'
 import { baseRenderer, checklistRenderer } from '../../../modules/marked'
 import { Modal, ModalBody } from '../../modal'
 import PreviewImage from '../articles/item/preview-image.vue'
-import Files from '../articles/item/files.vue'
 
 const $body = ref()
 const props = defineProps({
@@ -37,7 +32,6 @@ const props = defineProps({
   date: { type: String, required: true },
   today: { type: Boolean, required: true },
   percent: Number,
-  files: { type: Array, required: true },
 })
 const emits = defineEmits([ 'update:modelValue', 'update:checkboxes' ])
 const preference = preferenceStore()

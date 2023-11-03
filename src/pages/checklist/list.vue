@@ -1,6 +1,6 @@
 <template>
 <article class="content-over">
-  <PageHeader module="checklist" title="Checklist items"/>
+  <PageHeader module="checklist" title="Checklist / Items"/>
   <div class="checklist-list">
     <div class="checklist-list__body">
       <Loading v-if="loading" class="checklist-list__loading"/>
@@ -85,11 +85,6 @@ const data = reactive({
 })
 const page = ref(route.query.page ? Number(route.query.page) : 1)
 
-onMounted(() => {
-  filterKey.value = getFilterKey()
-  loadData().then()
-})
-
 async function onChangePage(page)
 {
   let params = {
@@ -142,6 +137,11 @@ async function loadData()
     throw e.message
   }
 }
+
+onMounted(() => {
+  filterKey.value = getFilterKey()
+  loadData().then()
+})
 </script>
 
 <style src="./list.scss" lang="scss" scoped></style>

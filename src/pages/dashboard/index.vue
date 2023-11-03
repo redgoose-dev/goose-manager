@@ -21,6 +21,7 @@
             :href="item.href"
             :title="item.title"
             :image="item.image"
+            thumbnail-type="cover"
             :alt="item.title"
             :meta="item.meta"
             :nav="[
