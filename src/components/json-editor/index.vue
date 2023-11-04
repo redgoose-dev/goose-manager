@@ -84,6 +84,24 @@ function expandFolder(depth = 0, node = undefined)
 }
 
 onMounted(() => {
+  JsonEditor.prototype.updateLanguage = function()
+  {
+    this.lang = Object.assign(this.lang, {
+      nodeChangeSort: '노드 순서변경',
+      nodeContextMenu: '노드메뉴',
+      nodeFold: '접기/펼치기',
+      contextChangeType: '타입변경',
+      contextInsertNode: '추가',
+      contextTypeObject: '객체',
+      contextTypeArray: '배열',
+      contextTypeString: '문자',
+      contextTypeNumber: '번호',
+      contextTypeBoolean: '부울',
+      contextTypeNull: '널',
+      contextDuplicate: '복제',
+      contextRemove: '삭제',
+    })
+  }
   jsonEditor = new JsonEditor($body.value, {
     live: true,
     theme: head.theme,
