@@ -238,7 +238,7 @@ async function submitUploadUrl(files)
 async function deleteItems(paths)
 {
   onSelectAll(false)
-  let res = await removeFilesGlobal(paths)
+  let res = await removeFilesGlobal(paths, preference.files.globalPath)
   let newIndex = pureObject(localStore.global.index)
   res.forEach(o => {
     switch (typeof o)

@@ -1,12 +1,12 @@
 import { get, post, formData } from '../../libs/api'
 import { createFullPath } from './util'
 
-function filteringItemGlobal(src)
+function filteringItemGlobal(src, dir)
 {
   return {
     name: src.name,
     path: src.path,
-    pathFull: createFullPath(src.path),
+    pathFull: createFullPath(`data/upload/${dir}/${src.path}`),
     size: src.size,
     type: src.type,
     badge: [],
@@ -35,22 +35,22 @@ export async function getItemsGlobal(path)
     sort: 'desc',
   })
   if (!success) throw new Error(message)
-  return data?.index.map(o => filteringItemGlobal(o))
+  return data?.index.map(o => filteringItemGlobal(o, path))
 }
 export async function uploadFileGlobal(file, path)
 {
   if (!file || !path) throw new Error('no file or path')
-  let res = await post('/files/upload-file/', formData({ sub_dir: path, file }), {
+  let res = await post('/files/upload-file/', formData({ dir: path, file }), {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
   if (!res.success) throw new Error(res.message)
-  return filteringItemGlobal(res.data)
+  return filteringItemGlobal(res.data, path)
 }
-export async function removeFilesGlobal(src)
+export async function removeFilesGlobal(src, dir)
 {
   if (src.length <= 0) throw new Error('no path')
   let res = await Promise.all(src.map(item => {
-    return post('/files/remove-file/', formData({ path: item.path }))
+    return post('/files/remove-file/', formData({ dir, path: item.path }))
   }))
   return res.map((res, key) => {
     return res.success ? src[key].key : res.message
