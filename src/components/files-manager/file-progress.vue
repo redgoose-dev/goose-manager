@@ -1,26 +1,22 @@
 <template>
-<div class="progress">
-  <Spinner class="progress__spinner"/>
+<div :class="[
+  'progress',
+  `progress--${localStore.attachmentTheme}`,
+]">
+  <div class="progress__wrap">
+    <div class="progress__spinner">
+      <Spinner/>
+    </div>
+    <p class="progress__body">Uploading..</p>
+  </div>
 </div>
 </template>
 
 <script setup>
+import { fileManagerStore } from './store.js'
 import Spinner from '../etc/spinner.vue'
+
+const localStore = fileManagerStore()
 </script>
 
-<style lang="scss" scoped>
-@use '../../assets/scss/mixins';
-.progress {
-  position: relative;
-  display: grid;
-  place-content: center;
-  aspect-ratio: 1 / 1;
-  background: rgb(var(--color-base-rgb) / 10%);
-  border-radius: 2px;
-  overflow: hidden;
-  user-select: none;
-  &__spinner {
-    --spinner-size: 40px;
-  }
-}
-</style>
+<style src="./file-progress.scss" lang="scss" scoped></style>
