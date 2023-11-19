@@ -26,7 +26,7 @@ async function requestArticles({ size } = {})
           `조회수: ${item.hit}`,
           `좋아요: ${item.star}`,
         ],
-        image: createFullPath(item.json?.thumbnail?.path),
+        image: createFullPath(item.json?.thumbnail?.path ? `data/upload/thumbnail/${item.json.thumbnail.path}` : ''),
       }
     }),
   }

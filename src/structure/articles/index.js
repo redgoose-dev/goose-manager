@@ -64,6 +64,7 @@ export async function requestArticles()
       {
         title = `[${item.category_name}] ${item.title}`
       }
+      let image = createFullPath(item.json.thumbnail?.path ? `data/upload/thumbnail/${item.json.thumbnail?.path}` : '')
       return {
         srl: item.srl,
         title,
@@ -72,7 +73,7 @@ export async function requestArticles()
           `조회수:${item.hit}`,
           `좋아요:${item.star}`,
         ].filter(Boolean),
-        image: item.json.thumbnail?.path ? createFullPath(item.json.thumbnail?.path) : '',
+        image,
         private: item.type === 'private',
       }
     }),

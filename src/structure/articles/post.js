@@ -103,7 +103,10 @@ export async function deleteThumbnail(path)
 {
   try
   {
-    await post('/files/remove-file/', formData({ path }))
+    await post('/files/remove-file/', formData({
+      dir: 'thumbnail',
+      path,
+    }))
   }
   catch (_) {}
 }
@@ -111,7 +114,7 @@ export async function deleteThumbnail(path)
 export async function uploadThumbnail(base64)
 {
   let res = await post('/files/upload-file/', formData({
-    sub_dir: 'thumbnail',
+    dir: 'thumbnail',
     base64,
   }))
   if (!res.success) throw new Error(res.message || 'Failed upload file.')
