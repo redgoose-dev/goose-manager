@@ -9,6 +9,10 @@
   :readonly="props.readonly"
   :rows="props.rows"
   :placeholder="props.placeholder"
+  autocomplete="off"
+  autocorrect="off"
+  autocapitalize="off"
+  spellcheck="false"
   :class="[
     'textarea',
     props.size && `textarea--size-${props.size}`,
