@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "2.6.8",
+  "version": "2.6.9",
   "main": "index.js",
   "private": false,
   "license": "MIT",
