@@ -11,5 +11,8 @@
     padding: 0;
     list-style: none;
     gap: 20px;
+    > li {
+      min-width: 0;
+    }
   }
 }

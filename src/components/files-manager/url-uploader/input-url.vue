@@ -45,12 +45,14 @@
 import { ref, computed } from 'vue'
 import { ofetch } from 'ofetch'
 import { toast } from '../../../modules/toast'
+import { getPath } from '../../../libs/string'
 import { FormTextarea } from '../../forms'
 import { ButtonBasic } from '../../button'
 import { Help } from '../../forms/fieldset'
 
+const { VITE_BASE_URL } = import.meta.env
 const emits = defineEmits([ 'submit', 'close' ])
-const address = ref('')
+const address = ref(``)
 const processingVerify = ref(false)
 const disabledSubmitButton = computed(() => {
   if (processingVerify.value) return true
@@ -86,8 +88,11 @@ async function uploadImageUrl(path)
     const url = new URL(path)
     if (!url.host) throw new Error('invalid url')
     if (!/^http(s)/.test(url.protocol)) throw new Error(`invalid url`)
-    let blob = await ofetch(url.href, {
+    let blob = await ofetch(getPath(`${VITE_BASE_URL}/local/download/`), {
+      method: 'post',
       responseType: 'blob',
+      retry: 0,
+      body: { path },
     })
     return {
       blob,

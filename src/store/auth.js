@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
-import { $fetch } from 'ofetch'
+import { ofetch } from 'ofetch'
 import { preferenceStore } from './preference'
 import { getPath } from '../libs/string'
+
+const { VITE_BASE_URL } = import.meta.env
 
 export const authStore = defineStore('auth', {
   state()
@@ -25,7 +27,7 @@ export const authStore = defineStore('auth', {
         // check store
         if (this.token && this.user?.srl) return true
         // request server for get cookie
-        const { success, data } = await $fetch(getPath(`${import.meta.env.VITE_BASE_URL}/local/auth/`), {
+        const { success, data } = await ofetch(getPath(`${VITE_BASE_URL}/local/auth/`), {
           method: 'post',
           responseType: 'json',
           retry: 0,
@@ -45,13 +47,13 @@ export const authStore = defineStore('auth', {
     },
     async logout()
     {
-      let { success } = await $fetch(getPath(`${import.meta.env.VITE_BASE_URL}/local/logout/`), {
+      let { success } = await ofetch(getPath(`${VITE_BASE_URL}/local/logout/`), {
         method: 'post',
         responseType: 'json',
         retry: 0,
       })
       if (!success) throw new Error('Failed request')
-      location.href = getPath(`${import.meta.env.VITE_BASE_URL}/auth/login/`)
+      location.href = getPath(`${VITE_BASE_URL}/auth/login/`)
     },
   },
 })

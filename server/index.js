@@ -3,6 +3,7 @@ import { ofetch } from 'ofetch'
 import { Router } from 'express'
 import { filteringHostname } from './libs/api.js'
 import { isDev } from './libs/entry-assets.js'
+import { blobToBuffer } from './libs/util.js'
 
 let cookie, app, env, api
 
@@ -106,6 +107,22 @@ function localRoutes()
   })
 
   // TODO: 로그를 기록하는 기능 만들기
+
+  // download files
+  router.post('/download/', async (req, res) => {
+    const { path } = req.body
+    const file = await ofetch(path, {
+      method: 'get',
+      responseType: 'blob',
+      retry: 0,
+    })
+    const buffer = await blobToBuffer(file)
+    res.writeHead(200, {
+      'Content-Type': file.type,
+      'Context-Length': file.size,
+    })
+    res.end(buffer)
+  })
 
   return router
 }

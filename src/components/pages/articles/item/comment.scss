@@ -79,6 +79,18 @@
         &:deep(:is(h1, h2, h3, h4, h5, h6) .anchor) {
           display: none;
         }
+        &:deep(:where(img, .grid-item)) {
+          position: static;
+          transform: none;
+          max-width: 100%;
+        }
+        &:deep(:where(pre)) {
+          position: static;
+          transform: none;
+          width: auto;
+          box-sizing: border-box;
+          max-width: unset;
+        }
       }
     }
   }
