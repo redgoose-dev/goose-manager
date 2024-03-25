@@ -94,9 +94,14 @@ async function uploadImageUrl(path)
       retry: 0,
       body: { path },
     })
+    let filename = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
+    if (!filename.includes('.'))
+    {
+      filename += `.${blob.type.split('/')[1]}`
+    }
     return {
       blob,
-      name: url.pathname.substring(url.pathname.lastIndexOf('/') + 1),
+      name: filename,
       type: blob.type,
       date: new Date(),
     }
