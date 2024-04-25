@@ -111,17 +111,24 @@ function localRoutes()
   // download files
   router.post('/download/', async (req, res) => {
     const { path } = req.body
-    const file = await ofetch(path, {
-      method: 'get',
-      responseType: 'blob',
-      retry: 0,
-    })
-    const buffer = await blobToBuffer(file)
-    res.writeHead(200, {
-      'Content-Type': file.type,
-      'Context-Length': file.size,
-    })
-    res.end(buffer)
+    try
+    {
+      const file = await ofetch(path, {
+        method: 'get',
+        responseType: 'blob',
+        retry: 0,
+      })
+      const buffer = await blobToBuffer(file)
+      res.writeHead(200, {
+        'Content-Type': file.type,
+        'Context-Length': file.size,
+      })
+      res.end(buffer)
+    }
+    catch (e)
+    {
+      res.status(500).end(e.message)
+    }
   })
 
   return router
