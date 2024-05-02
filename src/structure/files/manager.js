@@ -1,4 +1,5 @@
 import { get, post, formData } from '../../libs/api'
+import { pathUploadOriginal } from '../../libs/consts'
 import { createFullPath } from './util'
 
 function filteringItemGlobal(src, dir)
@@ -6,7 +7,7 @@ function filteringItemGlobal(src, dir)
   return {
     name: src.name,
     path: src.path,
-    pathFull: createFullPath(`data/upload/${dir}/${src.path}`),
+    pathFull: createFullPath(`${pathUploadOriginal}/${dir}/${src.path}`),
     size: src.size,
     type: src.type,
     badge: [],

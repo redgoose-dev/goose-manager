@@ -1,7 +1,7 @@
 import { get } from '../../libs/api'
 import { getDate } from '../../libs/date'
 import { createFullPath } from '../files/util'
-import { ARTICLE_TYPE } from '../../libs/consts'
+import { ARTICLE_TYPE, pathUploadThumbnail } from '../../libs/consts'
 
 async function requestArticles({ size } = {})
 {
@@ -26,7 +26,7 @@ async function requestArticles({ size } = {})
           `조회수: ${item.hit}`,
           `좋아요: ${item.star}`,
         ],
-        image: createFullPath(item.json?.thumbnail?.path ? `data/upload/thumbnail/${item.json.thumbnail.path}` : ''),
+        image: createFullPath(item.json?.thumbnail?.path ? `${pathUploadThumbnail}/${item.json.thumbnail.path}` : ''),
       }
     }),
   }

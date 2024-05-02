@@ -2,6 +2,7 @@ import { marked } from 'marked'
 import { authStore } from '../../store/auth'
 import { createFullPath } from '../files/util'
 import { get, post, formData } from '../../libs/api'
+import { pathUploadThumbnail } from '../../libs/consts'
 import { baseRenderer } from '../../modules/marked'
 
 function getDescription(content)
@@ -28,7 +29,7 @@ async function requestArticle(srl)
     categorySrl: data?.category_srl,
     title: data?.title,
     description: getDescription(data?.content),
-    image: createFullPath(data?.json.thumbnail?.path),
+    image: createFullPath(data?.json.thumbnail?.path ? `${pathUploadThumbnail}/${data.json.thumbnail.path}` : ''),
     meta: [
       data?.nest_name,
       data?.category_name,

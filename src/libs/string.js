@@ -1,3 +1,5 @@
+import { pathUploadOriginal } from './consts'
+
 const { VITE_API_URL } = import.meta.env
 
 /**
@@ -75,7 +77,7 @@ export function getPath(path)
  */
 export function getResizePath(src, query = 'width=640&height=480')
 {
-  const regexp = new RegExp(`^data/upload`)
+  const regexp = new RegExp(`^${pathUploadOriginal}`)
   const path = src.replace(regexp, '')
   return `${VITE_API_URL}/files/resize/?path=${path}&${query}`
 }

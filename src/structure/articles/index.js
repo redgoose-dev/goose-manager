@@ -6,6 +6,7 @@ import { createFullPath } from '../files/util'
 import { getDate } from '../../libs/date'
 import { serialize } from '../../libs/string'
 import { getFilterKey } from '../../libs/util'
+import { pathUploadThumbnail } from '../../libs/consts'
 
 const preference = preferenceStore()
 const filters = filtersStore()
@@ -64,7 +65,7 @@ export async function requestArticles()
       {
         title = `[${item.category_name}] ${item.title}`
       }
-      let image = createFullPath(item.json.thumbnail?.path ? `data/upload/thumbnail/${item.json.thumbnail?.path}` : '')
+      let image = createFullPath(item.json.thumbnail?.path ? `${pathUploadThumbnail}/${item.json.thumbnail?.path}` : '')
       return {
         srl: item.srl,
         title,
