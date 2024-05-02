@@ -1,37 +1,20 @@
 .input-url {
   position: relative;
   margin: 0;
-  padding: 24px;
   box-sizing: border-box;
-  width: 85vw;
-  min-width: 480px;
-  max-width: 1000px;
   fieldset {
     margin: 0;
     padding: 0;
     border: none;
   }
   &__title {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -.5px;
+    font-size: 0;
   }
-  &__description {
-    margin: 6px 0 16px;
-    font-size: 14px;
-    line-height: 1.05;
-    color: var(--color-weak);
-  }
-  &__text-input {
+}
 
-  }
-  &__nav {
-    margin: 24px 0 0;
-    display: flex;
-    gap: 12px;
-    > div {
-      flex: 1;
-    }
-  }
+.field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 8px;
+  align-items: center;
 }

@@ -23,7 +23,7 @@
   @click="onChangePosition"
   @keyup="onChangePosition"
   @keyup.enter="emits('submit')"
-  @keydown.enter="emits('submit')">
+  @keydown.enter="emits('submit')"/>
 </template>
 
 <script setup>

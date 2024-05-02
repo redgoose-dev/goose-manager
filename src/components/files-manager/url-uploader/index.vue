@@ -13,6 +13,9 @@
       @remove-item="removeVerifyItem"
       @update-item="updateVerifyItem"/>
   </div>
+  <div class="upload-url__input">
+    <InputUrl @submit="onSubmitInputUrl"/>
+  </div>
   <Controller class="upload-url__submit">
     <template #left>
       <ButtonBasic
@@ -25,12 +28,6 @@
     <template #right>
       <ButtonGroup>
         <ButtonBasic
-          color="sub"
-          icon-left="link-2"
-          @click="openAddUrl">
-          URL 추가하기
-        </ButtonBasic>
-        <ButtonBasic
           color="key"
           icon-left="upload"
           :disabled="disabledSubmitButton"
@@ -41,15 +38,6 @@
     </template>
   </Controller>
 </article>
-<teleport to="#modals">
-  <Modal :show="windowAddUrl" @close="windowAddUrl = false">
-    <ModalBody type="window">
-      <InputUrl
-        @submit="onSubmitInputUrl"
-        @close="windowAddUrl = false"/>
-    </ModalBody>
-  </Modal>
-</teleport>
 </template>
 
 <script setup>
@@ -59,30 +47,20 @@ import { fileManagerStore } from '../store'
 import { ButtonBasic, ButtonGroup } from '../../button'
 import { Controller } from '../../navigation'
 import Items from './items.vue'
-import { Modal, ModalBody } from '../../modal'
 import InputUrl from './input-url.vue'
 
 const emits = defineEmits([ 'close', 'submit' ])
-const localStore = fileManagerStore()
 const verifyItems = ref([])
-const windowAddUrl = ref(false)
 const disabledSubmitButton = computed(() => {
   return !(verifyItems.value.length > 0)
 })
 
 onMounted(() => {
-  localStore.useShortcut = false
   controlWindow(true, 'url-uploader')
 })
 onUnmounted(() => {
-  localStore.useShortcut = true
   controlWindow(false, 'url-uploader')
 })
-
-function openAddUrl()
-{
-  windowAddUrl.value = true
-}
 
 function onSubmitInputUrl(items)
 {
@@ -90,7 +68,6 @@ function onSubmitInputUrl(items)
     ...verifyItems.value,
     ...items,
   ]
-  windowAddUrl.value = false
 }
 
 function updateVerifyItem(idx, item)
