@@ -164,6 +164,7 @@ import { createFullPath } from '../../../structure/files/util'
 import { err } from '../../../libs/error'
 import { pureObject } from '../../../libs/object'
 import { printf, getByte } from '../../../libs/string'
+import { pathUploadThumbnail } from '../../../libs/consts.js'
 import { toast } from '../../../modules/toast'
 import { createMarkdownItems, createHtmlItems } from '../itemsUtil'
 import { Modal, ModalBody } from '../../modal'
@@ -201,7 +202,7 @@ const selectedAssets = computed(() => {
 const previewThumbnail = computed(() => {
   const { image, path } = localStore.post.thumbnail
   if (image) return image
-  else if (path) return createFullPath(path)
+  else if (path) return createFullPath(`${pathUploadThumbnail}/${path}`)
   else return ''
 })
 
