@@ -22,7 +22,8 @@
   &__body {
     margin: 8px 0 0;
     .textarea {
-      max-height: 480px;
+      min-height: 320px;
+      max-height: 520px;
     }
   }
 }

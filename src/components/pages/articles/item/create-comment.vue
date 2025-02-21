@@ -57,7 +57,6 @@ async function onSubmit()
     forms.content.value = ''
     emits('submit', res)
     await nextTick()
-    $form.value.changeHeight()
     window.scrollBy(0, $comment.value.getBoundingClientRect().top)
     processing.value = false
   }

@@ -48,6 +48,11 @@
     --textarea-shadow-3: 0 0 0 4px rgb(0 0 0 / 0%);
   }
 
+  // auto size
+  &--auto-size {
+    field-sizing: content;
+  }
+
   @include mixins.dark-mode() {
     color-scheme: dark;
     --textarea-bg: rgb(57 57 57);

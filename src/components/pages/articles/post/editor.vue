@@ -15,7 +15,6 @@
       autocapitalize="off"
       spellcheck="false"
       class="editor__content"
-      :style="[ textareaHeight && `--editor-height: ${textareaHeight}` ]"
       @input="onInputTextarea"
       @click="changePosition"
       @keyup="changePosition"
@@ -52,12 +51,10 @@ const emits = defineEmits([ 'update:modelValue', 'submit', 'open-file-manager' ]
 const showPreview = ref(false)
 const preview = ref('')
 const position = ref({ start: 0, end: 0 })
-const textareaHeight = ref('')
 
 function onInputTextarea(e)
 {
   emits('update:modelValue', e.target.value)
-  resize()
 }
 
 function onSelectToolbarItem(key)
@@ -94,7 +91,7 @@ function insertText(text, cursor)
   let content = props.modelValue + ''
   const { start } = position.value
   if (start === 0) text = text.replace(/^\n/g, '')
-  content = content.substr(0, start) + text + content.substr(start)
+  content = content.slice(0, start) + text + content.slice(start)
   emits('update:modelValue', content)
   let last = start + (cursor || text.length)
   position.value.start = last
@@ -123,15 +120,6 @@ function updateCursor()
   $textarea.value.focus()
 }
 
-function resize()
-{
-  textareaHeight.value = 'unset'
-  nextTick().then(() => {
-    if (!$textarea.value) return
-    textareaHeight.value = `${$textarea.value.scrollHeight}px`
-  })
-}
-
 function controlPreview(sw)
 {
   if (sw && !props.modelValue)
@@ -158,11 +146,7 @@ async function changeCursor(start, end)
   await nextTick()
   $textarea.value.focus()
   $textarea.value.setSelectionRange(start, end)
-  await nextTick()
-  resize()
 }
-
-onMounted(() => resize())
 
 defineExpose({
   position,

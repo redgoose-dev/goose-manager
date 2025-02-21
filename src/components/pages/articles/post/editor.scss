@@ -16,7 +16,7 @@
     padding: 16px;
     width: 100%;
     height: var(--editor-height, auto);
-    min-height: 240px;
+    min-height: 320px;
     max-height: 480px;
     resize: vertical;
     outline: none;
@@ -29,6 +29,7 @@
       var(--editor-shadow-2, 0 0 0 1px rgb(120 120 120 / 100%)),
       var(--editor-shadow-3, 0 0 0 4px rgb(0 0 0 / 0%));
     transition: box-shadow 120ms ease-out;
+    field-sizing: content;
     &::-webkit-input-placeholder {
       color: var(--editor-placeholder, rgb(150 150 150 / 100%));
     }

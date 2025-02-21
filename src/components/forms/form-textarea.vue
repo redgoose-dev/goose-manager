@@ -17,6 +17,7 @@
     'textarea',
     props.size && `textarea--size-${props.size}`,
     props.error && 'textarea--error',
+    props.autoSize && 'textarea--auto-size',
   ]"
   @input="onChangeText"
   @click="onChangePosition"
@@ -58,15 +59,7 @@ function onChangePosition(e)
 }
 function onChangeText(e)
 {
-  if (props.autoSize) changeHeight()
   emits('update:modelValue', e.target.value)
-}
-
-function changeHeight()
-{
-  const { style } = $root.value
-  style.setProperty('--textarea-height', `auto`)
-  style.setProperty('--textarea-height', `${$root.value.scrollHeight}px`)
 }
 
 function focus()
@@ -84,12 +77,7 @@ function changeCursor(start, end)
   $root.value.setSelectionRange(start, end)
 }
 
-onMounted(() => {
-  if (props.autoSize) changeHeight()
-})
-
 defineExpose({
-  changeHeight,
   changeCursor,
   focus,
 })

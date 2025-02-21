@@ -113,13 +113,12 @@ async function insertText(text, cursor)
   let content = forms.content.value + ''
   const { start } = position.value
   if (start === 0) text = text.replace(/^\n/g, '')
-  content = content.substr(0, start) + text + content.substr(start)
+  content = content.slice(0, start) + text + content.slice(start)
   forms.content.value = content
   let last = start + (cursor || text.length)
   position.value.start = last
   position.value.end = last
   await nextTick()
-  $content.value.changeHeight()
   $content.value.changeCursor(position.value.start, position.value.end)
   $content.value.focus()
 }
@@ -215,7 +214,6 @@ onMounted(async () => {
     const regdate = res.date.split(' ')[0].split('-').map(o => Number(o))
     forms.date = dateFormat(new Date(regdate[0], regdate[1]-1, regdate[2]), preference.checklist.dateFormat)
     await nextTick()
-    $content.value.changeHeight()
     loading.value = false
   }
   catch (e)
