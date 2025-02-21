@@ -2,7 +2,7 @@
 <article>
   <PageHeader module="json" :title="item.name ? `JSON / ${item.name}` : ' '"/>
   <Loading v-if="loading"/>
-  <Fieldset v-else tag="section">
+  <Fieldset v-else-if="!!item?.srl" tag="section">
     <Field label="번호">{{item.srl}}</Field>
     <Field label="이름"><strong>{{item.name}}</strong></Field>
     <Field label="설명">{{item.description}}</Field>
@@ -61,6 +61,7 @@
       <template v-else>{{item.path}}</template>
     </Field>
   </Fieldset>
+  <Empty v-else title="no item"/>
   <Controller>
     <template #left>
       <ButtonGroup>
@@ -90,6 +91,7 @@ import { ButtonGroup, ButtonBasic } from '../../components/button'
 import Loading from '../../components/etc/loading.vue'
 import JsonEditor from '../../components/json-editor/index.vue'
 import { ToolbarWrap, ToolbarGroup, ToolbarItem } from '../../components/navigation/toolbar'
+import Empty from '../../components/error/empty.vue'
 
 const $jsonEditor = ref()
 const route = useRoute()
@@ -125,12 +127,14 @@ onMounted(async () => {
     if (!route.params.srl) throw new Error('no srl')
     loading.value = true
     item.value = await getData()
-    loading.value = false
   }
   catch (e)
   {
     err([ '/pages/json/item.vue', 'onMounted()' ], 'error', e.message)
-    throw e.message
+  }
+  finally
+  {
+    loading.value = false
   }
 })
 </script>
