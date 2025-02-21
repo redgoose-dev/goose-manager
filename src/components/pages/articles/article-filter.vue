@@ -122,7 +122,7 @@ const forms = reactive({
 const keyword = ref(route.query.q)
 const total = computed(() => withCommas(props.total))
 
-function onReset()
+async function onReset()
 {
   setForms()
   filters.save(props.storageKey, {
@@ -131,33 +131,22 @@ function onReset()
     sort: forms.sort,
     theme: forms.theme,
   })
-  if (keyword.value) onClearKeyword()
+  if (keyword.value) await onClearKeyword()
   emits('update')
 }
 
-function onSubmit()
-{
-  filters.save(props.storageKey, {
-    type: forms.type,
-    order: forms.order,
-    sort: forms.sort,
-    theme: forms.theme,
-  })
-  emits('update')
-}
-
-function onClearKeyword()
+async function onClearKeyword()
 {
   keyword.value = ''
-  onSubmitKeyword()
+  await onSubmitKeyword()
 }
-function onSubmitKeyword()
+async function onSubmitKeyword()
 {
   const query = serialize({
     ...route.query,
     q: keyword.value || undefined,
   }, true)
-  router.push(`./${query}`)
+  await router.push(`./${query}`)
 }
 
 function onUpdateFilter()
