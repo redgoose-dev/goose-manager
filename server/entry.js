@@ -1,18 +1,21 @@
 import fs from 'fs'
 import path from 'path'
+import * as dotenv from 'dotenv'
 import express from 'express'
 import cookieParser from 'cookie-parser'
-import { createServer, loadEnv } from 'vite'
 import { openServerMessage, isDev, staticOptions } from './libs/entry-assets.js'
 import serviceServer from './index.js'
 
 const __dirname = path.resolve()
 
+// setup dotenv
+dotenv.config({ path: [ '.env.local', '.env' ] })
+
 async function server()
 {
   const app = express()
   const dev = isDev()
-  const env = loadEnv(dev ? 'development' : 'production', __dirname)
+  const env = process.env
   const outDir = env.VITE_OUT_DIR || 'dist'
   const clientPath = dev ? __dirname : path.resolve(outDir)
 
@@ -29,6 +32,7 @@ async function server()
   if (dev)
   {
     // # Development
+    const { createServer } = await import('vite')
     // set vite
     const vite = await createServer({
       mode: dev ? 'development' : 'production',
@@ -81,8 +85,8 @@ async function server()
   }
 
   // listen server
-  app.listen(Number(env.VITE_PORT) || 3000, env.VITE_HOST, () => {
-    openServerMessage(env.VITE_HOST, Number(env.VITE_PORT) || 3000, dev)
+  app.listen(Number(env.VITE_PORT) || 80, env.VITE_HOST, () => {
+    openServerMessage(env.VITE_HOST, Number(env.VITE_PORT) || 80, dev)
   })
 }
 

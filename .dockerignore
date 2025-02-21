@@ -1,11 +1,11 @@
 # directories
-.idea/
-node_modules/
-.AppleDouble/
-dist/
-public/user/
+/.idea
+/node_modules
+/.AppleDouble
+/public/user
 
 # files
+.dockerignore
 .DS_Store
 .env.local
 package-lock.json
@@ -16,3 +16,4 @@ action.sh
 .editorconfig
 README.md
 docker-compose.yml
+vite.config.js

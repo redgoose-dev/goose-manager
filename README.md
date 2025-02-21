@@ -23,8 +23,8 @@ $ cp .env .env.local
 테스트 및 개발을 위한 사용
 
 ```bash
-$ yarn install
-$ yarn run dev
+$ npm install
+$ npm run dev
 ```
 
 Open in browser `http://localhost:3000`
@@ -36,14 +36,14 @@ Open in browser `http://localhost:3000`
 #### build and start server
 
 ```bash
-$ yarn run build
-$ yarn run start
+$ npm run build
+$ npm run start
 ```
 
 #### change host and port
 
 ```bash
-$ HOST=0.0.0.0 PORT=3000 yarn run start
+$ HOST=0.0.0.0 PORT=3000 npm run start
 ```
 
 아니면 `.env.local`파일에서 `VITE_HOST`, `VITE_PORT` 항목에서 값을 고쳐서 사용해도 됩니다.
