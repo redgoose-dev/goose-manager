@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . /app
 
 # install dependencies
-RUN npm install --production
+# RUN npm install --production
 
 EXPOSE 80
 

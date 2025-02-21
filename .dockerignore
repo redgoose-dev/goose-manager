@@ -3,6 +3,7 @@
 /node_modules
 /.AppleDouble
 /public/user
+/dist
 
 # files
 .dockerignore
@@ -16,4 +17,3 @@ action.sh
 .editorconfig
 README.md
 docker-compose.yml
-vite.config.js
