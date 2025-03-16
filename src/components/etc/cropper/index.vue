@@ -5,8 +5,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import Croppie from 'croppie'
-import ImageResize from 'image-resize'
+import imageResize from 'image-resize'
 import { pureObject } from '../../../libs/object'
+import { err } from '../../../libs/error'
 import 'croppie/croppie.css'
 
 const $root = ref()
@@ -33,7 +34,7 @@ async function output()
     format: 'png',
     size: { width: width * 2, height: height * 2 },
   })
-  let resize = new ImageResize({
+  output = imageResize(output, {
     format: 'webp',
     outputType: 'base64',
     quality: .9,
@@ -42,7 +43,6 @@ async function output()
     reSample: 4,
     sharpen: .25,
   })
-  output = await resize.play(output)
   return output
 }
 
@@ -72,7 +72,7 @@ onMounted(() => {
   }
   catch (e)
   {
-    console.error(e)
+    err(['/components/etc/cropper/index.vue', 'onMounted()'], 'error', e.message)
   }
 })
 onUnmounted(() => {

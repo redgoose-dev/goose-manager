@@ -36,7 +36,7 @@ import { ButtonBasic } from '../../button'
 
 const { VITE_BASE_URL } = import.meta.env
 const emits = defineEmits([ 'submit', 'close' ])
-const address = ref(``)
+const address = ref(`https://goose.redgoose.me/data/upload/original/201906/rg3915.jpg`) // TODO: 주소 삭제하기
 const processingVerify = ref(false)
 const disabledSubmitButton = computed(() => {
   if (processingVerify.value) return true

@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import ImageResize from 'image-resize'
+import imageResize from 'image-resize'
 import { getByte, printf } from '../../../libs/string'
 import { loadImage } from '../../../libs/util'
 import { toast } from '../../../modules/toast'
@@ -88,15 +88,14 @@ async function onClickChangeFormat(idx)
     } : {
       height: Math.min(image.naturalHeight, 4200),
     }
-    const resize = new ImageResize({
+    const output = await imageResize(props.src[idx].blob, {
       format,
       outputType: 'blob',
-      quality: .90,
+      quality: .92,
       ...size,
       reSample: 1,
       sharpen: 0,
     })
-    let output = await resize.play(props.src[idx].blob)
     emits('update-item', idx, {
       blob: output,
       date: props.src[idx].date,
