@@ -18,10 +18,6 @@ const config = defineConfig(async ({ mode }) => {
           changeOrigin: true,
           rewrite: path => path.replace(/^\/zone\/?/, '/'),
         },
-        '/api': {
-          target: `http://0.0.0.0:${VITE_PORT_SERVER}/api`,
-          rewrite: path => path.replace(/^\/api\/?/, '/'),
-        },
       },
     },
     css: {

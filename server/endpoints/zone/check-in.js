@@ -3,6 +3,8 @@ import * as api from '../../libs/api.js'
 import * as cookie from '../../libs/cookie.js'
 import { onRequest, onResponse, printMessage } from '../../libs/server.js'
 
+const { VITE_API_URL } = Bun.env
+
 /**
  * setCookie
  * @params {Request} req
@@ -93,6 +95,7 @@ async function checkIn(req, ctx)
     response = Response.json({
       message: 'Complete check in.',
       provider: content.data.provider,
+      apiUrl: VITE_API_URL,
     })
   }
   catch(e)

@@ -2,7 +2,6 @@ import { isDev, openServerMessage } from './libs/server.js'
 import statics from './endpoints/statics.js'
 import zoneCheckIn from './endpoints/zone/check-in.js'
 import zoneCheckOut from './endpoints/zone/check-out.js'
-import api from './endpoints/api.js'
 import onError from './endpoints/on-error.js'
 
 const { serve } = Bun
@@ -21,7 +20,6 @@ const routes = {
   '/zone/check-out/': {
     POST: zoneCheckOut,
   },
-  '/api/*': api,
   ...(!server.dev ? { '/*': statics } : undefined),
 }
 

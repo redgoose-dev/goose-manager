@@ -1,3 +1,5 @@
+import { CONTENT_TYPES } from './keywords.js'
+
 /**
  * color text
  * @param {string} message
@@ -43,4 +45,14 @@ export function dateFormat(date, format)
   mix = mix.replace(/\{mm\}/, twoDigit(date.getMinutes()))
   mix = mix.replace(/\{ss\}/, twoDigit(date.getSeconds()))
   return mix
+}
+
+/**
+ * get content type
+ * @param {string} ext
+ * @returns {string}
+ */
+export function getContentType(ext)
+{
+  return CONTENT_TYPES[ext] || 'application/octet-stream'
 }

@@ -15,10 +15,12 @@ class ServerError {
    */
   constructor(message, options = {})
   {
-    const { status, error } = options
+    const { status, statusText, error, response } = options
     this.message = message
     this.status = status
+    this.statusText = statusText || message
     if (error) this.error = error
+    if (response) this.response = response
   }
 
 }

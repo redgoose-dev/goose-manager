@@ -1,0 +1,18 @@
+export const CONTENT_TYPES = {
+  html: 'text/html',
+  txt: 'text/plain',
+  css: 'text/css',
+  js: 'application/javascript',
+  json: 'application/json',
+  pdf: 'application/pdf',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  gif: 'image/gif',
+  svg: 'image/svg+xml',
+  webp: 'image/webp',
+  avif: 'image/avif',
+  ico: 'image/ico',
+  woff: 'font/woff',
+  woff2: 'font/woff2',
+}
