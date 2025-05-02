@@ -1,24 +1,59 @@
 <template>
-<article>
-  <h1>Welcome to the App</h1>
-  <p>This is a simple Vue.js application.</p>
-  <pre>{{data}}</pre>
-  <footer>
-    <p>&copy; 2023 My Application</p>
-  </footer>
-</article>
+<ErrorService v-if="error" :error="error"/>
+<component v-else-if="!current.blink && layout" :is="layout">
+  <router-view/>
+</component>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, watch, onErrorCaptured } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { authStore } from './store/auth.js'
+import { currentStore } from './store/app.js'
+import ErrorService from './pages/error/500.vue'
+import LayoutBlank from './layouts/blank.vue'
+import LayoutDefault from './layouts/default.vue'
 
-const data = ref()
+const router = useRouter()
+const route = useRoute()
+const auth = authStore()
+const current = currentStore()
 
-onMounted(async () => {
-  const res = await fetch('http://localhost:7777', {})
-  if (res.ok)
+const error = ref(undefined)
+const layout = computed(() => {
+  let layoutName = route.meta.layout || 'default'
+  if (!route.name) return null
+  if (!auth.account) layoutName = 'blank'
+  switch (layoutName)
   {
-    data.value = await res.json()
+    case 'default':
+      return LayoutDefault
+    case 'blank':
+    default:
+      return LayoutBlank
   }
+})
+
+// capture error
+onErrorCaptured((e) => {
+  if (typeof e === 'string')
+  {
+    error.value = new Error(e)
+  }
+  else
+  {
+    error.value = e
+  }
+})
+
+// router error
+router.onError(e => {
+  error.value = e
+})
+
+// watch route name
+watch(() => route.name, () => {
+  // 오류난 화면에서 뒤로가기나 다른페이지로 이동했을때 오류값 초기화하기
+  if (!!error.value) error.value = undefined
 })
 </script>

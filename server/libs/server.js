@@ -88,3 +88,20 @@ export function onResponse(req, res, ctx)
 {
   console.groupEnd()
 }
+
+/**
+ * get form data
+ * @param {Request} req
+ * @return {Promise<FormData>}
+ */
+export async function getFormData(req)
+{
+  try
+  {
+    return await req.formData()
+  }
+  catch (e)
+  {
+    return undefined
+  }
+}

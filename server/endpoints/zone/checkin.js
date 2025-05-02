@@ -1,9 +1,11 @@
 import ServiceError from '../../extends/ServerError.js'
 import * as api from '../../libs/api.js'
 import * as cookie from '../../libs/cookie.js'
-import { onRequest, onResponse, printMessage } from '../../libs/server.js'
+import { onRequest, onResponse, printMessage, getFormData } from '../../libs/server.js'
+import { isDev } from '../../libs/server.js'
 
 const { VITE_API_URL } = Bun.env
+const dev = isDev()
 
 /**
  * setCookie
@@ -18,11 +20,12 @@ async function checkIn(req, ctx)
 
   try
   {
-    const data = await req.formData()
+    // get form data
+    const data = await getFormData(req)
 
     // get access token
     let accessToken
-    if (data.get('accessToken'))
+    if (data?.get('accessToken'))
     {
       accessToken = data.get('accessToken')
     }
@@ -73,7 +76,7 @@ async function checkIn(req, ctx)
     if (!content?.data?.provider) throw new ServiceError('Not found provider.', { status })
 
     // save cookie
-    if (data.get('accessToken'))
+    if (data?.get('accessToken'))
     {
       cookie.save(
         req,
@@ -94,21 +97,26 @@ async function checkIn(req, ctx)
     // set response
     response = Response.json({
       message: 'Complete check in.',
-      provider: content.data.provider,
+      status: 200,
+      token: !data?.get('accessToken') ? accessToken : undefined,
       apiUrl: VITE_API_URL,
+      account: content.data.provider,
     })
   }
   catch(e)
   {
-    printMessage('error', `(${e.status || 500}) ${e.message}`)
-    response = new Response('Skipped check in.', {
+    if (dev)
+    {
+      printMessage('error', `(${e.status || 500}) ${e.message}`)
+    }
+    response = Response.json({
+      message: 'Skipped check in.',
       status: 202,
-      statusText: e.message,
-    })
+    }, { status: 202 })
   }
 
   onResponse(req, response, ctx)
-  return response || new Response('Skipped check-in.', { status: 202 })
+  return response || new Response('Skipped checkin.', { status: 202 })
 }
 
 export default checkIn
