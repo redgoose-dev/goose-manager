@@ -1,0 +1,11 @@
+.idea/
+__legacy/
+dist/
+node_modules/
+.git/
+
+Dockerfile*
+.gitignore
+*.md
+.env.*
+docker-compose.yml

@@ -75,7 +75,7 @@ export function onRequest(req, ctx)
   const date = dateFormat(new Date(), '{yyyy}-{MM}-{dd} {hh}:{mm}:{ss}')
   const method = colorText(req.method, 'cyan')
   const url = colorText(_url.pathname, 'blue')
-  console.group(`\n🪴 [${date}] ${method} ${url}`)
+  console.group(`🪴 [${date}] ${method} ${url}`)
 }
 
 /**
