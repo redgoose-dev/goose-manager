@@ -1,1 +1,254 @@
+@use '../scss/mixins';
+
 .layout {}
+
+// header
+.layout-header {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  background-color: mixins.mix-alpha(#{var(--color-light)}, 75%);
+  height: var(--size-header-height, 42px);
+  padding: 0 var(--size-side-padding);
+  box-shadow: 0 .5px 0 mixins.mix-alpha(var(--color-weak), 50%);
+  @include mixins.background-blur(8px);
+  .wrap {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    height: 100%;
+  }
+  .logo {
+    margin: 0;
+    height: 100%;
+    a {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      margin: 0 0 0 -16px;
+      padding: 0 16px;
+      text-decoration: none;
+      font-family: var(--font-eng);
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--color-dark);
+      letter-spacing: -.5px;
+      box-sizing: border-box;
+      transition: opacity 100ms ease-out;
+      user-select: none;
+      &:active {
+        opacity: .5;
+      }
+    }
+  }
+  .main-nav {
+    flex: 1;
+    height: 100%;
+    padding: 0 0 0 8px;
+    box-sizing: border-box;
+  }
+  .side-nav {
+    height: 100%;
+    margin-right: -16px;
+  }
+}
+
+// navigation
+.navigation {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  height: 100%;
+  > li {
+    position: relative;
+    > a, > span {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      box-sizing: border-box;
+      color: var(--color-base);
+      outline: none;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      padding: 8px 14px;
+      transition: background-color 200ms ease-out;
+      em {
+        display: block;
+        font-style: normal;
+        white-space: nowrap;
+        letter-spacing: -.25px;
+      }
+      .ico-arrow {
+        display: block;
+        margin: 0 -4px 0 8px;
+        --icon-size: 18px;
+        --icon-stroke: 2.5;
+        transition: transform 320ms ease-out
+      }
+      .ico-custom {
+        display: block;
+        --icon-size: 16px;
+        --icon-stroke: 2;
+        &:first-child {
+          margin: 0 4px 0 0;
+        }
+      }
+    }
+    > a {
+      cursor: pointer;
+      text-decoration: none;
+      &.active {
+        background-color: var(--color-key);
+        :where(em, .ico-arrow, .ico-custom) {
+          color: var(--color-light);
+        }
+      }
+    }
+    > span {
+      cursor: default;
+    }
+    > div {
+      position: relative;
+      //display: none;
+      pointer-events: none;
+      ol {
+        opacity: 0;
+      }
+    }
+    &:hover {
+      > a:not(.active), > span {
+        background-color: mixins.mix-alpha(var(--color-base), 10%);
+        .ico-arrow {
+          transform: rotateX(180deg);
+        }
+      }
+      > div {
+        //display: block;
+        pointer-events: auto;
+        ol {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    min-width: 150px;
+    box-sizing: border-box;
+    left: 0;
+    top: 0;
+    background-color: hsla(0 0% 100% / 100%);
+    box-shadow: 0 2px 10px hsla(0 0% 0% / 10%);
+    translate: 0 .5px;
+    border-radius: 0 0 2px 2px;
+    overflow: clip;
+    transition: opacity 200ms ease-out;
+    > li {
+      position: relative;
+      transition: background-color 200ms ease-out;
+      &:nth-child(n+2) {
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          height: .5px;
+          background-color: hsla(0 0% 0% / 20%);
+        }
+      }
+      > a, > span, > button {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 0 16px;
+        letter-spacing: -.25px;
+        box-sizing: border-box;
+        color: var(--color-base);
+        transition: background-color 150ms ease-out;
+        em {
+          display: block;
+          font-style: normal;
+          white-space: nowrap;
+        }
+        .ico-custom {
+          display: block;
+          margin: 0 8px 0 0;
+          --icon-size: 16px;
+          --icon-stroke: 2;
+        }
+        &:hover {
+          background-color: hsla(0 0% 0% / 10%);
+        }
+      }
+      > a {
+        text-decoration: none;
+        cursor: pointer;
+        &.active {
+          background-color: var(--color-key);
+        }
+      }
+      > button {
+        width: 100%;
+        text-align: left;
+        border: none;
+        background: none;
+        appearance: none;
+      }
+    }
+  }
+  &.right {
+    ol {
+      left: auto;
+      right: 0;
+    }
+  }
+}
+
+// container
+.container {
+  margin: 40px 0 80px;
+  padding: 0 var(--size-side-padding);
+  &__wrap {
+    max-width: var(--size-content-body);
+    margin: 0 auto;
+  }
+}
+
+// footer
+.layout-footer {
+  margin: 0;
+  padding: 0 var(--size-side-padding) 16px;
+  user-select: none;
+  text-align: right;
+  .wrap {
+    max-width: var(--size-content-body);
+    margin: 0 auto;
+  }
+  address {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    font-family: var(--font-eng);
+    font-size: 11px;
+    color: var(--color-weak);
+    line-height: 1.15;
+    > * {
+      display: block;
+    }
+  }
+}

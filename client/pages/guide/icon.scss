@@ -1,0 +1,49 @@
+@forward './common.scss';
+@use '../../scss/mixins';
+
+.icons-index {
+  --column: 6;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(var(--column), 1fr);
+  gap: 4px;
+  > li {
+    position: relative;
+    padding-top: 100%;
+    div {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-light);
+      flex-direction: column;
+      svg:not(.color) {
+        color: var(--color-base);
+      }
+    }
+    em {
+      display: block;
+      margin: 6px 0 0;
+      font-family: var(--font-eng);
+      font-style: normal;
+      font-size: 11px;
+      line-height: 1.15;
+      color: var(--color-weak);
+    }
+  }
+  &.col-4 {
+    --column: 4;
+  }
+  @include mixins.responsive(desktop) {
+    --column: 8;
+    &.col-4 {
+      --column: 4;
+    }
+  }
+}

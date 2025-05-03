@@ -33,6 +33,7 @@ export const authStore = defineStore('auth', {
           method: 'post',
           responseType: 'json',
         })
+        // TODO: preference 데이터도 가져와서 셋업
         // switching
         if (res.status === 200)
         {

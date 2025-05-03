@@ -23,7 +23,7 @@ const error = ref(undefined)
 const layout = computed(() => {
   let layoutName = route.meta.layout || 'default'
   if (!route.name) return null
-  if (!auth.account) layoutName = 'blank'
+  // if (!auth.account) layoutName = 'blank' // TODO: 인증부분 구현이 안되어있어서 주석처리
   switch (layoutName)
   {
     case 'default':
