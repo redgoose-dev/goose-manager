@@ -10,10 +10,10 @@
   left: 0;
   right: 0;
   margin: 0;
-  background-color: mixins.mix-alpha(#{var(--color-light)}, 75%);
+  background: mixins.mix-alpha(var(--color-edge), 82%);
   height: var(--size-header-height, 42px);
   padding: 0 var(--size-side-padding);
-  box-shadow: 0 .5px 0 mixins.mix-alpha(var(--color-weak), 50%);
+  box-shadow: 0 1px 12px mixins.mix-alpha(var(--color-weak), 20%);
   @include mixins.background-blur(8px);
   .wrap {
     display: flex;
@@ -24,21 +24,22 @@
   .logo {
     margin: 0;
     height: 100%;
+    font-size: 0;
     a {
       display: flex;
       height: 100%;
       align-items: center;
-      margin: 0 0 0 -16px;
+      margin: 0 -16px;
       padding: 0 16px;
       text-decoration: none;
       font-family: var(--font-eng);
       font-weight: 800;
       font-size: 22px;
       line-height: 1;
-      color: var(--color-dark);
+      color: var(--color-base);
       letter-spacing: -.5px;
       box-sizing: border-box;
-      transition: opacity 100ms ease-out;
+      transition: opacity 160ms ease-out;
       user-select: none;
       &:active {
         opacity: .5;
@@ -48,7 +49,7 @@
   .main-nav {
     flex: 1;
     height: 100%;
-    padding: 0 0 0 8px;
+    padding: 0 0 0 16px;
     box-sizing: border-box;
   }
   .side-nav {
@@ -77,7 +78,7 @@
       font-size: 14px;
       font-weight: 600;
       line-height: 1;
-      padding: 8px 14px;
+      padding: 8px 16px;
       transition: background-color 200ms ease-out;
       em {
         display: block;
@@ -87,17 +88,19 @@
       }
       .ico-arrow {
         display: block;
-        margin: 0 -4px 0 8px;
+        margin: 0 -8px 0 4px;
         --icon-size: 18px;
         --icon-stroke: 2.5;
-        transition: transform 320ms ease-out
+        transition: rotate 360ms ease-out;
+        rotate: x 180deg;
       }
       .ico-custom {
         display: block;
         --icon-size: 16px;
         --icon-stroke: 2;
+        --icon-color: var(--color-base);
         &:first-child {
-          margin: 0 4px 0 0;
+          margin: 0 6px 0 0;
         }
       }
     }
@@ -107,7 +110,7 @@
       &.active {
         background-color: var(--color-key);
         :where(em, .ico-arrow, .ico-custom) {
-          color: var(--color-light);
+          color: var(--color-edge);
         }
       }
     }
@@ -116,7 +119,6 @@
     }
     > div {
       position: relative;
-      //display: none;
       pointer-events: none;
       ol {
         opacity: 0;
@@ -126,11 +128,10 @@
       > a:not(.active), > span {
         background-color: mixins.mix-alpha(var(--color-base), 10%);
         .ico-arrow {
-          transform: rotateX(180deg);
+          rotate: x 0deg;
         }
       }
       > div {
-        //display: block;
         pointer-events: auto;
         ol {
           opacity: 1;
@@ -147,9 +148,8 @@
     box-sizing: border-box;
     left: 0;
     top: 0;
-    background-color: hsla(0 0% 100% / 100%);
-    box-shadow: 0 2px 10px hsla(0 0% 0% / 10%);
-    translate: 0 .5px;
+    background-color: var(--color-edge);
+    box-shadow: 0 2px 12px mixins.mix-alpha(var(--color-base), 10%);
     border-radius: 0 0 2px 2px;
     overflow: clip;
     transition: opacity 200ms ease-out;
@@ -165,13 +165,13 @@
           right: 0;
           top: 0;
           height: .5px;
-          background-color: hsla(0 0% 0% / 20%);
+          background-color: mixins.mix-alpha(var(--color-base), 20%);
         }
       }
       > a, > span, > button {
         display: flex;
         align-items: center;
-        height: 40px;
+        height: 36px;
         font-size: 13px;
         font-weight: 500;
         padding: 0 16px;
@@ -191,7 +191,7 @@
           --icon-stroke: 2;
         }
         &:hover {
-          background-color: hsla(0 0% 0% / 10%);
+          background-color: mixins.mix-alpha(var(--color-base), 5%);
         }
       }
       > a {
@@ -220,7 +220,7 @@
 
 // container
 .container {
-  margin: 40px 0 80px;
+  margin: 40px 0 60px;
   padding: 0 var(--size-side-padding);
   &__wrap {
     max-width: var(--size-content-body);

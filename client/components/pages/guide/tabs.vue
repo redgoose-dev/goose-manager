@@ -21,10 +21,11 @@
   &__wrap {
     display: flex;
     align-items: center;
-    padding: 0 15px;
-    background-color: rgb(204 204 204 / 40%);
-    border-radius: 2px;
+    padding: 0 12px;
+    background-color: var(--color-edge);
+    border-radius: 4px;
     user-select: none;
+    box-shadow: 0 0 0 .5px mixins.mix-alpha(var(--color-base), 15%);
   }
   a {
     display: block;
@@ -32,27 +33,27 @@
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
-    border-radius: 2px;
-    &:active {
-      opacity: .5;
+    border-radius: 0;
+    transition: background-color 160ms ease-out;
+    &:focus-visible {
+      outline: none;
     }
-    &:hover {
-      background-color: rgb(0 0 0 / 5%);
+    &:not(.router-link-exact-active) {
+      &:active {
+        opacity: .5;
+      }
+      &:hover {
+        background-color: mixins.mix-alpha(var(--color-base), 6%);
+      }
+      &:focus-visible {
+        outline-offset: -2px;
+        outline: 2px dashed var(--button-focus-color, var(--color-sub));
+      }
     }
     &.router-link-exact-active {
       color: var(--color-base);
       cursor: default;
       opacity: 1;
-      &:hover {
-        background-color: transparent;
-      }
-    }
-    &:focus-visible {
-      outline: none;
-    }
-    &:focus-visible:not(.router-link-exact-active) {
-      outline: none;
-      box-shadow: 0 0 0 3px rgb(var(--color-key-rgb) / 50%);
     }
   }
 }

@@ -7,16 +7,18 @@
 :root {
   color-scheme: light;
   // color
-  --color-bg: hsl(210 25% 98%);
-  --color-base: hsl(0 0% 13%);
-  --color-weak: hsl(0 0% 47%);
-  --color-light: hsl(0 0% 100%);
-  --color-dark: hsl(0 0% 0%);
-  --color-key: hsl(350 70% 41%);
-  --color-sub: hsl(26 79% 55%);
-  --color-code: hsl(233 100% 66%);
-  --color-success: hsl(142 75% 42%);
-  --color-error: hsl(0 100% 42%);
+  --color-bg: hsl(0 0% 97%);
+  --color-base: hsl(0 0% 18%);
+  --color-weak: hsl(0 0% 54%);
+  --color-blur: hsl(0 0% 88%);
+  --color-edge: hsl(0 0% 100%);
+  --color-reverse: hsl(0 0% 0%);
+  --color-key: hsl(162 78% 46%);
+  --color-sub: hsl(240 80% 64%);
+  --color-code: hsl(210 90% 62%);
+  --color-success: hsl(130 60% 48%);
+  --color-error: hsl(0 70% 50%);
+  --color-focus: hsl(240 80% 64%);
   // size
   --size-content-body: 920px;
   --size-content-large: 1440px;
@@ -54,7 +56,7 @@ code, kbd, pre, samp {
 }
 ::selection {
   background: var(--color-key);
-  color: var(--color-light);
+  color: var(--color-edge);
 }
 
 // over size content

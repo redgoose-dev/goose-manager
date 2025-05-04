@@ -23,4 +23,7 @@ export default {
   'server': lucide.Server,
   'droplet': lucide.Droplet,
   'folder-git-2': lucide.FolderGit2,
+  'power': lucide.Power,
+  'check': lucide.Check,
+  'loader': lucide.Loader,
 }

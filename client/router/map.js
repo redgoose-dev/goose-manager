@@ -27,7 +27,7 @@ const guide = [
       {
         path: 'button/',
         name: 'GuideButton',
-        component: () => import('../pages/guide/guide-button.vue'),
+        component: () => import('../pages/guide/button.vue'),
         meta: { active: 'guide' },
       },
       // {
@@ -48,12 +48,12 @@ const guide = [
         component: () => import('../pages/guide/icon.vue'),
         meta: { active: 'guide' },
       },
-      // {
-      //   path: 'color/',
-      //   name: 'GuideColor',
-      //   component: () => import('../pages/guide/color.vue'),
-      //   meta: { active: 'guide' },
-      // },
+      {
+        path: 'color/',
+        name: 'GuideColor',
+        component: () => import('../pages/guide/color.vue'),
+        meta: { active: 'guide' },
+      },
       // {
       //   path: 'modal/',
       //   name: 'GuideModal',

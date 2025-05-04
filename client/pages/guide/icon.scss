@@ -1,5 +1,5 @@
-@forward './common.scss';
 @use '../../scss/mixins';
+@forward './common.scss';
 
 .icons-index {
   --column: 6;
@@ -21,7 +21,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: var(--color-light);
+      background-color: var(--color-edge);
       flex-direction: column;
       svg:not(.color) {
         color: var(--color-base);

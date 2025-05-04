@@ -7,13 +7,12 @@
     font-size: 28px;
     font-family: var(--font-eng);
     letter-spacing: -.5px;
-    color: var(--color-sub);
+    color: var(--color-base);
     line-height: 1.15;
   }
   > p {
     margin: 0;
-    font-size: 12px;
-    color: var(--color-weak);
+    font-size: 13px;
   }
 }
 
@@ -27,18 +26,18 @@
       font-weight: 600;
       font-family: var(--font-eng);
       line-height: 1.25;
+      letter-spacing: -.5px;
     }
     p {
-      margin: 2px 0 0;
-      font-size: 12px;
-      line-height: 1.25;
-      color: var(--color-weak);
+      margin: 4px 0 0;
+      font-size: 13px;
+      line-height: 1.42;
     }
   }
 }
 
 .page-header + .page-section {
-  margin-top: 32px;
+  margin-top: 24px;
 }
 
 .example {
@@ -46,7 +45,7 @@
   background-color: var(--color-bg);
   box-sizing: border-box;
   border-radius: 4px;
-  box-shadow: 0 1px 15px rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 15px rgb(0 0 0 / 10%), 0 0 0 1px rgb(0 0 0 / 5%); // TODO
   > * {
     &:first-child {
       margin-top: 0;
@@ -59,7 +58,7 @@
     margin: 24px 0;
     display: block;
     border: none;
-    border-top: 1px dashed rgb(0 0 0 / 30%);
+    border-top: 1px dashed rgb(0 0 0 / 30%); // TODO
   }
   > pre {
     font-size: 12px;
@@ -74,7 +73,7 @@
   padding: 0;
   height: 1px;
   border: none;
-  border-top: 1px dashed rgb(0 0 0 / 20%);
+  border-top: 1px dashed rgb(0 0 0 / 20%); // TODO
 }
 
 .grid {

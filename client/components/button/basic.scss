@@ -1,0 +1,91 @@
+@use '../../scss/mixins';
+
+.button {
+  display: block;
+  width: var(--button-width, 100%);
+  height: var(--button-height, 42px);
+  margin: var(--button-margin, 0);
+  padding: var(--button-padding, (0 24px));
+  // outer
+  background: var(--button-color-bg, var(--color-weak));
+  border: 0;
+  border-radius: var(--button-radius);
+  filter: brightness(var(--button-brightness, unset));
+  // transition
+  transition:
+    background-color 160ms ease-out,
+    outline 160ms ease-out,
+    filter 160ms ease-out;
+  // icon
+  --icon-size: var(--button-icon-size, 18px);
+  --icon-stroke: 2;
+  --icon-color: var(--button-text-color, var(--color-edge));
+  // text
+  --button-text-size: 15px;
+  color: var(--button-text-color, var(--color-edge));
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  // etc
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  box-sizing: border-box;
+  outline-offset: 0;
+  // button
+  &[type=button],
+  &[type=submit],
+  &[type=reset] {
+    -webkit-appearance: button;
+  }
+  &[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+}
+
+.button:not([disabled],label,p) {
+  // focus
+  &:focus-visible {
+    outline: 2px dashed var(--button-focus-color, var(--color-sub));
+  }
+  // hover
+  &:hover {
+    --button-brightness: 105%;
+  }
+  // active
+  &:active {
+    --button-brightness: 95%;
+  }
+}
+
+// size
+.size {
+  &--small {
+    --button-height: 34px;
+    --button-padding: 0 16px;
+    --button-text-size: 13px;
+    --icon-size: 13px;
+  }
+}
+
+// color
+.color {
+  &--key {
+    --button-color-bg: var(--color-key);
+  }
+  &--sub {
+    --button-color-bg: var(--color-sub);
+  }
+  &--success {
+    --button-color-bg: var(--color-success);
+  }
+  &--error {
+    --button-color-bg: var(--color-error);
+  }
+}
+
+// animation rotate
+.ani-rotate {
+  --icon-animation: spin 2s linear infinite;
+}
