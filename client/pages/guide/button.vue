@@ -53,6 +53,9 @@
           <ButtonBasic type="button" color="sub">sub</ButtonBasic>
         </div>
         <div>
+          <ButtonBasic type="button" color="code">code</ButtonBasic>
+        </div>
+        <div>
           <ButtonBasic type="button" color="success">success</ButtonBasic>
         </div>
         <div>
@@ -89,13 +92,16 @@
           <ButtonBasic type="button" icon-right="power"/>
         </div>
         <div>
-          <ButtonBasic type="button" icon-left="check">left icon</ButtonBasic>
+          <ButtonBasic type="button" icon-left="chevrons-left">left icon</ButtonBasic>
         </div>
         <div>
-          <ButtonBasic type="button" icon-right="check">right icon</ButtonBasic>
+          <ButtonBasic type="button" icon-right="chevrons-right">right icon</ButtonBasic>
         </div>
         <div>
           <ButtonBasic type="button" icon-right="loader" :rotate-icon="true"/>
+        </div>
+        <div>
+          <ButtonBasic type="button" icon-left="cloud" size="small">Small size</ButtonBasic>
         </div>
       </div>
     </div>
@@ -135,13 +141,22 @@
     </header>
     <div class="example">
       <div class="flex">
-        <ButtonIcon icon-name="menu"/>
-        <ButtonIcon icon-name="activity" href="/foo/"/>
-        <ButtonIcon icon-name="twitter" href="https://google.com"/>
-        <ButtonIcon icon-name="star" color="key"/>
-        <ButtonIcon icon-name="cast" color="sub"/>
-        <ButtonIcon icon-name="file-minus" color="error"/>
-        <ButtonIcon icon-name="cloud" color="weak"/>
+        <ButtonIcon icon-name="box"/>
+        <ButtonIcon icon-name="code" href="/foo/"/>
+        <ButtonIcon icon-name="link" href="https://google.com"/>
+      </div>
+    </div>
+    <header>
+      <h2>colors</h2>
+      <p>아이콘 사용하기</p>
+    </header>
+    <div class="example">
+      <div class="flex">
+        <ButtonIcon icon-name="cloud" color="key"/>
+        <ButtonIcon icon-name="star" color="sub"/>
+        <ButtonIcon icon-name="trash-2" color="code"/>
+        <ButtonIcon icon-name="settings" color="success"/>
+        <ButtonIcon icon-name="power" color="error"/>
       </div>
     </div>
     <header>
@@ -149,8 +164,8 @@
     </header>
     <div class="example">
       <div class="flex">
-        <ButtonIcon icon-name="twitter"/>
-        <ButtonIcon icon-name="twitter" size="small"/>
+        <ButtonIcon icon-name="droplet"/>
+        <ButtonIcon icon-name="server" size="small"/>
       </div>
     </div>
     <header>
@@ -158,7 +173,7 @@
     </header>
     <div class="example">
       <div class="flex">
-        <ButtonIcon icon-name="github" :disabled="true"/>
+        <ButtonIcon icon-name="user" :disabled="true"/>
       </div>
     </div>
   </section>

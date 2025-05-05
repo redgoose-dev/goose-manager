@@ -30,12 +30,12 @@ const guide = [
         component: () => import('../pages/guide/button.vue'),
         meta: { active: 'guide' },
       },
-      // {
-      //   path: 'form/',
-      //   name: 'GuideForm',
-      //   component: () => import('../pages/guide/guide-form.vue'),
-      //   meta: { active: 'guide' },
-      // },
+      {
+        path: 'forms/',
+        name: 'GuideForms',
+        component: () => import('../pages/guide/forms.vue'),
+        meta: { active: 'guide' },
+      },
       // {
       //   path: 'fieldset/',
       //   name: 'GuideFieldset',

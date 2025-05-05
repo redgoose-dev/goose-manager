@@ -3,7 +3,7 @@
   <div class="tabs__wrap">
     <router-link to="/guide/" exact>Home</router-link>
     <router-link to="/guide/button/" exact>Button</router-link>
-    <router-link to="/guide/form/">Form</router-link>
+    <router-link to="/guide/forms/">Forms</router-link>
     <router-link to="/guide/fieldset/">Fieldset</router-link>
     <router-link to="/guide/icon/">Icon</router-link>
     <router-link to="/guide/color/">Color</router-link>

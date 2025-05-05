@@ -18,7 +18,7 @@ const props = defineProps({
   title: String,
   disabled: Boolean,
   size: String, // small
-  color: String, // key,sub,error,weak
+  color: String, // key,sub,code,success,error
   rotateIcon: Boolean,
   iconLeft: String,
   iconRight: String,
@@ -68,6 +68,7 @@ const _rootProps = computed(() => {
   }
   attr.class = [
     'button',
+    props.disabled && `disabled`,
     props.size && `size--${props.size}`,
     props.color && `color--${props.color}`,
     props.rotateIcon && `ani-rotate`,

@@ -16,7 +16,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import PageHeader from '../../components/header/index.vue'
+import PageHeader from '../../components/header/page.vue'
 import Tabs from '../../components/pages/guide/tabs.vue'
 import Home from './home.vue'
 
@@ -26,7 +26,7 @@ const title = computed(() => {
   switch (route.name)
   {
     case 'GuideButton': return 'Button'
-    case 'GuideForm': return 'Form'
+    case 'GuideForms': return 'Forms'
     case 'GuideFieldset': return 'Fieldset'
     case 'GuideIcon': return 'Icon'
     case 'GuideColor': return 'Color'

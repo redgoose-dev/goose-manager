@@ -1,0 +1,61 @@
+@use '../../scss/mixins';
+
+.input {
+  position: relative;
+  display: block;
+  width: var(--input-width, 100%);
+  height: var(--input-height, 40px);
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  padding: var(--input-padding, (0 12px));
+  background: var(--input-bg, var(--color-edge));
+  box-shadow: var(--input-shadow, inset 0 0 0 1px var(--color-weak));
+  outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+  outline-offset: 0;
+  font-size: var(--input-text-size, 14px);
+  color: var(--input-text-color, var(--color-base));
+  transition: box-shadow 160ms ease-out, outline-color 160ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+
+  // placeholder
+  &::-webkit-input-placeholder {
+    color: var(--input-placeholder, var(--color-weak));
+  }
+
+  // disabled
+  &:read-only {
+    background-color: var(--input-readonly, mixins.mix-alpha(var(--color-reverse), 8%));
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+
+  // focus
+  &:focus:not([disabled]) {
+    outline-color: var(--color-focus);
+    --input-shadow: inset 0 0 0 1px mixins.mix-alpha(var(--color-focus), 0%);
+  }
+
+  // extra
+  &:is([type=date])::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 8px;
+    margin: 0;
+  }
+}
+
+// size
+.size {
+  &--small {
+    --input-height: 32px;
+    --input-text-size: 12px;
+    --input-padding: 0 12px;
+  }
+}
+
+// error
+.error {
+  --input-shadow: inset 0 0 0 1px var(--color-error);
+}

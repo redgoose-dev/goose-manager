@@ -1,0 +1,61 @@
+@use '../../scss/mixins';
+
+.textarea {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  height: var(--textarea-height, auto);
+  padding: var(--textarea-padding, (12px 16px));
+  background: var(--textarea-bg, var(--color-edge));
+  box-shadow: var(--textarea-shadow, 0 0 0 1px var(--color-weak));
+  outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+  font-size: var(--textarea-text-size, 14px);
+  color: var(--textarea-text-color, var(--color-base));
+  line-height: 1.42;
+  transition: box-shadow 160ms ease-out, outline-color 160ms ease-out;
+  resize: vertical;
+
+  // placeholder
+  &::-webkit-input-placeholder {
+    color: var(--input-placeholder, var(--color-weak));
+  }
+
+  // disabled
+  &:read-only {
+    background-color: var(--input-readonly, mixins.mix-alpha(var(--color-reverse), 8%));
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+
+  // focus
+  &:focus:not(:disabled) {
+    outline-color: var(--color-focus);
+    --textarea-shadow: 0 0 0 1px mixins.mix-alpha(var(--color-focus), 0%);
+  }
+
+  // custom scrollbar
+  @include mixins.custom-scrollbar();
+}
+
+// size
+.size {
+  &--small {
+    --textarea-text-size: 12px;
+    --textarea-padding: 8px 12px;
+  }
+}
+
+// error
+.error {
+  --textarea-shadow: 0 0 0 1px var(--color-error);
+}
+
+// auto size
+.auto-size {
+  field-sizing: content;
+  resize: none;
+}

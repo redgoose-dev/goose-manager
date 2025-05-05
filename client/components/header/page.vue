@@ -91,4 +91,4 @@ const messages = computed(() => {
 })
 </script>
 
-<style src="./index.scss" lang="scss" scoped></style>
+<style src="./page.scss" lang="scss" scoped></style>

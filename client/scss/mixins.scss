@@ -48,8 +48,8 @@
 {
   --scroll-size: 16px;
   --scroll-padding: 4px;
-  --scroll-track: var(--scroll-track, var(--color-base));
-  --scroll-track-hover: #{mix-alpha(var(--color-base), 65%)};
+  --scroll-track: var(--scroll-track, var(--color-weak));
+  --scroll-track-hover: #{mix-alpha(var(--color-weak), 65%)};
   --scroll-bg: hsla(0 0% 100% / 0%);
   &::-webkit-scrollbar {
     width: var(--scroll-size);
@@ -59,7 +59,7 @@
     border: var(--scroll-padding) solid hsla(0 0% 100% / 0%);
     background-clip: padding-box;
     border-radius: 9999px;
-    background-color: var(--scroll-track, var(--color-base));
+    background-color: var(--scroll-track, var(--color-weak));
     &:hover {
       background-color: var(--scroll-track-hover);
     }
