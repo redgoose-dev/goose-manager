@@ -4,7 +4,7 @@
   position: relative;
   display: block;
   width: var(--input-width, 100%);
-  height: var(--input-height, 40px);
+  height: var(--input-height, 38px);
   border: none;
   border-radius: 0;
   box-sizing: border-box;
@@ -49,7 +49,7 @@
 // size
 .size {
   &--small {
-    --input-height: 32px;
+    --input-height: 30px;
     --input-text-size: 12px;
     --input-padding: 0 12px;
   }

@@ -36,6 +36,8 @@
                     :to="item2.link"
                     :href="item2.href"
                     :target="item2.target"
+                    tabindex="0"
+                    role="button"
                     :class="[
                       route.meta.active === item2.active && 'active',
                     ]">
@@ -131,7 +133,7 @@ function getNavigationElementName(item)
 
 async function onClickCheckout()
 {
-  //
+  // TODO: 체크아웃
 }
 </script>
 

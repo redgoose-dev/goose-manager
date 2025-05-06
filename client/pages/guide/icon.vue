@@ -6,7 +6,7 @@
   </header>
   <section class="page-section">
     <header>
-      <h2>icons index</h2>
+      <h1>icons index</h1>
       <p>
         다음은 아이콘들의 목록입니다.<br/>
         아이콘의 아래의 이름은 `icon` 컴포넌트의 `name`값입니다.
@@ -24,7 +24,7 @@
 
   <section class="page-section">
     <header>
-      <h2>color</h2>
+      <h1>color</h1>
       <p>아이콘의 컬러 예제입니다.</p>
     </header>
     <ul class="icons-index col-4">
@@ -69,7 +69,7 @@
 
   <section class="page-section">
     <header>
-      <h2>size</h2>
+      <h1>size</h1>
       <p>아이콘의 사이즈 예제입니다.</p>
     </header>
     <ul class="icons-index col-4">
@@ -114,7 +114,7 @@
 
   <section class="page-section">
     <header>
-      <h2>animation</h2>
+      <h1>animation</h1>
       <p>아이콘 애니메이션</p>
     </header>
     <ul class="icons-index col-4">

@@ -7,7 +7,7 @@
 
   <section class="page-section">
     <header>
-      <h2>basic</h2>
+      <h1>basic</h1>
       <p>기본적으로 사용하는 모습</p>
     </header>
     <div class="example">
@@ -15,7 +15,7 @@
     </div>
 
     <header>
-      <h2>disabled</h2>
+      <h1>disabled</h1>
       <p>버튼 비활성화</p>
     </header>
     <div class="example">
@@ -23,7 +23,7 @@
     </div>
 
     <header>
-      <h2>size</h2>
+      <h1>size</h1>
       <p>버튼의 사이즈 모음</p>
     </header>
     <div class="example">
@@ -38,7 +38,7 @@
     </div>
 
     <header>
-      <h2>color</h2>
+      <h1>color</h1>
       <p>버톤의 컬러</p>
     </header>
     <div class="example">
@@ -65,7 +65,7 @@
     </div>
 
     <header>
-      <h2>element type</h2>
+      <h1>element type</h1>
       <p>다양한 엘리먼트 사용</p>
     </header>
     <div class="example">
@@ -83,7 +83,7 @@
     </div>
 
     <header>
-      <h2>with icon</h2>
+      <h1>with icon</h1>
       <p>아이콘 사용하기</p>
     </header>
     <div class="example">
@@ -107,7 +107,7 @@
     </div>
 
     <header>
-      <h2>inline</h2>
+      <h1>inline</h1>
       <p>인라인 버튼</p>
     </header>
     <div class="example">
@@ -115,7 +115,7 @@
     </div>
 
     <header>
-      <h2>group</h2>
+      <h1>group</h1>
       <p>여러개의 버튼그룹</p>
     </header>
     <div class="example">
@@ -136,7 +136,7 @@
 
   <section class="page-section">
     <header>
-      <h2>type</h2>
+      <h1>type</h1>
       <p>사용 용도에 따른 타입</p>
     </header>
     <div class="example">
@@ -147,7 +147,7 @@
       </div>
     </div>
     <header>
-      <h2>colors</h2>
+      <h1>colors</h1>
       <p>아이콘 사용하기</p>
     </header>
     <div class="example">
@@ -160,7 +160,7 @@
       </div>
     </div>
     <header>
-      <h2>size</h2>
+      <h1>size</h1>
     </header>
     <div class="example">
       <div class="flex">
@@ -169,7 +169,7 @@
       </div>
     </div>
     <header>
-      <h2>disabled</h2>
+      <h1>disabled</h1>
     </header>
     <div class="example">
       <div class="flex">
@@ -181,7 +181,7 @@
 </template>
 
 <script setup>
-import { ButtonBasic, ButtonGroup, ButtonIcon } from '../../components/button'
+import { ButtonBasic, ButtonGroup, ButtonIcon } from '../../components/button/index.js'
 </script>
 
 <style src="./common.scss" lang="scss" scoped></style>

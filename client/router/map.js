@@ -36,12 +36,12 @@ const guide = [
         component: () => import('../pages/guide/forms.vue'),
         meta: { active: 'guide' },
       },
-      // {
-      //   path: 'fieldset/',
-      //   name: 'GuideFieldset',
-      //   component: () => import('../pages/guide/guide-fieldset.vue'),
-      //   meta: { active: 'guide' },
-      // },
+      {
+        path: 'fieldset/',
+        name: 'GuideFieldset',
+        component: () => import('../pages/guide/fieldset.vue'),
+        meta: { active: 'guide' },
+      },
       {
         path: 'icon/',
         name: 'GuideIcon',
@@ -54,12 +54,12 @@ const guide = [
         component: () => import('../pages/guide/color.vue'),
         meta: { active: 'guide' },
       },
-      // {
-      //   path: 'modal/',
-      //   name: 'GuideModal',
-      //   component: () => import('../pages/guide/modal.vue'),
-      //   meta: { active: 'guide' },
-      // },
+      {
+        path: 'modal/',
+        name: 'GuideModal',
+        component: () => import('../pages/guide/modal.vue'),
+        meta: { active: 'guide' },
+      },
       // {
       //   path: 'item/',
       //   name: 'GuideItem',

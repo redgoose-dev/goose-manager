@@ -70,16 +70,16 @@
 }
 
 // focus outline
-@mixin focus-outline($animation: true)
+@mixin focus-outline($animation: true, $offset: 0)
 {
-  outline: none;
+  outline: 2px dashed mix-alpha(var(--color-focus), 0%);
+  outline-offset: $offset;
   -webkit-tap-highlight-color: transparent;
   @if $animation {
-    transition: outline 160ms ease-out;
+    transition: outline-color 160ms ease-out;
   }
   &:focus-visible {
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
+    outline-color: var(--color-focus);
     @content;
   }
 }

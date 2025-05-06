@@ -44,6 +44,7 @@
       &:active {
         opacity: .5;
       }
+      @include mixins.focus-outline(true, -2px);
     }
   }
   .main-nav {
@@ -85,6 +86,7 @@
         font-style: normal;
         white-space: nowrap;
         letter-spacing: -.25px;
+        user-select: none;
       }
       .ico-arrow {
         display: block;
@@ -113,6 +115,7 @@
           color: var(--color-edge);
         }
       }
+      @include mixins.focus-outline(true, -2px);
     }
     > span {
       cursor: default;
@@ -124,7 +127,7 @@
         opacity: 0;
       }
     }
-    &:hover {
+    &:hover, &:has(:focus-visible) {
       > a:not(.active), > span {
         background-color: mixins.mix-alpha(var(--color-base), 10%);
         .ico-arrow {
@@ -193,6 +196,7 @@
         &:hover {
           background-color: mixins.mix-alpha(var(--color-base), 5%);
         }
+        @include mixins.focus-outline(true, -2px);
       }
       > a {
         text-decoration: none;
@@ -249,6 +253,9 @@
     line-height: 1.15;
     > * {
       display: block;
+    }
+    a {
+      @include mixins.focus-outline(true, 2px);
     }
   }
 }

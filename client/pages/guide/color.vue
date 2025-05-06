@@ -6,7 +6,7 @@
   </header>
   <section class="page-section">
     <header>
-      <h2>color example</h2>
+      <h1>color example</h1>
       <p>기본컬러 샘플입니다.</p>
     </header>
     <div class="colors">

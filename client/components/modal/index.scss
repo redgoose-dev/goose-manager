@@ -1,0 +1,72 @@
+@use '../../scss/mixins';
+
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.mode {
+  &--window {
+    display: grid;
+    place-content: center;
+    cursor: zoom-out;
+    background-color: var(--modal-color-bg, mixins.mix-alpha(var(--color-bg), 75%));
+    @include mixins.background-blur(16px);
+  }
+  &--full {
+    background-color: var(--modal-color-bg, var(--color-bg));
+    .body {
+      height: 100%;
+      box-sizing: border-box;
+    }
+  }
+}
+
+// transition
+.mode {
+  &--window {
+    > .body {
+      transition: opacity 160ms ease-out;
+      transition-delay: 200ms;
+    }
+    &:is(.modal-enter-active) {
+      transition: opacity 160ms ease-out;
+    }
+    &:is(.modal-enter-from, .modal-leave-to) {
+      opacity: 0;
+      > .body {
+        opacity: 0;
+      }
+    }
+    &:is(.modal-leave-active) {
+      transition: opacity 240ms ease-out;
+      transition-delay: 200ms;
+      > .body {
+        transition: opacity 220ms ease-out;
+        transition-delay: 0ms;
+      }
+    }
+  }
+  &--full {
+    &:is(.modal-enter-active, .modal-leave-active) {
+      transition: opacity 160ms ease-out;
+    }
+    &:is(.modal-enter-from, .modal-leave-to) {
+      opacity: 0;
+    }
+  }
+}
+
+// for root
+:global(html.mode-not-scroll) {
+  overflow: clip;
+  > body {
+    overflow: clip;
+  }
+}

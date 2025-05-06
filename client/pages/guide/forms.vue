@@ -7,9 +7,10 @@
 
   <section class="page-section">
     <header>
-      <h2>text</h2>
+      <h1>text</h1>
       <p>
-        <code>/client/components/forms/input.vue</code>
+        텍스트를 입력하는 용도로 사용합니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/input.vue</code>
       </p>
     </header>
     <p>다양한 타입</p>
@@ -53,9 +54,10 @@
 
   <section class="page-section">
     <header>
-      <h2>textarea</h2>
+      <h1>textarea</h1>
       <p>
-        <code>/src/components/forms/textarea.vue</code>
+        여러줄의 텍스트를 입력하는 용도로 사용합니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/textarea.vue</code>
       </p>
     </header>
     <div class="example">
@@ -70,9 +72,10 @@
 
   <section class="page-section">
     <header>
-      <h2>select</h2>
+      <h1>select</h1>
       <p>
-        <code>/src/components/forms/select.vue</code>
+        여러 항목중에 하나를 선택하는 용도로 사용합니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/select.vue</code>
       </p>
     </header>
     <div class="example">
@@ -103,9 +106,10 @@
 
   <section class="page-section">
     <header>
-      <h2>checkbox</h2>
+      <h1>checkbox</h1>
       <p>
-        <code>/src/components/forms/checkbox.vue</code>
+        여러 항목을 선택하는 용도로 사용합니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/checkbox.vue</code>
       </p>
     </header>
     <div class="example">
@@ -131,9 +135,10 @@
 
   <section class="page-section">
     <header>
-      <h2>radio</h2>
+      <h1>radio</h1>
       <p>
-        <code>/src/components/forms/radio.vue</code>
+        여러 항목들중 하나를 선택하는 용도로 사용합니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/radio.vue</code>
       </p>
     </header>
     <div class="example">
@@ -157,9 +162,10 @@
 
   <section class="page-section">
     <header>
-      <h2>switch</h2>
+      <h1>switch</h1>
       <p>
-        <code>/src/components/forms/switch.vue</code>
+        true/false 토글링하는 용도로 사용합니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/switch.vue</code>
       </p>
     </header>
     <div class="example">
@@ -186,25 +192,10 @@
 
   <section class="page-section">
     <header>
-      <h2>content-editable</h2>
+      <h1>keyword</h1>
       <p>
-        <code>/src/components/forms/content-editable.vue</code>
-      </p>
-    </header>
-    <div class="example content-editable">
-      <FormContentEditable
-        v-model="contentEditable"
-        class="content-editable__body"/>
-      <hr class="content-editable__line">
-      <pre class="content-editable__render">{{contentEditable}}</pre>
-    </div>
-  </section>
-
-  <section class="page-section">
-    <header>
-      <h2>keyword</h2>
-      <p>
-        <code>/src/components/forms/keyword.vue</code>
+        키워드를 입력할 수 있는 입력폼과 서브밋 버튼이 같이 붙어있는 컴포넌트입니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/keyword.vue</code>
       </p>
     </header>
     <div class="example">
@@ -214,6 +205,16 @@
         :disabled="false"
         :use-clear="true"
         :use-submit="true"
+        @clear="keywordMessage = ''"
+        @submit="onSubmitKeyword"/>
+      <hr>
+      <FormKeyword
+        v-model="keywordMessage"
+        :processing="keywordProcessing"
+        :disabled="false"
+        :use-clear="true"
+        :use-submit="true"
+        size="small"
         @clear="keywordMessage = ''"
         @submit="onSubmitKeyword"/>
       <p>{{keywordMessage}}</p>
@@ -226,10 +227,7 @@
 import { ref } from 'vue'
 import { sleep } from '../../libs/util.js'
 import { ButtonBasic } from '../../components/button/index.js'
-import { FormInput, FormTextarea, FormSelect, FormCheckbox, FormRadio, FormSwitch } from '../../components/forms/index.js'
-// import FormContentEditable from '../../components/forms/content-editable.vue'
-// import FormKeyword from '../../components/forms/keyword.vue'
-
+import { FormInput, FormTextarea, FormSelect, FormCheckbox, FormRadio, FormSwitch, FormKeyword } from '../../components/forms/index.js'
 
 const text = ref('')
 const textarea = ref('')
@@ -250,7 +248,7 @@ const selectOptions = [
 async function onSubmitKeyword()
 {
   keywordProcessing.value = true
-  await sleep(2000)
+  await sleep(1113000)
   console.log('on submit keyword:', keywordMessage.value)
   keywordProcessing.value = false
 }

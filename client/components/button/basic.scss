@@ -3,7 +3,7 @@
 .button {
   display: block;
   width: var(--button-width, 100%);
-  height: var(--button-height, 40px);
+  height: var(--button-height, 38px);
   margin: var(--button-margin, 0);
   padding: var(--button-padding, (0 24px));
   // outer
@@ -31,7 +31,7 @@
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   box-sizing: border-box;
-  outline: 2px dashed mixins.mix-alpha(var(--button-focus-color, var(--color-sub)), 0%);
+  outline: 2px dashed mixins.mix-alpha(var(--color-sub), 0%);
   // button
   &[type=button],
   &[type=submit],
@@ -49,7 +49,7 @@
 .button:not(.disabled,label,p) {
   // focus
   &:focus-visible {
-    outline-color: var(--button-focus-color, var(--color-sub));
+    outline-color: var(--color-sub);
   }
   // hover
   &:hover {

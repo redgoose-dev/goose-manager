@@ -26,4 +26,8 @@ export default {
   'power': lucide.Power,
   'check': lucide.Check,
   'loader': lucide.Loader,
+  'x-circle': lucide.XCircle,
+  'search': lucide.Search,
+  'menu': lucide.Menu,
+  'edit': lucide.Edit,
 }

@@ -16,7 +16,7 @@
     margin: 0;
     padding: var(--select-padding, 0 42px 0 16px);
     width: 100%;
-    height: var(--select-height, 40px);
+    height: var(--select-height, 38px);
     border: none;
     border-radius: 0;
     box-sizing: border-box;
@@ -69,7 +69,7 @@
   &--small {
     --select-height: 32px;
     --select-text-size: 12px;
-    --select-padding: 0 40px 0 12px;
+    --select-padding: 0 38px 0 12px;
     --icon-size: 14px;
     --icon-stroke: 2.5;
   }
