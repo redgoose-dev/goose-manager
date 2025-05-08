@@ -60,18 +60,18 @@ const guide = [
         component: () => import('../pages/guide/modal.vue'),
         meta: { active: 'guide' },
       },
-      // {
-      //   path: 'item/',
-      //   name: 'GuideItem',
-      //   component: () => import('../pages/guide/item.vue'),
-      //   meta: { active: 'guide' },
-      // },
-      // {
-      //   path: 'etc/',
-      //   name: 'GuideEtc',
-      //   component: () => import('../pages/guide/etc.vue'),
-      //   meta: { active: 'guide' },
-      // },
+      {
+        path: 'item/',
+        name: 'GuideItem',
+        component: () => import('../pages/guide/item.vue'),
+        meta: { active: 'guide' },
+      },
+      {
+        path: 'etc/',
+        name: 'GuideEtc',
+        component: () => import('../pages/guide/etc.vue'),
+        meta: { active: 'guide' },
+      },
     ],
   },
 ]

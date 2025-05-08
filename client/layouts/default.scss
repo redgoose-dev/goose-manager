@@ -110,7 +110,7 @@
       cursor: pointer;
       text-decoration: none;
       &.active {
-        background-color: var(--color-key);
+        background-color: var(--color-sub);
         :where(em, .ico-arrow, .ico-custom) {
           color: var(--color-edge);
         }
@@ -202,7 +202,7 @@
         text-decoration: none;
         cursor: pointer;
         &.active {
-          background-color: var(--color-key);
+          background-color: var(--color-sub);
         }
       }
       > button {

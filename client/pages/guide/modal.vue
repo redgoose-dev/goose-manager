@@ -46,7 +46,7 @@
           <p>header description</p>
         </header>
         <nav>
-          <ButtonBasic color="sub" @click="fullSize = false">
+          <ButtonBasic color="error" @click="fullSize = false">
             Close modal
           </ButtonBasic>
         </nav>
@@ -66,7 +66,7 @@ const fullSize = ref(false)
 </script>
 
 <style lang="scss" scoped>
-@forward 'common.scss';
+@forward 'common';
 .modal-full-content {
   display: grid;
   place-content: center;

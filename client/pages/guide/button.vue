@@ -184,4 +184,6 @@
 import { ButtonBasic, ButtonGroup, ButtonIcon } from '../../components/button/index.js'
 </script>
 
-<style src="./common.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+@forward 'common';
+</style>

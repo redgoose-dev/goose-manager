@@ -1,0 +1,24 @@
+@use '../../scss/mixins';
+
+.items {
+  display: grid;
+  gap: var(--items-gap, 16px);
+  grid-template-columns: repeat(var(--items-column, 1), 1fr);
+}
+
+.theme {
+  &--card {
+    --items-column: 2;
+  }
+  &--thumbnail {
+    --items-column: 3;
+  }
+  @include mixins.responsive(desktop-large) {
+    &--card {
+      --items-column: 3;
+    }
+    &--thumbnail {
+      --items-column: 4;
+    }
+  }
+}

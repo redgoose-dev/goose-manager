@@ -1,0 +1,18 @@
+@use '../../scss/mixins';
+
+.progress-donut {
+  circle {
+    &:nth-child(1) {
+      fill: transparent;
+      stroke: var(--progress-donut-color-back, var(--color-blur));
+    }
+    &:nth-child(2) {
+      fill: transparent;
+      stroke: var(--progress-donut-color-fill, var(--color-sub));
+      transition: stroke-dashoffset 200ms ease-out;
+      rotate: -90deg;
+      transform-origin: 50% 50%;
+      stroke-dashoffset: var(--progress-donut-dash-offset);
+    }
+  }
+}

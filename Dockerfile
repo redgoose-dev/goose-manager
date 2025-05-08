@@ -1,7 +1,7 @@
-ARG TAG=alpine
+ARG IMAGE_TAG=alpine
 
 # Build stage
-FROM oven/bun:${TAG} AS builder
+FROM oven/bun:${IMAGE_TAG} AS builder
 WORKDIR /app
 
 COPY . .
@@ -12,8 +12,9 @@ RUN rm -rf node_modules
 RUN bun install --production
 RUN rm -rf /tmp/* /root/.bun/cache
 
+
 # Runtime stage
-FROM oven/bun:${TAG}
+FROM oven/bun:${IMAGE_TAG}
 WORKDIR /app
 
 USER bun

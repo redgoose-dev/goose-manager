@@ -14,7 +14,7 @@
 </script>
 
 <style lang="scss" scoped>
-@forward './common.scss';
+@forward 'common';
 
 .description {
   font-size: 14px;

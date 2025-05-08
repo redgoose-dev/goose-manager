@@ -1,0 +1,45 @@
+@use '../../scss/mixins';
+
+.item {
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--item-color-bg, var(--color-edge));
+  box-shadow:
+    var(--item-shadow-1, 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%)),
+    var(--item-shadow-2, 0 2px 24px mixins.mix-alpha(var(--color-base), 15%));
+  transition: box-shadow 160ms ease-out;
+  width: var(--item-width, auto);
+  min-width: 0;
+  &:hover {
+    --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-key), 100%)};
+    --item-shadow-2: 0 2px 24px #{mixins.mix-alpha(var(--color-base), 25%)};
+  }
+  &__thumbnail {
+    width: 100%;
+    height: var(--item-image-height, auto);
+    min-height: var(--item-image-min-height, unset);
+    max-height: var(--item-image-max-height, unset);
+    box-sizing: border-box;
+    overflow: clip;
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 16px 24px;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+  &__title {
+    min-width: 0;
+  }
+  &__description {
+    margin: 2px 0 0;
+  }
+  &__meta {
+    margin: 4px 0 0;
+  }
+  &__nav {
+    margin: 8px 0 0;
+  }
+}

@@ -158,7 +158,7 @@ const switchValue = ref(false)
 </script>
 
 <style lang="scss" scoped>
-@forward './common.scss';
+@forward 'common';
 .optional-fieldset {
   margin-top: 36px;
 }

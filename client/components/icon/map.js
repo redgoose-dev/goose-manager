@@ -1,6 +1,6 @@
 import * as lucide from 'lucide-vue-next'
 
-export default {
+const icons = {
   'chevron-down': lucide.ChevronDown,
   'chevron-up': lucide.ChevronUp,
   'chevron-left': lucide.ChevronLeft,
@@ -31,3 +31,11 @@ export default {
   'menu': lucide.Menu,
   'edit': lucide.Edit,
 }
+
+export function iconRandomPick()
+{
+  const iconNames = Object.keys(icons)
+  return iconNames[Math.floor(Math.random() * iconNames.length)]
+}
+
+export default icons
