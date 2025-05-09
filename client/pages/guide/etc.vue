@@ -66,7 +66,10 @@
       <p>파일을 업로드하고 관리하는 컴포넌트</p>
     </header>
     <div class="example example--file-manager">
-      <FilesManager tab="global"/>
+      <FilesManager
+        tab="global"
+        :is-window="false"
+        :shortcut="true"/>
     </div>
   </section>
 </article>
