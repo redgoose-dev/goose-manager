@@ -7,7 +7,7 @@
 
   <section class="page-section">
     <header>
-      <h2>Toast component</h2>
+      <h1>Toast component</h1>
       <p>상태나 알림 메시지를 보여주는 토스트 컴포넌트</p>
     </header>
     <div class="example">
@@ -23,7 +23,7 @@
 
   <section class="page-section">
     <header>
-      <h2>Loading</h2>
+      <h1>Loading</h1>
       <p>데이터를 로딩하고있을때 사용하는 컴포넌트 입니다.</p>
     </header>
     <div class="example">
@@ -33,7 +33,7 @@
 
   <section class="page-section">
     <header>
-      <h2>Progress donut</h2>
+      <h1>Progress donut</h1>
       <p>도넛 형태의 그래프를 표시하는 컴포넌트 입니다.</p>
     </header>
     <div class="example">
@@ -47,7 +47,7 @@
 
   <section class="page-section">
     <header>
-      <h2>Pagination</h2>
+      <h1>Pagination</h1>
       <p>목록에서 사용하는 페이지 네비게이션</p>
     </header>
     <div class="example">
@@ -62,14 +62,48 @@
 
   <section class="page-section">
     <header>
-      <h2>Files manager</h2>
+      <h1>Dropdown</h1>
+      <p>드롭다운 UI</p>
+    </header>
+    <div class="example flex">
+      <Dropdown mode="click" :use-value="true" position="right" class="example--dropdown">
+        <template #trigger>
+          <ButtonBasic icon-right="chevron-down">
+            트리거 버튼
+          </ButtonBasic>
+        </template>
+        <Context
+          :items="[
+            { key: 'context-1', label: 'context #0', iconRight: 'star' },
+            { key: 'context-1', label: 'context #1', iconLeft: 'link', iconRight: 'link', color: 'key' },
+            { key: 'context-2', label: 'context #2', iconLeft: 'cloud', iconRight: 'cloud' },
+            { key: 'context-3', label: 'context #3', iconLeft: 'droplet', iconRight: 'droplet' },
+          ]"
+          @select=""/>
+      </Dropdown>
+      <Dropdown mode="click" :use-value="true" :disabled="false">
+        <Context
+          :items="[ { key: 'context-1', label: 'context #0' } ]"
+          @select=""/>
+      </Dropdown>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <header>
+      <h1>Files manager</h1>
       <p>파일을 업로드하고 관리하는 컴포넌트</p>
     </header>
-    <div class="example example--file-manager">
+    <div class="example">
       <FilesManager
         tab="global"
-        :is-window="false"
-        :shortcut="true"/>
+        module="article"
+        :module-srl="120"
+        :is-window="true"
+        :shortcut="false"
+        :use-thumbnail="true"
+        class="example--file-manager"
+        @close="() => { console.log('close file manager') }"/>
     </div>
   </section>
 </article>
@@ -82,6 +116,7 @@ import Loading from '../../components/content/loading.vue'
 import ProgressDonut from '../../components/content/progress-donut.vue'
 import Paginate from '../../components/content/paginate.vue'
 import FilesManager from '../../components/file-manager/index.vue'
+import { Dropdown, Context } from '../../components/navigation/dropdown/index.js'
 
 const toast = inject('toast')
 const progress = ref(30)
@@ -98,10 +133,14 @@ function onUpdatePage(page)
 }
 </script>
 
-<style src="./common.scss" lang="scss" scoped></style>
 <style lang="scss" scoped>
+@forward 'common';
 .example--file-manager {
-  padding: 0;
-  overflow: hidden;
+  height: 480px;
+}
+.example--dropdown {
+  width: 130px;
+  --context-width: auto;
+  --context-min-width: 160px;
 }
 </style>

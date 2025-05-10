@@ -1,0 +1,85 @@
+@use '../../../scss/mixins';
+
+.context {}
+
+ul {
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  width: var(--context-width, auto);
+  min-width: var(--context-min-width, unset);
+  max-width: var(--context-max-width, unset);
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: var(--color-edge);
+  box-shadow:
+    0 4px 16px mixins.mix-alpha(var(--color-base), 15%),
+    0 1px 4px mixins.mix-alpha(var(--color-base), 15%),
+    0 0 0 .5px mixins.mix-alpha(var(--color-base), 10%);
+}
+
+button {
+  --context-item-fill: var(--color-base);
+  width: 100%;
+  height: 32px;
+  margin: 0;
+  padding: 0 12px;
+  box-sizing: border-box;
+  text-align: left;
+  border: none;
+  background: none;
+  font-size: 13px;
+  color: var(--context-item-fill);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -.25px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 160ms ease-out, opacity 160ms ease-out;
+  --icon-margin: 0;
+  --icon-size: 14px;
+  --icon-stroke: 2.5;
+  --icon-color: var(--context-item-fill);
+  span {
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+  }
+  em {
+    flex: 1;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: clip;
+    font-style: normal;
+    min-width: 0;
+  }
+  &:hover:not(:disabled) {
+    background-color: mixins.mix-alpha(var(--color-blur), 50%);
+  }
+  &:active {
+    opacity: .5;
+  }
+  &:focus-visible:not(:disabled) {
+    outline: 2px solid var(--color-key-1);
+    outline-offset: -2px;
+    border-radius: 4px;
+  }
+}
+
+// color
+.color {
+  &--key {
+    --context-item-fill: var(--color-key);
+  }
+  &--sub {
+    --context-item-fill: var(--color-sub);
+  }
+  &--success {
+    --context-item-fill: var(--color-success);
+  }
+  &--error {
+    --context-item-fill: var(--color-error);
+  }
+}

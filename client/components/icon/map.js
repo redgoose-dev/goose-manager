@@ -30,6 +30,16 @@ const icons = {
   'search': lucide.Search,
   'menu': lucide.Menu,
   'edit': lucide.Edit,
+  'x': lucide.X,
+  'package': lucide.Package,
+  'file-search': lucide.FileSearch,
+  'more-horizontal': lucide.MoreHorizontal,
+  'image': lucide.Image,
+  'rotate-ccw': lucide.RotateCcw,
+  'scan-search': lucide.ScanSearch,
+  'between-horizontal-start': lucide.BetweenHorizontalStart,
+  'code-xml': lucide.CodeXml,
+  'file-code-2': lucide.FileCode2,
 }
 
 export function iconRandomPick()

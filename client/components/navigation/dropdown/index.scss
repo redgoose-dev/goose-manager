@@ -1,0 +1,61 @@
+.dropdown {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+}
+
+.trigger {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 0;
+}
+
+.body {
+  position: absolute;
+  top: 100%;
+  left: -6px;
+  padding: 6px 0 24px;
+  z-index: var(--context-z-index, 1);
+  &.position {
+    &--right {
+      left: unset;
+      right: calc(0px - 6px);
+    }
+    &--top-left {
+      top: auto;
+      bottom: 100%;
+      padding: 16px 0 6px;
+    }
+    &--top-right {
+      top: auto;
+      bottom: 100%;
+      left: unset;
+      right: calc(0px - 6px);
+      padding: 16px 0 6px;
+    }
+  }
+}
+
+.mode {
+  &--hover {
+    > .trigger {
+      transition: opacity 160ms ease-out;
+    }
+    > .body {
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 160ms ease-out;
+    }
+    &:not(.disabled):has(:hover, :focus-visible) {
+      > .body {
+        pointer-events: auto;
+        opacity: 1;
+      }
+    }
+  }
+  &--click {}
+}

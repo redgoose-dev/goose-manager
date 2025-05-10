@@ -1,0 +1,27 @@
+@use '../../scss/mixins';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background: var(--color-weak);
+  h1 {
+    margin: 0;
+    padding: 0 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+    font-size: 16px;
+    color: var(--color-edge);
+    font-weight: 600;
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -.5px;
+    --icon-size: 18px;
+    --icon-color: var(--color-edge);
+  }
+  nav {
+    display: flex;
+    gap: 0 1px;
+    padding: 4px;
+  }
+}

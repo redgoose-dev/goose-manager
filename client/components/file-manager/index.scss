@@ -3,7 +3,7 @@
 .file-manager {
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   box-sizing: border-box;
   width: var(--file-manager-width, unset);
   height: var(--file-manager-height, unset);
@@ -11,7 +11,5 @@
   min-height: var(--file-manager-min-height, 320px);
   max-width: var(--file-manager-max-width, unset);
   max-height: var(--file-manager-max-height, unset);
-  > .body {
-    box-sizing: border-box;
-  }
+  background: var(--color-edge);
 }
