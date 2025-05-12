@@ -3,7 +3,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  background: var(--color-weak);
+  background: mixins.mix-alpha(var(--color-blur), 75%);
   h1 {
     margin: 0;
     padding: 0 0 0 16px;
@@ -11,13 +11,13 @@
     align-items: center;
     gap: 0 6px;
     font-size: 16px;
-    color: var(--color-edge);
-    font-weight: 600;
+    color: var(--color-base);
+    font-weight: 700;
     line-height: 1;
     user-select: none;
     letter-spacing: -.5px;
     --icon-size: 18px;
-    --icon-color: var(--color-edge);
+    --icon-color: var(--color-base);
   }
   nav {
     display: flex;

@@ -1,8 +1,59 @@
 @use '../../scss/mixins';
 
 .content {
-  padding: 20px;
-  overflow: auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
   box-sizing: border-box;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: mixins.mix-alpha(var(--color-edge), 100%);
+  box-shadow:
+    0 2px 24px mixins.mix-alpha(var(--color-base), 20%),
+    0 .5px 0 mixins.mix-alpha(var(--color-base), 15%);
+  box-sizing: border-box;
+  &__controller {
+    display: flex;
+    align-items: center;
+  }
+  &__info {
+    margin: 0;
+    font-size: 12px;
+    color: var(--color-weak);
+    user-select: none;
+    em {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--color-base);
+    }
+  }
+  .upload {
+    --context-width: 150px;
+  }
+}
+
+.content-loading {
+  box-sizing: border-box;
+  .loading {
+    --loading-height: 100%;
+    --loading-min-height: 0;
+    --loading-max-height: unset;
+  }
+}
+
+.content-items {
+  overflow: auto;
   @include mixins.custom-scrollbar();
+}
+
+.empty {
+  --empty-height: 100%;
+  --empty-min-height: unset;
+  --empty-max-height: unset;
 }

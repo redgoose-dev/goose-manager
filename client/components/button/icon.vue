@@ -15,7 +15,7 @@ const props = defineProps({
   target: String,
   title: String,
   disabled: Boolean,
-  color: String, // key,sub,code,success,error
+  color: String, // key,sub,code,success,error,transparent
   size: String, // small
 })
 

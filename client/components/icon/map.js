@@ -40,6 +40,9 @@ const icons = {
   'between-horizontal-start': lucide.BetweenHorizontalStart,
   'code-xml': lucide.CodeXml,
   'file-code-2': lucide.FileCode2,
+  'upload': lucide.Upload,
+  'square-check-big': lucide.SquareCheckBig,
+  'bird': lucide.Bird,
 }
 
 export function iconRandomPick()

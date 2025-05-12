@@ -29,7 +29,6 @@ const props = defineProps({
   useThumbnail: Boolean,
 })
 const emits = defineEmits([ 'close' ])
-const state = reactive({})
 
 // setup file manager store
 const fileManager = fileManagerStore()

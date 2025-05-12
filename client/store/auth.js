@@ -4,8 +4,8 @@ import * as api from '../libs/api.js'
 
 export const authStore = defineStore('auth', {
   state: () => ({
-    token: '',
-    apiUrl: '',
+    token: '', // TODO: 인증 작업을 하지않아 임의로 넣었음
+    apiUrl: '', // TODO: 인증 작업을 하지않아 임의로 넣었음
     account: undefined,
   }),
   getters: {},

@@ -8,6 +8,8 @@ const defaultPreference = {
   moduleSrl: null, // 모듈 데이터 번호
   acceptFileType: 'image/*',
   useThumbnail: false,
+  limitCount: 3,
+  limitSize: 3 * 1024 * 1024, // 3MB
 }
 
 const fileManagerStore = defineStore('file-manager', {
@@ -22,7 +24,18 @@ const fileManagerStore = defineStore('file-manager', {
     windows: [], // 추가로 열려있는 모달의 목록
   }),
   getters: {
-    //
+    _countItems()
+    {
+      return Object.keys(this.items)?.length
+    },
+    _existItem()
+    {
+      return Object.keys(this.items)?.length > 0
+    },
+    _existSelected()
+    {
+      return this.selected.length > 0
+    },
   },
   actions: {
     setup(preference = {})
@@ -49,6 +62,29 @@ const fileManagerStore = defineStore('file-manager', {
       this.selected = []
       this.cropper = {}
       this.windows = []
+    },
+    /**
+     * @param {number} data.progress
+     */
+    addFile(data = {})
+    {
+      const newIdx = this.idx += 1
+      if (this.items[newIdx]) return
+      this.items[newIdx] = data
+      this.index.push(newIdx)
+      this.idx = newIdx
+      return newIdx
+    },
+    updateFile(idx, data)
+    {
+      if (!this.items[idx]) return
+      this.items[idx] = data
+    },
+    removeFile(idx)
+    {
+      if (!this.items[idx]) return
+      delete this.items[idx]
+      this.index.splice(idx, 1)
     },
   },
 })

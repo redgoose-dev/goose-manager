@@ -8,6 +8,7 @@
     <ButtonIcon
       v-if="_useClose"
       icon-name="x"
+      color="transparent"
       @click="fileManagerEvent.close"/>
   </nav>
 </header>

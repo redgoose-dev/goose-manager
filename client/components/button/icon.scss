@@ -76,4 +76,17 @@
   &--error {
     --button-color-bg: var(--color-error);
   }
+  &--transparent {
+    --button-color-bg: transparent;
+    --button-icon-color: var(--color-base);
+    &:not(.disabled,label) {
+      &:hover {
+        --button-brightness: 200%;
+      }
+      &:active {
+        --button-brightness: unset;
+        opacity: .5;
+      }
+    }
+  }
 }

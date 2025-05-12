@@ -66,7 +66,7 @@
       <p>드롭다운 UI</p>
     </header>
     <div class="example flex">
-      <Dropdown mode="click" :use-value="true" position="right" class="example--dropdown">
+      <Dropdown mode="click" :use-value="true" position="left" class="example--dropdown">
         <template #trigger>
           <ButtonBasic icon-right="chevron-down">
             트리거 버튼
@@ -81,7 +81,7 @@
           ]"
           @select=""/>
       </Dropdown>
-      <Dropdown mode="click" :use-value="true" :disabled="false">
+      <Dropdown mode="click" :use-value="true" position="right" :disabled="false">
         <Context
           :items="[ { key: 'context-1', label: 'context #0' } ]"
           @select=""/>
@@ -98,7 +98,7 @@
       <FilesManager
         tab="global"
         module="article"
-        :module-srl="120"
+        :module-srl="310"
         :is-window="true"
         :shortcut="false"
         :use-thumbnail="true"
@@ -136,7 +136,7 @@ function onUpdatePage(page)
 <style lang="scss" scoped>
 @forward 'common';
 .example--file-manager {
-  height: 480px;
+  height: 560px;
 }
 .example--dropdown {
   width: 130px;
