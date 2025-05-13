@@ -29,6 +29,7 @@ export async function request(path, options = {})
       ...assets.headers,
       ...headers,
     },
+    verbose: false, // 자세한 요청과 응답을 보려면 사용하기
   }
   if (body) op.body = formData(body)
   // request

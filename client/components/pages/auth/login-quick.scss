@@ -1,0 +1,42 @@
+@use '../../../scss/mixins';
+
+.quick-login {
+  padding: 36px 0;
+  background: mixins.mix-alpha(var(--color-base), 10%);
+  h1 {
+    margin: 0;
+    text-align: center;
+    line-height: 1.05;
+    font-weight: 600;
+    font-size: 0;
+  }
+}
+.sns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 16px;
+  button {
+    display: block;
+    width: 48px;
+    aspect-ratio: 1/1;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    border-radius: 12px;
+    user-select: none;
+    cursor: pointer;
+    transition: opacity 160ms ease-out, outline-color 160ms ease-out;
+    @include mixins.focus-outline(false);
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1/1;
+      filter: drop-shadow(0 2px 4px mixins.mix-alpha(var(--color-base), 20%));
+    }
+    &:active {
+      opacity: .5;
+    }
+  }
+}

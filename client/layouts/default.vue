@@ -3,7 +3,7 @@
   <header class="layout-header">
     <div class="wrap">
       <h1 class="logo">
-        <router-link to="/" :title="VITE_APP_NAME">
+        <router-link to="/" :title="VITE_APP_TITLE">
           {{VITE_APP_NICKNAME}}
         </router-link>
       </h1>
@@ -107,7 +107,7 @@ import { preferenceStore, currentStore } from '../store/app.js'
 import { authStore } from '../store/auth.js'
 import Icon from '../components/icon/index.vue'
 
-const { VITE_APP_NAME, VITE_APP_NICKNAME } = import.meta.env
+const { VITE_APP_TITLE, VITE_APP_NICKNAME } = import.meta.env
 
 const route = useRoute()
 const preference = preferenceStore()

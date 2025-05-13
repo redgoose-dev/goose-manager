@@ -6,13 +6,13 @@
   width: var(--input-width, 100%);
   height: var(--input-height, 38px);
   border: none;
-  border-radius: 0;
+  border-radius: var(--input-radius, 0);
   box-sizing: border-box;
   padding: var(--input-padding, (0 12px));
   background: var(--input-bg, var(--color-edge));
   box-shadow: var(--input-shadow, inset 0 0 0 1px var(--color-weak));
   outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
-  outline-offset: 0;
+  outline-offset: -2px;
   font-size: var(--input-text-size, 14px);
   color: var(--input-text-color, var(--color-base));
   transition: box-shadow 160ms ease-out, outline-color 160ms ease-out;
@@ -44,14 +44,36 @@
     right: 8px;
     margin: 0;
   }
+
+  // autofill
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:active,
+  &:-webkit-autofill:focus {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-transition: background-color 9999s ease-out;
+  }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow:
+      inset 0 0 0 1px var(--color-weak),
+      inset 0 0 0 100px mixins.mix-alpha(var(--color-sub), 15%),
+      inset 0 0 0 100px var(--color-edge);
+  }
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow:
+      inset 0 0 0 100px mixins.mix-alpha(var(--color-sub), 15%),
+      inset 0 0 0 100px var(--color-edge);
+  }
+  &:-webkit-autofill::selection {}
 }
 
 // size
 .size {
   &--small {
-    --input-height: 30px;
-    --input-text-size: 12px;
-    --input-padding: 0 12px;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-transition: background-color 9999s ease-out;
   }
 }
 

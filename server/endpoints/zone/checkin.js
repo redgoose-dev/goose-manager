@@ -4,11 +4,11 @@ import * as cookie from '../../libs/cookie.js'
 import { onRequest, onResponse, printMessage, getFormData } from '../../libs/server.js'
 import { isDev } from '../../libs/server.js'
 
-const { VITE_API_URL } = Bun.env
+const { VITE_API_URL, VITE_URL_PATH } = Bun.env
 const dev = isDev()
 
 /**
- * setCookie
+ * checkin
  * @params {Request} req
  * @params {DebugHTTPServer} ctx
  * @return {Promise<Response>}
@@ -20,19 +20,11 @@ async function checkIn(req, ctx)
 
   try
   {
-    // get form data
-    const data = await getFormData(req)
+    // get request data
+    const data = await getRequestData(req)
 
     // get access token
-    let accessToken
-    if (data?.get('accessToken'))
-    {
-      accessToken = data.get('accessToken')
-    }
-    else
-    {
-      accessToken = cookie.get(req, 'access')
-    }
+    const accessToken = data?.access || cookie.get(req, 'access')
     if (!accessToken)
     {
       throw new ServiceError('Not found access token.', {
@@ -76,21 +68,13 @@ async function checkIn(req, ctx)
     if (!content?.data?.provider) throw new ServiceError('Not found provider.', { status })
 
     // save cookie
-    if (data?.get('accessToken'))
+    if (data && data.access)
     {
-      cookie.save(
-        req,
-        'access',
-        data.get('accessToken'),
-        Number(data.get('expires') || 7 * 24 * 60 * 60 * 1000),
-      )
-      if (data.get('refreshToken'))
+      const expires = Number(data.expires || 7 * 24 * 60 * 60 * 1000)
+      cookie.save(req, 'access', data.access, expires)
+      if (data.refresh)
       {
-        cookie.save(
-          req,
-          'refresh',
-          data.get('refreshToken')
-        )
+        cookie.save(req, 'refresh', data.refresh)
       }
     }
 
@@ -98,7 +82,7 @@ async function checkIn(req, ctx)
     response = Response.json({
       message: 'Complete check in.',
       status: 200,
-      token: !data?.get('accessToken') ? accessToken : undefined,
+      token: !data?.access ? accessToken : undefined,
       apiUrl: VITE_API_URL,
       account: content.data.provider,
     })
@@ -116,7 +100,51 @@ async function checkIn(req, ctx)
   }
 
   onResponse(req, response, ctx)
-  return response || new Response('Skipped checkin.', { status: 202 })
+  if (req.method === 'GET')
+  {
+    return new Response(null, {
+      status: 302,
+      headers: { Location: VITE_URL_PATH },
+    })
+  }
+  else
+  {
+    return response || new Response('Skipped checkin.', { status: 202 })
+  }
+}
+
+async function getRequestData(req)
+{
+  let result = {}
+  switch (req.method)
+  {
+    case 'GET':
+      const url = new URL(req.url)
+      result = {
+        access: url.searchParams.get('access'),
+        expires: url.searchParams.get('expires'),
+        refresh: url.searchParams.get('refresh'),
+      }
+      break
+    case 'POST':
+      const _formData = await getFormData(req)
+      if (!_formData) return undefined
+      result = {
+        access: _formData.get('access'),
+        expires: _formData.get('expires'),
+        refresh: _formData.get('refresh'),
+      }
+      break
+  }
+  if (Object.values(result).filter(Boolean).length > 0)
+  {
+    if (!result.access) throw new ServiceError('Required "access" value.', { status: 400 })
+    return result
+  }
+  else
+  {
+    return undefined
+  }
 }
 
 export default checkIn

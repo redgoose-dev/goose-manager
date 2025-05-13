@@ -64,3 +64,11 @@ export function formData(src)
   Object.keys(src).forEach(o => data.append(o, src[o]))
   return data
 }
+
+export async function localRequest({ url, ...rest })
+{
+  return await $fetch(url, {
+    responseType: 'json',
+    ...rest,
+  })
+}

@@ -1,3 +1,59 @@
+@use '../../scss/mixins';
+
 .login {
-  //
+  display: grid;
+  place-content: center;
+  height: 100dvh;
+  box-sizing: border-box;
+  background: url('https://images.unsplash.com/photo-1743623930275-abbb3ad3be0b?q=70&w=1440&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 50% 50% no-repeat;
+  background-size: cover;
+  &:after {
+    --color: #{mixins.mix-alpha(var(--color-reverse), 20%)};
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-size: 8px 8px;
+    background-image: repeating-linear-gradient(-45deg, var(--color) 0, var(--color) .5px, transparent 0, transparent 50%);
+    //@include mixins.background-blur(32px);
+  }
+
+  &__wrap {
+    position: relative;
+    z-index: 2;
+    width: 400px;
+    padding: 60px 0 0;
+    background: mixins.mix-alpha(var(--color-edge), 85%);
+    box-sizing: border-box;
+    border-radius: 4px;
+    overflow: clip;
+    box-shadow:
+      0 32px 78px mixins.mix-alpha(var(--color-base), 55%),
+      0 6px 16px mixins.mix-alpha(var(--color-base), 35%),
+      0 0 0 .5px mixins.mix-alpha(var(--color-base), 15%);
+    @include mixins.background-blur(32px);
+  }
+  &__header {
+    text-align: center;
+    user-select: none;
+    h1 {
+      margin: 0 0 0;
+      font-family: var(--font-mix);
+      font-size: 36px;
+      color: var(--color-reverse);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.05;
+    }
+    p {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--color-weak);
+      font-weight: 400;
+    }
+  }
+  &__forms {
+    width: 280px;
+    margin: 24px auto 0;
+  }
 }

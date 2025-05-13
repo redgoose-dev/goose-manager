@@ -20,7 +20,7 @@
   &__label {
     display: block;
     font-style: normal;
-    font-weight: 500;
+    font-weight: var(--button-text-weight, 500);
     font-size: var(--button-text-size);
     line-height: normal;
     letter-spacing: -.25px;

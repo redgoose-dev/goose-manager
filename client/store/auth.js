@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia'
-import { $fetch } from 'ofetch'
-import * as api from '../libs/api.js'
+import { localRequest } from '../libs/api.js'
 
 export const authStore = defineStore('auth', {
   state: () => ({
-    token: '', // TODO: 인증 작업을 하지않아 임의로 넣었음
-    apiUrl: '', // TODO: 인증 작업을 하지않아 임의로 넣었음
+    token: '',
+    apiUrl: '',
     account: undefined,
   }),
   getters: {},
@@ -29,9 +28,9 @@ export const authStore = defineStore('auth', {
         // check store
         if (this.token && this.account) return true
         // request server for get cookie
-        const res = await $fetch(`/zone/checkin/`, {
+        const res = await localRequest({
           method: 'post',
-          responseType: 'json',
+          url: '/zone/checkin/',
         })
         // TODO: preference 데이터도 가져와서 셋업
         // switching
@@ -54,9 +53,9 @@ export const authStore = defineStore('auth', {
     {
       try
       {
-        await $fetch('/zone/checkout/', {
+        await localRequest({
           method: 'post',
-          responseType: 'json',
+          url: '/zone/checkout/',
         })
       }
       catch (e)
@@ -66,6 +65,13 @@ export const authStore = defineStore('auth', {
         this.destroy()
         location.href = `/auth/login/`
       }
+    },
+    async login(email, password, save)
+    {
+      const res = await localRequest({
+        method: 'post',
+        url: '/zone/login/',
+      })
     },
   },
 })

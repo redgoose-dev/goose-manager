@@ -21,20 +21,6 @@
   }
 }
 
-// gradient
-@mixin color-linear-gradient($matt-color, $start, $end, $direction:'vertical')
-{
-  background: $matt-color;
-  @if $direction == 'horizontal'
-  {
-    background: linear-gradient(to right, #{$start}, #{$end});
-  }
-  @else
-  {
-    background: linear-gradient(to bottom, #{$start}, #{$end});
-  }
-}
-
 // single line text
 @mixin single-line-text()
 {
@@ -99,4 +85,10 @@
 @function mix-alpha($color, $alpha: 100%)
 {
   @return color-mix(in hsl, $color $alpha, transparent);
+}
+
+// gradient
+@function color-linear-gradient($start, $end, $deg: 0deg)
+{
+  @return linear-gradient($deg, $start, $end);
 }
