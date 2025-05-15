@@ -2,7 +2,9 @@ import ServiceError from '../../extends/ServerError.js'
 import * as api from '../../libs/api.js'
 import * as cookie from '../../libs/cookie.js'
 import { onRequest, onResponse, printMessage, getFormData } from '../../libs/server.js'
+import { getPreferenceData } from './get-preference.js'
 import { isDev } from '../../libs/server.js'
+import { defaultCookieExpires } from '../../libs/assets.js'
 
 const { VITE_API_URL, VITE_URL_PATH } = Bun.env
 const dev = isDev()
@@ -16,6 +18,8 @@ const dev = isDev()
 async function checkIn(req, ctx)
 {
   let response
+
+  // trigger request event
   onRequest(req, ctx)
 
   try
@@ -62,21 +66,33 @@ async function checkIn(req, ctx)
         })
       }
     }
-    if (!res) throw new ServiceError('Not found response.', { status: 500 })
+    if (!res)
+    {
+      throw new ServiceError('Not found response.', { status: 500 })
+    }
     const { status, content } = res
-    if (status !== 200) throw new ServiceError(content, { status })
-    if (!content?.data?.provider) throw new ServiceError('Not found provider.', { status })
+    if (status !== 200)
+    {
+      throw new ServiceError(content, { status })
+    }
+    if (!content?.data?.provider)
+    {
+      throw new ServiceError('Not found provider.', { status })
+    }
 
     // save cookie
     if (data && data.access)
     {
-      const expires = Number(data.expires || 7 * 24 * 60 * 60 * 1000)
+      const expires = Number(data.expires || defaultCookieExpires)
       cookie.save(req, 'access', data.access, expires)
       if (data.refresh)
       {
-        cookie.save(req, 'refresh', data.refresh)
+        cookie.save(req, 'refresh', data.refresh, defaultCookieExpires)
       }
     }
+
+    // get preference
+    const preference = await getPreferenceData()
 
     // set response
     response = Response.json({
@@ -84,22 +100,20 @@ async function checkIn(req, ctx)
       status: 200,
       token: !data?.access ? accessToken : undefined,
       apiUrl: VITE_API_URL,
-      account: content.data.provider,
+      provider: content.data.provider,
+      preference,
     })
   }
   catch(e)
   {
-    if (dev)
-    {
-      printMessage('error', `(${e.status || 500}) ${e.message}`)
-    }
-    response = Response.json({
-      message: 'Skipped check in.',
-      status: 202,
-    }, { status: 202 })
+    if (dev) printMessage('error', `(${e.status || 500}) ${e.message}`)
+    response = new Response('Skipped check in.', { status: 202 })
   }
 
+  // trigger response event
   onResponse(req, response, ctx)
+
+  // return response
   if (req.method === 'GET')
   {
     return new Response(null, {

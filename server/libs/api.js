@@ -11,9 +11,10 @@ export let assets = {
  * request
  * @param {string} path
  * @param {object} options
+ * @param {boolean} debug 디버그 모드
  * @return {Promise}
  */
-export async function request(path, options = {})
+export async function request(path, options = {}, debug = false)
 {
   const { method, query, body, headers, responseType } = options
   // set assets
@@ -29,7 +30,7 @@ export async function request(path, options = {})
       ...assets.headers,
       ...headers,
     },
-    verbose: false, // 자세한 요청과 응답을 보려면 사용하기
+    verbose: debug,
   }
   if (body) op.body = formData(body)
   // request
@@ -46,18 +47,19 @@ export async function request(path, options = {})
   {
     case 'blob':
       result = await res.blob()
-      return new ServiceResponse(res.status, result)
+      break
     case 'buffer':
       result = await res.arrayBuffer()
-      return new ServiceResponse(res.status, result)
+      break
     case 'text':
       result = await res.text()
-      return new ServiceResponse(res.status, result)
+      break
     case 'json':
     default:
       result = await res.json()
-      return new ServiceResponse(res.status, result)
+      break
   }
+  return new ServiceResponse(res.status, result)
 }
 
 /**

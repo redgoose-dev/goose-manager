@@ -16,12 +16,12 @@
 .field {
   &__label {
     margin: 0;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     user-select: none;
   }
   &__body {
-    margin: 4px 0 0;
+    margin: 3px 0 0;
   }
   &--id {}
   &--password {

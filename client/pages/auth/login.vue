@@ -43,8 +43,7 @@ onMounted(async () => {
   }
   catch (e)
   {
-    console.error('[ERROR] ', e)
-    // toast.add('로그인을 위한 데이터를 가져오지 못했습니다.', 'error').then()
+    toast.add('로그인을 위한 데이터를 가져오지 못했습니다.', 'error').then()
   }
   finally
   {

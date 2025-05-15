@@ -22,7 +22,7 @@ export function save(req, key, value, expires = undefined)
   const { cookies } = req
   if (!cookies) throw new Error('cookies not found.')
   const _url = new URL(req.url)
-  const maxAge = expires ? Number(expires) : 14 * 24 * 60 * 60 * 1000 // 14 days
+  const maxAge = expires ? Number(expires) : undefined
   cookies.set(getKeyName(key), value, {
     domain: COOKIE_DOMAIN,
     path: COOKIE_PATH,

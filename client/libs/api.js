@@ -1,10 +1,10 @@
 import { $fetch } from 'ofetch'
 import { authStore } from '../store/auth.js'
 
-let instance = $fetch.create({
-  retry: 0,
-  responseType: 'json',
-})
+// let instance = $fetch.create({
+//   retry: 0,
+//   responseType: 'json',
+// })
 export let baseUrl = ''
 
 /**

@@ -1,9 +1,12 @@
 import { isDev, openServerMessage } from './libs/server.js'
 import statics from './endpoints/statics.js'
+import onError from './endpoints/on-error.js'
 import zoneCheckIn from './endpoints/zone/checkin.js'
 import zoneCheckOut from './endpoints/zone/checkout.js'
 import zoneReady from './endpoints/zone/ready.js'
-import onError from './endpoints/on-error.js'
+import getPreference from './endpoints/zone/get-preference.js'
+import updatePreference from './endpoints/zone/update-preference.js'
+import login from './endpoints/zone/login.js'
 
 const { serve } = Bun
 const { VITE_HOST, VITE_PORT_SERVER } = Bun.env
@@ -25,7 +28,13 @@ const routes = {
   '/zone/checkout/': {
     POST: zoneCheckOut,
   },
-  // '/zone/login/': {},
+  '/zone/preference/': {
+    POST: getPreference,
+    PATCH: updatePreference,
+  },
+  '/zone/login/': {
+    POST: login,
+  },
   ...(!server.dev ? { '/*': statics } : undefined),
 }
 

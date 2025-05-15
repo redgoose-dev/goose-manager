@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { pureObject } from '../libs/object.js'
-import { defaultPreference } from '../libs/defaults.js'
+
+const preferenceKeys = [ 'general', 'dashboard', 'nest', 'article', 'file', 'checklist', 'navigation' ]
 
 export const currentStore = defineStore('current', {
   state: () => ({
@@ -9,31 +10,39 @@ export const currentStore = defineStore('current', {
 })
 
 export const preferenceStore = defineStore('preference', {
-  state()
-  {
-    return pureObject(defaultPreference)
+  state: () => {
+    let result = {}
+    for (const key of preferenceKeys) result[key] = undefined
+    return result
   },
   getters: {
-    pure: ({ general, dashboard, navigation, nests, articles, files, checklist }) => {
-      return pureObject({
-        general,
-        dashboard,
-        navigation,
-        nests,
-        articles,
-        files,
-        checklist,
-      })
+    _pure: (data) => {
+      let result = {}
+      for (const key of preferenceKeys) result[key] = data[key]
+      return pureObject(result)
     }
   },
   actions: {
-    async setup()
+    setup(pref)
     {
-      // TODO: preference 데이터도 가져와서 셋업
+      const arr = Object.entries(pref)
+      for (const [ key, value ] of arr)
+      {
+        if (!value) continue
+        this[key] = value
+      }
     },
-    async save()
+    async update()
     {
       // TODO: save preference
+      console.log('update preference')
+    },
+    destroy()
+    {
+      for (const key of preferenceKeys)
+      {
+        this[key] = undefined
+      }
     },
   },
 })

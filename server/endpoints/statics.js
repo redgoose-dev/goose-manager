@@ -47,11 +47,7 @@ async function statics(req, ctx)
 
     // set headers
     const headers = new Headers(req.headers)
-    if (contentType)
-    {
-      // console.log(req.url, contentType)
-      headers.set('Content-Type', contentType)
-    }
+    if (contentType) headers.set('Content-Type', contentType)
 
     // set response
     response = new Response(content, {

@@ -2,6 +2,9 @@ import ServiceError from '../../extends/ServerError.js'
 import * as api from '../../libs/api.js'
 import * as cookie from '../../libs/cookie.js'
 import { onRequest, onResponse, printMessage } from '../../libs/server.js'
+import { isDev } from '../../libs/server.js'
+
+const dev = isDev()
 
 /**
  * setCookie
@@ -12,6 +15,8 @@ import { onRequest, onResponse, printMessage } from '../../libs/server.js'
 async function checkOut(req, ctx)
 {
   let response
+
+  // trigger request event
   onRequest(req, ctx)
 
   try
@@ -56,14 +61,17 @@ async function checkOut(req, ctx)
   }
   catch (e)
   {
-    printMessage('error', `(${e.status}) ${e.error?.message || e.message}`)
+    if (dev) printMessage('error', `(${e.status}) ${e.error?.message || e.message}`)
     response = new Response(e.message, {
       status: e.status,
       statusText: e.error.message,
     })
   }
 
+  // trigger response event
   onResponse(req, response, ctx)
+
+  // return response
   return response || new Response('Invalid error.', { status: 500 })
 }
 

@@ -1,9 +1,12 @@
+# directories
 .idea/
 __legacy/
 dist/
 node_modules/
 .git/
+data/
 
+# files
 Dockerfile*
 .gitignore
 *.md

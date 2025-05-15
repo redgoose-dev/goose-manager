@@ -67,11 +67,13 @@
   list-style: none;
   box-sizing: border-box;
   height: 100%;
+  user-select: none;
   > li {
     position: relative;
     > a, > span {
       display: flex;
       align-items: center;
+      gap: 6px;
       height: 100%;
       box-sizing: border-box;
       color: var(--color-base);
@@ -90,7 +92,7 @@
       }
       .ico-arrow {
         display: block;
-        margin: 0 -8px 0 4px;
+        margin: 0 -8px 0 -2px;
         --icon-size: 18px;
         --icon-stroke: 2.5;
         transition: rotate 360ms ease-out;
@@ -101,9 +103,15 @@
         --icon-size: 16px;
         --icon-stroke: 2;
         --icon-color: var(--color-base);
-        &:first-child {
-          margin: 0 6px 0 0;
-        }
+      }
+      .avatar {
+        display: block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%);
+        user-select: none;
+        margin-right: 4px;
       }
     }
     > a {
@@ -181,6 +189,7 @@
         letter-spacing: -.25px;
         box-sizing: border-box;
         color: var(--color-base);
+        cursor: pointer;
         transition: background-color 150ms ease-out;
         em {
           display: block;

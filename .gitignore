@@ -3,6 +3,7 @@
 .AppleDouble/
 node_modules/
 dist/
+data/
 __legacy/
 
 # files

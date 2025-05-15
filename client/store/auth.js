@@ -1,38 +1,42 @@
 import { defineStore } from 'pinia'
 import { localRequest } from '../libs/api.js'
+import { preferenceStore } from './app.js'
 
 export const authStore = defineStore('auth', {
   state: () => ({
     token: '',
     apiUrl: '',
-    account: undefined,
+    provider: undefined,
   }),
   getters: {},
   actions: {
-    setup({ token, apiUrl, account })
+    setup(data)
     {
-      this.token = token
-      this.apiUrl = apiUrl
-      this.account = account
+      this.token = data.token
+      this.apiUrl = data.apiUrl
+      this.provider = data.provider
+      const preference = preferenceStore()
+      preference.setup(data.preference)
     },
     destroy()
     {
       this.token = ''
       this.apiUrl = ''
-      this.account = undefined
+      this.provider = undefined
+      const preference = preferenceStore()
+      preference.destroy()
     },
     async checkin()
     {
       try
       {
         // check store
-        if (this.token && this.account) return true
+        if (this.token && this.apiUrl && this.provider) return true
         // request server for get cookie
         const res = await localRequest({
           method: 'post',
           url: '/zone/checkin/',
         })
-        // TODO: preference 데이터도 가져와서 셋업
         // switching
         if (res.status === 200)
         {
@@ -51,27 +55,26 @@ export const authStore = defineStore('auth', {
     },
     async checkout()
     {
-      try
-      {
-        await localRequest({
-          method: 'post',
-          url: '/zone/checkout/',
-        })
-      }
-      catch (e)
-      {}
-      finally
-      {
-        this.destroy()
-        location.href = `/auth/login/`
-      }
+      await localRequest({
+        method: 'post',
+        url: '/zone/checkout/',
+        headers: { Authorization: this.token },
+      })
+      this.destroy()
+      location.href = `/auth/login/`
     },
-    async login(email, password, save)
+    async login(id, password, save)
     {
       const res = await localRequest({
         method: 'post',
         url: '/zone/login/',
+        body: {
+          id,
+          password,
+          save,
+        },
       })
+      this.setup(res)
     },
   },
 })

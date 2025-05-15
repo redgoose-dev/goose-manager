@@ -54,26 +54,28 @@
         <ul class="navigation right">
           <li>
             <span>
-              <em>username</em>
+              <img v-if="_profile.avatar" :src="_profile.avatar" :alt="_profile.name" class="avatar"/>
+              <Icon v-else name="person" class="ico-custom"/>
+              <em>{{_profile.name}}</em>
               <Icon name="chevron-down" class="ico-arrow"/>
             </span>
             <div>
               <ol>
                 <li>
-                  <router-link :to="`/user/`">
-                     <Icon name="user" class="ico-custom"/>
+                  <router-link :to="`/account/`">
+                    <Icon name="user" class="ico-custom"/>
                     <em>계정</em>
                   </router-link>
                 </li>
                 <li>
                   <router-link to="/preference/">
-                     <Icon name="settings" class="ico-custom"/>
+                    <Icon name="settings" class="ico-custom"/>
                     <em>환경설정</em>
                   </router-link>
                 </li>
                 <li>
                   <button type="button" @click="onClickCheckout">
-                     <Icon name="log-out" class="ico-custom"/>
+                    <Icon name="log-out" class="ico-custom"/>
                     <em>로그아웃</em>
                   </button>
                 </li>
@@ -101,13 +103,14 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import { preferenceStore, currentStore } from '../store/app.js'
 import { authStore } from '../store/auth.js'
 import Icon from '../components/icon/index.vue'
 
 const { VITE_APP_TITLE, VITE_APP_NICKNAME } = import.meta.env
+const toast = inject('toast')
 
 const route = useRoute()
 const preference = preferenceStore()
@@ -118,6 +121,15 @@ const year = new Date().getFullYear()
 const _mainNav = computed(() => {
   const { navigation } = preference
   return navigation
+})
+const _profile = computed(() => {
+  const { user_avatar, user_email, user_id, user_name } = auth.provider
+  return {
+    id: user_id,
+    name: user_name,
+    avatar: user_avatar,
+    email: user_email,
+  }
 })
 
 /**
@@ -133,7 +145,15 @@ function getNavigationElementName(item)
 
 async function onClickCheckout()
 {
-  // TODO: 체크아웃
+  if (!confirm('정말로 로그아웃 할까요?')) return
+  try
+  {
+    await auth.checkout()
+  }
+  catch (e)
+  {
+    toast.add('로그아웃에 실패했습니다.', 'error')
+  }
 }
 </script>
 

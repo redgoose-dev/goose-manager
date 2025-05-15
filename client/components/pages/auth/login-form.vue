@@ -4,17 +4,16 @@
     <legend>로그인 필드</legend>
     <div class="field field--id">
       <p class="field__label">
-        <label for="email">이메일 주소</label>
+        <label for="id">아이디</label>
       </p>
       <div class="field__body">
         <FormInput
-          type="email"
-          name="email"
-          id="email"
-          v-model="forms.email"
+          type="text"
+          name="id"
+          id="id"
+          v-model="forms.id"
           :maxlength="30"
-          placeholder="이메일 주소를 입력해주세요."
-          autocomplete="email"
+          placeholder="아이디를 입력해주세요."
           :required="true"/>
       </div>
     </div>
@@ -59,17 +58,19 @@
 
 <script setup>
 import { reactive, ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { authStore } from '../../../store/auth.js'
 import { ButtonBasic } from '../../button/index.js'
 import { FormCheckbox, FormInput } from '../../forms/index.js'
 
 const toast = inject('toast')
+const router = useRouter()
 const auth = authStore()
 const processing = ref(false)
 const forms = reactive({
-  email: '',
+  id: '',
   password: '',
-  save: false,
+  save: true,
 })
 
 async function onSubmit()
@@ -77,13 +78,12 @@ async function onSubmit()
   try
   {
     processing.value = true
-    const res = await auth.login(forms.email, forms.password, forms.save)
-    // console.log('onSubmit()', res)
+    await auth.login(forms.id, forms.password, forms.save)
+    router.replace('/').then()
   }
   catch(e)
   {
-    toast.add('Error login', 'error').then()
-    console.error(e)
+    toast.add('Failed login', 'error').then()
   }
   finally
   {
