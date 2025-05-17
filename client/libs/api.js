@@ -1,30 +1,88 @@
 import { $fetch } from 'ofetch'
 import { authStore } from '../store/auth.js'
+import { filterObjectToQuery } from './object.js'
+import ServiceError from './ServiceError.js'
 
-// let instance = $fetch.create({
-//   retry: 0,
-//   responseType: 'json',
-// })
-export let baseUrl = ''
+function _fetch(url, options)
+{
+  return new Promise((resolve, reject) => {
+    $fetch(url, {
+      onResponse: ({ request, response, options }) => {
+        console.warn('[ON_RESPONSE]', response) // TODO: 당분간은 확인해야겠다.
+        if (!response.ok) return
+        resolve({
+          status: response.status,
+          data: response._data,
+        })
+      },
+      onResponseError: ({ request, response, options }) => {
+        console.error('[ON_RESPONSE_ERROR]', response) // TODO: 당분간은 확인해야겠다.
+        reject({
+          status: response.status,
+          message: response._data,
+        })
+      },
+      ...options,
+    }).then()
+  })
+}
 
 /**
  * request api
- * @param {string} method
  * @param {string} url
  * @param {object} options
+ * @param {boolean} retried 재발급으로 다시 시도했는지 여부
  * @return {Promise<object>}
  */
-export async function request(method = 'get', url, options = {})
+export async function request(url, options = {}, retried = false)
 {
+  const auth = authStore()
   try
   {
-    const auth = authStore()
-    console.log('request', method, url, options)
-    return {}
+    if (!auth.apiUrl) new Error('No API url')
+    if (!auth.token) new Error('No token')
+    const { method, query, body, headers } = options
+    let _options = {
+      baseURL: auth.apiUrl,
+      method,
+      headers: {
+        'Authorization': auth.token,
+        ...headers,
+      },
+      query: query ? filterObjectToQuery(query) : undefined,
+      body,
+      retry: 0,
+      timeout: 15000,
+    }
+    const res = await _fetch(url, _options)
+    return res.data
   }
   catch (e)
   {
-    // TODO: handle error
+    if (e instanceof Error)
+    {
+      throw new ServiceError(e.message, { error: e })
+    }
+    else
+    {
+      const { status, message } = e
+      if (!retried && status === 401 && auth.token)
+      {
+        try
+        {
+          await auth.renew()
+        }
+        catch(_e)
+        {
+          throw new ServiceError('Failed renew token', { status: 401 })
+        }
+        return await request(url, options, true)
+      }
+      else
+      {
+        throw new ServiceError(message, { status })
+      }
+    }
   }
 }
 
@@ -57,6 +115,11 @@ export function upload(options = {})
   xhr.send(_formData)
 }
 
+/**
+ * convert object to FormData
+ * @param {object} src
+ * @return {FormData}
+ */
 export function formData(src)
 {
   if (!src) return null
@@ -65,6 +128,12 @@ export function formData(src)
   return data
 }
 
+/**
+ * 프로젝트 내부 API 요청
+ * @param {object} options
+ * @param {string} [options.url]
+ * @return {Promise<any>}
+ */
 export async function localRequest({ url, ...rest })
 {
   return await $fetch(url, {

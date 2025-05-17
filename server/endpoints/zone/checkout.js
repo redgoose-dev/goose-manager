@@ -12,7 +12,7 @@ const dev = isDev()
  * @params {DebugHTTPServer} ctx
  * @return {Promise<Response>}
  */
-async function checkOut(req, ctx)
+export default async function checkOut(req, ctx)
 {
   let response
 
@@ -25,25 +25,16 @@ async function checkOut(req, ctx)
     const accessToken = api.getAuthorization(req)
     if (!accessToken)
     {
-      throw new ServiceError('Unauthorized', {
-        status: 401,
-        error: new Error('Not found access token.'),
-      })
+      throw new ServiceError('Not found access token.', { status: 401 })
     }
     const accessTokenInCookie = cookie.get(req, 'access')
     if (!accessTokenInCookie)
     {
-      throw new ServiceError('Invalid access token.', {
-        status: 401,
-        error: new Error('Not found accessTokenInCookie.'),
-      })
+      throw new ServiceError('Not found accessTokenInCookie.', { status: 401 })
     }
     if (accessToken !== accessTokenInCookie)
     {
-      throw new ServiceError('Invalid access token.', {
-        status: 401,
-        error: new Error('Mismatch accessToken and accessTokenInCookie.'),
-      })
+      throw new ServiceError('Mismatch accessToken and accessTokenInCookie.', { status: 401 })
     }
 
     // call logout api
@@ -61,10 +52,10 @@ async function checkOut(req, ctx)
   }
   catch (e)
   {
-    if (dev) printMessage('error', `(${e.status}) ${e.error?.message || e.message}`)
-    response = new Response(e.message, {
+    if (dev) printMessage('error', `[${e.status}] ${e.message}`)
+    response = new Response('Failed check out.', {
       status: e.status,
-      statusText: e.error.message,
+      statusText: e.message,
     })
   }
 
@@ -72,7 +63,5 @@ async function checkOut(req, ctx)
   onResponse(req, response, ctx)
 
   // return response
-  return response || new Response('Invalid error.', { status: 500 })
+  return response
 }
-
-export default checkOut

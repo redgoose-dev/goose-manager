@@ -12,11 +12,14 @@ export const authStore = defineStore('auth', {
   actions: {
     setup(data)
     {
-      this.token = data.token
-      this.apiUrl = data.apiUrl
-      this.provider = data.provider
-      const preference = preferenceStore()
-      preference.setup(data.preference)
+      if (data.token) this.token = data.token
+      if (data.apiUrl) this.apiUrl = data.apiUrl
+      if (data.provider) this.provider = data.provider
+      if (data.preference)
+      {
+        const preference = preferenceStore()
+        preference.setup(data.preference)
+      }
     },
     destroy()
     {
@@ -38,7 +41,7 @@ export const authStore = defineStore('auth', {
           url: '/zone/checkin/',
         })
         // switching
-        if (res.status === 200)
+        if (res.token && res.apiUrl && res.provider)
         {
           this.setup(res)
           return true
@@ -75,6 +78,16 @@ export const authStore = defineStore('auth', {
         },
       })
       this.setup(res)
+    },
+    async renew()
+    {
+      const res = await localRequest({
+        method: 'post',
+        url: '/zone/renew/',
+        headers: { Authorization: this.token },
+      })
+      if (!res.token) throw new Error('Failed renew token')
+      this.token = res.token
     },
   },
 })

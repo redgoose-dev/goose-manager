@@ -1,12 +1,12 @@
 import ServiceError from '../../extends/ServerError.js'
 import * as api from '../../libs/api.js'
 import * as cookie from '../../libs/cookie.js'
-import { onRequest, onResponse, printMessage, getFormData } from '../../libs/server.js'
+import { onRequest, onResponse, printMessage } from '../../libs/server.js'
 import { getPreferenceData } from './get-preference.js'
 import { isDev } from '../../libs/server.js'
 import { defaultCookieExpires } from '../../libs/assets.js'
 
-const { VITE_API_URL, VITE_URL_PATH } = Bun.env
+const { VITE_API_URL } = Bun.env
 const dev = isDev()
 
 /**
@@ -71,7 +71,6 @@ export default async function login(req, ctx)
     // set response
     response = Response.json({
       message: 'Login successful',
-      status: 200,
       token: content.data.access,
       apiUrl: VITE_API_URL,
       provider: provider.content.data,
@@ -80,7 +79,7 @@ export default async function login(req, ctx)
   }
   catch (e)
   {
-    if (dev) printMessage('error', `(${e.status || 500}) ${e.message}`)
+    if (dev) printMessage('error', `[${e.status || 500}] ${e.message}`)
     response = new Response('Failed login', { status: e.status || 401 })
   }
 

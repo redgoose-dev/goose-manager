@@ -14,6 +14,8 @@ const dev = isDev()
 async function ready(req, ctx)
 {
   let response
+
+  // trigger request event
   onRequest(req, ctx)
 
   try
@@ -34,18 +36,15 @@ async function ready(req, ctx)
   }
   catch (e)
   {
-    if (dev)
-    {
-      printMessage('error', `(${e.status || 500}) ${e.message}`)
-    }
-    response = new Response(e.message, {
-      status: e.status,
-      statusText: e.error.message,
-    })
+    if (dev) printMessage('error', `[${e.status || 500}] ${e.message}`)
+    response = new Response('Failed get login ready data.', { status: e.status || 500 })
   }
 
+  // trigger response event
   onResponse(req, response, ctx)
-  return response || new Response('Invalid error.', { status: 500 })
+
+  // return response
+  return response
 }
 
 export default ready

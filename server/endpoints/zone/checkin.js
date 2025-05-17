@@ -15,7 +15,7 @@ const dev = isDev()
  * @params {DebugHTTPServer} ctx
  * @return {Promise<Response>}
  */
-async function checkIn(req, ctx)
+export default async function checkIn(req, ctx)
 {
   let response
 
@@ -83,8 +83,8 @@ async function checkIn(req, ctx)
     // save cookie
     if (data && data.access)
     {
-      const expires = Number(data.expires || defaultCookieExpires)
-      cookie.save(req, 'access', data.access, expires)
+      const _expires = Number(data.expires || defaultCookieExpires)
+      cookie.save(req, 'access', data.access, _expires)
       if (data.refresh)
       {
         cookie.save(req, 'refresh', data.refresh, defaultCookieExpires)
@@ -97,7 +97,6 @@ async function checkIn(req, ctx)
     // set response
     response = Response.json({
       message: 'Complete check in.',
-      status: 200,
       token: !data?.access ? accessToken : undefined,
       apiUrl: VITE_API_URL,
       provider: content.data.provider,
@@ -106,8 +105,11 @@ async function checkIn(req, ctx)
   }
   catch(e)
   {
-    if (dev) printMessage('error', `(${e.status || 500}) ${e.message}`)
-    response = new Response('Skipped check in.', { status: 202 })
+    if (dev) printMessage('error', `[${e.status || 500}] ${e.message}`)
+    response = new Response('Skipped check in.', {
+      status: 202,
+      statusText: e.message,
+    })
   }
 
   // trigger response event
@@ -123,7 +125,7 @@ async function checkIn(req, ctx)
   }
   else
   {
-    return response || new Response('Skipped checkin.', { status: 202 })
+    return response
   }
 }
 
@@ -160,5 +162,3 @@ async function getRequestData(req)
     return undefined
   }
 }
-
-export default checkIn

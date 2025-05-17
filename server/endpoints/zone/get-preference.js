@@ -1,22 +1,42 @@
+import { onRequest, onResponse, printMessage } from '../../libs/server.js'
+import { isDev } from '../../libs/server.js'
+
 const { VITE_BASE_PATH } = Bun.env
+const dev = isDev()
 const path = `${VITE_BASE_PATH}/data/preference.json`
 
-export default async function getPreference()
+/**
+ * get preference
+ * @params {Request} req
+ * @params {DebugHTTPServer} ctx
+ * @return {Promise<Response>}
+ */
+export default async function getPreference(req, ctx)
 {
+  let response
+
+  // trigger request event
+  onRequest(req, ctx)
+
   try
   {
     const preference = await getPreferenceData()
-    return Response.json({
+    response = Response.json({
       message: 'get preference',
       data: preference,
     })
   }
   catch(e)
   {
-    return Response.json({
-      message: 'Error get preference.',
-    }, { status: 500 })
+    if (dev) printMessage('error', `[${e.status || 500}] ${e.message}`)
+    response = new Response('Error get preference.', { status: 500 })
   }
+
+  // trigger response event
+  onResponse(req, response, ctx)
+
+  // return response
+  return response
 }
 
 /**
