@@ -49,8 +49,27 @@
 
 .content-items {
   overflow: auto;
+  container-type: inline-size;
+  padding: 20px;
   @include mixins.custom-scrollbar();
 }
+
+.files {
+  display: grid;
+  grid-template-columns: repeat(var(--column, 4), 1fr);
+  gap: var(--gap, 8px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @container (min-width: #{mixins.$responsive-desktop}) {
+    --column: 5;
+    --gap: 12px
+  }
+  > li {
+    min-width: 0;
+  }
+}
+
 
 .empty {
   --empty-height: 100%;

@@ -8,7 +8,7 @@ const defaultPreference = {
   moduleSrl: null, // 모듈 데이터 번호
   acceptFileType: 'image/*',
   useThumbnail: false,
-  limitCount: 3,
+  limitCount: 50,
   limitSize: 3 * 1024 * 1024, // 3MB
 }
 

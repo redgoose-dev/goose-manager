@@ -1,0 +1,42 @@
+@use '../../scss/mixins';
+
+.img {
+  margin: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+img {
+  display: block;
+  width: var(--img-width, unset);
+  height: var(--img-height, unset);
+  object-fit: var(--img-fit, contain);
+  box-sizing: border-box;
+  &:is(.fade-enter-active) {
+    transition: opacity 320ms ease-out;
+  }
+  &:is(.fade-enter-from, .fade-leave-to) {
+    opacity: 0;
+  }
+}
+
+p {
+  margin: 0;
+  display: grid;
+  place-content: center;
+  height: 100%;
+  --icon-size: 42px;
+  --icon-stroke: 1;
+  --icon-color: var(--color-error);
+}
+
+figcaption {
+  display: grid;
+  place-content: center;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  --icon-size: 32px;
+  --icon-stroke: 1;
+  --icon-color: var(--color-weak);
+}

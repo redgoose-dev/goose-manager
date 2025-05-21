@@ -9,7 +9,7 @@ import { computed } from 'vue'
 import Icon from '../icon/index.vue'
 
 const props = defineProps({
-  type: String,
+  type: String, // button,label
   iconName: String,
   href: String,
   target: String,

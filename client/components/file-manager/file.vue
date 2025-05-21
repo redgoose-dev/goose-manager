@@ -1,8 +1,100 @@
 <template>
-  <div>file.vue</div>
+<div
+  role="button"
+  :class="[
+    'file',
+    selected && 'file--selected',
+  ]"
+  @click="onClick">
+  <Image
+    v-if="_isImage"
+    :src="_src"
+    :alt="props.name"
+    :use-fetch="true"
+    class="file__image"/>
+  <p v-else class="file__raw">
+    <Icon :name="_fileIcon"/>
+    <span>{{props.name}}</span>
+  </p>
+  <ul v-if="props.badge?.length > 0" class="file__badge">
+    <li v-for="o in props.badge">
+      <Icon v-if="o === 'thumbnail'" name="image"/>
+    </li>
+  </ul>
+  <div class="file__context" @click.stop>
+    <Dropdown mode="hover" position="right">
+      <template #trigger>
+        <ButtonIcon type="label" icon-name="menu">
+          트리거 버튼
+        </ButtonIcon>
+      </template>
+      <Context
+        :items="[
+          { key: 'context-1', label: 'context #0', iconRight: 'star' },
+          { key: 'context-1', label: 'context #1', iconLeft: 'link', iconRight: 'link', color: 'key' },
+          { key: 'context-2', label: 'context #2', iconLeft: 'cloud', iconRight: 'cloud' },
+          { key: 'context-3', label: 'context #3', iconLeft: 'droplet', iconRight: 'droplet' },
+        ]"
+        @select=""/>
+    </Dropdown>
+  </div>
+</div>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
+import { authStore } from '../../store/auth.js'
+import Image from '../content/image.vue'
+import { Dropdown, Context } from '../navigation/dropdown/index.js'
+import { ButtonBasic, ButtonIcon } from '../button/index.js'
+import Icon from '../icon/index.vue'
+
+const auth = authStore()
+const props = defineProps({
+  srl: Number,
+  code: String,
+  name: String,
+  mime: String,
+  size: Number,
+  selected: Boolean,
+  badge: Array,
+  context: Array,
+})
+
+const _src = computed(() => {
+  const type = props.mime.split('/')[0]
+  switch (type)
+  {
+    case 'image':
+      return `${auth.apiUrl}/file/${props.srl}/?w=300&h=300&q=65`
+    default:
+      return `${auth.apiUrl}/file/${props.srl}/`
+  }
+})
+const _isImage = computed(() => {
+  return /^image/.test(props.mime || '')
+})
+const _fileIcon = computed(() => {
+  const type = props.mime.split('/')[0]
+  switch (type)
+  {
+    case 'image':
+      return 'file-image'
+    case 'application':
+      return 'file'
+    case 'text':
+      return 'file-text'
+    case 'audio':
+      return 'file-audio'
+    case 'video':
+      return 'file-video'
+  }
+})
+
+function onClick()
+{
+  console.log('onClick()')
+}
 </script>
 
 <style src="./file.scss" lang="scss" scoped></style>

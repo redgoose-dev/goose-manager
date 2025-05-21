@@ -7,6 +7,24 @@
 
   <section class="page-section">
     <header>
+      <h1>Files manager</h1>
+      <p>파일을 업로드하고 관리하는 컴포넌트</p>
+    </header>
+    <div class="example">
+      <FilesManager
+        tab="global"
+        module="article"
+        :module-srl="310"
+        :is-window="true"
+        :shortcut="false"
+        :use-thumbnail="true"
+        class="example--file-manager"
+        @close="() => { console.log('close file manager') }"/>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <header>
       <h1>Toast component</h1>
       <p>상태나 알림 메시지를 보여주는 토스트 컴포넌트</p>
     </header>
@@ -89,23 +107,7 @@
     </div>
   </section>
 
-  <section class="page-section">
-    <header>
-      <h1>Files manager</h1>
-      <p>파일을 업로드하고 관리하는 컴포넌트</p>
-    </header>
-    <div class="example">
-      <FilesManager
-        tab="global"
-        module="article"
-        :module-srl="310"
-        :is-window="true"
-        :shortcut="false"
-        :use-thumbnail="true"
-        class="example--file-manager"
-        @close="() => { console.log('close file manager') }"/>
-    </div>
-  </section>
+
 </article>
 </template>
 

@@ -20,6 +20,7 @@ const icons = {
   'file': lucide.File,
   'file-search': lucide.FileSearch,
   'file-code-2': lucide.FileCode2,
+  'file-image': lucide.FileImage,
   'folder': lucide.Folder,
   'folder-git-2': lucide.FolderGit2,
   'code': lucide.Code,
@@ -43,6 +44,7 @@ const icons = {
   'upload': lucide.Upload,
   'square-check-big': lucide.SquareCheckBig,
   'bird': lucide.Bird,
+  'circle-slash': lucide.CircleSlash,
 }
 
 export function iconRandomPick()

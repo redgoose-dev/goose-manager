@@ -1,7 +1,7 @@
 <template>
 <article class="file-manager">
   <Header/>
-  <Content/>
+  <Content v-if="!state.loading"/>
   <Footer/>
 </article>
 </template>
@@ -29,17 +29,36 @@ const props = defineProps({
   useThumbnail: Boolean,
 })
 const emits = defineEmits([ 'close' ])
+const state = reactive({
+  loading: true,
+})
 
 // setup file manager store
 const fileManager = fileManagerStore()
 provide('file-manager', fileManager)
 provide('file-manager-event', {
   close: onClose,
-  // TODO: 로컬 이벤트 필요하면 하나씩 추가하기
+  setup: onSetup,
+  destroy: onDestroy,
 })
 
 // lifecycles
-onMounted(() => {
+onMounted(() => onSetup())
+onBeforeUnmount(() => onDestroy())
+
+function onPressKey(e)
+{
+  console.log('onPressKey', e)
+}
+
+function onClose()
+{
+  emits('close')
+}
+
+function onSetup()
+{
+  state.loading = true
   fileManager.setup({
     isWindow: props.isWindow,
     module: props.module,
@@ -51,23 +70,16 @@ onMounted(() => {
   {
     window.addEventListener('keyup', onPressKey)
   }
-})
-onBeforeUnmount(() => {
+  state.loading = false
+}
+function onDestroy()
+{
   if (fileManager.preference.shortcut)
   {
     window.removeEventListener('keyup', onPressKey)
   }
   fileManager.destroy()
-})
-
-function onPressKey(e)
-{
-  console.log('onPressKey', e)
-}
-
-function onClose()
-{
-  emits('close')
+  state.loading = true
 }
 </script>
 

@@ -5,6 +5,8 @@
   align-items: center;
   width: var(--button-size, 38px);
   height: var(--button-size, 38px);
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   box-sizing: border-box;
   border: none;
@@ -12,7 +14,7 @@
   border-radius: 0;
   background: var(--button-color-bg, var(--color-weak));
   filter: brightness(var(--button-brightness, unset));
-  transition: background-color 150ms ease-out, filter 150ms ease-out;
+  transition: background-color 160ms ease-out, filter 160ms ease-out;
   &[type='button'],
   &[type='submit'],
   &[type='reset'] {

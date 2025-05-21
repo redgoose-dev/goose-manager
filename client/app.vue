@@ -6,10 +6,11 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onErrorCaptured } from 'vue'
+import { ref, computed, watch, onErrorCaptured, provide } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { authStore } from './store/auth.js'
 import { currentStore } from './store/app.js'
+import ErrorTrigger from './libs/ErrorTrigger.js'
 import ErrorService from './pages/error/500.vue'
 import LayoutBlank from './layouts/blank.vue'
 import LayoutDefault from './layouts/default.vue'
@@ -19,11 +20,14 @@ const route = useRoute()
 const auth = authStore()
 const current = currentStore()
 
+// set provides
+provide('error', new ErrorTrigger())
+
 const error = ref(undefined)
 const layout = computed(() => {
   let layoutName = route.meta.layout || 'default'
   if (!route.name) return null
-  // if (!auth.provider) layoutName = 'blank' // TODO: 인증부분 구현이 안되어있어서 주석처리
+  if (!auth.provider) layoutName = 'blank'
   switch (layoutName)
   {
     case 'default':

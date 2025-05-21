@@ -47,43 +47,54 @@
     <Loading class="loading"/>
   </div>
   <div v-else-if="fileManager._existItem" class="content-items">
-    <pre>{{fileManager.items}}</pre>
-    <pre>{{fileManager.index}}</pre>
-    <Files
-      :files="_files"
-      :progress="10"/>
+    <ul class="files">
+      <li v-for="file in _files">
+        <File
+          :srl="file.srl"
+          :code="file.code"
+          :name="file.name"
+          :mime="file.mime"
+          :size="file.size"
+          :path="file.path"
+          :selected="file.selected"
+          :badge="file.badge"
+          :context="[]"/>
+      </li>
+    </ul>
   </div>
   <Empty v-else title="No file" message="파일이 없습니다." class="empty"/>
 </article>
 </template>
 
 <script setup>
-import { reactive, computed, inject, onMounted } from 'vue'
-import { ButtonBasic, ButtonGroup } from '../button/index.js'
-import { Dropdown, Context } from '../navigation/dropdown/index.js'
+import { reactive, computed, inject, onMounted, onUnmounted } from 'vue'
+import { authStore } from '../../store/auth.js'
 import { fileUploader } from '../../libs/file.js'
 import { upload } from '../../libs/api.js'
+import { request } from '../../libs/api.js'
+import { convertDataToFileItem } from './libs.js'
+import { ButtonBasic, ButtonGroup } from '../button/index.js'
+import { Dropdown, Context } from '../navigation/dropdown/index.js'
 import Loading from '../content/loading.vue'
 import Empty from '../content/empty.vue'
-import Files from './files.vue'
+import File from './file.vue'
 
-// TODO: 현재까지는 파일 업로드 요청하고 응답받는데까지 끝냈다.
-// TODO: API 인증관련해서 다른부분부터 작업하는게 좋겠다.
-// TODO: 인증처리 부분 끝내고나서
-
+const auth = authStore()
 const fileManager = inject('file-manager')
+const error = inject('error')
 const state = reactive({
   loading: false,
 })
 
 const _files = computed(() => {
-  // TODO: 목록 순서대로 가져오고 선택되어있는지도 체킹하기
   return fileManager.index
     .map(idx => {
       const item = fileManager.items[idx]
       if (!item) return false
       return {
         ...item,
+        selected: false, // TODO
+        // badge: [ 'thumbnail' ], // TODO
       }
     })
     .filter(Boolean)
@@ -93,12 +104,27 @@ onMounted(async () => {
   try
   {
     state.loading = true
-    // TODO: 데이터 불러오기
-    // TODO: 불러온 데이터 스토어에 넣기
+    const { module, moduleSrl } = fileManager.preference
+    const res = await request('/file/', {
+      query: {
+        module,
+        module_srl: moduleSrl,
+        unlimited: 1,
+      },
+    })
+    if (!res?.data?.index) throw new Error('Not found data.....')
+    if (res.data.index.length > 0)
+    {
+      res.data.index.forEach(item => fileManager.addFile(convertDataToFileItem(item)))
+    }
   }
   catch (e)
   {
-    // TODO: 오류처리
+    error.catch({
+      path: [ 'components', 'file-manager', 'content.vue', 'onMounted' ],
+      message: '첨부파일 목록을 가져오지 못했습니다.',
+      error: e,
+    })
   }
   finally
   {
@@ -119,7 +145,11 @@ async function uploadFiles()
   }
   catch (e)
   {
-    // TODO: 오류처리
+    error.catch({
+      path: [ 'components', 'file-manager', 'content.vue', 'uploadFiles()' ],
+      message: '파일 업로드하지 못했습니다.....',
+      error: e,
+    })
   }
 }
 function uploadFile(files)
@@ -143,7 +173,7 @@ function uploadFile(files)
     {
       // TODO: 확인 아직 안되었다.
       console.error('제한된 갯수보다 넘침:', fileManager._countItems, '>', fileManager.preference.limitCount)
-      return reject()
+      return reject('')
     }
     // upload file
     upload({
@@ -168,20 +198,16 @@ function uploadFile(files)
       onComplete: (res) => {
         if (res?.data)
         {
-          fileManager.updateFile(idx, res.data)
+          fileManager.updateFile(idx, convertDataToFileItem(res.data))
           nextFile(remainingFiles, resolve)
         }
         else
         {
           fileManager.removeFile(idx)
-          reject('Not found file data')
+          reject('파일 데이터가 없습니다.')
         }
       },
-      onError: (error) => {
-        console.error('onError()', error)
-        // TODO: 막아놨던 업로드 버튼을 풀어준다.
-        reject()
-      },
+      onError: (e) => reject(e.message),
     })
   })
 }

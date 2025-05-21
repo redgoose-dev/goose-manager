@@ -1,13 +1,16 @@
+$responsive-desktop: 1024px;
+$responsive-max: 1440px;
+
 // responsive
 @mixin responsive($range)
 {
   @if $range == desktop
   {
-    @media (min-width: 1024px) { @content; }
+    @media (min-width: #{$responsive-desktop}) { @content; }
   }
   @else if $range == max
   {
-    @media (min-width: 1440px) { @content; }
+    @media (min-width: #{$responsive-max}) { @content; }
   }
 }
 
