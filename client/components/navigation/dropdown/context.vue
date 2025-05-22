@@ -4,6 +4,7 @@
     <li v-for="item in props.items">
       <button
         type="button"
+        :disabled="item.disabled"
         :class="[
           item.color && `color--${item.color}`,
         ]"
@@ -23,7 +24,7 @@
 import Icon from '../../icon/index.vue'
 
 const props = defineProps({
-  items: { type: Array, required: true }, // { label, icon, color }
+  items: { type: Array, required: true }, // { label, icon, color, disabled }
 })
 const emits = defineEmits([ 'select' ])
 

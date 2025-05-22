@@ -5,7 +5,7 @@
     'file',
     selected && 'file--selected',
   ]"
-  @click="onClick">
+  @click="emits('select', props.idx, $event)">
   <Image
     v-if="_isImage"
     :src="_src"
@@ -21,7 +21,7 @@
       <Icon v-if="o === 'thumbnail'" name="image"/>
     </li>
   </ul>
-  <div class="file__context" @click.stop>
+  <div v-if="props.context.length > 0" class="file__context" @click.stop>
     <Dropdown mode="hover" position="right">
       <template #trigger>
         <ButtonIcon type="label" icon-name="menu">
@@ -42,24 +42,25 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { authStore } from '../../store/auth.js'
-import Image from '../content/image.vue'
-import { Dropdown, Context } from '../navigation/dropdown/index.js'
-import { ButtonBasic, ButtonIcon } from '../button/index.js'
-import Icon from '../icon/index.vue'
+import { computed } from 'vue'
+import { authStore } from '../../../store/auth.js'
+import Image from '../../content/image.vue'
+import { Dropdown, Context } from '../../navigation/dropdown/index.js'
+import { ButtonIcon } from '../../button/index.js'
+import Icon from '../../icon/index.vue'
 
 const auth = authStore()
 const props = defineProps({
+  idx: Number,
   srl: Number,
-  code: String,
   name: String,
   mime: String,
-  size: Number,
   selected: Boolean,
   badge: Array,
   context: Array,
 })
+console.log('file)', props)
+const emits = defineEmits([ 'select' ])
 
 const _src = computed(() => {
   const type = props.mime.split('/')[0]
@@ -90,11 +91,6 @@ const _fileIcon = computed(() => {
       return 'file-video'
   }
 })
-
-function onClick()
-{
-  console.log('onClick()')
-}
 </script>
 
 <style src="./file.scss" lang="scss" scoped></style>

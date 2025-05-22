@@ -51,6 +51,7 @@
   overflow: auto;
   container-type: inline-size;
   padding: 20px;
+  outline: none;
   @include mixins.custom-scrollbar();
 }
 
@@ -69,7 +70,6 @@
     min-width: 0;
   }
 }
-
 
 .empty {
   --empty-height: 100%;

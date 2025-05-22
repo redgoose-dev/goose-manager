@@ -41,6 +41,9 @@ button {
   --icon-size: 14px;
   --icon-stroke: 2.5;
   --icon-color: var(--context-item-fill);
+  &:not(:disabled) {
+    @include mixins.focus-outline(true, -2px);
+  }
   span {
     display: flex;
     align-items: center;
@@ -60,11 +63,6 @@ button {
   }
   &:active {
     opacity: .5;
-  }
-  &:focus-visible:not(:disabled) {
-    outline: 2px solid var(--color-key-1);
-    outline-offset: -2px;
-    border-radius: 4px;
   }
 }
 

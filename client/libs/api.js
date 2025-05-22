@@ -99,10 +99,7 @@ export function upload(options = {})
   const xhr = new XMLHttpRequest()
   const _formData = formData(data)
   xhr.upload.addEventListener('progress', (e) => {
-    if (e.lengthComputable)
-    {
-      onProgress(Math.floor((e.loaded / e.total) * 100 * 100) / 100)
-    }
+    if (e.lengthComputable) onProgress(e.total, e.loaded)
   })
   xhr.addEventListener('load', () => {
     onComplete(JSON.parse(xhr.responseText))

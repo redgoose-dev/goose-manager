@@ -19,3 +19,38 @@ export function getResizePath(src, query = 'width=640&height=480')
   // TODO: 나중에 좀 변경하기. 리사이즈되는 방식으로..
   return src
 }
+
+/**
+ * printf
+ * @param {string} str
+ * @param {...*} values
+ * @return {string}
+ * @example
+ * ```js
+ * const str = printf('Hello {0} {1}', 'World', '!')
+ * console.log(str) // Hello World !
+ * ```
+ */
+export function printf(str, ...values)
+{
+  for (let i = 0; i < values.length; i++)
+  {
+    let pattern = `\\{${i}\\}`
+    let replace = new RegExp(pattern, 'g')
+    str = str.replace(replace, values[i])
+  }
+  return str
+}
+
+/**
+ * get byte
+ * @param {number} bytes
+ * @return {string}
+ */
+export function getByte(bytes)
+{
+  const sizes = [ 'Bytes', 'KB', 'MB', 'GB', 'TB' ]
+  if (bytes === 0) return '0 Byte'
+  let i = Math.floor(Math.log(bytes) / Math.log(1024))
+  return String(Math.round(bytes / Math.pow(1024, i))) + sizes[i]
+}

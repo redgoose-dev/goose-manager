@@ -46,19 +46,26 @@
   <div v-if="state.loading" class="content-loading">
     <Loading class="loading"/>
   </div>
-  <div v-else-if="fileManager._existItem" class="content-items">
+  <div
+    v-else-if="fileManager._existItem"
+    class="content-items"
+    @click="onClickSpace">
     <ul class="files">
-      <li v-for="file in _files">
+      <li v-for="file in _files" @click.stop>
+        <Progress
+          v-if="file.total"
+          :total="file.total"
+          :loaded="file.loaded"/>
         <File
+          v-else-if="file.idx && file.srl"
+          :idx="file.idx"
           :srl="file.srl"
-          :code="file.code"
           :name="file.name"
           :mime="file.mime"
-          :size="file.size"
-          :path="file.path"
-          :selected="file.selected"
-          :badge="file.badge"
-          :context="[]"/>
+          :selected="!!file.selected"
+          :badge="file.badge || []"
+          :context="[]"
+          @select="onSelect"/>
       </li>
     </ul>
   </div>
@@ -67,21 +74,22 @@
 </template>
 
 <script setup>
-import { reactive, computed, inject, onMounted, onUnmounted } from 'vue'
+import { reactive, computed, inject, onMounted } from 'vue'
 import { authStore } from '../../store/auth.js'
 import { fileUploader } from '../../libs/file.js'
 import { upload } from '../../libs/api.js'
 import { request } from '../../libs/api.js'
 import { convertDataToFileItem } from './libs.js'
+import { printf } from '../../libs/strings.js'
 import { ButtonBasic, ButtonGroup } from '../button/index.js'
 import { Dropdown, Context } from '../navigation/dropdown/index.js'
 import Loading from '../content/loading.vue'
 import Empty from '../content/empty.vue'
-import File from './file.vue'
+import { File, Progress } from './item/index.js'
 
-const auth = authStore()
 const fileManager = inject('file-manager')
 const error = inject('error')
+const auth = authStore()
 const state = reactive({
   loading: false,
 })
@@ -93,7 +101,8 @@ const _files = computed(() => {
       if (!item) return false
       return {
         ...item,
-        selected: false, // TODO
+        idx,
+        selected: fileManager.selected[idx],
         // badge: [ 'thumbnail' ], // TODO
       }
     })
@@ -112,8 +121,7 @@ onMounted(async () => {
         unlimited: 1,
       },
     })
-    if (!res?.data?.index) throw new Error('Not found data.....')
-    if (res.data.index.length > 0)
+    if (res?.data?.index?.length > 0)
     {
       res.data.index.forEach(item => fileManager.addFile(convertDataToFileItem(item)))
     }
@@ -132,23 +140,34 @@ onMounted(async () => {
   }
 })
 
+function onClickUpload(key)
+{
+  switch (key)
+  {
+    case 'upload-file':
+      uploadFiles().then()
+      break
+    case 'upload-url':
+      // TODO: URL 업로드 창 열기
+      break
+  }
+}
 async function uploadFiles()
 {
   try
   {
     const files = await fileUploader({
-      accept: 'image/*',
+      accept: fileManager.preference.acceptFileType,
       multiple: true,
     })
-    // TODO: 업로드 못하도록 막는다.
     await uploadFile(files)
   }
   catch (e)
   {
     error.catch({
       path: [ 'components', 'file-manager', 'content.vue', 'uploadFiles()' ],
-      message: '파일 업로드하지 못했습니다.....',
-      error: e,
+      message: typeof e === 'string' ? e : '파일 업로드하지 못했습니다.',
+      error: typeof e === 'string' ? new Error(e) : e,
     })
   }
 }
@@ -171,9 +190,7 @@ function uploadFile(files)
     // checking limit file count
     if (fileManager._countItems > fileManager.preference.limitCount)
     {
-      // TODO: 확인 아직 안되었다.
-      console.error('제한된 갯수보다 넘침:', fileManager._countItems, '>', fileManager.preference.limitCount)
-      return reject('')
+      return reject(printf('업로드할 수 있는 파일 갯수는 {0}개 입니다.', fileManager.preference.limitCount))
     }
     // upload file
     upload({
@@ -185,14 +202,14 @@ function uploadFile(files)
         json: JSON.stringify({ foo: 'bar' }),
         file,
       },
-      onProgress: progress => {
+      onProgress: (total, loaded) => {
         if (idx === undefined)
         {
-          idx = fileManager.addFile({ progress })
+          idx = fileManager.addFile({ total, loaded })
         }
         else
         {
-          fileManager.updateFile(idx, { progress })
+          fileManager.updateFile(idx, { total, loaded })
         }
       },
       onComplete: (res) => {
@@ -212,29 +229,47 @@ function uploadFile(files)
   })
 }
 
-function onClickUpload(key)
+function onSelect(idx, $event)
 {
-  switch (key)
-  {
-    case 'upload-file':
-      uploadFiles().then()
-      break
-    case 'upload-url':
-      // TODO: URL 업로드 창 열기
-      break
-  }
+  fileManager.selectFile(idx, $event)
 }
-
 function onClickSelectAll()
 {
-  // TODO: 모든파일 선택하기
-  console.log('onClickSelectAll()')
+  fileManager.selectAllFiles()
+}
+function onClickSpace()
+{
+  fileManager.selectAllFiles(false)
 }
 
-function onClickDelete()
+async function onClickDelete()
 {
-  // TODO: 선택된 파일 삭제하기
-  console.log('onClickDelete()')
+  if (!confirm('선택한 파일을 삭제할까요? 삭제하면 복구할 수 없습니다.')) return
+  const index = fileManager._selectedFilesIndex
+  fileManager.selectAllFiles(false)
+  for (const key of index)
+  {
+    if (fileManager.items[key])
+    {
+      await deleteFile(fileManager.items[key].srl)
+      fileManager.removeFile(key)
+    }
+  }
+}
+async function deleteFile(srl)
+{
+  try
+  {
+    await request(`/file/${srl}/`, { method: 'delete' })
+  }
+  catch (e)
+  {
+    error.catch({
+      path: [ 'components', 'file-manager', 'content.vue', 'deleteFile()' ],
+      message: '파일을 삭제하지 못했습니다.',
+      error: e,
+    })
+  }
 }
 </script>
 
