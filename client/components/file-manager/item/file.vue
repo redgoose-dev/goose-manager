@@ -21,21 +21,12 @@
       <Icon v-if="o === 'thumbnail'" name="image"/>
     </li>
   </ul>
-  <div v-if="props.context.length > 0" class="file__context" @click.stop>
+  <div v-if="_context.length > 0" class="file__context" @click.stop>
     <Dropdown mode="hover" position="right">
       <template #trigger>
-        <ButtonIcon type="label" icon-name="menu">
-          트리거 버튼
-        </ButtonIcon>
+        <ButtonIcon type="label" icon-name="ellipsis"/>
       </template>
-      <Context
-        :items="[
-          { key: 'context-1', label: 'context #0', iconRight: 'star' },
-          { key: 'context-1', label: 'context #1', iconLeft: 'link', iconRight: 'link', color: 'key' },
-          { key: 'context-2', label: 'context #2', iconLeft: 'cloud', iconRight: 'cloud' },
-          { key: 'context-3', label: 'context #3', iconLeft: 'droplet', iconRight: 'droplet' },
-        ]"
-        @select=""/>
+      <Context :items="_context" @select="onSelectContextItem"/>
     </Dropdown>
   </div>
 </div>
@@ -44,6 +35,7 @@
 <script setup>
 import { computed } from 'vue'
 import { authStore } from '../../../store/auth.js'
+import { fileContextKey } from '../assets.js'
 import Image from '../../content/image.vue'
 import { Dropdown, Context } from '../../navigation/dropdown/index.js'
 import { ButtonIcon } from '../../button/index.js'
@@ -57,10 +49,8 @@ const props = defineProps({
   mime: String,
   selected: Boolean,
   badge: Array,
-  context: Array,
 })
-console.log('file)', props)
-const emits = defineEmits([ 'select' ])
+const emits = defineEmits([ 'select', 'select-context-item' ])
 
 const _src = computed(() => {
   const type = props.mime.split('/')[0]
@@ -91,6 +81,42 @@ const _fileIcon = computed(() => {
       return 'file-video'
   }
 })
+const _context = computed(() => {
+  const useNewWindow = checkUseNewWindow()
+  const useEditThumbnail = checkUseEditThumbnail()
+  const useDownload = checkUseDownload()
+  return [
+    useNewWindow && { key: fileContextKey.OPEN_NEW_WINDOW, label: '새창으로 열기', iconRight: 'external-link' },
+    useDownload && { key: fileContextKey.DOWNLOAD, label: '파일 다운로드', iconRight: 'download' },
+    useEditThumbnail && { key: fileContextKey.SET_THUMBNAIL, label: '썸네일 이미지 설정', iconRight: 'crop', color: 'sub' },
+    { line: true },
+    { key: fileContextKey.INSERT_MARKDOWN, label: '마크다운 코드삽입', iconRight: 'file-down' },
+    { key: fileContextKey.INSERT_ADDRESS, label: '주소 삽입하기', iconRight: 'link' },
+    { key: fileContextKey.INSERT_HTML, label: 'HTML 삽입하기', iconRight: 'code-xml' },
+    { line: true },
+    { key: fileContextKey.DELETE, label: '삭제하기', iconRight: 'trash-2', color: 'error' },
+  ].filter(Boolean)
+})
+
+function onSelectContextItem({ key })
+{
+  emits('select-context-item', props.idx, key)
+}
+
+function checkUseNewWindow()
+{
+  const type = props.mime.split('/')[0]
+  const allow = [ 'image', 'video', 'audio', 'text', 'application' ]
+  return allow.includes(type)
+}
+function checkUseEditThumbnail()
+{
+  return props.mime.startsWith('image') && !props.badge.includes('thumbnail')
+}
+function checkUseDownload()
+{
+  return !props.mime.startsWith('image')
+}
 </script>
 
 <style src="./file.scss" lang="scss" scoped></style>

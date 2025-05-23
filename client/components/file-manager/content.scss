@@ -53,6 +53,11 @@
   padding: 20px;
   outline: none;
   @include mixins.custom-scrollbar();
+  &:after {
+    content: '';
+    display: block;
+    height: 100px;
+  }
 }
 
 .files {

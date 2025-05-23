@@ -82,7 +82,7 @@ const fileManagerStore = defineStore('file-manager', {
       const newIdx = this.idx += 1
       if (this.items[newIdx]) return
       this.items[newIdx] = data
-      this.index.push(newIdx)
+      this.index.unshift(newIdx)
       this.idx = newIdx
       return newIdx
     },

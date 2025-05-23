@@ -36,13 +36,15 @@ button {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 160ms ease-out, opacity 160ms ease-out;
+  transition-property: background-color, opacity, outline-color;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
   --icon-margin: 0;
   --icon-size: 14px;
   --icon-stroke: 2.5;
   --icon-color: var(--context-item-fill);
   &:not(:disabled) {
-    @include mixins.focus-outline(true, -2px);
+    @include mixins.focus-outline(false, -2px);
   }
   span {
     display: flex;
@@ -58,12 +60,21 @@ button {
     font-style: normal;
     min-width: 0;
   }
-  &:hover:not(:disabled) {
-    background-color: mixins.mix-alpha(var(--color-blur), 50%);
+  &:not(:disabled) {
+    &:hover {
+      background-color: mixins.mix-alpha(var(--color-blur), 50%);
+    }
+    &:active {
+      opacity: .5;
+    }
   }
-  &:active {
-    opacity: .5;
-  }
+}
+
+hr {
+  margin: 6px 0;
+  border: none;
+  height: .5px;
+  background: var(--color-blur);
 }
 
 // color

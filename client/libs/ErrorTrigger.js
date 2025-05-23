@@ -19,7 +19,7 @@ class ErrorTrigger {
   catch({ path, message, error })
   {
     if (!message || !path) return
-    let _tree = []
+
     if (DEV)
     {
       if (error)
@@ -31,8 +31,10 @@ class ErrorTrigger {
       }
       else
       {
-        _tree.push(`🗄️ ${path.join('/')}`)
-        _tree.push(`🚨 ${message}`)
+        const _tree = [
+          `🗄️ ${path.join('/')}`,
+          `🚨 ${message}`,
+        ]
         console.error(_tree.join('\n'))
       }
     }

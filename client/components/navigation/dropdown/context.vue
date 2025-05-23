@@ -2,7 +2,9 @@
 <nav class="context">
   <ul>
     <li v-for="item in props.items">
+      <hr v-if="item.line">
       <button
+        v-else
         type="button"
         :disabled="item.disabled"
         :class="[
