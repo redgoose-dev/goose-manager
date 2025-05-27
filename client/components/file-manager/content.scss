@@ -8,36 +8,6 @@
   box-sizing: border-box;
 }
 
-.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 16px;
-  background: mixins.mix-alpha(var(--color-edge), 100%);
-  box-shadow:
-    0 2px 24px mixins.mix-alpha(var(--color-base), 20%),
-    0 .5px 0 mixins.mix-alpha(var(--color-base), 15%);
-  box-sizing: border-box;
-  &__controller {
-    display: flex;
-    align-items: center;
-  }
-  &__info {
-    margin: 0;
-    font-size: 12px;
-    color: var(--color-weak);
-    user-select: none;
-    em {
-      font-style: normal;
-      font-weight: 600;
-      color: var(--color-base);
-    }
-  }
-  .upload {
-    --context-width: 150px;
-  }
-}
-
 .content-loading {
   box-sizing: border-box;
   .loading {

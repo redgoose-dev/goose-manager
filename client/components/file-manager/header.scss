@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-between;
   background: mixins.mix-alpha(var(--color-blur), 75%);
+  min-height: 46px;
   h1 {
     margin: 0;
     padding: 0 0 0 16px;

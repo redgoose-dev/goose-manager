@@ -23,3 +23,16 @@ export function fileUploader(options = {})
     input.click()
   })
 }
+
+/**
+ * download file
+ * @param {string} url
+ * @param {string} filename
+ */
+export function downloadFile(url, filename)
+{
+  const el = document.createElement('a')
+  el.href = url
+  el.download = filename
+  el.click()
+}

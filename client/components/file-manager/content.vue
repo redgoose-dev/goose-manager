@@ -1,48 +1,6 @@
 <template>
 <article class="content">
-  <header class="head">
-    <nav class="head__controller">
-      <ButtonGroup>
-        <Dropdown mode="hover" class="upload">
-          <template #trigger>
-            <ButtonBasic
-              size="small"
-              color="key"
-              icon-left="upload"
-              class="button-upload"
-              @click="onClickUpload('upload-file')">
-              업로드
-            </ButtonBasic>
-          </template>
-          <Context
-            :items="[
-              { key: 'upload-file', label: '파일 업로드', iconLeft: 'upload' },
-              { key: 'upload-url', label: 'URL 업로드', iconLeft: 'link' },
-            ]"
-            @select="(e) => onClickUpload(e.key)"/>
-        </Dropdown>
-        <ButtonBasic
-          size="small"
-          icon-left="square-check-big"
-          :color="fileManager._existItem ? 'sub' : ''"
-          :disabled="!fileManager._existItem"
-          @click="onClickSelectAll">
-          모두선택
-        </ButtonBasic>
-        <ButtonBasic
-          size="small"
-          color="error"
-          icon-left="trash-2"
-          :disabled="!fileManager._existSelected"
-          @click="onClickDelete">
-          삭제
-        </ButtonBasic>
-      </ButtonGroup>
-    </nav>
-    <p class="head__info">
-      업로드: <em>{{fileManager._countItems}} / {{fileManager.preference.limitCount}}</em>
-    </p>
-  </header>
+  <Toolbar @action="onActionToolbar"/>
   <div v-if="state.loading" class="content-loading">
     <Loading class="loading"/>
   </div>
@@ -76,18 +34,17 @@
 <script setup>
 import { reactive, computed, inject, onMounted } from 'vue'
 import { authStore } from '../../store/auth.js'
-import { fileUploader } from '../../libs/file.js'
-import { upload } from '../../libs/api.js'
-import { request } from '../../libs/api.js'
-import { convertDataToFileItem } from './libs.js'
+import { downloadFile } from '../../libs/file.js'
+import { request, upload } from '../../libs/api.js'
 import { printf } from '../../libs/strings.js'
 import { sleep } from '../../libs/util.js'
-import { fileContextKey } from './assets.js'
-import { ButtonBasic, ButtonGroup } from '../button/index.js'
-import { Dropdown, Context } from '../navigation/dropdown/index.js'
+import { pureObject } from '../../libs/object.js'
+import { convertDataToFileItem, getFile } from './libs.js'
+import { fileContextKey, insertMode, thumbnailContextKey } from './assets.js'
 import Loading from '../content/loading.vue'
 import Empty from '../content/empty.vue'
 import { File, Progress } from './item/index.js'
+import Toolbar from './toolbar.vue'
 
 const fileManager = inject('file-manager')
 const fileManagerEvent = inject('file-manager-event')
@@ -99,7 +56,7 @@ const state = reactive({
 const errorPath = [ 'components', 'file-manager', 'content.vue' ]
 
 const _files = computed(() => {
-  return fileManager.index
+  const index = fileManager.index
     .map(idx => {
       const item = fileManager.items[idx]
       if (!item) return false
@@ -110,7 +67,7 @@ const _files = computed(() => {
         // badge: [ 'thumbnail' ], // TODO
       }
     })
-    .filter(Boolean)
+  return index.filter(Boolean)
 })
 
 onMounted(async () => {
@@ -118,6 +75,10 @@ onMounted(async () => {
   {
     state.loading = true
     const { module, moduleSrl } = fileManager.preference
+    if (!(module && moduleSrl))
+    {
+      throw new Error('module, moduleSrl 값이 필요합니다.')
+    }
     const res = await request('/file/', {
       query: {
         module,
@@ -129,7 +90,10 @@ onMounted(async () => {
     {
       res.data.index
         .reverse()
-        .forEach(item => fileManager.addFile(convertDataToFileItem(item)))
+        .forEach(item => {
+          // TODO: 썸네일 데이터라면 다른곳에다 저장한다. 썸네일 기능이 만들어지면 작업할 수 있다.
+          fileManager.addFile(convertDataToFileItem(item))
+        })
     }
   }
   catch (e)
@@ -146,33 +110,20 @@ onMounted(async () => {
   }
 })
 
-function onClickUpload(key)
+function onSelect(idx, $event)
 {
-  switch (key)
-  {
-    case 'upload-file':
-      uploadFiles().then()
-      break
-    case 'upload-url':
-      // TODO: URL 업로드 창 열기
-      break
-  }
+  fileManager.selectFile(idx, $event)
 }
-async function uploadFiles()
+function onClickSpace()
 {
-  try
-  {
-    const files = await fileUploader({
-      accept: fileManager.preference.acceptFileType,
-      multiple: true,
-    })
-    await uploadFile(files)
-  }
-  catch (e)
-  {
-    errorUploadFile([ 'uploadFiles()' ], e)
-  }
+  fileManager.selectAllFiles(false)
 }
+
+/**
+ * upload file
+ * @param {File[]} files
+ * @return {Promise<void>}
+ */
 function uploadFile(files)
 {
   const [ file, ...remainingFiles ] = files
@@ -183,7 +134,11 @@ function uploadFile(files)
     {
       setTimeout(() => {
         uploadFile(remainFiles)
-          .catch(e => errorUploadFile([ 'uploadFile()' ], e))
+          .catch(e => error.catch({
+            path: [ ...errorPath, 'uploadFile()' ],
+            message: typeof e === 'string' ? e : '파일 업로드 실패',
+            error: typeof e === 'string' ? new Error(e) : e,
+          }))
       }, 100)
     }
     else resolve()
@@ -236,41 +191,12 @@ function uploadFile(files)
     })
   })
 }
-function errorUploadFile(path, err)
-{
-  error.catch({
-    path: [ ...errorPath, ...path ],
-    message: typeof err === 'string' ? err : '파일 업로드 실패',
-    error: typeof err === 'string' ? new Error(err) : err,
-  })
-}
 
-function onSelect(idx, $event)
-{
-  fileManager.selectFile(idx, $event)
-}
-function onClickSelectAll()
-{
-  fileManager.selectAllFiles()
-}
-function onClickSpace()
-{
-  fileManager.selectAllFiles(false)
-}
-
-async function onClickDelete()
-{
-  if (!confirm('선택한 파일을 삭제할까요? 삭제하면 복구할 수 없습니다.')) return
-  const index = fileManager._selectedFilesIndex
-  fileManager.selectAllFiles(false)
-  const _index = [ ...index ].reverse()
-  for (const key of _index)
-  {
-    if (!fileManager.items[key]) continue
-    await deleteFile(key)
-    await sleep(1000)
-  }
-}
+/**
+ * delete file
+ * @param {number} key
+ * @return {Promise<void>}
+ */
 async function deleteFile(key)
 {
   try
@@ -301,28 +227,79 @@ async function onSelectContextItem(idx, code)
     })
     return
   }
-  console.log('onSelectContextItem()', idx, code)
   switch (code)
   {
     case fileContextKey.OPEN_NEW_WINDOW:
+      openWindow(item.srl).then()
       break
     case fileContextKey.DOWNLOAD:
+      download(item.srl, item.name).then()
       break
     case fileContextKey.SET_THUMBNAIL:
+      fileManagerEvent.thumbnail(thumbnailContextKey.EDIT, idx)
       break
     case fileContextKey.INSERT_MARKDOWN:
+      fileManagerEvent.insert([ pureObject(item) ], insertMode.MARKDOWN)
       break
     case fileContextKey.INSERT_ADDRESS:
+      fileManagerEvent.insert([ pureObject(item) ], insertMode.ADDRESS)
       break
     case fileContextKey.INSERT_HTML:
+      fileManagerEvent.insert([ pureObject(item) ], insertMode.HTML)
       break
     case fileContextKey.DELETE:
       if (!confirm('선택한 파일을 삭제할까요? 삭제하면 복구할 수 없습니다.')) return
-      await deleteFile(idx)
+      deleteFile(idx).then()
       break
   }
-  // console.log('onSelectContextItem()', item)
-  // fileManagerEvent.
+}
+async function openWindow(srl)
+{
+  try
+  {
+    const url = await getFile(srl, 'url')
+    window.open(url)
+    await sleep(100)
+    URL.revokeObjectURL(url)
+  }
+  catch (e)
+  {
+    error.catch({
+      path: [ ...errorPath, 'openWindow' ],
+      message: '파일을 열지 못했습니다.',
+      error: e,
+    })
+  }
+}
+async function download(srl, name)
+{
+  try
+  {
+    const url = await getFile(srl, 'url')
+    downloadFile(url, name)
+    await sleep(100)
+    URL.revokeObjectURL(url)
+  }
+  catch (e)
+  {
+    error.catch({
+      path: [ ...errorPath, 'openWindow' ],
+      message: '파일을 다운로드 실패했습니다.',
+      error: e,
+    })
+  }
+}
+
+async function onActionToolbar(type, value)
+{
+  switch (type)
+  {
+    case 'delete-file':
+      await deleteFile(value)
+      break
+    case 'upload-file':
+      await uploadFile(value)
+  }
 }
 </script>
 

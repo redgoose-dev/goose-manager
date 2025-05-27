@@ -1,66 +1,109 @@
 <template>
 <article class="file-manager">
-  <Header/>
-  <Content v-if="!state.loading"/>
-  <Footer/>
+  <slot name="header"/>
+  <Content ref="$content" v-if="!loading"/>
+  <slot name="footer"/>
+  <teleport to="#modals">
+    <Modal :open="modal.thumbnailEditor">
+      <p>sdog</p>
+    </Modal>
+    <Modal :open="modal.thumbnailPreview">
+      <p>sdog</p>
+    </Modal>
+    <Modal :open="modal.urlUploader">
+      <p>sdog</p>
+    </Modal>
+  </teleport>
 </article>
 </template>
 
 <script setup>
-import { reactive, computed, provide, onMounted, onBeforeUnmount } from 'vue'
+import { ref, reactive, provide, onMounted, onBeforeUnmount } from 'vue'
+import { windowKey, thumbnailContextKey } from './assets.js'
+import { convertOutputCode } from './libs.js'
 import fileManagerStore from './store.js'
-import Header from './header.vue'
+import { Modal, ModalWindow } from '../modal/index.js'
 import Content from './content.vue'
-import Footer from './footer.vue'
 
 /**
  * props guide
- *
- * isWindow?: boolean
  * shortcut?: boolean
- * module?: 'article' | 'comment' | 'checklist' | 'json'
+ * module?: 'article'|'comment'|'checklist'|'json'
  * moduleSrl?: number
  */
 const props = defineProps({
-  isWindow: Boolean,
   shortcut: Boolean,
   module: String,
   moduleSrl: Number,
   useThumbnail: Boolean,
 })
-const emits = defineEmits([ 'close' ])
-const state = reactive({
-  loading: true,
+const emits = defineEmits([ 'insert', 'update-thumbnail' ])
+const $content = ref()
+const loading = ref(true)
+const modal = reactive({
+  thumbnailEditor: false,
+  thumbnailPreview: false,
+  urlUploader: false,
 })
 
 // setup file manager store
 const fileManager = fileManagerStore()
 provide('file-manager', fileManager)
 provide('file-manager-event', {
-  close: onClose,
   setup: onSetup,
   destroy: onDestroy,
+  insert: onInsert,
+  thumbnail: onRouteThumbnail,
 })
 
 // lifecycles
 onMounted(() => onSetup())
 onBeforeUnmount(() => onDestroy())
 
-function onPressKey(e)
+function onKeyup(e)
 {
-  console.log('onPressKey', e)
+  e.preventDefault()
+  switch (e.key)
+  {
+    case 'Escape':
+      shortcutEscape()
+      break
+  }
 }
-
-function onClose()
+function onKeydown(e)
 {
-  emits('close')
+  if (!(e.ctrlKey || e.metaKey)) return
+  // console.log('onKeydown()', e.key)
+  // TODO: 키 조합 (cmd+a, cmd+enter, cmd+u)
+  switch (e.key)
+  {
+    case 'Enter':
+      e.preventDefault()
+      break
+    case 'a':
+      e.preventDefault()
+      break
+  }
+}
+function shortcutEscape()
+{
+  // TODO: esc 키를 누르면 현재 열려있는 모달을 닫는다.
+  // console.log('shortcutEscape()')
+  let key = ''
+  switch(key)
+  {
+    case windowKey.THUMBNAIL_EDITOR:
+      break
+    case windowKey.THUMBNAIL_PREVIEW:
+      break
+    case windowKey.URL_UPLOADER:
+      break
+  }
 }
 
 function onSetup()
 {
-  state.loading = true
   fileManager.setup({
-    isWindow: props.isWindow,
     module: props.module,
     moduleSrl: props.moduleSrl,
     shortcut: Boolean(props.shortcut),
@@ -68,18 +111,51 @@ function onSetup()
   })
   if (fileManager.preference.shortcut)
   {
-    window.addEventListener('keyup', onPressKey)
+    window.addEventListener('keyup', onKeyup)
+    window.addEventListener('keydown', onKeydown)
   }
-  state.loading = false
+  loading.value = false
 }
 function onDestroy()
 {
   if (fileManager.preference.shortcut)
   {
-    window.removeEventListener('keyup', onPressKey)
+    window.removeEventListener('keyup', onKeyup)
+    window.removeEventListener('keydown', onKeydown)
   }
   fileManager.destroy()
-  state.loading = true
+  loading.value = true
+}
+function onInsert(files, mode)
+{
+  if (!(files?.length > 0)) return ''
+  const str = convertOutputCode(files, mode)
+  emits('insert', str)
+}
+
+function onRouteThumbnail(key, idx)
+{
+  console.log('onRouteThumbnail()', key, idx)
+  switch (key)
+  {
+    case thumbnailContextKey.EDIT:
+      if (idx)
+      {
+        // TODO: 에디터를 연다. 에디터에서 썸네일 정보를 검사하고 합친다.
+      }
+      else if (fileManager.thumbnail)
+      {
+        // TODO: 썸네일 정보가 있다면 에디터를 연다.
+      }
+      break
+    case thumbnailContextKey.PREVIEW:
+      // TODO: 썸네일 정보가 있으면 미리보기를 한다.
+      break
+    case thumbnailContextKey.RESET:
+      // TODO: 썸네일 정보가 있으면 정보를 지운다. API 파일도 삭제해야 할것이다.
+      // fileManager.thumbnail = undefined
+      break
+  }
 }
 </script>
 

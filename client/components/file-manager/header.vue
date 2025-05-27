@@ -2,29 +2,27 @@
 <header class="header">
   <h1>
     <Icon name="file-search"/>
-    <span>첨부파일 매니저</span>
+    <span>{{props.title}}</span>
   </h1>
   <nav>
     <ButtonIcon
-      v-if="_useClose"
+      v-if="props.useClose"
       icon-name="x"
       color="transparent"
-      @click="fileManagerEvent.close"/>
+      @click="emits('close')"/>
   </nav>
 </header>
 </template>
 
 <script setup>
-import { inject, computed } from 'vue'
 import { ButtonIcon } from '../button/index.js'
 import Icon from '../icon/index.vue'
 
-const fileManager = inject('file-manager')
-const fileManagerEvent = inject('file-manager-event')
-
-const _useClose = computed(() => {
-  return fileManager.preference.isWindow
+const props = defineProps({
+  title: { type: String, default: '첨부파일 매니저' },
+  useClose: Boolean,
 })
+const emits = defineEmits([ 'close' ])
 </script>
 
 <style src="./header.scss" lang="scss" scoped></style>

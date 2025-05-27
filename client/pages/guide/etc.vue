@@ -11,15 +11,22 @@
       <p>파일을 업로드하고 관리하는 컴포넌트</p>
     </header>
     <div class="example">
-      <FilesManager
+      <FileManager
         tab="global"
         module="article"
         :module-srl="310"
         :is-window="true"
-        :shortcut="false"
+        :shortcut="true"
         :use-thumbnail="true"
         class="example--file-manager"
-        @close="() => { console.log('close file manager') }"/>
+        @insert="onInsertFromFileManager">
+        <template #header>
+          <FileManagerHeader
+            title="가이드용 파일 매니저"
+            :use-close="true"
+            @close=""/>
+        </template>
+      </FileManager>
     </div>
   </section>
 
@@ -107,7 +114,7 @@
     </div>
   </section>
 
-
+  <!-- // TODO: 파일 매니저 작업 끝나면 들어갈 예정 -->
 </article>
 </template>
 
@@ -117,7 +124,7 @@ import { ButtonBasic } from '../../components/button/index.js'
 import Loading from '../../components/content/loading.vue'
 import ProgressDonut from '../../components/content/progress-donut.vue'
 import Paginate from '../../components/content/paginate.vue'
-import FilesManager from '../../components/file-manager/index.vue'
+import { FileManager, FileManagerHeader } from '../../components/file-manager/index.js'
 import { Dropdown, Context } from '../../components/navigation/dropdown/index.js'
 
 const toast = inject('toast')
@@ -133,12 +140,18 @@ function onUpdatePage(page)
 {
   console.log('onUpdatePage()', page)
 }
+
+function onInsertFromFileManager(src)
+{
+  console.log('onInsertFromFileManager()', src)
+}
 </script>
 
 <style lang="scss" scoped>
 @forward 'common';
 .example--file-manager {
   height: 560px;
+  --file-manager-rows: auto 1fr;
 }
 .example--dropdown {
   width: 130px;

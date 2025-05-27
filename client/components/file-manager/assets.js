@@ -7,3 +7,21 @@ export const fileContextKey = {
   INSERT_HTML: 'insert-html',
   DELETE: 'delete',
 }
+
+export const insertMode = {
+  MARKDOWN: 'markdown',
+  ADDRESS: 'address',
+  HTML: 'html',
+}
+
+export const thumbnailContextKey = {
+  EDIT: 'edit',
+  PREVIEW: 'preview',
+  RESET: 'reset',
+}
+
+export const windowKey = {
+  THUMBNAIL_EDITOR: 'thumbnail-editor',
+  THUMBNAIL_PREVIEW: 'thumbnail-preview',
+  URL_UPLOADER: 'url-uploader',
+}

@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { authStore } from '../../../store/auth.js'
 import { fileContextKey } from '../assets.js'
 import Image from '../../content/image.vue'
@@ -41,6 +41,7 @@ import { Dropdown, Context } from '../../navigation/dropdown/index.js'
 import { ButtonIcon } from '../../button/index.js'
 import Icon from '../../icon/index.vue'
 
+const fileManager = inject('file-manager')
 const auth = authStore()
 const props = defineProps({
   idx: Number,
@@ -79,15 +80,16 @@ const _fileIcon = computed(() => {
       return 'file-audio'
     case 'video':
       return 'file-video'
+    default:
+      return 'file'
   }
 })
 const _context = computed(() => {
   const useNewWindow = checkUseNewWindow()
   const useEditThumbnail = checkUseEditThumbnail()
-  const useDownload = checkUseDownload()
   return [
     useNewWindow && { key: fileContextKey.OPEN_NEW_WINDOW, label: '새창으로 열기', iconRight: 'external-link' },
-    useDownload && { key: fileContextKey.DOWNLOAD, label: '파일 다운로드', iconRight: 'download' },
+    { key: fileContextKey.DOWNLOAD, label: '파일 다운로드', iconRight: 'download' },
     useEditThumbnail && { key: fileContextKey.SET_THUMBNAIL, label: '썸네일 이미지 설정', iconRight: 'crop', color: 'sub' },
     { line: true },
     { key: fileContextKey.INSERT_MARKDOWN, label: '마크다운 코드삽입', iconRight: 'file-down' },
@@ -111,11 +113,9 @@ function checkUseNewWindow()
 }
 function checkUseEditThumbnail()
 {
-  return props.mime.startsWith('image') && !props.badge.includes('thumbnail')
-}
-function checkUseDownload()
-{
-  return !props.mime.startsWith('image')
+  if (!fileManager.preference.useThumbnail) return false
+  if (!/^image\//.test(props.mime) && !props.badge.includes('thumbnail')) return false
+  return true
 }
 </script>
 
