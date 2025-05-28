@@ -20,6 +20,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { request } from '../../libs/api.js'
+import { sleep } from '../../libs/util.js'
 import Icon from '../icon/index.vue'
 
 const props = defineProps({
@@ -55,6 +56,8 @@ async function _fetch()
       })
       if (!blob) throw true
       src.value = URL.createObjectURL(blob)
+      await sleep(100)
+      URL.revokeObjectURL(src.value)
     }
     catch (e)
     {

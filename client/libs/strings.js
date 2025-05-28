@@ -54,3 +54,20 @@ export function getByte(bytes)
   let i = Math.floor(Math.log(bytes) / Math.log(1024))
   return String(Math.round(bytes / Math.pow(1024, i))) + sizes[i]
 }
+
+/**
+ * create random text
+ * @param {number} length
+ * @return {string}
+ */
+export function createRandomText(length)
+{
+  let result = ''
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let len = characters.length
+  for (let i = 0; i < length; i++)
+  {
+    result += characters.charAt(Math.floor(Math.random() * len))
+  }
+  return result
+}

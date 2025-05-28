@@ -4,14 +4,27 @@
   <Content ref="$content" v-if="!loading"/>
   <slot name="footer"/>
   <teleport to="#modals">
-    <Modal :open="modal.thumbnailEditor">
-      <p>sdog</p>
+    <Modal
+      :open="modal.thumbnailEditor.open"
+      mode="window"
+      @close="onCloseThumbnailEditor">
+      <ModalWindow class="thumbnail-editor-window">
+        <ThumbnailEditor
+          :src="modal.thumbnailEditor.src"
+          :crop-size="[ 640, 480 ]"
+          :default-coordinates="modal.thumbnailEditor.coordinates"
+          @close="onCloseThumbnailEditor"
+          @submit="onSubmitThumbnailEditor"/>
+      </ModalWindow>
     </Modal>
-    <Modal :open="modal.thumbnailPreview">
-      <p>sdog</p>
-    </Modal>
+    <Lightbox
+      :src="modal.thumbnailPreview.src"
+      :title="modal.thumbnailPreview.name"
+      :use-fetch="true"/>
     <Modal :open="modal.urlUploader">
-      <p>sdog</p>
+      <ModalWindow>
+        <p>sdog</p>
+      </ModalWindow>
     </Modal>
   </teleport>
 </article>
@@ -24,6 +37,8 @@ import { convertOutputCode } from './libs.js'
 import fileManagerStore from './store.js'
 import { Modal, ModalWindow } from '../modal/index.js'
 import Content from './content.vue'
+import { ThumbnailEditor } from './thumbnail/index.js'
+import Lightbox from '../content/lightbox.vue'
 
 /**
  * props guide
@@ -41,8 +56,15 @@ const emits = defineEmits([ 'insert', 'update-thumbnail' ])
 const $content = ref()
 const loading = ref(true)
 const modal = reactive({
-  thumbnailEditor: false,
-  thumbnailPreview: false,
+  thumbnailEditor: {
+    open: false,
+    src: '',
+    coordinates: null,
+  },
+  thumbnailPreview: {
+    src: '',
+    name: '',
+  },
   urlUploader: false,
 })
 
@@ -135,27 +157,46 @@ function onInsert(files, mode)
 
 function onRouteThumbnail(key, idx)
 {
-  console.log('onRouteThumbnail()', key, idx)
+  // TODO: 모달 윈도우창이 열릴때 스토어 window 값을 업데이트 해줘야 한다.
   switch (key)
   {
     case thumbnailContextKey.EDIT:
-      if (idx)
+      if (fileManager.items[idx]?.srl)
       {
-        // TODO: 에디터를 연다. 에디터에서 썸네일 정보를 검사하고 합친다.
+        modal.thumbnailEditor.src = `/file/${fileManager.items[idx].srl}/`
+        modal.thumbnailEditor.open = true
+        // TODO: 스토어 정보에 있는 originSrl 값과 `fileManager.items[idx].srl` 값이 같으면 스토어 정보에 있는 데이터를 이용해야 한다.
       }
-      else if (fileManager.thumbnail)
+      else if (fileManager.thumbnail?.srl)
       {
-        // TODO: 썸네일 정보가 있다면 에디터를 연다.
+        modal.thumbnailEditor.open = true
+        modal.thumbnailEditor.src = `/file/${fileManager.thumbnail.srl}/`
+        // TODO: 여기 스토어 thumbnail 데이터를 사용해야 한다.
       }
       break
     case thumbnailContextKey.PREVIEW:
+      if (!fileManager.thumbnail?.srl) return
       // TODO: 썸네일 정보가 있으면 미리보기를 한다.
+      // TODO: 라이트박스를 연다.
       break
     case thumbnailContextKey.RESET:
+      if (!confirm('재설정하면 썸네일 이미지와 설정 정보가 전부 삭제됩니다.\n재설정 하시겠습니까?')) return
       // TODO: 썸네일 정보가 있으면 정보를 지운다. API 파일도 삭제해야 할것이다.
       // fileManager.thumbnail = undefined
       break
   }
+}
+function onCloseThumbnailEditor()
+{
+  modal.thumbnailEditor.open = false
+  modal.thumbnailEditor.src = ''
+}
+async function onSubmitThumbnailEditor({ coordinates, file })
+{
+  // TODO: 썸네일 이미지가 만들어졌다.
+  // TODO: API로 파일을 업로드하거나 업데이트하기
+  // TODO: 스토어 정보 업데이트하기
+  console.log('onSubmitThumbnailEditor()', coordinates, file)
 }
 </script>
 

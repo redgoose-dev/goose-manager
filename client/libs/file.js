@@ -36,3 +36,15 @@ export function downloadFile(url, filename)
   el.download = filename
   el.click()
 }
+
+/**
+ * blob to file
+ * @param {Blob} blob
+ * @param {string} name
+ * @param {string} type
+ * @return {File}
+ */
+export function blobToFile(blob, name, type)
+{
+  return new File([blob], name, { type })
+}

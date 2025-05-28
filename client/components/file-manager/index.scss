@@ -13,3 +13,12 @@
   max-height: var(--file-manager-max-height, unset);
   background: var(--color-edge);
 }
+
+.thumbnail-editor-window {
+  --modal-window-width: auto;
+  --modal-window-height: auto;
+  --modal-window-max-width: none;
+  --modal-window-max-height: none;
+  --modal-window-min-width: auto;
+  --modal-window-min-height: auto;
+}

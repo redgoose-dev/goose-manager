@@ -51,6 +51,8 @@ const icons = {
   'upload': lucide.Upload,
   'x-circle': lucide.XCircle,
   'x': lucide.X,
+  'zoom-in': lucide.ZoomIn,
+  'zoom-out': lucide.ZoomOut,
 }
 
 export function iconRandomPick()

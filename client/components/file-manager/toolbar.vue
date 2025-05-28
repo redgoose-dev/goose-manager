@@ -37,26 +37,24 @@
         삭제
       </ButtonBasic>
       <Dropdown
-        v-if="fileManager.preference.useThumbnail"
+        v-if="_useThumbnail"
         mode="hover"
         position="left"
-        :disabled="!_useThumbnail"
         class="toolbar__context">
         <template #trigger>
           <ButtonBasic
             type="button"
             size="small"
             icon-left="image"
-            :disabled="!_useThumbnail"
             @click="onSelectContextFromThumbnail(thumbnailContextKey.PREVIEW)">
             썸네일 이미지
           </ButtonBasic>
         </template>
         <Context
           :items="[
-            { key: thumbnailContextKey.EDIT, label: '편집', iconRight: 'crop' },
+            { key: thumbnailContextKey.EDIT, label: '편집하기', iconRight: 'crop' },
             { key: thumbnailContextKey.PREVIEW, label: '이미지 프리뷰', iconRight: 'scan-search' },
-            { key: thumbnailContextKey.RESET, label: '설정 리셋하기', iconRight: 'rotate-ccw' },
+            { key: thumbnailContextKey.RESET, label: '설정 재설정', iconRight: 'rotate-ccw' },
           ]"
           @select="(e) => onSelectContextFromThumbnail(e.key)"/>
       </Dropdown>
@@ -115,8 +113,8 @@ const _useInsert = computed(() => {
   return fileManager._existSelected
 })
 const _useThumbnail = computed(() => {
-  // TODO: 썸네일 정보가 들어있다면 true 없으면 설정되어 있지않아서 false
-  return true
+  if (!fileManager.preference.useThumbnail) return false
+  return !!fileManager.thumbnail?.srl
 })
 
 function onClickUpload(key)
