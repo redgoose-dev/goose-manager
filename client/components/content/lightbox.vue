@@ -1,31 +1,34 @@
 <template>
-<dialog
-  ref="$root"
-  v-if="open"
-  class="lightbox"
-  @click="onClose"
-  @cancel.prevent="onClose">
-  <figure>
-    <Image
-      :src="props.src"
-      draggable="false"
-      :use-fetch="props.useFetch"
-      :alt="props.title"/>
-  </figure>
-  <nav class="close">
-    <button
-      ref="_close"
-      type="button"
-      title="Close"
-      @click.stop="onClose">
-      <Icon name="x"/>
-    </button>
-  </nav>
-</dialog>
+<transition name="modal">
+  <dialog
+    ref="$root"
+    v-if="open"
+    class="lightbox"
+    @click="onClose"
+    @cancel.prevent="onClose">
+    <figure>
+      <Image
+        :src="props.src"
+        draggable="false"
+        :use-fetch="props.useFetch"
+        :alt="props.title"/>
+    </figure>
+    <nav class="close">
+      <button
+        ref="_close"
+        type="button"
+        title="Close"
+        @click.stop="onClose">
+        <Icon name="x"/>
+      </button>
+    </nav>
+  </dialog>
+</transition>
 </template>
 
 <script setup>
 import { ref, watch, nextTick, onUnmounted } from 'vue'
+import { modalRootClassName } from '../../libs/assets.js'
 import Icon from '../icon/index.vue'
 import Image from '../content/image.vue'
 
@@ -57,10 +60,10 @@ async function control(sw)
   }
   else
   {
-    if ($root.value) $root.value.close()
     open.value = false
     controlRoot(false)
     await nextTick()
+    if ($root.value) $root.value.close()
     window.scrollTo({ top: backupScrollY.value })
   }
 }
@@ -68,7 +71,7 @@ async function control(sw)
 function controlRoot(sw)
 {
   if (!sw && document.getElementById('modal')?.children.length > 1) return
-  document.documentElement.classList[sw ? 'add' : 'remove']('mode-not-scroll')
+  document.documentElement.classList[sw ? 'add' : 'remove'](modalRootClassName)
 }
 
 function onClose()

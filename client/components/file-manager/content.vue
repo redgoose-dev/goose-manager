@@ -1,6 +1,6 @@
 <template>
 <article class="content">
-  <Toolbar @action="onActionToolbar"/>
+  <Toolbar ref="$toolbar" @action="onActionToolbar"/>
   <div v-if="state.loading" class="content-loading">
     <Loading class="loading"/>
   </div>
@@ -32,11 +32,10 @@
 </template>
 
 <script setup>
-import { reactive, computed, inject, onMounted } from 'vue'
+import { ref, reactive, computed, inject, onMounted } from 'vue'
 import { authStore } from '../../store/auth.js'
 import { downloadFile } from '../../libs/file.js'
 import { request, upload } from '../../libs/api.js'
-import { printf } from '../../libs/strings.js'
 import { sleep } from '../../libs/util.js'
 import { pureObject } from '../../libs/object.js'
 import { convertDataToFileItem, getFile } from './libs.js'
@@ -46,6 +45,7 @@ import Empty from '../content/empty.vue'
 import { File, Progress } from './item/index.js'
 import Toolbar from './toolbar.vue'
 
+const $toolbar = ref()
 const fileManager = inject('file-manager')
 const fileManagerEvent = inject('file-manager-event')
 const error = inject('error')
@@ -60,11 +60,14 @@ const _files = computed(() => {
     .map(idx => {
       const item = fileManager.items[idx]
       if (!item) return false
+
       return {
         ...item,
         idx,
         selected: fileManager.selected[idx],
-        // badge: [ 'thumbnail' ], // TODO
+        badge: [
+          fileManager.thumbnail?.originSrl === item.srl && 'thumbnail',
+        ].filter(Boolean),
       }
     })
   return index.filter(Boolean)
@@ -91,8 +94,18 @@ onMounted(async () => {
       res.data.index
         .reverse()
         .forEach(item => {
-          // TODO: 썸네일 데이터라면 다른곳에다 저장한다. 썸네일 기능이 만들어지면 작업할 수 있다.
-          fileManager.addFile(convertDataToFileItem(item))
+          if (item.json.thumbnail)
+          {
+            fileManager.thumbnail = {
+              srl: item.srl,
+              coordinates: item.json.thumbnail.coordinates,
+              originSrl: item.json.thumbnail.originSrl,
+            }
+          }
+          else
+          {
+            fileManager.addFile(convertDataToFileItem(item))
+          }
         })
     }
   }
@@ -117,103 +130,6 @@ function onSelect(idx, $event)
 function onClickSpace()
 {
   fileManager.selectAllFiles(false)
-}
-
-/**
- * upload file
- * @param {File[]} files
- * @return {Promise<void>}
- */
-function uploadFile(files)
-{
-  const [ file, ...remainingFiles ] = files
-  let idx = undefined
-  function nextFile(remainFiles, resolve)
-  {
-    if (remainFiles.length > 0)
-    {
-      setTimeout(() => {
-        uploadFile(remainFiles)
-          .catch(e => error.catch({
-            path: [ ...errorPath, 'uploadFile()' ],
-            message: typeof e === 'string' ? e : '파일 업로드 실패',
-            error: typeof e === 'string' ? new Error(e) : e,
-          }))
-      }, 100)
-    }
-    else resolve()
-  }
-  return new Promise((resolve, reject) => {
-    if (!file) return
-    // checking limit file size
-    if (file.size > fileManager.preference.limitSize)
-    {
-      return nextFile(remainingFiles, resolve)
-    }
-    // checking limit file count
-    if (fileManager._countItems >= fileManager.preference.limitCount)
-    {
-      return reject(printf('업로드할 수 있는 파일 갯수는 {0}개 입니다.', fileManager.preference.limitCount))
-    }
-    // upload file
-    upload({
-      method: 'put',
-      url: '/file/',
-      data: {
-        module: fileManager.preference.module,
-        module_srl: fileManager.preference.moduleSrl,
-        json: JSON.stringify({ foo: 'bar' }),
-        file,
-      },
-      onProgress: (total, loaded) => {
-        if (idx === undefined)
-        {
-          idx = fileManager.addFile({ total, loaded })
-        }
-        else
-        {
-          fileManager.updateFile(idx, { total, loaded })
-        }
-      },
-      onComplete: (res) => {
-        if (res?.data)
-        {
-          fileManager.updateFile(idx, convertDataToFileItem(res.data))
-          nextFile(remainingFiles, resolve)
-        }
-        else
-        {
-          fileManager.removeFile(idx)
-          reject('파일 데이터가 없습니다.')
-        }
-      },
-      onError: (e) => reject(e.message),
-    })
-  })
-}
-
-/**
- * delete file
- * @param {number} key
- * @return {Promise<void>}
- */
-async function deleteFile(key)
-{
-  try
-  {
-    const srl = fileManager.items[key]?.srl
-    if (!srl) throw new Error('Not found srl.')
-    fileManager.removeFile(key)
-    await request(`/file/${srl}/`, { method: 'delete' })
-  }
-  catch (e)
-  {
-    error.catch({
-      path: [ ...errorPath, 'deleteFile()' ],
-      message: '파일을 삭제하지 못했습니다.',
-      error: e,
-    })
-  }
 }
 
 async function onSelectContextItem(idx, code)
@@ -249,7 +165,7 @@ async function onSelectContextItem(idx, code)
       break
     case fileContextKey.DELETE:
       if (!confirm('선택한 파일을 삭제할까요? 삭제하면 복구할 수 없습니다.')) return
-      deleteFile(idx).then()
+      fileManagerEvent.deleteFile(idx).then()
       break
   }
 }
@@ -265,7 +181,7 @@ async function openWindow(srl)
   catch (e)
   {
     error.catch({
-      path: [ ...errorPath, 'openWindow' ],
+      path: [ ...errorPath, 'openWindow()' ],
       message: '파일을 열지 못했습니다.',
       error: e,
     })
@@ -283,7 +199,7 @@ async function download(srl, name)
   catch (e)
   {
     error.catch({
-      path: [ ...errorPath, 'openWindow' ],
+      path: [ ...errorPath, 'download()' ],
       message: '파일을 다운로드 실패했습니다.',
       error: e,
     })
@@ -295,10 +211,8 @@ async function onActionToolbar(type, value)
   switch (type)
   {
     case 'delete-file':
-      await deleteFile(value)
+      await fileManagerEvent.deleteFile(value)
       break
-    case 'upload-file':
-      await uploadFile(value)
   }
 }
 </script>

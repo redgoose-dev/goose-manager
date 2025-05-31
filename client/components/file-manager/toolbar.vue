@@ -47,7 +47,7 @@
             size="small"
             icon-left="image"
             @click="onSelectContextFromThumbnail(thumbnailContextKey.PREVIEW)">
-            썸네일 이미지
+            썸네일
           </ButtonBasic>
         </template>
         <Context
@@ -95,10 +95,8 @@
 </template>
 
 <script setup>
-import { reactive, computed, inject, onMounted, ref } from 'vue'
+import { computed, inject } from 'vue'
 import { sleep } from '../../libs/util.js'
-import { pureObject } from '../../libs/object.js'
-import { fileUploader } from '../../libs/file.js'
 import { insertMode, thumbnailContextKey } from './assets.js'
 import { ButtonBasic, ButtonGroup } from '../button/index.js'
 import { Context, Dropdown } from '../navigation/dropdown/index.js'
@@ -122,31 +120,12 @@ function onClickUpload(key)
   switch (key)
   {
     case 'upload-file':
-      uploadFiles().then()
+      fileManagerEvent.uploadFile().then()
       break
     case 'upload-url':
-      // TODO: URL 업로드 창 열기
+      // TODO: URL 업로드 창 열기 및 URL 파일 업로드 기능 만들기
       console.log('onClickUpload()', key)
       break
-  }
-}
-async function uploadFiles()
-{
-  try
-  {
-    const files = await fileUploader({
-      accept: fileManager.preference.acceptFileType,
-      multiple: true,
-    })
-    if (files?.length > 0) emits('action', 'upload-file', files)
-  }
-  catch (e)
-  {
-    error.catch({
-      path: [ ...errorPath, 'uploadFiles()' ],
-      message: typeof e === 'string' ? e : '파일 업로드 실패',
-      error: typeof e === 'string' ? new Error(e) : e,
-    })
   }
 }
 
@@ -171,10 +150,7 @@ async function onClickDelete()
 
 function insertSelectItems(mode)
 {
-  const selectedFiles = Object.entries(fileManager.selected).map(([key,value]) => {
-    return (value && fileManager.items[key]) ? pureObject(fileManager.items[key]) : false
-  }).filter(Boolean)
-  fileManagerEvent.insert(selectedFiles, mode)
+  fileManagerEvent.insert(fileManager._selectedFileItems, mode)
 }
 
 function onSelectContextFromThumbnail(key)

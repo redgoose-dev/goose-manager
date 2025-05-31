@@ -18,6 +18,7 @@
         :is-window="true"
         :shortcut="true"
         :use-thumbnail="true"
+        :use-fetch="true"
         class="example--file-manager"
         @insert="onInsertFromFileManager">
         <template #header>

@@ -69,3 +69,11 @@ code, kbd, pre, samp {
   translate: -50% 0;
   box-sizing: border-box;
 }
+
+// for modal
+html.mode-not-scroll {
+  overflow: clip;
+  > body {
+    overflow: clip;
+  }
+}

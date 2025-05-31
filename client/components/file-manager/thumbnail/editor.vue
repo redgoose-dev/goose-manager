@@ -75,7 +75,7 @@ const $cropper = ref()
 const props = defineProps({
   src: String,
   cropSize: { type: Array, default: [ 640, 480 ] },
-  defaultCoordinates: [ Object, null ],
+  options: Object,
 })
 const emits = defineEmits([ 'close', 'submit' ])
 const src = ref('')
@@ -144,10 +144,10 @@ function getCropperZoom()
 
 function onReady()
 {
-  if (props.defaultCoordinates)
+  if (props.options?.coordinates)
   {
     $cropper.value.setCoordinates({
-      ...props.defaultCoordinates,
+      ...props.options.coordinates,
     })
   }
   zoom.value = getCropperZoom()
@@ -192,13 +192,14 @@ async function onSubmit()
     height: props.cropSize[1],
     outputType: 'blob',
     reSample: 2,
-    sharpen: .5,
+    sharpen: .75,
     bgColor: '#ffffff',
   })
   const file = blobToFile(blob, `${Date.now()}-${createRandomText(4)}.webp`, 'image/webp')
   emits('submit', {
     coordinates,
     file,
+    options: props.options,
   })
 }
 </script>

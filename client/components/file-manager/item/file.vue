@@ -10,7 +10,7 @@
     v-if="_isImage"
     :src="_src"
     :alt="props.name"
-    :use-fetch="true"
+    :use-fetch="fileManager.preference.useFetch"
     class="file__image"/>
   <p v-else class="file__raw">
     <Icon :name="_fileIcon"/>

@@ -9,6 +9,7 @@ const defaultPreference = {
   useThumbnail: false,
   limitCount: 10,
   limitSize: 3 * 1024 * 1024, // 3MB
+  useFetch: false,
 }
 let lastSelectedKey = NaN
 
@@ -20,7 +21,7 @@ const fileManagerStore = defineStore('file-manager', {
     items: {}, // 아이템 데이터 (key,value)
     index: [], // 아이템의 순서 (key)
     selected: {}, // 선택된 아이템의 키
-    thumbnail: undefined, // 크로핑 데이터 (srl,parentSrl,cropper정보)
+    thumbnail: undefined, // 크로핑 데이터 (srl,originSrl,coordinates)
     windows: [], // 추가로 열려있는 모달의 목록
   }),
   getters: {
@@ -44,6 +45,13 @@ const fileManagerStore = defineStore('file-manager', {
         if (value) result.push(Number(key))
       }
       return result
+    },
+    _selectedFileItems()
+    {
+      const selectedItems = Object.entries(this.selected).map(([key,sw]) => {
+        return (sw && this.items[key]) ? this.items[key] : false
+      }).filter(Boolean)
+      return pureObject(selectedItems)
     },
   },
   actions: {
@@ -92,7 +100,6 @@ const fileManagerStore = defineStore('file-manager', {
     },
     removeFile(key)
     {
-      // TODO: 썸네일 부모가 되는 파일이라면 썸네일 데이터도 삭제한다.
       if (!this.items[key]) return
       const idx = this.index.indexOf(key)
       if (idx > -1) this.index.splice(idx, 1)
@@ -166,6 +173,22 @@ const fileManagerStore = defineStore('file-manager', {
         }
       })
       lastSelectedKey = NaN
+    },
+    controlWindow(sw, key)
+    {
+      if (key)
+      {
+        const idx = this.windows.indexOf(key)
+        if (idx > -1) this.windows.splice(idx, 1)
+      }
+      if (sw && key)
+      {
+        this.windows.push(key)
+      }
+      else
+      {
+        this.windows.pop()
+      }
     },
   },
 })

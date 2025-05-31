@@ -55,18 +55,10 @@
   }
   &--full {
     &:is(.modal-enter-active, .modal-leave-active) {
-      transition: opacity 160ms ease-out;
+      transition: opacity 240ms ease-out;
     }
     &:is(.modal-enter-from, .modal-leave-to) {
       opacity: 0;
     }
-  }
-}
-
-// for root
-:global(html.mode-not-scroll) {
-  overflow: clip;
-  > body {
-    overflow: clip;
   }
 }

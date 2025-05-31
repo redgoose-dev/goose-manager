@@ -18,6 +18,12 @@ dialog {
     background-color: hsla(0 0% 100% / 50%);
     @include mixins.background-blur(32px);
   }
+  &:is(.modal-enter-active, .modal-leave-active) {
+    transition: opacity 240ms ease-out;
+  }
+  &:is(.modal-enter-from, .modal-leave-to) {
+    opacity: 0;
+  }
 }
 
 figure {
@@ -60,13 +66,5 @@ figure {
       outline: 2px solid var(--color-key-1, unset);
       outline-offset: -2px;
     }
-  }
-}
-
-// for root
-:global(html.mode-not-scroll) {
-  overflow: clip;
-  > body {
-    overflow: clip;
   }
 }
