@@ -18,6 +18,7 @@ const icons = {
   'check': lucide.Check,
   'check-square': lucide.CheckSquare,
   'circle-slash': lucide.CircleSlash,
+  'circle-plus': lucide.CirclePlus,
   'crop': lucide.Crop,
   'droplet': lucide.Droplet,
   'download': lucide.Download,

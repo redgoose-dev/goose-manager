@@ -9,7 +9,7 @@
             color="key"
             icon-left="upload"
             class="button-upload"
-            @click="onClickUpload('upload-file')">
+            @click="fileManagerEvent.upload('upload-file')">
             업로드
           </ButtonBasic>
         </template>
@@ -18,7 +18,7 @@
             { key: 'upload-file', label: '파일 업로드', iconRight: 'upload' },
             { key: 'upload-url', label: 'URL 업로드', iconRight: 'link' },
           ]"
-          @select="(e) => onClickUpload(e.key)"/>
+          @select="(e) => fileManagerEvent.upload(e.key)"/>
       </Dropdown>
       <ButtonBasic
         size="small"
@@ -114,20 +114,6 @@ const _useThumbnail = computed(() => {
   if (!fileManager.preference.useThumbnail) return false
   return !!fileManager.thumbnail?.srl
 })
-
-function onClickUpload(key)
-{
-  switch (key)
-  {
-    case 'upload-file':
-      fileManagerEvent.uploadFile().then()
-      break
-    case 'upload-url':
-      // TODO: URL 업로드 창 열기 및 URL 파일 업로드 기능 만들기
-      console.log('onClickUpload()', key)
-      break
-  }
-}
 
 function onClickSelectAll()
 {

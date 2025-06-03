@@ -48,3 +48,17 @@ export function blobToFile(blob, name, type)
 {
   return new File([blob], name, { type })
 }
+
+/**
+ * load image
+ * @param {string} src
+ * @return {Promise<Image>}
+ */
+export function loadImage(src)
+{
+  return new Promise((resolve => {
+    const image = new Image()
+    image.onload = () => resolve(image)
+    image.src = src
+  }))
+}

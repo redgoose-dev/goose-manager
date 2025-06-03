@@ -1,0 +1,13 @@
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px 0;
+  box-sizing: border-box;
+  > li {
+    background: lime;
+  }
+}
+
+.item {}

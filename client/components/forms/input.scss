@@ -72,6 +72,9 @@
 // size
 .size {
   &--small {
+    --input-height: 30px;
+    --input-padding: 0 12px;
+    --input-text-size: 12px;
     transition: background-color 5000s ease-in-out 0s;
     -webkit-transition: background-color 9999s ease-out;
   }

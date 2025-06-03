@@ -18,12 +18,12 @@ const props = defineProps({
 .modal-window {
   position: relative;
   cursor: auto;
-  width: var(--modal-window-width, 75vw);
-  min-width: var(--modal-window-min-width, 460px);
-  max-width: var(--modal-window-max-width, 640px);
-  height: var(--modal-window-height, 65vh);
-  min-height: var(--modal-window-min-width, 320px);
-  max-height: var(--modal-window-max-height, 480px);
+  width: var(--modal-window-width, auto);
+  min-width: var(--modal-window-min-width, auto);
+  max-width: var(--modal-window-max-width, none);
+  height: var(--modal-window-height, auto);
+  min-height: var(--modal-window-min-width, none);
+  max-height: var(--modal-window-max-height, none);
   box-sizing: border-box;
   border-radius: 8px;
   background: var(--modal-window-bg, var(--color-bg));

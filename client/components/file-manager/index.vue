@@ -8,7 +8,7 @@
       :open="modal.thumbnailEditor.open"
       mode="window"
       @close="onCloseThumbnailEditor">
-      <ModalWindow class="thumbnail-editor-window">
+      <ModalWindow>
         <ThumbnailEditor
           :src="modal.thumbnailEditor.src"
           :options="modal.thumbnailEditor.options"
@@ -18,12 +18,16 @@
       </ModalWindow>
     </Modal>
     <Lightbox
-      :src="modal.thumbnailPreview.src"
+      :src="modal.thumbnailPreview"
       :use-fetch="fileManager.preference.useFetch"
       @close="onControlThumbnailPreview(false)"/>
-    <Modal :open="modal.urlUploader">
+    <Modal
+      :open="modal.urlUploader"
+      @close="onControlUrlUploader(false)">
       <ModalWindow>
-        <p>sdog</p>
+        <UrlUploader
+          @submit=""
+          @close="onControlUrlUploader(false)"/>
       </ModalWindow>
     </Modal>
   </teleport>
@@ -41,6 +45,7 @@ import { windowKey, thumbnailContextKey, insertMode } from './assets.js'
 import { Modal, ModalWindow } from '../modal/index.js'
 import Content from './content.vue'
 import { ThumbnailEditor } from './thumbnail/index.js'
+import UrlUploader from './url-uploader/index.vue'
 import Lightbox from '../content/lightbox.vue'
 
 /**
@@ -65,10 +70,8 @@ const modal = reactive({
     src: '',
     options: {},
   },
-  thumbnailPreview: {
-    src: '',
-  },
-  urlUploader: false,
+  thumbnailPreview: '',
+  urlUploader: true, // TODO: false로 변경 예정
 })
 const errorPath = [ 'components', 'file-manager', 'index.vue' ]
 
@@ -81,7 +84,7 @@ provide('file-manager-event', {
   destroy: onDestroy,
   insert: onInsert,
   thumbnail: onRouteThumbnail,
-  uploadFile: onUploadFile,
+  upload: onUpload,
   deleteFile: onDeleteFile,
 })
 
@@ -130,6 +133,7 @@ function shortcutEscape()
       onControlThumbnailPreview(false)
       break
     case windowKey.URL_UPLOADER:
+      onControlUrlUploader(false)
       break
   }
 }
@@ -167,6 +171,18 @@ function onInsert(files, mode)
   emits('insert', str)
 }
 
+function onUpload(mode)
+{
+  switch (mode)
+  {
+    case 'upload-file':
+      onUploadFile().then()
+      break
+    case 'upload-url':
+      onControlUrlUploader(true)
+      break
+  }
+}
 async function onUploadFile()
 {
   try
@@ -411,12 +427,12 @@ function onControlThumbnailPreview(sw)
   {
     if (!fileManager.thumbnail?.srl) return
     fileManager.controlWindow(true, windowKey.THUMBNAIL_PREVIEW)
-    modal.thumbnailPreview.src = `/file/${fileManager.thumbnail.srl}/`
+    modal.thumbnailPreview = `/file/${fileManager.thumbnail.srl}/`
   }
   else
   {
     fileManager.controlWindow(false, windowKey.THUMBNAIL_PREVIEW)
-    modal.thumbnailPreview.src = ''
+    modal.thumbnailPreview = ''
   }
 }
 async function onResetThumbnail()
@@ -436,6 +452,12 @@ async function onResetThumbnail()
       error: e,
     })
   }
+}
+
+function onControlUrlUploader(sw)
+{
+  fileManager.controlWindow(sw, windowKey.URL_UPLOADER)
+  modal.urlUploader = sw
 }
 </script>
 

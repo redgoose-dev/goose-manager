@@ -1,0 +1,22 @@
+@use '../../../scss/mixins.scss';
+
+.input-url {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  &__label {
+    margin: 0 16px 0 0;
+    font-size: 12px;
+    font-weight: 700;
+    user-select: none;
+    letter-spacing: -.5px;
+  }
+  &__text {
+    .textarea {
+      resize: none;
+    }
+  }
+  &__submit {
+    margin-left: 12px;
+  }
+}
