@@ -10,7 +10,7 @@
       "purpose": "any"
     },
     {
-      "src": "/images/icons-512x512-mask.png",
+      "src": "/images/icons-512x512-mask.webp",
       "type": "image/webp",
       "sizes": "512x512",
       "purpose": "maskable"
@@ -19,6 +19,6 @@
   "id": "/?sw=1",
   "start_url": "/?sw=1",
   "display": "standalone",
-  "theme_color": "#222222",
-  "background_color": "#fafbfc"
+  "theme_color": "#2e2e2e",
+  "background_color": "#f7f7f7"
 }
