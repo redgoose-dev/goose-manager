@@ -8,7 +8,7 @@ function _fetch(url, options)
   return new Promise((resolve, reject) => {
     $fetch(url, {
       onResponse: ({ request, response, options }) => {
-        // console.warn('[ON_RESPONSE]', response) // TODO: 당분간은 확인해야겠다.
+        // console.warn('[ON_RESPONSE]', response)
         if (!response.ok) return
         resolve({
           status: response.status,
@@ -16,7 +16,7 @@ function _fetch(url, options)
         })
       },
       onResponseError: ({ request, response, options }) => {
-        // console.error('[ON_RESPONSE_ERROR]', response) // TODO: 당분간은 확인해야겠다.
+        // console.error('[ON_RESPONSE_ERROR]', response)
         reject({
           status: response.status,
           message: response._data,

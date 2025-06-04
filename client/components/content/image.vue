@@ -3,30 +3,28 @@
   <p v-if="error">
     <Icon name="circle-slash"/>
   </p>
-  <transition name="fade">
-    <img
-      v-if="src"
-      :src="src"
-      :alt="props.alt"
-      :draggable="false"
-      loading="lazy"/>
-    <figcaption v-else>
-      <Icon name="image"/>
-    </figcaption>
-  </transition>
+  <img
+    v-else-if="src"
+    :src="src"
+    :alt="props.alt"
+    :draggable="false"
+    loading="lazy"/>
+  <figcaption v-else>
+    <Icon name="image"/>
+  </figcaption>
 </figure>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { request } from '../../libs/api.js'
-import { sleep } from '../../libs/util.js'
 import Icon from '../icon/index.vue'
 
 const props = defineProps({
   src: String,
   alt: { type: String, default: 'filename' },
   useFetch: Boolean,
+  revoke: { type: Boolean, default: true },
 })
 const src = ref(null)
 const error = ref(false)
@@ -46,6 +44,10 @@ async function _fetch()
   if (props.src.startsWith('blob:'))
   {
     src.value = props.src
+    if (props.revoke)
+    {
+      setTimeout(() => URL.revokeObjectURL(src.value), 100)
+    }
   }
   else if (props.useFetch)
   {
@@ -56,8 +58,10 @@ async function _fetch()
       })
       if (!blob) throw true
       src.value = URL.createObjectURL(blob)
-      await sleep(100)
-      URL.revokeObjectURL(src.value)
+      if (props.revoke)
+      {
+        setTimeout(() => URL.revokeObjectURL(src.value), 100)
+      }
     }
     catch (e)
     {

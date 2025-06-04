@@ -26,7 +26,7 @@
       @close="onControlUrlUploader(false)">
       <ModalWindow>
         <UrlUploader
-          @submit=""
+          @submit="onSubmitUrlUploader"
           @close="onControlUrlUploader(false)"/>
       </ModalWindow>
     </Modal>
@@ -71,7 +71,7 @@ const modal = reactive({
     options: {},
   },
   thumbnailPreview: '',
-  urlUploader: true, // TODO: false로 변경 예정
+  urlUploader: false,
 })
 const errorPath = [ 'components', 'file-manager', 'index.vue' ]
 
@@ -458,6 +458,21 @@ function onControlUrlUploader(sw)
 {
   fileManager.controlWindow(sw, windowKey.URL_UPLOADER)
   modal.urlUploader = sw
+}
+async function onSubmitUrlUploader(files)
+{
+  try
+  {
+    if (files?.length > 0) await uploadFile(files)
+  }
+  catch (e)
+  {
+    error.catch({
+      path: [ ...errorPath, 'onSubmitUrlUploader()' ],
+      message: typeof e === 'string' ? e : 'URL 주소로 파일 가져오기 실패',
+      error: typeof e === 'string' ? new Error(e) : e,
+    })
+  }
 }
 </script>
 

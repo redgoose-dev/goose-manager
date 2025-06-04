@@ -1,3 +1,5 @@
+@use '../../../scss/mixins';
+
 .items {
   margin: 0;
   padding: 0;
@@ -5,9 +7,91 @@
   display: grid;
   gap: 8px 0;
   box-sizing: border-box;
-  > li {
-    background: lime;
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  overflow: clip;
+  border-radius: 8px;
+  box-shadow:
+    var(--item-shadow-1, 0 0 0 .5px hsla(0 0% 0% / 5%)),
+    var(--item-shadow-2, 0 2px 16px hsla(0 0% 0% / 15%));
+  transition: box-shadow 160ms ease-out;
+  min-width: 0;
+  &:not(:has(.processing-overlay)):hover {
+    --item-shadow-1: 0 0 0 1px var(--color-weak);
+  }
+  &__image {
+    margin: 0;
+    width: 120px;
+    aspect-ratio: 3/2;
+    background: var(--color-edge);
+    cursor: pointer;
+    --img-width: 100%;
+    --img-height: 100%;
+    --img-fit: cover;
+    transition: opacity 160ms ease-out;
+    &:active {
+      opacity: .75;
+    }
+  }
+  &__body {
+    margin: 0 8px 0 16px;
+    .input {
+      max-width: 420px;
+    }
+    p {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin: 8px 0 0;
+      color: var(--color-weak);
+      font-size: 11px;
+      line-height: 1.05;
+      user-select: none;
+      span {
+        &:not(:last-child):after {
+          content: ',';
+        }
+      }
+    }
+  }
+  &__control {
+    display: flex;
+    align-items: center;
+    gap: 0 2px;
+    justify-content: center;
+    width: 120px;
+    .button-icon {
+      --icon-stroke: 1;
+      &.minify {
+        --button-icon-color: var(--color-sub);
+      }
+      &.remove {
+        --button-icon-color: var(--color-error);
+      }
+    }
   }
 }
 
-.item {}
+.processing-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  place-content: center;
+  background: mixins.mix-alpha(var(--color-edge), 50%);
+  border-radius: 8px;
+  overflow: clip;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--color-base);
+  user-select: none;
+  @include mixins.background-blur(16px);
+}

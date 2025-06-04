@@ -6,6 +6,7 @@
   width: calc(96vw - (40px * 2));
   max-width: 820px;
   box-sizing: border-box;
+  background: var(--color-edge);
   &__header {
     padding: 24px 24px 16px 24px;
     user-select: none;
@@ -18,7 +19,7 @@
     }
     p {
       margin: 4px 0 0;
-      line-height: 1.05;
+      line-height: 1.15;
       color: var(--color-weak);
       font-size: 12px;
     }
@@ -41,4 +42,14 @@
       margin: 0;
     }
   }
+}
+
+.empty {
+  --empty-title-margin: 12px 0 0;
+  --empty-title-font-weight: 400;
+  --empty-title-letter-spacing: -.5px;
+  --empty-title-size: 14px;
+  --empty-title-color: var(--color-weak);
+  --empty-icon-size: 82px;
+  --empty-icon-stroke: 1.5;
 }

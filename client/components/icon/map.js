@@ -38,6 +38,7 @@ const icons = {
   'loader': lucide.Loader,
   'menu': lucide.Menu,
   'more-horizontal': lucide.MoreHorizontal,
+  'minimize-2': lucide.Minimize2,
   'power': lucide.Power,
   'package': lucide.Package,
   'rotate-ccw': lucide.RotateCcw,

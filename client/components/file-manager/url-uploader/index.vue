@@ -9,9 +9,18 @@
   </header>
   <InputUrl
     class="url-uploader__input-url"
-    @submit=""/>
+    @submit="addFile"/>
   <div class="url-uploader__items">
-    <Items/>
+    <Items
+      v-if="items?.length > 0"
+      :items="items"
+      @update-item="updateItem"
+      @remove-item="removeItem"/>
+    <Empty
+      v-else
+      icon="circle-slash"
+      title="가져온 파일이 없습니다."
+      class="empty"/>
   </div>
   <Controller class="url-uploader__submit">
     <template #left>
@@ -34,18 +43,42 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { ref, computed } from 'vue'
+import { blobToFile } from '../../../libs/file.js'
 import Items from './items.vue'
 import InputUrl from './input-url.vue'
 import Controller from '../../navigation/controller.vue'
 import { ButtonBasic } from '../../button/index.js'
+import Empty from '../../content/empty.vue'
 
 const emits = defineEmits([ 'submit', 'close' ])
+const items = ref([])
+
+const _disabledSubmitButton = computed(() => (!(items.value.length > 0)))
+
+function addFile(item)
+{
+  items.value.push(item)
+}
+function updateItem(idx, item)
+{
+  items.value = Object.assign([], items.value, { [idx]: item })
+}
+function removeItem(idx)
+{
+  items.value.splice(idx, 1)
+}
 
 function onSubmit()
 {
-  console.log('onSubmit()')
-  emits('submit')
+  const files = items.value.map(item => {
+    return blobToFile(item.blob, item.name, {
+      type: item.blob.type,
+      lastModified: item.date.getTime(),
+    })
+  })
+  emits('submit', files)
+  emits('close')
 }
 </script>
 

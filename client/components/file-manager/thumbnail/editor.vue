@@ -195,7 +195,9 @@ async function onSubmit()
     sharpen: .75,
     bgColor: '#ffffff',
   })
-  const file = blobToFile(blob, `${Date.now()}-${createRandomText(4)}.webp`, 'image/webp')
+  const file = blobToFile(blob, `${Date.now()}-${createRandomText(4)}.webp`, {
+    type: 'image/webp',
+  })
   emits('submit', {
     coordinates,
     file,

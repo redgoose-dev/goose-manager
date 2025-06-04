@@ -15,7 +15,14 @@
   outline-offset: -2px;
   font-size: var(--input-text-size, 14px);
   color: var(--input-text-color, var(--color-base));
-  transition: box-shadow 160ms ease-out, outline-color 160ms ease-out;
+  transition:
+    box-shadow 160ms ease-out,
+    outline-color 160ms ease-out,
+    background-color 5000s ease-in-out 0s;
+  -webkit-transition:
+    box-shadow 160ms ease-out,
+    outline-color 160ms ease-out,
+    background-color 9999s ease-out;
   -webkit-tap-highlight-color: transparent;
 
   // placeholder
@@ -75,8 +82,6 @@
     --input-height: 30px;
     --input-padding: 0 12px;
     --input-text-size: 12px;
-    transition: background-color 5000s ease-in-out 0s;
-    -webkit-transition: background-color 9999s ease-out;
   }
 }
 

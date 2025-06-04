@@ -41,12 +41,12 @@ export function downloadFile(url, filename)
  * blob to file
  * @param {Blob} blob
  * @param {string} name
- * @param {string} type
+ * @param {object} options
  * @return {File}
  */
-export function blobToFile(blob, name, type)
+export function blobToFile(blob, name, options = {})
 {
-  return new File([blob], name, { type })
+  return new File([blob], name, options)
 }
 
 /**

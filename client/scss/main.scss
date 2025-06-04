@@ -77,3 +77,11 @@ html.mode-not-scroll {
     overflow: clip;
   }
 }
+
+// transition
+.fade-enter-active {
+  transition: opacity 200ms ease-out;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}

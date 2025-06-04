@@ -4,7 +4,7 @@
     <figure class="empty__icon">
       <Icon :name="props.icon"/>
     </figure>
-    <h1 class="empty__title">
+    <h1 v-if="props.title" class="empty__title">
       {{props.title}}
     </h1>
     <p v-if="props.message" class="empty__message">
@@ -18,7 +18,7 @@
 import Icon from '../icon/index.vue'
 
 const props = defineProps({
-  title: { type: String, required: true },
+  title: { type: String },
   message: String,
   icon: { type: String, default: 'bird' },
 })

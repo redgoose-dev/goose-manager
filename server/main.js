@@ -8,6 +8,7 @@ import getPreference from './endpoints/zone/get-preference.js'
 import updatePreference from './endpoints/zone/update-preference.js'
 import login from './endpoints/zone/login.js'
 import renew from './endpoints/zone/renew.js'
+import download from './endpoints/zone/download.js'
 
 const { serve } = Bun
 const { VITE_HOST, VITE_PORT_SERVER } = Bun.env
@@ -38,6 +39,9 @@ const routes = {
   },
   '/zone/renew/': {
     POST: renew,
+  },
+  '/zone/download/': {
+    POST: download,
   },
   ...(!server.dev ? { '/*': statics } : undefined),
 }
