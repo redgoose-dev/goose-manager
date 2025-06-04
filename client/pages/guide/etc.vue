@@ -7,32 +7,6 @@
 
   <section class="page-section">
     <header>
-      <h1>Files manager</h1>
-      <p>파일을 업로드하고 관리하는 컴포넌트</p>
-    </header>
-    <div class="example">
-      <FileManager
-        tab="global"
-        module="article"
-        :module-srl="310"
-        :is-window="true"
-        :shortcut="true"
-        :use-thumbnail="true"
-        :use-fetch="true"
-        class="example--file-manager"
-        @insert="onInsertFromFileManager">
-        <template #header>
-          <FileManagerHeader
-            title="가이드용 파일 매니저"
-            :use-close="true"
-            @close=""/>
-        </template>
-      </FileManager>
-    </div>
-  </section>
-
-  <section class="page-section">
-    <header>
       <h1>Toast component</h1>
       <p>상태나 알림 메시지를 보여주는 토스트 컴포넌트</p>
     </header>
@@ -115,7 +89,31 @@
     </div>
   </section>
 
-  <!-- // TODO: 파일 매니저 작업 끝나면 들어갈 예정 -->
+  <section class="page-section">
+    <header>
+      <h1>Files manager</h1>
+      <p>파일을 업로드하고 관리하는 컴포넌트</p>
+    </header>
+    <div class="example">
+      <FileManager
+        tab="global"
+        module="article"
+        :module-srl="310"
+        :is-window="true"
+        :shortcut="true"
+        :use-thumbnail="true"
+        :use-fetch="true"
+        class="example--file-manager"
+        @insert="onInsertFromFileManager">
+        <template #header>
+          <FileManagerHeader
+            title="가이드용 파일 매니저"
+            :use-close="true"
+            @close=""/>
+        </template>
+      </FileManager>
+    </div>
+  </section>
 </article>
 </template>
 
