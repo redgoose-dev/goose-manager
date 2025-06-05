@@ -138,3 +138,16 @@ export async function localRequest({ url, ...rest })
     ...rest,
   })
 }
+
+/**
+ * check forms
+ * 모든 폼에 에러가 있는지 검사한다.
+ * @param {object} src
+ * @throws {Error}
+ */
+export function checkForms(src)
+{
+  Object.keys(src).forEach(key => {
+    if (!!src[key].error) throw new Error(src[key].error)
+  })
+}

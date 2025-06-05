@@ -38,6 +38,10 @@
   &__nav {
     margin: 8px 0 0;
   }
+  &__status {
+    padding: 0 24px;
+    min-width: 130px;
+  }
   &--link {
     &:hover {
       --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-key), 100%)};

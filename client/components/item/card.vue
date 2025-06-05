@@ -31,6 +31,10 @@
       :items="props.nav"
       class="item__nav"/>
   </div>
+  <Status
+    v-if="props.status?.length > 0"
+    :items="props.status"
+    class="item__status"/>
   <slot v-if="$slots.after" name="after"/>
 </section>
 </template>
@@ -41,6 +45,7 @@ import ItemTitle from './assets/item-title.vue'
 import Description from './assets/description.vue'
 import ItemMeta from './assets/item-meta.vue'
 import ItemNav from './assets/item-nav/index.vue'
+import Status from './assets/status.vue'
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -49,6 +54,7 @@ const props = defineProps({
   alt: String,
   meta: Array,
   nav: Array,
+  status: Array,
   href: undefined,
   target: String,
 })

@@ -6,7 +6,14 @@
   align-items: center;
   margin: 0 0 30px;
   user-select: none;
-  &__title {
+  > nav {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.body {
+  > h1 {
     margin: 0;
     font-size: 32px;
     line-height: 1.05;
@@ -15,14 +22,10 @@
     font-family: var(--font-eng);
     color: var(--color-reverse);
   }
-  &__description {
-    margin: 0;
+  > p {
+    margin: 2px 0 0;
     font-size: 12px;
     letter-spacing: -.25px;
     color: var(--color-weak);
-  }
-  &__nav {
-    display: flex;
-    align-items: center;
   }
 }

@@ -9,12 +9,36 @@ const auth = [
     meta: { layout: 'blank', active: 'auth' },
   },
 ]
-const apps = []
-const nests = []
-const articles = []
-const files = []
+const app = [
+  {
+    path: '/app/',
+    name: 'App',
+    component: () => import('../pages/app/index.vue'),
+    meta: { active: 'app' },
+  },
+  {
+    path: '/app/create/',
+    name: 'AppCreate',
+    component: () => import('../pages/app/create.vue'),
+    meta: { active: 'app' },
+  },
+  {
+    path: '/app/:srl/edit/',
+    name: 'AppEdit',
+    component: () => import('../pages/app/edit.vue'),
+    meta: { active: 'app' },
+  },
+  {
+    path: '/app/:srl/delete/',
+    name: 'AppDelete',
+    component: () => import('../pages/app/delete.vue'),
+    meta: { active: 'app' },
+  },
+]
+const nest = []
+const article = []
+const file = []
 const json = []
-const users = []
 const checklist = []
 const preference = []
 const guide = [
@@ -84,6 +108,13 @@ export default [
     meta: { active: 'dashboard' },
   },
   ...auth,
+  ...app,
+  ...nest,
+  ...article,
+  ...file,
+  ...json,
+  ...checklist,
+  ...preference,
   ...(DEV ? guide : []),
   {
     path: '/:pathMatch(.*)*',

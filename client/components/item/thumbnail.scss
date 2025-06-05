@@ -42,4 +42,9 @@
   &__nav {
     margin: 8px 0 0;
   }
+  &__status {
+    margin: 16px 0 -4px;
+    padding: 16px 0 0;
+    border-top: .5px solid var(--color-weak);
+  }
 }

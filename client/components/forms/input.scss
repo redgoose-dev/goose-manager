@@ -17,12 +17,7 @@
   color: var(--input-text-color, var(--color-base));
   transition:
     box-shadow 160ms ease-out,
-    outline-color 160ms ease-out,
-    background-color 5000s ease-in-out 0s;
-  -webkit-transition:
-    box-shadow 160ms ease-out,
-    outline-color 160ms ease-out,
-    background-color 9999s ease-out;
+    outline-color 160ms ease-out;
   -webkit-tap-highlight-color: transparent;
 
   // placeholder

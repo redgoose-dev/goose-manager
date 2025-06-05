@@ -71,3 +71,14 @@ export function createRandomText(length)
   }
   return result
 }
+
+/**
+ * `0-9a-z-_`만 서용할 수 있도록 검사한다.
+ * @param {string} str
+ * @return {boolean}
+ */
+export function validateCode(str)
+{
+  const reg = /^[A-Za-z0-9_-]*$/
+  return reg.test(str)
+}

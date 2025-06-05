@@ -212,6 +212,8 @@
         cursor: pointer;
         &.active {
           background-color: var(--color-sub);
+          color: var(--color-edge);
+          --icon-color: var(--color-edge);
         }
       }
       > button {

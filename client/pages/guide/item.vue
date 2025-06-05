@@ -24,6 +24,10 @@
           { label: 'discord', href: `https://discord.com/`, target: '_blank' },
           { label: 'function', click: callAlert },
         ]"
+        :status="[
+          { label: 'Before', value: 123 },
+          { label: 'After', value: 45678 },
+        ]"
         style="--item-height: 120px"/>
       <hr>
       <div class="grid grid--col-2">
@@ -66,6 +70,10 @@
             { label: 'Guide', href: `/guide/` },
             { label: 'GuideButton', href: `/guide/button/` },
             { label: 'discord', href: `https://discord.com/`, target: '_blank' },
+          ]"
+          :status="[
+            { label: 'Apple', value: 432 },
+            { label: 'Banana', value: 765 },
           ]"
           :style="[
             '--item-width: 240px',

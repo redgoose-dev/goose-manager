@@ -94,7 +94,7 @@
     &__context {
       opacity: 0;
       pointer-events: none;
-      transition: 240ms ease-out;
+      transition: opacity 160ms ease-out;
       z-index: 1;
     }
     &:hover {

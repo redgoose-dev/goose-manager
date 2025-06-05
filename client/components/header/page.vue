@@ -1,15 +1,15 @@
 <template>
 <header class="page-header">
-  <div>
-    <h1 class="page-header__title">
+  <div class="body">
+    <h1>
       {{props.prefix ? `${props.prefix} ` : ''}}
-      {{messages.title}}
+      {{_message.title}}
     </h1>
-    <p v-if="messages.description" class="page-header__description">
-      {{messages.description}}
+    <p v-if="_message.description">
+      {{_message.description}}
     </p>
   </div>
-  <nav v-if="$slots.default" class="page-header__nav">
+  <nav v-if="$slots.default">
     <slot/>
   </nav>
 </header>
@@ -24,7 +24,8 @@ const props = defineProps({
   module: String,
   prefix: String,
 })
-const messages = computed(() => {
+
+const _message = computed(() => {
   switch(props.module)
   {
     case 'dashboard':
@@ -32,39 +33,39 @@ const messages = computed(() => {
         title: props.title || 'Dashboard',
         description: props.description || '',
       }
-    case 'apps':
+    case 'app':
       return {
-        title: props.title || 'Apps',
+        title: props.title || 'App',
         description: props.description || '둥지를 그룹화시켜 관리하는 모듈입니다. 프로젝트 이름으로 사용하는것을 권장합니다.',
       }
-    case 'articles':
+    case 'article':
       return {
-        title: props.title || 'Articles',
+        title: props.title || 'Article',
         description: props.description || '포스팅된 글을 관리하는 모듈입니다.',
       }
-    case 'categories':
+    case 'category':
       return {
-        title: props.title || 'Categories',
+        title: props.title || 'Category',
         description: props.description || '`아티클` 분류를 관리하는 모듈입니다.',
       }
-    case 'nests':
+    case 'nest':
       return {
-        title: props.title || 'Nests',
+        title: props.title || 'Nest',
         description: props.description || '둥지를 관리하는 모듈입니다.',
       }
-    case 'users':
+    case 'account':
       return {
-        title: props.title || 'Users',
-        description: props.description || '사용자 목록을 관리하는 모듈입니다.',
+        title: props.title || 'Account',
+        description: props.description || '계정 정보를 관리하는 모듈입니다.',
       }
     case 'json':
       return {
         title: props.title || 'JSON',
         description: props.description || '`JSON`데이터를 관리하는 모듈입니다.',
       }
-    case 'files':
+    case 'file':
       return {
-        title: props.title || 'Files',
+        title: props.title || 'File',
         description: props.description || '첨부된 파일들을 관리하는 모듈입니다.',
       }
     case 'checklist':

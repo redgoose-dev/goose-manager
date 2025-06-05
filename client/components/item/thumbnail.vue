@@ -32,6 +32,10 @@
       v-if="props.nav?.length > 0"
       :items="props.nav"
       class="item__nav"/>
+    <Status
+      v-if="props.status?.length > 0"
+      :items="props.status"
+      class="item__status"/>
   </div>
   <slot v-if="$slots.after" name="after"/>
 </section>
@@ -45,6 +49,7 @@ import ItemTitle from './assets/item-title.vue'
 import Description from './assets/description.vue'
 import ItemMeta from './assets/item-meta.vue'
 import ItemNav from './assets/item-nav/index.vue'
+import Status from './assets/status.vue'
 
 const props = defineProps({
   image: String,
@@ -53,6 +58,7 @@ const props = defineProps({
   description: String,
   meta: Array,
   nav: Array,
+  status: Array,
   href: String,
   target: String,
   json: { type: Object, default: {} },
