@@ -1,5 +1,5 @@
 <template>
-<article class="empty">
+<component :is="props.tag" class="empty">
   <div class="empty__wrap">
     <figure class="empty__icon">
       <Icon :name="props.icon"/>
@@ -11,13 +11,14 @@
       {{props.message}}
     </p>
   </div>
-</article>
+</component>
 </template>
 
 <script setup>
 import Icon from '../icon/index.vue'
 
 const props = defineProps({
+  tag: { type: String, default: 'article' },
   title: { type: String },
   message: String,
   icon: { type: String, default: 'bird' },

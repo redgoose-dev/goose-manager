@@ -15,7 +15,7 @@ function filtering(src)
       let thumbnail, icon
       if (/^image/.test(o.mime))
       {
-        thumbnail = getResizePath(o.srl, 'w=640&h=480&q=65')
+        thumbnail = getResizePath(o.code, 'w=640&h=480&q=65')
       }
       else if (o.mime === 'application/pdf')
       {
@@ -55,7 +55,7 @@ function filtering(src)
   }
 }
 
-export async function getItems()
+export async function getData()
 {
   if (!_route) _route = useRoute()
   const preference = preferenceStore()

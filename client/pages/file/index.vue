@@ -26,12 +26,11 @@ import { reactive, onMounted, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../store/app.js'
 import { serialize } from '../../libs/strings.js'
-import { getItems } from '../../structure/file/index.js'
+import { scrollTo } from '../../libs/util.js'
+import { getData } from '../../structure/file/index.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty } from '../../components/content/index.js'
-import { Card, Items } from '../../components/item/index.js'
-import { Controller, Paginate } from '../../components/navigation/index.js'
-import { ButtonBasic } from '../../components/button/index.js'
+import { Paginate } from '../../components/navigation/index.js'
 import Files from '../../components/pages/file/files.vue'
 
 const route = useRoute()
@@ -52,8 +51,9 @@ async function load()
 {
   try
   {
+    scrollTo(0)
     state.loading = true
-    const { total, index } = await getItems()
+    const { total, index } = await getData()
     state.total = total
     state.index = index
   }

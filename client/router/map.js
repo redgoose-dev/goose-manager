@@ -35,7 +35,46 @@ const app = [
     meta: { active: 'app' },
   },
 ]
-const nest = []
+const nest = [
+  {
+    path: '/nest/',
+    name: 'Nest',
+    component: () => import('../pages/nest/index.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/create/',
+    name: 'NestCreate',
+    component: () => import('../pages/nest/create.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:srl/edit/',
+    name: 'NestEdit',
+    component: () => import('../pages/nest/edit.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:srl/delete/',
+    name: 'NestDelete',
+    component: () => import('../pages/nest/delete.vue'),
+    meta: { active: 'nest' },
+  },
+  // article
+  {
+    path: '/nest/:nestSrl/article/',
+    name: 'NestArticleIndex',
+    component: () => import('../pages/nest/article/index.vue'),
+    meta: { active: 'nest' },
+  },
+  // category
+  {
+    path: '/nest/:nestSrl/category/',
+    name: 'NestCategoryIndex',
+    component: () => import('../pages/nest/category/index.vue'),
+    meta: { active: 'nest' },
+  },
+]
 const article = []
 const file = [
   {

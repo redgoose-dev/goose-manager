@@ -30,11 +30,13 @@
     em {
       display: block;
       margin: 6px 0 0;
+      padding: 0 8px;
       font-family: var(--font-eng);
       font-style: normal;
       font-size: 11px;
       line-height: 1.15;
       color: var(--color-weak);
+      text-align: center;
     }
   }
   &.col-4 {
