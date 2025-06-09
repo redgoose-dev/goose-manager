@@ -1,20 +1,28 @@
 <template>
-<component :is="_tag" v-bind="_rootProps">
-  <img
+<component
+  :is="_tag"
+  v-bind="_rootProps"
+  @click="emits('click:body', $event)">
+  <Image
     v-if="props.src"
     :src="props.src"
     :alt="props.alt"
     :width="props.width"
     :height="props.height"
-    loading="lazy"
-    class="image">
+    :use-fetch="_useFetch"
+    class="image"/>
+  <i v-else-if="props.icon" class="icon-wrap">
+    <Icon :name="props.icon"/>
+  </i>
   <Empty v-else title="no item"/>
 </component>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { Image } from '../../content/index.js'
 import Empty from './thumbnail-empty.vue'
+import Icon from '../../icon/index.vue'
 
 const props = defineProps({
   src: String,
@@ -22,27 +30,13 @@ const props = defineProps({
   target: String,
   alt: String,
   type: String, // cover,contain
+  icon: String,
   width: Number,
   height: Number,
 })
+const emits = defineEmits([ 'click:body' ])
 
-const _tag = computed(() => {
-  if (props.href)
-  {
-    if (typeof props.href === 'string')
-    {
-      return /^http/.test(props.href) ? 'a' : 'router-link'
-    }
-    else
-    {
-      return 'router-link'
-    }
-  }
-  else
-  {
-    return 'figure'
-  }
-})
+const _tag = computed(() => (props.href ? 'a' : 'strong'))
 const _rootProps = computed(() => {
   let attr = {}
   switch (_tag.value)
@@ -50,9 +44,6 @@ const _rootProps = computed(() => {
     case 'a':
       attr.href = props.href || '#'
       if (props.target) attr.target = props.target;
-      break
-    case 'router-link':
-      attr.to = props.href || '#'
       break
   }
   attr.class = [
@@ -65,6 +56,7 @@ const _rootProps = computed(() => {
   }
   return attr
 })
+const _useFetch = computed(() => (!/^http/.test(props.src)))
 </script>
 
 <style lang="scss" scoped>
@@ -76,33 +68,45 @@ const _rootProps = computed(() => {
   user-select: none;
   overflow: hidden;
   aspect-ratio: var(--item-img-ratio, unset);
-  > * {
-    transform-origin: 50% 50%;
-    transition: transform 240ms ease-out;
-  }
-  &:hover > * {
-    transform: scale(1.05);
+  &:has(.image) {
+    > * {
+      transform-origin: 50% 50%;
+      transition: transform 240ms ease-out;
+    }
+    &:hover > * {
+      transform: scale(1.05);
+    }
   }
 }
 .image {
   display: block;
   box-sizing: border-box;
-  background-color: var(--item-thumbnail-bg, var(--color-weak));
-  width: 100%;
-  height: auto;
+  background-color: var(--item-thumbnail-bg, var(--color-edge));
+  --img-width: 100%;
+  --img-height: 100%;
 }
 .type {
   &--cover {
     .image {
-      height: 100%;
-      object-fit: cover;
+      --img-height: 100%;
+      --img-fit: cover;
     }
   }
   &--contain {
     .image {
-      height: 100%;
-      object-fit: contain;
+      --img-height: 100%;
+      --img-fit: contain;
     }
   }
+}
+.icon-wrap {
+  display: grid;
+  place-content: center;
+  width: 100%;
+  height: 100%;
+  background: mixins.mix-alpha(var(--color-weak), 100%);
+  --icon-size: 52px;
+  --icon-stroke: 1;
+  --icon-color: var(--color-edge);
 }
 </style>

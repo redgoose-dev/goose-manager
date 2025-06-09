@@ -9,18 +9,6 @@ export function toCamelCase(str)
 }
 
 /**
- * get resize path
- * @param {string} src
- * @param {string} query
- * @return {string}
- */
-export function getResizePath(src, query = 'width=640&height=480')
-{
-  // TODO: 나중에 좀 변경하기. 리사이즈되는 방식으로..
-  return src
-}
-
-/**
  * printf
  * @param {string} str
  * @param {...*} values
@@ -81,4 +69,26 @@ export function validateCode(str)
 {
   const reg = /^[A-Za-z0-9_-]*$/
   return reg.test(str)
+}
+
+/**
+ * serialize object to query string
+ * @param {object} obj
+ * @param {boolean} usePrefix
+ * @param {boolean} useEncode
+ * @return {string}
+ */
+export function serialize(obj, usePrefix = false, useEncode = true)
+{
+  let str = []
+  let res
+  for (let p in obj)
+  {
+    if (!obj.hasOwnProperty(p) || obj[p] === undefined || obj[p] === null) continue
+    if (typeof obj[p] === 'number' && isNaN(obj[p])) continue
+    const value = useEncode ? encodeURIComponent(obj[p]) : obj[p]
+    str.push(encodeURIComponent(p) + '=' + value)
+  }
+  res = str.join('&')
+  return (res && usePrefix ? '?' : '') + res
 }

@@ -7,6 +7,8 @@
     v-else-if="src"
     :src="src"
     :alt="props.alt"
+    :width="props.width"
+    :height="props.height"
     :draggable="false"
     loading="lazy"/>
   <figcaption v-else>
@@ -25,6 +27,8 @@ const props = defineProps({
   alt: { type: String, default: 'filename' },
   useFetch: Boolean,
   revoke: { type: Boolean, default: true },
+  width: Number,
+  height: Number,
 })
 const src = ref(null)
 const error = ref(false)

@@ -37,7 +37,14 @@ const app = [
 ]
 const nest = []
 const article = []
-const file = []
+const file = [
+  {
+    path: '/file/',
+    name: 'File',
+    component: () => import('../pages/file/index.vue'),
+    meta: { active: 'file' },
+  },
+]
 const json = []
 const checklist = []
 const preference = []

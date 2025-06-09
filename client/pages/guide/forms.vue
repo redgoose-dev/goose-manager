@@ -248,7 +248,7 @@ const selectOptions = [
 async function onSubmitKeyword()
 {
   keywordProcessing.value = true
-  await sleep(1113000)
+  await sleep(3000)
   console.log('on submit keyword:', keywordMessage.value)
   keywordProcessing.value = false
 }

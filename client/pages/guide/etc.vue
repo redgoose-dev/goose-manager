@@ -120,11 +120,10 @@
 <script setup>
 import { ref, inject } from 'vue'
 import { ButtonBasic } from '../../components/button/index.js'
-import Loading from '../../components/content/loading.vue'
-import ProgressDonut from '../../components/content/progress-donut.vue'
-import Paginate from '../../components/content/paginate.vue'
+import { ProgressDonut, Loading } from '../../components/content/index.js'
 import { FileManager, FileManagerHeader } from '../../components/file-manager/index.js'
 import { Dropdown, Context } from '../../components/navigation/dropdown/index.js'
+import { Paginate } from '../../components/navigation/index.js'
 
 const toast = inject('toast')
 const progress = ref(30)

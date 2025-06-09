@@ -16,12 +16,17 @@
   &--thumbnail {
     --items-column: 3;
   }
-  @include mixins.responsive(desktop-large) {
+  @include mixins.responsive(desktop) {
+    &--thumbnail {
+      --items-column: 4;
+    }
+  }
+  @include mixins.responsive(max) {
     &--card {
       --items-column: 3;
     }
     &--thumbnail {
-      --items-column: 4;
+      --items-column: 5;
     }
   }
 }

@@ -4,17 +4,20 @@
   <ThumbnailImage
     v-if="props.alt"
     :src="props.image"
+    :icon="props.icon"
     :href="props.href"
     :target="props.target"
     :alt="props.alt"
     type="cover"
-    class="item__thumbnail"/>
+    class="item__thumbnail"
+    @click:body="onClickLink"/>
   <div class="item__body">
     <ItemTitle
       v-if="props.title"
       :href="props.href"
       :target="props.target"
-      class="item__title">
+      class="item__title"
+      @click:body="onClickLink">
       {{props.title}}
     </ItemTitle>
     <Description
@@ -40,6 +43,7 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 import ThumbnailImage from './assets/thumbnail-image.vue'
 import ItemTitle from './assets/item-title.vue'
 import Description from './assets/description.vue'
@@ -47,17 +51,50 @@ import ItemMeta from './assets/item-meta.vue'
 import ItemNav from './assets/item-nav/index.vue'
 import Status from './assets/status.vue'
 
+const router = useRouter()
 const props = defineProps({
   title: { type: String, required: true },
   description: String,
   image: String,
+  icon: String,
   alt: String,
   meta: Array,
   nav: Array,
   status: Array,
   href: undefined,
   target: String,
+  useButton: Boolean,
 })
+const emits = defineEmits([ 'click:body' ])
+
+function onClickLink(e)
+{
+  if (!props.href)
+  {
+    e.preventDefault()
+  }
+  else if (props.useButton)
+  {
+    e.preventDefault()
+    emits('click:body', props.href, e)
+  }
+  else if (/^http/.test(props.href))
+  {
+    if (props.target)
+    {
+      window.open(props.href, props.target || '_blank')
+    }
+    else
+    {
+      window.location = props.href
+    }
+  }
+  else
+  {
+    e.preventDefault()
+    router.push(props.href || '#')
+  }
+}
 </script>
 
 <style src="./card.scss" lang="scss" scoped></style>

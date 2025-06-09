@@ -38,6 +38,7 @@ import { Controller } from '../../components/navigation/index.js'
 import { ButtonBasic } from '../../components/button/index.js'
 
 const error = inject('error')
+const errorPath = [ 'pages', 'app', 'index.vue' ]
 const state = reactive({
   loading: true,
   total: 0,
@@ -55,8 +56,8 @@ onMounted(async () => {
   catch (e)
   {
     error.catch({
-      path: [ 'pages', 'app', 'index.vue', 'onMounted' ],
-      message: '데이터를 가져오지 못했습니다.',
+      path: [ ...errorPath, 'onMounted' ],
+      message: '앱 데이터를 가져오지 못했습니다.',
       error: e,
     })
   }

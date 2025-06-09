@@ -14,13 +14,17 @@
   border-radius: 0;
   background: var(--button-color-bg, var(--color-weak));
   filter: brightness(var(--button-brightness, unset));
-  transition: background-color 160ms ease-out, filter 160ms ease-out;
+  transition:
+    background-color 160ms ease-out,
+    outline 160ms ease-out,
+    filter 160ms ease-out;
+  outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+  outline-offset: -1px;
   &[type='button'],
   &[type='submit'],
   &[type='reset'] {
     display: block;
     -webkit-appearance: button;
-    outline: 0;
   }
   .icon {
     display: block;
@@ -41,7 +45,7 @@
 .button-icon:not(.disabled,label) {
   // focus
   &:focus-visible {
-    outline: 2px dashed var(--button-focus-color, var(--color-sub));
+    outline-color: var(--color-sub);
   }
   // hover
   &:hover {

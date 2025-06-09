@@ -1,10 +1,15 @@
+$responsive-tablet: 768px;
 $responsive-desktop: 1024px;
 $responsive-max: 1440px;
 
 // responsive
 @mixin responsive($range)
 {
-  @if $range == desktop
+  @if $range == tablet
+  {
+    @media (min-width: #{$responsive-tablet}) { @content; }
+  }
+  @else if $range == desktop
   {
     @media (min-width: #{$responsive-desktop}) { @content; }
   }

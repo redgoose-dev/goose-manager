@@ -27,7 +27,7 @@
       scale: .65;
       opacity: 0;
       transition: scale 100ms ease-out, opacity 120ms ease-out;
-      background: var(--checkbox-unit-color, var(--color-key));
+      background: var(--checkbox-unit-color, var(--color-sub));
       width: var(--checkbox-point-size, 13px);
       height: var(--checkbox-point-size, 13px);
       border-radius: 1px;

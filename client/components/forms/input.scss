@@ -12,7 +12,7 @@
   background: var(--input-bg, var(--color-edge));
   box-shadow: var(--input-shadow, inset 0 0 0 1px var(--color-weak));
   outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
-  outline-offset: -2px;
+  outline-offset: -1px;
   font-size: var(--input-text-size, 14px);
   color: var(--input-text-color, var(--color-base));
   transition:

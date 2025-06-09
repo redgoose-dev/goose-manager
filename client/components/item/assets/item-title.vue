@@ -6,7 +6,8 @@
   <component
     :is="_tag"
     v-bind="_rootProps"
-    class="body">
+    class="body"
+    @click="emits('click:body', $event)">
     <slot/>
   </component>
 </h3>
@@ -19,24 +20,9 @@ const props = defineProps({
   href: [ String, Object ],
   target: String,
 })
+const emits = defineEmits([ 'click:body' ])
 
-const _tag = computed(() => {
-  if (props.href)
-  {
-    if (typeof props.href === 'string')
-    {
-      return /^http/.test(props.href) ? 'a' : 'router-link'
-    }
-    else
-    {
-      return 'router-link'
-    }
-  }
-  else
-  {
-    return 'strong'
-  }
-})
+const _tag = computed(() => (props.href ? 'a' : 'strong'))
 const _rootProps = computed(() => {
   let attr = {}
   switch (_tag.value)
@@ -44,9 +30,6 @@ const _rootProps = computed(() => {
     case 'a':
       attr.href = props.href || '#'
       if (props.target) attr.target = props.target
-      break
-    case 'router-link':
-      attr.to = props.href || '#'
       break
   }
   return attr
@@ -63,10 +46,10 @@ const _rootProps = computed(() => {
   letter-spacing: -.25px;
   @include mixins.text-single-line();
   &--link {
-    color: var(--color-key);
+    color: var(--color-base);
     .body {
       text-decoration: none;
-      color: var(--color-key);
+      color: var(--color-base);
       &:hover {
         text-decoration: underline;
       }

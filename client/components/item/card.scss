@@ -44,7 +44,7 @@
   }
   &--link {
     &:hover {
-      --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-key), 100%)};
+      --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-sub), 100%)};
       --item-shadow-2: 0 2px 24px #{mixins.mix-alpha(var(--color-base), 25%)};
     }
   }

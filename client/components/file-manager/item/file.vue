@@ -35,8 +35,9 @@
 <script setup>
 import { computed, inject } from 'vue'
 import { authStore } from '../../../store/auth.js'
+import { getResizePath } from '../../../libs/file.js'
 import { fileContextKey } from '../assets.js'
-import Image from '../../content/image.vue'
+import { Image } from '../../content/index.js'
 import { Dropdown, Context } from '../../navigation/dropdown/index.js'
 import { ButtonIcon } from '../../button/index.js'
 import Icon from '../../icon/index.vue'
@@ -58,9 +59,9 @@ const _src = computed(() => {
   switch (type)
   {
     case 'image':
-      return `${auth.apiUrl}/file/${props.srl}/?w=300&h=300&q=65`
+      return getResizePath(props.srl, 'w=300&h=300&q=65')
     default:
-      return `${auth.apiUrl}/file/${props.srl}/`
+      return getResizePath(props.srl)
   }
 })
 const _isImage = computed(() => {

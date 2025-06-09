@@ -62,3 +62,14 @@ export function loadImage(src)
     image.src = src
   }))
 }
+
+/**
+ * get resize path
+ * @param {number} srl
+ * @param {string} query
+ * @return {string}
+ */
+export function getResizePath(srl, query = undefined)
+{
+  return `/file/${srl}/${query ? `?${query}` : ''}`
+}

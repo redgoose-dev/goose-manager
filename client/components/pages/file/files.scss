@@ -1,0 +1,16 @@
+@use '../../../scss/mixins';
+
+.files {}
+
+.total {
+  margin: 0;
+  font-size: 12px;
+  text-align: right;
+  line-height: 1.05;
+  user-select: none;
+}
+
+.index {
+  margin: 12px 0 0;
+  --item-img-ratio: 6/5;
+}
