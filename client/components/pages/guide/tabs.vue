@@ -16,25 +16,28 @@
 
 <style lang="scss" scoped>
 @use '../../../scss/mixins';
-
 .tabs {
   &__wrap {
     display: flex;
     align-items: center;
+    height: 42px;
     padding: 0 12px;
     background-color: var(--color-edge);
-    border-radius: 4px;
+    border-radius: mixins.radius(42px);
     user-select: none;
     box-shadow: 0 0 0 .5px mixins.mix-alpha(var(--color-base), 15%);
   }
   a {
-    display: block;
-    padding: 12px 12px;
+    display: grid;
+    place-content: center;
+    padding: 0 12px;
+    height: 100%;
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
     border-radius: 0;
     transition: background-color 160ms ease-out;
+    box-sizing: border-box;
     &:focus-visible {
       outline: none;
     }

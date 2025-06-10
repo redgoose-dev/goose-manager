@@ -9,7 +9,7 @@
   // outer
   background: var(--button-color-bg, var(--color-weak));
   border: 0;
-  border-radius: var(--button-radius);
+  border-radius: mixins.radius(var(--button-height, 38px));
   filter: brightness(var(--button-brightness, unset));
   // transition
   transition:
@@ -50,7 +50,7 @@
 .button:not(.disabled,label,p) {
   // focus
   &:focus-visible {
-    outline-color: var(--color-sub);
+    outline-color: var(--color-focus);
   }
   // hover
   &:hover {

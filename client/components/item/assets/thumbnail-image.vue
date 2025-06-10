@@ -66,7 +66,7 @@ const _useFetch = computed(() => (!/^http/.test(props.src)))
   display: block;
   margin: 0;
   user-select: none;
-  overflow: hidden;
+  overflow: clip;
   aspect-ratio: var(--item-img-ratio, unset);
   &:has(.image) {
     > * {

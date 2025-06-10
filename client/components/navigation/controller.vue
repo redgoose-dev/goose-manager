@@ -30,17 +30,17 @@ const isCenter = computed(() => (!!slots.center))
   }
   &:is(.is-center) {
     justify-content: center;
-    gap: var(--controller-gap, 5px);
+    gap: var(--controller-gap, 6px);
   }
   &__left {
     display: grid;
     grid-auto-flow: column;
-    gap: var(--controller-gap, 5px);
+    gap: var(--controller-gap, 6px);
   }
   &__right {
     display: grid;
     grid-auto-flow: column;
-    gap: var(--controller-gap, 5px);
+    gap: var(--controller-gap, 6px);
   }
 }
 </style>

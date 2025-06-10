@@ -1,10 +1,14 @@
 <template>
 <article>
-  nest/edit.vue
+  <PageHeader module="nest" title="Edit nest"/>
+  <Post mode="edit" :srl="Number(route.params.srl)"/>
 </article>
 </template>
 
 <script setup>
-</script>
+import { useRoute } from 'vue-router'
+import PageHeader from '../../components/header/page.vue'
+import Post from '../../components/pages/nest/post.vue'
 
-<style lang="scss" scoped></style>
+const route = useRoute()
+</script>

@@ -43,8 +43,9 @@
     --empty-max-height: none;
     --empty-min-height: auto;
     background: var(--color-blur);
-    --empty-icon-size: 36px;
+    --empty-icon-size: 32px;
     --empty-icon-stroke: 1.25;
-    --empty-icon-color: var(--color-bg);
+    --empty-icon-color: var(--color-weak);
+    border-radius: mixins.radius(82px);
   }
 }

@@ -10,7 +10,7 @@ ul {
   min-width: var(--context-min-width, unset);
   max-width: var(--context-max-width, unset);
   box-sizing: border-box;
-  border-radius: 2px;
+  border-radius: mixins.radius(64px);
   background-color: var(--color-edge);
   box-shadow:
     0 4px 16px mixins.mix-alpha(var(--color-base), 15%),

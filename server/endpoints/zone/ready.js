@@ -1,8 +1,9 @@
 import * as api from '../../libs/api.js'
 import { onRequest, onResponse, printMessage } from '../../libs/server.js'
 import { isDev } from '../../libs/server.js'
+import { getPreferenceData } from './get-preference.js'
 
-const { VITE_URL_PATH } = Bun.env
+const { VITE_URL_PATH, VITE_BASE_PATH } = Bun.env
 const dev = isDev()
 
 /**
@@ -24,14 +25,20 @@ async function ready(req, ctx)
       method: 'post',
       body: { redirect_uri: VITE_URL_PATH + '/zone/checkin/' },
     })
-    const { status, content } = res
+    const { content } = res
     if (!content.data?.providers?.length > 0)
     {
       throw new Error('Not found data.')
     }
+    // get preference
+    const preference = await getPreferenceData()
+    // set response
     response = Response.json({
       message: 'Complete get ready login data.',
-      data: content.data.providers,
+      data: {
+        providers: content.data.providers,
+        preference: preference.login,
+      },
     })
   }
   catch (e)

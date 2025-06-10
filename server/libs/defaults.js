@@ -112,4 +112,9 @@ export const defaultPreference = {
       active: 'guide',
     }
   ],
+  login: {
+    gradient: 1, // 1~10
+    image: '',
+    blur: false,
+  },
 }

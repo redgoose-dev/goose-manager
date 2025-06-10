@@ -63,7 +63,7 @@
       aspect-ratio: 1 / 1;
       background: var(--color-sub);
       box-sizing: border-box;
-      border-radius: 2px;
+      border-radius: mixins.radius(30px);
       --icon-size: 18px;
       --icon-stroke: 2;
       --icon-color: var(--color-edge);
@@ -81,7 +81,6 @@
       --button-icon-color: var(--color-reverse);
       --button-icon-size: 20px;
       --button-icon-stroke: 2.5;
-      border-radius: 2px;
       box-shadow: 0 2px 8px mixins.mix-alpha(var(--color-base), 25%);
     }
   }

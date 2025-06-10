@@ -124,6 +124,16 @@
         <ButtonBasic color="key">Button Component</ButtonBasic>
         <ButtonBasic color="sub">Last</ButtonBasic>
       </ButtonGroup>
+      <hr>
+      <ButtonGroup>
+        <ButtonBasic size="small">First</ButtonBasic>
+        <ButtonBasic size="small" color="key">Button Component</ButtonBasic>
+        <ButtonBasic size="small" color="sub">Last</ButtonBasic>
+      </ButtonGroup>
+      <hr>
+      <ButtonGroup>
+        <ButtonBasic>First</ButtonBasic>
+      </ButtonGroup>
     </div>
   </section>
 

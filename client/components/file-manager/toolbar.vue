@@ -23,7 +23,7 @@
       <ButtonBasic
         size="small"
         icon-left="square-check-big"
-        :color="fileManager._existItem ? 'sub' : ''"
+        :color="fileManager._existItem ? 'code' : ''"
         :disabled="!fileManager._existItem"
         @click="onClickSelectAll">
         모두선택
@@ -46,6 +46,7 @@
             type="button"
             size="small"
             icon-left="image"
+            color="sub"
             @click="onSelectContextFromThumbnail(thumbnailContextKey.PREVIEW)">
             썸네일
           </ButtonBasic>
@@ -59,37 +60,35 @@
           @select="(e) => onSelectContextFromThumbnail(e.key)"/>
       </Dropdown>
     </ButtonGroup>
+    <Dropdown
+      mode="hover"
+      position="right"
+      :disabled="!_useInsert"
+      class="toolbar__context">
+      <template #trigger>
+        <ButtonBasic
+          type="text"
+          color="key"
+          size="small"
+          icon-left="between-horizontal-start"
+          :disabled="!_useInsert"
+          @click="insertSelectItems(insertMode.MARKDOWN)">
+          첨부파일 삽입
+        </ButtonBasic>
+      </template>
+      <Context
+        :items="[
+          { key: insertMode.MARKDOWN, label: '마크다운 코드삽입', iconRight: 'file-code-2' },
+          { key: insertMode.ADDRESS, label: 'URL 주소삽입', iconRight: 'link' },
+          { key: insertMode.HTML, label: 'HTML 코드삽입', iconRight: 'code-xml' },
+        ]"
+        @select="(e) => insertSelectItems(e.key)"/>
+    </Dropdown>
   </nav>
   <nav class="toolbar__column">
     <p class="info">
       업로드: <em>{{fileManager._countItems}} / {{fileManager.preference.limitCount}}</em>
     </p>
-    <ButtonGroup>
-      <Dropdown
-        mode="hover"
-        position="right"
-        :disabled="!_useInsert"
-        class="toolbar__context">
-        <template #trigger>
-          <ButtonBasic
-            type="text"
-            color="key"
-            size="small"
-            icon-left="between-horizontal-start"
-            :disabled="!_useInsert"
-            @click="insertSelectItems(insertMode.MARKDOWN)">
-            첨부파일 삽입
-          </ButtonBasic>
-        </template>
-        <Context
-          :items="[
-            { key: insertMode.MARKDOWN, label: '마크다운 코드삽입', iconRight: 'file-code-2' },
-            { key: insertMode.ADDRESS, label: 'URL 주소삽입', iconRight: 'link' },
-            { key: insertMode.HTML, label: 'HTML 코드삽입', iconRight: 'code-xml' },
-          ]"
-          @select="(e) => insertSelectItems(e.key)"/>
-      </Dropdown>
-    </ButtonGroup>
   </nav>
 </header>
 </template>

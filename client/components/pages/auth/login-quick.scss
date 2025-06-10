@@ -2,7 +2,7 @@
 
 .quick-login {
   padding: 36px 0;
-  background: mixins.mix-alpha(var(--color-base), 10%);
+  background: mixins.mix-alpha(var(--color-reverse), 8%);
   h1 {
     margin: 0;
     text-align: center;
@@ -29,6 +29,8 @@
     cursor: pointer;
     transition: opacity 160ms ease-out, outline-color 160ms ease-out;
     @include mixins.focus-outline(false);
+    --color-focus: var(--color-base);
+    outline-offset: 2px;
     img {
       display: block;
       width: 100%;

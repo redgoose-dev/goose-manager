@@ -6,7 +6,7 @@
   width: var(--input-width, 100%);
   height: var(--input-height, 38px);
   border: none;
-  border-radius: var(--input-radius, 0);
+  border-radius: mixins.radius(var(--input-height, 38px));
   box-sizing: border-box;
   padding: var(--input-padding, (0 12px));
   background: var(--input-bg, var(--color-edge));

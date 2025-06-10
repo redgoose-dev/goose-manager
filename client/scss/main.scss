@@ -8,17 +8,17 @@
   color-scheme: light;
   // color
   --color-bg: hsl(0 0% 97%);
-  --color-base: hsl(0 0% 18%);
-  --color-weak: hsl(0 0% 62%);
-  --color-blur: hsl(0 0% 88%);
+  --color-base: hsl(0 0% 20%);
+  --color-weak: hsl(0 0% 68%);
+  --color-blur: hsl(0 0% 92%);
   --color-edge: hsl(0 0% 100%);
   --color-reverse: hsl(0 0% 0%);
-  --color-key: hsl(160 78% 46%);
-  --color-sub: hsl(240 80% 64%);
+  --color-key: hsl(160 90% 42%);
+  --color-sub: hsl(240 90% 68%);
   --color-code: hsl(210 90% 62%);
-  --color-success: hsl(130 60% 48%);
-  --color-error: hsl(0 70% 50%);
-  --color-focus: hsl(240 80% 64%);
+  --color-success: hsl(130 68% 52%);
+  --color-error: hsl(0 70% 60%);
+  --color-focus: hsl(240 90% 68%);
   // size
   --size-content-body: 920px;
   --size-content-large: 1440px;
@@ -72,9 +72,9 @@ code, kbd, pre, samp {
 
 // for modal
 html.mode-not-scroll {
-  overflow: clip;
+  overflow: hidden;
   > body {
-    overflow: clip;
+    overflow: hidden;
   }
 }
 

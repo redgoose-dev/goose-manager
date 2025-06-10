@@ -9,6 +9,7 @@
     var(--item-shadow-2, 0 2px 24px mixins.mix-alpha(var(--color-base), 15%));
   transition: box-shadow 160ms ease-out;
   width: var(--item-width, auto);
+  border-radius: mixins.radius(var(--item-radius, 82px));
   min-width: 0;
   &:hover {
     --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-sub), 100%)};
@@ -22,6 +23,8 @@
     box-sizing: border-box;
     overflow: clip;
     border-bottom: .5px solid var(--color-blur);
+    border-top-left-radius: mixins.radius(var(--item-radius, 82px));
+    border-top-right-radius: mixins.radius(var(--item-radius, 82px));
   }
   &__body {
     display: flex;

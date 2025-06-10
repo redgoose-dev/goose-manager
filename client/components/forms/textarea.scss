@@ -4,7 +4,7 @@
   display: block;
   width: 100%;
   border: none;
-  border-radius: 0;
+  border-radius: mixins.radius(38px);
   box-sizing: border-box;
   height: var(--textarea-height, auto);
   padding: var(--textarea-padding, (12px 16px));

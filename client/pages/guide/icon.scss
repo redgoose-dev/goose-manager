@@ -23,6 +23,7 @@
       justify-content: center;
       background-color: var(--color-edge);
       flex-direction: column;
+      border-radius: mixins.radius(42px);
       svg:not(.color) {
         color: var(--color-base);
       }

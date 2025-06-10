@@ -100,3 +100,9 @@ $responsive-max: 1440px;
 {
   @return linear-gradient($deg, $start, $end);
 }
+
+// radius
+@function radius($size)
+{
+  @return calc($size * .17544);
+}

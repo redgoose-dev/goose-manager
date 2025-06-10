@@ -5,32 +5,36 @@
   place-content: center;
   height: 100dvh;
   box-sizing: border-box;
-  background: url('https://images.unsplash.com/photo-1743623930275-abbb3ad3be0b?q=70&w=1440&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 50% 50% no-repeat;
   background-size: cover;
   &:after {
-    --color: #{mixins.mix-alpha(var(--color-reverse), 20%)};
+    --color: #{mixins.mix-alpha(var(--color-edge), 15%)};
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
-    background-size: 8px 8px;
+    background-size: 6px 6px;
     background-image: repeating-linear-gradient(-45deg, var(--color) 0, var(--color) .5px, transparent 0, transparent 50%);
-    //@include mixins.background-blur(32px);
   }
-
+  &--blur {
+    &:after {
+      @include mixins.background-blur(24px);
+    }
+  }
   &__wrap {
     position: relative;
     z-index: 2;
     width: 400px;
     padding: 60px 0 0;
-    background: mixins.mix-alpha(var(--color-edge), 85%);
+    background: #{mixins.mix-alpha(var(--color-edge), 25%)};
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: mixins.radius(160px);
     overflow: clip;
     box-shadow:
-      0 32px 78px mixins.mix-alpha(var(--color-base), 55%),
-      0 6px 16px mixins.mix-alpha(var(--color-base), 35%),
-      0 0 0 .5px mixins.mix-alpha(var(--color-base), 15%);
+      inset 0 0 0 1px mixins.mix-alpha(var(--color-edge), 65%),
+      -1px -1px 0 mixins.mix-alpha(var(--color-edge), 50%),
+      1px 1px 0 mixins.mix-alpha(var(--color-reverse), 30%),
+      0 32px 78px mixins.mix-alpha(var(--color-base), 35%),
+      0 6px 16px mixins.mix-alpha(var(--color-base), 25%);
     @include mixins.background-blur(32px);
   }
   &__header {
@@ -40,20 +44,58 @@
       margin: 0 0 0;
       font-family: var(--font-mix);
       font-size: 36px;
-      color: var(--color-reverse);
       font-weight: 800;
       letter-spacing: -1px;
-      line-height: 1.05;
+      line-height: 1;
     }
     p {
-      margin: 2px 0 0;
-      font-size: 12px;
-      color: var(--color-weak);
+      margin: 4px 0 0;
+      font-size: 13px;
       font-weight: 400;
     }
   }
   &__forms {
     width: 280px;
     margin: 24px auto 0;
+  }
+}
+
+.bg {
+  &--image {
+    --bg-image: url('https://images.unsplash.com/photo-1743623930275-abbb3ad3be0b?q=70&w=1440&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+  &--gradient-1 {
+    background-image: linear-gradient( 69.2deg,  rgba(77,143,251,1) 35.3%, rgba(202,51,255,1) 100.3% );
+  }
+  &--gradient-2 {
+    background-image: linear-gradient( 109.6deg,  rgba(112,246,255,0.33) 11.2%, rgba(221,108,241,0.26) 42%, rgba(229,106,253,0.71) 71.5%, rgba(123,183,253,1) 100.2% );
+  }
+  &--gradient-3 {
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  }
+  &--gradient-4 {
+    background-image: linear-gradient(to top, #3f51b1 0%, #5a55ae 13%, #7b5fac 25%, #8f6aae 38%, #a86aa4 50%, #cc6b8e 62%, #f18271 75%, #f3a469 87%, #f7c978 100%);
+  }
+  &--gradient-5 {
+    background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);
+  }
+  &--gradient-6 {
+    background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
+  }
+  &--gradient-7 {
+    background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
+  }
+  &--gradient-8 {
+    background-image: linear-gradient(to top, #50cc7f 0%, #f5d100 100%);
+  }
+  &--gradient-9 {
+    background-image: linear-gradient(-225deg, #D4FFEC 0%, #57F2CC 48%, #4596FB 100%);
+  }
+  &--gradient-10 {
+    background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
   }
 }

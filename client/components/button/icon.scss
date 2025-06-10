@@ -11,7 +11,7 @@
   box-sizing: border-box;
   border: none;
   user-select: none;
-  border-radius: 0;
+  border-radius: mixins.radius(var(--button-size, 38px));
   background: var(--button-color-bg, var(--color-weak));
   filter: brightness(var(--button-brightness, unset));
   transition:
