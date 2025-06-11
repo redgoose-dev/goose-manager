@@ -119,10 +119,14 @@ onMounted(async () => {
 
 async function onSubmit()
 {
+  forms.code.error = null
+  if (!validateCode(forms.code.value))
+  {
+    forms.code.error = '코드를 확인해주세요.'
+    return
+  }
   try
   {
-    forms.code.error = null
-    if (!validateCode(forms.code.value)) forms.code.error = '코드를 확인해주세요.'
     state.processing = true
     checkForms(forms)
     const data = {

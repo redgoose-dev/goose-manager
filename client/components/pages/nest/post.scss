@@ -1,3 +1,13 @@
 @use '../../../scss/mixins.scss';
 
-div {}
+.extra {
+  margin-top: 48px;
+}
+
+.input-thumbnail-size {
+  --input-width: 80px;
+}
+
+.input-file-size {
+  --input-width: 110px;
+}

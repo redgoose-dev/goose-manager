@@ -63,7 +63,6 @@ export const authStore = defineStore('auth', {
         url: '/zone/checkout/',
         headers: { Authorization: this.token },
       })
-      this.destroy()
       location.href = `/auth/login/`
     },
     async login(id, password, save)

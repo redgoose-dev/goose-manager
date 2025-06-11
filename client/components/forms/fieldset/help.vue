@@ -9,7 +9,7 @@
 
 <script setup>
 const props = defineProps({
-  color: String, // key,sub,code,success,error
+  color: String, // weak,key,sub,code,success,error
 });
 </script>
 
@@ -18,9 +18,12 @@ const props = defineProps({
   margin: 5px 0 0;
   font-size: 12px;
   line-height: 1.15;
-  color: var(--help-color, var(--color-weak));
+  color: var(--help-color, var(--color-base));
 }
 .color {
+  &--weak {
+    --help-color: var(--color-weak);
+  }
   &--key {
     --help-color: var(--color-key);
   }
