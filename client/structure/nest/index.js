@@ -42,7 +42,7 @@ export async function getData()
         key: 'apps',
         url: '/app/',
         params: {
-          field: 'srl,code,name,description',
+          fields: 'srl,code,name,description',
           mod: 'count-nest',
           unlimited: 1,
         },

@@ -18,7 +18,7 @@
 <script setup>
 import { reactive, onMounted, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getItem, submit } from '../../structure/app/delete.js'
+import { getData, submit } from '../../structure/app/delete.js'
 import PageHeader from '../../components/header/page.vue'
 import { DeleteConfirm, Loading, Empty } from '../../components/content/index.js'
 
@@ -41,7 +41,7 @@ const errorPath = [ 'pages', 'app', 'delete.vue' ]
 onMounted(async () => {
   try
   {
-    const { srl, name } = await getItem(state.srl)
+    const { srl, name } = await getData(state.srl)
     fields.name = `[${srl}] ${name}`
   }
   catch (e)
@@ -64,6 +64,8 @@ async function onSubmit()
   {
     state.processing = true
     await submit(state.srl)
+    toast.add('둥지를 삭제했습니다.', 'success').then()
+    router.push('../../').then()
   }
   catch (e)
   {

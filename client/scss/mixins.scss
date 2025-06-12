@@ -94,6 +94,10 @@ $responsive-max: 1440px;
 {
   @return color-mix(in hsl, $color $alpha, transparent);
 }
+@function mix-color($color1, $color2, $position: 50%)
+{
+  @return color-mix(in hsl, $color1, $color2 $position);
+}
 
 // gradient
 @function color-linear-gradient($start, $end, $deg: 0deg)

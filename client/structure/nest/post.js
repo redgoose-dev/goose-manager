@@ -40,7 +40,7 @@ export async function getData(mode, srl)
         key: 'app',
         url: '/app/',
         params: {
-          field: 'srl,code,name',
+          fields: 'srl,code,name',
           unlimited: 1,
         },
       },

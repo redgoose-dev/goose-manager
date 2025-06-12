@@ -41,6 +41,7 @@ const icons = {
   'menu': lucide.Menu,
   'more-horizontal': lucide.MoreHorizontal,
   'minimize-2': lucide.Minimize2,
+  'move': lucide.Move,
   'power': lucide.Power,
   'package': lucide.Package,
   'plus': lucide.Plus,

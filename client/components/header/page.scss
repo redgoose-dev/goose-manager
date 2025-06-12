@@ -26,6 +26,6 @@
     margin: 2px 0 0;
     font-size: 12px;
     letter-spacing: -.25px;
-    color: var(--color-weak);
+    color: mixins.mix-color(var(--color-weak), var(--color-base), 50%);
   }
 }

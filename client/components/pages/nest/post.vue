@@ -194,6 +194,7 @@ const props = defineProps({
   mode: { type: String, required: true },
   srl: Number,
 })
+const emits = defineEmits( [ 'submit' ])
 const state = reactive({
   loading: true,
   processing: false,
@@ -262,9 +263,9 @@ async function onSubmit()
       description: forms.description.value,
       json: JSON.stringify(pureObject(forms.json)),
     })
-    await router.push('/nest/')
     const message = props.mode === 'edit' ? '둥지를 수정했습니다.' : '둥지를 만들었습니다.'
     toast.add(message, 'success').then()
+    emits('submit')
   }
   catch (e)
   {

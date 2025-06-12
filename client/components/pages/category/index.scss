@@ -1,0 +1,42 @@
+@use '../../../scss/mixins';
+@forward '../../item/items';
+
+.nest-info {
+  margin: 0 0 12px 0;
+  text-align: right;
+  line-height: 1.05;
+  font-size: 12px;
+  strong {
+    &:before, &:after {
+      content: '"';
+    }
+  }
+}
+
+.card {
+  position: relative;
+  transition: opacity 200ms ease-out;
+  &.ghost {
+    opacity: .25;
+  }
+  :is(.item__body) {
+    padding-left: 0;
+  }
+  .move {
+    display: grid;
+    place-content: center;
+    margin: 0 0 0 0;
+    padding: 0;
+    width: 72px;
+    background: none;
+    border: none;
+    cursor: move;
+    --icon-size: 18px;
+    --icon-stroke: 1.5;
+    --icon-color: var(--color-base);
+    transition: opacity 200ms ease-out;
+    &:active {
+      opacity: .5;
+    }
+  }
+}

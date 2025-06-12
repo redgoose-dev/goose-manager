@@ -62,16 +62,34 @@ const nest = [
   },
   // article
   {
-    path: '/nest/:nestSrl/article/',
+    path: '/nest/:nest/article/',
     name: 'NestArticleIndex',
     component: () => import('../pages/nest/article/index.vue'),
     meta: { active: 'nest' },
   },
   // category
   {
-    path: '/nest/:nestSrl/category/',
+    path: '/nest/:nest/category/',
     name: 'NestCategoryIndex',
     component: () => import('../pages/nest/category/index.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:nest/category/create/',
+    name: 'NestCategoryCreate',
+    component: () => import('../pages/nest/category/create.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:nest/category/:category/edit/',
+    name: 'NestCategoryEdit',
+    component: () => import('../pages/nest/category/edit.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:nest/category/:category/delete/',
+    name: 'NestCategoryDelete',
+    component: () => import('../pages/nest/category/delete.vue'),
     meta: { active: 'nest' },
   },
 ]
@@ -84,7 +102,15 @@ const file = [
     meta: { active: 'file' },
   },
 ]
-const json = []
+const json = [
+  // category
+  {
+    path: '/json/category/',
+    name: 'JSONCategoryIndex',
+    component: () => import('../pages/json/category/index.vue'),
+    meta: { active: 'json' },
+  },
+]
 const checklist = []
 const preference = []
 const guide = [

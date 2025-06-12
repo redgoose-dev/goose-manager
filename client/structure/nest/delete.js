@@ -2,7 +2,7 @@ import { request } from '../../libs/api.js'
 
 export async function getData(srl)
 {
-  const { data, message } = await request(`/app/${srl}/`, {
+  const { data, message } = await request(`/nest/${srl}/`, {
     query: { fields: 'srl,name' },
   })
   if (!data) throw new Error(message)
@@ -11,7 +11,7 @@ export async function getData(srl)
 
 export async function submit(srl)
 {
-  await request(`/app/${srl}/`, {
+  await request(`/nest/${srl}/`, {
     method: 'delete',
   })
 }

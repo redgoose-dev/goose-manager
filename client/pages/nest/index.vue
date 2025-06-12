@@ -27,8 +27,8 @@
             :meta="nest.meta"
             :nav="[
               { label: '수정', href: `./${nest.srl}/edit/` },
-              { label: '삭제', href: `./${nest.srl}/delete/` },
               nest.useCategory && { label: '분류', href: `./${nest.srl}/category/` },
+              { label: '삭제', href: `./${nest.srl}/delete/` },
             ].filter(Boolean)"
             :status="nest.status"/>
         </Items>
