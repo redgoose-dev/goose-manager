@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="category" title="Nest Category"/>
+  <PageHeader module="category" title="Nest / Category"/>
   <CategoryIndex
     module="nest"
     :module-srl="Number(route.params.nest)"/>

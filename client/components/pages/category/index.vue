@@ -2,7 +2,7 @@
 <Loading v-if="state.loading"/>
 <template v-else-if="state.index.length > 0">
   <p v-if="props.module === 'nest'" class="nest-info">
-    둥지의 이름은 <strong>{{state.nest?.name}}</strong>입니다.
+    둥지: <em>{{state.nest?.code}} {{state.nest?.name}}</em>
   </p>
   <VueDraggable
     v-model="state.index"
@@ -35,12 +35,13 @@
 <script setup>
 import { ref, reactive, onMounted, computed, inject } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
-import { getData } from '../../../structure/category/index.js'
+import { getData, changeOrder } from '../../../structure/category/index.js'
 import { Loading, Empty } from '../../content/index.js'
 import { Card } from '../../item/index.js'
 import Icon from '../../icon/index.vue'
 
 const $index = ref()
+const toast = inject('toast')
 const error = inject('error')
 const props = defineProps({
   module: { type: String, required: true },
@@ -67,7 +68,6 @@ onMounted(async () => {
   try
   {
     const { nest, category } = await getData(props.module, props.moduleSrl)
-    console.log(category)
     state.nest = nest
     state.index = category
   }
@@ -88,7 +88,9 @@ onMounted(async () => {
 async function onChangeOrder(e)
 {
   if (e.newIndex === e.oldIndex) return
-  console.log('onChangeOrder()', state.index.map(o => o.srl))
+  const srls = state.index.map(o => o.srl).join(',')
+  await changeOrder(props.module, props.moduleSrl, srls)
+  toast.add('순서를 변경했습니다.', 'success').then()
 }
 </script>
 

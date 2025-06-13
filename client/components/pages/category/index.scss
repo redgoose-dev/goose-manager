@@ -3,13 +3,13 @@
 
 .nest-info {
   margin: 0 0 12px 0;
-  text-align: right;
   line-height: 1.05;
   font-size: 12px;
-  strong {
-    &:before, &:after {
-      content: '"';
-    }
+  font-weight: 400;
+  text-align: right;
+  em {
+    font-style: normal;
+    font-weight: 700;
   }
 }
 

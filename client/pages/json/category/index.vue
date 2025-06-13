@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="json" title="JSON Category"/>
+  <PageHeader module="json" title="JSON / Category"/>
   <CategoryIndex module="json"/>
   <Controller>
     <template #left>

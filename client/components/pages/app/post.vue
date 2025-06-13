@@ -60,7 +60,7 @@
 import { reactive, computed, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { validateCode } from '../../../libs/strings.js'
-import { request, checkForms, formData } from '../../../libs/api.js'
+import { getData, submit } from '../../../structure/app/post.js'
 import { Fieldset, Field, Help } from '../../forms/fieldset/index.js'
 import { FormInput } from '../../forms/index.js'
 import { Controller } from '../../navigation/index.js'
@@ -73,15 +73,16 @@ const props = defineProps({
   mode: { type: String, required: true },
   srl: Number,
 })
+const state = reactive({
+  loading: props.mode === 'edit',
+  processing: false,
+})
 const forms = reactive({
   code: { value: '', error: null },
   name: { value: '', error: null },
   description: { value: '', error: null },
 })
-const state = reactive({
-  loading: true,
-  processing: false,
-})
+const emits = defineEmits([ 'submit' ])
 const errorPath = [ 'components', 'pages', 'app', 'post.vue' ]
 
 const _isEdit = computed(() => (props.mode === 'edit'))
@@ -90,26 +91,21 @@ const _submitLabel = computed(() => {
 })
 
 onMounted(async () => {
+  if (!_isEdit.value) return
   try
   {
-    if (!_isEdit.value) throw undefined
-    state.loading = true
-    const { data } = await request(`/app/${props.srl}/`)
-    if (!data) throw new Error('데이터가 없습니다.')
-    forms.code.value = data.code
-    forms.name.value = data.name
-    forms.description.value = data.description
+    const { code, name, description } = await getData(props.srl)
+    forms.code.value = code
+    forms.name.value = name
+    forms.description.value = description
   }
   catch (e)
   {
-    if (e)
-    {
-      error.catch({
-        path: [ ...errorPath, 'onMounted' ],
-        message: '데이터를 가져오지 못했습니다.',
-        error: e,
-      })
-    }
+    error.catch({
+      path: [ ...errorPath, 'onMounted' ],
+      message: '데이터를 가져오지 못했습니다.',
+      error: e,
+    })
   }
   finally
   {
@@ -128,20 +124,10 @@ async function onSubmit()
   try
   {
     state.processing = true
-    checkForms(forms)
-    const data = {
-      code: forms.code.value,
-      name: forms.name.value,
-      description: forms.description.value,
-    }
-    const url = props.srl ? `/app/${props.srl}/` : '/app/'
-    await request(url, {
-      method: props.srl ? 'patch' : 'put',
-      body: formData(data),
-    })
+    await submit(props.srl, forms)
     const message = _isEdit.value ? '앱을 수정했습니다.' : '앱을 만들었습니다.'
     toast.add(message, 'success').then()
-    await router.push('/app/')
+    emits('submit')
   }
   catch (e)
   {

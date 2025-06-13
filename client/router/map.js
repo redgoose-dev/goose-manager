@@ -110,6 +110,24 @@ const json = [
     component: () => import('../pages/json/category/index.vue'),
     meta: { active: 'json' },
   },
+  {
+    path: '/json/category/create/',
+    name: 'JSONCategoryCreate',
+    component: () => import('../pages/json/category/create.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/category/:category/edit/',
+    name: 'JSONCategoryEdit',
+    component: () => import('../pages/json/category/edit.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/category/:category/delete/',
+    name: 'JSONCategoryDelete',
+    component: () => import('../pages/json/category/delete.vue'),
+    meta: { active: 'json' },
+  },
 ]
 const checklist = []
 const preference = []

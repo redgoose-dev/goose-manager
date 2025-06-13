@@ -1,4 +1,4 @@
-import { request } from '../../libs/api.js'
+import { formData, request } from '../../libs/api.js'
 import { getDate } from '../../libs/date.js'
 
 function filteringNest(nest)
@@ -14,7 +14,6 @@ function filteringCategories(src)
 {
   if (!(src.data?.index?.length > 0)) return []
   return src.data.index.map(o => {
-    console.log(o)
     return {
       srl: o.srl,
       title: o.name,
@@ -72,4 +71,17 @@ export async function getData(module, moduleSrl)
         category: filteringCategories(res),
       }
   }
+}
+
+export async function changeOrder(module, moduleSrl, srls)
+{
+  let data = {
+    module,
+    srls,
+  }
+  if (moduleSrl) data['module_srl'] = moduleSrl
+  await request('/category/change-order/', {
+    method: 'patch',
+    body: formData(data),
+  })
 }

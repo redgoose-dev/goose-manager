@@ -1,17 +1,18 @@
 <template>
 <article>
-  <PageHeader module="app" title="Edit App"/>
+  <PageHeader module="category" title="JSON / Edit Category"/>
   <Post
     mode="edit"
-    :srl="Number(route.params.srl)"
+    module="json"
+    :srl="Number(route.params.category)"
     @submit="onSubmit"/>
 </article>
 </template>
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
-import PageHeader from '../../components/header/page.vue'
-import Post from '../../components/pages/app/post.vue'
+import PageHeader from '../../../components/header/page.vue'
+import Post from '../../../components/pages/category/post.vue'
 
 const router = useRouter()
 const route = useRoute()
