@@ -26,6 +26,7 @@ const router = useRouter()
 const route = useRoute()
 const toast = inject('toast')
 const error = inject('error')
+const errorPath = [ 'pages', 'app', 'delete.vue' ]
 const state = reactive({
   srl: Number(route.params.srl),
   loading: true,
@@ -36,7 +37,6 @@ const fields = reactive({
   description: '이 앱을 삭제하면 하위의 "둥지", "아티클", "분류", "첨부파일" 데이터들이 전부 삭제됩니다.',
   name: '',
 })
-const errorPath = [ 'pages', 'app', 'delete.vue' ]
 
 onMounted(async () => {
   try

@@ -20,7 +20,10 @@ const $post = ref()
 
 onMounted(() => {
   nextTick().then(() => {
-    if ($post.value?.$refs.$root.name) $post.value.$refs.$root.name.focus()
+    if ($post.value?.$refs.$root['post-name'])
+    {
+      $post.value?.$refs.$root['post-name'].focus()
+    }
   })
 })
 
