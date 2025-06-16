@@ -1,0 +1,15 @@
+@use '../../scss/mixins';
+
+.content {
+  margin-top: 24px;
+}
+
+.items {
+  @container (min-width: 560px) {
+    --items-column: 2;
+  }
+}
+
+.paginate {
+  margin-top: 36px;
+}

@@ -1,6 +1,5 @@
 <template>
-<Loading v-if="state.loading"/>
-<form v-else ref="$root" @submit.prevent="onSubmit">
+<form ref="$root" @submit.prevent="onSubmit">
   <Fieldset legend="기본 필드" class="basic" :disabled="state.loading">
     <Field label="앱 번호" for="post-app">
       <FormSelect
@@ -184,7 +183,6 @@ import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset/index
 import { FormSelect, FormInput, FormSwitch, FormRadio } from '../../forms/index.js'
 import { Controller } from '../../navigation/index.js'
 import { ButtonBasic } from '../../button/index.js'
-import { Loading } from '../../content/index.js'
 
 const router = useRouter()
 const error = inject('error')
@@ -196,7 +194,7 @@ const props = defineProps({
 })
 const emits = defineEmits( [ 'submit' ])
 const state = reactive({
-  loading: true,
+  loading: props.mode === 'edit',
   processing: false,
   app: [],
 })
@@ -209,6 +207,7 @@ const forms = reactive({
 })
 const errorPath = [ 'components', 'pages', 'nest', 'post.vue' ]
 
+const _isEdit = computed(() => (props.mode === 'edit'))
 const _limitUploadFileSize = computed(() => {
   return getByte(forms.json.files?.sizeSingle || 0)
 })
@@ -218,6 +217,7 @@ const _submitLabel = computed(() => {
 })
 
 onMounted(async () => {
+  if (!_isEdit.value) return
   try
   {
     const { app, nest } = await getData(props.mode, props.srl)
@@ -235,7 +235,7 @@ onMounted(async () => {
   {
     error.catch({
       path: [ ...errorPath, 'onMounted' ],
-      message: '둥지 데이터를 가져오지 못했습니다.',
+      message: '둥지를 가져오지 못했습니다.',
       error: e,
     })
   }

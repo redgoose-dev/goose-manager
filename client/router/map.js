@@ -103,6 +103,36 @@ const file = [
   },
 ]
 const json = [
+  {
+    path: '/json/',
+    name: 'JSON',
+    component: () => import('../pages/json/index.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/create/',
+    name: 'JSONCreate',
+    component: () => import('../pages/json/create.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/:srl/',
+    name: 'JSONDetail',
+    component: () => import('../pages/json/detail.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/:srl/edit/',
+    name: 'JSONEdit',
+    component: () => import('../pages/json/edit.vue'),
+    meta: { active: 'json' },
+  },
+  {
+    path: '/json/:srl/delete/',
+    name: 'JSONDelete',
+    component: () => import('../pages/json/delete.vue'),
+    meta: { active: 'json' },
+  },
   // category
   {
     path: '/json/category/',

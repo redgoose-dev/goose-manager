@@ -1,11 +1,11 @@
 <template>
 <form ref="root" @submit.prevent="onSubmit">
   <Fieldset :disabled="state.loading" class="fields">
-    <Field label="코드" for="code">
+    <Field label="코드" for="post-code">
       <FormInput
         v-model="forms.code.value"
-        name="code"
-        id="code"
+        name="post-code"
+        id="post-code"
         :maxlength="24"
         placeholder="코드를 입력해주세요."
         :required="true"
@@ -14,11 +14,11 @@
         {{forms.code.error || '"알파벳, 숫자형식의 글자와 `-`, `_`" 형식으로 입력해주세요.'}}
       </Help>
     </Field>
-    <Field label="이름" for="name">
+    <Field label="이름" for="post-name">
       <FormInput
         v-model="forms.name.value"
-        name="name"
-        id="name"
+        name="post-name"
+        id="post-name"
         :maxlength="50"
         placeholder="이름을 입력해주세요."
         :error="!!forms.name.error"
@@ -26,11 +26,11 @@
         class="fields__name"/>
       <Help>앱의 이름입니다.</Help>
     </Field>
-    <Field label="설명" for="description">
+    <Field label="설명" for="post-description">
       <FormInput
         v-model="forms.description.value"
-        name="description"
-        id="description"
+        name="post-description"
+        id="post-description"
         :maxlength="120"
         placeholder="설명을 입력해주세요."
         :error="!!forms.description.error"/>

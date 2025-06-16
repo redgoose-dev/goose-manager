@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="app" title="Create App"/>
+  <PageHeader module="json" title="Create JSON"/>
   <Post
     ref="$post"
     mode="create"
@@ -12,7 +12,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import PageHeader from '../../components/header/page.vue'
-import Post from '../../components/pages/app/post.vue'
+import Post from '../../components/pages/json/post.vue'
 
 const router = useRouter()
 const $post = ref()
@@ -26,8 +26,8 @@ onMounted(() => {
   })
 })
 
-function onSubmit()
+function onSubmit(srl)
 {
-  router.push('../').then()
+  router.push(`../${srl}/`).then()
 }
 </script>

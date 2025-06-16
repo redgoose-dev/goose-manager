@@ -13,6 +13,7 @@
     --button-icon-stroke: 2.25;
     &:disabled {
       opacity: .35;
+      cursor: default;
     }
   }
   .number {

@@ -15,11 +15,11 @@ class ErrorTrigger {
    * @param {array} [path]
    * @param {string} [message]
    * @param {Error} [error]
+   * @param {boolean} [useToast]
    */
-  catch({ path, message, error })
+  catch({ path, message, error, useToast })
   {
     if (!message || !path) return
-
     if (DEV)
     {
       if (error)
@@ -38,7 +38,7 @@ class ErrorTrigger {
         console.error(_tree.join('\n'))
       }
     }
-    this.#toast.add(message, 'error').then()
+    if (useToast !== false) this.#toast.add(message, 'error').then()
   }
 
 }

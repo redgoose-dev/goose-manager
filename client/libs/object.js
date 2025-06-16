@@ -33,3 +33,18 @@ export function filterObjectToQuery(query)
   })
   return query
 }
+
+/**
+ * checking json
+ * @param {string|object} json
+ * @throws {Error}
+ */
+export function checkingJSON(json)
+{
+  if (!json) throw new Error('no json data')
+  if (typeof json !== 'string')
+  {
+    json = JSON.stringify(json)
+  }
+  JSON.parse(json)
+}

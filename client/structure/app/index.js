@@ -19,11 +19,11 @@ async function _request(op)
   })
 }
 
-function filtering(res)
+function filtering(src)
 {
   return {
-    total: res.total,
-    index: res.index.map(item => {
+    total: src.total,
+    index: src.index.map(item => {
       return {
         srl: item.srl,
         title: item.name,
@@ -42,7 +42,7 @@ function filtering(res)
   }
 }
 
-export default async function getData(options)
+export async function getData(options)
 {
   let op = { ...defaultOptions, ...options }
   if (options?.query)

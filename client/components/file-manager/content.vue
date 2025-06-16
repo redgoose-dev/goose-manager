@@ -35,7 +35,7 @@
 import { ref, reactive, computed, inject, onMounted } from 'vue'
 import { authStore } from '../../store/auth.js'
 import { downloadFile } from '../../libs/file.js'
-import { request, upload } from '../../libs/api.js'
+import { request } from '../../libs/api.js'
 import { sleep } from '../../libs/util.js'
 import { pureObject } from '../../libs/object.js'
 import { convertDataToFileItem, getFile } from './libs.js'
@@ -115,6 +115,7 @@ onMounted(async () => {
       path: [ ...errorPath, 'onMounted' ],
       message: '첨부파일 목록을 가져오지 못했습니다.',
       error: e,
+      useToast: false,
     })
   }
   finally

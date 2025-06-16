@@ -1,0 +1,14 @@
+@use '../../../scss/mixins';
+
+div {}
+
+.category {
+  display: inline-block;
+  --select-width: auto;
+}
+
+.file-manager {
+  height: 100%;
+  --empty-min-height: none;
+  --empty-max-height: none;
+}

@@ -209,6 +209,11 @@ async function onUploadFile()
  */
 function uploadFile(files)
 {
+  const { module, moduleSrl } = fileManager.preference
+  if (!(module && moduleSrl))
+  {
+    throw new Error('module, moduleSrl 값이 필요합니다.')
+  }
   const [ file, ...remainingFiles ] = files
   let idx = undefined
   function nextFile(remainFiles, resolve)
