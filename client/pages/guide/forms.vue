@@ -220,6 +220,25 @@
       <p>{{keywordMessage}}</p>
     </div>
   </section>
+
+  <section class="page-section">
+    <header>
+      <h1>tag</h1>
+      <p>
+        해시태그를 입력하는 UI 컴포넌트입니다.<br/>
+        <strong>code:</strong> <code>/client/components/forms/tag.vue</code>
+      </p>
+    </header>
+    <div class="example">
+      <FormTag v-model="tag" :limit-count="10"/>
+      <pre>{{tag}}</pre>
+    </div>
+    <h2>컴포넌트 작동 안내</h2>
+    <p>
+      단어를 입력하고 쉼표(,)를 입력하면 배열 목록에 태그 항목이 추가되고 새로운 태그를 입력할 수 있게됩니다.<br/>
+      입력창에 아무것도 입력되지 않은 상태에서 백스페이스를 누르면 마지막 태그가 삭제됩니다.
+    </p>
+  </section>
 </article>
 </template>
 
@@ -227,7 +246,7 @@
 import { ref } from 'vue'
 import { sleep } from '../../libs/util.js'
 import { ButtonBasic } from '../../components/button/index.js'
-import { FormInput, FormTextarea, FormSelect, FormCheckbox, FormRadio, FormSwitch, FormKeyword } from '../../components/forms/index.js'
+import { FormInput, FormTextarea, FormSelect, FormCheckbox, FormRadio, FormSwitch, FormKeyword, FormTag } from '../../components/forms/index.js'
 
 const text = ref('')
 const textarea = ref('')
@@ -236,6 +255,7 @@ const checkbox = ref(false)
 const sw = ref(false)
 const customSwitch = ref('apple')
 const radio = ref('radio1')
+const tag = ref('apple,banana,mango')
 const contentEditable = ref('hello content-editable')
 const keywordMessage = ref('hello keyword')
 const keywordProcessing = ref(false)

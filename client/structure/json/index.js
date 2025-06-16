@@ -4,7 +4,7 @@ import { serialize } from '../../libs/strings.js'
 
 function filteringJSON(src)
 {
-  if (!src.data)
+  if (!src?.data)
   {
     return { total: 0, index: [] }
   }
@@ -27,7 +27,7 @@ function filteringJSON(src)
 
 function filteringCategory(src, query)
 {
-  if (!(src.data?.index?.length > 0)) return []
+  if (!(src?.data?.index?.length > 0)) return []
   return src.data.index.map(o => {
     let _query = { ...query }
     let link, active
@@ -35,30 +35,33 @@ function filteringCategory(src, query)
     {
       case 'none':
         _query.category = '0'
-        active = query.category === '0'
         break
       case 'all':
         _query.category = undefined
-        active = !query.category
         break
       default:
-        _query.category = o.srl
-        active = Number(query.category) === o.srl
+        _query.category = String(o.srl)
         break
     }
+    _query.page = undefined
     link = `./${serialize(_query, true) || ''}`
     return {
+      srl: _query.category,
       link,
       label: o.name,
       count: o.count,
-      active,
     }
   })
 }
 
-export async function getData(query = {})
+function getCategorySrl(srl)
 {
-  const category_srl = query.category === undefined ? undefined : (Number(query.category) || 0)
+  return srl === undefined ? undefined : (Number(srl) || 0)
+}
+
+export async function getData(query = {}, options = {})
+{
+  const category_srl = getCategorySrl(query.category)
   const { json, category } = await request('/mix/', {
     method: 'post',
     body: [
@@ -68,8 +71,9 @@ export async function getData(query = {})
         params: {
           fields: 'srl,name,description,category_srl,created_at',
           category_srl,
-          page: query.page > 1 || 1,
-          mod: query.category === undefined ? '' : 'category',
+          page: query.page > 1 ? query.page : undefined,
+          size: options.size || 24,
+          mod: query.category === undefined ? undefined : 'category',
         },
       },
       {
@@ -89,4 +93,19 @@ export async function getData(query = {})
     json: filteringJSON(json),
     category: filteringCategory(category, query),
   }
+}
+
+export async function getDataJSON(query = {}, options = {})
+{
+  const category = getCategorySrl(query.category)
+  const res = await request('/json/', {
+    query: {
+      fields: 'srl,name,description,category_srl,created_at',
+      category,
+      page: query.page > 1 ? query.page : undefined,
+      size: options.size || 24,
+      mod: query.category === undefined ? undefined : 'category',
+    },
+  })
+  return filteringJSON(res)
 }

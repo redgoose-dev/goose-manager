@@ -58,7 +58,7 @@ import { ref, computed } from 'vue'
 import { ButtonBasic, ButtonIcon } from '../button/index.js'
 
 const props = defineProps({
-  modelValue: { type: Number, required: true }, // 1
+  modelValue: { type: [ Number, String ] }, // 1
   total: { type: Number, required: true }, // 0
   size: { type: Number, default: 16 }, // 10
   range: { type: Number, default: 10 }, // 5

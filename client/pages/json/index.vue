@@ -1,30 +1,32 @@
 <template>
 <article>
   <PageHeader module="json"/>
-  <CategoryTab :items="state.category"/>
+  <CategoryTab
+    :items="state.category"
+    :active="route.query.category"/>
   <IndexWithFilter class="content">
     <template #content>
       <Loading v-if="state.loading"/>
-      <template v-else-if="state.index?.length > 0">
-        <Items>
-          <Card
-            v-for="item in state.index"
-            :title="item.title"
-            :description="item.description"
-            :href="`./${item.srl}/`"
-            :meta="item.meta"
-            :nav="[
-              { label: '수정', href: `./${item.srl}/edit/` },
-              { label: '삭제', href: `./${item.srl}/delete/` },
-            ]"/>
-        </Items>
-        <Paginate
-          :model-value="Number(route.params.page) || 1"
-          :total="state.total"
-          :size="5"
-          @update:model-value="onChangePage"/>
-      </template>
+      <Items v-else-if="state.index?.length > 0">
+        <Card
+          v-for="item in state.index"
+          :title="item.title"
+          :description="item.description"
+          :href="`./${item.srl}/`"
+          :meta="item.meta"
+          :nav="[
+            { label: '수정', href: `./${item.srl}/edit/` },
+            { label: '삭제', href: `./${item.srl}/delete/` },
+          ]"/>
+      </Items>
       <Empty v-else title="No data"/>
+      <Paginate
+        v-if="state.total > 0"
+        :model-value="route.query.page"
+        :total="state.total"
+        :size="preference.json.pageCount"
+        :range="preference.json.pageRange"
+        @update:model-value="onChangePage"/>
     </template>
     <template #filter>
       <Filter/>
@@ -47,8 +49,10 @@
 
 <script setup>
 import { reactive, onMounted, watch, inject } from 'vue'
-import { useRoute } from 'vue-router'
-import { getData } from '../../structure/json/index.js'
+import { useRouter, useRoute } from 'vue-router'
+import { preferenceStore } from '../../store/app.js'
+import { getData, getDataJSON } from '../../structure/json/index.js'
+import { serialize } from '../../libs/strings.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
 import { Card, Items } from '../../components/item/index.js'
@@ -56,8 +60,10 @@ import { Controller, CategoryTab, Paginate } from '../../components/navigation/i
 import { ButtonBasic } from '../../components/button/index.js'
 import Filter from '../../components/pages/json/filter.vue'
 
+const router = useRouter()
 const route = useRoute()
 const error = inject('error')
+const preference = preferenceStore()
 const errorPath = [ 'pages', 'json', 'index.vue' ]
 const state = reactive({
   loading: true,
@@ -66,15 +72,13 @@ const state = reactive({
   category: [],
 })
 
-onMounted(_fetch)
-watch(() => route.query.category, _fetch)
-
-async function _fetch()
-{
+onMounted(async () => {
   try
   {
     state.loading = true
-    const { json, category } = await getData(route.query)
+    const { json, category } = await getData(route.query, {
+      size: preference.json.pageCount,
+    })
     state.total = json.total
     state.index = json.index
     state.category = category
@@ -83,7 +87,7 @@ async function _fetch()
   {
     error.catch({
       path: [ ...errorPath, 'onMounted' ],
-      message: 'JSON 데이터를 가져오지 못했습니다.',
+      message: '데이터를 가져오지 못했습니다.',
       error: e,
       useToast: false,
     })
@@ -92,12 +96,39 @@ async function _fetch()
   {
     state.loading = false
   }
+})
+watch(() => route.query, _fetchJSON)
+
+async function _fetchJSON()
+{
+  try
+  {
+    state.loading = true
+    const res = await getDataJSON(route.query, {
+      size: preference.json.pageCount,
+    })
+    state.total = res.total
+    state.index = res.index
+  }
+  catch (e)
+  {
+    error.catch({
+      path: [ ...errorPath, '_fetchJSON' ],
+      message: 'JSON 데이터를 가져오지 못했습니다.',
+      error: e,
+    })
+  }
+  finally
+  {
+    state.loading = false
+  }
 }
 
-async function onChangePage(n)
+function onChangePage(n)
 {
-  // TODO
-  console.log('onChangePage()', n)
+  let _query = { ...route.query }
+  _query.page = n > 1 ? n : NaN
+  router.push(`./${serialize(_query, true)}`).then()
 }
 </script>
 

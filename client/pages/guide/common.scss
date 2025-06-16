@@ -41,6 +41,16 @@
       line-height: 1.42;
     }
   }
+  > h2 {
+    margin: 24px 0 16px;
+    font-size: 14px;
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: -.5px;
+  }
+  > p {
+    line-height: 1.42;
+  }
 }
 
 .page-header + .page-section {

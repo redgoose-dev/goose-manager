@@ -30,7 +30,11 @@ export const defaultPreference = {
   article: {
     pageCount: 24,
     pageRange: 10,
-    displayDateField: 'regdate',
+    displayDateField: 'created_at',
+  },
+  json: {
+    pageCount: 24,
+    pageRange: 10,
   },
   file: {
     pagePerSize: 24,

@@ -45,7 +45,11 @@
   </div>
   <Fieldset :disabled="state.loading">
     <Field label="태그" for="post-tag">
-      TODO: tag
+      <FormTag
+        v-model="forms.tag.value"
+        id="post-tag"
+        name="post-tag"
+        :limit="10"/>
     </Field>
   </Fieldset>
   <Controller>
@@ -91,7 +95,7 @@ import { useRouter } from 'vue-router'
 import { preferenceStore } from '../../../store/app.js'
 import { getData, submit } from '../../../structure/json/post.js'
 import { Fieldset, Field, Help } from '../../forms/fieldset/index.js'
-import { FormSelect, FormInput } from '../../forms/index.js'
+import { FormSelect, FormInput, FormTag } from '../../forms/index.js'
 import { Controller } from '../../navigation/index.js'
 import { ButtonBasic } from '../../button/index.js'
 import Editor from './editor.vue'
@@ -133,8 +137,6 @@ const _submitLabel = computed(() => {
   if (state.processing) return '처리중..'
   return _isEdit.value ? 'JSON 수정하기' : 'JSON 만들기'
 })
-
-// TODO: 태그입력 UI 컴포넌트 만들기
 
 onMounted(async () => {
   try

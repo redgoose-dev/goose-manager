@@ -164,11 +164,45 @@
       </Items>
     </div>
   </section>
+
+  <header class="page-header">
+    <h1>Hash tag</h1>
+    <p>해시태그로 사용하는 컴포넌트</p>
+  </header>
+
+  <section class="page-section">
+    <header>
+      <h1>Basic</h1>
+      <p>기본적으로 사용하는 모습</p>
+    </header>
+    <div class="example">
+      <div class="flex flex--h-center">
+        <Tag label="basic"/>
+        <Tag label="한글태그"/>
+        <Tag label="click" :use-click="true"/>
+        <Tag label="remove" :use-remove="true"/>
+        <Tag label="click + remove" :use-click="true" :use-remove="true"/>
+      </div>
+    </div>
+  </section>
+  <section class="page-section">
+    <header>
+      <h1>Colors</h1>
+      <p>컬러를 적용한 모습</p>
+    </header>
+    <div class="example">
+      <div class="flex flex--h-center">
+        <Tag v-for="o in tagColors" :label="o" :color="o" :use-click="true" :use-remove="true"/>
+      </div>
+    </div>
+  </section>
 </article>
 </template>
 
 <script setup>
-import { Card, Thumbnail, Items } from '../../components/item/index.js'
+import { Card, Thumbnail, Items, Tag } from '../../components/item/index.js'
+
+const tagColors = [ 'base', 'weak', 'blur', 'key', 'sub', 'code', 'success', 'error' ]
 
 function callAlert()
 {

@@ -2,7 +2,9 @@
 <nav class="category-tab">
   <ul>
     <li v-for="o in props.items">
-      <router-link :to="o.link" :class="[ o.active && 'active' ]">
+      <router-link
+        :to="o.link"
+        :class="[ props.active === o.srl && 'active' ]">
         <span>{{o.label}}</span>
         <em>{{o.count}}</em>
       </router-link>
@@ -13,7 +15,8 @@
 
 <script setup>
 const props = defineProps({
-  items: Array, // { label, link, count, active }
+  items: Array, // { srl, link, label, count }
+  active: [ String, Number ],
 })
 </script>
 
