@@ -203,19 +203,15 @@
         v-model="keywordMessage"
         :processing="keywordProcessing"
         :disabled="false"
-        :use-clear="true"
         :use-submit="true"
-        @clear="keywordMessage = ''"
         @submit="onSubmitKeyword"/>
       <hr>
       <FormKeyword
         v-model="keywordMessage"
         :processing="keywordProcessing"
         :disabled="false"
-        :use-clear="true"
         :use-submit="true"
         size="small"
-        @clear="keywordMessage = ''"
         @submit="onSubmitKeyword"/>
       <p>{{keywordMessage}}</p>
     </div>

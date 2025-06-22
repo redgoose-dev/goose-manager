@@ -1,11 +1,8 @@
 @use '../../../scss/mixins';
 
-.context {}
-
-ul {
-  margin: 0;
+.context {
+  position: relative;
   padding: 8px 0;
-  list-style: none;
   width: var(--context-width, auto);
   min-width: var(--context-min-width, unset);
   max-width: var(--context-max-width, unset);
@@ -16,10 +13,18 @@ ul {
     0 4px 16px mixins.mix-alpha(var(--color-base), 15%),
     0 1px 4px mixins.mix-alpha(var(--color-base), 15%),
     0 0 0 .5px mixins.mix-alpha(var(--color-base), 10%);
+  overflow: clip;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: .5px 0;
 }
 
 button {
-  --context-item-fill: var(--color-base);
   width: 100%;
   height: 32px;
   margin: 0;
@@ -27,9 +32,9 @@ button {
   box-sizing: border-box;
   text-align: left;
   border: none;
-  background: none;
+  background: var(--context-item-fill, none);
   font-size: 13px;
-  color: var(--context-item-fill);
+  color: var(--context-item-color, var(--color-base));
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -.25px;
@@ -42,7 +47,7 @@ button {
   --icon-margin: 0;
   --icon-size: 14px;
   --icon-stroke: 2.5;
-  --icon-color: var(--context-item-fill);
+  --icon-color: var(--context-item-color, var(--color-base));
   &:not(:disabled) {
     @include mixins.focus-outline(false, -2px);
   }
@@ -62,7 +67,7 @@ button {
   }
   &:not(:disabled) {
     &:hover {
-      background-color: mixins.mix-alpha(var(--color-blur), 50%);
+      opacity: .75;
     }
     &:active {
       opacity: .5;
@@ -79,11 +84,51 @@ hr {
 
 // color
 .color {
+  &--edge {
+    --context-item-color: var(--color-edge);
+  }
+  &--blur {
+    --context-item-color: var(--color-blur);
+  }
+  &--weak {
+    --context-item-color: var(--color-weak);
+  }
+  &--key {
+    --context-item-color: var(--color-key);
+  }
+  &--sub {
+    --context-item-color: var(--color-sub);
+  }
+  &--code {
+    --context-item-color: var(--color-code);
+  }
+  &--success {
+    --context-item-color: var(--color-success);
+  }
+  &--error {
+    --context-item-color: var(--color-error);
+  }
+}
+
+// fill
+.fill {
+  &--edge {
+    --context-item-fill: var(--color-edge);
+  }
+  &--blur {
+    --context-item-fill: var(--color-blur);
+  }
+  &--weak {
+    --context-item-fill: var(--color-weak);
+  }
   &--key {
     --context-item-fill: var(--color-key);
   }
   &--sub {
     --context-item-fill: var(--color-sub);
+  }
+  &--code {
+    --context-item-fill: var(--color-code);
   }
   &--success {
     --context-item-fill: var(--color-success);

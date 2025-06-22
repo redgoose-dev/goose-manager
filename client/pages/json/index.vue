@@ -3,7 +3,8 @@
   <PageHeader module="json"/>
   <CategoryTab
     :items="state.category"
-    :active="route.query.category"/>
+    :active="route.query.category"
+    @select="onSelectCategory"/>
   <IndexWithFilter class="content">
     <template #content>
       <Loading v-if="state.loading"/>
@@ -29,7 +30,11 @@
         @update:model-value="onChangePage"/>
     </template>
     <template #filter>
-      <Filter/>
+      <Filter
+        :loading="state.loading"
+        :total="state.total"
+        :tag="state.tag"
+        @update="onUpdateFilter"/>
     </template>
   </IndexWithFilter>
   <Controller>
@@ -51,7 +56,7 @@
 import { reactive, onMounted, watch, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { preferenceStore } from '../../store/app.js'
-import { getData, getDataJSON } from '../../structure/json/index.js'
+import { getData } from '../../structure/json/index.js'
 import { serialize } from '../../libs/strings.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
@@ -70,18 +75,21 @@ const state = reactive({
   total: 0,
   index: [],
   category: [],
+  tag: [],
 })
 
 onMounted(async () => {
   try
   {
     state.loading = true
-    const { json, category } = await getData(route.query, {
+    const { json, category, tag } = await getData(route.query, {
       size: preference.json.pageCount,
+      useTag: true,
     })
     state.total = json.total
     state.index = json.index
     state.category = category
+    state.tag = tag
   }
   catch (e)
   {
@@ -97,18 +105,20 @@ onMounted(async () => {
     state.loading = false
   }
 })
-watch(() => route.query, _fetchJSON)
+watch(() => route.query, _fetchContent)
 
-async function _fetchJSON()
+async function _fetchContent()
 {
   try
   {
     state.loading = true
-    const res = await getDataJSON(route.query, {
+    const { json, category } = await getData(route.query, {
       size: preference.json.pageCount,
+      useTag: false,
     })
-    state.total = res.total
-    state.index = res.index
+    state.total = json.total
+    state.index = json.index
+    state.category = category
   }
   catch (e)
   {
@@ -129,6 +139,26 @@ function onChangePage(n)
   let _query = { ...route.query }
   _query.page = n > 1 ? n : NaN
   router.push(`./${serialize(_query, true)}`).then()
+}
+function onUpdateFilter(value)
+{
+  const query = {
+    order: value.order || null,
+    sort: value.sort || null,
+    tag: value.tag || null,
+    category: route.query.category || null,
+  }
+  router.push(`./${serialize(query, true)}`).then()
+}
+function onSelectCategory(item, e)
+{
+  e.preventDefault()
+  const query = {
+    ...route.query,
+    category: item.srl,
+    page: null,
+  }
+  router.push(`./${serialize(query, true)}`).then()
 }
 </script>
 

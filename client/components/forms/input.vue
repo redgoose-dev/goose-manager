@@ -71,7 +71,7 @@ function onChangeText(e)
       value = Number(value)
       break
   }
-  emits('update:modelValue', value)
+  emits('update:modelValue', value, e)
 }
 
 function focus()

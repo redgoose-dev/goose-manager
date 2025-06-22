@@ -54,9 +54,16 @@
       z-index: 2;
     }
   }
+  &:is(:last-child) {
+    > input {
+      border-right-width: 1px;
+      border-top-right-radius: mixins.radius(var(--keyword-height, 38px));
+      border-bottom-right-radius: mixins.radius(var(--keyword-height, 38px));
+    }
+  }
 }
 
-.clear, .submit {
+.submit {
   display: block;
   height: 100%;
   box-sizing: border-box;
@@ -90,10 +97,6 @@
     display: block;
     margin: 0 auto;
   }
-}
-
-.clear {
-  background: var(--color-weak);
 }
 
 .submit {

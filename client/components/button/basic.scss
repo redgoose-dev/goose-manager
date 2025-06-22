@@ -74,6 +74,9 @@
 
 // color
 .color {
+  &--base {
+    --button-color-bg: var(--color-base);
+  }
   &--key {
     --button-color-bg: var(--color-key);
   }

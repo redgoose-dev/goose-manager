@@ -2,12 +2,13 @@
 <nav class="category-tab">
   <ul>
     <li v-for="o in props.items">
-      <router-link
-        :to="o.link"
-        :class="[ props.active === o.srl && 'active' ]">
+      <a
+        :href="o.link"
+        :class="[ props.active === o.srl && 'active' ]"
+        @click="emits('select', o, $event)">
         <span>{{o.label}}</span>
         <em>{{o.count}}</em>
-      </router-link>
+      </a>
     </li>
   </ul>
 </nav>
@@ -18,6 +19,7 @@ const props = defineProps({
   items: Array, // { srl, link, label, count }
   active: [ String, Number ],
 })
+const emits = defineEmits([ 'select' ])
 </script>
 
 <style src="./category-tab.scss" lang="scss" scoped></style>

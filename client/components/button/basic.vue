@@ -18,7 +18,7 @@ const props = defineProps({
   title: String,
   disabled: Boolean,
   size: String, // small
-  color: String, // key,sub,code,success,error
+  color: String, // base,key,sub,code,success,error
   rotateIcon: Boolean,
   iconLeft: String,
   iconRight: String,

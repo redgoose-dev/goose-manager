@@ -1,6 +1,7 @@
 <template>
 <nav class="context">
-  <ul>
+  <slot name="before"/>
+  <ul v-if="props.items.length > 0">
     <li v-for="item in props.items">
       <hr v-if="item.line">
       <button
@@ -9,6 +10,7 @@
         :disabled="item.disabled"
         :class="[
           item.color && `color--${item.color}`,
+          item.fill && `fill--${item.fill}`,
         ]"
         @click="onClickItem(item)">
         <span>
@@ -19,6 +21,7 @@
       </button>
     </li>
   </ul>
+  <slot name="after"/>
 </nav>
 </template>
 
@@ -26,7 +29,7 @@
 import Icon from '../../icon/index.vue'
 
 const props = defineProps({
-  items: { type: Array, required: true }, // { label, icon, color, disabled }
+  items: { type: Array, required: true }, // { label, icon, color, fill, disabled }
 })
 const emits = defineEmits([ 'select' ])
 

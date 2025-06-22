@@ -87,9 +87,7 @@ function onKeyupEnterReady(e)
 function addTag(newTags)
 {
   if (_limit.value) return
-  updateModelValue([
-    ...new Set([ ..._tags.value, ...newTags ])
-  ])
+  updateModelValue([ ...new Set([ ..._tags.value, ...newTags ]) ])
 }
 
 function removeTag(tag)

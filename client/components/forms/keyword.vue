@@ -11,6 +11,7 @@
       :type="props.type"
       :name="props.name"
       :id="props.id"
+      :list="props.list"
       :value="props.modelValue"
       :required="props.required"
       :disabled="_disabled"
@@ -18,20 +19,11 @@
       :maxlength="props.maxlength"
       :minlength="props.minlength"
       :placeholder="props.placeholder"
+      :autocomplete="props.autocomplete ? 'on' : 'off'"
       @input="$emit('update:modelValue', $event.target.value)"
       @click="$emit('click-input', $event)"
-      @keydown.enter.prevent="$emit('submit', props.modelValue)"
-      @keydown.esc="$emit('clear')"/>
+      @keydown.enter.prevent="$emit('submit', props.modelValue)"/>
   </p>
-  <button
-    v-if="props.useClear"
-    type="button"
-    :disabled="_disabledClear"
-    title="Clear"
-    class="clear"
-    @click="emits('clear')">
-    <Icon :name="props.iconClear"/>
-  </button>
   <button
     v-if="props.useSubmit"
     type="button"
@@ -53,9 +45,10 @@ import Icon from '../icon/index.vue'
 
 const $input = ref()
 const props = defineProps({
-  type: { type: String, default: 'text' },
+  type: { type: String, default: 'search' },
   name: String,
   id: String,
+  list: String,
   modelValue: String,
   required: Boolean,
   disabled: Boolean,
@@ -64,19 +57,14 @@ const props = defineProps({
   maxlength: Number,
   size: String, // small
   placeholder: { type: String, default: '키워드를 입력해주세요.' },
+  autocomplete: Boolean,
   processing: Boolean,
-  useClear: Boolean,
   useSubmit: Boolean,
   iconSubmit: { type: String, default: 'search' },
-  iconClear: { type: String, default: 'x-circle' },
 })
-const emits = defineEmits([ 'update:modelValue', 'clear', 'submit', 'click-input' ])
+const emits = defineEmits([ 'update:modelValue', 'submit', 'click-input' ])
 const _disabled = computed(() => {
   return props.disabled || props.processing
-})
-const _disabledClear = computed(() => {
-  if (props.processing) return true
-  return !(props.modelValue?.length > 0)
 })
 
 defineExpose({

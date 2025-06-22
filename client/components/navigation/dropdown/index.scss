@@ -19,7 +19,7 @@
   top: 100%;
   left: -6px;
   padding: 6px 0 24px;
-  z-index: var(--context-z-index, 1);
+  z-index: var(--dropdown-z-index, 1);
   &.position {
     &--right {
       left: unset;

@@ -29,27 +29,36 @@ function filteringCategory(src, query)
 {
   if (!(src?.data?.index?.length > 0)) return []
   return src.data.index.map(o => {
-    let _query = { ...query }
-    let link, active
+    let category
     switch (o.name)
     {
       case 'none':
-        _query.category = '0'
+        category = '0'
         break
       case 'all':
-        _query.category = undefined
+        category = undefined
         break
       default:
-        _query.category = String(o.srl)
+        category = String(o.srl)
         break
     }
-    _query.page = undefined
-    link = `./${serialize(_query, true) || ''}`
+    const link = `./${serialize({ category }, true) || ''}`
     return {
-      srl: _query.category,
+      srl: category,
       link,
       label: o.name,
       count: o.count,
+    }
+  })
+}
+
+function filteringTag(src)
+{
+  if (!(src?.data?.index?.length > 0)) return []
+  return src.data.index.map(o => {
+    return {
+      srl: o.srl,
+      name: o.name,
     }
   })
 }
@@ -61,8 +70,9 @@ function getCategorySrl(srl)
 
 export async function getData(query = {}, options = {})
 {
+  const { size, useTag } = options
   const category_srl = getCategorySrl(query.category)
-  const { json, category } = await request('/mix/', {
+  const { json, category, tag } = await request('/mix/', {
     method: 'post',
     body: [
       {
@@ -72,7 +82,10 @@ export async function getData(query = {}, options = {})
           fields: 'srl,name,description,category_srl,created_at',
           category_srl,
           page: query.page > 1 ? query.page : undefined,
-          size: options.size || 24,
+          size: size || 24,
+          order: query.order,
+          sort: query.sort,
+          tag: query.tag,
           mod: query.category === undefined ? undefined : 'category',
         },
       },
@@ -84,28 +97,22 @@ export async function getData(query = {}, options = {})
           unlimited: 1,
           order: 'turn',
           sort: 'asc',
+          tag: query.tag,
           mod: 'count,none,all',
         },
       },
-    ],
+      useTag && {
+        key: 'tag',
+        url: '/tag/',
+        params: {
+          module: 'json',
+        },
+      },
+    ].filter(Boolean),
   })
   return {
     json: filteringJSON(json),
     category: filteringCategory(category, query),
+    tag: filteringTag(tag),
   }
-}
-
-export async function getDataJSON(query = {}, options = {})
-{
-  const category = getCategorySrl(query.category)
-  const res = await request('/json/', {
-    query: {
-      fields: 'srl,name,description,category_srl,created_at',
-      category,
-      page: query.page > 1 ? query.page : undefined,
-      size: options.size || 24,
-      mod: query.category === undefined ? undefined : 'category',
-    },
-  })
-  return filteringJSON(res)
 }
