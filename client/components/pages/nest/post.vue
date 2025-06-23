@@ -203,7 +203,10 @@ const forms = reactive({
   code: { value: '', error: null },
   name: { value: '', error: null },
   description: { value: '', error: null },
-  json: {},
+  json: {
+    thumbnail: {},
+    files: {},
+  },
 })
 const errorPath = [ 'components', 'pages', 'nest', 'post.vue' ]
 
@@ -217,7 +220,6 @@ const _submitLabel = computed(() => {
 })
 
 onMounted(async () => {
-  if (!_isEdit.value) return
   try
   {
     const { app, nest } = await getData(props.mode, props.srl)

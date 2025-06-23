@@ -16,7 +16,7 @@ const props = defineProps({
   disabled: Boolean,
   edit: { type: String, default: 'all' }, // all,value,none
 })
-const emits = defineEmits([ 'init', 'update:model-value', 'context' ])
+const emits = defineEmits([ 'init', 'update:modelValue', 'context' ])
 
 onMounted(() => {
   JsonEditor.prototype.updateLanguage = function()
@@ -60,7 +60,7 @@ watch(() => props.edit, value => {
 
 function onUpdateEditor({ detail })
 {
-  emits('update:model-value', JSON.stringify(detail, null, 2))
+  emits('update:modelValue', JSON.stringify(detail, null, 2))
 }
 
 function onContextEditor({ detail })

@@ -24,7 +24,7 @@ import {} from 'vue'
 import { FormInput } from '../../forms/index.js'
 
 const props = defineProps({})
-const emits = defineEmits([ 'update:model-value' ])
+const emits = defineEmits([ 'update:modelValue' ])
 </script>
 
 <style lang="scss" scoped>

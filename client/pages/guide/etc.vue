@@ -96,10 +96,8 @@
     </header>
     <div class="example">
       <FileManager
-        tab="global"
         module="article"
         :module-srl="310"
-        :is-window="true"
         :shortcut="true"
         :use-thumbnail="true"
         :use-fetch="true"

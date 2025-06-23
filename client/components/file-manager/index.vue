@@ -55,11 +55,12 @@ import Lightbox from '../content/lightbox.vue'
  * moduleSrl?: number
  */
 const props = defineProps({
-  shortcut: Boolean,
   module: String,
   moduleSrl: Number,
+  shortcut: Boolean,
   useThumbnail: Boolean,
   useFetch: Boolean,
+  multipleSelection: Boolean,
 })
 const emits = defineEmits([ 'insert', 'update-thumbnail' ])
 const $content = ref()
@@ -146,6 +147,7 @@ function onSetup()
     shortcut: Boolean(props.shortcut),
     useThumbnail: props.useThumbnail,
     useFetch: props.useFetch,
+    multipleSelection: props.multipleSelection,
   })
   if (fileManager.preference.shortcut)
   {

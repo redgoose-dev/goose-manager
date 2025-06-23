@@ -3,7 +3,13 @@ import { checkingJSON } from '../../libs/object.js'
 
 function filteringJSON(src)
 {
-  return {}
+  if (!src?.data) return null
+  const { data } = src
+  return {
+    ...data,
+    json: JSON.stringify(data.json),
+    tag: data.tag?.length > 0 ? data.tag.map(o => (o.name)).join(',') : '',
+  }
 }
 function filteringCategory(src)
 {
@@ -36,7 +42,10 @@ export async function getData(mode, srl)
       mode === 'edit' && {
         key: 'json',
         url: '/json/{srl}/',
-        params: { srl },
+        params: {
+          srl,
+          mod: 'tag',
+        },
       }
     ].filter(Boolean),
   })

@@ -65,11 +65,12 @@ export function loadImage(src)
 
 /**
  * get resize path
- * @param {number} srl
+ * @param {number|string} srl
  * @param {string} query
+ * @param {string} prefix
  * @return {string}
  */
-export function getResizePath(srl, query = undefined)
+export function getResizePath(srl, query = '', prefix = '')
 {
-  return `/file/${srl}/${query ? `?${query}` : ''}`
+  return `${prefix}/file/${srl}/${query ? `?${query}` : ''}`
 }

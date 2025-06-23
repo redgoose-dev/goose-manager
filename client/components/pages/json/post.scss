@@ -7,8 +7,13 @@ div {}
   --select-width: auto;
 }
 
+.editor {
+  padding: 12px 0;
+}
+
 .file-manager {
   height: 100%;
   --empty-min-height: none;
   --empty-max-height: none;
+  --file-manager-rows: auto 1fr;
 }

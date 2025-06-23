@@ -31,7 +31,7 @@ const props = defineProps({
   id: String,
   limit: Number,
 })
-const emits = defineEmits([ 'update:model-value' ])
+const emits = defineEmits([ 'update:modelValue' ])
 const ready = ref('')
 
 const _tags = computed(() => {
@@ -101,7 +101,7 @@ function removeTag(tag)
 
 function updateModelValue(newTags)
 {
-  emits('update:model-value', newTags.join(','))
+  emits('update:modelValue', newTags.join(','))
 }
 </script>
 

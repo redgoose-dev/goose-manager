@@ -13,9 +13,10 @@ function filtering(src)
     total: src.total,
     index: src.index.map(o => {
       let thumbnail, icon
+      const path = getResizePath(o.srl)
       if (/^image/.test(o.mime))
       {
-        thumbnail = getResizePath(o.code, 'w=640&h=480&q=65')
+        thumbnail = `${path}?w=640&h=480&q=65`
       }
       else if (o.mime === 'application/pdf')
       {
@@ -37,7 +38,7 @@ function filtering(src)
       return {
         srl: o.srl,
         title: o.name,
-        href: getResizePath(o.srl),
+        href: path,
         thumbnail,
         icon,
         meta: [

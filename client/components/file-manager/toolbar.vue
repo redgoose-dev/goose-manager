@@ -21,6 +21,7 @@
           @select="(e) => fileManagerEvent.upload(e.key)"/>
       </Dropdown>
       <ButtonBasic
+        v-if="fileManager.preference.multipleSelection"
         size="small"
         icon-left="square-check-big"
         :color="fileManager._existItem ? 'code' : ''"

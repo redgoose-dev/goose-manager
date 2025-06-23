@@ -34,15 +34,14 @@
       <Help>이 JSON에 대한 설명을 입력합니다.</Help>
     </Field>
   </Fieldset>
-  <div class="json">
-    <Editor
-      v-if="!state.loading"
-      ref="$editor"
-      v-model="forms.json.value"
-      :use-attach-files="_isEdit"
-      @submit=""
-      @open:file-manager="controlFileManager"/>
-  </div>
+  <Editor
+    v-if="!state.loading"
+    ref="$editor"
+    v-model="forms.json.value"
+    :use-attach-file="_isEdit"
+    class="editor"
+    @submit=""
+    @open:file-manager="controlFileManager"/>
   <Fieldset :disabled="state.loading">
     <Field label="태그" for="post-tag">
       <FormTag
@@ -81,9 +80,18 @@
         module="json"
         :module-srl="props.srl"
         :shortcut="true"
-        :use-thumbnail="true"
-        :use-fetch="true"
-        class="file-manager"/>
+        :use-thumbnail="false"
+        :use-fetch="false"
+        :multiple-selection="state.fileManager.mode !== 'editor'"
+        class="file-manager"
+        @insert="onInsertFile">
+        <template #header>
+          <FileManagerHeader
+            title="가이드용 파일 매니저"
+            :use-close="true"
+            @close="controlFileManager()"/>
+        </template>
+      </FileManager>
     </Modal>
   </teleport>
 </form>
@@ -100,7 +108,7 @@ import { Controller } from '../../navigation/index.js'
 import { ButtonBasic } from '../../button/index.js'
 import Editor from './editor.vue'
 import { Modal } from '../../modal/index.js'
-import FileManager from '../../file-manager/index.vue'
+import { FileManager, FileManagerHeader } from '../../file-manager/index.js'
 
 const router = useRouter()
 const toast = inject('toast')
@@ -120,8 +128,7 @@ const state = reactive({
   category: [],
   fileManager: {
     open: false,
-    mode: '', // editor,source,path
-    limitSelect: 0,
+    mode: '', // editor,source
   },
 })
 const forms = reactive({
@@ -142,7 +149,14 @@ onMounted(async () => {
   try
   {
     const { json, category } = await getData(props.mode, props.srl)
-    // TODO: getData (json)
+    if (json)
+    {
+      forms.name.value = json.name
+      forms.description.value = json.description
+      forms.category.value = json.category_srl
+      forms.json.value = json.json
+      forms.tag.value = json.tag
+    }
     state.category = category
   }
   catch (e)
@@ -165,13 +179,18 @@ function controlFileManager(mode)
   {
     state.fileManager.open = true
     state.fileManager.mode = mode
-    state.fileManager.limitSelect = [ 'editor', 'path' ].includes(mode) ? 1 : 0
   }
   else
   {
     state.fileManager.open = false
     state.fileManager.mode = ''
   }
+}
+
+function onInsertFile(file)
+{
+  $editor.value?.insert(file)
+  controlFileManager()
 }
 
 async function onSubmit()

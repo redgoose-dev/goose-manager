@@ -103,3 +103,13 @@ export function randomNumber(min, max)
 {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+
+/**
+ * 숫자 한자리라면 앞에 `0`을 붙인다.
+ * @param {number|string} n
+ * @return {string}
+ */
+export function twoDigit(n)
+{
+  return `0${n}`.slice(-2)
+}

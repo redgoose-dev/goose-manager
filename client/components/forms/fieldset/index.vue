@@ -41,8 +41,11 @@ const props = defineProps({
   }
   &__body {
     display: grid;
-    margin: 10px 0 0;
+    margin: 0;
     border-top: 1px solid var(--color-blur);
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
     :slotted(> *) {
       border-bottom: 1px solid var(--color-blur);
     }

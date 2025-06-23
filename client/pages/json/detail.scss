@@ -1,0 +1,26 @@
+@use '../../scss/mixins';
+
+.field {
+  --field-label-width: 120px;
+}
+
+.tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.json {
+  padding: 10px 0;
+}
+
+.attachment-button {
+  display: flex;
+  .button {
+    --button-width: auto;
+    --button-padding: 0 24px;
+  }
+}

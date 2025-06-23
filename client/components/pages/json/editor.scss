@@ -2,7 +2,7 @@
 
 .editor {
   margin: 0;
-  padding: 16px 0 0;
+  padding: 0;
   border: none;
   > legend {
     font-size: 0;
@@ -29,4 +29,7 @@
 .source-editor {
   min-height: 320px;
   max-height: 520px;
+  &:read-only {
+    background: inherit;
+  }
 }

@@ -22,7 +22,7 @@
   &--full {
     background-color: var(--modal-color-bg, var(--color-bg));
     .body {
-      height: 100%;
+      height: 100dvh;
       box-sizing: border-box;
     }
   }

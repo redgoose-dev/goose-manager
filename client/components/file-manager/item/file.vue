@@ -56,13 +56,12 @@ const emits = defineEmits([ 'select', 'select-context-item' ])
 
 const _src = computed(() => {
   const type = props.mime.split('/')[0]
-  switch (type)
+  let path = getResizePath(props.srl, type === 'image' ? 'w=300&h=300&q=65' : undefined)
+  if (!fileManager.preference.useFetch)
   {
-    case 'image':
-      return getResizePath(props.srl, 'w=300&h=300&q=65')
-    default:
-      return getResizePath(props.srl)
+    path = `${auth.apiUrl}${path}`
   }
+  return path
 })
 const _isImage = computed(() => {
   return /^image/.test(props.mime || '')

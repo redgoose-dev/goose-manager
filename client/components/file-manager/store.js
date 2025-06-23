@@ -10,6 +10,7 @@ const defaultPreference = {
   limitCount: 10,
   limitSize: 3 * 1024 * 1024, // 3MB
   useFetch: false,
+  multipleSelection: true,
 }
 let lastSelectedKey = NaN
 
@@ -107,6 +108,21 @@ const fileManagerStore = defineStore('file-manager', {
     },
     selectFile(idx, $event)
     {
+      // 하나만 선택할 수 있을때
+      if (!this.preference.multipleSelection)
+      {
+        if (!!this.selected[idx])
+        {
+          delete this.selected[idx]
+        }
+        else
+        {
+          this.selectAllFiles(false)
+          this.selected[idx] = true
+        }
+        return
+      }
+      // 여러개 선택할 수 있을때
       if ($event.metaKey)
       {
         // 메타키를 누르고 있을때

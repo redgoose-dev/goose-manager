@@ -38,6 +38,7 @@ const icons = {
   'image': lucide.Image,
   'log-out': lucide.LogOut,
   'link': lucide.Link,
+  'list': lucide.List,
   'loader': lucide.Loader,
   'arrow-left': lucide.ArrowLeft,
   'archive': lucide.Archive,

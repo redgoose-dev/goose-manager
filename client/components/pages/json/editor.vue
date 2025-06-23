@@ -64,17 +64,19 @@
       :placeholder='`{ "foo": "bar" }`'
       :auto-size="true"
       :required="true"
+      :readonly="props.readonly"
       class="source-editor"
       @position="onUpdatePosition"
-      @update:modelValue="emits('update:model-value', $event)"
+      @update:modelValue="emits('update:modelValue', $event)"
       @submit="emits('submit')"/>
     <JSONEditor
       v-else
       ref="$editor"
       :model-value="props.modelValue"
+      :edit="props.readonly ? 'none' : 'all'"
       class="node-editor"
       @init="onInitJSONEditor"
-      @update:model-value="emits('update:model-value', $event)"
+      @update:model-value="emits('update:modelValue', $event)"
       @context="onContextEditor"/>
   </div>
 </fieldset>
@@ -92,8 +94,9 @@ const $editor = ref()
 const props = defineProps({
   modelValue: String,
   useAttachFile: Boolean,
+  readonly: Boolean,
 })
-const emits = defineEmits([ 'update:model-value', 'submit', 'open:file-manager' ])
+const emits = defineEmits([ 'update:modelValue', 'submit', 'open:file-manager' ])
 let _jsonEditor
 let _node
 
