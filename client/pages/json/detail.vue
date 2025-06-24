@@ -1,13 +1,15 @@
 <template>
 <article>
-  <PageHeader module="json" title="JSON"/>
+  <PageHeader module="json" title="Detail JSON"/>
   <Loading v-if="state.loading"/>
   <template v-else-if="_item">
     <Fieldset>
       <Field label="번호">{{_item.srl}}</Field>
       <Field label="이름"><strong>{{_item.name}}</strong></Field>
       <Field v-if="_item.description" label="설명">{{_item.description}}</Field>
-      <Field v-if="_item.category" label="분류">{{_item.category}}</Field>
+      <Field v-if="_item.category" label="분류">
+        <router-link :to="`../?category=${_item.categorySrl}`">{{_item.category}}</router-link>
+      </Field>
       <Field label="만든 날짜">{{_item.date}}</Field>
     </Fieldset>
     <Editor
@@ -96,13 +98,13 @@ const errorPath = [ 'pages', 'json', 'detail.vue' ]
 
 const _item = computed(() => {
   if (!state.data) return {}
-  console.log(state.data.date)
   return {
     srl: state.data.srl,
     name: state.data.name,
     description: state.data.description,
     category: state.data.category,
-    date: dateFormat(new Date(state.data.date), '{yyyy}년 {month} {dd}일 {week}, {hh}시 {mm}분'),
+    categorySrl: state.data.categorySrl,
+    date: dateFormat(new Date(state.data.date), '{yyyy}년 {month} {dd}일 ({weekShort}), {hh}시 {mm}분'),
     tag: state.data.tag,
     file: state.data.file,
   }

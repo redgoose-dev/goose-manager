@@ -9,6 +9,7 @@ function filtering({ json, category, tag, file })
     json: json.json,
     date: json.created_at,
     category: category?.name || '',
+    categorySrl: category?.srl || null,
     tag: tag?.index?.length > 0 ? tag.index : [],
     file: file?.index?.length > 0 ? file.index : [],
   }

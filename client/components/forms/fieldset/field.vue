@@ -1,7 +1,7 @@
 <template>
 <dl v-if="!!props.label" class="field">
   <dt class="field__label">
-    <label :for="props.for">{{props.label}}</label>
+    <component :is="props.for ? 'label' : 'span'" :for="props.for">{{props.label}}</component>
   </dt>
   <dd class="field__body">
     <slot/>

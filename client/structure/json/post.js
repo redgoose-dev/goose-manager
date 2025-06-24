@@ -1,14 +1,14 @@
 import { request, formData, checkForms } from '../../libs/api.js'
 import { checkingJSON } from '../../libs/object.js'
 
-function filteringJSON(src)
+function filteringJSON(src, tag)
 {
   if (!src?.data) return null
   const { data } = src
   return {
     ...data,
     json: JSON.stringify(data.json),
-    tag: data.tag?.length > 0 ? data.tag.map(o => (o.name)).join(',') : '',
+    tag: tag?.data?.index?.length > 0 ? tag.data.index.map(o => (o.name)).join(',') : '',
   }
 }
 function filteringCategory(src)
@@ -25,7 +25,7 @@ function filteringCategory(src)
 export async function getData(mode, srl)
 {
   if (!mode) return { app: [], nest: undefined }
-  const { json, category } = await request('/mix/', {
+  const { json, category, json_tag, json_category } = await request('/mix/', {
     method: 'post',
     body: [
       {
@@ -39,18 +39,25 @@ export async function getData(mode, srl)
           unlimited: '1',
         },
       },
-      mode === 'edit' && {
-        key: 'json',
-        url: '/json/{srl}/',
-        params: {
-          srl,
-          mod: 'tag',
+      ...(mode === 'edit' ? [
+        {
+          key: 'json',
+          url: '/json/{srl}/',
+          params: { srl },
         },
-      }
+        {
+          key: 'json_tag',
+          url: '/tag/',
+          params: {
+            module: 'json',
+            module_srl: '{{json.data.srl}}',
+          }
+        },
+      ] : []),
     ].filter(Boolean),
   })
   return {
-    json: filteringJSON(json),
+    json: filteringJSON(json, json_tag),
     category: filteringCategory(category),
   }
 }
