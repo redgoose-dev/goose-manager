@@ -17,6 +17,10 @@ $responsive-max: 1440px;
   {
     @media (min-width: #{$responsive-max}) { @content; }
   }
+  @else if $range == mobile
+  {
+    @media (max-width: #{$responsive-tablet}) { @content; }
+  }
 }
 
 // background blur

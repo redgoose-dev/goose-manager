@@ -16,7 +16,7 @@
   --color-key: hsl(160 90% 42%);
   --color-sub: hsl(240 90% 68%);
   --color-code: hsl(210 90% 62%);
-  --color-success: hsl(130 68% 52%);
+  --color-success: hsl(130 62% 50%);
   --color-error: hsl(0 70% 60%);
   --color-focus: hsl(240 90% 68%);
   // size
@@ -45,6 +45,9 @@ body {
   background: var(--color-bg);
   color: var(--color-base);
   min-width: 768px;
+  @include mixins.responsive(tablet) {
+    overflow-x: clip;
+  }
 }
 body, button, input, textarea, select {
   font-family: var(--font-base);
@@ -100,3 +103,4 @@ html.mode-not-scroll {
     transform: translateX(-50%);
   }
 }
+

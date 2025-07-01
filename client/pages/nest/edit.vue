@@ -1,6 +1,6 @@
 <template>
 <article>
-  <PageHeader module="nest" title="Edit nest"/>
+  <PageHeader module="nest" title="Edit Nest"/>
   <Post
     mode="edit"
     :srl="Number(route.params.srl)"

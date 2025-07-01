@@ -1,14 +1,15 @@
 <template>
-<div :class="[
+<component :is="props.tag" :class="[
   'modal-window',
   props.scroll && 'scroll',
 ]">
   <slot/>
-</div>
+</component>
 </template>
 
 <script setup>
 const props = defineProps({
+  tag: { type: String, default: 'div' },
   scroll: Boolean,
 })
 </script>

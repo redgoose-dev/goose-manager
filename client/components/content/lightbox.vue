@@ -6,13 +6,13 @@
     class="lightbox"
     @click="onClose"
     @cancel.prevent="onClose">
-    <figure>
+    <div class="lightbox__body">
       <Image
         :src="props.src"
         draggable="false"
         :use-fetch="props.useFetch"
         :alt="props.title"/>
-    </figure>
+    </div>
     <nav class="close">
       <button
         ref="_close"

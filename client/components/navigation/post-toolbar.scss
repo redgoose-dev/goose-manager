@@ -1,0 +1,21 @@
+@use '../../scss/mixins';
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.context {
+  --context-min-width: 150px;
+}

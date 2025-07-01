@@ -9,7 +9,7 @@
 import { ref, computed, watch, onErrorCaptured, provide } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { authStore } from './store/auth.js'
-import { currentStore } from './store/app.js'
+import { currentStore, preferenceStore } from './store/app.js'
 import ErrorTrigger from './libs/ErrorTrigger.js'
 import ErrorService from './pages/error/500.vue'
 import LayoutBlank from './layouts/blank.vue'
@@ -22,6 +22,7 @@ const current = currentStore()
 
 // set provides
 provide('error', new ErrorTrigger())
+provide('preference', preferenceStore())
 
 const error = ref(undefined)
 const layout = computed(() => {

@@ -29,7 +29,7 @@
 import Icon from '../../icon/index.vue'
 
 const props = defineProps({
-  items: { type: Array, required: true }, // { label, icon, color, fill, disabled }
+  items: { type: Array, required: true }, // { label, iconLeft, iconRight, color, fill, disabled }
 })
 const emits = defineEmits([ 'select' ])
 

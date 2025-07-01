@@ -24,7 +24,7 @@ const isCenter = computed(() => (!!slots.center))
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  margin: 54px 0 0;
+  margin: 32px 0 0;
   &:not(.is-center) {
     justify-content: space-between;
   }

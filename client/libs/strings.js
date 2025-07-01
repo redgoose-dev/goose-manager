@@ -113,3 +113,15 @@ export function twoDigit(n)
 {
   return `0${n}`.slice(-2)
 }
+
+/**
+ * filtering content
+ * @param {string} src
+ * @return {string}
+ */
+export function filteringContent(src)
+{
+  if (!src) return ''
+  src = src.replace(/\\r\\n/gi, '\n')
+  return src
+}

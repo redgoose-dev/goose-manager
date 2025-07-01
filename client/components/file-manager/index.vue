@@ -61,6 +61,7 @@ const props = defineProps({
   useThumbnail: Boolean,
   useFetch: Boolean,
   multipleSelection: Boolean,
+  fileKey: { type: String, default: 'srl' },
 })
 const emits = defineEmits([ 'insert', 'update-thumbnail' ])
 const $content = ref()
@@ -169,7 +170,7 @@ function onDestroy()
 function onInsert(files, mode)
 {
   if (!(files?.length > 0)) return ''
-  const str = convertOutputCode(files, mode)
+  const str = convertOutputCode(files, mode, props.fileKey)
   emits('insert', str)
 }
 

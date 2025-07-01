@@ -73,7 +73,7 @@
       v-if="_isEdit"
       :open="state.fileManager.open"
       mode="full"
-      :scroll="false"
+      :scroll="true"
       :shortcut="true"
       @close="controlFileManager()">
       <FileManager

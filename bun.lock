@@ -13,6 +13,7 @@
         "esbuild": "^0.25.5",
         "image-resize": "^1.4.1",
         "lucide-vue-next": "^0.515.0",
+        "marked": "^16.0.0",
         "ofetch": "^1.4.1",
         "pinia": "^3.0.3",
         "sass": "^1.89.2",
@@ -283,6 +284,8 @@
     "lucide-vue-next": ["lucide-vue-next@0.515.0", "", { "peerDependencies": { "vue": ">=3.0.1" } }, "sha512-RqR6xrhay6xtnRPpfNQUYAO8yQjxWkoL7RWIa6im9IUmqGD2nsdUqDP8ZnpS5Ji4QhemSk6vgPJxAsYUbeLICw=="],
 
     "magic-string": ["magic-string@0.30.17", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0" } }, "sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA=="],
+
+    "marked": ["marked@16.0.0", "", { "bin": { "marked": "bin/marked.js" } }, "sha512-MUKMXDjsD/eptB7GPzxo4xcnLS6oo7/RHimUMHEDRhUooPwmN9BEpMl7AEOJv3bmso169wHI2wUF9VQgL7zfmA=="],
 
     "micromatch": ["micromatch@4.0.8", "", { "dependencies": { "braces": "^3.0.3", "picomatch": "^2.3.1" } }, "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA=="],
 

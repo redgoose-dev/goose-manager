@@ -1,6 +1,6 @@
 <template>
 <figure class="img">
-  <p v-if="error">
+  <p v-if="error" class="error">
     <Icon name="circle-slash"/>
   </p>
   <img
@@ -11,9 +11,9 @@
     :height="props.height"
     :draggable="false"
     loading="lazy"/>
-  <figcaption v-else>
+  <p v-else class="empty">
     <Icon name="image"/>
-  </figcaption>
+  </p>
 </figure>
 </template>
 

@@ -1,0 +1,29 @@
+@use '../../scss/mixins';
+
+.heading {
+  margin: 0;
+  padding: 16px 0;
+  background-color: var(--color-blur);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  line-height: 1.1;
+}
+
+.body {
+  margin: 20px 0 0;
+}
+
+.content {
+  margin: 8px 0 0;
+  min-height: 320px;
+  max-height: 520px;
+}
+
+.file-manager {
+  height: 100%;
+  --empty-min-height: none;
+  --empty-max-height: none;
+  --file-manager-rows: auto 1fr;
+}

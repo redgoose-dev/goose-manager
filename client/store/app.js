@@ -1,14 +1,13 @@
 import { defineStore } from 'pinia'
 import { pureObject } from '../libs/object.js'
 
-const preferenceKeys = [ 'general', 'dashboard', 'nest', 'article', 'file', 'checklist', 'navigation' ]
-
 export const currentStore = defineStore('current', {
   state: () => ({
     blink: false,
   }),
 })
 
+const preferenceKeys = [ 'general', 'dashboard', 'nest', 'article', 'file', 'checklist', 'navigation' ]
 export const preferenceStore = defineStore('preference', {
   state: () => {
     let result = {}

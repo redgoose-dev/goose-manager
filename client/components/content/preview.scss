@@ -1,0 +1,44 @@
+@use '../../scss/mixins';
+
+.preview-modal {
+  --modal-window-width: calc(100dvw - (var(--size-side-padding) * 2));
+  --modal-window-max-width: var(--size-content-body);
+  --modal-window-max-height: 80dvh;
+}
+.preview {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: 6px;
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    height: 44px;
+    background: var(--color-base);
+    user-select: none;
+    h1 {
+      margin: 0;
+      padding: 0 0 0 20px;
+      display: grid;
+      align-items: center;
+      color: var(--color-edge);
+      line-height: 1.05;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    nav {
+      padding: 0 10px 0 0;
+      .button-icon {
+        --button-icon-color: var(--color-edge);
+      }
+    }
+  }
+  &__content {
+    padding: 40px;
+    box-sizing: border-box;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    overflow: auto;
+    @include mixins.custom-scrollbar();
+  }
+}

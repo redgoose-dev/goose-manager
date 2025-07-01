@@ -159,7 +159,44 @@ const json = [
     meta: { active: 'json' },
   },
 ]
-const checklist = []
+const checklist = [
+  {
+    path: '/checklist/',
+    name: 'Checklist',
+    component: () => import('../pages/checklist/today.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/index/',
+    name: 'ChecklistList',
+    component: () => import('../pages/checklist/index.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/edit/',
+    name: 'ChecklistEditToday',
+    component: () => import('../pages/checklist/edit.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/:srl/',
+    name: 'ChecklistDetail',
+    component: () => import('../pages/checklist/detail.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/:srl/edit/',
+    name: 'ChecklistEdit',
+    component: () => import('../pages/checklist/edit.vue'),
+    meta: { active: 'checklist' },
+  },
+  {
+    path: '/checklist/:srl/delete/',
+    name: 'ChecklistDelete',
+    component: () => import('../pages/checklist/delete.vue'),
+    meta: { active: 'checklist' },
+  },
+]
 const preference = []
 const guide = [
   {

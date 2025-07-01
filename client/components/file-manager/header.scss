@@ -3,8 +3,8 @@
 .header {
   display: flex;
   justify-content: space-between;
-  background: mixins.mix-alpha(var(--color-blur), 75%);
-  min-height: 46px;
+  background: var(--color-base);
+  min-height: 44px;
   h1 {
     margin: 0;
     padding: 0 0 0 16px;
@@ -12,17 +12,20 @@
     align-items: center;
     gap: 0 6px;
     font-size: 16px;
-    color: var(--color-base);
+    color: var(--color-edge);
     font-weight: 700;
     line-height: 1;
     user-select: none;
     letter-spacing: -.5px;
     --icon-size: 18px;
-    --icon-color: var(--color-base);
+    --icon-color: var(--color-edge);
   }
   nav {
     display: flex;
     gap: 0 1px;
     padding: 4px;
+    .button-icon {
+      --button-icon-color: var(--color-edge);
+    }
   }
 }

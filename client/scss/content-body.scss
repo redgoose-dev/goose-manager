@@ -2,5 +2,134 @@
 @import url('https://assets.redgoose.me/markdown/index.css');
 
 .redgoose-body {
-  //
+  --markdown-color-base: var(--color-base);
+  --markdown-color-title: var(--color-reverse);
+  --markdown-color-key: var(--color-sub);
+  --markdown-size-margin: 2rem;
+  --markdown-size-img-margin: 4rem 0 2rem;
+  --markdown-color-blockquote-line: var(--color-code);
+  --markdown-color-blockquote-outline: var(--color-weak);
+  --markdown-head-scroll-margin-top: calc(var(--size-header-height) + 30px);
+  --markdown-size-side-padding: var(--size-side-padding);
+  word-break: break-word;
+  white-space: normal;
+  :is(h1, h2, h3, h4, h5, h6) {
+    @include mixins.responsive(tablet) {
+      .anchor svg {
+        color: var(--color-weak);
+      }
+    }
+  }
+  img {
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @include mixins.responsive(mobile) {
+    :is(img, pre, .grid-item) {
+      position: static;
+      transform: none;
+      transform-origin: unset;
+      cursor: default;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    :is(goose-dark-mode-image) {
+      --goose-dmi-position: static;
+      --goose-dmi-margin: 0 auto;
+      --goose-dmi-max-width: 100%;
+      --goose-dmi-max-height: none;
+      --goose-dmi-transform: none;
+    }
+  }
+}
+
+// checkbox item
+.redgoose-body .checkbox-item {
+  > label {
+    position: relative;
+    line-height: inherit;
+    &:not(:has(:disabled)) {
+      cursor: pointer;
+    }
+    > * {
+      vertical-align: middle;
+    }
+  }
+  .checkbox {
+    position: relative;
+    display: inline-block;
+    font-size: 0;
+    margin: -4px 6px 0 0;
+    input {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      display: block;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      box-sizing: border-box;
+    }
+    i {
+      display: block;
+      position: relative;
+      width: var(--checkbox-size, 20px);
+      height: var(--checkbox-size, 20px);
+      box-sizing: border-box;
+      border-radius: mixins.radius(var(--checkbox-size, 20px));
+      background-color: var(--checkbox-bg, var(--color-edge));
+      box-shadow: var(--checkbox-shadow, inset 0 0 0 1px var(--color-weak));
+      transition: box-shadow 160ms ease-out, outline-color 160ms ease-out;
+      outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+      outline-offset: -1px;
+      &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        left: 50%;
+        top: 50%;
+        transform-origin: 50% 50%;
+        translate: -50% -50%;
+        scale: .65;
+        opacity: 0;
+        transition: scale 100ms ease-out, opacity 120ms ease-out;
+        background: var(--checkbox-unit-color, var(--color-sub));
+        width: var(--checkbox-point-size, 13px);
+        height: var(--checkbox-point-size, 13px);
+        border-radius: mixins.radius(var(--checkbox-point-size, 13px));
+      }
+    }
+    &:has(:checked) {
+      i:after {
+        opacity: 1;
+        scale: 1;
+        transition: scale 180ms cubic-bezier(.35, 1.9, .68, 1.05), opacity 40ms ease-out;
+      }
+    }
+  }
+}
+
+// for popup mode
+.redgoose-body--popup {
+  :is(img, pre, .grid-item) {
+    position: static;
+    transform: none;
+    transform-origin: unset;
+    cursor: default;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  :is(goose-dark-mode-image) {
+    --goose-dmi-position: static;
+    --goose-dmi-margin: 0 auto;
+    --goose-dmi-max-width: 100%;
+    --goose-dmi-max-height: none;
+    --goose-dmi-transform: none;
+  }
 }

@@ -34,3 +34,30 @@ export function dateFormat(date, format)
   mix = mix.replace(/\{ss\}/, twoDigit(date.getSeconds()))
   return mix
 }
+
+/**
+ * compare date
+ * 시간을 0으로 변경하고 `년,월,일`로 날짜를 비교한다.
+ * @param {string|Date} date1
+ * @param {string|Date} date2
+ * @param {string} compare - 비교 연산자: '<', '>', '='
+ * @return {boolean}
+ */
+export function compareDate(date1, date2, compare = '<')
+{
+  if (!(date1 && date2)) throw new Error('no date1 or date2')
+  date1 = new Date(date1)
+  date2 = new Date(date2)
+  let d1 = date1.setHours(0,0,0,0)
+  let d2 = date2.setHours(0,0,0,0)
+  switch (compare)
+  {
+    case '<':
+      return d1 < d2
+    case '>':
+      return d1 > d2
+    case '=':
+    default:
+      return d1 === d2
+  }
+}

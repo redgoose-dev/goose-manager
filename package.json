@@ -22,6 +22,7 @@
     "esbuild": "^0.25.5",
     "image-resize": "^1.4.1",
     "lucide-vue-next": "^0.515.0",
+    "marked": "^16.0.0",
     "ofetch": "^1.4.1",
     "pinia": "^3.0.3",
     "sass": "^1.89.2",

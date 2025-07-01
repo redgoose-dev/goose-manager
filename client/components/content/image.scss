@@ -17,7 +17,7 @@ img {
   box-sizing: border-box;
 }
 
-p {
+.error {
   margin: 0;
   display: grid;
   place-content: center;
@@ -27,7 +27,7 @@ p {
   --icon-color: var(--color-error);
 }
 
-figcaption {
+.empty {
   display: grid;
   place-content: center;
   width: 100%;

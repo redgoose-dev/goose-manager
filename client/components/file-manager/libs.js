@@ -51,9 +51,10 @@ export async function getFile(srl, type = 'blob')
  * convert output code
  * @param {object[]} arr
  * @param {string} mode
+ * @param {string} keyName
  * @return {string}
  */
-export function convertOutputCode(arr, mode)
+export function convertOutputCode(arr, mode, keyName = 'srl')
 {
   switch (mode)
   {
@@ -61,26 +62,26 @@ export function convertOutputCode(arr, mode)
       return arr.map(item => {
         if (/^image\//.test(item.mime))
         {
-          return `![${item.name}](${contentCodes.API_HOST}/file/${item.srl}/)`
+          return `![${item.name}](${contentCodes.API_HOST}/file/${item[keyName]}/)`
         }
         else
         {
-          return `[${item.name}](${contentCodes.API_HOST}/file/${item.srl}/)`
+          return `[${item.name}](${contentCodes.API_HOST}/file/${item[keyName]}/)`
         }
       }).join('\n')
     case insertMode.ADDRESS:
       return arr.map(item => {
-        return `${contentCodes.API_HOST}/file/${item.srl}/`
+        return `${contentCodes.API_HOST}/file/${item[keyName]}/`
       }).join('\n')
     case insertMode.HTML:
       return arr.map(item => {
         if (/^image\//.test(item.mime))
         {
-          return `<p><img src="${contentCodes.API_HOST}/file/${item.srl}/" loading="lazy" alt="${item.name}"/></p>`
+          return `<p><img src="${contentCodes.API_HOST}/file/${item[keyName]}/" loading="lazy" alt="${item.name}"/></p>`
         }
         else
         {
-          return `<p><a href="${contentCodes.API_HOST}/file/${item.srl}/" target="_blank">${item.name}</a></p>`
+          return `<p><a href="${contentCodes.API_HOST}/file/${item[keyName]}/" target="_blank">${item.name}</a></p>`
         }
       }).join(`\n`)
     default:

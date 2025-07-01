@@ -49,11 +49,11 @@ const $toolbar = ref()
 const fileManager = inject('file-manager')
 const fileManagerEvent = inject('file-manager-event')
 const error = inject('error')
+const errorPath = [ 'components', 'file-manager', 'content.vue' ]
 const auth = authStore()
 const state = reactive({
   loading: false,
 })
-const errorPath = [ 'components', 'file-manager', 'content.vue' ]
 
 const _files = computed(() => {
   const index = fileManager.index
