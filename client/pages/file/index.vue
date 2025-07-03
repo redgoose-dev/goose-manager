@@ -51,7 +51,7 @@ async function load()
 {
   try
   {
-    scrollTo(0)
+    scrollTo()
     state.loading = true
     const { total, index } = await getData()
     state.total = total

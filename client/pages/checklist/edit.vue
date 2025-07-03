@@ -52,9 +52,9 @@
         file-key="code"
         @insert="onInsertFileManager">
         <template #header>
-          <FileManagerHeader
+          <ModalHeader
             title="체크리스트 첨부파일"
-            :use-close="true"
+            icon="file-search"
             @close="state.openFileManager = false"/>
         </template>
       </FileManager>
@@ -80,8 +80,8 @@ import { FormTextarea } from '../../components/forms/index.js'
 import { PostToolbar, Controller } from '../../components/navigation/index.js'
 import { ButtonBasic } from '../../components/button/index.js'
 import { Loading, Preview } from '../../components/content/index.js'
-import { FileManager, FileManagerHeader } from '../../components/file-manager/index.js'
-import { Modal } from '../../components/modal/index.js'
+import { FileManager } from '../../components/file-manager/index.js'
+import { Modal, ModalHeader } from '../../components/modal/index.js'
 
 const router = useRouter()
 const route = useRoute()
@@ -105,7 +105,7 @@ const forms = reactive({
 
 const _date = computed(() => {
   if (!state.date) return ''
-  return dateFormat(new Date(state.date), '{yyyy}-{MM}-{dd} ({week})')
+  return dateFormat(new Date(state.date), preference.checklist.dateFormat)
 })
 
 onMounted(async () => {
@@ -219,7 +219,7 @@ async function onSubmit()
     if (!forms.content.value) throw new Error('no content')
     await submit(state.srl, forms.content.value)
     toast.add('체크리스트 내용을 수정했습니다.', 'success').then()
-    router.push(route.params.srl ? `../${route.params.srl}/` : '../').then()
+    router.push('../').then()
   }
   catch (e)
   {

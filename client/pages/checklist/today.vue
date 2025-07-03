@@ -7,7 +7,6 @@
     v-model:content="state.content"
     v-model:checkbox="state.countCheckbox"
     :date="state.date"
-    :today="_today"
     :percent="_percent"
     @update:content="onUpdateContent"/>
   <Controller>
@@ -28,7 +27,6 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
-import { preferenceStore } from '../../store/app.js'
 import { getData, editData } from '../../structure/checklist/today.js'
 import { checkTime, countingCheckbox } from '../../structure/checklist/libs.js'
 import PageHeader from '../../components/header/page.vue'
@@ -38,15 +36,15 @@ import { ButtonBasic } from '../../components/button/index.js'
 import ChecklistBody from '../../components/pages/checklist/body.vue'
 import ChecklistProgress from '../../components/pages/checklist/progress.vue'
 
+const preference = inject('preference')
 const error = inject('error')
 const errorPath = [ 'pages', 'checklist', 'today.vue' ]
-const preference = preferenceStore()
 const state = reactive({
   loading: true,
   srl: NaN,
   content: '',
   date: '',
-  percent: 0,
+  percent: NaN,
   countCheckbox: 0,
 })
 
@@ -74,6 +72,7 @@ onMounted(async () => {
   }
   catch (e)
   {
+    console.error(e)
     error.catch({
       path: [ ...errorPath, 'onMounted' ],
       message: '체크리스트 데이터를 가져오지 못했습니다.',

@@ -24,7 +24,6 @@ function filteringJSON(src)
     })
   }
 }
-
 function filteringCategory(src, query)
 {
   if (!(src?.data?.index?.length > 0)) return []
@@ -51,7 +50,6 @@ function filteringCategory(src, query)
     }
   })
 }
-
 function filteringTag(src)
 {
   if (!(src?.data?.index?.length > 0)) return []

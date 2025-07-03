@@ -56,6 +56,7 @@ const icons = {
   'paperclip': lucide.Paperclip,
   'rotate-ccw': lucide.RotateCcw,
   'star': lucide.Star,
+  'sun': lucide.Sun,
   'settings': lucide.Settings,
   'server': lucide.Server,
   'search': lucide.Search,

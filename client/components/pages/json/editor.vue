@@ -133,7 +133,6 @@ function onContextEditor(e)
     case 'string':
       if (props.useAttachFile)
       {
-        // TODO: 체크하기
         const $item = $(`<li><button type="button" data-mode="files"><em class="label">파일첨부 주소</em></button></li>`)
         $item.on('click', () => {
           _node = { node, $ }

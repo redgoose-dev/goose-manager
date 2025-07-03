@@ -13,7 +13,7 @@
   background: mixins.mix-alpha(var(--color-edge), 30%);
   height: var(--size-header-height, 42px);
   padding: 0 var(--size-side-padding);
-  box-shadow: 0 1px 12px mixins.mix-alpha(var(--color-weak), 50%);
+  box-shadow: 0 1px 12px mixins.mix-alpha(var(--color-base), 30%);
   @include mixins.background-blur(16px);
   .wrap {
     display: flex;
@@ -160,7 +160,9 @@
     left: 0;
     top: 0;
     background-color: var(--color-edge);
-    box-shadow: 0 2px 12px mixins.mix-alpha(var(--color-base), 10%);
+    box-shadow:
+      0 4px 8px mixins.mix-alpha(var(--color-base), 10%),
+      0 4px 16px mixins.mix-alpha(var(--color-base), 20%);
     border-radius: 0 0 2px 2px;
     overflow: clip;
     transition: opacity 200ms ease-out;

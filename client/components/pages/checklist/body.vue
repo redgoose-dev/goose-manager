@@ -28,9 +28,9 @@ const preference = preferenceStore()
 const props = defineProps({
   content: { type: String, required: true },
   checkbox: Number,
-  date: { type: String, required: true },
-  today: { type: Boolean, required: true },
+  date: { type: String },
   percent: Number,
+  readonly: Boolean,
 })
 const emits = defineEmits([ 'update:content', 'update:checkbox' ])
 const state = reactive({
@@ -67,7 +67,7 @@ onMounted(async () => {
   $body.value.innerHTML = ''
   // set marked renderer
   let renderer = baseRenderer()
-  renderer = checklistRenderer(renderer)
+  renderer = checklistRenderer(renderer, props.readonly)
   const content = renderContent(props.content)
   const parsed = marked.parse(content, {
     ...defaultOptions,

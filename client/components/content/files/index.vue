@@ -1,10 +1,7 @@
 <template>
 <article class="files">
-  <header class="files__header">
-    <h1>{{props.title || '첨부파일 목록'}}</h1>
-    <p>첨부파일을 확인할 수 있습니다. 그림을 클릭하면 새창으로 파일의 내용을 확인할 수 있습니다.</p>
-  </header>
-  <div class="files__body">
+  <ModalHeader :title="props.title" @close="emits('close')"/>
+  <div class="body">
     <p class="count">
       총 <strong>{{props.items.length || 0}}</strong>개의 파일이 있습니다.
     </p>
@@ -25,15 +22,6 @@
       title="No data"
       message="첨부파일이 없습니다."/>
   </div>
-  <nav class="close">
-    <ButtonBasic
-      title="닫기"
-      icon-left="x"
-      color="base"
-      @click="emits('close')">
-      닫기
-    </ButtonBasic>
-  </nav>
 </article>
 </template>
 
@@ -44,12 +32,12 @@ import { getResizePath } from '../../../libs/file.js'
 import { getDate } from '../../../libs/date.js'
 import { getByte } from '../../../libs/strings.js'
 import { Empty } from '../index.js'
-import { ButtonBasic } from '../../button/index.js'
 import { Items, Thumbnail } from '../../item/index.js'
+import { ModalHeader } from '../../modal/index.js'
 
 const auth = authStore()
 const props = defineProps({
-  title: String,
+  title: { type: String, default: '첨부파일' },
   items: Array,
   private: Boolean,
 })

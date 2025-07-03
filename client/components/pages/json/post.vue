@@ -86,9 +86,9 @@
         class="file-manager"
         @insert="onInsertFile">
         <template #header>
-          <FileManagerHeader
+          <ModalHeader
             title="가이드용 파일 매니저"
-            :use-close="true"
+            icon="file-search"
             @close="controlFileManager()"/>
         </template>
       </FileManager>
@@ -107,8 +107,8 @@ import { FormSelect, FormInput, FormTag } from '../../forms/index.js'
 import { Controller } from '../../navigation/index.js'
 import { ButtonBasic } from '../../button/index.js'
 import Editor from './editor.vue'
-import { Modal } from '../../modal/index.js'
-import { FileManager, FileManagerHeader } from '../../file-manager/index.js'
+import { Modal, ModalHeader } from '../../modal/index.js'
+import { FileManager } from '../../file-manager/index.js'
 
 const router = useRouter()
 const toast = inject('toast')

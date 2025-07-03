@@ -104,9 +104,9 @@
         class="example--file-manager"
         @insert="onInsertFromFileManager">
         <template #header>
-          <FileManagerHeader
+          <ModalHeader
             title="가이드용 파일 매니저"
-            :use-close="true"
+            icon="file-search"
             @close=""/>
         </template>
       </FileManager>
@@ -119,7 +119,8 @@
 import { ref, inject } from 'vue'
 import { ButtonBasic } from '../../components/button/index.js'
 import { ProgressDonut, Loading } from '../../components/content/index.js'
-import { FileManager, FileManagerHeader } from '../../components/file-manager/index.js'
+import { FileManager } from '../../components/file-manager/index.js'
+import { ModalHeader } from '../../components/modal/index.js'
 import { Dropdown, Context } from '../../components/navigation/dropdown/index.js'
 import { Paginate } from '../../components/navigation/index.js'
 

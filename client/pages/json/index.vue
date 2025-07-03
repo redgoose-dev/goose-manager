@@ -58,6 +58,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { preferenceStore } from '../../store/app.js'
 import { getData } from '../../structure/json/index.js'
 import { serialize } from '../../libs/strings.js'
+import { scrollTo } from '../../libs/util.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
 import { Card, Items } from '../../components/item/index.js'
@@ -67,8 +68,8 @@ import Filter from '../../components/pages/json/filter.vue'
 
 const router = useRouter()
 const route = useRoute()
-const error = inject('error')
 const preference = preferenceStore()
+const error = inject('error')
 const errorPath = [ 'pages', 'json', 'index.vue' ]
 const state = reactive({
   loading: true,
@@ -111,6 +112,7 @@ async function _fetchContent()
 {
   try
   {
+    scrollTo()
     state.loading = true
     const { json, category } = await getData(route.query, {
       size: preference.json.pageCount,
@@ -126,6 +128,7 @@ async function _fetchContent()
       path: [ ...errorPath, '_fetchJSON' ],
       message: 'JSON 데이터를 가져오지 못했습니다.',
       error: e,
+      useToast: false,
     })
   }
   finally

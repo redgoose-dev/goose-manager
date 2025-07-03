@@ -87,6 +87,7 @@ import { Modal } from '../../components/modal/index.js'
 const router = useRouter()
 const route = useRoute()
 const error = inject('error')
+const errorPath = [ 'pages', 'json', 'detail.vue' ]
 const $jsonEditor = ref()
 const state = reactive({
   loading: true,
@@ -94,7 +95,6 @@ const state = reactive({
   jsonMode: 'editor', // editor,source
   filesWindow: false,
 })
-const errorPath = [ 'pages', 'json', 'detail.vue' ]
 
 const _item = computed(() => {
   if (!state.data) return {}

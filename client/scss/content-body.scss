@@ -116,6 +116,8 @@
 
 // for popup mode
 .redgoose-body--popup {
+  word-break: keep-all;
+  overflow-wrap: break-word;
   :is(img, pre, .grid-item) {
     position: static;
     transform: none;

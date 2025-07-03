@@ -23,6 +23,8 @@ export async function getLastData()
         })
       })
       if (!res?.data) throw new Error('Not found add data.')
+      res = await request(`/checklist/${res.data}/`)
+      if (!res?.data) throw new Error('Not found data.')
       result = res.data
     }
     else
@@ -40,12 +42,14 @@ export async function getLastData()
       }),
     })
     if (!res?.data) throw new Error('Not found add data.')
+    res = await request(`/checklist/${res.data}/`)
+    if (!res?.data) throw new Error('Not found data.')
     result = res.data
   }
   return result
 }
 
-export async function getData()
+export async function getData(srl)
 {
   const result = await getLastData()
   return filteringData(result)

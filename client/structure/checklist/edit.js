@@ -12,6 +12,7 @@ export async function getData(srl = NaN)
   else
   {
     res = await request(`/checklist/${srl}/`)
+    res = res?.data || null
   }
   return filteringData(res)
 }
