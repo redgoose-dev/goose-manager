@@ -10,7 +10,7 @@
         <ButtonBasic href="../../" icon-left="cloud">
           둥지
         </ButtonBasic>
-        <ButtonBasic href="../article/" icon-left="droplet">
+        <ButtonBasic href="../article/" icon-left="droplet" color="code">
           아티클
         </ButtonBasic>
       </ButtonGroup>

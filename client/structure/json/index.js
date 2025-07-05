@@ -61,15 +61,10 @@ function filteringTag(src)
   })
 }
 
-function getCategorySrl(srl)
-{
-  return srl === undefined ? undefined : (Number(srl) || 0)
-}
-
 export async function getData(query = {}, options = {})
 {
   const { size, useTag } = options
-  const category_srl = getCategorySrl(query.category)
+  const category_srl = query.category === undefined ? undefined : (Number(query.category) || 0)
   const { json, category, tag } = await request('/mix/', {
     method: 'post',
     body: [

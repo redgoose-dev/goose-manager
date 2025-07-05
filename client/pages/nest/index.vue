@@ -1,7 +1,7 @@
 <template>
 <article>
   <PageHeader module="nest"/>
-  <div class="container-over">
+  <div class="container">
     <Loading v-if="state.loading"/>
     <div v-else-if="state.apps.length > 0" class="apps">
       <section v-for="app in state.apps" class="app">

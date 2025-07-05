@@ -1,0 +1,44 @@
+@use '../../scss/mixins';
+
+.container-over {
+  margin-top: 24px;
+  min-height: 360px;
+}
+
+.content {
+  container-type: inline-size;
+}
+
+.items {
+  --items-gap: 10px 0;
+  &.theme--card {
+    --items-gap: 16px;
+    @container (min-width: 640px) {
+      --items-column: 2;
+    }
+    @container (min-width: 1000px) {
+      --items-column: 3;
+    }
+  }
+  &.theme--thumbnail {
+    --items-gap: 16px;
+    --items-column: 2;
+    @container (min-width: 580px) {
+      --items-column: 3;
+    }
+    @container (min-width: 860px) {
+      --items-column: 4;
+    }
+    @container (min-width: 1120px) {
+      --items-column: 5;
+    }
+  }
+}
+
+.paginate {
+  margin-top: 36px;
+}
+
+.controller {
+  margin-top: 78px;
+}

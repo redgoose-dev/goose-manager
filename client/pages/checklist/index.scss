@@ -1,5 +1,9 @@
 @use '../../scss/mixins';
 
+.content {
+  container-type: inline-size;
+}
+
 .items {
   @container (min-width: 560px) {
     --items-column: 2;

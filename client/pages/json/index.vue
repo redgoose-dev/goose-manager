@@ -5,29 +5,33 @@
     :items="state.category"
     :active="route.query.category"
     @select="onSelectCategory"/>
-  <IndexWithFilter class="content">
+  <IndexWithFilter class="container">
     <template #content>
-      <Loading v-if="state.loading"/>
-      <Items v-else-if="state.index?.length > 0">
-        <Card
-          v-for="item in state.index"
-          :title="item.title"
-          :description="item.description"
-          :href="`./${item.srl}/`"
-          :meta="item.meta"
-          :nav="[
-            { label: '수정', href: `./${item.srl}/edit/` },
-            { label: '삭제', href: `./${item.srl}/delete/` },
-          ]"/>
-      </Items>
-      <Empty v-else title="No data"/>
-      <Paginate
-        v-if="state.total > 0"
-        :model-value="route.query.page"
-        :total="state.total"
-        :size="preference.json.pageCount"
-        :range="preference.json.pageRange"
-        @update:model-value="onChangePage"/>
+      <div class="content">
+        <Loading v-if="state.loading"/>
+        <Items
+          v-else-if="state.index?.length > 0"
+          theme="card">
+          <Card
+            v-for="item in state.index"
+            :title="item.title"
+            :description="item.description"
+            :href="`./${item.srl}/`"
+            :meta="item.meta"
+            :nav="[
+              { label: '수정', href: `./${item.srl}/edit/` },
+              { label: '삭제', href: `./${item.srl}/delete/` },
+            ]"/>
+        </Items>
+        <Empty v-else title="No data"/>
+        <Paginate
+          v-if="state.total > 0"
+          :model-value="route.query.page"
+          :total="state.total"
+          :size="preference.json.pageCount"
+          :range="preference.json.pageRange"
+          @update:model-value="onChangePage"/>
+      </div>
     </template>
     <template #filter>
       <Filter
@@ -55,7 +59,6 @@
 <script setup>
 import { reactive, onMounted, watch, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { preferenceStore } from '../../store/app.js'
 import { getData } from '../../structure/json/index.js'
 import { serialize } from '../../libs/strings.js'
 import { scrollTo } from '../../libs/util.js'
@@ -68,7 +71,7 @@ import Filter from '../../components/pages/json/filter.vue'
 
 const router = useRouter()
 const route = useRoute()
-const preference = preferenceStore()
+const preference = inject('preference')
 const error = inject('error')
 const errorPath = [ 'pages', 'json', 'index.vue' ]
 const state = reactive({
@@ -96,7 +99,7 @@ onMounted(async () => {
   {
     error.catch({
       path: [ ...errorPath, 'onMounted' ],
-      message: '데이터를 가져오지 못했습니다.',
+      message: 'JSON 데이터를 가져오지 못했습니다.',
       error: e,
       useToast: false,
     })

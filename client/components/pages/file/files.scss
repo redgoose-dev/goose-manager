@@ -1,6 +1,8 @@
 @use '../../../scss/mixins';
 
-.files {}
+.files {
+  container-type: inline-size;
+}
 
 .total {
   margin: 0;
@@ -10,7 +12,19 @@
   user-select: none;
 }
 
-.index {
+.items {
   margin: 12px 0 0;
   --item-img-ratio: 6/5;
+  &.theme--thumbnail {
+    --items-column: 3;
+    @container (min-width: 780px) {
+      --items-column: 4;
+    }
+    @container (min-width: 1080px) {
+      --items-column: 5;
+    }
+    @container (min-width: 1280px) {
+      --items-column: 6;
+    }
+  }
 }

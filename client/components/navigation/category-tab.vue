@@ -1,5 +1,5 @@
 <template>
-<nav class="category-tab">
+<nav v-if="props.items?.length > 0" class="category-tab">
   <ul>
     <li v-for="o in props.items">
       <a

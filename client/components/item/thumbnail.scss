@@ -11,10 +11,6 @@
   width: var(--item-width, auto);
   border-radius: mixins.radius(var(--item-radius, 82px));
   min-width: 0;
-  &:hover {
-    --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-sub), 100%)};
-    --item-shadow-2: 0 2px 24px #{mixins.mix-alpha(var(--color-base), 25%)};
-  }
   &__thumbnail {
     width: 100%;
     height: var(--item-image-height, auto);
@@ -53,6 +49,21 @@
     border-top: .5px solid var(--color-weak);
     :deep(li > span) {
       font-size: 14px;
+    }
+  }
+  :deep(.mark) {
+    --mark-size: 32px;
+  }
+  &--link {
+    :deep(.mark) {
+      transition: box-shadow 160ms ease-out;
+    }
+    &:hover {
+      --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-sub), 100%)};
+      --item-shadow-2: 0 2px 24px #{mixins.mix-alpha(var(--color-base), 25%)};
+      :deep(.mark) {
+        box-shadow: 2px -2px 0 #{mixins.mix-alpha(var(--color-sub), 100%)};
+      }
     }
   }
 }

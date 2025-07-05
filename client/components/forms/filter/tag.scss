@@ -5,7 +5,7 @@
 .dropdown {
   --dropdown-body-width: 100%;
   &:deep(.body) {
-    width: 100%;
+    width: calc(100% + 30px);
     left: 0;
   }
 }

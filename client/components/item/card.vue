@@ -2,7 +2,7 @@
 <section :class="['item', props.href && 'item--link']">
   <slot v-if="$slots.before" name="before"/>
   <ThumbnailImage
-    v-if="props.alt"
+    v-if="props.image"
     :src="props.image"
     :icon="props.icon"
     :href="props.href"

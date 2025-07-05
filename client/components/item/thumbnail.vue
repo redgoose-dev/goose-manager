@@ -1,5 +1,5 @@
 <template>
-<section class="item">
+<section :class="['item', props.href && 'item--link']">
   <slot v-if="$slots.before" name="before"/>
   <ThumbnailImage
     :src="props.image"

@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { request } from '../../libs/api.js'
 import Icon from '../icon/index.vue'
 
@@ -34,6 +34,7 @@ const src = ref(null)
 const error = ref(false)
 
 onMounted(_fetch)
+onBeforeUnmount(beforeUnmounted)
 watch(() => props.src, _fetch)
 
 async function _fetch()
@@ -48,10 +49,6 @@ async function _fetch()
   if (props.src.startsWith('blob:'))
   {
     src.value = props.src
-    if (props.revoke)
-    {
-      setTimeout(() => URL.revokeObjectURL(src.value), 100)
-    }
   }
   else if (props.useFetch)
   {
@@ -62,10 +59,6 @@ async function _fetch()
       })
       if (!blob) throw true
       src.value = URL.createObjectURL(blob)
-      if (props.revoke)
-      {
-        setTimeout(() => URL.revokeObjectURL(src.value), 100)
-      }
     }
     catch (e)
     {
@@ -76,6 +69,12 @@ async function _fetch()
   {
     src.value = props.src
   }
+}
+
+function beforeUnmounted()
+{
+  if (!props.revoke) return
+  URL.revokeObjectURL(src.value)
 }
 </script>
 

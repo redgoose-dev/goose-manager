@@ -1,15 +1,26 @@
 @use '../../scss/mixins';
 
-.content {
+.container {
   margin-top: 24px;
+  min-height: 360px;
+}
+
+.content {
+  container-type: inline-size;
 }
 
 .items {
-  @container (min-width: 560px) {
-    --items-column: 2;
+  &.theme--card {
+    @container (min-width: 560px) {
+      --items-column: 2;
+    }
   }
 }
 
 .paginate {
   margin-top: 36px;
+}
+
+.controller {
+  margin-top: 78px;
 }

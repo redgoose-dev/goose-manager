@@ -48,3 +48,24 @@ export function checkingJSON(json)
   }
   JSON.parse(json)
 }
+
+/**
+ * deep update object
+ * @param {object} obj
+ * @param {string} path
+ * @param {any} value
+ * @returns {object}
+ */
+export function deepUpdate(obj, path, value)
+{
+  const keys = path.split(/\.|\[|\]/).filter(key => key !== '')
+  let current = obj
+  for (let i = 0; i < keys.length - 1; i++)
+  {
+    const key = keys[i]
+    if (!current[key]) current[key] = isNaN(keys[i + 1]) ? {} : []
+    current = current[key]
+  }
+  current[keys[keys.length - 1]] = value
+  return obj
+}

@@ -1,13 +1,6 @@
 <template>
 <article>
-  <PageHeader
-    module="article"
-    :title="_header.title"
-    :description="_header.description"/>
-  <CategoryTab
-    :items="state.category"
-    :active="route.query.category"
-    @select="onSelectCategory"/>
+  <PageHeader module="article"/>
   <IndexWithFilter class="container-over">
     <template #content>
       <div class="content">
@@ -50,68 +43,32 @@
         @update="onUpdateFilter"/>
     </template>
   </IndexWithFilter>
-  <Controller>
-    <template #left>
-      <ButtonGroup>
-        <ButtonBasic href="../../" icon-left="cloud">
-          둥지
-        </ButtonBasic>
-        <ButtonBasic href="../category/" icon-left="server" color="code">
-          분류
-        </ButtonBasic>
-      </ButtonGroup>
-    </template>
-    <template #right>
-      <ButtonBasic href="./create/" icon-left="plus" color="key">
-        아티클 만들기
-      </ButtonBasic>
-    </template>
-  </Controller>
 </article>
 </template>
 
 <script setup>
 import { reactive, computed, onMounted, watch, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../../structure/article/index.js'
-import { serialize } from '../../../libs/strings.js'
-import { scrollTo } from '../../../libs/util.js'
-import PageHeader from '../../../components/header/page.vue'
-import { Loading, Empty, IndexWithFilter } from '../../../components/content/index.js'
-import { Items, Card, Thumbnail, Mark } from '../../../components/item/index.js'
-import { Controller, CategoryTab, Paginate } from '../../../components/navigation/index.js'
-import { ButtonGroup, ButtonBasic } from '../../../components/button/index.js'
-import Filter from '../../../components/pages/article/filter.vue'
+import { getData } from '../../structure/article/index.js'
+import { serialize } from '../../libs/strings.js'
+import { scrollTo } from '../../libs/util.js'
+import PageHeader from '../../components/header/page.vue'
+import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
+import { Items, Card, Thumbnail, Mark } from '../../components/item/index.js'
+import { Paginate } from '../../components/navigation/index.js'
+import Filter from '../../components/pages/article/filter.vue'
 
 const router = useRouter()
 const route = useRoute()
 const preference = inject('preference')
 const error = inject('error')
-const errorPath = [ 'pages', 'nest', 'article', 'index.vue' ]
+const errorPath = [ 'pages', 'article', 'index.vue' ]
 const state = reactive({
   loading: true,
   article: null,
-  nest: null,
-  category: [],
   tag: [],
 })
 
-const _header = computed(() => {
-  if (!!state.nest)
-  {
-    return {
-      title: `[${state.nest.code}] Article`,
-      description: state.nest.description || undefined,
-    }
-  }
-  else
-  {
-    return {
-      title: 'Nest / Article',
-      description: undefined,
-    }
-  }
-})
 const _itemComponent = computed(() => {
   switch (preference.article.indexTheme)
   {
@@ -127,14 +84,11 @@ onMounted(async () => {
   try
   {
     state.loading = true
-    const { article, category, nest, tag } = await getData(route.query, {
-      nestSrl: Number(route.params.nest),
+    const { article, tag } = await getData(route.query, {
       size: preference.article.pageCount,
       all: true,
     })
     state.article = article
-    state.nest = nest
-    state.category = category
     state.tag = tag
   }
   catch (e)
@@ -159,13 +113,11 @@ async function _fetchContent()
   {
     scrollTo()
     state.loading = true
-    const { article, category } = await getData(route.query, {
-      nestSrl: Number(route.params.nest),
+    const { article } = await getData(route.query, {
       size: preference.article.pageCount,
       all: false,
     })
     state.article = article
-    state.category = category
   }
   catch (e)
   {
@@ -180,17 +132,6 @@ async function _fetchContent()
   {
     state.loading = false
   }
-}
-
-function onSelectCategory(item, e)
-{
-  e.preventDefault()
-  const query = {
-    ...route.query,
-    category: item.srl,
-    page: null,
-  }
-  router.push(`./${serialize(query, true)}`).then()
 }
 
 function onChangePage(n)
@@ -214,4 +155,4 @@ function onUpdateFilter(value)
 }
 </script>
 
-<style src="../../article/index.scss" lang="scss" scoped></style>
+<style src="./index.scss" lang="scss" scoped></style>

@@ -1,8 +1,6 @@
 <template>
 <div class="index-wrap">
-  <div class="index-wrap__content">
-    <slot name="content"/>
-  </div>
+  <slot name="content"/>
   <slot name="filter"/>
 </div>
 </template>
@@ -16,8 +14,5 @@
   grid-template-columns: 1fr auto;
   gap: 0 30px;
   align-items: start;
-  &__content {
-    container-type: inline-size;
-  }
 }
 </style>

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { pureObject } from '../libs/object.js'
+import { pureObject, deepUpdate } from '../libs/object.js'
+import { localRequest } from '../libs/api.js'
 
 export const currentStore = defineStore('current', {
   state: () => ({
@@ -15,11 +16,7 @@ export const preferenceStore = defineStore('preference', {
     return result
   },
   getters: {
-    _pure: (data) => {
-      let result = {}
-      for (const key of preferenceKeys) result[key] = data[key]
-      return pureObject(result)
-    }
+    _pure: (data) => toPureObject(data, preferenceKeys),
   },
   actions: {
     setup(pref)
@@ -31,10 +28,18 @@ export const preferenceStore = defineStore('preference', {
         this[key] = value
       }
     },
-    async update()
+    async update(path = null, value = null)
     {
-      // TODO: save preference
-      console.log('update preference')
+      if (path)
+      {
+        deepUpdate(this, path, value || null)
+      }
+      const newValue = toPureObject(this, preferenceKeys)
+      await localRequest({
+        method: 'patch',
+        url: '/zone/preference/',
+        body: JSON.stringify(newValue),
+      })
     },
     destroy()
     {
@@ -45,3 +50,13 @@ export const preferenceStore = defineStore('preference', {
     },
   },
 })
+
+function toPureObject(data, keys)
+{
+  let result = {}
+  for (const key of keys)
+  {
+    result[key] = data[key]
+  }
+  return pureObject(result)
+}

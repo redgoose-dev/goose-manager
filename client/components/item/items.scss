@@ -10,23 +10,4 @@
   &--list {
     --items-gap: 8px;
   }
-  &--card {
-    --items-column: 2;
-  }
-  &--thumbnail {
-    --items-column: 3;
-  }
-  @include mixins.responsive(desktop) {
-    &--thumbnail {
-      --items-column: 4;
-    }
-  }
-  @include mixins.responsive(max) {
-    &--card {
-      --items-column: 3;
-    }
-    &--thumbnail {
-      --items-column: 5;
-    }
-  }
 }

@@ -37,6 +37,7 @@
         <Empty
           v-if="!(_contextItems.length > 0)"
           icon="x-circle"
+          title="no tag"
           class="context__empty"/>
       </template>
     </Context>

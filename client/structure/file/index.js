@@ -43,8 +43,6 @@ function filtering(src)
         icon,
         meta: [
           `날짜: ${getDate(o.created_at)}`,
-          `모듈: ${o.module}`,
-          `모듈번호: ${o.module_srl}`,
           `타입: ${o.mime.split('/')[0]}`,
           `사이즈: ${getByte(o.size)}`,
         ],

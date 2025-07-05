@@ -88,8 +88,4 @@ async function onChangePage(n)
 }
 </script>
 
-<style lang="scss" scoped>
-.paginate {
-  margin: 48px 0 0;
-}
-</style>
+<style src="./index.scss" lang="scss" scoped></style>

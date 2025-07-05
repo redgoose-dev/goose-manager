@@ -40,7 +40,7 @@ const _orderOptions = computed(() => {
   ]
 })
 const _sortOptions = computed(() => {
-  return props.orderOptions?.length > 0 ? props.orderOptions : [
+  return props.sortOptions?.length > 0 ? props.sortOptions : [
     { label: 'Z ~ A', value: '' },
     { label: 'A ~ Z', value: 'asc' },
   ]

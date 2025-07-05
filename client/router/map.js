@@ -67,6 +67,36 @@ const nest = [
     component: () => import('../pages/nest/article/index.vue'),
     meta: { active: 'nest' },
   },
+  {
+    path: '/nest/:nest/article/create/',
+    name: 'NestArticleCreate',
+    component: () => import('../pages/nest/article/create.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:nest/article/:article/',
+    name: 'NestArticleDetail',
+    component: () => import('../pages/nest/article/detail.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:nest/article/:article/edit/',
+    name: 'NestArticleEdit',
+    component: () => import('../pages/nest/article/edit.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:nest/article/:article/delete/',
+    name: 'NestArticleDelete',
+    component: () => import('../pages/nest/article/delete.vue'),
+    meta: { active: 'nest' },
+  },
+  {
+    path: '/nest/:nest/article/:article/change-nest/',
+    name: 'NestArticleChangeNest',
+    component: () => import('../pages/nest/article/change-nest.vue'),
+    meta: { active: 'nest' },
+  },
   // category
   {
     path: '/nest/:nest/category/',
@@ -93,7 +123,38 @@ const nest = [
     meta: { active: 'nest' },
   },
 ]
-const article = []
+const article = [
+  {
+    path: '/article/',
+    name: 'ArticleIndex',
+    component: () => import('../pages/article/index.vue'),
+    meta: { active: 'article' },
+  },
+  {
+    path: '/article/:article/',
+    name: 'ArticleDetail',
+    component: () => import('../pages/article/detail.vue'),
+    meta: { active: 'article' },
+  },
+  {
+    path: '/article/:article/edit/',
+    name: 'ArticleEdit',
+    component: () => import('../pages/article/edit.vue'),
+    meta: { active: 'article' },
+  },
+  {
+    path: '/article/:article/delete/',
+    name: 'ArticleDelete',
+    component: () => import('../pages/article/delete.vue'),
+    meta: { active: 'article' },
+  },
+  {
+    path: '/nest/:nest/article/:article/change-nest/',
+    name: 'ArticleChangeNest',
+    component: () => import('../pages/article/change-nest.vue'),
+    meta: { active: 'article' },
+  },
+]
 const file = [
   {
     path: '/file/',

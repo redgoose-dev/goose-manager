@@ -5,43 +5,45 @@
       오늘로 이동
     </ButtonBasic>
   </PageHeader>
-  <IndexWithFilter class="container">
+  <IndexWithFilter>
     <template #content>
-      <Loading v-if="state.loading"/>
-      <Items v-else-if="state.index?.length > 0">
-        <Card
-          v-for="o in state.index"
-          :title="o.title"
-          :href="`../${o.srl}/`"
-          :nav="[
-            { label: '수정', href: `../${o.srl}/edit/` },
-            { label: '삭제', href: `../${o.srl}/delete/` },
-          ]">
-          <template #after>
-            <div
-              :class="[
-                'graph',
-                o.percent === 100 && 'complete',
-                o.percent === 0 && 'zero',
-              ]">
-              <ProgressDonut
-                :radius="30"
-                :stroke="7"
-                :percent="o.percent"/>
-              <p>{{o.percent}}%</p>
-            </div>
-            <Mark v-if="o.today"/>
-          </template>
-        </Card>
-      </Items>
-      <Empty v-else title="No data"/>
-      <Paginate
-        v-if="state.total > 0"
-        :model-value="route.query.page"
-        :total="state.total"
-        :size="preference.checklist.pageCount"
-        :range="preference.checklist.pageRange"
-        @update:model-value="onChangePage"/>
+      <div class="content">
+        <Loading v-if="state.loading"/>
+        <Items v-else-if="state.index?.length > 0">
+          <Card
+            v-for="o in state.index"
+            :title="o.title"
+            :href="`../${o.srl}/`"
+            :nav="[
+              { label: '수정', href: `../${o.srl}/edit/` },
+              { label: '삭제', href: `../${o.srl}/delete/` },
+            ]">
+            <template #after>
+              <div
+                :class="[
+                  'graph',
+                  o.percent === 100 && 'complete',
+                  o.percent === 0 && 'zero',
+                ]">
+                <ProgressDonut
+                  :radius="30"
+                  :stroke="7"
+                  :percent="o.percent"/>
+                <p>{{o.percent}}%</p>
+              </div>
+              <Mark v-if="o.today"/>
+            </template>
+          </Card>
+        </Items>
+        <Empty v-else title="No data"/>
+        <Paginate
+          v-if="state.total > 0"
+          :model-value="route.query.page"
+          :total="state.total"
+          :size="preference.checklist.pageCount"
+          :range="preference.checklist.pageRange"
+          @update:model-value="onChangePage"/>
+      </div>
     </template>
     <template #filter>
       <Filter

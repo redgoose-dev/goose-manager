@@ -14,7 +14,7 @@
 import NavItem from './item.vue'
 
 const props = defineProps({
-  items: Array,
+  items: Array, // { label, href, target, click }
 })
 </script>
 
