@@ -77,6 +77,7 @@ async function control(sw)
     if (props.scroll)
     {
       await nextTick()
+      await nextTick()
       window.scrollTo({ top: backupScrollY.value })
     }
   }

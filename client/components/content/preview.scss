@@ -10,7 +10,7 @@
   grid-template-rows: auto 1fr;
   border-radius: 6px;
   &__content {
-    padding: 40px;
+    padding: 40px 40px 60px;
     box-sizing: border-box;
     overflow: auto;
     @include mixins.custom-scrollbar();

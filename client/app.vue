@@ -23,6 +23,7 @@ const current = currentStore()
 // set provides
 provide('error', new ErrorTrigger())
 provide('preference', preferenceStore())
+provide('auth', auth)
 
 const error = ref(undefined)
 const layout = computed(() => {

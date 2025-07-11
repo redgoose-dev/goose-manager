@@ -121,7 +121,10 @@ export function formData(src)
 {
   if (!src) return null
   let data = new FormData()
-  Object.keys(src).forEach(o => data.append(o, src[o]))
+  Object.keys(src).forEach(o => {
+    if (!o || src[o] === undefined || src[o] === null) return
+    data.append(o, src[o])
+  })
   return data
 }
 

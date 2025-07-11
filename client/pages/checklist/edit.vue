@@ -5,23 +5,25 @@
   <form v-else class="post" @submit.prevent="onSubmit">
     <h2 class="heading">{{_date}}</h2>
     <div class="body">
-      <PostToolbar @select="onSelectToolbar"/>
+      <PostToolbar
+        :use-file-manager="true"
+        :use-preview="true"
+        @select="onSelectToolbar"/>
       <FormTextarea
         ref="$content"
-        v-model="forms.content.value"
+        v-model:content="forms.content.value"
+        v-model:position="state.position"
         name="content"
         id="content"
         :auto-size="true"
-        class="content"
-        @position="onPositionContent"/>
+        class="content"/>
     </div>
     <Controller>
       <template #left>
         <ButtonBasic
           type="button"
           icon-left="arrow-left"
-          @click="router.back()"
-          @submit="onSubmit">
+          @click="router.back()">
           뒤로가기
         </ButtonBasic>
       </template>
@@ -47,7 +49,7 @@
         module="checklist"
         :module-srl="state.srl"
         :shortcut="true"
-        :use-fetch="false"
+        :private="false"
         :multiple-selection="true"
         file-key="code"
         @insert="onInsertFileManager">
@@ -70,11 +72,8 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { marked } from 'marked'
 import { getData, submit } from '../../structure/checklist/edit.js'
 import { dateFormat } from '../../libs/date.js'
-import * as contentCode from '../../libs/content-code.js'
-import { defaultOptions, baseRenderer, checklistRenderer, renderContent } from '../../modules/marked.js'
 import PageHeader from '../../components/header/page.vue'
 import { FormTextarea } from '../../components/forms/index.js'
 import { PostToolbar, Controller } from '../../components/navigation/index.js'
@@ -131,24 +130,12 @@ onMounted(async () => {
   }
 })
 
-function onSelectToolbar(code)
+function onSelectToolbar(code, value)
 {
   switch (code)
   {
-    case 'element-space':
-      insertTextToContent(contentCode.space.code, contentCode.space.cursor)
-      break
-    case 'element-iframe':
-      insertTextToContent(contentCode.iframe.code, contentCode.iframe.cursor)
-      break
-    case 'element-image':
-      insertTextToContent(contentCode.image.code, contentCode.image.cursor)
-      break
-    case 'layout-group':
-      insertTextToContent(contentCode.gridGroup.code, contentCode.gridGroup.cursor)
-      break
-    case 'layout-image':
-      insertTextToContent(contentCode.gridItem.code, contentCode.gridItem.cursor)
+    case 'insert':
+      $content.value.insert(value.code, value.cursor)
       break
     case 'open-file-manager':
       state.openFileManager = true
@@ -159,28 +146,6 @@ function onSelectToolbar(code)
   }
 }
 
-async function insertTextToContent(text, cursor)
-{
-  if (!text) return
-  let content = forms.content.value + ''
-  const { start } = state.position
-  if (start === 0) text = text.replace(/^\n/g, '')
-  content = content.slice(0, start) + text + content.slice(start)
-  forms.content.value = content
-  let last = start + (cursor || text.length)
-  state.position.start = last
-  state.position.end = last
-  await nextTick()
-  $content.value.changeCursor(state.position.start, state.position.end)
-  $content.value.focus()
-}
-
-function onPositionContent(o)
-{
-  state.position.start = o.start
-  state.position.end = o.end
-}
-
 function controlPreview(sw)
 {
   if (sw && !forms.content.value)
@@ -188,25 +153,12 @@ function controlPreview(sw)
     toast.add('내용이 비었습니다.', 'error').then()
     return
   }
-  if (sw)
-  {
-    let renderer = baseRenderer()
-    renderer = checklistRenderer(renderer, true)
-    const content = renderContent(forms.content.value)
-    state.preview = marked.parse(content, {
-      ...defaultOptions,
-      renderer,
-    })
-  }
-  else
-  {
-    state.preview = ''
-  }
+  state.preview = sw ? forms.content.value : ''
 }
 
 function onInsertFileManager(str)
 {
-  insertTextToContent(str)
+  $content.value.insert(str)
   state.openFileManager = false
 }
 

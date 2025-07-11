@@ -10,8 +10,8 @@
       <Image
         :src="props.src"
         draggable="false"
-        :use-fetch="props.useFetch"
-        :alt="props.title"/>
+        :alt="props.title"
+        :private="props.private"/>
     </div>
     <nav class="close">
       <button
@@ -36,7 +36,7 @@ const _close = ref()
 const props = defineProps({
   src: String,
   title: String,
-  useFetch: Boolean,
+  private: Boolean,
 })
 const emits = defineEmits([ 'close' ])
 const $root = ref()

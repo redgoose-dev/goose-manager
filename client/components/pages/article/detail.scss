@@ -1,0 +1,87 @@
+@use '../../../scss/mixins';
+
+.article {
+  padding: 16px 0 0;
+}
+
+.header {
+  text-align: center;
+  box-sizing: border-box;
+  small {
+    display: block;
+    margin: 0;
+    font-family: var(--font-eng);
+    font-size: 12px;
+    color: var(--color-sub);
+    font-weight: 700;
+    line-height: 1.25;
+    user-select: none;
+    > a {
+      text-decoration: none;
+    }
+    > a:not(:first-child):before {
+      content: ' / ';
+      padding: 0 4px;
+    }
+  }
+  h1 {
+    margin: 2px 0 0;
+    font-size: 36px;
+    letter-spacing: -1.5px;
+    line-height: 1.15;
+    font-weight: 800;
+    word-break: break-all;
+    color: var(--color-reverse);
+  }
+  p {
+    margin: 6px 0 0;
+    font-size: 10px;
+    user-select: none;
+    > span:not(:first-child):before {
+      content: ', ';
+      padding: 0 2px 0 0;
+    }
+  }
+  @include mixins.responsive(desktop) {
+    position: relative;
+    width: calc(100dvw - (var(--size-side-padding) * 2));
+    transform: translateX(-50%);
+    left: 50%;
+  }
+}
+
+.content-body {
+  margin: 42px 0 0;
+  min-height: 240px;
+}
+
+.tags {
+  margin: 36px 0 0;
+  h1 {
+    margin: 0;
+    line-height: 1.05;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    user-select: none;
+  }
+  ul {
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+}
+
+.controller {
+  margin: 52px 0 0;
+}
+
+.comment-content {
+  margin: 80px auto 0;
+  max-width: 780px;
+  padding: 0 40px;
+}

@@ -4,7 +4,6 @@
     <Image
       role="button"
       :src="item.src"
-      :revoke="true"
       class="item__image"
       @click="onClickImage(idx)"/>
     <div class="item__body">

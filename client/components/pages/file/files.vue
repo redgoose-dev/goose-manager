@@ -12,6 +12,7 @@
       :meta="o.meta"
       :nav="o.nav"
       :use-button="true"
+      :private="true"
       @click:body="onClickItem"/>
   </Items>
 </div>

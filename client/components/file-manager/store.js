@@ -9,7 +9,7 @@ const defaultPreference = {
   useThumbnail: false,
   limitCount: 10,
   limitSize: 3 * 1024 * 1024, // 3MB
-  useFetch: false,
+  private: false,
   multipleSelection: true,
 }
 let lastSelectedKey = NaN
@@ -22,7 +22,7 @@ const fileManagerStore = defineStore('file-manager', {
     items: {}, // 아이템 데이터 (key,value)
     index: [], // 아이템의 순서 (key)
     selected: {}, // 선택된 아이템의 키
-    thumbnail: undefined, // 크로핑 데이터 (srl,originSrl,coordinates)
+    thumbnail: undefined, // 크로핑 데이터 (srl,code,originSrl,coordinates)
     windows: [], // 추가로 열려있는 모달의 목록
   }),
   getters: {

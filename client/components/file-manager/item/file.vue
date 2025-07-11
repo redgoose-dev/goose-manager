@@ -10,7 +10,7 @@
     v-if="_isImage"
     :src="_src"
     :alt="props.name"
-    :use-fetch="fileManager.preference.useFetch"
+    :private="fileManager.preference.private"
     class="file__image"/>
   <p v-else class="file__raw">
     <Icon :name="_fileIcon"/>
@@ -34,7 +34,6 @@
 
 <script setup>
 import { computed, inject } from 'vue'
-import { authStore } from '../../../store/auth.js'
 import { getResizePath } from '../../../libs/file.js'
 import { fileContextKey } from '../assets.js'
 import { Image } from '../../content/index.js'
@@ -42,8 +41,6 @@ import { Dropdown, Context } from '../../navigation/dropdown/index.js'
 import { ButtonIcon } from '../../button/index.js'
 import Icon from '../../icon/index.vue'
 
-const fileManager = inject('file-manager')
-const auth = authStore()
 const props = defineProps({
   idx: Number,
   srl: Number,
@@ -53,15 +50,12 @@ const props = defineProps({
   badge: Array,
 })
 const emits = defineEmits([ 'select', 'select-context-item' ])
+const auth = inject('auth')
+const fileManager = inject('file-manager')
 
 const _src = computed(() => {
   const type = props.mime.split('/')[0]
-  let path = getResizePath(props.srl, type === 'image' ? 'w=300&h=300&q=65' : undefined)
-  if (!fileManager.preference.useFetch)
-  {
-    path = `${auth.apiUrl}${path}`
-  }
-  return path
+  return getResizePath(props.srl, type === 'image' ? `w=300&h=300&q=65` : undefined)
 })
 const _isImage = computed(() => {
   return /^image/.test(props.mime || '')

@@ -58,7 +58,8 @@
     <FormTextarea
       v-if="state.mode === 'source'"
       ref="$source"
-      :model-value="props.modelValue"
+      :content="props.modelValue"
+      v-model:position="state.position"
       name="json-source"
       id="json-source"
       :placeholder='`{ "foo": "bar" }`'
@@ -66,8 +67,7 @@
       :required="true"
       :readonly="props.readonly"
       class="source-editor"
-      @position="onUpdatePosition"
-      @update:modelValue="emits('update:modelValue', $event)"
+      @update:content="emits('update:modelValue', $event)"
       @submit="emits('submit')"/>
     <JSONEditor
       v-else
@@ -97,20 +97,20 @@ const props = defineProps({
   readonly: Boolean,
 })
 const emits = defineEmits([ 'update:modelValue', 'submit', 'open:file-manager' ])
-let _jsonEditor
-let _node
-
 const state = reactive({
   mode: 'editor',
   position: { start: 0, end: 0 },
 })
+let _jsonEditor
+let _node
 
 function onClickChangeMode(mode)
 {
   state.mode = mode
   if (mode === 'editor')
   {
-    onUpdatePosition({ start: 0, end: 0 })
+    state.position.start = 0
+    state.position.end = 0
   }
 }
 
@@ -143,12 +143,6 @@ function onContextEditor(e)
       }
       break
   }
-}
-
-function onUpdatePosition({ start, end })
-{
-  state.position.start = start
-  state.position.end = end
 }
 
 function openFileManager(mode)

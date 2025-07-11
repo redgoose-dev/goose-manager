@@ -86,7 +86,7 @@ onMounted(async () => {
       query: {
         module,
         module_srl: moduleSrl,
-        unlimited: 1,
+        unlimited: '1',
       },
     })
     if (res?.data?.index?.length > 0)
@@ -98,6 +98,7 @@ onMounted(async () => {
           {
             fileManager.thumbnail = {
               srl: item.srl,
+              code: item.code,
               coordinates: item.json.thumbnail.coordinates,
               originSrl: item.json.thumbnail.originSrl,
             }

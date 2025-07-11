@@ -41,7 +41,7 @@ export async function getData(mode, srl)
         url: '/app/',
         params: {
           fields: 'srl,code,name',
-          unlimited: 1,
+          unlimited: '1',
         },
       },
       mode === 'edit' && {

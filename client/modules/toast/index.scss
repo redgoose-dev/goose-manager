@@ -2,7 +2,7 @@
   position: fixed;
   left: unset;
   right: 16px;
-  top: 16px;
+  top: calc(var(--size-header-height) + 16px);
   margin: 0;
   padding: 8px;
   overflow: visible;

@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, inject } from 'vue'
+import { reactive, onMounted, watch, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { preferenceStore } from '../../store/app.js'
 import { serialize } from '../../libs/strings.js'
@@ -46,6 +46,7 @@ const state = reactive({
 })
 
 onMounted(load)
+watch(() => route.query, () => load())
 
 async function load()
 {
@@ -53,7 +54,7 @@ async function load()
   {
     scrollTo()
     state.loading = true
-    const { total, index } = await getData()
+    const { total, index } = await getData(route.query.module, route.query.module_srl)
     state.total = total
     state.index = index
   }

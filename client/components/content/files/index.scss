@@ -11,6 +11,7 @@
 .body {
   padding: 40px var(--size-side-padding) 60px;
   overflow: auto;
+  container-type: inline-size;
   @include mixins.custom-scrollbar();
 }
 
@@ -21,5 +22,17 @@
 }
 
 .index {
-  --item-img-ratio: 6/5;
+  --item-img-ratio: 6/4;
+  &.theme--thumbnail {
+    --items-column: 3;
+    @container (min-width: 780px) {
+      --items-column: 4;
+    }
+    @container (min-width: 1080px) {
+      --items-column: 5;
+    }
+    @container (min-width: 1280px) {
+      --items-column: 6;
+    }
+  }
 }

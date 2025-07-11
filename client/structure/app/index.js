@@ -6,7 +6,7 @@ const defaultOptions = {
   query: {
     order: 'srl',
     sort: 'desc',
-    unlimited: 1,
+    unlimited: '1',
     mod: 'count-nest,count-article',
   },
 }

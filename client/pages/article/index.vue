@@ -18,7 +18,8 @@
             :nav="[
               { label: '수정', href: `./${o.srl}/edit/` },
               { label: '삭제', href: `./${o.srl}/delete/` },
-            ]">
+            ]"
+            :private="o.private">
             <template #after>
               <Mark v-if="o.private"/>
             </template>

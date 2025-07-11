@@ -87,7 +87,7 @@ export async function getData(query = {}, options = {})
         url: '/category/',
         params: {
           module: 'json',
-          unlimited: 1,
+          unlimited: '1',
           order: 'turn',
           sort: 'asc',
           tag: query.tag,

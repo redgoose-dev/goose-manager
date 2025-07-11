@@ -44,7 +44,7 @@ export async function getData()
         params: {
           fields: 'srl,code,name,description',
           mod: 'count-nest',
-          unlimited: 1,
+          unlimited: '1',
         },
       },
       {
@@ -52,7 +52,7 @@ export async function getData()
         url: '/nest/',
         params: {
           mod: 'count-article',
-          unlimited: 1,
+          unlimited: '1',
         },
       },
     ],

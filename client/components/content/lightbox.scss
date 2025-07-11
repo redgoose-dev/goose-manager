@@ -20,9 +20,15 @@
   }
   &:is(.modal-enter-active, .modal-leave-active) {
     transition: opacity 240ms ease-out;
+    &::backdrop {
+      transition: opacity 240ms ease-out;
+    }
   }
   &:is(.modal-enter-from, .modal-leave-to) {
     opacity: 0;
+    &::backdrop {
+      opacity: 0;
+    }
   }
   &__body {
     margin: 0;

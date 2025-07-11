@@ -9,7 +9,7 @@
     :alt="props.alt"
     :width="props.width"
     :height="props.height"
-    :use-fetch="_useFetch"
+    :private="props.private"
     class="image"/>
   <i v-else-if="props.icon" class="icon-wrap">
     <Icon :name="props.icon"/>
@@ -33,6 +33,7 @@ const props = defineProps({
   icon: String,
   width: Number,
   height: Number,
+  private: Boolean,
 })
 const emits = defineEmits([ 'click:body' ])
 
@@ -56,7 +57,6 @@ const _rootProps = computed(() => {
   }
   return attr
 })
-const _useFetch = computed(() => (!/^http/.test(props.src)))
 </script>
 
 <style lang="scss" scoped>

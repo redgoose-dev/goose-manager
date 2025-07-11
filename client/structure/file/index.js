@@ -54,12 +54,14 @@ function filtering(src)
   }
 }
 
-export async function getData()
+export async function getData(module, moduleSrl)
 {
   if (!_route) _route = useRoute()
   const preference = preferenceStore()
   const { data, message } = await request('/file/', {
     query: {
+      module,
+      module_srl: moduleSrl,
       order: 'srl',
       sort: 'desc',
       size: preference.file.pagePerSize,

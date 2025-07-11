@@ -10,6 +10,7 @@
     :width="props.json?.width"
     :height="props.json?.height"
     :type="props.thumbnailType"
+    :private="props.private"
     class="item__thumbnail"
     @click:body="onClickLink"/>
   <div class="item__body">
@@ -67,6 +68,7 @@ const props = defineProps({
   useButton: Boolean,
   json: { type: Object, default: {} },
   thumbnailType: String,
+  private: Boolean,
 })
 const emits = defineEmits([ 'click:body' ])
 

@@ -11,6 +11,8 @@
 
 .items {
   --items-gap: 10px 0;
+  --item-img-ratio: 3/2;
+  --img-fit: cover;
   &.theme--card {
     --items-gap: 16px;
     @container (min-width: 640px) {

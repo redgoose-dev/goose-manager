@@ -22,6 +22,7 @@
             :title="o.title"
             :image="o.thumbnail"
             :meta="o.meta"
+            :private="o.private"
             :nav="[
               { label: '수정', href: `./${o.srl}/edit/` },
               { label: '삭제', href: `./${o.srl}/delete/` },

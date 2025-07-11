@@ -63,7 +63,7 @@
       <Files
         title="JSON 첨부파일"
         :items="_item.file"
-        :private="false"
+        :private="true"
         @close="state.filesWindow = false"/>
     </Modal>
   </teleport>

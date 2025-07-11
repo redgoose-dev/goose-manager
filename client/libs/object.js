@@ -35,6 +35,20 @@ export function filterObjectToQuery(query)
 }
 
 /**
+ * url에 쿼리 파라메터를 추가한다.
+ * @param {string} url
+ * @param {string} key
+ * @param {string} value
+ * @return {string}
+ */
+export function addQueryParams(url, key, value)
+{
+  const urlObj = new URL(url, window.location.origin)
+  urlObj.searchParams.set(key, value)
+  return urlObj.toString()
+}
+
+/**
  * checking json
  * @param {string|object} json
  * @throws {Error}

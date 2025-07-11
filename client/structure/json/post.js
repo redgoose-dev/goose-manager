@@ -25,7 +25,7 @@ function filteringCategory(src)
 export async function getData(mode, srl)
 {
   if (!mode) return { app: [], nest: undefined }
-  const { json, category, json_tag, json_category } = await request('/mix/', {
+  const { json, category, json_tag } = await request('/mix/', {
     method: 'post',
     body: [
       {

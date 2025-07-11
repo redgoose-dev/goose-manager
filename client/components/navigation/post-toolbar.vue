@@ -30,6 +30,7 @@
           @select="onClickItem($event.key)"/>
       </Dropdown>
       <ButtonBasic
+        v-if="props.useFileManager"
         icon-left="paperclip"
         size="small"
         color="key"
@@ -53,6 +54,7 @@
   </div>
   <div class="toolbar__right">
     <ButtonBasic
+      v-if="props.usePreview"
       icon-left="eye"
       size="small"
       color="sub"
@@ -64,14 +66,55 @@
 </template>
 
 <script setup>
-import { ButtonGroup, ButtonBasic, ButtonIcon } from '../button/index.js'
+import { contentCode } from '../../modules/marked.js'
+import { ButtonGroup, ButtonBasic } from '../button/index.js'
 import { Dropdown, Context } from './dropdown/index.js'
 
+const props = defineProps({
+  useFileManager: Boolean,
+  usePreview: Boolean,
+})
 const emits = defineEmits([ 'select' ])
 
 function onClickItem(code)
 {
-  emits('select', code)
+  switch (code)
+  {
+    case 'element-space':
+      emits('select', 'insert', {
+        code: contentCode.space.code,
+        cursor: contentCode.space.cursor,
+      })
+      break
+    case 'element-iframe':
+      emits('select', 'insert', {
+        code: contentCode.iframe.code,
+        cursor: contentCode.iframe.cursor,
+      })
+      break
+    case 'element-image':
+      emits('select', 'insert', {
+        code: contentCode.image.code,
+        cursor: contentCode.image.cursor,
+      })
+      break
+    case 'layout-group':
+      emits('select', 'insert', {
+        code: contentCode.gridGroup.code,
+        cursor: contentCode.gridGroup.cursor,
+      })
+      break
+    case 'layout-image':
+      emits('select', 'insert', {
+        code: contentCode.gridItem.code,
+        cursor: contentCode.gridItem.cursor,
+      })
+      break
+    case 'open-file-manager':
+    case 'preview':
+      emits('select', code)
+      break
+  }
 }
 function onClickGuide({ href })
 {

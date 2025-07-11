@@ -2,14 +2,14 @@
 <form ref="$root" @submit.prevent="onSubmit">
   <Fieldset :disabled="state.loading">
     <Field
-      v-if="state.category?.length > 0"
+      v-if="data.category?.length > 0"
       label="분류"
       for="post-category">
       <FormSelect
         id="post-category"
         name="post-category"
         v-model="forms.category.value"
-        :options="state.category"
+        :options="data.category"
         value-type="text"
         placeholder="JSON 분류"
         class="category"/>
@@ -81,7 +81,7 @@
         :module-srl="props.srl"
         :shortcut="true"
         :use-thumbnail="false"
-        :use-fetch="false"
+        :private="false"
         :multiple-selection="state.fileManager.mode !== 'editor'"
         class="file-manager"
         @insert="onInsertFile">
@@ -100,7 +100,6 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { preferenceStore } from '../../../store/app.js'
 import { getData, submit } from '../../../structure/json/post.js'
 import { Fieldset, Field, Help } from '../../forms/fieldset/index.js'
 import { FormSelect, FormInput, FormTag } from '../../forms/index.js'
@@ -111,12 +110,12 @@ import { Modal, ModalHeader } from '../../modal/index.js'
 import { FileManager } from '../../file-manager/index.js'
 
 const router = useRouter()
+const preference = inject('preference')
 const toast = inject('toast')
 const error = inject('error')
-const preference = preferenceStore()
+const errorPath = [ 'components', 'pages', 'json', 'post.vue' ]
 const $root = ref()
 const $editor = ref()
-const errorPath = [ 'components', 'pages', 'json', 'post.vue' ]
 const props = defineProps({
   mode: { type: String, required: true },
   srl: Number,
@@ -125,11 +124,13 @@ const emits = defineEmits( [ 'submit' ])
 const state = reactive({
   loading: props.mode === 'edit',
   processing: false,
-  category: [],
   fileManager: {
     open: false,
     mode: '', // editor,source
   },
+})
+const data = reactive({
+  category: [],
 })
 const forms = reactive({
   name: { value: '', error: null },
@@ -157,7 +158,7 @@ onMounted(async () => {
       forms.json.value = json.json
       forms.tag.value = json.tag
     }
-    state.category = category
+    data.category = category
   }
   catch (e)
   {

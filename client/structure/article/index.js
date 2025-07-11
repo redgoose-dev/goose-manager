@@ -13,6 +13,7 @@ function filteringArticle(src)
       let title = o.title
       if (o.nest?.code) title = `[${o.nest.code}] ${title}`
       else if (o.category?.name) title = `[${o.category.name}] ${title}`
+      const thumbnail = o.json?.thumbnail ? `/file/${o.json?.thumbnail}/` : null
       return {
         srl: o.srl,
         title,
@@ -21,7 +22,7 @@ function filteringArticle(src)
           `조회수:${o.hit || 0}`,
           `좋아요:${o.star || 0}`,
         ],
-        thumbnail: 'https://goose.redgoose.me/data/upload/thumbnail/201905/5cecf0601d059.jpg', // TODO: 나중에 주소 생기면 추가하기
+        thumbnail,
         private: o.mode === 'private',
       }
     })
@@ -105,7 +106,7 @@ export async function getData(query = {}, options = {})
           sort: 'asc',
           tag: query.tag,
           q: query.q,
-          unlimited: 1,
+          unlimited: '1',
           mod: 'count,none,all',
         },
       },

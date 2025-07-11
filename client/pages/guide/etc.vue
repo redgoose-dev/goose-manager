@@ -55,7 +55,7 @@
         v-model="page"
         :total="200"
         :size="10"
-        :range="8"
+        :range="10"
         @update:modelValue="onUpdatePage"/>
     </div>
   </section>
@@ -100,7 +100,7 @@
         :module-srl="310"
         :shortcut="true"
         :use-thumbnail="true"
-        :use-fetch="true"
+        :private="true"
         class="example--file-manager"
         @insert="onInsertFromFileManager">
         <template #header>

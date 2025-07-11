@@ -62,7 +62,7 @@
     </header>
     <div class="example">
       <FormTextarea
-        v-model="textarea"
+        v-model:content="textarea"
         :rows="3"
         placeholder="Please input text"/>
       <hr>

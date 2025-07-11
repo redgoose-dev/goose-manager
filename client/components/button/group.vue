@@ -4,12 +4,6 @@
 </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  size: String, // small
-})
-</script>
-
 <style lang="scss" scoped>
 @use '../../scss/mixins';
 .button-group {

@@ -61,3 +61,16 @@ export function compareDate(date1, date2, compare = '<')
       return d1 === d2
   }
 }
+
+/**
+ * check regdate
+ * `0000-00-00`형식이거나 올바른 날짜인지 검사한다.
+ * @param {string} str
+ * @return {boolean}
+ */
+export function checkRegdate(str = '')
+{
+  if (str.length !== 10) return false
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false
+  return !isNaN(new Date(str).getTime())
+}

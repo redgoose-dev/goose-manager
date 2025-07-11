@@ -13,13 +13,14 @@
           :src="modal.thumbnailEditor.src"
           :options="modal.thumbnailEditor.options"
           :crop-size="[ 640, 480 ]"
+          :private="fileManager.preference.private"
           @close="onCloseThumbnailEditor"
           @submit="onSubmitThumbnailEditor"/>
       </ModalWindow>
     </Modal>
     <Lightbox
       :src="modal.thumbnailPreview"
-      :use-fetch="fileManager.preference.useFetch"
+      :private="fileManager.preference.private"
       @close="onControlThumbnailPreview(false)"/>
     <Modal
       :open="modal.urlUploader"
@@ -39,7 +40,8 @@ import { ref, reactive, provide, inject, onMounted, onBeforeUnmount } from 'vue'
 import fileManagerStore from './store.js'
 import { request, upload, formData } from '../../libs/api.js'
 import { fileUploader } from '../../libs/file.js'
-import { printf } from '../../libs/strings.js'
+import { printf, getByte } from '../../libs/strings.js'
+import { pureObject } from '../../libs/object.js'
 import { convertOutputCode, convertDataToFileItem } from './libs.js'
 import { windowKey, thumbnailContextKey, insertMode } from './assets.js'
 import { Modal, ModalWindow } from '../modal/index.js'
@@ -59,11 +61,15 @@ const props = defineProps({
   moduleSrl: Number,
   shortcut: Boolean,
   useThumbnail: Boolean,
-  useFetch: Boolean,
+  private: Boolean,
   multipleSelection: Boolean,
-  fileKey: { type: String, default: 'srl' },
+  fileKey: { type: String, default: 'code' },
 })
 const emits = defineEmits([ 'insert', 'update-thumbnail' ])
+const toast = inject('toast')
+const auth = inject('auth')
+const error = inject('error')
+const errorPath = [ 'components', 'file-manager', 'index.vue' ]
 const $content = ref()
 const loading = ref(true)
 const modal = reactive({
@@ -75,11 +81,9 @@ const modal = reactive({
   thumbnailPreview: '',
   urlUploader: false,
 })
-const errorPath = [ 'components', 'file-manager', 'index.vue' ]
 
 // setup file manager store
 const fileManager = fileManagerStore()
-const error = inject('error')
 provide('file-manager', fileManager)
 provide('file-manager-event', {
   setup: onSetup,
@@ -147,7 +151,7 @@ function onSetup()
     moduleSrl: props.moduleSrl,
     shortcut: Boolean(props.shortcut),
     useThumbnail: props.useThumbnail,
-    useFetch: props.useFetch,
+    private: props.private,
     multipleSelection: props.multipleSelection,
   })
   if (fileManager.preference.shortcut)
@@ -236,24 +240,26 @@ function uploadFile(files)
   }
   return new Promise((resolve, reject) => {
     if (!file) return
+    const { module, moduleSrl, limitSize, limitCount } = fileManager.preference
     // checking limit file size
-    if (file.size > fileManager.preference.limitSize)
+    if (file.size > limitSize)
     {
+      toast.add(`파일 크기는 ${getByte(limitSize)} 이하로 업로드 가능합니다.`, 'error').then()
       return nextFile(remainingFiles, resolve)
     }
     // checking limit file count
-    if (fileManager._countItems >= fileManager.preference.limitCount)
+    if (fileManager._countItems >= limitCount)
     {
-      return reject(printf('업로드할 수 있는 파일 갯수는 {0}개 입니다.', fileManager.preference.limitCount))
+      return reject(printf('업로드할 수 있는 파일 갯수는 {0}개 입니다.', limitCount))
     }
     // upload file
     upload({
       method: 'put',
       url: '/file/',
       data: {
-        module: fileManager.preference.module,
-        module_srl: fileManager.preference.moduleSrl,
-        json: JSON.stringify({ foo: 'bar' }),
+        module,
+        module_srl: moduleSrl,
+        json: undefined,
         file,
       },
       onProgress: (total, loaded) => {
@@ -381,6 +387,7 @@ async function onSubmitThumbnailEditor({ coordinates, file, options })
         method: 'patch',
         body: formData({
           file,
+          dir_name: 'cover',
           json: JSON.stringify({
             thumbnail: {
               originSrl: options.srl,
@@ -400,6 +407,7 @@ async function onSubmitThumbnailEditor({ coordinates, file, options })
           module: fileManager.preference.module,
           module_srl: fileManager.preference.moduleSrl,
           file,
+          dir_name: 'cover',
           json: JSON.stringify({
             thumbnail: {
               originSrl: options.srl,
@@ -411,10 +419,12 @@ async function onSubmitThumbnailEditor({ coordinates, file, options })
       if (!res.data?.srl) throw new Error('Not found response data')
       fileManager.thumbnail = {
         srl: res.data.srl,
+        code: res.data.code,
         coordinates,
         originSrl: options.srl,
       }
     }
+    emits('update-thumbnail', pureObject(fileManager.thumbnail))
   }
   catch (e)
   {

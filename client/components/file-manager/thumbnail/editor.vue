@@ -7,7 +7,7 @@
   <div class="thumbnail-editor__body">
     <Cropper
       ref="$cropper"
-      :src="src"
+      :src="_src"
       :stencil-size="stencilSize"
       :stencil-props="{
         aspectRatio: _ratio,
@@ -35,7 +35,7 @@
       <p>
         <input
           type="range"
-          :value="zoom"
+          :value="state.zoom"
           :min="0"
           :max=".75"
           :step="0.01"
@@ -44,12 +44,14 @@
       <i><Icon name="zoom-in"/></i>
     </div>
     <div class="submit">
-      <ButtonBasic icon-left="x" @click="emits('close')">
-        닫기
-      </ButtonBasic>
-      <ButtonBasic icon-left="check" color="key" @click="onSubmit">
-        썸네일 만들기
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic icon-left="x" @click="emits('close')">
+          닫기
+        </ButtonBasic>
+        <ButtonBasic icon-left="check" color="key" @click="onSubmit">
+          썸네일 만들기
+        </ButtonBasic>
+      </ButtonGroup>
     </div>
   </nav>
   <ButtonIcon
@@ -60,58 +62,43 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, reactive, computed, onMounted, watch, inject } from 'vue'
 import { Cropper } from 'vue-advanced-cropper'
 import imageResize from 'image-resize'
-import { request } from '../../../libs/api.js'
-import { sleep } from '../../../libs/util.js'
+import { addQueryParams } from '../../../libs/object.js'
 import { createRandomText } from '../../../libs/strings.js'
 import { blobToFile } from '../../../libs/file.js'
-import { ButtonBasic, ButtonIcon } from '../../button/index.js'
+import { ButtonGroup, ButtonBasic, ButtonIcon } from '../../button/index.js'
 import Icon from '../../icon/index.vue'
 import 'vue-advanced-cropper/dist/style.css'
 
-const $cropper = ref()
 const props = defineProps({
   src: String,
   cropSize: { type: Array, default: [ 640, 480 ] },
+  private: Boolean,
   options: Object,
 })
 const emits = defineEmits([ 'close', 'submit' ])
-const src = ref('')
-const zoom = ref(0)
+const auth = inject('auth')
+const $cropper = ref()
+const state = reactive({
+  zoom: 0,
+})
 
+const _src = computed(() => {
+  if (!props.src) return ''
+  if (/^blob:/.test(props.src)) return props.src
+  if (props.src.startsWith('/file/'))
+  {
+    if (props.private) return addQueryParams(`${auth.apiUrl}${props.src}`, '_a', auth.token)
+    else return `${auth.apiUrl}${props.src}`
+  }
+  return props.src
+})
 const _ratio = computed(() => {
   if (props.cropSize?.length === 2) return props.cropSize[0] / props.cropSize[1]
   return 1
 })
-
-onMounted(fetch)
-watch(() => props.src, fetch)
-
-async function fetch()
-{
-  if (!props.src) return
-  if (/^blob:/.test(props.src))
-  {
-    src.value = props.src
-    return
-  }
-  try
-  {
-    const blob = await request(props.src, {
-      method: 'get',
-      responseType: 'blob',
-    })
-    src.value = URL.createObjectURL(blob)
-    await sleep(800)
-    URL.revokeObjectURL(src.value)
-  }
-  catch (e)
-  {
-    src.value = ''
-  }
-}
 
 function stencilSize({ boundaries })
 {
@@ -150,12 +137,12 @@ function onReady()
       ...props.options.coordinates,
     })
   }
-  zoom.value = getCropperZoom()
+  state.zoom = getCropperZoom()
 }
 function onChange()
 {
   if (!$cropper.value) return
-  zoom.value = getCropperZoom()
+  state.zoom = getCropperZoom()
 }
 
 function onChangeZoom(e)
@@ -168,16 +155,16 @@ function onChangeZoom(e)
   {
     const minHeight = cropper.sizeRestrictions.minHeight
     const imageHeight = cropper.imageSize.height
-    z = (imageHeight - zoom.value * (imageHeight - minHeight)) / (imageHeight - value * (imageHeight - minHeight))
+    z = (imageHeight - state.zoom * (imageHeight - minHeight)) / (imageHeight - value * (imageHeight - minHeight))
   }
   else
   {
     const minWidth = cropper.sizeRestrictions.minWidth
     const imageWidth = cropper.imageSize.width
-    z = (imageWidth - zoom.value * (imageWidth - minWidth)) / (imageWidth - value * (imageWidth - minWidth))
+    z = (imageWidth - state.zoom * (imageWidth - minWidth)) / (imageWidth - value * (imageWidth - minWidth))
   }
   cropper.zoom(z)
-  zoom.value = value
+  state.zoom = value
 }
 
 async function onSubmit()

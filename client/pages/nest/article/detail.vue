@@ -1,10 +1,12 @@
 <template>
-<article>
-  nest/article/detail.vue
-</article>
+<Detail
+  :nest-srl="Number(route.params.nest)"
+  :srl="Number(route.params.article)"/>
 </template>
 
 <script setup>
-</script>
+import { useRoute } from 'vue-router'
+import Detail from '../../../components/pages/article/detail.vue'
 
-<style lang="scss" scoped></style>
+const route = useRoute()
+</script>

@@ -1,0 +1,113 @@
+@use '../../../scss/mixins';
+
+.comment {
+  position: relative;
+  box-shadow:
+    0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%),
+    0 2px 24px mixins.mix-alpha(var(--color-base), 20%);
+  border-radius: mixins.radius(64px);
+  background: var(--color-edge);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      .footer__control {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.body {
+  padding: 40px;
+}
+.content-body {
+  --markdown-size-text: .875rem;
+  --markdown-size-text-length: 1.42rem 0;
+}
+
+.editor {
+  .textarea {
+    margin: 8px 0 0;
+    min-height: 100px;
+    max-height: 360px;
+  }
+  footer {
+    display: flex;
+    justify-content: end;
+    margin: 8px 0 0;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 36px;
+  border-top: .5px solid var(--color-weak);
+  background: mixins.mix-alpha(var(--color-blur), 50%);
+  &__date {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.15;
+    user-select: none;
+  }
+  &__control {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0 -4px 0 0;
+    user-select: none;
+    @media (hover: hover) and (pointer: fine) {
+      transition: opacity 200ms ease-out;
+      opacity: 0;
+      &:has(> button.active) {
+        opacity: 1;
+      }
+    }
+    > button {
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+      gap: 0 3px;
+      margin: 0;
+      padding: 0 8px;
+      height: 100%;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      background: none;
+      cursor: pointer;
+      outline: none;
+      border-radius: mixins.radius(36px);
+      --icon-size: 13px;
+      --icon-stroke: 2.75;
+      &:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+      }
+      &:active {
+        opacity: .5;
+      }
+      @include mixins.focus-outline(true, -2px);
+      &.edit {
+        color: var(--color-base);
+        --icon-color: var(--color-base);
+      }
+      &.delete {
+        color: var(--color-error);
+        --icon-color: var(--color-error);
+      }
+      &.active {
+        color: var(--color-sub);
+        --icon-color: var(--color-sub);
+      }
+    }
+  }
+}
+
+.file-manager {
+  height: 100%;
+  --empty-min-height: none;
+  --empty-max-height: none;
+  --file-manager-rows: auto 1fr;
+}

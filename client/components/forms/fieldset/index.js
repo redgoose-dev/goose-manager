@@ -1,5 +1,6 @@
 export { default as Fieldset } from './index.vue'
 export { default as Field } from './field.vue'
+export { default as Fields } from './fields.vue'
 export { default as FieldCheck } from './field-check.vue'
 export { default as Columns } from './columns.vue'
 export { default as Labels } from './labels.vue'

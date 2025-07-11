@@ -15,6 +15,7 @@
         :title="o.title"
         :meta="o.meta"
         :use-button="true"
+        :private="props.private"
         @click:body="onClickItem"/>
     </Items>
     <Empty
@@ -26,8 +27,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { authStore } from '../../../store/auth.js'
+import { computed, inject } from 'vue'
+import { request } from '../../../libs/api.js'
 import { getResizePath } from '../../../libs/file.js'
 import { getDate } from '../../../libs/date.js'
 import { getByte } from '../../../libs/strings.js'
@@ -35,19 +36,23 @@ import { Empty } from '../index.js'
 import { Items, Thumbnail } from '../../item/index.js'
 import { ModalHeader } from '../../modal/index.js'
 
-const auth = authStore()
+// TODO: 컴포넌트 삭제예정 /file/ 페이지에서 사용하기로 함
+
 const props = defineProps({
   title: { type: String, default: '첨부파일' },
   items: Array,
   private: Boolean,
 })
 const emits = defineEmits([ 'close' ])
+const auth = inject('auth')
+const error = inject('error')
+const errorPath = [ 'components', 'content', 'files', 'index.vue' ]
 
 const _items = computed(() => {
   if (!(props.items?.length > 0)) return []
   return props.items.map(o => {
     let image, icon
-    const path = getResizePath(o.code, '', auth.apiUrl)
+    const path = getResizePath(o.code, '')
     if (/^image/.test(o.mime))
     {
       image = `${path}?w=640&h=480&q=65`
@@ -75,9 +80,24 @@ const _items = computed(() => {
   })
 })
 
-function onClickItem(href, e)
+async function onClickItem(href, e)
 {
-  window.open(href, '_blank')
+  try
+  {
+    const res = await request(href, {})
+    if (!res) throw new Error('파일을 가져오지 못했습니다.')
+    if (!(res instanceof Blob)) throw new Error('파일 데이터가 아닙니다.')
+    const uri = URL.createObjectURL(res)
+    window.open(uri)
+  }
+  catch (_e)
+  {
+    error.catch({
+      path: [ ...errorPath, 'onClickItem()' ],
+      message: '파일을 열지 못했습니다.',
+      error: _e,
+    })
+  }
 }
 </script>
 
