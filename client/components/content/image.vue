@@ -1,13 +1,17 @@
 <template>
 <figure class="img">
+  <p v-if="error" class="error">
+    <Icon name="ban"/>
+  </p>
   <img
-    v-if="_src"
+    v-else-if="_src"
     :src="_src"
     :alt="props.alt"
     :width="props.width"
     :height="props.height"
     :draggable="false"
-    loading="lazy"/>
+    loading="lazy"
+    @error="onError"/>
   <p v-else class="empty">
     <Icon name="image"/>
   </p>
@@ -15,7 +19,7 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { ref, computed, inject } from 'vue'
 import { addQueryParams } from '../../libs/object.js'
 import Icon from '../icon/index.vue'
 
@@ -27,6 +31,7 @@ const props = defineProps({
   private: Boolean,
 })
 const auth = inject('auth')
+const error = ref(false)
 
 const _src = computed(() => {
   if (!props.src)
@@ -53,6 +58,11 @@ const _src = computed(() => {
     return props.src
   }
 })
+
+function onError()
+{
+  error.value = true
+}
 </script>
 
 <style src="./image.scss" lang="scss" scoped></style>

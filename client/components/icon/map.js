@@ -8,6 +8,7 @@ const icons = {
   'between-horizontal-start': lucide.BetweenHorizontalStart,
   'brush-cleaning': lucide.BrushCleaning,
   'book-open': lucide.BookOpen,
+  'ban': lucide.Ban,
   'chevron-down': lucide.ChevronDown,
   'chevron-up': lucide.ChevronUp,
   'chevron-left': lucide.ChevronLeft,

@@ -20,8 +20,8 @@ function filteringArticle(src, nest, category)
   const _category = category?.index?.find(item => item.srl === src.data.category_srl) || {}
   return {
     srl: src.data.srl,
-    nestSrl: String(src.data.nest_srl),
-    categorySrl: String(src.data.category_srl),
+    nestSrl: src.data.nest_srl ? String(src.data.nest_srl) : null,
+    categorySrl: src.data.category_srl ? String(src.data.category_srl) : '',
     title: src.data.title,
     description: getDescription(src.data.content),
     meta: [
@@ -46,12 +46,17 @@ function filteringNest(src)
 function filteringCategory(src)
 {
   if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  let items = src.data.index.map(o => {
     return {
       value: String(o.srl),
       label: o.name,
     }
   })
+  items.unshift({
+    value: '0',
+    label: '분류없음',
+  })
+  return items
 }
 
 export async function getData(srl)

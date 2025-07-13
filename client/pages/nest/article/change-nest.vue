@@ -10,7 +10,8 @@
         :description="data.article.description"
         :use-thumbnail="true"
         :image="data.article.image"
-        :meta="data.article.meta"/>
+        :meta="data.article.meta"
+        :private="data.article.private"/>
     </section>
     <Fieldset legend="변경할 둥지 선택하기" class="change-nest">
       <Field label="둥지">
@@ -24,7 +25,7 @@
         <FormSelect
           v-model="forms.categorySrl"
           :options="data.category"
-          placeholder="분류없음"/>
+          placeholder="분류를 선택해주세요."/>
       </Field>
     </Fieldset>
     <Controller>
@@ -91,7 +92,8 @@ onMounted(async () => {
     data.nest = res.nest || []
     data.category = res.category || []
     forms.nestSrl = data.article.nestSrl
-    forms.categorySrl = data.article.categorySrl
+    forms.categorySrl = data.article.categorySrl || ''
+    console.log(forms.categorySrl)
   }
   catch (e)
   {
