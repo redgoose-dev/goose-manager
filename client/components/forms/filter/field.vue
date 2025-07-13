@@ -1,7 +1,8 @@
 <template>
 <div class="field">
   <p v-if="props.label" class="field__label">
-    <label :for="props.for">{{props.label}}</label>
+    <label v-if="props.for" :for="props.for">{{props.label}}</label>
+    <span v-else>{{props.label}}</span>
   </p>
   <slot/>
 </div>

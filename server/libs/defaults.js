@@ -6,19 +6,19 @@ export const defaultPreference = {
     contents: [
       {
         module: 'article',
-        options: { size: 8 },
+        params: { size: 8 },
       },
       {
         module: 'nest',
-        options: { size: 12 },
+        params: { size: 12 },
       },
       {
         module: 'app',
-        options: { size: 6 },
+        params: { size: 6 },
       },
       {
         module: 'json',
-        options: { size: 4 },
+        params: { size: 4 },
       },
     ],
   },

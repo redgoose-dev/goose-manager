@@ -48,9 +48,9 @@
         </ButtonBasic>
         <ButtonBasic
           v-if="data.article?.countFile > 0"
-          :href="`/file/?module=article&module_srl=${props.srl}`"
           icon-left="file-search"
-          color="code">
+          color="code"
+          @click="state.file = true">
           {{data.article.countFile}}개의 첨부파일
         </ButtonBasic>
       </ButtonGroup>
@@ -60,7 +60,7 @@
         <ButtonBasic v-if="_fromNest" href="./change-nest/" icon-left="package">
           둥지변경
         </ButtonBasic>
-        <ButtonBasic href="./edit/" color="key" icon-left="edit">
+        <ButtonBasic href="./edit/" icon-left="edit">
           수정
         </ButtonBasic>
         <ButtonBasic href="./delete/" color="error" icon-left="trash-2">
@@ -79,9 +79,22 @@
 </article>
 <Empty v-else title="Not found article."/>
 <teleport to="#modals">
+  <Modal
+    :open="state.file"
+    mode="full"
+    :shortcut="true"
+    :scroll="true"
+    @close="state.file = false">
+    <Files
+      title="아티클 첨부파일"
+      module="article"
+      :module-srl="props.srl"
+      :private="_private"
+      @close="state.file = false"/>
+  </Modal>
   <Lightbox
     :src="state.previewImage"
-    :private="data.article?.mode === 'private'"
+    :private="_private"
     @close="state.previewImage = ''"/>
 </teleport>
 </template>
@@ -95,6 +108,7 @@ import { Controller } from '../../navigation/index.js'
 import { ButtonGroup, ButtonBasic } from '../../button/index.js'
 import { Loading, Empty, Lightbox, Files } from '../../content/index.js'
 import { Tag } from '../../item/index.js'
+import { Modal } from '../../modal/index.js'
 import Comments from '../../content/comment/index.vue'
 
 const props = defineProps({
@@ -115,6 +129,8 @@ const data = reactive({
 const state = reactive({
   loading: true,
   previewImage: '',
+  fileWindow: false,
+  fileIndex: [],
 })
 
 const _fromNest = computed(() => (props.nestSrl > 0))
@@ -136,6 +152,7 @@ const _regdate = computed(() => {
   return dateFormat(new Date(data.article.regdate), '{yyyy}-{MM}-{dd}')
 })
 const _useComment = computed(() => (Number(data.nest?.json?.useComment) === 1))
+const _private = computed(() => (data.article?.mode === 'private'))
 
 onMounted(async () => {
   try

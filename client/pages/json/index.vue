@@ -43,9 +43,14 @@
   </IndexWithFilter>
   <Controller>
     <template #left>
-      <ButtonBasic href="./category/" icon-left="server">
-        분류
-      </ButtonBasic>
+      <ButtonGroup>
+        <ButtonBasic href="./category/" icon-left="server">
+          분류
+        </ButtonBasic>
+        <ButtonBasic href="/tag/json/" icon-left="tag" color="code">
+          태그
+        </ButtonBasic>
+      </ButtonGroup>
     </template>
     <template #right>
       <ButtonBasic href="./create/" color="key" icon-left="plus">
@@ -66,7 +71,7 @@ import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
 import { Card, Items } from '../../components/item/index.js'
 import { Controller, CategoryTab, Paginate } from '../../components/navigation/index.js'
-import { ButtonBasic } from '../../components/button/index.js'
+import { ButtonGroup, ButtonBasic } from '../../components/button/index.js'
 import Filter from '../../components/pages/json/filter.vue'
 
 const router = useRouter()

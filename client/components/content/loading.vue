@@ -1,9 +1,11 @@
 <template>
-<div :class="[
-  'loading',
-  move && 'loading--move'
-]">
-  <div v-if="show" class="loading__loader">
+<div
+  v-if="show"
+  :class="[
+    'loading',
+    move && 'loading--move'
+  ]">
+  <div class="loading__loader">
     <div class="loading__shadow"/>
     <div class="loading__box"/>
   </div>
@@ -23,7 +25,7 @@ onMounted(() => {
   mounted = true
   setTimeout(() => {
     if (mounted) show.value = true
-  }, 240)
+  }, 160)
 })
 onUnmounted(() => {
   mounted = false

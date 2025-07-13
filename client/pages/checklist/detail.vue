@@ -15,11 +15,11 @@
           목록
         </ButtonBasic>
         <ButtonBasic
-          v-if="state.file?.length > 0"
+          v-if="state.fileIndex?.length > 0"
           icon-left="file-search"
-          color="base"
+          color="code"
           @click="state.fileWindow = true">
-          {{state.file.length}}개의 첨부파일
+          {{state.fileIndex.length}}개의 첨부파일
         </ButtonBasic>
         <ButtonBasic href="../" icon-left="sun" color="key">
           오늘로 이동
@@ -31,7 +31,7 @@
         <ButtonBasic href="./edit/" icon-left="edit">
           수정
         </ButtonBasic>
-        <ButtonBasic href="./delete/" color="error" icon-left="trash-2">
+        <ButtonBasic href="./delete/" icon-left="trash-2" color="error">
           삭제
         </ButtonBasic>
       </ButtonGroup>
@@ -46,7 +46,7 @@
       @close="state.fileWindow = false">
       <Files
         title="체크리스트 첨부파일"
-        :items="state.file"
+        :items="state.fileIndex"
         :private="false"
         @close="state.fileWindow = false"/>
     </Modal>
@@ -74,8 +74,8 @@ const state = reactive({
   loading: true,
   srl: Number(route.params.srl),
   data: null,
-  file: [],
   fileWindow: false,
+  fileIndex: [],
 })
 
 const _today = computed(() => {
@@ -89,7 +89,7 @@ onMounted(async () => {
     state.loading = true
     const { data, file } = await getData(state.srl)
     state.data = data
-    state.file = file
+    state.fileIndex = file
   }
   catch (e)
   {

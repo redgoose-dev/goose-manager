@@ -16,9 +16,10 @@
             :image="o.thumbnail"
             :meta="o.meta"
             :nav="[
+              o.nestSrl && { label: '둥지', href: `/nest/${o.nestSrl}/article/`, },
               { label: '수정', href: `./${o.srl}/edit/` },
               { label: '삭제', href: `./${o.srl}/delete/` },
-            ]"
+            ].filter(Boolean)"
             :use-thumbnail="true"
             :private="o.private">
             <template #after>
@@ -45,6 +46,13 @@
         @update="onUpdateFilter"/>
     </template>
   </IndexWithFilter>
+  <Controller>
+    <template #left>
+      <ButtonBasic href="/tag/article/" icon-left="tag" color="code">
+        태그
+      </ButtonBasic>
+    </template>
+  </Controller>
 </article>
 </template>
 
@@ -57,7 +65,8 @@ import { scrollTo } from '../../libs/util.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
 import { Items, Card, Thumbnail, Mark } from '../../components/item/index.js'
-import { Paginate } from '../../components/navigation/index.js'
+import { Paginate, Controller } from '../../components/navigation/index.js'
+import { ButtonBasic } from '../../components/button/index.js'
 import Filter from '../../components/pages/article/filter.vue'
 
 const router = useRouter()

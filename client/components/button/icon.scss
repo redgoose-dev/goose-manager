@@ -48,8 +48,10 @@
     outline-color: var(--color-sub);
   }
   // hover
-  &:hover {
-    --button-brightness: 105%;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      --button-brightness: 105%;
+    }
   }
   // active
   &:active {

@@ -59,7 +59,11 @@
         <ButtonBasic href="../../" icon-left="cloud">
           둥지
         </ButtonBasic>
-        <ButtonBasic href="../category/" icon-left="server" color="code">
+        <ButtonBasic
+          v-if="state.nest?.useCategory"
+          href="../category/"
+          icon-left="server"
+          color="code">
           분류
         </ButtonBasic>
       </ButtonGroup>

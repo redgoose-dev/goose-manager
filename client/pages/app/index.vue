@@ -67,3 +67,10 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style lang="scss" scoped>
+:deep(.status) {
+  padding: 0 32px;
+  gap: 0 28px;
+}
+</style>

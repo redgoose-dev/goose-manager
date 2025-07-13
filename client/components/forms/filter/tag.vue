@@ -104,24 +104,11 @@ const _contextItems = computed(() => {
 
 function onUpdateDropdown(sw)
 {
-  if (sw)
-  {
-    context.selected = pureObject(props.modelValue || [])
-    nextTick(() => {
-      if ($search.value) $search.value?.focus()
-    })
-  }
-  else
-  {
-    if (context.selected.length > 0)
-    {
-      emits('update:modelValue', pureObject(context.selected))
-    }
-    else
-    {
-      emits('update:modelValue', [])
-    }
-  }
+  if (!sw) return
+  context.selected = pureObject(props.modelValue || [])
+  nextTick(() => {
+    if ($search.value) $search.value?.focus()
+  })
 }
 
 function onUpdateKeyword()
@@ -150,11 +137,19 @@ function onSelectContext(item)
     if (context.selected.length >= props.limit) return
     context.selected.push({ srl: item.srl, name: item.label })
   }
+  triggerUpdate()
 }
 
 function onClickReset()
 {
   context.selected = []
+  triggerUpdate()
+}
+
+function triggerUpdate()
+{
+  // update
+  emits('update:modelValue', context.selected.length > 0 ? pureObject(context.selected) : [])
 }
 </script>
 

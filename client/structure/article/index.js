@@ -16,6 +16,7 @@ function filteringArticle(src)
       const thumbnail = o.json?.thumbnail ? `/file/${o.json?.thumbnail}/` : null
       return {
         srl: o.srl,
+        nestSrl: o.nest_srl,
         title,
         meta: [
           getDate(o[preference.article?.displayDateField] || o.created_at),
@@ -67,7 +68,12 @@ function filteringTag(src)
 function filteringNest(src)
 {
   if (!src?.data) return null
-  return src.data
+  return {
+    srl: src.data.srl,
+    code: src.data.code,
+    description: src.data.description,
+    useCategory: Number(src.data.json?.useCategory) === 1,
+  }
 }
 
 export async function getData(query = {}, options = {})
@@ -115,7 +121,7 @@ export async function getData(query = {}, options = {})
         url: `/nest/{srl}/`,
         params: {
           srl: nest_srl,
-          fields: 'srl,code,description',
+          fields: 'srl,code,description,json',
         },
       },
       all && {

@@ -258,6 +258,14 @@ const checklist = [
     meta: { active: 'checklist' },
   },
 ]
+const tag = [
+  {
+    path: '/tag/:module/',
+    name: 'Tag',
+    component: () => import('../pages/tag/index.vue'),
+    meta: { active: 'tag' },
+  },
+]
 const preference = []
 const guide = [
   {
@@ -322,7 +330,7 @@ export default [
   {
     path: '/',
     name: 'Dashboard',
-    component: () => import('../pages/dashboard.vue'),
+    component: () => import('../pages/dashboard/index.vue'),
     meta: { active: 'dashboard' },
   },
   ...auth,
@@ -332,6 +340,7 @@ export default [
   ...file,
   ...json,
   ...checklist,
+  ...tag,
   ...preference,
   ...(DEV ? guide : []),
   {

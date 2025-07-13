@@ -36,7 +36,9 @@ import { Empty } from '../index.js'
 import { Items, Thumbnail } from '../../item/index.js'
 import { ModalHeader } from '../../modal/index.js'
 
-// TODO: 컴포넌트 삭제예정 /file/ 페이지에서 사용하기로 함
+// TODO: 이 컴포넌트 상당히 고쳐야 한다.
+// TODO: module, moduleSrl 값을 props로 받아서 api 요청하기
+// TODO: 컴포넌트가 고쳐지면 사용된 컴포넌트 부분 같이 고쳐줘야 한다.
 
 const props = defineProps({
   title: { type: String, default: '첨부파일' },

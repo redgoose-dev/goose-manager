@@ -62,7 +62,7 @@ const props = defineProps({
   meta: Array,
   nav: Array,
   status: Array,
-  href: undefined,
+  href: String,
   target: String,
   useButton: Boolean,
   useThumbnail: Boolean,

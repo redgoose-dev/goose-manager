@@ -11,7 +11,7 @@
     var(--item-shadow-1, 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%)),
     var(--item-shadow-2, 0 2px 24px mixins.mix-alpha(var(--color-base), 15%));
   transition: box-shadow 160ms ease-out;
-  border-radius: mixins.radius(var(--item-radius, 82px));
+  border-radius: mixins.radius(var(--item-radius, 72px));
   &__thumbnail {
     width: unset;
     height: 100%;
@@ -45,10 +45,10 @@
     padding: 0 16px;
     min-width: 80px;
   }
-  &--link {
-    :deep(.mark) {
-      transition: box-shadow 160ms ease-out;
-    }
+  :deep(.mark) {
+    transition: box-shadow 160ms ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
     &:hover {
       --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-sub), 100%)};
       --item-shadow-2: 0 2px 24px #{mixins.mix-alpha(var(--color-base), 25%)};

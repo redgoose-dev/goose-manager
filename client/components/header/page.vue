@@ -78,6 +78,11 @@ const _message = computed(() => {
         title: props.title || 'Preference',
         description: props.description || '환경설정 값들을 관리합니다.',
       }
+    case 'tag':
+      return {
+        title: props.title || 'Tag',
+        description: props.description || '데이터의 태그를 관리합니다.',
+      }
     case 'guide':
       return {
         title: props.title || 'Guide',

@@ -7,7 +7,7 @@
 <style lang="scss" scoped>
 @use '../../../scss/mixins';
 .description {
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.25;
   color: var(--color-weak);
   @include mixins.text-single-line();
