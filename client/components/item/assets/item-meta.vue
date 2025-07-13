@@ -11,6 +11,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use '../../../scss/mixins';
 .meta {
   display: flex;
   align-items: center;
@@ -19,6 +20,7 @@ const props = defineProps({
     display: block;
     font-size: 10px;
     line-height: 1.15;
+    color: mixins.mix-alpha(var(--color-base), 80%);
     &:nth-child(n+2):before {
       content: ',';
       padding-right: 4px;

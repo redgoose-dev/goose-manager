@@ -57,17 +57,14 @@
     </template>
     <template #right>
       <ButtonGroup>
-        <ButtonBasic v-if="_fromNest" href="../create/" color="key" icon-left="plus">
-          만들기
+        <ButtonBasic v-if="_fromNest" href="./change-nest/" icon-left="package">
+          둥지변경
         </ButtonBasic>
-        <ButtonBasic href="./edit/" color="base" icon-left="edit">
+        <ButtonBasic href="./edit/" color="key" icon-left="edit">
           수정
         </ButtonBasic>
         <ButtonBasic href="./delete/" color="error" icon-left="trash-2">
           삭제
-        </ButtonBasic>
-        <ButtonBasic href="./change-nest/" icon-left="package">
-          둥지변경
         </ButtonBasic>
       </ButtonGroup>
     </template>

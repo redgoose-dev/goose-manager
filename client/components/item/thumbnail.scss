@@ -51,9 +51,6 @@
       font-size: 14px;
     }
   }
-  :deep(.mark) {
-    --mark-size: 32px;
-  }
   &--link {
     :deep(.mark) {
       transition: box-shadow 160ms ease-out;

@@ -19,6 +19,7 @@
               { label: '수정', href: `./${o.srl}/edit/` },
               { label: '삭제', href: `./${o.srl}/delete/` },
             ]"
+            :use-thumbnail="true"
             :private="o.private">
             <template #after>
               <Mark v-if="o.private"/>

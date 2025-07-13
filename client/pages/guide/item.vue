@@ -123,20 +123,22 @@
       </Items>
       <hr>
       <p>theme - card</p>
-      <Items theme="card">
-        <Card
-          v-for="_ in Array(5)"
-          href="/"
-          image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
-          title="card title"
-          alt="card title"
-          :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
-          :nav="[
-            { label: 'Guide' },
-            { label: 'GuideButton' },
-            { label: 'Discord' },
-          ]"/>
-      </Items>
+      <div class="items-card">
+        <Items theme="card">
+          <Card
+            v-for="_ in Array(5)"
+            href="/"
+            image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+            title="card title"
+            alt="card title"
+            :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
+            :nav="[
+              { label: 'Guide' },
+              { label: 'GuideButton' },
+              { label: 'Discord' },
+            ]"/>
+        </Items>
+      </div>
     </div>
   </section>
 
@@ -147,21 +149,23 @@
     </header>
     <div class="example">
       <p>theme - thumbnail</p>
-      <Items theme="thumbnail">
-        <Thumbnail
-          v-for="_ in Array(6)"
-          href="/"
-          image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
-          thumbnail-type="cover"
-          title="card title"
-          alt="card title"
-          :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
-          :nav="[
-            { label: 'Guide' },
-            { label: 'GuideButton' },
-            { label: 'Discord' },
-          ]"/>
-      </Items>
+      <div class="items-thumbnail">
+        <Items theme="thumbnail">
+          <Thumbnail
+            v-for="_ in Array(6)"
+            href="/"
+            image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+            thumbnail-type="cover"
+            title="card title"
+            alt="card title"
+            :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
+            :nav="[
+              { label: 'Guide' },
+              { label: 'GuideButton' },
+              { label: 'Discord' },
+            ]"/>
+        </Items>
+      </div>
     </div>
   </section>
 
@@ -212,4 +216,22 @@ function callAlert()
 
 <style lang="scss" scoped>
 @forward 'common';
+.items-card {
+  container-type: inline-size;
+  .items {
+    --items-column: 1;
+    @container (min-width: 680px) {
+      --items-column: 2;
+    }
+  }
+}
+.items-thumbnail {
+  container-type: inline-size;
+  .items {
+    --items-column: 2;
+    @container (min-width: 680px) {
+      --items-column: 3;
+    }
+  }
+}
 </style>

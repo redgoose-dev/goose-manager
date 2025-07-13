@@ -24,7 +24,8 @@ const iconName = ref(iconRandomPick())
   min-height: var(--image-empty-min-height, unset);
   max-height: var(--image-empty-max-height, unset);
   box-sizing: border-box;
-  background-color: var(--image-empty-bg, mixins.mix-alpha(var(--color-base), 25%));
+  background-color: var(--image-empty-bg, mixins.mix-alpha(var(--color-base), 18%));
+  box-shadow: inset 0 0 32px mixins.mix-alpha(var(--color-base), 15%);
   --icon-size: 32px;
   --icon-color: var(--color-edge);
   --icon-stroke: 1.5;

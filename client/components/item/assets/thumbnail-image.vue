@@ -14,7 +14,7 @@
   <i v-else-if="props.icon" class="icon-wrap">
     <Icon :name="props.icon"/>
   </i>
-  <Empty v-else title="no item"/>
+  <Empty v-else/>
 </component>
 </template>
 

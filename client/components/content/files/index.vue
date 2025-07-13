@@ -29,7 +29,7 @@
 <script setup>
 import { computed, inject } from 'vue'
 import { request } from '../../../libs/api.js'
-import { getResizePath } from '../../../libs/file.js'
+import { getFilePath } from '../../../libs/file.js'
 import { getDate } from '../../../libs/date.js'
 import { getByte } from '../../../libs/strings.js'
 import { Empty } from '../index.js'
@@ -52,7 +52,7 @@ const _items = computed(() => {
   if (!(props.items?.length > 0)) return []
   return props.items.map(o => {
     let image, icon
-    const path = getResizePath(o.code, '')
+    const path = getFilePath(o.code)
     if (/^image/.test(o.mime))
     {
       image = `${path}?w=640&h=480&q=65`

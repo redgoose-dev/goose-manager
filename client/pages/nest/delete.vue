@@ -3,12 +3,12 @@
   <PageHeader module="nest" title="Delete Nest"/>
   <Loading v-if="state.loading"/>
   <DeleteConfirm
-    v-else-if="fields.name"
-    :title="fields.title"
-    :description="fields.description"
-    :name="fields.name"
+    v-else-if="state.name"
+    title="이 둥지를 삭제할까요?"
+    description="이 둥지를 삭제하면 하위의 모든 데이터들이 삭제됩니다."
+    :name="state.name"
     :processing="state.processing"
-    :button-label="state.processing ? '둥지 삭제중..' : '둥지 삭제하기'"
+    :button-label="state.processing ? '삭제중..' : '둥지 삭제하기'"
     @cancel="$router.back()"
     @submit="onSubmit"/>
 </article>
@@ -25,23 +25,19 @@ const router = useRouter()
 const route = useRoute()
 const toast = inject('toast')
 const error = inject('error')
+const errorPath = [ 'pages', 'nest', 'delete.vue' ]
 const state = reactive({
   srl: Number(route.params.srl),
   loading: true,
   processing: false,
-})
-const fields = reactive({
-  title: '이 둥지를 삭제할까요?',
-  description: '이 둥지를 삭제하면 하위의 "아티클", "분류", "첨부파일" 데이터들이 전부 삭제됩니다.',
   name: '',
 })
-const errorPath = [ 'pages', 'nest', 'delete.vue' ]
 
 onMounted(async () => {
   try
   {
     const { srl, name } = await getData(state.srl)
-    fields.name = `[${srl}] ${name}`
+    state.name = `[${srl}] ${name}`
   }
   catch (e)
   {
@@ -49,6 +45,7 @@ onMounted(async () => {
       path: [ ...errorPath, 'onMounted' ],
       message: '둥지 데이터를 가져오지 못했습니다.',
       error: e,
+      useToast: false,
     })
   }
   finally
@@ -81,5 +78,3 @@ async function onSubmit()
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

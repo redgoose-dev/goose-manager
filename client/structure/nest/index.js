@@ -22,11 +22,14 @@ function filteringNest(src)
     return {
       srl: o.srl,
       appSrl: o.app_srl,
-      title: `${o.name}`,
+      title: `[${o.code}] ${o.name}`,
       description: o.description,
-      meta: [ getDate(o.created_at), `코드:${o.code}` ],
+      meta: [
+        `번호:${o.srl}`,
+        getDate(o.created_at),
+      ],
       status: [
-        { label: '아티클 수', value: o.count_article || 0 },
+        { label: '아티클', value: o.count_article || 0 },
       ],
       useCategory: o.json.useCategory === '1',
     }

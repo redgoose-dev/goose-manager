@@ -21,7 +21,7 @@ import Icon from '../icon/index.vue'
 
 const props = defineProps({
   src: String,
-  alt: { type: String, default: 'filename' },
+  alt: String,
   width: Number,
   height: Number,
   private: Boolean,

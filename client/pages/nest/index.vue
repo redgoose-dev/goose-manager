@@ -11,9 +11,7 @@
             <strong>{{app.name}}</strong>
             <em>{{app.countNest}}</em>
           </h1>
-          <p>
-            description
-          </p>
+          <p>{{app.description}}</p>
         </header>
         <Items
           v-if="app.nests?.length > 0"

@@ -2,13 +2,14 @@
 <section :class="['item', props.href && 'item--link']">
   <slot v-if="$slots.before" name="before"/>
   <ThumbnailImage
-    v-if="props.image"
+    v-if="props.useThumbnail"
     :src="props.image"
     :icon="props.icon"
     :href="props.href"
     :target="props.target"
     :alt="props.alt"
     type="cover"
+    :private="props.private"
     class="item__thumbnail"
     @click:body="onClickLink"/>
   <div class="item__body">
@@ -64,6 +65,8 @@ const props = defineProps({
   href: undefined,
   target: String,
   useButton: Boolean,
+  useThumbnail: Boolean,
+  private: Boolean,
 })
 const emits = defineEmits([ 'click:body' ])
 

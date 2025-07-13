@@ -1,7 +1,7 @@
 import { useRoute } from 'vue-router'
 import { preferenceStore } from '../../store/app.js'
 import { request } from '../../libs/api.js'
-import { getResizePath } from '../../libs/file.js'
+import { getFilePath } from '../../libs/file.js'
 import { getByte } from '../../libs/strings.js'
 import { getDate } from '../../libs/date.js'
 
@@ -13,7 +13,7 @@ function filtering(src)
     total: src.total,
     index: src.index.map(o => {
       let thumbnail, icon
-      const path = getResizePath(o.srl)
+      const path = getFilePath(o.srl)
       if (/^image/.test(o.mime))
       {
         thumbnail = `${path}?w=640&h=480&q=65`

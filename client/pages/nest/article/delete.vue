@@ -1,10 +1,10 @@
 <template>
-<article>
-  nest/article/delete.vue
-</article>
+<Delete :srl="Number(route.params.article)"/>
 </template>
 
 <script setup>
-</script>
+import { useRoute } from 'vue-router'
+import Delete from '../../../components/pages/article/delete.vue'
 
-<style lang="scss" scoped></style>
+const route = useRoute()
+</script>

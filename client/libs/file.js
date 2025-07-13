@@ -1,3 +1,5 @@
+import { serialize } from './strings.js'
+
 /**
  * file uploader
  * @param {string} [options.accept]
@@ -64,13 +66,17 @@ export function loadImage(src)
 }
 
 /**
- * get resize path
- * @param {number|string} srl
- * @param {string} query
- * @param {string} prefix
+ * get file path
+ * @param {number|string} code
+ * @param {object} options
+ * @param {string} options.query
+ * @param {string} options.prefix
  * @return {string}
  */
-export function getResizePath(srl, query = '', prefix = '')
+export function getFilePath(code, options = {})
 {
-  return `${prefix}/file/${srl}/${query ? `?${query}` : ''}`
+  if (!code) return ''
+  const { prefix, query } = options
+  const _query = query ? serialize(query, true, true) : ''
+  return `${prefix || ''}/file/${code}/${_query}`
 }

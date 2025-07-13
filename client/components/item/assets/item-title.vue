@@ -42,7 +42,7 @@ const _rootProps = computed(() => {
   margin: 0;
   line-height: 1.05;
   word-break: break-all;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: -.25px;
   @include mixins.text-single-line();
   &--link {

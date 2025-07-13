@@ -11,7 +11,7 @@
     margin: 0 0 16px;
     h1 {
       margin: 0;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.05;
       letter-spacing: -.5px;
       font-weight: 700;
@@ -41,9 +41,6 @@
   }
   &__nests {
     --items-column: 2;
-    @container (min-width: 860px) {
-      --items-column: 3;
-    }
   }
   &__empty {
     --empty-height: 160px;

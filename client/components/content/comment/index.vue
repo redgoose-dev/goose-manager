@@ -15,10 +15,6 @@
         @delete="onDeleteComment(k)"/>
     </li>
   </ul>
-  <Empty
-    v-else
-    title="no comment"
-    class="empty-comment"/>
   <Create
     :module="props.module"
     :module-srl="props.moduleSrl"
@@ -30,7 +26,7 @@
 <script setup>
 import { reactive, onMounted, inject } from 'vue'
 import { getData } from '../../../structure/comment/index.js'
-import { Loading, Empty } from '../index.js'
+import { Loading } from '../index.js'
 import Item from './item.vue'
 import Create from './create.vue'
 

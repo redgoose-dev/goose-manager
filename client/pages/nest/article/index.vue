@@ -20,8 +20,10 @@
             v-for="o in state.article.index"
             :href="`./${o.srl}/`"
             :title="o.title"
+            :alt="o.title"
             :image="o.thumbnail"
             :meta="o.meta"
+            :use-thumbnail="true"
             :private="o.private"
             :nav="[
               { label: '수정', href: `./${o.srl}/edit/` },

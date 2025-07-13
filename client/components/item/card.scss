@@ -3,6 +3,7 @@
 .item {
   position: relative;
   display: flex;
+  min-width: 0;
   height: var(--item-height, 100px);
   box-sizing: border-box;
   background-color: var(--item-color-bg, var(--color-edge));
@@ -10,7 +11,6 @@
     var(--item-shadow-1, 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%)),
     var(--item-shadow-2, 0 2px 24px mixins.mix-alpha(var(--color-base), 15%));
   transition: box-shadow 160ms ease-out;
-  min-width: 0;
   border-radius: mixins.radius(var(--item-radius, 82px));
   &__thumbnail {
     width: unset;
@@ -42,8 +42,8 @@
     margin: 6px 0 0;
   }
   &__status {
-    padding: 0 24px;
-    min-width: 100px;
+    padding: 0 16px;
+    min-width: 80px;
   }
   &--link {
     :deep(.mark) {

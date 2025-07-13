@@ -34,7 +34,7 @@
 
 <script setup>
 import { computed, inject } from 'vue'
-import { getResizePath } from '../../../libs/file.js'
+import { getFilePath } from '../../../libs/file.js'
 import { fileContextKey } from '../assets.js'
 import { Image } from '../../content/index.js'
 import { Dropdown, Context } from '../../navigation/dropdown/index.js'
@@ -55,7 +55,9 @@ const fileManager = inject('file-manager')
 
 const _src = computed(() => {
   const type = props.mime.split('/')[0]
-  return getResizePath(props.srl, type === 'image' ? `w=300&h=300&q=65` : undefined)
+  return getFilePath(props.srl, {
+    query: type === 'image' ? { w: 300, h: 300, q: 65 } : undefined,
+  })
 })
 const _isImage = computed(() => {
   return /^image/.test(props.mime || '')

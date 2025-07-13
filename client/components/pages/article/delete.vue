@@ -1,14 +1,14 @@
 <template>
 <article>
-  <PageHeader module="app" title="Delete App"/>
+  <PageHeader module="article" title="Delete Article"/>
   <Loading v-if="state.loading"/>
   <DeleteConfirm
     v-else-if="state.name"
-    title="이 앱을 삭제할까요?"
+    title="이 아티클을 삭제할까요?"
     description="이 앱을 삭제하면 하위의 모든 데이터들이 삭제됩니다."
     :name="state.name"
     :processing="state.processing"
-    :button-label="state.processing ? '삭제중..' : '앱 삭제하기'"
+    :button-label="state.processing ? '삭제중..' : '아티클 삭제하기'"
     @cancel="router.back()"
     @submit="onSubmit"/>
   <Empty v-else title="No data"/>
@@ -18,17 +18,19 @@
 <script setup>
 import { reactive, onMounted, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getData, submit } from '../../structure/app/delete.js'
-import PageHeader from '../../components/header/page.vue'
-import { DeleteConfirm, Loading, Empty } from '../../components/content/index.js'
+import { getData, submit } from '../../../structure/article/delete.js'
+import PageHeader from '../../header/page.vue'
+import { DeleteConfirm, Loading, Empty } from '../../content/index.js'
 
+const props = defineProps({
+  srl: Number,
+})
 const router = useRouter()
 const route = useRoute()
 const toast = inject('toast')
 const error = inject('error')
-const errorPath = [ 'pages', 'app', 'delete.vue' ]
+const errorPath = [ 'components', 'pages', 'article', 'delete.vue' ]
 const state = reactive({
-  srl: Number(route.params.srl),
   loading: true,
   processing: false,
   name: '',
@@ -37,14 +39,14 @@ const state = reactive({
 onMounted(async () => {
   try
   {
-    const { srl, name } = await getData(state.srl)
+    const { srl, name } = await getData(props.srl)
     state.name = `[${srl}] ${name}`
   }
   catch (e)
   {
     error.catch({
       path: [ ...errorPath, 'onMounted' ],
-      message: '앱을 가져오지 못했습니다.',
+      message: '아티클을 가져오지 못했습니다.',
       error: e,
       useToast: false,
     })
@@ -60,15 +62,15 @@ async function onSubmit()
   try
   {
     state.processing = true
-    await submit(state.srl)
-    toast.add('앱을 삭제했습니다.', 'success').then()
+    await submit(props.srl)
+    toast.add('아티클을 삭제했습니다.', 'success').then()
     router.push('../../').then()
   }
   catch (e)
   {
     error.catch({
-      path: [ ...errorPath, 'onSubmit' ],
-      message: '앱을 삭제하지 못했습니다.',
+      path: [ ...errorPath, 'onSubmit()' ],
+      message: '아티클을 삭제하지 못했습니다.',
       error: e,
     })
   }
