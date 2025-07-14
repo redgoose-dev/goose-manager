@@ -1,6 +1,6 @@
 import { request } from '../../libs/api.js'
 
-function filtering({ json, category, tag, file })
+function filtering({ json, category, tag })
 {
   return {
     srl: json.srl,
@@ -11,7 +11,7 @@ function filtering({ json, category, tag, file })
     category: category?.name || '',
     categorySrl: category?.srl || null,
     tag: tag?.index?.length > 0 ? tag.index : [],
-    file: file?.index?.length > 0 ? file.index : [],
+    countFile: json.count_file || 0,
   }
 }
 
@@ -23,7 +23,10 @@ export async function getData(srl)
       {
         key: 'json',
         url: '/json/{srl}/',
-        params: { srl: srl },
+        params: {
+          srl,
+          mod: 'count-file',
+        },
       },
       {
         key: 'category',
@@ -38,15 +41,6 @@ export async function getData(srl)
           module_srl: '{{json.data.srl}}',
         }
       },
-      {
-        key: 'file',
-        url: '/file/',
-        params: {
-          module: 'json',
-          module_srl: '{{json.data.srl}}',
-          fields: 'srl,code,name,mime,size,json,created_at',
-        },
-      },
     ],
   })
   if (!res?.json?.data) throw new Error(res?.json?.message || 'No JSON data.')
@@ -54,6 +48,5 @@ export async function getData(srl)
     json: res.json.data,
     category: res.category?.data,
     tag: res.tag?.data,
-    file: res.file?.data,
   })
 }

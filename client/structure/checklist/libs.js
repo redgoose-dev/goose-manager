@@ -113,5 +113,6 @@ export function filteringData(src)
     content: filteringContent(src.content),
     date: src.created_at,
     percent: src.percent,
+    countFile: src.count_file || 0,
   }
 }

@@ -1,6 +1,11 @@
 <template>
-<ErrorService v-if="error" :error="error"/>
-<component v-else-if="!current.blink && layout" :is="layout">
+<ErrorService
+  v-if="error"
+  :code="500"
+  page-title="오류가 발생했습니다."
+  :page-message="error?.message || '알 수 없는 오류가 발생했습니다.'"
+  :error="error"/>
+<component v-else-if="!current.blink && _layout" :is="_layout">
   <router-view/>
 </component>
 </template>
@@ -11,7 +16,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { authStore } from './store/auth.js'
 import { currentStore, preferenceStore } from './store/app.js'
 import ErrorTrigger from './libs/ErrorTrigger.js'
-import ErrorService from './pages/error/500.vue'
+import ErrorService from './pages/error/index.vue'
 import LayoutBlank from './layouts/blank.vue'
 import LayoutDefault from './layouts/default.vue'
 
@@ -26,7 +31,7 @@ provide('preference', preferenceStore())
 provide('auth', auth)
 
 const error = ref(undefined)
-const layout = computed(() => {
+const _layout = computed(() => {
   let layoutName = route.meta.layout || 'default'
   if (!route.name) return null
   if (!auth.provider) layoutName = 'blank'

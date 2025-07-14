@@ -1,58 +1,8 @@
 import { useRoute } from 'vue-router'
 import { preferenceStore } from '../../store/app.js'
 import { request } from '../../libs/api.js'
-import { getFilePath } from '../../libs/file.js'
-import { getByte } from '../../libs/strings.js'
-import { getDate } from '../../libs/date.js'
 
 let _route
-
-function filtering(src)
-{
-  return {
-    total: src.total,
-    index: src.index.map(o => {
-      let thumbnail, icon
-      const path = getFilePath(o.srl)
-      if (/^image/.test(o.mime))
-      {
-        thumbnail = `${path}?w=640&h=480&q=65`
-      }
-      else if (o.mime === 'application/pdf')
-      {
-        icon = 'file-text'
-      }
-      else
-      {
-        icon = 'file'
-      }
-      let moduleUrl = ''
-      switch (o.module)
-      {
-        case 'article':
-        case 'json':
-        case 'checklist':
-          moduleUrl = `/${o.module}/${o.module_srl}/`
-          break
-      }
-      return {
-        srl: o.srl,
-        title: o.name,
-        href: path,
-        thumbnail,
-        icon,
-        meta: [
-          `날짜: ${getDate(o.created_at)}`,
-          `타입: ${o.mime.split('/')[0]}`,
-          `사이즈: ${getByte(o.size)}`,
-        ],
-        nav: [
-          moduleUrl && { label: '모듈 바로가기', href: moduleUrl },
-        ].filter(Boolean),
-      }
-    })
-  }
-}
 
 export async function getData(module, moduleSrl)
 {
@@ -69,5 +19,8 @@ export async function getData(module, moduleSrl)
     }
   })
   if (!data) throw new Error(message)
-  return filtering(data)
+  return {
+    total: data.total || 0,
+    index: data.index?.length > 0 ? data.index : [],
+  }
 }

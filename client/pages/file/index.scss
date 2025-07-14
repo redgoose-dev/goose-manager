@@ -1,5 +1,34 @@
 @use '../../scss/mixins';
 
+.files {
+  container-type: inline-size;
+}
+
+.total {
+  margin: 0;
+  font-size: 12px;
+  text-align: right;
+  line-height: 1.05;
+  user-select: none;
+}
+
+.items {
+  margin: 12px 0 0;
+  --item-img-ratio: 6/5;
+  &.theme--thumbnail {
+    --items-column: 3;
+    @container (min-width: 780px) {
+      --items-column: 4;
+    }
+    @container (min-width: 1080px) {
+      --items-column: 5;
+    }
+    @container (min-width: 1280px) {
+      --items-column: 6;
+    }
+  }
+}
+
 .paginate {
   margin: 48px 0 0;
 }

@@ -28,14 +28,14 @@
           </li>
         </ul>
       </Field>
-      <Field v-if="_item.file?.length > 0" label="첨부파일">
+      <Field v-if="state.data.countFile > 0" label="첨부파일">
         <nav class="attachment-button">
           <ButtonBasic
             size="small"
             color="base"
             icon-left="file-search"
             @click="state.filesWindow = true">
-            총 {{_item.file.length}}개의 첨부파일 열람
+            총 {{state.data.countFile}}개의 첨부파일 열람
           </ButtonBasic>
         </nav>
       </Field>
@@ -62,7 +62,8 @@
       @close="state.filesWindow = false">
       <Files
         title="JSON 첨부파일"
-        :items="_item.file"
+        module="json"
+        :module-srl="_item.srl"
         :private="true"
         @close="state.filesWindow = false"/>
     </Modal>
@@ -106,7 +107,6 @@ const _item = computed(() => {
     categorySrl: state.data.categorySrl,
     date: dateFormat(new Date(state.data.date), '{yyyy}년 {month} {dd}일 ({weekShort}), {hh}시 {mm}분'),
     tag: state.data.tag,
-    file: state.data.file,
   }
 })
 const _json = computed(() => {

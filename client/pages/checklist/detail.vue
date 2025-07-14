@@ -15,11 +15,11 @@
           목록
         </ButtonBasic>
         <ButtonBasic
-          v-if="state.fileIndex?.length > 0"
+          v-if="state.data?.countFile > 0"
           icon-left="file-search"
           color="code"
           @click="state.fileWindow = true">
-          {{state.fileIndex.length}}개의 첨부파일
+          {{state.data.countFile}}개의 첨부파일
         </ButtonBasic>
         <ButtonBasic href="../" icon-left="sun" color="key">
           오늘로 이동
@@ -46,8 +46,9 @@
       @close="state.fileWindow = false">
       <Files
         title="체크리스트 첨부파일"
-        :items="state.fileIndex"
-        :private="false"
+        module="checklist"
+        :module-srl="state.srl"
+        :private="true"
         @close="state.fileWindow = false"/>
     </Modal>
   </teleport>
@@ -87,9 +88,7 @@ onMounted(async () => {
   try
   {
     state.loading = true
-    const { data, file } = await getData(state.srl)
-    state.data = data
-    state.fileIndex = file
+    state.data = await getData(state.srl)
   }
   catch (e)
   {

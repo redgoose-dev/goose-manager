@@ -9,6 +9,7 @@ const icons = {
   'brush-cleaning': lucide.BrushCleaning,
   'book-open': lucide.BookOpen,
   'ban': lucide.Ban,
+  'bug': lucide.Bug,
   'chevron-down': lucide.ChevronDown,
   'chevron-up': lucide.ChevronUp,
   'chevron-left': lucide.ChevronLeft,

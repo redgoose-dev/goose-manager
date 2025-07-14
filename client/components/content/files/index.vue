@@ -1,58 +1,61 @@
 <template>
 <article class="files">
   <ModalHeader :title="props.title" @close="emits('close')"/>
-  <div class="body">
+  <Loading v-if="state.loading"/>
+  <div v-else-if="state.index?.length > 0" class="body">
     <p class="count">
-      총 <strong>{{props.items.length || 0}}</strong>개의 파일이 있습니다.
+      총 <strong>{{state.total}}</strong>개의 파일이 있습니다.
     </p>
     <Items v-if="_items.length > 0" theme="thumbnail" class="index">
       <Thumbnail
         v-for="o in _items"
         :href="o.href"
+        target="_blank"
         :image="o.image"
         :icon="o.icon"
         thumbnail-type="contain"
         :title="o.title"
         :meta="o.meta"
-        :use-button="true"
-        :private="props.private"
-        @click:body="onClickItem"/>
+        :private="props.private"/>
     </Items>
-    <Empty
-      v-else
-      title="No data"
-      message="첨부파일이 없습니다."/>
   </div>
+  <Empty
+    v-else
+    title="No data"
+    message="첨부파일이 없습니다."/>
 </article>
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { reactive, computed, onMounted, inject } from 'vue'
 import { request } from '../../../libs/api.js'
 import { getFilePath } from '../../../libs/file.js'
-import { getDate } from '../../../libs/date.js'
+import { dateFormat } from '../../../libs/date.js'
 import { getByte } from '../../../libs/strings.js'
-import { Empty } from '../index.js'
+import { addQueryParams } from '../../../libs/object.js'
+import { Loading, Empty } from '../index.js'
 import { Items, Thumbnail } from '../../item/index.js'
 import { ModalHeader } from '../../modal/index.js'
 
-// TODO: 이 컴포넌트 상당히 고쳐야 한다.
-// TODO: module, moduleSrl 값을 props로 받아서 api 요청하기
-// TODO: 컴포넌트가 고쳐지면 사용된 컴포넌트 부분 같이 고쳐줘야 한다.
-
 const props = defineProps({
   title: { type: String, default: '첨부파일' },
-  items: Array,
+  module: String,
+  moduleSrl: Number,
   private: Boolean,
 })
 const emits = defineEmits([ 'close' ])
 const auth = inject('auth')
 const error = inject('error')
 const errorPath = [ 'components', 'content', 'files', 'index.vue' ]
+const state = reactive({
+  loading: true,
+  total: 0,
+  index: [],
+})
 
 const _items = computed(() => {
-  if (!(props.items?.length > 0)) return []
-  return props.items.map(o => {
+  if (!(state.index.length > 0)) return []
+  return state.index.map(o => {
     let image, icon
     const path = getFilePath(o.code)
     if (/^image/.test(o.mime))
@@ -70,37 +73,50 @@ const _items = computed(() => {
     return {
       srl: o.srl,
       title: o.name,
-      href: path,
+      href: props.private ? addQueryParams(`${auth.apiUrl}${path}`, '_a', auth.token) : `${auth.apiUrl}${path}`,
       image,
       icon,
       meta: [
-        `날짜: ${getDate(o.created_at)}`,
-        `타입: ${o.mime.split('/')[0]}`,
-        `사이즈: ${getByte(o.size)}`,
+        dateFormat(new Date(o.created_at), '{yyyy}-{MM}-{dd}'),
+        o.mime.split('/')[0],
+        getByte(o.size),
       ],
     }
   })
 })
 
-async function onClickItem(href, e)
-{
+onMounted(async () => {
   try
   {
-    const res = await request(href, {})
-    if (!res) throw new Error('파일을 가져오지 못했습니다.')
-    if (!(res instanceof Blob)) throw new Error('파일 데이터가 아닙니다.')
-    const uri = URL.createObjectURL(res)
-    window.open(uri)
+    if (!(props.module && props.moduleSrl))
+    {
+      throw new Error('module, moduleSrl 값이 없습니다.')
+    }
+    const res = await request('/file/', {
+      query: {
+        module: props.module,
+        module_srl: props.moduleSrl,
+        unlimited: '1',
+      },
+    })
+    if (!res?.data) throw new Error('파일 데이터가 없습니다.')
+    state.total = res.data.total
+    state.index = res.data.index?.length > 0 ? res.data.index : []
   }
-  catch (_e)
+  catch (e)
   {
     error.catch({
-      path: [ ...errorPath, 'onClickItem()' ],
-      message: '파일을 열지 못했습니다.',
-      error: _e,
+      path: [ ...errorPath, 'onMounted' ],
+      message: '파일 데이터를 가져오지 못했습니다.',
+      error: e,
+      useToast: false,
     })
   }
-}
+  finally
+  {
+    state.loading = false
+  }
+})
 </script>
 
 <style src="./index.scss" lang="scss" scoped></style>
