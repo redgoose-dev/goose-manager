@@ -266,7 +266,58 @@ const tag = [
     meta: { active: 'tag' },
   },
 ]
-const preference = []
+const preference = [
+  {
+    path: '/preference/',
+    name: 'Preference',
+    component: () => import('../pages/preference/index.vue'),
+    meta: { active: 'preference' },
+    children: [
+      {
+        path: '',
+        name: 'PreferenceBasic',
+        component: () => import('../pages/preference/basic.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'dashboard/',
+        name: 'PreferenceDashboard',
+        component: () => import('../pages/preference/dashboard.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'navigation/',
+        name: 'PreferenceNavigation',
+        component: () => import('../pages/preference/navigation.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'nest/',
+        name: 'PreferenceNest',
+        component: () => import('../pages/preference/nest.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'article/',
+        name: 'PreferenceArticle',
+        component: () => import('../pages/preference/article.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'file/',
+        name: 'PreferenceFile',
+        component: () => import('../pages/preference/file.vue'),
+        meta: { active: 'preference' },
+      },
+      {
+        path: 'checklist/',
+        name: 'PreferenceChecklist',
+        component: () => import('../pages/preference/checklist.vue'),
+        meta: { active: 'preference' },
+      },
+    ],
+  },
+]
 const guide = [
   {
     path: '/guide/',

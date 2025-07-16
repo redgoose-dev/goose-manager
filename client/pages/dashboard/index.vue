@@ -126,7 +126,6 @@ onMounted(async () => {
   try
   {
     state.contents = await getData(preference.dashboard.contents)
-    console.log(state.contents)
   }
   catch (e)
   {

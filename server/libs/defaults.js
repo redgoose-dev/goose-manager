@@ -1,5 +1,9 @@
 export const defaultPreference = {
-  general: {},
+  general: {
+    nickname: 'GOOSE',
+    title: 'Goose Manager',
+    description: 'dev goose-manager',
+  },
   dashboard: {
     title: 'Dashboard',
     description: 'Welcome to goose manager',
@@ -31,6 +35,7 @@ export const defaultPreference = {
     pageCount: 24,
     pageRange: 10,
     displayDateField: 'created_at',
+    indexTheme: 'card',
   },
   json: {
     pageCount: 24,

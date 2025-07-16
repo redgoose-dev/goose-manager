@@ -172,6 +172,7 @@ async function insert(src)
 
 defineExpose({
   insert,
+  $editor,
 })
 </script>
 

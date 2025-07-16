@@ -37,7 +37,10 @@ async function ready(req, ctx)
       message: 'Complete get ready login data.',
       data: {
         providers: content.data.providers,
-        preference: preference.login,
+        preference: {
+          ...preference.general,
+          ...preference.login,
+        },
       },
     })
   }

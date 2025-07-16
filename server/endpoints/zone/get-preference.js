@@ -1,5 +1,5 @@
 import { onRequest, onResponse, printMessage } from '../../libs/server.js'
-import { isDev } from '../../libs/server.js'
+import { isDev, getRequestJSON } from '../../libs/server.js'
 
 const { VITE_BASE_PATH } = Bun.env
 const dev = isDev()
@@ -20,7 +20,17 @@ export default async function getPreference(req, ctx)
 
   try
   {
-    const preference = await getPreferenceData()
+    const body = await getRequestJSON(req)
+    let preference
+    if (body?.default)
+    {
+      const { defaultPreference } = await import('../../libs/defaults.js')
+      preference = defaultPreference
+    }
+    else
+    {
+      preference = await getPreferenceData()
+    }
     response = Response.json({
       message: 'get preference',
       data: preference,

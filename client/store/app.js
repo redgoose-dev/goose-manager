@@ -48,6 +48,15 @@ export const preferenceStore = defineStore('preference', {
         this[key] = undefined
       }
     },
+    async getDefault(keyName)
+    {
+      const res = await localRequest({
+        method: 'post',
+        url: '/zone/preference/',
+        body: JSON.stringify({ default: true }),
+      })
+      return res?.data[keyName] || null
+    }
   },
 })
 

@@ -1,5 +1,7 @@
 <template>
+<Loading v-if="state.loading"/>
 <article
+  v-else
   :class="[
     'login',
     state.theme.blur && 'login--blur',
@@ -10,8 +12,8 @@
   ]">
   <div class="login__wrap">
     <header class="login__header">
-      <h1>{{_title}}</h1>
-      <p>{{_description}}</p>
+      <h1>{{state.title}}</h1>
+      <p>{{state.description}}</p>
     </header>
     <LoginForm class="login__forms"/>
     <LoginQuick v-if="state.providers.length > 0" :items="state.providers"/>
@@ -20,30 +22,25 @@
 </template>
 
 <script setup>
-import { reactive, inject, computed, onMounted, onBeforeUnmount } from 'vue'
+import { reactive, computed, onMounted, onBeforeUnmount, inject } from 'vue'
 import { localRequest } from '../../libs/api.js'
 import { randomNumber } from '../../libs/strings.js'
 import { modalRootClassName } from '../../libs/assets.js'
 import LoginForm from '../../components/pages/auth/login-form.vue'
 import LoginQuick from '../../components/pages/auth/login-quick.vue'
+import { Loading } from '../../components/content/index.js'
 
 const toast = inject('toast')
-const { VITE_APP_TITLE, VITE_APP_DESCRIPTION } = import.meta.env
 const state = reactive({
   loading: true,
+  title: '',
+  description: '',
   providers: [],
   theme: {
     blur: false,
     image: '',
     gradient: 0,
   },
-})
-
-const _title = computed(() => {
-  return VITE_APP_TITLE || '거위 매니저'
-})
-const _description = computed(() => {
-  return VITE_APP_DESCRIPTION || '컨텐츠 관리 프로그램'
 })
 
 onMounted(async () => {
@@ -59,6 +56,8 @@ onMounted(async () => {
       state.theme.blur = data.preference.blur
       state.theme.image = data.preference.image
       state.theme.gradient = data.preference.gradient === 0 ? randomNumber(1, 10) : Math.min(Math.max(data.preference.gradient, 1), 10)
+      state.title = data.preference.title
+      state.description = data.preference.description
     }
     state.providers = data.providers || []
   }

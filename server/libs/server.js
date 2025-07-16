@@ -105,3 +105,21 @@ export async function getFormData(req)
     return undefined
   }
 }
+
+/**
+ * get request JSON
+ * @param {Request} req
+ * @return {Promise<object|null>}
+ */
+export async function getRequestJSON(req)
+{
+  try
+  {
+    if (!req?.body) return null
+    return await req.json()
+  }
+  catch (e)
+  {
+    return null
+  }
+}

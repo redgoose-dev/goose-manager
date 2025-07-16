@@ -3,8 +3,8 @@
   <header class="layout-header">
     <div class="wrap">
       <h1 class="logo">
-        <router-link to="/" :title="VITE_APP_TITLE">
-          {{VITE_APP_NICKNAME}}
+        <router-link to="/" :title="_title">
+          {{_nickname}}
         </router-link>
       </h1>
       <nav class="main-nav">
@@ -105,17 +105,13 @@
 <script setup>
 import { computed, inject } from 'vue'
 import { useRoute } from 'vue-router'
-import { preferenceStore, currentStore } from '../store/app.js'
-import { authStore } from '../store/auth.js'
 import Icon from '../components/icon/index.vue'
 
-const { VITE_APP_TITLE, VITE_APP_NICKNAME } = import.meta.env
-const toast = inject('toast')
-
 const route = useRoute()
-const preference = preferenceStore()
-const auth = authStore()
-const current = currentStore()
+const toast = inject('toast')
+const preference = inject('preference')
+const auth = inject('auth')
+const current = inject('current')
 const year = new Date().getFullYear()
 
 const _mainNav = computed(() => {
@@ -130,6 +126,12 @@ const _profile = computed(() => {
     avatar: user_avatar,
     email: user_email,
   }
+})
+const _nickname = computed(() => {
+  return preference.general.nickname || 'MANAGER'
+})
+const _title = computed(() => {
+  return preference.general.title || 'Manager title'
 })
 
 /**

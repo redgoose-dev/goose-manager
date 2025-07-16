@@ -1,5 +1,11 @@
 @use '../../scss/mixins';
 
+.loading {
+  height: 100dvh;
+  min-height: unset;
+  max-height: unset;
+}
+
 .login {
   display: grid;
   place-content: center;
