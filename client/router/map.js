@@ -6,7 +6,14 @@ const auth = [
     path: '/auth/login/',
     name: 'AuthLogin',
     component: () => import('../pages/auth/login.vue'),
-    meta: { layout: 'blank', active: 'auth' },
+    meta: { layout: 'blank', active: 'login' },
+  },
+  // account
+  {
+    path: '/auth/account/',
+    name: 'AuthAccount',
+    component: () => import('../pages/auth/account.vue'),
+    meta: { active: 'account' },
   },
 ]
 const app = [

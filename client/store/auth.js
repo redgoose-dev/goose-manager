@@ -1,18 +1,26 @@
 import { defineStore } from 'pinia'
 import { localRequest } from '../libs/api.js'
+import { pureObject } from '../libs/object.js'
 import { preferenceStore } from './app.js'
 
 export const authStore = defineStore('auth', {
   state: () => ({
     token: '',
+    url: '',
     apiUrl: '',
     provider: undefined,
   }),
-  getters: {},
+  getters: {
+    _account()
+    {
+      return pureObject(this.provider)
+    },
+  },
   actions: {
     setup(data)
     {
       if (data.token) this.token = data.token
+      if (data.url) this.url = data.url
       if (data.apiUrl) this.apiUrl = data.apiUrl
       if (data.provider) this.provider = data.provider
       if (data.preference)
@@ -24,6 +32,7 @@ export const authStore = defineStore('auth', {
     destroy()
     {
       this.token = ''
+      this.url = ''
       this.apiUrl = ''
       this.provider = undefined
       const preference = preferenceStore()

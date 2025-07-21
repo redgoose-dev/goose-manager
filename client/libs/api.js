@@ -2,6 +2,7 @@ import { $fetch } from 'ofetch'
 import { authStore } from '../store/auth.js'
 import { filterObjectToQuery } from './object.js'
 import ServiceError from './ServiceError.js'
+import { triggerEvent } from './util.js'
 
 function _fetch(url, options)
 {
@@ -153,4 +154,48 @@ export function checkForms(src)
   Object.keys(src).forEach(key => {
     if (!!src[key].error) throw new Error(src[key].error)
   })
+}
+
+/**
+ * 인증용 웹소켓
+ * @param {string} provider
+ * @param {object} options
+ * @return {EventTarget}
+ */
+export function webSocketAuth(provider, options = {})
+{
+  const auth = authStore()
+  if (!auth.apiUrl) new Error('No API url')
+  if (!auth.token) new Error('No token')
+  const eventTarget = new EventTarget()
+  const socketId = `socket-${Math.random().toString(36).slice(3,12)}`
+  const ws = new WebSocket(`${auth.apiUrl}/auth/ws/${socketId}/`)
+  ws.addEventListener('open', () => {
+    ws.send(JSON.stringify({
+      mode: 'start-auth',
+      provider,
+      redirect_uri: auth.url,
+      access_token: auth.token,
+    }))
+  })
+  ws.addEventListener('message', (e) => {
+    const data = JSON.parse(e.data)
+    switch (data.mode)
+    {
+      case 'auth-link':
+        triggerEvent(eventTarget, 'start', data)
+        break
+      case 'auth-error':
+        triggerEvent(eventTarget, 'error', data)
+        break
+      case 'auth-complete':
+        triggerEvent(eventTarget, 'complete', data)
+        break
+    }
+  })
+  ws.addEventListener('close', (e) => {
+    triggerEvent(eventTarget, 'close')
+    ws.close()
+  })
+  return eventTarget
 }

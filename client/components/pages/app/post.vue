@@ -11,7 +11,7 @@
         :required="true"
         class="fields__code"/>
       <Help>
-        {{forms.code.error || '"알파벳, 숫자형식의 글자와 `-`, `_`" 형식으로 입력해주세요.'}}
+        {{forms.code.error || '"a-z, 0-9, `-`, `_`" 형식으로 입력해주세요.'}}
       </Help>
     </Field>
     <Field label="이름" for="post-name">

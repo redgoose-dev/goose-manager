@@ -41,12 +41,11 @@
   &[type=reset] {
     -webkit-appearance: button;
   }
-}
-
-// disabled
-.disabled {
-  opacity: .5;
-  cursor: not-allowed;
+  // disabled
+  &.disabled {
+    opacity: .5;
+    cursor: default;
+  }
 }
 
 .button:not(.disabled,label,p) {

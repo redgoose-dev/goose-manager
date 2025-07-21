@@ -105,13 +105,24 @@
         --icon-color: var(--color-base);
       }
       .avatar {
-        display: block;
+        margin-right: 4px;
+        border-radius: 50%;
+        user-select: none;
         width: 24px;
         height: 24px;
-        border-radius: 50%;
-        box-shadow: 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%);
-        user-select: none;
-        margin-right: 4px;
+        &--image {
+          display: block;
+          box-shadow: 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%);
+          object-fit: cover;
+        }
+        &--icon {
+          display: grid;
+          place-content: center;
+          background: var(--color-weak);
+          --icon-size: 14px;
+          --icon-stroke: 3;
+          --icon-color: var(--color-edge);
+        }
       }
     }
     > a {

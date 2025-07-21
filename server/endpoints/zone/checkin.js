@@ -98,6 +98,7 @@ export default async function checkIn(req, ctx)
     response = Response.json({
       message: 'Complete check in.',
       token: !data?.access ? accessToken : undefined,
+      url: VITE_URL_PATH,
       apiUrl: VITE_API_URL,
       provider: content.data.provider,
       preference,
@@ -106,7 +107,7 @@ export default async function checkIn(req, ctx)
   catch(e)
   {
     if (dev) printMessage('error', `[${e.status || 500}] ${e.message}`)
-    response = new Response('Skipped check in.', {
+    response = new Response(e.response || 'Skipped check in.', {
       status: 202,
       statusText: e.message,
     })
@@ -140,6 +141,7 @@ async function getRequestData(req)
         access: url.searchParams.get('access'),
         expires: url.searchParams.get('expires'),
         refresh: url.searchParams.get('refresh'),
+        errorCode: url.searchParams.get('error_code'),
       }
       break
     case 'POST':
@@ -154,7 +156,17 @@ async function getRequestData(req)
   }
   if (Object.values(result).filter(Boolean).length > 0)
   {
-    if (!result.access) throw new ServiceError('Required "access" value.', { status: 400 })
+    if (result.errorCode)
+    {
+      throw new ServiceError(`API Error "${result.errorCode}"`, {
+        status: 400,
+        response: 'Failed checkin.',
+      })
+    }
+    if (!result.access)
+    {
+      throw new ServiceError('Required "access" value.', { status: 400 })
+    }
     return result
   }
   else

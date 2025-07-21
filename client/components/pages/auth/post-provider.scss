@@ -1,0 +1,40 @@
+@use '../../../scss/mixins';
+
+.post-provider {
+  &__header {
+    user-select: none;
+    h1 {
+      margin: 0;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      font-size: 30px;
+    }
+    p {
+      margin: 6px 0 0;
+      line-height: 1.15;
+      font-size: 12px;
+    }
+  }
+}
+
+.empty {
+  --empty-height: none;
+  --empty-min-height: none;
+  --empty-max-height: none;
+  --empty-icon-size: 100px;
+  --empty-title-size: 24px;
+  padding: 40px 0;
+}
+
+.fieldset {
+  margin: 30px 0 0;
+}
+
+.field {
+  --field-label-width: 120px;
+  .inline {
+    --input-width: auto;
+  }
+}
+

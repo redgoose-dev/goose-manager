@@ -54,21 +54,29 @@
         <ul class="navigation right">
           <li>
             <span>
-              <img v-if="_profile.avatar" :src="_profile.avatar" :alt="_profile.name" class="avatar"/>
-              <Icon v-else name="person" class="ico-custom"/>
+              <img
+                v-if="_profile.avatar"
+                :src="_profile.avatar"
+                :alt="_profile.name"
+                class="avatar avatar--image"/>
+              <i v-else class="avatar avatar--icon"><Icon name="user"/></i>
               <em>{{_profile.name}}</em>
               <Icon name="chevron-down" class="ico-arrow"/>
             </span>
             <div>
               <ol>
                 <li>
-                  <router-link :to="`/account/`">
+                  <router-link
+                    to="/auth/account/"
+                    :class="[ route.meta.active === 'account' && 'active' ]">
                     <Icon name="user" class="ico-custom"/>
                     <em>계정</em>
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/preference/">
+                  <router-link
+                    to="/preference/"
+                    :class="[ route.meta.active === 'preference' && 'active' ]">
                     <Icon name="settings" class="ico-custom"/>
                     <em>환경설정</em>
                   </router-link>
