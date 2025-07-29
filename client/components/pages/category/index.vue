@@ -2,32 +2,34 @@
 <Loading v-if="state.loading"/>
 <template v-else-if="state.index.length > 0">
   <p v-if="props.module === 'nest'" class="nest-info">
-    둥지: <em>{{state.nest?.code}} {{state.nest?.name}}</em>
+    둥지: <strong>{{state.nest?.name}} <em>{{state.nest?.code}}</em></strong>
   </p>
-  <VueDraggable
-    v-model="state.index"
-    handle=".move"
-    ghost-class="ghost"
-    :animation="200"
-    class="items theme--card"
-    @end="onChangeOrder">
-    <Card
-      v-for="o in state.index"
-      :title="o.title"
-      :meta="o.meta"
-      :nav="[
-        { label: '수정', href: `./${o.srl}/edit/` },
-        { label: '삭제', href: `./${o.srl}/delete/` },
-      ]"
-      :status="o.status"
-      class="card">
-      <template #before>
-        <button type="button" title="순서변경" class="move">
-          <Icon name="move"/>
-        </button>
-      </template>
-    </Card>
-  </VueDraggable>
+  <div class="body">
+    <VueDraggable
+      v-model="state.index"
+      handle=".move"
+      ghost-class="ghost"
+      :animation="200"
+      class="items theme--card"
+      @end="onChangeOrder">
+      <Card
+        v-for="o in state.index"
+        :title="o.title"
+        :meta="o.meta"
+        :nav="[
+          { label: '수정', href: `./${o.srl}/edit/` },
+          { label: '삭제', href: `./${o.srl}/delete/` },
+        ]"
+        :status="o.status"
+        class="card">
+        <template #before>
+          <button type="button" title="순서변경" class="move">
+            <Icon name="move"/>
+          </button>
+        </template>
+      </Card>
+    </VueDraggable>
+  </div>
 </template>
 <Empty v-else title="No data"/>
 </template>

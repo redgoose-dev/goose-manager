@@ -7,9 +7,32 @@
   font-size: 12px;
   font-weight: 400;
   text-align: right;
-  em {
+  strong {
     font-style: normal;
     font-weight: 700;
+    em {
+      font-style: normal;
+      font-weight: 400;
+      &:before {
+        content: '(';
+      }
+      &:after {
+        content: ')';
+      }
+    }
+  }
+}
+
+.body {
+  container-type: inline-size;
+}
+
+.items {
+  &.theme--card {
+    --items-column: 2;
+    @container (min-width: 860px) {
+      --items-column: 3;
+    }
   }
 }
 

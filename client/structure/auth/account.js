@@ -45,6 +45,7 @@ export async function getPasswordItem(srl)
 {
   const res = await request(`/auth/provider/`, {
     method: 'post',
+    body: formData({ srl })
   })
   if (!res?.data) return null
   return filtering({

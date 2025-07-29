@@ -25,6 +25,9 @@
     outline: none;
     -webkit-tap-highlight-color: transparent;
   }
+  > pre {
+    max-width: 100%;
+  }
   @include mixins.responsive(mobile) {
     :is(img, pre, .grid-item) {
       position: static;

@@ -15,8 +15,8 @@
       <h1>{{state.title}}</h1>
       <p>{{state.description}}</p>
     </header>
-    <LoginForm class="login__forms"/>
-    <LoginQuick v-if="state.providers.length > 0" :items="state.providers"/>
+    <LoginForm v-if="_usePasswordForm" class="login__forms"/>
+    <LoginQuick v-if="_useQuickLogin" :items="state.providers"/>
   </div>
 </article>
 </template>
@@ -41,6 +41,14 @@ const state = reactive({
     image: '',
     gradient: 0,
   },
+})
+
+const _usePasswordForm = computed(() => {
+  if (!(state.providers.length > 0)) return true
+  return state.providers.some(o => o.name === 'password')
+})
+const _useQuickLogin = computed(() => {
+  return state.providers.length > 0
 })
 
 onMounted(async () => {

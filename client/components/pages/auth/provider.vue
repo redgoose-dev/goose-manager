@@ -47,7 +47,7 @@
       </i>
     </figure>
     <dl>
-      <dt>Provider ID</dt>
+      <dt>User ID</dt>
       <dd>{{props.id}}</dd>
       <dt>Name</dt>
       <dd>{{props.name}}</dd>
