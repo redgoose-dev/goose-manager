@@ -8,7 +8,7 @@ export async function getLastData()
   let result, postDate
   const query = { order: 'srl', sort: 'desc', size: 1 }
   let res = await request('/checklist/', { query })
-  let lastItem = res.data?.index[0]
+  let lastItem = res?.data?.index[0]
   if (lastItem)
   {
     postDate = checkTime(lastItem?.created_at, preference.checklist.resetTime)

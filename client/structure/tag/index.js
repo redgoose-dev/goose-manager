@@ -28,5 +28,5 @@ export async function getData(module)
       module,
     },
   })
-  return filtering(module, res.data)
+  return filtering(module, res?.data)
 }

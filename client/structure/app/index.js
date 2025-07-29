@@ -11,16 +11,9 @@ const defaultOptions = {
   },
 }
 
-async function _request(op)
-{
-  return await request(op.url, {
-    method: 'get',
-    query: op.query,
-  })
-}
-
 function filtering(src)
 {
+  if (!(src?.index?.length > 0)) return { total: 0, index: [] }
   return {
     total: src.total,
     index: src.index.map(item => {
@@ -49,7 +42,8 @@ export async function getData(options)
   {
     op.query = { ...defaultOptions.query, ...options.query }
   }
-  const { data } = await _request(op)
-  if (!data) throw new Error('No data')
-  return filtering(data)
+  const res = await request(op.url, {
+    query: op.query,
+  })
+  return filtering(res?.data)
 }

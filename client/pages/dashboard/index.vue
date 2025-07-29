@@ -5,7 +5,7 @@
     :title="preference.dashboard.title"
     :description="preference.dashboard.description"/>
   <Loading v-if="state.loading"/>
-  <div v-else-if="state.contents" class="contents">
+  <div v-else-if="_emptyContent" class="contents">
     <section v-if="state.contents.article" class="section">
       <header>
         <h1>Article</h1>
@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, inject } from 'vue'
+import { reactive, computed, onMounted, inject } from 'vue'
 import { getData } from '../../structure/dashboard/index.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty } from '../../components/content/index.js'
@@ -120,6 +120,12 @@ const errorPath = [ 'pages', 'dashboard.vue' ]
 const state = reactive({
   loading: true,
   contents: null,
+})
+
+const _emptyContent = computed(() => {
+  if (!state.contents) return false
+  for (const o of Object.values(state.contents)) if (!!o) return true
+  return false
 })
 
 onMounted(async () => {

@@ -4,10 +4,7 @@ import { serialize } from '../../libs/strings.js'
 
 function filteringJSON(src)
 {
-  if (!src?.data)
-  {
-    return { total: 0, index: [] }
-  }
+  if (!src?.data) return { total: 0, index: [] }
   return {
     total: src.data.total,
     index: src.data.index.map(o => {

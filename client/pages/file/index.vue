@@ -122,6 +122,7 @@ async function load()
       path: [ ...errorPath, 'load()' ],
       message: '파일 데이터를 가져오지 못했습니다.',
       error: e,
+      useToast: false,
     })
   }
   finally

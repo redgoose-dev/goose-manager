@@ -3,7 +3,7 @@ import { getDate } from '../../libs/date.js'
 
 function filteringApp(src)
 {
-  if (!(src.index?.length > 0)) return []
+  if (!(src?.index?.length > 0)) return []
   return src.index.map(o => {
     return {
       srl: o.srl,
@@ -17,7 +17,7 @@ function filteringApp(src)
 
 function filteringNest(src)
 {
-  if (!(src.index?.length > 0)) return []
+  if (!(src?.index?.length > 0)) return []
   return src.index.map(o => {
     return {
       srl: o.srl,

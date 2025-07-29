@@ -39,7 +39,7 @@
     </div>
     <Empty v-else title="No data"/>
   </div>
-  <Controller>
+  <Controller v-if="_useCreateNest">
     <template #right>
       <ButtonBasic
         href="./create/"
@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, inject } from 'vue'
+import { reactive, computed, onMounted, inject } from 'vue'
 import { getData } from '../../structure/nest/index.js'
 import { iconRandomPick } from '../../components/icon/map.js'
 import PageHeader from '../../components/header/page.vue'
@@ -69,6 +69,8 @@ const state = reactive({
 })
 const errorPath = [ 'pages', 'nest', 'index.vue' ]
 
+const _useCreateNest = computed(() => (state.apps.length > 0))
+
 onMounted(async () => {
   try
   {
@@ -80,6 +82,7 @@ onMounted(async () => {
       path: [ ...errorPath, 'onMounted' ],
       message: '앱과 둥지 데이터를 가져오지 못했습니다.',
       error: _e,
+      useToast: false,
     })
   }
   finally

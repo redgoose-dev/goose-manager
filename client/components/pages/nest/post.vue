@@ -1,6 +1,7 @@
 <template>
-<form ref="$root" @submit.prevent="onSubmit">
-  <Fieldset legend="기본 필드" class="basic" :disabled="state.loading">
+<Loading v-if="state.loading"/>
+<form v-else-if="state.app?.length > 0" ref="$root" @submit.prevent="onSubmit">
+  <Fieldset legend="기본 필드" class="basic">
     <Field label="앱 번호" for="post-app">
       <FormSelect
         id="post-app"
@@ -43,7 +44,7 @@
       <Help>이 "둥지"에 대한 설명을 입력합니다.</Help>
     </Field>
   </Fieldset>
-  <Fieldset legend="엑스트라 필드" class="extra" :disabled="state.loading">
+  <Fieldset legend="엑스트라 필드" class="extra">
     <Field label="분류 사용하기" for="post-use-category">
       <FormSwitch
         id="post-use-category"
@@ -171,6 +172,10 @@
     </template>
   </Controller>
 </form>
+<Empty
+  v-else
+  title="no data"
+  message="필요한 데이터를 가져오지 못했습니다."/>
 </template>
 
 <script setup>
@@ -183,6 +188,7 @@ import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset/index
 import { FormSelect, FormInput, FormSwitch, FormRadio } from '../../forms/index.js'
 import { Controller } from '../../navigation/index.js'
 import { ButtonBasic } from '../../button/index.js'
+import { Loading, Empty } from '../../content/index.js'
 
 const router = useRouter()
 const error = inject('error')
@@ -194,7 +200,7 @@ const props = defineProps({
 })
 const emits = defineEmits( [ 'submit' ])
 const state = reactive({
-  loading: props.mode === 'edit',
+  loading: true,
   processing: false,
   app: [],
 })
@@ -239,6 +245,7 @@ onMounted(async () => {
       path: [ ...errorPath, 'onMounted' ],
       message: '둥지를 가져오지 못했습니다.',
       error: e,
+      useToast: false,
     })
   }
   finally

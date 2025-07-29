@@ -3,13 +3,13 @@ import { dateFormat } from '../../libs/date.js'
 import { checkTime } from './libs.js'
 import { preferenceStore } from '../../store/app.js'
 
-function filtering({ data })
+function filtering(src)
 {
-  if (!data) return { total: 0, index: [] }
+  if (!src?.index?.length > 0) return { total: 0, index: [] }
   const preference = preferenceStore()
   return {
-    total: data.total,
-    index: data.index.map(o => {
+    total: src.total,
+    index: src.index.map(o => {
       return {
         srl: o.srl,
         title: dateFormat(new Date(o.created_at), preference.checklist.dateFormat),
@@ -35,5 +35,5 @@ export async function getData(query = {}, options = {})
       content: query.q,
     },
   })
-  return filtering(res)
+  return filtering(res?.data)
 }

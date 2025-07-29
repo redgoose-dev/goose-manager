@@ -8,7 +8,7 @@ export async function getData(module, moduleSrl)
 {
   if (!_route) _route = useRoute()
   const preference = preferenceStore()
-  const { data, message } = await request('/file/', {
+  const res = await request('/file/', {
     query: {
       module,
       module_srl: moduleSrl,
@@ -18,9 +18,9 @@ export async function getData(module, moduleSrl)
       page: Number(_route.query.page) > 1 ? Number(_route.query.page) : undefined,
     }
   })
-  if (!data) throw new Error(message)
+  if (!(res?.data)) return { total: 0, index: [] }
   return {
-    total: data.total || 0,
-    index: data.index?.length > 0 ? data.index : [],
+    total: res.data.total || 0,
+    index: res.data.index?.length > 0 ? res.data.index : [],
   }
 }

@@ -3,7 +3,7 @@ import { request, formData } from '../../libs/api.js'
 
 function filteringApp(src)
 {
-  if (!(src.index?.length > 0)) return []
+  if (!(src?.index?.length > 0)) throw new Error('Not found App data')
   return src.index.map(o => {
     return {
       label: `[${o.code}] ${o.name}`,
