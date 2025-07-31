@@ -1,0 +1,140 @@
+@use '../../../scss/mixins';
+
+.context {
+  position: relative;
+  padding: 8px 0;
+  width: var(--context-width, auto);
+  min-width: var(--context-min-width, unset);
+  max-width: var(--context-max-width, unset);
+  box-sizing: border-box;
+  border-radius: mixins.radius(64px);
+  background-color: var(--color-edge);
+  box-shadow:
+    0 4px 16px mixins.mix-alpha(var(--color-base), 15%),
+    0 1px 4px mixins.mix-alpha(var(--color-base), 15%),
+    0 0 0 .5px mixins.mix-alpha(var(--color-base), 10%);
+  overflow: clip;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: .5px 0;
+}
+
+button {
+  width: 100%;
+  height: 32px;
+  margin: 0;
+  padding: 0 12px;
+  box-sizing: border-box;
+  text-align: left;
+  border: none;
+  background: var(--context-item-fill, none);
+  font-size: 13px;
+  color: var(--context-item-color, var(--color-base));
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -.25px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: background-color, opacity, outline-color;
+  transition-duration: 160ms;
+  transition-timing-function: ease-out;
+  --icon-margin: 0;
+  --icon-size: 14px;
+  --icon-stroke: 2.5;
+  --icon-color: var(--context-item-color, var(--color-base));
+  &:not(:disabled) {
+    @include mixins.focus-outline(false, -2px);
+  }
+  span {
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+  }
+  em {
+    flex: 1;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: clip;
+    font-style: normal;
+    min-width: 0;
+  }
+  &:not(:disabled) {
+    &:hover {
+      opacity: .75;
+      background: mixins.mix-alpha(var(--context-item-fill, var(--color-blur)), 50%);
+    }
+    &:active {
+      opacity: .5;
+    }
+  }
+}
+
+hr {
+  margin: 6px 0;
+  border: none;
+  height: .5px;
+  background: var(--color-blur);
+}
+
+// color
+.color {
+  &--edge {
+    --context-item-color: var(--color-edge);
+  }
+  &--blur {
+    --context-item-color: var(--color-blur);
+  }
+  &--weak {
+    --context-item-color: var(--color-weak);
+  }
+  &--key {
+    --context-item-color: var(--color-key);
+  }
+  &--sub {
+    --context-item-color: var(--color-sub);
+  }
+  &--code {
+    --context-item-color: var(--color-code);
+  }
+  &--success {
+    --context-item-color: var(--color-success);
+  }
+  &--error {
+    --context-item-color: var(--color-error);
+  }
+}
+
+// fill
+.fill {
+  &--edge {
+    --context-item-fill: var(--color-edge);
+  }
+  &--blur {
+    --context-item-fill: var(--color-blur);
+  }
+  &--weak {
+    --context-item-fill: var(--color-weak);
+  }
+  &--key {
+    --context-item-fill: var(--color-key);
+  }
+  &--sub {
+    --context-item-fill: var(--color-sub);
+  }
+  &--code {
+    --context-item-fill: var(--color-code);
+  }
+  &--success {
+    --context-item-fill: var(--color-success);
+  }
+  &--error {
+    --context-item-fill: var(--color-error);
+  }
+}

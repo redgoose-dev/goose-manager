@@ -1,0 +1,97 @@
+@use '../../scss/mixins';
+
+.tag {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  height: var(--tag-height, 24px);
+  box-sizing: border-box;
+  background: var(--tag-color, var(--color-base));
+  border-radius: calc(var(--tag-height, 24px));
+  &:has(.body:is(button)) {
+    transition: outline-color 160ms ease-out, opacity 160ms ease-out;
+    outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+    &:has(.body:focus-visible) {
+      outline-color: var(--color-focus);
+    }
+    &:has(.body:active) {
+      opacity: .5;
+    }
+  }
+  &:has(.remove) {
+    .body {
+      padding-right: 0;
+    }
+  }
+}
+
+.body {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  padding: var(--tag-padding, (0 12px));
+  font-size: var(--tag-text-size, 11px);
+  font-weight: 700;
+  height: 100%;
+  box-sizing: border-box;
+  color: var(--tag-text-color, var(--color-edge));
+  &:is(button) {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+.remove {
+  display: grid;
+  place-content: center;
+  margin: 0 2px 0 0;
+  padding: 0;
+  width: var(--tag-height, 24px);
+  height: var(--tag-height, 24px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  --icon-margin: 0;
+  --icon-size: 12px;
+  --icon-color: var(--color-edge);
+  --icon-stroke: 3;
+  border-radius: 50%;
+  @include mixins.focus-outline();
+  &:active {
+    opacity: .5;
+  }
+}
+
+.color {
+  &--weak {
+    background: var(--tag-color, var(--color-weak));
+  }
+  &--blur {
+    background: var(--tag-color, var(--color-blur));
+    .body {
+      color: var(--tag-text-color, var(--color-base));
+    }
+    .remove {
+      --icon-color: var(--color-base);
+    }
+  }
+  &--key {
+    background: var(--tag-color, var(--color-key));
+  }
+  &--sub {
+    background: var(--tag-color, var(--color-sub));
+  }
+  &--code {
+    background: var(--tag-color, var(--color-code));
+  }
+  &--success {
+    background: var(--tag-color, var(--color-success));
+  }
+  &--error {
+    background: var(--tag-color, var(--color-error));
+  }
+}

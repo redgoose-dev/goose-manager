@@ -1,0 +1,35 @@
+@use '../../../scss/mixins';
+
+.editor {
+  margin: 0;
+  padding: 0;
+  border: none;
+  > legend {
+    font-size: 0;
+  }
+  &__body {
+    margin: 10px 0 0;
+  }
+}
+
+.toolbar {
+  margin: 0;
+  .toggle-mode-button {
+    &:disabled {
+      opacity: 1;
+      cursor: default;
+    }
+  }
+}
+
+.node-editor {
+  min-height: 320px;
+}
+
+.source-editor {
+  min-height: 320px;
+  max-height: 520px;
+  &:read-only {
+    background: inherit;
+  }
+}

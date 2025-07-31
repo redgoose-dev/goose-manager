@@ -1,0 +1,36 @@
+@use '../../../scss/mixins';
+
+.filter {
+  width: 180px;
+  position: sticky;
+  top: calc(var(--size-header-height) + 52px);
+  &__total {
+    margin: 0 0 20px;
+  }
+  &__fields {
+    margin: 0;
+    padding: 0;
+    border: none;
+    display: grid;
+    gap: 16px 0;
+    > legend {
+      position: absolute;
+      font-size: 0;
+    }
+  }
+  &__submit {
+    margin: 24px 0 0;
+  }
+  &__line {
+    margin: 30px 0;
+    border: none;
+    height: .5px;
+    background: var(--color-base);
+  }
+}
+
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

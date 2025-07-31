@@ -1,19 +1,14 @@
 # directories
-/.idea
-/node_modules
-/.AppleDouble
-/public/user
-/dist
+.idea/
+__legacy/
+dist/
+node_modules/
+.git/
+data/
 
 # files
-.dockerignore
-.DS_Store
-.env.local
-package-lock.json
-yarn.lock
-bun.lockb
-cmd.sh
-action.sh
-.editorconfig
-README.md
+Dockerfile*
+.gitignore
+*.md
+.env.*
 docker-compose.yml

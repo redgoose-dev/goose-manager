@@ -1,13 +1,11 @@
+const { NODE_ENV } = Bun.env
+
 /**
- * convert blob to buffer
- * @param {Blob} blob
- * @return {Promise<Buffer>}
+ * sleep (delay tool)
+ * @param {number} [ms=1000]
+ * @returns {Promise<unknown>}
  */
-export function blobToBuffer(blob)
+export function sleep(ms = 1000)
 {
-  return new Promise(resolve => {
-    blob.arrayBuffer()
-      .then(arrayBuffer => Buffer.from(arrayBuffer, 'binary'))
-      .then(res => resolve(res))
-  })
+  return new Promise(resolve => setTimeout(resolve, ms))
 }

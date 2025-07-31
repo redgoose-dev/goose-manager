@@ -1,0 +1,83 @@
+@use '../../scss/mixins';
+
+.switch {
+  --width: var(--switch-width, 48px);
+  --height: var(--switch-height, 24px);
+  --radius: calc(var(--height) * .5);
+  --padding: var(--switch-padding, 4px);
+  --active-offset: 8px;
+
+  display: block;
+  position: relative;
+  width: var(--width);
+  height: var(--height);
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: var(--radius);
+  -webkit-tap-highlight-color: transparent;
+  input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    pointer-events: none;
+    appearance: none;
+    background-color: var(--switch-bg, var(--color-edge));
+    border-radius: var(--radius);
+    box-shadow: var(--switch-shadow, inset 0 0 0 1px var(--color-weak));
+    transition: box-shadow 160ms ease-out, outline-color 160ms ease-out;
+    border: none;
+    outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+    outline-offset: -1px;
+  }
+  i {
+    --unit-size: calc(var(--height) - (var(--padding) * 2));
+    display: block;
+    position: absolute;
+    left: var(--padding);
+    top: var(--padding);
+    width: calc(var(--height) - (var(--padding) * 2));
+    height: calc(var(--height) - calc(var(--padding) * 2));
+    background-color: var(--switch-color, var(--color-weak));
+    border-radius: var(--radius);
+    transition: width 120ms ease-out, background-color 120ms ease-out;
+    pointer-events: none;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,.15);
+  }
+
+  // active
+  &:not(.disabled,.readonly):has(:active) {
+    i {
+      width: calc(var(--height) - (var(--padding) * 2) + var(--active-offset));
+    }
+  }
+
+  // focus
+  &:not(.disabled,.readonly):has(:focus-visible) {
+    --switch-shadow: #{inset 0 0 0 1px mixins.mix-alpha(var(--color-focus), 0%)};
+    input {
+      outline-color: var(--color-focus);
+    }
+  }
+
+  // checked
+  &:has(:checked) {
+    i {
+      left: unset;
+      right: var(--padding);
+    }
+    &:not(.disabled) i {
+      --switch-color: var(--color-sub);
+    }
+  }
+
+  // disabled
+  &.readonly {
+    cursor: default;
+    --switch-bg: #{mixins.mix-alpha(var(--color-reverse), 5%)};
+  }
+  &.disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+}

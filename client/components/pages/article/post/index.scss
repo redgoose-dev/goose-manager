@@ -1,0 +1,56 @@
+@use '../../../../scss/mixins';
+
+.fieldset {
+  --field-label-width: 100px;
+}
+
+.category {
+  display: inline-block;
+  --select-width: auto;
+}
+
+.regdate {
+  display: inline-block;
+  --input-width: auto;
+}
+
+.mode {
+  display: flex;
+  align-items: center;
+  gap: 0 16px;
+  > label {
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+    > span {}
+    &:not(:has(:disabled)) {
+      cursor: pointer;
+    }
+    &:has(:disabled) {
+      :deep(input) {
+        cursor: default;
+      }
+      > span {
+        color: var(--color-weak);
+      }
+    }
+  }
+}
+
+.content {
+  padding: 16px 0;
+  &__toolbar {}
+  &__editor {
+    margin: 10px 0 0;
+    min-height: 320px;
+    max-height: 560px;
+    font-size: 16px;
+  }
+}
+
+.file-manager {
+  height: 100%;
+  --empty-min-height: none;
+  --empty-max-height: none;
+  --file-manager-rows: auto 1fr;
+}

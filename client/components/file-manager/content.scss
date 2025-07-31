@@ -1,0 +1,53 @@
+@use '../../scss/mixins';
+
+.content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.content-loading {
+  box-sizing: border-box;
+  .loading {
+    --loading-height: 100%;
+    --loading-min-height: 0;
+    --loading-max-height: unset;
+  }
+}
+
+.content-items {
+  overflow: auto;
+  container-type: inline-size;
+  padding: 20px;
+  outline: none;
+  @include mixins.custom-scrollbar();
+  &:after {
+    content: '';
+    display: block;
+    height: 100px;
+  }
+}
+
+.files {
+  display: grid;
+  grid-template-columns: repeat(var(--column, 4), 1fr);
+  gap: var(--gap, 8px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @container (min-width: #{mixins.$responsive-desktop}) {
+    --column: 5;
+    --gap: 12px
+  }
+  > li {
+    min-width: 0;
+  }
+}
+
+.empty {
+  --empty-height: 100%;
+  --empty-min-height: unset;
+  --empty-max-height: unset;
+}

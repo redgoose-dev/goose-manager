@@ -1,30 +1,78 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import createServiceWorkerPlugin from './plugins/create-service-worker'
+
+const { VITE_PORT, VITE_PORT_SERVER, VITE_API_URL } = Bun.env
 
 const config = defineConfig(async ({ mode }) => {
-  const env = loadEnv(mode, process.cwd())
   return {
-    base: env.VITE_BASE_URL,
+    root: 'client',
+    publicDir: './public',
+    base: './',
     server: {
-      host: env.VITE_HOST,
-      port: Number(env.VITE_PORT),
-      open: env.VITE_OPEN_BROWSER === 'true',
+      host: '0.0.0.0',
+      port: Number(VITE_PORT),
+      open: false,
+      proxy: {
+        '/zone': {
+          target: `http://0.0.0.0:${VITE_PORT_SERVER}/zone`,
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/zone\/?/, '/'),
+        },
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
     },
     build: {
-      outDir: env.VITE_OUT_DIR || 'dist',
-      rollupOptions: {},
+      outDir: '../dist',
+      emptyOutDir: true,
+      rollupOptions: {
+        output: {
+          assetFileNames: assetInfo => {
+            const info = assetInfo.name.split('.')
+            let ext = info[info.length - 1]
+            if (/png|jpe?g|svg|gif|ico|webp|avif/i.test(ext)) ext = 'images/'
+            else if (/css/.test(ext)) ext = 'css/'
+            else if (/woff?2|ttf/i.test(ext)) ext = 'fonts/'
+            else ext = ''
+            return `assets/${ext}[name]-[hash][extname]`
+          },
+          manualChunks: {
+            vue: [
+              'vue',
+              'vue-router',
+              'pinia',
+            ],
+            vendor: [
+              // 'vue-advanced-cropper',
+              // 'vue-draggable-plus',
+              // 'marked',
+              // 'ofetch',
+            ],
+            redgoose: [
+              // '@redgoose/json-editor',
+              // 'image-resize',
+            ],
+          },
+        },
+      },
+      minify: 'terser',
+      terserOptions: {
+        format: {
+          comments: false,
+        },
+      },
     },
-    css: {},
     plugins: [
       vue({
         template: {
-          compilerOptions: {
-            isCustomElement: tag => /^ext-|^goose-/.test(tag),
-          },
+          compilerOptions: {},
         },
       }),
-      createServiceWorkerPlugin(),
     ],
   }
 })

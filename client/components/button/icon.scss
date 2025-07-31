@@ -1,0 +1,103 @@
+@use '../../scss/mixins';
+
+.button-icon {
+  display: flex;
+  align-items: center;
+  width: var(--button-size, 38px);
+  height: var(--button-size, 38px);
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: none;
+  user-select: none;
+  border-radius: mixins.radius(var(--button-size, 38px));
+  background: var(--button-color-bg, var(--color-weak));
+  filter: brightness(var(--button-brightness, unset));
+  transition:
+    background-color 160ms ease-out,
+    outline 160ms ease-out,
+    filter 160ms ease-out;
+  outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+  outline-offset: -1px;
+  &[type='button'],
+  &[type='submit'],
+  &[type='reset'] {
+    display: block;
+    -webkit-appearance: button;
+  }
+  .icon {
+    display: block;
+    margin: 0 auto;
+    width: var(--button-icon-size, 20px);
+    height: var(--button-icon-size, 20px);
+    color: var(--button-icon-color, var(--color-edge));
+    stroke-width: var(--button-icon-stroke, 2.5px);
+  }
+}
+
+// disabled
+.disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.button-icon:not(.disabled,label) {
+  // focus
+  &:focus-visible {
+    outline-color: var(--color-sub);
+  }
+  // hover
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      --button-brightness: 105%;
+    }
+  }
+  // active
+  &:active {
+    --button-brightness: 95%;
+  }
+}
+
+// size
+.size {
+  &--small {
+    --button-size: 30px;
+    --button-icon-size: 14px;
+  }
+}
+
+// color
+.color {
+  &--base {
+    --button-color-bg: var(--color-base);
+  }
+  &--key {
+    --button-color-bg: var(--color-key);
+  }
+  &--sub {
+    --button-color-bg: var(--color-sub);
+  }
+  &--code {
+    --button-color-bg: var(--color-code);
+  }
+  &--success {
+    --button-color-bg: var(--color-success);
+  }
+  &--error {
+    --button-color-bg: var(--color-error);
+  }
+  &--transparent {
+    --button-color-bg: transparent;
+    --button-icon-color: var(--color-base);
+    &:not(.disabled,label) {
+      &:hover {
+        --button-brightness: 200%;
+      }
+      &:active {
+        --button-brightness: unset;
+        opacity: .5;
+      }
+    }
+  }
+}

@@ -1,0 +1,103 @@
+@use '../../scss/mixins';
+
+.button {
+  display: block;
+  width: var(--button-width, 100%);
+  height: var(--button-height, 38px);
+  margin: var(--button-margin, 0);
+  padding: var(--button-padding, (0 20px));
+  // outer
+  background: var(--button-color-bg, var(--color-weak));
+  border: 0;
+  border-radius: mixins.radius(var(--button-height, 38px));
+  filter: brightness(var(--button-brightness, unset));
+  // transition
+  transition:
+    background-color 160ms ease-out,
+    outline 160ms ease-out,
+    filter 160ms ease-out;
+  // icon
+  --icon-size: var(--button-icon-size, 18px);
+  --icon-stroke: 2.5;
+  --icon-color: var(--button-text-color, var(--color-edge));
+  // text
+  --button-text-size: 14px;
+  color: var(--button-text-color, var(--color-edge));
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  // etc
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  box-sizing: border-box;
+  outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+  outline-offset: -1px;
+  // button
+  &:not(p, label) {
+    cursor: pointer;
+  }
+  &[type=button],
+  &[type=submit],
+  &[type=reset] {
+    -webkit-appearance: button;
+  }
+  // disabled
+  &.disabled {
+    opacity: .5;
+    cursor: default;
+  }
+}
+
+.button:not(.disabled,label,p) {
+  // focus
+  &:focus-visible {
+    outline-color: var(--color-focus);
+  }
+  // hover
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      --button-brightness: 105%;
+    }
+  }
+  // active
+  &:active {
+    --button-brightness: 95%;
+  }
+}
+
+// size
+.size {
+  &--small {
+    --button-height: 30px;
+    --button-padding: 0 16px;
+    --button-text-size: 12px;
+    --icon-size: 14px;
+  }
+}
+
+// color
+.color {
+  &--base {
+    --button-color-bg: var(--color-base);
+  }
+  &--key {
+    --button-color-bg: var(--color-key);
+  }
+  &--sub {
+    --button-color-bg: var(--color-sub);
+  }
+  &--code {
+    --button-color-bg: var(--color-code);
+  }
+  &--success {
+    --button-color-bg: var(--color-success);
+  }
+  &--error {
+    --button-color-bg: var(--color-error);
+  }
+}
+
+// animation rotate
+.ani-rotate {
+  --icon-animation: spin 2s linear infinite;
+}

@@ -1,0 +1,49 @@
+@use '../../scss/mixins';
+
+.category-tab {
+  margin: 0;
+  user-select: none;
+  ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: block;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    margin: -2px 0;
+    padding: 2px 4px;
+    color: var(--color-text, var(--color-base));
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.25;
+    text-decoration: none;
+    &:hover:not(.active) {
+      text-decoration: underline;
+    }
+    &.active {
+      cursor: default;
+      &,
+      &:hover {
+        --color-text: var(--color-key);
+      }
+    }
+    em {
+      margin-left: 2px;
+      font-style: normal;
+      &:before {
+        content: '(';
+      }
+      &:after {
+        content: ')';
+      }
+    }
+  }
+}

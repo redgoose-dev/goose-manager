@@ -1,0 +1,66 @@
+@use '../../scss/mixins';
+
+.item {
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--item-color-bg, var(--color-edge));
+  box-shadow:
+    var(--item-shadow-1, 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%)),
+    var(--item-shadow-2, 0 2px 24px mixins.mix-alpha(var(--color-base), 15%));
+  transition: box-shadow 160ms ease-out;
+  width: var(--item-width, auto);
+  border-radius: mixins.radius(var(--item-radius, 72px));
+  min-width: 0;
+  &__thumbnail {
+    width: 100%;
+    height: var(--item-image-height, auto);
+    min-height: var(--item-image-min-height, unset);
+    max-height: var(--item-image-max-height, unset);
+    box-sizing: border-box;
+    overflow: clip;
+    border-bottom: .5px solid var(--color-blur);
+    border-top-left-radius: mixins.radius(var(--item-radius, 82px));
+    border-top-right-radius: mixins.radius(var(--item-radius, 82px));
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 16px 20px;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+  &__title {
+    min-width: 0;
+    font-size: 14px;
+  }
+  &__description {
+    margin: 2px 0 0;
+  }
+  &__meta {
+    margin: 4px 0 0;
+  }
+  &__nav {
+    margin: 8px 0 0;
+  }
+  &__status {
+    margin: 16px 0 -4px;
+    padding: 16px 0 0;
+    border-top: .5px solid var(--color-weak);
+    :deep(li > span) {
+      font-size: 14px;
+    }
+  }
+  :deep(.mark) {
+    transition: box-shadow 160ms ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      --item-shadow-1: 0 0 0 2px #{mixins.mix-alpha(var(--color-sub), 100%)};
+      --item-shadow-2: 0 2px 24px #{mixins.mix-alpha(var(--color-base), 25%)};
+      :deep(.mark) {
+        box-shadow: 2px -2px 0 #{mixins.mix-alpha(var(--color-sub), 100%)};
+      }
+    }
+  }
+}

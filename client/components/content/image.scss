@@ -1,0 +1,40 @@
+@use '../../scss/mixins';
+
+.img {
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+  user-select: none;
+  width: var(--img-width, unset);
+  height: var(--img-height, unset);
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--img-fit, contain);
+  box-sizing: border-box;
+}
+
+.error {
+  margin: 0;
+  display: grid;
+  place-content: center;
+  height: 100%;
+  --icon-size: 32px;
+  --icon-stroke: 1;
+  --icon-color: var(--color-error);
+}
+
+.empty {
+  display: grid;
+  place-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  --icon-size: 32px;
+  --icon-stroke: 1;
+  --icon-color: var(--color-weak);
+}

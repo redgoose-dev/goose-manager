@@ -1,0 +1,60 @@
+@use '../../scss/mixins';
+@forward 'common';
+
+.colors {
+  box-sizing: border-box;
+  ul {
+    position: relative;
+    margin: 0;
+    padding: 50px 30px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(var(--column, 4), 1fr);
+    grid-row-gap: 40px;
+    background-color: var(--color-edge);
+    border: 1px solid var(--color-blur);
+    border-radius: mixins.radius(72px);
+  }
+  i {
+    position: relative;
+    display: block;
+    width: 94px;
+    height: 94px;
+    margin: 0 auto;
+    background-color: #eee;
+    border-radius: 50%;
+    box-sizing: border-box;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-radius: 50%;
+      border: 1px solid mixins.mix-alpha(var(--color-base), 8%);
+    }
+    &.color-bg { background-color: var(--color-bg); }
+    &.color-base { background-color: var(--color-base); }
+    &.color-weak { background-color: var(--color-weak); }
+    &.color-blur { background-color: var(--color-blur); }
+    &.color-edge { background-color: var(--color-edge); }
+    &.color-reverse { background-color: var(--color-reverse); }
+    &.color-key { background-color: var(--color-key); }
+    &.color-sub { background-color: var(--color-sub); }
+    &.color-code { background-color: var(--color-code); }
+    &.color-success { background-color: var(--color-success); }
+    &.color-error { background-color: var(--color-error); }
+  }
+  em {
+    display: block;
+    margin: 8px 0 0;
+    font-size: 12px;
+    font-style: normal;
+    text-align: center;
+  }
+  @include mixins.responsive(desktop) {
+    --column: 5;
+  }
+}

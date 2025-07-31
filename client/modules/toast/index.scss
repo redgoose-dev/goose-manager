@@ -1,0 +1,94 @@
+.rg-toast {
+  position: fixed;
+  left: unset;
+  right: 16px;
+  top: 24px;
+  margin: 0;
+  padding: 8px;
+  overflow: visible;
+  background: none;
+  border: none;
+  pointer-events: none;
+  width: unset;
+  height: unset;
+  &::backdrop {
+    display: none;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  li {
+    position: relative;
+    margin: 0;
+    background: var(--color-weak);
+    pointer-events: auto;
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(.4,.75,.45,1);
+    min-width: 240px;
+    max-width: 400px;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 1px 8px hsla(0 0% 0% / 50%);
+    transform: translateX(280px);
+    &.show {
+      transform: translateX(0);
+    }
+    &.color-key {
+      background: var(--color-key);
+    }
+    &.color-sub {
+      background: var(--color-sub);
+    }
+    &.color-success {
+      background: var(--color-success);
+    }
+    &.color-error {
+      background: var(--color-error);
+    }
+  }
+  p {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    min-width: 0;
+    margin: 0;
+  }
+  span {
+    display: block;
+    flex: 1;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.05;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    user-select: none;
+  }
+  i {
+    position: absolute;
+    display: block;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    height: 2px;
+    background: #fff;
+    opacity: 0;
+    transform-origin: 0 0;
+    animation-name: progress;
+    animation-timing-function: linear;
+    animation-play-state: paused;
+    animation-duration: 3s;
+    &.play {
+      opacity: 1;
+      animation-play-state: running;
+    }
+    @keyframes progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+  }
+}

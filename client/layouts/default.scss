@@ -1,0 +1,286 @@
+@use '../scss/mixins';
+
+.layout {}
+
+// header
+.layout-header {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  background: mixins.mix-alpha(var(--color-edge), 30%);
+  height: var(--size-header-height, 42px);
+  padding: 0 var(--size-side-padding);
+  box-shadow: 0 1px 12px mixins.mix-alpha(var(--color-base), 30%);
+  @include mixins.background-blur(16px);
+  .wrap {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    height: 100%;
+  }
+  .logo {
+    margin: 0;
+    height: 100%;
+    font-size: 0;
+    a {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      margin: 0 -16px;
+      padding: 0 16px;
+      text-decoration: none;
+      font-family: var(--font-eng);
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--color-base);
+      letter-spacing: -.5px;
+      box-sizing: border-box;
+      transition: opacity 160ms ease-out;
+      user-select: none;
+      &:active {
+        opacity: .5;
+      }
+      @include mixins.focus-outline(true, -2px);
+    }
+  }
+  .main-nav {
+    flex: 1;
+    height: 100%;
+    padding: 0 0 0 16px;
+    box-sizing: border-box;
+  }
+  .side-nav {
+    height: 100%;
+    margin-right: -16px;
+  }
+}
+
+// navigation
+.navigation {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  height: 100%;
+  user-select: none;
+  > li {
+    position: relative;
+    > a, > span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 100%;
+      box-sizing: border-box;
+      color: var(--color-base);
+      outline: none;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      padding: 8px 16px;
+      transition: background-color 200ms ease-out;
+      em {
+        display: block;
+        font-style: normal;
+        white-space: nowrap;
+        letter-spacing: -.25px;
+        user-select: none;
+      }
+      .ico-arrow {
+        display: block;
+        margin: 0 -8px 0 -2px;
+        --icon-size: 18px;
+        --icon-stroke: 2.5;
+        transition: rotate 360ms ease-out;
+        rotate: x 360deg;
+      }
+      .ico-custom {
+        display: block;
+        --icon-size: 16px;
+        --icon-stroke: 2;
+        --icon-color: var(--color-base);
+      }
+      .avatar {
+        margin-right: 4px;
+        border-radius: 50%;
+        user-select: none;
+        width: 24px;
+        height: 24px;
+        &--image {
+          display: block;
+          box-shadow: 0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%);
+          object-fit: cover;
+        }
+        &--icon {
+          display: grid;
+          place-content: center;
+          background: var(--color-weak);
+          --icon-size: 14px;
+          --icon-stroke: 3;
+          --icon-color: var(--color-edge);
+        }
+      }
+    }
+    > a {
+      cursor: pointer;
+      text-decoration: none;
+      &.active {
+        background-color: var(--color-sub);
+        :where(em, .ico-arrow, .ico-custom) {
+          color: var(--color-edge);
+        }
+      }
+      @include mixins.focus-outline(true, -2px);
+    }
+    > span {
+      cursor: default;
+    }
+    > div {
+      position: relative;
+      pointer-events: none;
+      ol {
+        opacity: 0;
+      }
+    }
+    &:hover, &:has(:focus-visible) {
+      > a:not(.active), > span {
+        background-color: mixins.mix-alpha(var(--color-base), 10%);
+        .ico-arrow {
+          rotate: x 0deg;
+        }
+      }
+      > div {
+        pointer-events: auto;
+        ol {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    min-width: 150px;
+    box-sizing: border-box;
+    left: 0;
+    top: 0;
+    background-color: var(--color-edge);
+    box-shadow:
+      0 4px 8px mixins.mix-alpha(var(--color-base), 10%),
+      0 4px 16px mixins.mix-alpha(var(--color-base), 20%);
+    border-radius: 0 0 2px 2px;
+    overflow: clip;
+    transition: opacity 200ms ease-out;
+    @include mixins.background-blur(16px);
+    > li {
+      position: relative;
+      transition: background-color 200ms ease-out;
+      &:nth-child(n+2) {
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          height: .5px;
+          background-color: mixins.mix-alpha(var(--color-base), 20%);
+        }
+      }
+      > a, > span, > button {
+        display: flex;
+        align-items: center;
+        height: 36px;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 0 16px;
+        letter-spacing: -.25px;
+        box-sizing: border-box;
+        color: var(--color-base);
+        cursor: pointer;
+        transition: background-color 150ms ease-out;
+        em {
+          display: block;
+          font-style: normal;
+          white-space: nowrap;
+        }
+        .ico-custom {
+          display: block;
+          margin: 0 8px 0 0;
+          --icon-size: 16px;
+          --icon-stroke: 2;
+        }
+        &:hover {
+          background-color: mixins.mix-alpha(var(--color-base), 5%);
+        }
+        @include mixins.focus-outline(true, -2px);
+      }
+      > a {
+        text-decoration: none;
+        cursor: pointer;
+        &.active {
+          background-color: var(--color-sub);
+          color: var(--color-edge);
+          --icon-color: var(--color-edge);
+        }
+      }
+      > button {
+        width: 100%;
+        text-align: left;
+        border: none;
+        background: none;
+        appearance: none;
+      }
+    }
+  }
+  &.right {
+    ol {
+      left: auto;
+      right: 0;
+    }
+  }
+}
+
+// container
+.container {
+  margin: 40px 0 100px;
+  padding: 0 var(--size-side-padding);
+  &__wrap {
+    max-width: var(--size-content-body);
+    margin: 0 auto;
+  }
+}
+
+// footer
+.layout-footer {
+  margin: 0;
+  padding: 0 var(--size-side-padding) 16px;
+  user-select: none;
+  text-align: right;
+  .wrap {
+    max-width: var(--size-content-body);
+    margin: 0 auto;
+  }
+  address {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    font-family: var(--font-eng);
+    font-size: 11px;
+    color: var(--color-weak);
+    line-height: 1.15;
+    > * {
+      display: block;
+    }
+    a {
+      @include mixins.focus-outline(true, 2px);
+    }
+  }
+}

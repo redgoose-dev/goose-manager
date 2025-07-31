@@ -1,0 +1,13 @@
+@use '../../scss/mixins';
+
+.items {
+  display: grid;
+  gap: var(--items-gap, 16px);
+  grid-template-columns: repeat(var(--items-column, 1), 1fr);
+}
+
+.theme {
+  &--list {
+    --items-gap: 12px;
+  }
+}

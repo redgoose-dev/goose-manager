@@ -1,0 +1,32 @@
+@use '../../scss/mixins';
+@forward 'common';
+
+.content-editable {
+  &__body {
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 2px;
+    box-shadow: inset 1px 4px 20px rgb(0 0 0 / 5%);
+    max-height: 150px;
+    border: 1px solid rgb(var(--color-base-rgb) / 20%);
+    overflow: auto;
+  }
+  &__line {
+    display: block;
+    margin: 20px 0;
+    height: 0;
+    border: none;
+    border-top: 1px dashed var(--color-weak);
+  }
+  &__render {
+    padding: 16px;
+    white-space: break-spaces;
+    word-break: keep-all;
+    word-wrap: break-word;
+    border-radius: 2px;
+    background: rgb(var(--color-base-rgb) / 10%);
+    box-shadow: inset 1px 4px 20px rgb(0 0 0 / 5%);
+    line-height: 1.42;
+    user-select: none;
+  }
+}

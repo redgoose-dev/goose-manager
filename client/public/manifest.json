@@ -1,0 +1,24 @@
+{
+  "short_name": "goose-manager",
+  "name": "goose-manager",
+  "description": "Goose Management Service",
+  "icons": [
+    {
+      "src": "/images/icons-512x512.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icons-512x512-mask.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "/?sw=1",
+  "start_url": "/?sw=1",
+  "display": "standalone",
+  "theme_color": "#2e2e2e",
+  "background_color": "#f7f7f7"
+}

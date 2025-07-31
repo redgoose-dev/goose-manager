@@ -1,0 +1,43 @@
+@use '../../../scss/mixins';
+
+.tag-selector {}
+
+.dropdown {
+  --dropdown-body-width: 100%;
+  &:deep(.body) {
+    width: calc(100% + 30px);
+    left: 0;
+  }
+}
+
+.context {
+  padding: 0;
+  &:deep(ul) {
+    max-height: 240px;
+    overflow: auto;
+    @include mixins.custom-scrollbar();
+  }
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    padding: 8px 10px;
+    border-bottom: .5px solid var(--color-weak);
+    p {
+      margin: 0 0 6px 0;
+      line-height: 1.15;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-weak);
+    }
+  }
+  &__empty {
+    --empty-height: 120px;
+    --empty-min-height: none;
+    --empty-max-height: none;
+    --empty-icon-size: 24px;
+    --empty-icon-stroke: 1.75;
+    --empty-title-size: 14px;
+    --empty-title-letter-spacing: -.5px;
+  }
+}

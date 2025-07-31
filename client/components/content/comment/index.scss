@@ -1,0 +1,49 @@
+@use '../../../scss/mixins';
+
+.header {
+  margin: 0 0 12px;
+  padding: 0 0 0 2px;
+  user-select: none;
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -.5px;
+  }
+  p {
+    margin: 6px 0 0;
+    font-size: 12px;
+    line-height: 1.05;
+    font-weight: 500;
+    strong {
+      font-style: normal;
+      font-weight: 700;
+    }
+  }
+}
+
+.index {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 20px 0;
+  > li {
+    min-width: 0;
+  }
+}
+
+.empty-comment {
+  --empty-height: 240px;
+  --empty-min-height: none;
+  --empty-max-height: none;
+  --empty-icon-size: 82px;
+  --empty-icon-stroke: 1.5;
+  --empty-title-size: 18px;
+  --empty-title-letter-spacing: -.5px;
+}
+
+.create {
+  margin: 32px 0 0;
+}

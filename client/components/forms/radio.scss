@@ -1,0 +1,89 @@
+@use '../../scss/mixins';
+
+.radio {
+  position: relative;
+  display: block;
+  font-size: 0;
+  i {
+    display: block;
+    position: relative;
+    width: var(--radio-size, 20px);
+    height: var(--radio-size, 20px);
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: var(--checkbox-bg, var(--color-edge));
+    box-shadow: var(--checkbox-shadow, inset 0 0 0 1px var(--color-weak));
+    transition: box-shadow 160ms ease-out, outline-color 160ms ease-out;
+    outline: 2px dashed mixins.mix-alpha(var(--color-focus), 0%);
+    outline-offset: -1px;
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      left: 50%;
+      top: 50%;
+      transform-origin: 50% 50%;
+      translate: -50% -50%;
+      scale: .65;
+      opacity: 0;
+      transition: scale 100ms ease-out, opacity 120ms ease-out;
+      background: var(--radio-unit-color, var(--color-sub));
+      width: var(--radio-point-size, 13px);
+      height: var(--radio-point-size, 13px);
+      border-radius: 50%;
+    }
+  }
+  input {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  // checked
+  &:has(:checked) {
+    i:after {
+      opacity: 1;
+      scale: 1;
+      transition: scale 240ms cubic-bezier(.35, 1.9, .68, 1.05), opacity 60ms ease-out;
+    }
+  }
+
+  // disabled
+  &:has(:disabled) {
+    i {
+      opacity: .5;
+      background-color: var(--checkbox-bg, var(--color-blur));
+      &:after {
+        background: var(--checkbox-unit-color, mixins.mix-alpha(var(--color-base), 60%));
+      }
+    }
+    input {
+      cursor: not-allowed;
+    }
+  }
+
+  // focus
+  &:has(:focus-visible:not(:disabled)) {
+    i {
+      --checkbox-shadow: inset 0 0 0 1px mixins.mix-alpha(var(--color-focus), 0%);
+      outline-color: var(--color-focus);
+    }
+  }
+}
+
+// size
+.size {
+  &--small {
+    --radio-size: 16px;
+    --radio-point-size: 10px;
+  }
+}

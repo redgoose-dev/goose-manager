@@ -1,0 +1,70 @@
+.thumbnail-editor {
+  position: relative;
+  user-select: none;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 40px;
+  &__header {
+    h1 {
+      margin: 0;
+      line-height: 1.05;
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: -.5px;
+    }
+    p {
+      margin: 4px 0 0;
+      line-height: 1.05;
+      color: var(--color-weak);
+      font-size: 12px;
+    }
+  }
+  &__body {
+    margin: 20px 0;
+  }
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .button-icon {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+  }
+}
+
+.cropper {
+  width: calc(90vw - (40px * 2));
+  height: calc(90vh - 240px);
+  max-width: 960px;
+  max-height: 640px;
+  background: var(--color-blur);
+}
+
+.zoom {
+  display: flex;
+  align-items: center;
+  gap: 0 8px;
+  i {
+    display: block;
+    --icon-size: 20px;
+    --icon-stroke: 2.25;
+    --icon-color: var(--color-weak);
+  }
+  p {
+    display: block;
+    margin: 0;
+    line-height: 1;
+    input {
+      display: block;
+      width: 200px;
+    }
+  }
+}
+
+.submit {
+  display: flex;
+  align-items: center;
+  gap: 0 6px;
+}

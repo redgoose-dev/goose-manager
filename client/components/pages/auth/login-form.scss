@@ -1,0 +1,82 @@
+@use '../../../scss/mixins';
+
+.login-form {
+  padding: 0;
+  > fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    > legend {
+      font-size: 0;
+      visibility: hidden;
+    }
+  }
+}
+
+.field {
+  &__label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    user-select: none;
+  }
+  &__body {
+    margin: 6px 0 0;
+    .input {
+      --input-padding: 0 12px;
+      --input-bg: transparent;
+      --input-placeholder: #{mixins.mix-alpha(var(--color-base), 50%)};
+      --input-shadow: 0 0 0 1px #{mixins.mix-alpha(var(--color-base), 100%)};
+      --color-focus: var(--color-base);
+      --input-text-size: 15px;
+      font-weight: 700;
+      outline-width: 3px;
+      &::selection {
+        background: var(--color-base);
+        color: var(--color-edge);
+      }
+    }
+  }
+  &--id {}
+  &--password {
+    margin-top: 20px;
+  }
+  &--save {
+    margin-top: 16px;
+  }
+}
+
+.save-auth {
+  display: flex;
+  align-items: center;
+  gap: 0 6px;
+  margin: 0;
+  --checkbox-bg: transparent;
+  --checkbox-shadow: inset 0 0 0 1px var(--color-base);
+  --color-focus: var(--color-base);
+  --checkbox-unit-color: var(--color-base);
+  label {
+    line-height: 1.15;
+    user-select: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+.submit {
+  margin: 32px 0 0;
+  .button {
+    --button-height: 48px;
+    --button-text-weight: 700;
+    --button-text-size: 16px;
+    --button-radius: 2px;
+    --icon-size: 18px;
+    --icon-stroke: 3;
+    --button-color-bg: var(--color-reverse);
+    //--button-color-bg: #{mixins.color-linear-gradient(var(--color-key) -10%, var(--color-sub) 80%, 135deg)};
+    --color-focus: var(--color-base);
+    outline-offset: 2px;
+    outline-width: 3px;
+  }
+}

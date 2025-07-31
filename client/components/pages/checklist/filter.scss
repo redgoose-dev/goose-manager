@@ -1,0 +1,24 @@
+@use '../../../scss/mixins';
+
+.filter {
+  width: 180px;
+  position: sticky;
+  top: calc(var(--size-header-height) + 52px);
+  &__total {
+    margin: 0 0 20px;
+  }
+  &__fields {
+    margin: 0;
+    padding: 0;
+    border: none;
+    display: grid;
+    gap: 16px 0;
+    > legend {
+      position: absolute;
+      font-size: 0;
+    }
+  }
+  &__submit {
+    margin: 40px 0 0;
+  }
+}

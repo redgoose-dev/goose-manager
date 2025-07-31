@@ -1,0 +1,19 @@
+@use '../../scss/mixins';
+
+.guide {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 14px;
+}
+
+.index {
+  margin: 12px 0 0;
+  padding: 32px 42px;
+  list-style: none;
+  border-radius: mixins.radius(100px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  box-shadow: 0 0 0 .5px mixins.mix-alpha(var(--color-weak));
+  background: var(--color-edge);
+}

@@ -1,0 +1,116 @@
+$responsive-tablet: 768px;
+$responsive-desktop: 1024px;
+$responsive-max: 1440px;
+
+// responsive
+@mixin responsive($range)
+{
+  @if $range == tablet
+  {
+    @media (min-width: #{$responsive-tablet}) { @content; }
+  }
+  @else if $range == desktop
+  {
+    @media (min-width: #{$responsive-desktop}) { @content; }
+  }
+  @else if $range == max
+  {
+    @media (min-width: #{$responsive-max}) { @content; }
+  }
+  @else if $range == mobile
+  {
+    @media (max-width: #{$responsive-tablet}) { @content; }
+  }
+}
+
+// background blur
+@mixin background-blur($size: 8px)
+{
+  @supports (backdrop-filter: blur(#{$size})) or (-webkit-backdrop-filter: blur(#{$size})) {
+    backdrop-filter: blur(#{$size});
+    -webkit-backdrop-filter: blur(#{$size});
+    @content;
+  }
+}
+
+// single line text
+@mixin single-line-text()
+{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: clip;
+}
+
+// custom scrollbar
+@mixin custom-scrollbar()
+{
+  --scroll-size: 16px;
+  --scroll-padding: 4px;
+  --scroll-track: var(--scroll-track, var(--color-weak));
+  --scroll-track-hover: #{mix-alpha(var(--color-weak), 65%)};
+  --scroll-bg: hsla(0 0% 100% / 0%);
+  &::-webkit-scrollbar {
+    width: var(--scroll-size);
+    height: var(--scroll-size);
+  }
+  &::-webkit-scrollbar-thumb {
+    border: var(--scroll-padding) solid hsla(0 0% 100% / 0%);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: var(--scroll-track, var(--color-weak));
+    &:hover {
+      background-color: var(--scroll-track-hover);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--scroll-bg);
+  }
+}
+
+// focus outline
+@mixin focus-outline($animation: true, $offset: 0)
+{
+  outline: 2px dashed mix-alpha(var(--color-focus), 0%);
+  outline-offset: $offset;
+  -webkit-tap-highlight-color: transparent;
+  @if $animation {
+    transition: outline-color 160ms ease-out;
+  }
+  &:focus-visible {
+    outline-color: var(--color-focus);
+    @content;
+  }
+}
+
+// single line text
+@mixin text-single-line()
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// FUNCTIONS
+
+// color-mix with alpha
+@function mix-alpha($color, $alpha: 100%)
+{
+  @return color-mix(in hsl, $color $alpha, transparent);
+}
+@function mix-color($color1, $color2, $position: 50%)
+{
+  @return color-mix(in hsl, $color1, $color2 $position);
+}
+
+// gradient
+@function color-linear-gradient($start, $end, $deg: 0deg)
+{
+  @return linear-gradient($deg, $start, $end);
+}
+
+// radius
+@function radius($size)
+{
+  @return calc($size * .17544);
+}

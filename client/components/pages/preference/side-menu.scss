@@ -1,0 +1,46 @@
+@use '../../../scss/mixins';
+
+.side-menu {
+  position: sticky;
+  top: calc(var(--size-header-height) + 52px);
+  padding: 12px 0;
+  border-radius: mixins.radius(64px);
+  background: var(--color-edge);
+  box-shadow:
+    0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%),
+    0 8px 24px mixins.mix-alpha(var(--color-base), 20%);
+  user-select: none;
+  display: grid;
+  gap: 0;
+  a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    min-width: 0;
+    text-decoration: none;
+    padding: 8px 16px;
+    color: var(--color-base);
+    letter-spacing: -.25px;
+    transition: background-color 160ms ease-out;
+    --icon-margin: -4px;
+    --icon-size: 18px;
+    --icon-stroke: 2.5;
+    --icon-color: var(--color-weak);
+    span {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font-eng);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: var(--color-blur);
+      }
+    }
+    &.router-link-exact-active {
+      background-color: var(--color-sub);
+      color: var(--color-edge);
+      --icon-color: var(--color-edge);
+    }
+  }
+}

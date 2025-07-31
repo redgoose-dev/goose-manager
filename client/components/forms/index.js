@@ -1,0 +1,8 @@
+export { default as FormInput } from './input.vue'
+export { default as FormTextarea } from './textarea.vue'
+export { default as FormSelect } from './select.vue'
+export { default as FormCheckbox } from './checkbox.vue'
+export { default as FormRadio } from './radio.vue'
+export { default as FormSwitch } from './switch.vue'
+export { default as FormKeyword } from './keyword.vue'
+export { default as FormTag } from './tag.vue'

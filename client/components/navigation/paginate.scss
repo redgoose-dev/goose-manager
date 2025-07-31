@@ -1,0 +1,33 @@
+@use '../../scss/mixins';
+
+.paginate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--paginate-gap, 6px);
+  user-select: none;
+  --paginate-item-size: 36px;
+  .dir {
+    --button-size: var(--paginate-item-size);
+    --button-icon-size: 18px;
+    --button-icon-stroke: 2.25;
+    &:disabled {
+      opacity: .25;
+      cursor: default;
+    }
+  }
+  .number {
+    width: auto;
+    --button-height: var(--paginate-item-size);
+    padding: 0;
+    min-width: var(--paginate-item-size);
+    &:is(:disabled) {
+      opacity: 1;
+      cursor: default;
+      --button-color-bg: var(--color-sub);
+    }
+  }
+  em {
+      font-style: normal;
+    }
+}
