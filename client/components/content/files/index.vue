@@ -34,7 +34,8 @@ import { dateFormat } from '../../../libs/date.js'
 import { getByte } from '../../../libs/strings.js'
 import { addQueryParams } from '../../../libs/object.js'
 import { Loading, Empty } from '../index.js'
-import { Items, Thumbnail } from '../../item/index.js'
+import { Items } from '../../item/index.js'
+import Thumbnail from '../../item/thumbnail.vue'
 import { ModalHeader } from '../../modal/index.js'
 
 const props = defineProps({

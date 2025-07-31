@@ -47,10 +47,11 @@ const config = defineConfig(async ({ mode }) => {
               'vue-router',
               'pinia',
             ],
-            // icon: [ 'lucide-vue-next' ],
             vendor: [
               // 'vue-advanced-cropper',
               // 'vue-draggable-plus',
+              // 'marked',
+              // 'ofetch',
             ],
             redgoose: [
               // '@redgoose/json-editor',

@@ -45,7 +45,8 @@ import { getData } from '../../structure/file/index.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty } from '../../components/content/index.js'
 import { Paginate } from '../../components/navigation/index.js'
-import { Items, Thumbnail } from '../../components/item/index.js'
+import { Items } from '../../components/item/index.js'
+import Thumbnail from '../../components/item/thumbnail.vue'
 
 const route = useRoute()
 const router = useRouter()

@@ -204,7 +204,9 @@
 </template>
 
 <script setup>
-import { Card, Thumbnail, Items, Tag } from '../../components/item/index.js'
+import { Items, Tag } from '../../components/item/index.js'
+import Thumbnail from '../../components/item/thumbnail.vue'
+import Card from '../../components/item/card.vue'
 
 const tagColors = [ 'base', 'weak', 'blur', 'key', 'sub', 'code', 'success', 'error' ]
 

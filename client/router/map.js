@@ -1,3 +1,5 @@
+import ErrorService from '../pages/error/index.vue'
+
 const { DEV } = import.meta.env
 
 const auth = [
@@ -153,12 +155,6 @@ const article = [
     path: '/article/:article/delete/',
     name: 'ArticleDelete',
     component: () => import('../pages/article/delete.vue'),
-    meta: { active: 'article' },
-  },
-  {
-    path: '/nest/:nest/article/:article/change-nest/',
-    name: 'ArticleChangeNest',
-    component: () => import('../pages/article/change-nest.vue'),
     meta: { active: 'article' },
   },
 ]
@@ -404,7 +400,7 @@ export default [
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('../pages/error/index.vue'),
+    component: ErrorService,
     props: {
       code: 404,
       pageTitle: '페이지가 없습니다.',

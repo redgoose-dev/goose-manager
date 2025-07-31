@@ -39,7 +39,7 @@ import { ref, reactive, onMounted, computed, inject } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { getData, changeOrder } from '../../../structure/category/index.js'
 import { Loading, Empty } from '../../content/index.js'
-import { Card } from '../../item/index.js'
+import Card from '../../item/card.vue'
 import Icon from '../../icon/index.vue'
 
 const $index = ref()

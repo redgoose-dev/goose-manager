@@ -111,7 +111,9 @@ import { getData } from '../../structure/dashboard/index.js'
 import PageHeader from '../../components/header/page.vue'
 import { Loading, Empty } from '../../components/content/index.js'
 import { ButtonIcon } from '../../components/button/index.js'
-import { Items, Card, Thumbnail, Mark } from '../../components/item/index.js'
+import { Items, Mark } from '../../components/item/index.js'
+import Thumbnail from '../../components/item/thumbnail.vue'
+import Card from '../../components/item/card.vue'
 
 const auth = inject('auth')
 const preference = inject('preference')
