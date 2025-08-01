@@ -4,10 +4,11 @@
 node_modules/
 dist/
 data/
+scripts/
 __legacy/
 
 # files
 .DS_Store
 .env.*
 cmd.sh
-docker-compose.yml
+podman-compose.yml

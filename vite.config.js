@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-const { VITE_PORT, VITE_PORT_SERVER, VITE_API_URL } = Bun.env
+const { VITE_PORT, VITE_PORT_SERVER } = Bun.env
 
 const config = defineConfig(async ({ mode }) => {
   return {
     root: 'client',
     publicDir: './public',
-    base: './',
+    base: '/',
     server: {
       host: '0.0.0.0',
       port: Number(VITE_PORT),

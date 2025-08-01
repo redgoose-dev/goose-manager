@@ -6,7 +6,7 @@ import { getPreferenceData } from './get-preference.js'
 import { isDev } from '../../libs/server.js'
 import { defaultCookieExpires } from '../../libs/assets.js'
 
-const { VITE_API_URL, VITE_URL_PATH } = Bun.env
+const { VITE_API_URL, VITE_API_CLIENT_URL, VITE_URL_PATH } = Bun.env
 const dev = isDev()
 
 /**
@@ -99,7 +99,7 @@ export default async function checkIn(req, ctx)
       message: 'Complete check in.',
       token: !data?.access ? accessToken : undefined,
       url: VITE_URL_PATH,
-      apiUrl: VITE_API_URL,
+      apiUrl: VITE_API_CLIENT_URL || VITE_API_URL,
       provider: content.data.provider,
       preference,
     })

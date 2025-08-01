@@ -1,6 +1,6 @@
 import { colorText, dateFormat } from './string.js'
 
-const { NODE_ENV, VITE_APP_TITLE } = Bun.env
+const { NODE_ENV  } = Bun.env
 
 /**
  * is development
@@ -38,7 +38,7 @@ export function openServerMessage(host, port, isDev)
     mode = colorText(`[${assets.production}]`, 'blue')
   }
   console.log(assets.line)
-  console.log(`${assets.intent}${colorText(VITE_APP_TITLE, 'green')} ${mode}`)
+  console.log(`${assets.intent}${colorText('GOOSE MANAGER', 'green')} ${mode}`)
   console.log(`${assets.intent}➜ Local: ${colorText(`${host}:${port}`, 'cyan')}`)
   console.log(assets.line)
 }

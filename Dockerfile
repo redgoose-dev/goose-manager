@@ -17,14 +17,13 @@ RUN rm -rf /tmp/* /root/.bun/cache
 FROM oven/bun:${IMAGE_TAG}
 WORKDIR /app
 
-USER bun
-
-COPY --from=builder --chown=bun:bun /app/node_modules ./node_modules
-COPY --from=builder --chown=bun:bun /app/dist ./dist
-COPY --from=builder --chown=bun:bun /app/server ./server
-COPY --from=builder --chown=bun:bun /app/.env ./.env
-COPY --from=builder --chown=bun:bun /app/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server ./server
+COPY --from=builder /app/.env ./.env
+COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 80
 
-CMD [ "bun", "run", "server/main.js" ]
+CMD [ "bun", "run", "preview" ]
+# CMD [ "tail", "-f", "/dev/null" ] # for test

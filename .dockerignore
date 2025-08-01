@@ -5,6 +5,7 @@ dist/
 node_modules/
 .git/
 data/
+scripts/
 
 # files
 Dockerfile*
@@ -12,3 +13,4 @@ Dockerfile*
 *.md
 .env.*
 docker-compose.yml
+cmd.sh
