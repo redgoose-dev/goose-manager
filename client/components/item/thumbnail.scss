@@ -19,8 +19,8 @@
     box-sizing: border-box;
     overflow: clip;
     border-bottom: .5px solid var(--color-blur);
-    border-top-left-radius: mixins.radius(var(--item-radius, 82px));
-    border-top-right-radius: mixins.radius(var(--item-radius, 82px));
+    border-top-left-radius: mixins.radius(var(--item-radius, 72px));
+    border-top-right-radius: mixins.radius(var(--item-radius, 72px));
   }
   &__body {
     display: flex;

@@ -31,6 +31,11 @@
         <article>
           <h1>modal title</h1>
           <p>window type content</p>
+          <nav>
+            <ButtonBasic color="error" @click="windowType = false">
+              Close modal
+            </ButtonBasic>
+          </nav>
         </article>
       </ModalWindow>
     </Modal>
@@ -94,6 +99,9 @@ const fullSize = ref(false)
   }
   p {
     margin: 8px 0 0;
+  }
+  nav {
+    margin: 16px 0 0;
   }
 }
 </style>

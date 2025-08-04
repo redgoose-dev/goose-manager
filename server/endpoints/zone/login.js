@@ -47,11 +47,13 @@ export default async function login(req, ctx)
     }
     const { access, expires, refresh } = content.data
 
-    // get provider
-    const provider = await api.request('/auth/provider/', {
+    // checking
+    const checkingResponse = await api.request('/auth/checking/', {
       headers: { 'Authorization': access },
+      method: 'post',
     })
-    if (!provider?.content?.data)
+    const _provider = checkingResponse?.content?.data?.provider
+    if (!_provider)
     {
       throw new ServiceError('No provider from API.', { status: 400 })
     }
@@ -73,7 +75,7 @@ export default async function login(req, ctx)
       token: content.data.access,
       url: VITE_URL_PATH,
       apiUrl: VITE_API_CLIENT_URL || VITE_API_URL,
-      provider: provider.content.data,
+      provider: _provider,
       preference,
     })
   }

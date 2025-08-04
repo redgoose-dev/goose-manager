@@ -17,8 +17,8 @@
     height: 100%;
     box-sizing: border-box;
     aspect-ratio: 1 / 1;
-    border-top-left-radius: mixins.radius(var(--item-radius, 82px));
-    border-bottom-left-radius: mixins.radius(var(--item-radius, 82px));
+    border-top-left-radius: mixins.radius(var(--item-radius, 72px));
+    border-bottom-left-radius: mixins.radius(var(--item-radius, 72px));
   }
   &__body {
     flex: 1;

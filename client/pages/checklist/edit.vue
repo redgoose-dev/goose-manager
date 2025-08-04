@@ -16,7 +16,8 @@
         name="content"
         id="content"
         :auto-size="true"
-        class="content"/>
+        class="content"
+        @submit="onSubmit"/>
     </div>
     <Controller>
       <template #left>

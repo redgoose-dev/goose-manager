@@ -7,6 +7,7 @@
   <CategoryTab
     :items="state.category"
     :active="route.query.category"
+    class="container-over"
     @select="onSelectCategory"/>
   <IndexWithFilter class="container-over">
     <template #content>
@@ -223,4 +224,6 @@ function onUpdateFilter(value)
 }
 </script>
 
-<style src="../../article/index.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+@forward '../../article/index';
+</style>

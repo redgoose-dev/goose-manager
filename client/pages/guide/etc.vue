@@ -7,24 +7,6 @@
 
   <section class="page-section">
     <header>
-      <h1>Tab navigation</h1>
-      <p>가로로 정렬된 탭 네비게이션</p>
-    </header>
-    <div class="example">
-      <Tab
-        v-model:active="activeTab"
-        :items="[
-          { key: 'tab-1', label: '첫번쨰 탭', icon: 'check' },
-          { key: 'tab-2', label: '둘탭' },
-          { key: 'tab-3', label: '세번 세번째 탭', icon: 'star' },
-          { key: 'tab-4', label: '링크주소', link: '/', icon: 'link' },
-        ]"/>
-      <pre>active tab: {{activeTab}}</pre>
-    </div>
-  </section>
-
-  <section class="page-section">
-    <header>
       <h1>Toast component</h1>
       <p>상태나 알림 메시지를 보여주는 토스트 컴포넌트</p>
     </header>
@@ -128,6 +110,24 @@
             @close=""/>
         </template>
       </FileManager>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <header>
+      <h1>Tab navigation</h1>
+      <p>가로로 정렬된 탭 네비게이션</p>
+    </header>
+    <div class="example">
+      <Tab
+        v-model:active="activeTab"
+        :items="[
+          { key: 'tab-1', label: '첫번쨰 탭', icon: 'check' },
+          { key: 'tab-2', label: '둘탭' },
+          { key: 'tab-3', label: '세번 세번째 탭', icon: 'star' },
+          { key: 'tab-4', label: '링크주소', link: '/', icon: 'link' },
+        ]"/>
+      <pre>active tab: {{activeTab}}</pre>
     </div>
   </section>
 </article>

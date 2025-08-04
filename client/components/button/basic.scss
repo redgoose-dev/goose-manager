@@ -56,12 +56,12 @@
   // hover
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      --button-brightness: 105%;
+      --button-brightness: 110%;
     }
   }
   // active
   &:active {
-    --button-brightness: 95%;
+    --button-brightness: 90%;
   }
 }
 

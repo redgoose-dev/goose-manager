@@ -41,6 +41,9 @@
   }
 
   // extra
+  &:is([type=date]) {
+    -webkit-appearance: none;
+  }
   &:is([type=date])::-webkit-calendar-picker-indicator {
     position: absolute;
     right: 8px;

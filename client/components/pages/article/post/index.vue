@@ -74,7 +74,8 @@
       v-model:position="state.position"
       :auto-size="true"
       :required="true"
-      class="content__editor"/>
+      class="content__editor"
+      @submit="quickSave"/>
   </div>
   <Fieldset>
     <Field label="태그" for="post-tag">

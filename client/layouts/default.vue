@@ -9,7 +9,9 @@
       </h1>
       <nav class="main-nav">
         <ul v-if="_mainNav?.length > 0" class="navigation">
-          <li v-for="item in _mainNav">
+          <li
+            v-for="item in _mainNav"
+            @touchend="onTouchMenu">
             <component
               :is="getNavigationElementName(item)"
               :to="item.link"
@@ -52,7 +54,7 @@
       </nav>
       <nav class="side-nav">
         <ul class="navigation right">
-          <li>
+          <li @touchend="onTouchMenu">
             <span>
               <img
                 v-if="_profile.avatar"
@@ -163,6 +165,15 @@ async function onClickCheckout()
   catch (e)
   {
     toast.add('로그아웃에 실패했습니다.', 'error')
+  }
+}
+
+function onTouchMenu(e)
+{
+  if (e.currentTarget.querySelector('ol'))
+  {
+    window.addEventListener('touchend', () => {}, { once: true })
+    e.stopPropagation()
   }
 }
 </script>

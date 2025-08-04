@@ -19,7 +19,7 @@ export async function getIndex()
   const res = await request('/auth/token/', {
     query: { mod: 'provider' },
   })
-  if (!(res?.data?.index?.length > 0)) return null
+  if (!(res?.data?.index?.length > 0)) return []
   return res.data.index.map(o => filtering(o))
 }
 

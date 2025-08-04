@@ -1,6 +1,6 @@
 @use '../../scss/mixins';
 
-.container-over {
+.index-wrap {
   margin-top: 24px;
   min-height: 360px;
 }
@@ -31,8 +31,8 @@
     @container (min-width: 860px) {
       --items-column: 4;
     }
-    @container (min-width: 1120px) {
-      --items-column: 5;
+    @container (min-width: 1160px) {
+      --items-column: 6;
     }
   }
 }
