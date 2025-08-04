@@ -51,7 +51,7 @@
     nav {}
   }
   .body {
-    padding: 30px 30px;
+    padding: 24px 30px;
     display: flex;
     gap: 0 20px;
     border-top: .5px solid var(--color-weak);
@@ -60,7 +60,7 @@
       user-select: none;
       align-self: center;
       width: 30%;
-      max-width: 160px;
+      max-width: 150px;
       img {
         display: block;
         margin: 0 auto;
@@ -122,7 +122,7 @@
   }
   &:not(.is) {
     header {
-      padding-block: 20px;
+      padding-block: 12px;
     }
   }
 }

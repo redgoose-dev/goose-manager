@@ -49,7 +49,6 @@ export default async function login(req, ctx)
 
     // get provider
     const provider = await api.request('/auth/provider/', {
-      method: 'post',
       headers: { 'Authorization': access },
     })
     if (!provider?.content?.data)

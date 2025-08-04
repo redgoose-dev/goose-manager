@@ -93,7 +93,7 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
-import { getPasswordItem, create, edit } from '../../../structure/auth/account.js'
+import { getPasswordItem, create, edit } from '../../../structure/auth/provider.js'
 import { pureObject } from '../../../libs/object.js'
 import { Loading, Empty } from '../../content/index.js'
 import { Fieldset, Field, Help } from '../../forms/fieldset/index.js'

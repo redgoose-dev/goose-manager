@@ -1,0 +1,44 @@
+@use '../../../scss/mixins';
+
+.post-token {
+  &__header {
+    user-select: none;
+    h1 {
+      margin: 0;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      font-size: 30px;
+    }
+    p {
+      margin: 6px 0 0;
+      line-height: 1.15;
+      font-size: 12px;
+    }
+  }
+}
+
+.fieldset {
+  margin: 30px 0 0;
+  --field-label-width: 120px;
+}
+
+.guide {
+  margin: 20px 0 0;
+  padding: 12px 0 12px 16px;
+  border-left: 4px solid var(--color-code);
+  background: var(--color-edge);
+  h1 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.05;
+    user-select: none;
+    letter-spacing: -.5px;
+  }
+  p {
+    margin: 4px 0 0;
+    line-height: 1.25;
+    font-size: 12px;
+  }
+}

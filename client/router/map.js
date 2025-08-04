@@ -16,6 +16,20 @@ const auth = [
     name: 'AuthAccount',
     component: () => import('../pages/auth/account.vue'),
     meta: { active: 'account' },
+    children: [
+      {
+        path: '',
+        name: 'AuthAccountProviders',
+        component: () => import('../pages/auth/account/provider.vue'),
+        meta: { active: 'account' },
+      },
+      {
+        path: 'token',
+        name: 'AuthAccountTokens',
+        component: () => import('../pages/auth/account/token.vue'),
+        meta: { active: 'account' },
+      },
+    ],
   },
 ]
 const app = [

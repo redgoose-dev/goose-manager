@@ -46,7 +46,7 @@
     transition: border-color 160ms ease-out, outline-color 160ms ease-out;
     &:read-only {
       cursor: not-allowed;
-      --keyword-bg: var(--color-blur);
+      background: var(--keyword-bg, var(--color-blur));
     }
     &:focus:not(:disabled) {
       outline-color: var(--color-focus);

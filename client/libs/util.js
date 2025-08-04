@@ -25,3 +25,13 @@ export function triggerEvent(target, name, value = undefined)
   if (!(target && name)) return
   target.dispatchEvent(new CustomEvent(name, { detail: value }))
 }
+
+/**
+ * Copy to clipboard
+ * @param {string} text
+ */
+export async function copyToClipboard(text)
+{
+  if (!navigator.clipboard) throw new Error('클립보드 기능을 지원하지 않는 환경입니다.')
+  await navigator.clipboard.writeText(text)
+}

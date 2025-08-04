@@ -1,0 +1,94 @@
+@use '../../../scss/mixins';
+
+.tokens {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px 0;
+}
+
+.token-total {
+  margin: 0 0 10px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.15;
+  user-select: none;
+}
+
+.token {
+  overflow: clip;
+  border-radius: mixins.radius(32px);
+  box-shadow:
+    var(--shadow-1, (0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%))),
+    var(--shadow-2, (0 4px 24px mixins.mix-alpha(var(--color-base), 20%)));
+  background: var(--color-edge);
+  padding: 20px 36px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0 30px;
+  > .body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px 12px;
+    dt {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: -.5px;
+      user-select: none;
+      text-align: right;
+      &:after {
+        content: ' :';
+      }
+    }
+    dd {
+      margin: 0;
+      grid-column: 2;
+    }
+  }
+  .access-token {
+    width: 360px;
+    --keyword-bg: transparent;
+  }
+  .description {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.15;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 0 0;
+    font-size: 12px;
+    user-select: none;
+    line-height: 1.15;
+    > span {
+      &:not(:last-child):after {
+        content: ' /';
+        margin-left: 3px;
+      }
+    }
+  }
+  > nav {
+    display: flex;
+    place-content: center;
+    align-items: center;
+    gap: 0 4px;
+    --button-icon-stroke: 2;
+    .button-edit {}
+    .button-delete {
+      --button-icon-color: var(--color-error);
+    }
+  }
+}
+
+.post-provider-window {
+  --modal-window-width: calc(100dvw - (var(--size-side-padding) * 2));
+  --modal-window-max-width: 680px;
+  --modal-window-height: none;
+  --modal-window-max-height: none;
+  padding: 40px;
+}

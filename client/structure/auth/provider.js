@@ -28,8 +28,7 @@ function filteringIndex(src)
 export async function getIndex(body)
 {
   const res = await request('/auth/providers/', {
-    method: 'post',
-    body: formData(body),
+    query: body,
   })
   return filteringIndex(res.data)
 }
@@ -43,10 +42,7 @@ export async function disconnect(srl)
 
 export async function getPasswordItem(srl)
 {
-  const res = await request(`/auth/provider/`, {
-    method: 'post',
-    body: formData({ srl })
-  })
+  const res = await request(`/auth/provider/${srl}/`)
   if (!res?.data) return null
   return filtering({
     code: res.data.code,

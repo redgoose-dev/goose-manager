@@ -1,8 +1,11 @@
-@use '../../scss/mixins';
+@use '../../../scss/mixins';
 
 .providers {
   display: grid;
   gap: 24px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .update-provider-window {
