@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-const { VITE_PORT, VITE_PORT_SERVER } = Bun.env
+const { VITE_HOST, VITE_PORT, VITE_PORT_SERVER } = Bun.env
 
 const config = defineConfig(async ({ mode }) => {
   return {
@@ -9,7 +9,7 @@ const config = defineConfig(async ({ mode }) => {
     publicDir: './public',
     base: '/',
     server: {
-      host: '0.0.0.0',
+      host: VITE_HOST,
       port: Number(VITE_PORT),
       open: false,
       proxy: {
