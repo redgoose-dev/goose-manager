@@ -13,4 +13,5 @@ Dockerfile*
 *.md
 .env.*
 docker-compose.yml
+podman-compose.yml
 cmd.sh
