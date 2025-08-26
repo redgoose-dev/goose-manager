@@ -40,14 +40,15 @@ export function baseRenderer(renderer = null, options = {})
 {
   if (!renderer) renderer = new Renderer()
   renderer.heading = (ctx) => {
-    const { depth, text } = ctx
+    const { depth, text, tokens } = ctx
     const id = text.replace(/\s+/g, '_')
+    const _text = renderer.parser.parseInline(tokens)
     let str = `<h${depth} id="${id}">`
     if (options.useHeadingLink)
     {
       str += `<a href="#${id}" class="anchor">${sharp}</a>`
     }
-    str += `${text}</h${depth}>`
+    str += `${_text}</h${depth}>`
     return str
   }
   renderer.image = (ctx) => {
@@ -55,10 +56,11 @@ export function baseRenderer(renderer = null, options = {})
     return `<img src="${href}" alt="${title || text}" loading="lazy"/>`
   }
   renderer.link = (ctx) => {
-    const { href, title, text } = ctx
+    const { href, title, text, tokens } = ctx
     const _target = /^http/.test(href) ? ' target="_blank"' : ''
     const _title = title ? ` title="${title}"` : ''
-    return `<a href="${href}"${_target}${_title}>${text}</a>`
+    const _text = renderer.parser.parseInline(tokens)
+    return `<a href="${href}"${_target}${_title}>${_text}</a>`
   }
   return renderer
 }
@@ -67,17 +69,18 @@ export function checklistRenderer(renderer, disabled = false)
 {
   if (!renderer) renderer = new Renderer()
   renderer.listitem = (ctx) => {
-    let { text, raw, checked, task } = ctx
+    let { checked, task, tokens } = ctx
+    let _text = renderer.parser.parseInline(tokens)
     if (task)
     {
       const _checked = checked ? ' checked' : ''
       const _disabled = disabled ? ' disabled' : ''
       const checkbox = `<span class="checkbox"><input type="checkbox"${_checked}${_disabled}/><i></i></span>`
-      return `<li class="checkbox-item"><label>${checkbox}${text}</label></li>`
+      return `<li class="checkbox-item"><label>${checkbox}${_text}</label></li>`
     }
     else
     {
-      return `<li>${text}</li>`
+      return `<li>${_text}</li>`
     }
   }
   return renderer
