@@ -1,0 +1,58 @@
+@use '../../scss/mixins';
+
+.icon-preview {
+  container-type: inline-size;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(var(--column, 1), 1fr);
+  gap: var(--gap, 2px);
+  @container (min-width: 240px) {
+    --column: 2;
+  }
+  @container (min-width: 360px) {
+    --column: 3;
+    --gap: 4px;
+  }
+  @container (min-width: 600px) {
+    --column: 4;
+  }
+  @container (min-width: 740px) {
+    --column: 5;
+    --gap: 8px;
+  }
+  @container (min-width: 860px) {
+    --column: 6;
+  }
+}
+
+li {
+  display: grid;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  background: mixins.mix-color(var(--color-blur), var(--color-edge), 35%);
+  border-radius: 2px;
+}
+
+.body {
+  display: block;
+  --icon-margin: 0 auto;
+  --icon-size: 36px;
+  --icon-stroke: 1.75;
+  min-width: 0;
+}
+
+em {
+  display: block;
+  margin: 6px 0 0 0;
+  padding: 0 12px;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 1.15;
+  text-align: center;
+  @include mixins.single-line-text();
+}

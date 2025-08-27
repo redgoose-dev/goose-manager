@@ -13,7 +13,7 @@
     <div class="example">
       <Card
         href="/"
-        image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+        image="https://goose.redgoose.me/file/b8vbig69ypgtpEPy/"
         title="card title"
         alt="card title"
         description="description message"
@@ -60,7 +60,7 @@
       <div class="flex flex--h-center flex--v-start">
         <Thumbnail
           href="/"
-          image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+          image="https://goose.redgoose.me/file/b8vbig69ypgtpEPy/"
           thumbnail-type="cover"
           title="card title"
           alt="card title"
@@ -81,7 +81,7 @@
           ]"/>
         <Thumbnail
           href="/"
-          image="https://goose.redgoose.me/data/upload/original/202107/rg-20210521-000009.jpg"
+          image="https://goose.redgoose.me/file/Sos15vBVG8zO9fUW/"
           thumbnail-type="cover"
           title="card title"
           alt="card title"
@@ -111,7 +111,7 @@
         <Card
           v-for="_ in Array(2)"
           href="/"
-          image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+          image="https://goose.redgoose.me/file/b8vbig69ypgtpEPy/"
           title="card title"
           alt="card title"
           :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
@@ -128,7 +128,7 @@
           <Card
             v-for="_ in Array(5)"
             href="/"
-            image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+            image="https://goose.redgoose.me/file/b8vbig69ypgtpEPy/"
             title="card title"
             alt="card title"
             :meta="[ 'Public', '0000-00-00', 'hit:234' ]"
@@ -154,7 +154,7 @@
           <Thumbnail
             v-for="_ in Array(6)"
             href="/"
-            image="https://goose.redgoose.me/data/upload/original/202107/rg-20190626-000027.jpg"
+            image="https://goose.redgoose.me/file/b8vbig69ypgtpEPy/"
             thumbnail-type="cover"
             title="card title"
             alt="card title"

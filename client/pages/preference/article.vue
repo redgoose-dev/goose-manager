@@ -1,6 +1,10 @@
 <template>
 <form @submit.prevent="onSubmit">
-  <h1 class="content-title">Article</h1>
+  <header class="content-header">
+    <div class="body">
+      <h1 class="content-title">Article</h1>
+    </div>
+  </header>
   <div class="json-content">
     <Editor ref="$editor" v-model="forms.json"/>
   </div>

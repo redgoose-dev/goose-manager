@@ -1,12 +1,29 @@
 @use '../../scss/mixins';
 
-.content-title {
+.content-header {
   margin: 0 0 24px;
   padding: 8px 0 0;
-  font-family: var(--font-eng);
-  line-height: 1.05;
-  font-size: 24px;
-  letter-spacing: -.25px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  .body {}
+  h1 {
+    margin: 0;
+    font-family: var(--font-eng);
+    line-height: 1.05;
+    font-size: 24px;
+    letter-spacing: -.25px;
+  }
+  p {
+    margin: 8px 0 0;
+    line-height: 1.25;
+    font-size: 12px;
+  }
+  .action {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
 }
 
 .json-content {

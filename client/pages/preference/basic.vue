@@ -1,6 +1,10 @@
 <template>
 <form @submit.prevent="onSubmit">
-  <h1 class="content-title">Basic</h1>
+  <header class="content-header">
+    <div class="body">
+      <h1 class="content-title">Basic</h1>
+    </div>
+  </header>
   <Fieldset>
     <Field label="버전정보">{{state.version}}</Field>
   </Fieldset>

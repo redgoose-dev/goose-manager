@@ -1,6 +1,21 @@
 <template>
 <form @submit.prevent="onSubmit">
-  <h1 class="content-title">Navigation</h1>
+  <header class="content-header">
+    <div class="body">
+      <h1>Navigation</h1>
+      <p>관리자 메뉴에서 사용되는 데이터입니다.</p>
+    </div>
+    <nav class="action">
+      <ButtonBasic
+        type="button"
+        icon-left="bird"
+        size="small"
+        color="sub"
+        @click="state.iconPreview = true">
+        아이콘
+      </ButtonBasic>
+    </nav>
+  </header>
   <div class="json-content">
     <Editor ref="$editor" v-model="forms.json"/>
   </div>
@@ -26,6 +41,23 @@
       </ButtonBasic>
     </template>
   </Controller>
+  <teleport to="#modals">
+    <Modal
+      :open="state.iconPreview"
+      :scroll="true"
+      :shortcut="true"
+      class="modal-icon-preview"
+      @close="state.iconPreview = false">
+      <ModalWindow :scroll="false" class="content-icon-preview">
+        <ModalHeader
+          title="아이콘 프리뷰"
+          @close="state.iconPreview = false"/>
+        <div class="content-icon-preview__body">
+          <IconPreview/>
+        </div>
+      </ModalWindow>
+    </Modal>
+  </teleport>
 </form>
 </template>
 
@@ -34,6 +66,8 @@ import { ref, reactive, inject } from 'vue'
 import Editor from '../../components/pages/json/editor.vue'
 import { Controller } from '../../components/navigation/index.js'
 import { ButtonBasic } from '../../components/button/index.js'
+import { Modal, ModalWindow, ModalHeader } from '../../components/modal/index.js'
+import IconPreview from '../../components/icon/preview.vue'
 
 const keyName = 'navigation'
 const preference = inject('preference')
@@ -43,6 +77,7 @@ const toast = inject('toast')
 const $editor = ref()
 const state = reactive({
   processing: false,
+  iconPreview: false,
 })
 const forms = reactive({
   json: JSON.stringify(preference._pure[keyName]),
@@ -97,4 +132,33 @@ async function onClickReset()
 }
 </script>
 
-<style src="./content.scss" lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use '../../scss/mixins';
+@forward './content.scss';
+.modal-icon-preview {
+  --modal-window-width: calc(100dvw - (var(--size-side-padding) * 2));
+  --modal-window-max-width: var(--size-content-body);
+  --modal-window-max-height: 65dvh;
+  @include mixins.responsive(tablet) {}
+}
+.content-icon-preview {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: 2px;
+  &__body {
+    padding: 16px;
+    overflow: auto;
+    @include mixins.custom-scrollbar();
+  }
+  @include mixins.responsive(tablet) {
+    &__body {
+      padding: 16px;
+    }
+  }
+  @include mixins.responsive(desktop) {
+    &__body {
+      padding: 36px;
+    }
+  }
+}
+</style>
