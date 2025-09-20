@@ -1,17 +1,19 @@
 # directories
 .idea/
-__legacy/
-dist/
-node_modules/
 .git/
+.vscode/
+node_modules/
+dist/
 data/
 scripts/
 
 # files
-Dockerfile*
+.DS_Store
 .gitignore
 *.md
 .env.*
+bun.lock
+Dockerfile
 docker-compose.yml
 podman-compose.yml
 cmd.sh

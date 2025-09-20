@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { preferenceStore } from '../../store/app.js'
 import { pureObject } from '../../libs/object.js'
 
 const defaultPreference = {
@@ -15,16 +16,23 @@ const defaultPreference = {
 let lastSelectedKey = NaN
 
 const fileManagerStore = defineStore('file-manager', {
-  state: () => ({
-    initialized: false,
-    preference: pureObject(defaultPreference),
-    idx: 0, // 아이템 인덱스 번호. 아이템이 추가될수록 증가한다.
-    items: {}, // 아이템 데이터 (key,value)
-    index: [], // 아이템의 순서 (key)
-    selected: {}, // 선택된 아이템의 키
-    thumbnail: undefined, // 크로핑 데이터 (srl,code,originSrl,coordinates)
-    windows: [], // 추가로 열려있는 모달의 목록
-  }),
+  state: () => {
+    const pref = preferenceStore()
+    let preference = pureObject(defaultPreference)
+    Object.entries(pref.file).forEach(([key, value]) => {
+      preference[key] = value
+    })
+    return {
+      initialized: false,
+      preference,
+      idx: 0, // 아이템 인덱스 번호. 아이템이 추가될수록 증가한다.
+      items: {}, // 아이템 데이터 (key,value)
+      index: [], // 아이템의 순서 (key)
+      selected: {}, // 선택된 아이템의 키
+      thumbnail: undefined, // 크로핑 데이터 (srl,code,originSrl,coordinates)
+      windows: [], // 추가로 열려있는 모달의 목록
+    }
+  },
   getters: {
     _countItems()
     {

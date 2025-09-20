@@ -1,9 +1,9 @@
 import { onRequest, onResponse, printMessage } from '../../libs/server.js'
 import { isDev, getRequestJSON } from '../../libs/server.js'
 
-const { VITE_BASE_PATH } = Bun.env
+const { DATA_PATH } = Bun.env
 const dev = isDev()
-const path = `${VITE_BASE_PATH}/data/preference.json`
+const path = `${DATA_PATH}/preference.json`
 
 /**
  * get preference

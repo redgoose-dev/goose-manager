@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN bun install --frozen-lockfile
+RUN bun install --frozen-lockfile --verbose
 RUN bun run build
 RUN rm -rf node_modules
 RUN bun install --production

@@ -1,7 +1,7 @@
 import ServiceError from '../extends/ServerError.js'
 import ServiceResponse from '../extends/ServiceResponse.js'
 
-const { VITE_API_URL } = Bun.env
+const { API_URL } = Bun.env
 
 export let assets = {
   headers: {},
@@ -18,7 +18,7 @@ export async function request(path, options = {}, debug = false)
 {
   const { method, query, body, headers, responseType } = options
   // set assets
-  let url = `${VITE_API_URL}${path}`
+  let url = `${API_URL}${path}`
   if (query)
   {
     const params = new URLSearchParams(query)

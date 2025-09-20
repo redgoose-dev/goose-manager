@@ -221,6 +221,7 @@ onMounted(async () => {
     forms.content = article.content || ''
     forms.json = article.json || {}
     forms.tag = tag || ''
+    if (typeof forms.json === 'string') forms.json = JSON.parse(forms.json)
     if (!_isEdit.value)
     {
       forms.app_srl = nest.app_srl

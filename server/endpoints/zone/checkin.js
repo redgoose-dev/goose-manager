@@ -6,7 +6,7 @@ import { getPreferenceData } from './get-preference.js'
 import { isDev } from '../../libs/server.js'
 import { defaultCookieExpires } from '../../libs/assets.js'
 
-const { VITE_API_URL, VITE_API_CLIENT_URL, VITE_URL_PATH } = Bun.env
+const { API_URL, API_CLIENT_URL, URL_PATH } = Bun.env
 const dev = isDev()
 
 /**
@@ -32,7 +32,7 @@ export default async function checkIn(req, ctx)
     if (!accessToken)
     {
       throw new ServiceError('Not found access token.', {
-        status: 400,
+        status: 401,
       })
     }
 
@@ -98,8 +98,8 @@ export default async function checkIn(req, ctx)
     response = Response.json({
       message: 'Complete check in.',
       token: !data?.access ? accessToken : undefined,
-      url: VITE_URL_PATH,
-      apiUrl: VITE_API_CLIENT_URL || VITE_API_URL,
+      url: URL_PATH,
+      apiUrl: API_CLIENT_URL || API_URL,
       provider: content.data.provider,
       preference,
     })
@@ -121,7 +121,7 @@ export default async function checkIn(req, ctx)
   {
     return new Response(null, {
       status: 302,
-      headers: { Location: VITE_URL_PATH },
+      headers: { Location: URL_PATH },
     })
   }
   else
@@ -159,13 +159,13 @@ async function getRequestData(req)
     if (result.errorCode)
     {
       throw new ServiceError(`API Error "${result.errorCode}"`, {
-        status: 400,
+        status: 401,
         response: 'Failed checkin.',
       })
     }
     if (!result.access)
     {
-      throw new ServiceError('Required "access" value.', { status: 400 })
+      throw new ServiceError('Required "access" value.', { status: 401 })
     }
     return result
   }

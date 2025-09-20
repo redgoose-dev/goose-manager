@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-const { VITE_HOST, VITE_PORT, VITE_PORT_SERVER } = Bun.env
+const { HOST, PORT, PORT_CLIENT } = Bun.env
 
 const config = defineConfig(async ({ mode }) => {
   return {
@@ -9,12 +9,12 @@ const config = defineConfig(async ({ mode }) => {
     publicDir: './public',
     base: '/',
     server: {
-      host: VITE_HOST,
-      port: Number(VITE_PORT),
+      host: HOST,
+      port: Number(PORT_CLIENT),
       open: false,
       proxy: {
         '/zone': {
-          target: `http://0.0.0.0:${VITE_PORT_SERVER}/zone`,
+          target: `http://0.0.0.0:${PORT}/zone`,
           changeOrigin: true,
           rewrite: path => path.replace(/^\/zone\/?/, '/'),
         },

@@ -25,7 +25,7 @@
 bun run dev
 ```
 
-서버가 열리면 `.env`에서 설정한 포트 두개가 같이 열리게 됩니다. 이때 `VITE_PORT` 포트를 조합한 URL로 접속합니다. ex) `http://localhost:81`
+서버가 열리면 `.env`에서 설정한 포트 두개가 같이 열리게 됩니다. 이때 `PORT_CLIENT` 포트를 조합한 URL로 접속합니다. ex) `http://localhost:3030`
 
 
 ## Production
@@ -43,7 +43,7 @@ bun run build
 bun run preview
 ```
 
-서버가 실행되었으면 `.env`에서 설정한 `VITE_PORT_SERVER` 포트로 접속할 수 있습니다. ex) `http://localhost:80`
+서버가 실행되었으면 `.env`에서 설정한 `PORT` 포트로 접속할 수 있습니다. ex) `http://localhost:3000`
 
 
 ## .env 가이드
@@ -51,20 +51,17 @@ bun run preview
 프로그램 사용에 기초적인 설정을 합니다.
 기본값은 `.env`파일에 기록되어 있으니 참고해주세요.
 
-- `VITE_HOST`: 서버 호스트 주소를 설정합니다.
-- `VITE_PORT`: 클라이언트 서버 포트번호 (개발모드에서만 사용됩니다.)
-- `VITE_PORT_SERVER`: 백엔드 서버 포트번호 (이 값은 프로덕션 모드에서 사용됩니다.)
-- `VITE_BASE_PATH`: 상대경로
-- `VITE_DATA_PATH`: 사용자 데이터가 저장되는 경로 이름입니다.
-- `VITE_URL_PATH`: 이 프로그램에서 사용하는 URL 경로
-- `VITE_DIR_OUT`: 빌드경로 디렉토리 이름
+- `HOST`: 서버 호스트 주소를 설정합니다.
+- `PORT`: 백엔드 서버 포트번호 (이 값은 프로덕션 모드에서 사용됩니다.)
+- `PORT_CLIENT`: 클라이언트 서버 포트번호 (개발모드에서만 사용됩니다.)
+- `DATA_PATH`: 사용자 데이터가 저장되는 경로 이름입니다.
+- `URL_PATH`: 이 프로그램에서 사용하는 URL 경로
 - `COOKIE_PREFIX`: 쿠키이름 접두사
 - `COOKIE_DOMAIN`: 쿠키 도메인
 - `COOKIE_HTTPONLY`: 쿠키 HttpOnly 설정
 - `COOKIE_PATH`: 쿠키 경로
-- `VITE_API_URL`: API 서버 URL
-- `VITE_API_CLIENT_URL`: 클라이언트에서 사용되는 API 서버 URL (값이 없으면 VITE_API_URL 값으로 사용합니다.)
-- `TZ`: 타임존 설정 (예: Asia/Seoul)
+- `API_URL`: API 서버 URL
+- `API_CLIENT_URL`: 클라이언트에서 사용되는 API 서버 URL (값이 없으면 API_URL 값으로 사용합니다.)
 
 
 ## Docker 사용하기
@@ -89,7 +86,7 @@ services:
     container_name: goose-manager
     image: redgoose/goose-manager:latest
     ports:
-      - "8080:80"
+      - "8080:3000"
     volumes:
       - ./.env.local:/app/.env.local
       - ./data:/app/data

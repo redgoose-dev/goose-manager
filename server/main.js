@@ -11,10 +11,10 @@ import renew from './endpoints/zone/renew.js'
 import download from './endpoints/zone/download.js'
 
 const { serve } = Bun
-const { VITE_HOST, VITE_PORT_SERVER } = Bun.env
+const { HOST, PORT } = Bun.env
 const server = {
-  host: VITE_HOST,
-  port: Number(VITE_PORT_SERVER),
+  host: HOST,
+  port: Number(PORT),
   dev: isDev(),
 }
 
@@ -47,7 +47,7 @@ const routes = {
 }
 
 // run server
-serve({
+const _server = serve({
   development: server.dev,
   port: server.port,
   hostname: server.host,
@@ -56,4 +56,4 @@ serve({
 })
 
 // open server message
-openServerMessage(server.host, server.port, server.dev)
+openServerMessage(_server.hostname, _server.port, _server.development)
