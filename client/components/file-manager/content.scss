@@ -51,3 +51,37 @@
   --empty-min-height: unset;
   --empty-max-height: unset;
 }
+
+.overlay-dropzone {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10001;
+  display: grid;
+  place-content: center;
+  height: 100dvh;
+  box-sizing: border-box;
+  pointer-events: none;
+  background: mixins.mix-alpha(var(--color-sub), 80%);
+  align-content: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 120ms ease-out;
+  @include mixins.background-blur(24px);
+  &.active {
+    opacity: 1;
+  }
+  :is(span) {
+    display: block;
+    font-size: 52px;
+    font-weight: 700;
+    font-family: var(--font-eng);
+    color: var(--color-edge);
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: -.5px;
+    user-select: none;
+  }
+}

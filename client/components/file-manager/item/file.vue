@@ -11,6 +11,7 @@
     :src="_src"
     :alt="props.name"
     :private="fileManager.preference.private"
+    :draggable="false"
     class="file__image"/>
   <p v-else class="file__raw">
     <Icon :name="_fileIcon"/>

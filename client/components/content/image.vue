@@ -9,7 +9,7 @@
     :alt="props.alt"
     :width="props.width"
     :height="props.height"
-    :draggable="false"
+    :draggable="props.draggable"
     loading="lazy"
     @error="onError"/>
   <p v-else class="empty">
@@ -29,6 +29,7 @@ const props = defineProps({
   width: Number,
   height: Number,
   private: Boolean,
+  draggable: Boolean,
 })
 const auth = inject('auth')
 const error = ref(false)

@@ -1,5 +1,10 @@
 <template>
-<article class="content">
+<article
+  ref="$content"
+  class="content"
+  @dragover="onOverFile"
+  @dragleave="onLeaveFile"
+  @drop="onDropFile">
   <Toolbar ref="$toolbar" @action="onActionToolbar"/>
   <div v-if="state.loading" class="content-loading">
     <Loading class="loading"/>
@@ -28,11 +33,16 @@
     </ul>
   </div>
   <Empty v-else title="No file" message="파일이 없습니다." class="empty"/>
+  <teleport to="#modals">
+    <div :class="[ 'overlay-dropzone', state.dropZone && 'active' ]">
+      <span>Drop files here!</span>
+    </div>
+  </teleport>
 </article>
 </template>
 
 <script setup>
-import { ref, reactive, computed, inject, onMounted } from 'vue'
+import { ref, reactive, computed, inject, onMounted, onBeforeUnmount } from 'vue'
 import { authStore } from '../../store/auth.js'
 import { downloadFile } from '../../libs/file.js'
 import { request } from '../../libs/api.js'
@@ -46,6 +56,7 @@ import { File, Progress } from './item/index.js'
 import Toolbar from './toolbar.vue'
 
 const $toolbar = ref()
+const $content = ref()
 const fileManager = inject('file-manager')
 const fileManagerEvent = inject('file-manager-event')
 const error = inject('error')
@@ -53,6 +64,8 @@ const errorPath = [ 'components', 'file-manager', 'content.vue' ]
 const auth = authStore()
 const state = reactive({
   loading: false,
+  dragEvent: false,
+  dropZone: false,
 })
 
 const _files = computed(() => {
@@ -76,24 +89,26 @@ const _files = computed(() => {
 onMounted(async () => {
   try
   {
-    state.loading = true
-    const { module, moduleSrl } = fileManager.preference
-    if (!(module && moduleSrl))
+    if (!fileManager.initialized)
     {
-      throw new Error('module, moduleSrl 값이 필요합니다.')
-    }
-    const res = await request('/file/', {
-      query: {
-        module,
-        module_srl: moduleSrl,
-        unlimited: '1',
-      },
-    })
-    if (res?.data?.index?.length > 0)
-    {
-      res.data.index
-        .reverse()
-        .forEach(item => {
+      state.loading = true
+      const { module, moduleSrl } = fileManager.preference
+      if (!(module && moduleSrl))
+      {
+        throw new Error('module, moduleSrl 값이 필요합니다.')
+      }
+      const res = await request('/file/', {
+        query: {
+          module,
+          module_srl: moduleSrl,
+          unlimited: '1',
+          order: 'srl',
+          sort: 'asc',
+        },
+      })
+      if (res?.data?.index?.length > 0)
+      {
+        res.data.index.forEach(item => {
           if (item.json.thumbnail)
           {
             fileManager.thumbnail = {
@@ -108,6 +123,12 @@ onMounted(async () => {
             fileManager.addFile(convertDataToFileItem(item))
           }
         })
+      }
+      fileManager.initialized = true
+    }
+    if (window.File && window.FileList && window.FileReader && window.Blob)
+    {
+      state.dragEvent = true
     }
   }
   catch (e)
@@ -123,6 +144,10 @@ onMounted(async () => {
   {
     state.loading = false
   }
+})
+onBeforeUnmount(() => {
+  if (!state.dragEvent) return
+  state.dragEvent = false
 })
 
 function onSelect(idx, $event)
@@ -217,6 +242,33 @@ async function onActionToolbar(type, value)
       break
   }
 }
+
+function onOverFile(e)
+{
+  if (!state.dragEvent) return
+  e.preventDefault()
+  if (state.dropZone) return
+  state.dropZone = true
+}
+function onLeaveFile(e)
+{
+  if (!state.dragEvent) return
+  e.preventDefault()
+  if (!state.dropZone) return
+  const related = e.relatedTarget
+  if (related && $content.value && $content.value.contains(related)) return
+  state.dropZone = false
+}
+function onDropFile(e)
+{
+  if (!state.dragEvent) return
+  e.preventDefault()
+  if (!state.dropZone) return
+  state.dropZone = false
+  const files = (e.dataTransfer) ? e.dataTransfer.files : undefined
+  fileManagerEvent.uploadFiles(files).then()
+}
+
 </script>
 
 <style src="./content.scss" lang="scss" scoped></style>

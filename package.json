@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -15,25 +15,25 @@
     "> 1%",
     "last 2 versions"
   ],
+  "dependencies": {
+    "@types/bun": "^1.3.1"
+  },
   "devDependencies": {
     "@redgoose/json-editor": "^1.2.2",
     "@vitejs/plugin-vue": "^5.2.4",
     "concurrently": "^9.2.1",
-    "esbuild": "^0.25.10",
+    "esbuild": "^0.25.11",
     "image-resize": "^1.4.1",
     "lucide-vue-next": "^0.515.0",
-    "marked": "^16.3.0",
+    "marked": "^16.4.1",
     "ofetch": "^1.4.1",
     "pinia": "^3.0.3",
-    "sass": "^1.93.0",
+    "sass": "^1.93.2",
     "terser": "^5.44.0",
-    "vite": "^6.3.6",
-    "vue": "^3.5.21",
+    "vite": "^6.4.1",
+    "vue": "^3.5.22",
     "vue-advanced-cropper": "^2.8.9",
     "vue-draggable-plus": "^0.6.0",
-    "vue-router": "^4.5.1"
-  },
-  "dependencies": {
-    "@types/bun": "^1.2.22"
+    "vue-router": "^4.6.3"
   }
 }

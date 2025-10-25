@@ -9,7 +9,7 @@
     <div class="lightbox__body">
       <Image
         :src="props.src"
-        draggable="false"
+        :draggable="false"
         :alt="props.title"
         :private="props.private"/>
     </div>

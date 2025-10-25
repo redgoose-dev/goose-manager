@@ -72,7 +72,6 @@ const fileManagerStore = defineStore('file-manager', {
         if (!(key in this.preference)) continue
         this.preference[key] = value
       }
-      this.initialized = true
     },
     destroy()
     {
@@ -98,7 +97,7 @@ const fileManagerStore = defineStore('file-manager', {
       const newIdx = this.idx += 1
       if (this.items[newIdx]) return
       this.items[newIdx] = data
-      this.index.unshift(newIdx)
+      this.index.push(newIdx)
       this.idx = newIdx
       return newIdx
     },

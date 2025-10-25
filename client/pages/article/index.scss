@@ -28,11 +28,8 @@
     @container (min-width: 580px) {
       --items-column: 3;
     }
-    @container (min-width: 860px) {
+    @container (min-width: 920px) {
       --items-column: 4;
-    }
-    @container (min-width: 1160px) {
-      --items-column: 6;
     }
   }
 }

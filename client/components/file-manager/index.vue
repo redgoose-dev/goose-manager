@@ -92,6 +92,7 @@ provide('file-manager-event', {
   thumbnail: onRouteThumbnail,
   upload: onUpload,
   deleteFile: onDeleteFile,
+  uploadFiles: uploadFile,
 })
 
 // lifecycles
