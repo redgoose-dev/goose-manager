@@ -16,7 +16,7 @@ async function statics(req, ctx)
   onRequest(req, ctx)
 
   const url = new URL(req.url)
-  const distPath = 'dist'
+  const distPath = 'dist/client'
 
   // set file path
   let filePath = `${distPath}${url.pathname}`

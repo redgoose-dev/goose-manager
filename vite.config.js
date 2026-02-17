@@ -14,7 +14,7 @@ const config = defineConfig(async ({ mode }) => {
       open: false,
       proxy: {
         '/zone': {
-          target: `http://0.0.0.0:${PORT}/zone`,
+          target: `http://${HOST}:${PORT}/zone`,
           changeOrigin: true,
           rewrite: path => path.replace(/^\/zone\/?/, '/'),
         },
@@ -23,12 +23,12 @@ const config = defineConfig(async ({ mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          api: 'modern-compiler',
+          // api: 'modern-compiler',
         },
       },
     },
     build: {
-      outDir: '../dist',
+      outDir: '../dist/client',
       emptyOutDir: true,
       rollupOptions: {
         output: {
@@ -48,14 +48,15 @@ const config = defineConfig(async ({ mode }) => {
               'pinia',
             ],
             vendor: [
-              // 'vue-advanced-cropper',
-              // 'vue-draggable-plus',
-              // 'marked',
-              // 'ofetch',
+              'vue-advanced-cropper',
+              'vue-draggable-plus',
+              'marked',
+              'ofetch',
+              'lucide-vue-next',
             ],
             redgoose: [
-              // '@redgoose/json-editor',
-              // 'image-resize',
+              '@redgoose/json-editor',
+              'image-resize',
             ],
           },
         },

@@ -8,8 +8,11 @@
   "author": "redgoose <scripter@me.com>",
   "scripts": {
     "dev": "NODE_ENV=development concurrently \"bun run --bun server/main.js\" \"bunx --bun vite\"",
-    "build": "bunx --bun vite build",
-    "preview": "NODE_ENV=production bun run --bun server/main.js"
+    "prebuild": "rm -rf ./dist",
+    "build": "bun run --bun ./server/build.js && bunx --bun vite build",
+    "build:client": "rm -rf ./dist && bunx --bun vite build",
+    "build:server": "rm -rf ./dist && bun run --bun ./server/build.js",
+    "preview": "NODE_ENV=production bun run --bun dist/main.js"
   },
   "browserslist": [
     "> 1%",
@@ -20,20 +23,20 @@
   },
   "devDependencies": {
     "@redgoose/json-editor": "^1.2.3",
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitejs/plugin-vue": "^6.0.4",
     "concurrently": "^9.2.1",
-    "esbuild": "^0.25.12",
+    "esbuild": "^0.27.3",
     "image-resize": "^1.4.1",
-    "lucide-vue-next": "^0.515.0",
-    "marked": "^16.4.2",
+    "lucide-vue-next": "^0.566.0",
+    "marked": "^17.0.2",
     "ofetch": "^1.5.1",
     "pinia": "^3.0.4",
     "sass": "^1.97.3",
     "terser": "^5.46.0",
-    "vite": "^6.4.1",
+    "vite": "^7.3.1",
     "vue": "^3.5.28",
     "vue-advanced-cropper": "^2.8.9",
     "vue-draggable-plus": "^0.6.1",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.0.2"
   }
 }
