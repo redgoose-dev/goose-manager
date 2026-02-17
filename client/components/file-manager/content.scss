@@ -32,14 +32,28 @@
 
 .files {
   display: grid;
-  grid-template-columns: repeat(var(--column, 4), 1fr);
+  grid-template-columns: repeat(var(--column, 3), 1fr);
   gap: var(--gap, 8px);
   margin: 0;
   padding: 0;
   list-style: none;
-  @container (min-width: #{mixins.$responsive-desktop}) {
+  @container (min-width: 780px) {
+    --column: 4;
+  }
+  @container (min-width: 1080px) {
     --column: 5;
     --gap: 12px
+  }
+  @container (min-width: 1280px) {
+    --column: 6;
+  }
+  @container (min-width: 1920px) {
+    --column: 8;
+    --gap: 16px;
+  }
+  @container (min-width: 2400px) {
+    --column: 12;
+    --gap: 20px;
   }
   > li {
     min-width: 0;

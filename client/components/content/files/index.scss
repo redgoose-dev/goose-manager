@@ -34,6 +34,12 @@
     @container (min-width: 1280px) {
       --items-column: 6;
     }
+    @container (min-width: 1920px) {
+      --items-column: 8;
+    }
+    @container (min-width: 2400px) {
+      --items-column: 12;
+    }
   }
 }
 
