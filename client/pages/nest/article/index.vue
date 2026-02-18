@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="container-over">
   <PageHeader
     module="article"
     :title="_header.title"
@@ -7,9 +7,8 @@
   <CategoryTab
     :items="state.category"
     :active="route.query.category"
-    class="container-over"
     @select="onSelectCategory"/>
-  <IndexWithFilter class="container-over">
+  <IndexWithFilter>
     <template #content>
       <div class="content">
         <Loading v-if="state.loading"/>

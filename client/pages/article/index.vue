@@ -1,7 +1,7 @@
 <template>
-<article>
+<article class="container-over">
   <PageHeader module="article"/>
-  <IndexWithFilter class="container-over">
+  <IndexWithFilter>
     <template #content>
       <div class="content">
         <Loading v-if="state.loading"/>
