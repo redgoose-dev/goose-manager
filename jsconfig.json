@@ -24,11 +24,9 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
-    "plugins": [
-      {
-        "name": "@vue/typescript-plugin",
-        "location": "node_modules/@vue/typescript-plugin"
-      }
-    ]
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [ "client/*" ]
+    }
   }
 }

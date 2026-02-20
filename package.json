@@ -24,7 +24,6 @@
   "devDependencies": {
     "@redgoose/json-editor": "^1.2.3",
     "@vitejs/plugin-vue": "^6.0.4",
-    "@vue/typescript-plugin": "^3.2.4",
     "concurrently": "^9.2.1",
     "esbuild": "^0.27.3",
     "image-resize": "^1.4.1",

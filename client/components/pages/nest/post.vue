@@ -153,7 +153,11 @@
         </Label>
       </Labels>
     </Field>
+    <Field label="아티클 데이터">
+      <ArticleData v-model="forms.json.articleExtra"/>
+    </Field>
   </Fieldset>
+  <pre style="font-size:10px">{{forms.json.articleExtra}}</pre>
   <Controller>
     <template #left>
       <ButtonBasic icon-left="arrow-left" @click="router.back()">
@@ -181,14 +185,15 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { getData, getJSON, submit } from '../../../structure/nest/post.js'
-import { getByte, validateCode } from '../../../libs/strings.js'
-import { pureObject } from '../../../libs/object.js'
+import { getData, getJSON, submit } from '@/structure/nest/post.js'
+import { getByte, validateCode } from '@/libs/strings.js'
+import { pureObject } from '@/libs/object.js'
 import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset/index.js'
 import { FormSelect, FormInput, FormSwitch, FormRadio } from '../../forms/index.js'
 import { Controller } from '../../navigation/index.js'
 import { ButtonBasic } from '../../button/index.js'
 import { Loading, Empty } from '../../content/index.js'
+import ArticleData from './article-data/index.vue'
 
 const router = useRouter()
 const error = inject('error')
@@ -212,6 +217,7 @@ const forms = reactive({
   json: {
     thumbnail: {},
     files: {},
+    articleExtra: [],
   },
 })
 const errorPath = [ 'components', 'pages', 'nest', 'post.vue' ]

@@ -1,5 +1,5 @@
-import { preferenceStore } from '../../store/app.js'
-import { request, formData } from '../../libs/api.js'
+import { preferenceStore } from '@/store/app.js'
+import { request, formData } from '@/libs/api.js'
 
 function filteringApp(src)
 {
@@ -27,6 +27,7 @@ export function getJSON(src = {})
       count: Number(src.files?.count || preference.nest.uploadFileCount),
       sizeSingle: Number(src.files?.sizeSingle || preference.nest.limitUploadFile),
     },
+    articleExtra: [],
   }
 }
 
