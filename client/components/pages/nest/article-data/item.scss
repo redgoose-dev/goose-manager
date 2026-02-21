@@ -43,10 +43,24 @@
   justify-content: center;
   width: 60px;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .remove {
   display: grid;
   justify-content: center;
   width: 100px;
+}
+
+.default {
+  min-height: 30px;
+  &--text {}
+  &--switch {
+    --switch-width: 36px;
+    --switch-height: 20px;
+  }
+  &--empty {
+    font-size: 12px;
+    color: var(--color-weak);
+  }
 }

@@ -2,7 +2,7 @@
 <Loading v-if="state.loading"/>
 <form v-else-if="state.app?.length > 0" ref="$root" @submit.prevent="onSubmit">
   <Fieldset legend="기본 필드" class="basic">
-    <Field label="앱 번호" for="post-app">
+    <Field label="* 앱 선택하기" for="post-app">
       <FormSelect
         id="post-app"
         name="post-app"
@@ -11,7 +11,7 @@
         placeholder="앱을 선택해주세요."
         style="--select-width:400px"/>
     </Field>
-    <Field label="코드" for="post-code">
+    <Field label="* 코드" for="post-code">
       <FormInput
         id="post-code"
         name="post-code"
@@ -24,7 +24,7 @@
       <Help v-if="!!forms.code.error" color="error">{{forms.code.error}}</Help>
       <Help>코드를 "알파벳, 숫자, `-` and `_`"으로만 입력해주세요.</Help>
     </Field>
-    <Field label="이름" for="post-name">
+    <Field label="* 이름" for="post-name">
       <FormInput
         id="post-name"
         name="post-name"
@@ -157,7 +157,6 @@
       <ArticleData v-model="forms.json.articleExtra"/>
     </Field>
   </Fieldset>
-  <pre style="font-size:10px">{{forms.json.articleExtra}}</pre>
   <Controller>
     <template #left>
       <ButtonBasic icon-left="arrow-left" @click="router.back()">
@@ -188,11 +187,11 @@ import { useRouter } from 'vue-router'
 import { getData, getJSON, submit } from '@/structure/nest/post.js'
 import { getByte, validateCode } from '@/libs/strings.js'
 import { pureObject } from '@/libs/object.js'
-import { Fieldset, Field, Help, Labels, Label } from '../../forms/fieldset/index.js'
-import { FormSelect, FormInput, FormSwitch, FormRadio } from '../../forms/index.js'
-import { Controller } from '../../navigation/index.js'
-import { ButtonBasic } from '../../button/index.js'
-import { Loading, Empty } from '../../content/index.js'
+import { Fieldset, Field, Help, Labels, Label } from '@/components/forms/fieldset'
+import { FormSelect, FormInput, FormSwitch, FormRadio } from '@/components/forms'
+import { Controller } from '@/components/navigation'
+import { ButtonBasic } from '@/components/button'
+import { Loading, Empty } from '@/components/content'
 import ArticleData from './article-data/index.vue'
 
 const router = useRouter()
@@ -260,6 +259,33 @@ onMounted(async () => {
   }
 })
 
+function checkingJson(src)
+{
+  let _json = pureObject(src)
+  if (_json.articleExtra?.length > 0)
+  {
+    _json.articleExtra = _json.articleExtra.reduce((acc, cur, idx) => {
+      if (!cur.name) return acc
+      switch (cur.type)
+      {
+        case 'text':
+          delete cur.values
+          break
+        case 'switch':
+          delete cur.values
+          cur.default = !!cur.default
+          break
+        default:
+          break
+      }
+      acc.push(cur)
+      return acc
+    }, [])
+    _json.articleExtra = [...new Map(_json.articleExtra.map(item => [item.name, item])).values()]
+  }
+  return JSON.stringify(_json)
+}
+
 async function onSubmit()
 {
   forms.code.error = null
@@ -271,12 +297,13 @@ async function onSubmit()
   try
   {
     state.processing = true
+    const json = checkingJson(forms.json)
     await submit(props.srl, {
       app: forms.app.value,
       code: forms.code.value,
       name: forms.name.value,
       description: forms.description.value,
-      json: JSON.stringify(pureObject(forms.json)),
+      json,
     })
     const message = props.mode === 'edit' ? '둥지를 수정했습니다.' : '둥지를 만들었습니다.'
     toast.add(message, 'success').then()

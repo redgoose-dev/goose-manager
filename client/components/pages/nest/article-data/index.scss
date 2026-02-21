@@ -16,9 +16,10 @@
     padding: 16px 0;
     background-color: var(--color-edge);
     border-radius: mixins.radius(72px);
-    box-shadow:
-      0 1px 24px mixins.mix-alpha(var(--color-base), 20%),
-      0 0 0 .5px mixins.mix-alpha(var(--color-base), 10%);
+    border: .5px solid mixins.mix-alpha(var(--color-base), 25%);
+    &.ghost {
+      opacity: .25;
+    }
   }
 }
 

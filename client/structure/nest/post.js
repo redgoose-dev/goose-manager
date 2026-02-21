@@ -27,7 +27,7 @@ export function getJSON(src = {})
       count: Number(src.files?.count || preference.nest.uploadFileCount),
       sizeSingle: Number(src.files?.sizeSingle || preference.nest.limitUploadFile),
     },
-    articleExtra: [],
+    articleExtra: src.articleExtra?.length > 0 ? src.articleExtra : [],
   }
 }
 

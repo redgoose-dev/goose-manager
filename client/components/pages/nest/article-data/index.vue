@@ -1,6 +1,13 @@
 <template>
 <article class="article-data">
-  <ol v-if="model.length > 0" class="index">
+  <VueDraggable
+    v-if="model.length > 0"
+    v-model="model"
+    tag="ol"
+    handle=".move"
+    ghost-class="ghost"
+    :animation="200"
+    class="index">
     <li v-for="(_,k) in model">
       <Item
         :idx="k"
@@ -8,7 +15,7 @@
         class="item"
         @remove="onRemoveItem"/>
     </li>
-  </ol>
+  </VueDraggable>
   <nav class="add-item">
     <ButtonBasic
       type="button"
@@ -24,19 +31,28 @@
 </template>
 
 <script setup>
+import { nextTick } from 'vue'
+import { VueDraggable } from 'vue-draggable-plus'
+import { pureObject } from '@/libs/object.js'
 import { ButtonBasic } from '@/components/button'
 import Item from './item.vue'
 
 const model = defineModel()
 
-function onClickAddItem()
+async function onClickAddItem()
 {
-  model.value.push({
-    name: '',
-    type: 'text',
-    values: '',
-    default: '',
-  })
+  const _items = pureObject(model.value)
+  model.value = []
+  await nextTick()
+  model.value = [
+    ..._items,
+    {
+      name: '',
+      type: 'text',
+      values: '',
+      default: '',
+    },
+  ]
 }
 
 function onRemoveItem(key)

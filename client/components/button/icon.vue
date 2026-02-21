@@ -28,7 +28,7 @@ const _tag = computed(() => {
   {
     case 'a': return 'a'
     case 'router': return 'router-link'
-    case 'label': return 'label'
+    case 'label': return 'span'
     default: return 'button'
   }
 })
