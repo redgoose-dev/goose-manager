@@ -53,6 +53,18 @@
             @update:model-value="model.default = $event"/>
           <em v-else class="default--empty">항목이 없습니다.</em>
         </template>
+        <template v-else-if="_isCheckboxType">
+          <Labels v-if="_valuesOptions.length">
+            <Label v-for="o in _valuesOptions">
+              <FormCheckbox
+                :model-value="model.default.split(',').includes(o.value)"
+                size="small"
+                @update:model-value="onChangeCheckboxItem(o.value, $event)"/>
+              <span>{{o.label}}</span>
+            </Label>
+          </Labels>
+          <em v-else class="default--empty">항목이 없습니다.</em>
+        </template>
         <FormSwitch
           v-else-if="_isSwitchType"
           :id="`article-data-${props.idx}-default`"
@@ -84,7 +96,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { ButtonIcon } from '@/components/button'
-import { FormInput, FormSelect, FormSwitch, FormTag } from '@/components/forms'
+import { FormInput, FormSelect, FormSwitch, FormTag, FormCheckbox } from '@/components/forms'
 import { Labels, Label } from '@/components/forms/fieldset'
 
 const props = defineProps({
@@ -123,11 +135,10 @@ const _visibleValues = computed(() => {
       return true
   }
 })
-const _isSwitchType = computed(() => {
-  return model.value.type === 'switch'
-})
+const _isSwitchType = computed(() => (model.value.type === 'switch'))
+const _isCheckboxType = computed(() => (model.value.type === 'checkbox'))
 const _isMultipleType = computed(() => {
-  return [ 'checkbox', 'radio', 'select' ].includes(model.value.type)
+  return [ 'radio', 'select' ].includes(model.value.type)
 })
 
 function onChangeType(type)
@@ -141,6 +152,22 @@ function onChangeType(type)
       model.value.default = ''
       break
   }
+}
+
+function onChangeCheckboxItem(value, checked)
+{
+  const _modelValue = model.value.default.split(',')
+  model.value.default = _valuesOptions.value.map(o => {
+    if (o.value === value)
+    {
+      if (checked) return o.value
+    }
+    else
+    {
+      if (_modelValue.includes(o.value)) return o.value
+    }
+    return false
+  }).filter(Boolean).join(',')
 }
 </script>
 

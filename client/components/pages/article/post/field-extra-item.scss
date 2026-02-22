@@ -1,0 +1,22 @@
+@use '../../../../scss/mixins';
+
+dt {
+  padding-left: 12px;
+  font-size: 13px;
+  text-align: right;
+}
+
+dd {
+  margin: 0;
+}
+
+.field {
+  &--select {
+    display: grid;
+    justify-content: start;
+  }
+  &--switch {
+    --switch-width: 36px;
+    --switch-height: 20px;
+  }
+}
