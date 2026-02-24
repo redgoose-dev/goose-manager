@@ -23,7 +23,7 @@ const props = defineProps({
 @use '../../../scss/mixins';
 .field {
   display: grid;
-  grid-template-columns: var(--field-label-width, 150px) 1fr;
+  grid-template-columns: var(--field-label-width, 160px) 1fr;
   grid-auto-flow: column;
   align-items: center;
   margin: 0;
@@ -33,7 +33,7 @@ const props = defineProps({
   &__label {
     padding: 0 0 0 12px;
     box-sizing: border-box;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: -.5px;
     line-height: 1.15;

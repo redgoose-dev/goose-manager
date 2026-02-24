@@ -1,0 +1,66 @@
+@use "../../../../scss/mixins";
+
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+.body {
+  display: grid;
+  gap: 2px;
+  --labels-gap: 0 24px;
+  &-items {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+  .label-text {
+    font-size: 12px;
+    min-width: 32px;
+    text-align: right;
+    cursor: pointer;
+  }
+  .manage-values {
+    padding: 6px 8px;
+    --input-tag-font-size: 12px;
+  }
+}
+
+.move {
+  display: grid;
+  justify-content: center;
+  width: 60px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.remove {
+  display: grid;
+  justify-content: center;
+  width: 100px;
+}
+
+.default {
+  min-height: 30px;
+  &--text {}
+  &--switch {
+    --switch-width: 36px;
+    --switch-height: 20px;
+  }
+  &--empty {
+    font-size: 12px;
+    color: var(--color-weak);
+  }
+}

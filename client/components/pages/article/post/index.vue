@@ -2,7 +2,7 @@
 <Loading v-if="state.loading"/>
 <form v-else-if="_ready" ref="$root" @submit.prevent="save">
   <Fieldset>
-    <Field label="분류" for="post-category">
+    <Field v-if="_useCategory" label="분류" for="post-category">
       <FormSelect
         name="post-category"
         id="post-category"
@@ -85,6 +85,11 @@
         v-model="forms.tag"
         :limit="10"/>
     </Field>
+    <Field v-if="_useExtra" label="엑스트라">
+      <FieldExtra
+        v-model="forms.json.extra"
+        :resource="data.nest.json.articleExtra"/>
+    </Field>
   </Fieldset>
   <Controller>
     <template #left>
@@ -153,15 +158,16 @@
 <script setup>
 import { computed, inject, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { getData, submit } from '../../../../structure/article/post.js'
-import { dateFormat } from '../../../../libs/date.js'
-import { Fieldset, Fields, Field } from '../../../forms/fieldset/index.js'
-import { FormSelect, FormInput, FormTag, FormTextarea, FormRadio } from '../../../forms/index.js'
-import { Controller, PostToolbar } from '../../../navigation/index.js'
-import { ButtonGroup, ButtonBasic } from '../../../button/index.js'
-import { Modal, ModalHeader } from '../../../modal/index.js'
-import { Loading, Empty, Preview } from '../../../content/index.js'
-import { FileManager } from '../../../file-manager/index.js'
+import { getData, submit } from '@/structure/article/post.js'
+import { dateFormat } from '@/libs/date.js'
+import { Fieldset, Fields, Field } from '@/components/forms/fieldset/index.js'
+import { FormSelect, FormInput, FormTag, FormTextarea, FormRadio } from '@/components/forms/index.js'
+import { Controller, PostToolbar } from '@/components/navigation/index.js'
+import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'
+import { Modal, ModalHeader } from '@/components/modal/index.js'
+import { Loading, Empty, Preview } from '@/components/content/index.js'
+import { FileManager } from '@/components/file-manager/index.js'
+import FieldExtra from './field-extra.vue'
 
 const router = useRouter()
 const preference = inject('preference')
@@ -194,7 +200,9 @@ const forms = reactive({
   regdate: '',
   mode: '',
   content: '',
-  json: {},
+  json: {
+    extra: {},
+  },
   tag: '',
 })
 
@@ -204,6 +212,10 @@ const _submitLabel = computed(() => {
   if (state.processing) return '처리중..'
   return _isEdit.value ? '아티클 수정하기' : '아티클 만들기'
 })
+const _useExtra = computed(() => {
+  return data.nest.json?.articleExtra?.length > 0
+})
+const _useCategory = computed(() => (Number(data.nest?.json?.useCategory) === 1))
 
 onMounted(async () => {
   try
@@ -219,9 +231,28 @@ onMounted(async () => {
     forms.regdate = article.regdate || dateFormat(new Date(), '{yyyy}-{MM}-{dd}')
     forms.mode = article.mode || 'ready'
     forms.content = article.content || ''
-    forms.json = article.json || {}
+    let _json = (typeof article.json === 'string') ? JSON.parse(article.json) : (article.json || {})
+    forms.json = {
+      ...forms.json,
+      ..._json,
+    }
+    if (_useExtra.value)
+    {
+      data.nest.json.articleExtra.forEach(item => {
+        if (item.name in forms.json.extra)
+        {
+          forms.json.extra[item.name] = forms.json.extra[item.name]
+        }
+        else
+        {
+          if (item.default !== undefined)
+          {
+            forms.json.extra[item.name] = item.default
+          }
+        }
+      })
+    }
     forms.tag = tag || ''
-    if (typeof forms.json === 'string') forms.json = JSON.parse(forms.json)
     if (!_isEdit.value)
     {
       forms.app_srl = nest.app_srl
@@ -230,6 +261,7 @@ onMounted(async () => {
   }
   catch (e)
   {
+    console.log(e)
     error.catch({
       path: [ ...errorPath, 'onMounted' ],
       message: '아티클 데이터를 가져오지 못했습니다.',

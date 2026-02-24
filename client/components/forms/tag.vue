@@ -30,6 +30,7 @@ const props = defineProps({
   name: String,
   id: String,
   limit: Number,
+  placeholder: { type: String, default: '태그 입력' },
 })
 const emits = defineEmits([ 'update:modelValue' ])
 const ready = ref('')
@@ -45,14 +46,13 @@ const _limit = computed(() => {
   return _tags.value.length > props.limit - 1
 })
 const _placeholder = computed(() => {
-  let str = '태그 입력'
   if (props.limit)
   {
-    return `${str} (최대 ${props.limit}개)`
+    return `${props.placeholder} (${props.limit - _tags.value.length}개)`
   }
   else
   {
-    return str
+    return props.placeholder
   }
 })
 

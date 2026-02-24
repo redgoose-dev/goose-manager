@@ -1,0 +1,29 @@
+@use "../../../../scss/mixins";
+
+.article-data {
+  display: grid;
+  gap: 16px 0;
+  padding: 8px 0;
+}
+
+.index {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 10px;
+  > li {
+    padding: 16px 0;
+    background-color: var(--color-edge);
+    border-radius: mixins.radius(72px);
+    border: .5px solid mixins.mix-alpha(var(--color-base), 25%);
+    &.ghost {
+      opacity: .25;
+    }
+  }
+}
+
+.add-item {
+  display: grid;
+  justify-content: start;
+}

@@ -1,29 +1,27 @@
 <template>
-<article>
+<article class="container-over">
   <PageHeader module="file"/>
-  <div class="container-over">
-    <Loading v-if="state.loading"/>
-    <div v-else-if="state.index.length > 0" class="files">
-      <p class="total">총 <strong>{{state.total}}</strong>개의 파일이 등록되어 있습니다.</p>
-      <Items theme="thumbnail" class="index">
-        <Thumbnail
-          v-for="o in _index"
-          :href="o.href"
-          target="_blank"
-          :image="o.thumbnail"
-          :icon="o.icon"
-          thumbnail-type="contain"
-          :title="o.title"
-          :meta="o.meta"
-          :nav="o.nav"
-          :private="true"/>
-      </Items>
-    </div>
-    <Empty
-      v-else
-      title="No data"
-      message="파일 데이터가 없습니다."/>
+  <Loading v-if="state.loading"/>
+  <div v-else-if="state.index.length > 0" class="files">
+    <p class="total">총 <strong>{{state.total}}</strong>개의 파일이 등록되어 있습니다.</p>
+    <Items theme="thumbnail" class="index">
+      <Thumbnail
+        v-for="o in _index"
+        :href="o.href"
+        target="_blank"
+        :image="o.thumbnail"
+        :icon="o.icon"
+        thumbnail-type="contain"
+        :title="o.title"
+        :meta="o.meta"
+        :nav="o.nav"
+        :private="true"/>
+    </Items>
   </div>
+  <Empty
+    v-else
+    title="No data"
+    message="파일 데이터가 없습니다."/>
   <Paginate
     :model-value="state.page"
     :total="state.total"

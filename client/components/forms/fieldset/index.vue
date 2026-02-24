@@ -33,7 +33,7 @@ const props = defineProps({
     display: block;
     margin: 0;
     padding: 0;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1.05;
     font-weight: 700;
     letter-spacing: -.25px;
