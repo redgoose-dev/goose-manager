@@ -41,7 +41,7 @@
         </li>
       </ul>
     </section>
-    <section class="extra">
+    <section v-if="_extra.length > 0" class="extra">
       <h1>엑스트라</h1>
       <dl>
         <template v-for="o in _extra">
