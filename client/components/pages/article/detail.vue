@@ -28,18 +28,29 @@
   <div class="content">
     <div ref="$content" v-html="data.article.content" class="content-body redgoose-body"/>
   </div>
-  <section v-if="data.tag?.length > 0" class="tags">
-    <h1>태그</h1>
-    <ul>
-      <li v-for="o in data.tag">
-        <Tag
-          :label="o.name"
-          color="key"
-          :use-click="true"
-          @click="onClickTag(o.srl)"/>
-      </li>
-    </ul>
-  </section>
+  <div class="extend">
+    <section v-if="data.tag?.length > 0" class="tags">
+      <h1>태그</h1>
+      <ul>
+        <li v-for="o in data.tag">
+          <Tag
+            :label="o.name"
+            color="key"
+            :use-click="true"
+            @click="onClickTag(o.srl)"/>
+        </li>
+      </ul>
+    </section>
+    <section class="extra">
+      <h1>엑스트라</h1>
+      <dl>
+        <template v-for="o in _extra">
+          <dt>{{o.key}}</dt>
+          <dd>{{o.value}}</dd>
+        </template>
+      </dl>
+    </section>
+  </div>
   <Controller>
     <template #left>
       <ButtonGroup>
@@ -102,15 +113,15 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { getData } from '../../../structure/article/detail.js'
-import { dateFormat } from '../../../libs/date.js'
-import { Controller } from '../../navigation/index.js'
-import { ButtonGroup, ButtonBasic } from '../../button/index.js'
-import { Loading, Empty, Lightbox } from '../../content/index.js'
-import Files from '../../content/files/index.vue'
-import { Tag } from '../../item/index.js'
-import { Modal } from '../../modal/index.js'
-import Comments from '../../content/comment/index.vue'
+import { getData } from '@/structure/article/detail.js'
+import { dateFormat } from '@/libs/date.js'
+import { Controller } from '@/components/navigation'
+import { ButtonGroup, ButtonBasic } from '@/components/button'
+import { Loading, Empty, Lightbox } from '@/components/content'
+import Files from '@/components/content/files/index.vue'
+import { Tag } from '@/components/item'
+import { Modal } from '@/components/modal'
+import Comments from '@/components/content/comment/index.vue'
 
 const props = defineProps({
   nestSrl: Number,
@@ -154,6 +165,11 @@ const _regdate = computed(() => {
 })
 const _useComment = computed(() => (Number(data.nest?.json?.useComment) === 1))
 const _private = computed(() => (data.article?.mode === 'private'))
+const _extra = computed(() => {
+  const { extra } = data.article.json
+  if (!extra) return []
+  return Object.entries(extra).map(([ key, value ]) => ({ key, value }))
+})
 
 onMounted(async () => {
   try
