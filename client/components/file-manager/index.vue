@@ -38,10 +38,10 @@
 <script setup>
 import { ref, reactive, provide, inject, onMounted, onBeforeUnmount } from 'vue'
 import fileManagerStore from './store.js'
-import { request, upload, formData } from '../../libs/api.js'
-import { fileUploader } from '../../libs/file.js'
-import { printf, getByte } from '../../libs/strings.js'
-import { pureObject } from '../../libs/object.js'
+import { request, upload, formData } from '@/libs/api.js'
+import { fileUploader } from '@/libs/file.js'
+import { printf, getByte } from '@/libs/strings.js'
+import { pureObject } from '@/libs/object.js'
 import { convertOutputCode, convertDataToFileItem } from './libs.js'
 import { windowKey, thumbnailContextKey, insertMode } from './assets.js'
 import { Modal, ModalWindow } from '../modal/index.js'
@@ -64,6 +64,8 @@ const props = defineProps({
   private: Boolean,
   multipleSelection: Boolean,
   fileKey: { type: String, default: 'code' },
+  limitCount: Number,
+  limitSize: Number,
 })
 const emits = defineEmits([ 'insert', 'update-thumbnail' ])
 const toast = inject('toast')
@@ -154,6 +156,8 @@ function onSetup()
     useThumbnail: props.useThumbnail,
     private: props.private,
     multipleSelection: props.multipleSelection,
+    limitCount: props.limitCount,
+    limitSize: props.limitSize,
   })
   if (fileManager.preference.shortcut)
   {

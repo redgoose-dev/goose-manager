@@ -96,7 +96,7 @@
 
 <script setup>
 import { computed, inject } from 'vue'
-import { sleep } from '../../libs/util.js'
+import { sleep } from '@/libs/util.js'
 import { insertMode, thumbnailContextKey } from './assets.js'
 import { ButtonBasic, ButtonGroup } from '../button/index.js'
 import { Context, Dropdown } from '../navigation/dropdown/index.js'

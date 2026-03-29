@@ -135,6 +135,8 @@
         :multiple-selection="true"
         file-key="code"
         :use-thumbnail="true"
+        :limit-count="data.nest?.json?.files?.count"
+        :limit-size="data.nest?.json?.files?.sizeSingle"
         @insert="onInsertFileManager"
         @update-thumbnail="onUpdateThumbnail">
         <template #header>
@@ -261,7 +263,6 @@ onMounted(async () => {
   }
   catch (e)
   {
-    console.log(e)
     error.catch({
       path: [ ...errorPath, 'onMounted' ],
       message: '아티클 데이터를 가져오지 못했습니다.',

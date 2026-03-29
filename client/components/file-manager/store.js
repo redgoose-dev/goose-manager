@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { preferenceStore } from '../../store/app.js'
-import { pureObject } from '../../libs/object.js'
+import { preferenceStore } from '@/store/app.js'
+import { pureObject } from '@/libs/object.js'
 
 const defaultPreference = {
   shortcut: false, // 단축키 사용여부
@@ -8,8 +8,8 @@ const defaultPreference = {
   moduleSrl: null, // 모듈 데이터 번호
   acceptFileType: 'image/*',
   useThumbnail: false,
-  limitCount: 10,
-  limitSize: 3 * 1024 * 1024, // 3MB
+  limitCount: 10, // 업로드 가능한 파일 수
+  limitSize: 3 * 1024 * 1024, // 업로드 가능한 파일용량 (3MB)
   private: false,
   multipleSelection: true,
 }

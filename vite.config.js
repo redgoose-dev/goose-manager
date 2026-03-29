@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 const { HOST, PORT, PORT_CLIENT } = Bun.env
 
-const config = defineConfig(async ({ mode }) => {
+const config = defineConfig(() => {
   return {
     root: 'client',
     publicDir: './public',
@@ -30,34 +30,16 @@ const config = defineConfig(async ({ mode }) => {
     build: {
       outDir: '../dist/client',
       emptyOutDir: true,
-      rollupOptions: {
+      rolldownOptions: {
         output: {
           assetFileNames: assetInfo => {
-            const info = assetInfo.name.split('.')
-            let ext = info[info.length - 1]
-            if (/png|jpe?g|svg|gif|ico|webp|avif/i.test(ext)) ext = 'images/'
-            else if (/css/.test(ext)) ext = 'css/'
-            else if (/woff?2|ttf/i.test(ext)) ext = 'fonts/'
-            else ext = ''
-            return `assets/${ext}[name]-[hash][extname]`
-          },
-          manualChunks: {
-            vue: [
-              'vue',
-              'vue-router',
-              'pinia',
-            ],
-            vendor: [
-              'vue-advanced-cropper',
-              'vue-draggable-plus',
-              'marked',
-              'ofetch',
-              'lucide-vue-next',
-            ],
-            redgoose: [
-              '@redgoose/json-editor',
-              'image-resize',
-            ],
+            const info = assetInfo.name?.split('.') || ''
+            let ext = info ? info[info.length - 1] : ''
+            let subDir = ''
+            if (/png|jpe?g|svg|gif|ico|webp|avif/i.test(ext)) subDir = 'images/'
+            else if (/css/.test(ext)) subDir = 'css/'
+            else if (/woff?2|ttf/i.test(ext)) subDir = 'fonts/'
+            return `assets/${subDir}[name]-[hash][extname]`
           },
         },
       },
