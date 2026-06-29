@@ -58,16 +58,16 @@
 <script setup>
 import { reactive, onMounted, inject, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../structure/checklist/index.js'
-import { serialize } from '../../libs/strings.js'
-import { scrollTo } from '../../libs/util.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty, IndexWithFilter, ProgressDonut } from '../../components/content/index.js'
-import { ButtonBasic } from '../../components/button/index.js'
-import { Items, Mark } from '../../components/item/index.js'
-import Card from '../../components/item/card.vue'
-import { Paginate } from '../../components/navigation/index.js'
-import Filter from '../../components/pages/checklist/filter.vue'
+import { getData } from '@/structure/checklist/index.js'
+import { serialize } from '@/libs/strings.js'
+import { scrollTo } from '@/libs/util.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty, IndexWithFilter, ProgressDonut } from '@/components/content/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
+import { Items, Mark } from '@/components/item/index.js'
+import Card from '@/components/item/card.vue'
+import { Paginate } from '@/components/navigation/index.js'
+import Filter from '@/components/pages/checklist/filter.vue'
 
 const route = useRoute()
 const router = useRouter()

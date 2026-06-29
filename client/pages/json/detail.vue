@@ -74,17 +74,17 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../structure/json/detail.js'
-import { dateFormat } from '../../libs/date.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty } from '../../components/content/index.js'
-import Files from '../../components/content/files/index.vue'
-import { Fieldset, Field } from '../../components/forms/fieldset/index.js'
-import { Controller } from '../../components/navigation/index.js'
-import { ButtonBasic, ButtonGroup } from '../../components/button/index.js'
-import { Tag } from '../../components/item/index.js'
-import Editor from '../../components/pages/json/editor.vue'
-import { Modal } from '../../components/modal/index.js'
+import { getData } from '@/structure/json/detail.js'
+import { dateFormat } from '@/libs/date.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty } from '@/components/content/index.js'
+import Files from '@/components/content/files/index.vue'
+import { Fieldset, Field } from '@/components/forms/fieldset/index.js'
+import { Controller } from '@/components/navigation/index.js'
+import { ButtonBasic, ButtonGroup } from '@/components/button/index.js'
+import { Tag } from '@/components/item/index.js'
+import Editor from '@/components/pages/json/editor.vue'
+import { Modal } from '@/components/modal/index.js'
 
 const router = useRouter()
 const route = useRoute()

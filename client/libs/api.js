@@ -4,6 +4,8 @@ import { filterObjectToQuery } from './object.js'
 import ServiceError from './ServiceError.js'
 import { triggerEvent } from './util.js'
 
+const { DEV } = import.meta.env
+
 function _fetch(url, options)
 {
   return new Promise((resolve, reject) => {
@@ -168,32 +170,39 @@ export function webSocketAuth(provider, options = {})
   if (!auth.apiUrl) new Error('No API url')
   if (!auth.token) new Error('No token')
   const eventTarget = new EventTarget()
-  const socketId = `socket-${Math.random().toString(36).slice(3,12)}`
-  const ws = new WebSocket(`${auth.apiUrl}/auth/ws/${socketId}/`)
+  // const socketId = `socket-${Math.random().toString(36).slice(3,12)}`
+  const ws = new WebSocket(`${auth.apiUrl}/auth/ws/authorize/`)
+  let session = ''
   ws.addEventListener('open', () => {
-    ws.send(JSON.stringify({
-      mode: 'start-auth',
-      provider,
-      redirect_uri: auth.url,
-      access_token: auth.token,
-    }))
+    if (DEV) console.log('⭐ Start connect WebSocket.')
   })
   ws.addEventListener('message', (e) => {
     const data = JSON.parse(e.data)
     switch (data.mode)
     {
-      case 'auth-link':
+      case 'AUTH_OPEN':
+        session = data.session
+        ws.send(JSON.stringify({
+          mode: 'AUTH_START',
+          provider,
+          session,
+          redirect_uri: auth.url,
+          access_token: auth.token,
+        }))
+        break
+      case 'AUTH_LINK':
         triggerEvent(eventTarget, 'start', data)
         break
-      case 'auth-error':
+      case 'AUTH_ERROR':
         triggerEvent(eventTarget, 'error', data)
         break
-      case 'auth-complete':
+      case 'AUTH_COMPLETE':
         triggerEvent(eventTarget, 'complete', data)
         break
     }
   })
   ws.addEventListener('close', (e) => {
+    if (DEV) console.log('🚫 Close connect WebSocket.')
     triggerEvent(eventTarget, 'close')
     ws.close()
   })

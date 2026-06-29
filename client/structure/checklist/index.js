@@ -1,7 +1,7 @@
-import { request } from '../../libs/api.js'
-import { dateFormat } from '../../libs/date.js'
+import { request } from '@/libs/api.js'
+import { dateFormat } from '@/libs/date.js'
 import { checkTime } from './libs.js'
-import { preferenceStore } from '../../store/app.js'
+import { preferenceStore } from '@/store/app.js'
 
 function filtering(src)
 {
@@ -25,7 +25,7 @@ export async function getData(query = {}, options = {})
   const { size } = options
   const res = await request('/checklist/', {
     query: {
-      fields: 'srl,percent,created_at',
+      field: 'srl,percent,created_at',
       page: query.page > 1 ? query.page : undefined,
       size: size || 24,
       order: query.order,

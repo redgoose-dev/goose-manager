@@ -1,3 +1,4 @@
+import ServiceError from '../../extends/ServerError.js'
 import * as api from '../../libs/api.js'
 import { onRequest, onResponse, printMessage } from '../../libs/server.js'
 import { isDev } from '../../libs/server.js'
@@ -21,27 +22,26 @@ async function ready(req, ctx)
 
   try
   {
+    let _data = {}
     const res = await api.request('/auth/ready-login/', {
       method: 'post',
       body: { redirect_uri: URL_PATH + '/zone/checkin/' },
     })
     const { content } = res
-    if (!content.data?.providers?.length > 0)
+    if (content.data?.length > 0)
     {
-      throw new Error('Not found data.')
+      _data.providers = content.data
     }
     // get preference
-    const preference = await getPreferenceData()
+    const _preference = await getPreferenceData()
+    _data.preference = {
+      ..._preference.general,
+      ..._preference.login,
+    }
     // set response
     response = Response.json({
       message: 'Complete get ready login data.',
-      data: {
-        providers: content.data.providers,
-        preference: {
-          ...preference.general,
-          ...preference.login,
-        },
-      },
+      data: _data,
     })
   }
   catch (e)

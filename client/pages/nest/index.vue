@@ -54,14 +54,14 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
-import { getData } from '../../structure/nest/index.js'
-import { iconRandomPick } from '../../components/icon/map.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty } from '../../components/content/index.js'
-import { Items } from '../../components/item/index.js'
-import Card from '../../components/item/card.vue'
-import { Controller } from '../../components/navigation/index.js'
-import { ButtonBasic } from '../../components/button/index.js'
+import { getData } from '@/structure/nest/index.js'
+import { iconRandomPick } from '@/components/icon/map.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty } from '@/components/content/index.js'
+import { Items } from '@/components/item/index.js'
+import Card from '@/components/item/card.vue'
+import { Controller } from '@/components/navigation/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
 
 const error = inject('error')
 const state = reactive({

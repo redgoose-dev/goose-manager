@@ -23,12 +23,12 @@
 
 <script setup>
 import { reactive, computed, onMounted, onBeforeUnmount, inject } from 'vue'
-import { localRequest } from '../../libs/api.js'
-import { randomNumber } from '../../libs/strings.js'
-import { modalRootClassName } from '../../libs/assets.js'
-import LoginForm from '../../components/pages/auth/login-form.vue'
-import LoginQuick from '../../components/pages/auth/login-quick.vue'
-import { Loading } from '../../components/content/index.js'
+import { localRequest } from '@/libs/api.js'
+import { randomNumber } from '@/libs/strings.js'
+import { modalRootClassName } from '@/libs/assets.js'
+import LoginForm from '@/components/pages/auth/login-form.vue'
+import LoginQuick from '@/components/pages/auth/login-quick.vue'
+import { Loading } from '@/components/content/index.js'
 
 const toast = inject('toast')
 const state = reactive({
@@ -48,7 +48,7 @@ const _usePasswordForm = computed(() => {
   return state.providers.some(o => o.name === 'password')
 })
 const _useQuickLogin = computed(() => {
-  return state.providers.length > 0
+  return state.providers.filter(o => o.type === 'oauth')?.length > 0
 })
 
 onMounted(async () => {

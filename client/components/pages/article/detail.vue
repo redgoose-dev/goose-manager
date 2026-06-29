@@ -197,6 +197,7 @@ onMounted(async () => {
 
 function initContentEvents()
 {
+  if (!$content.value) return
   $content.value.querySelectorAll('img').forEach(el => {
     el.addEventListener('click', e => {
       state.previewImage = e.currentTarget.src

@@ -1,4 +1,4 @@
-import { request, formData } from '../../libs/api.js'
+import { request, formData } from '@/libs/api.js'
 
 function filtering(src)
 {
@@ -27,7 +27,7 @@ function filteringIndex(src)
 
 export async function getIndex(body)
 {
-  const res = await request('/auth/providers/', {
+  const res = await request('/auth/provider/', {
     query: body,
   })
   return filteringIndex(res.data)

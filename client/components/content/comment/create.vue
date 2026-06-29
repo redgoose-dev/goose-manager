@@ -33,11 +33,11 @@
 
 <script setup>
 import { ref, reactive, inject } from 'vue'
-import { createComment } from '../../../structure/comment/index.js'
-import { PostToolbar } from '../../navigation/index.js'
-import { FormTextarea } from '../../forms/index.js'
-import { ButtonGroup, ButtonBasic } from '../../button/index.js'
-import { Preview } from '../../content/index.js'
+import { createComment } from '@/structure/comment/index.js'
+import { PostToolbar } from '@/components/navigation/index.js'
+import { FormTextarea } from '@/components/forms/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
+import { Preview } from '@/components/content/index.js'
 
 const props = defineProps({
   module: { type: String, required: true },

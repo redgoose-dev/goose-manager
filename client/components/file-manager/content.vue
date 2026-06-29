@@ -43,11 +43,11 @@
 
 <script setup>
 import { ref, reactive, computed, inject, onMounted, onBeforeUnmount } from 'vue'
-import { authStore } from '../../store/auth.js'
-import { downloadFile } from '../../libs/file.js'
-import { request } from '../../libs/api.js'
-import { sleep } from '../../libs/util.js'
-import { pureObject } from '../../libs/object.js'
+import { authStore } from '@/store/auth.js'
+import { downloadFile } from '@/libs/file.js'
+import { request } from '@/libs/api.js'
+import { sleep } from '@/libs/util.js'
+import { pureObject } from '@/libs/object.js'
 import { convertDataToFileItem, getFile } from './libs.js'
 import { fileContextKey, insertMode, thumbnailContextKey } from './assets.js'
 import Loading from '../content/loading.vue'
@@ -101,7 +101,7 @@ onMounted(async () => {
         query: {
           module,
           module_srl: moduleSrl,
-          unlimited: '1',
+          page: 0,
           order: 'srl',
           sort: 'asc',
         },

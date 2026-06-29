@@ -40,7 +40,7 @@ export default async function checkIn(req, ctx)
     let res
     try
     {
-      res = await api.request('/auth/checking/', {
+      res = await api.request('/auth/checkin/', {
         method: 'post',
         headers: { 'Authorization': accessToken },
       })

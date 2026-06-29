@@ -1,5 +1,5 @@
-import { request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
+import { request } from '@/libs/api.js'
+import { getDate } from '@/libs/date.js'
 
 function filteringApp(src)
 {
@@ -45,24 +45,24 @@ export async function getData()
         key: 'apps',
         url: '/app/',
         params: {
-          fields: 'srl,code,name,description',
+          field: 'srl,code,name,description',
+          page: 0,
           mod: 'count-nest',
-          unlimited: '1',
         },
       },
       {
         key: 'nests',
         url: '/nest/',
         params: {
+          page: 0,
           mod: 'count-article',
-          unlimited: '1',
         },
       },
     ],
   })
   // filtering data
-  apps = filteringApp(apps.data)
-  nests = filteringNest(nests.data)
+  apps = filteringApp(apps)
+  nests = filteringNest(nests)
   // combine data
   return apps.map(app => ({
     ...app,

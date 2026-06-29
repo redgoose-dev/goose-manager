@@ -1,7 +1,7 @@
 import { marked } from 'marked'
-import { request, formData } from '../../libs/api.js'
-import { baseRenderer } from '../../modules/marked.js'
-import { getFilePath } from '../../libs/file.js'
+import { request } from '@/libs/api.js'
+import { baseRenderer } from '@/modules/marked.js'
+import { getFilePath } from '@/libs/file.js'
 
 function getDescription(content)
 {
@@ -15,28 +15,28 @@ function getDescription(content)
 
 function filteringArticle(src, nest, category)
 {
-  if (!src?.data) return null
-  const _nest = nest?.index?.find(item => item.srl === src.data.nest_srl) || {}
-  const _category = category?.index?.find(item => item.srl === src.data.category_srl) || {}
+  if (!src) return null
+  const _nest = nest?.index?.find(item => item.srl === src.nest_srl) || {}
+  const _category = category?.index?.find(item => item.srl === src.category_srl) || {}
   return {
-    srl: src.data.srl,
-    nestSrl: src.data.nest_srl ? String(src.data.nest_srl) : null,
-    categorySrl: src.data.category_srl ? String(src.data.category_srl) : '',
-    title: src.data.title,
-    description: getDescription(src.data.content),
+    srl: src.srl,
+    nestSrl: src.nest_srl ? String(src.nest_srl) : null,
+    categorySrl: src.category_srl ? String(src.category_srl) : '',
+    title: src.title,
+    description: getDescription(src.content),
     meta: [
-      src.data.regdate,
+      src.regdate,
       _nest.name && `둥지:${_nest.name}`,
       _category.name && `분류:${_category.name}`,
     ].filter(Boolean),
-    image: getFilePath(src.data.json.thumbnail),
-    private: src.data.mode === 'private',
+    image: getFilePath(src.json.thumbnail),
+    private: src.mode === 'private',
   }
 }
 function filteringNest(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     return {
       value: o.srl,
       label: `[${o.code}] ${o.name}`,
@@ -45,8 +45,8 @@ function filteringNest(src)
 }
 function filteringCategory(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  let items = src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  let items = src.index.map(o => {
     return {
       value: String(o.srl),
       label: o.name,
@@ -68,15 +68,18 @@ export async function getData(srl)
       {
         key: 'article',
         url: `/article/{srl}/`,
-        params: { srl },
+        params: {
+          srl,
+          mod: 'app',
+        },
       },
       {
         key: 'nest',
         url: `/nest/`,
         params: {
-          app_srl: '{{article.data.app_srl}}',
-          unlimited: '1',
-          mod: 'app',
+          app: `{{article.app.srl}}`,
+          page: 0,
+          mod: 'count-article',
         },
       },
       {
@@ -84,16 +87,16 @@ export async function getData(srl)
         url: '/category/',
         params: {
           module: 'nest',
-          module_srl: '{{article.data.nest_srl}}',
+          module_srl: '{{article.nest_srl}}',
+          page: 0,
           order: 'turn',
           sort: 'asc',
-          unlimited: '1',
         },
       },
     ],
   })
   return {
-    article: filteringArticle(res.article, res.nest?.data, res.category?.data),
+    article: filteringArticle(res.article, res.nest, res.category),
     nest: filteringNest(res.nest),
     category: filteringCategory(res.category),
   }
@@ -106,13 +109,13 @@ export async function changeNest(srl)
     query: {
       module: 'nest',
       module_srl: srl,
+      page: 0,
       order: 'turn',
       sort: 'asc',
-      unlimited: '1',
     },
   })
   return {
-    category: filteringCategory(res),
+    category: filteringCategory(res.data),
   }
 }
 
@@ -120,9 +123,9 @@ export async function submit(srl, nestSrl, categorySrl)
 {
   await request(`/article/${srl}/`, {
     method: 'patch',
-    body: formData({
+    body: {
       nest: nestSrl || null,
       category: categorySrl || 0,
-    })
+    },
   })
 }

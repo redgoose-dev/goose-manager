@@ -1,4 +1,4 @@
-import { request } from '../../libs/api.js'
+import { request } from '@/libs/api.js'
 
 function filtering({ json, category, tag })
 {
@@ -31,22 +31,22 @@ export async function getData(srl)
       {
         key: 'category',
         url: '/category/{srl}/',
-        params: { srl: '{{json.data.category_srl}}' }
+        params: { srl: '{{json.category_srl}}' }
       },
       {
         key: 'tag',
         url: '/tag/',
         params: {
           module: 'json',
-          module_srl: '{{json.data.srl}}',
+          module_srl: '{{json.srl}}',
         }
       },
     ],
   })
-  if (!res?.json?.data) throw new Error(res?.json?.message || 'No JSON data.')
+  if (!res?.json) throw new Error(res?.json?.message || 'No JSON data.')
   return filtering({
-    json: res.json.data,
-    category: res.category?.data,
-    tag: res.tag?.data,
+    json: res.json,
+    category: res.category,
+    tag: res.tag,
   })
 }

@@ -1,15 +1,15 @@
-import { request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
-import { serialize } from '../../libs/strings.js'
-import { preferenceStore } from '../../store/app.js'
+import { request } from '@/libs/api.js'
+import { getDate } from '@/libs/date.js'
+import { serialize } from '@/libs/strings.js'
+import { preferenceStore } from '@/store/app.js'
 
 function filteringArticle(src)
 {
-  if (!src?.data) return { total: 0, index: [] }
+  if (!src) return { total: 0, index: [] }
   const preference = preferenceStore()
   return {
-    total: src.data.total,
-    index: src.data.index.map(o => {
+    total: src.total,
+    index: src.index?.map(o => {
       let title = o.title
       if (o.nest?.code) title = `[${o.nest.code}] ${title}`
       else if (o.category?.name) title = `[${o.category.name}] ${title}`
@@ -31,8 +31,8 @@ function filteringArticle(src)
 }
 function filteringCategory(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     let category
     switch (o.name)
     {
@@ -57,8 +57,8 @@ function filteringCategory(src)
 }
 function filteringTag(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     return {
       srl: o.srl,
       name: o.name,
@@ -67,12 +67,12 @@ function filteringTag(src)
 }
 function filteringNest(src)
 {
-  if (!src?.data) return null
+  if (!src) return null
   return {
-    srl: src.data.srl,
-    code: src.data.code,
-    description: src.data.description,
-    useCategory: Number(src.data.json?.useCategory) === 1,
+    srl: src.srl,
+    code: src.code,
+    description: src.description,
+    useCategory: Number(src.json?.useCategory) === 1,
   }
 }
 
@@ -89,17 +89,17 @@ export async function getData(query = {}, options = {})
         key: 'article',
         url: '/article/',
         params: {
-          fields: 'srl,nest_srl,category_srl,title,hit,star,json,mode,regdate,created_at',
-          nest_srl,
-          category_srl,
+          field: 'srl,nest_srl,category_srl,title,hit,star,json,mode,regdate,created_at',
+          nest: nest_srl,
+          category: category_srl,
           mode: query.mode,
           page: query.page > 1 ? query.page : undefined,
           size: size || 24,
-          order: query.order,
-          sort: query.sort,
+          order: query.order || 'srl',
+          sort: query.sort || 'desc',
           tag: query.tag,
           q: query.q,
-          mod: fromNest ? (all ? 'category' : '') : 'nest',
+          mod: fromNest ? (!query.category ? 'category' : '') : 'nest',
         },
       },
       fromNest && {
@@ -108,11 +108,11 @@ export async function getData(query = {}, options = {})
         params: {
           module: 'nest',
           module_srl: nest_srl,
+          page: 0,
           order: 'turn',
           sort: 'asc',
           tag: query.tag,
           q: query.q,
-          unlimited: '1',
           mod: 'count,none,all',
         },
       },
@@ -121,7 +121,7 @@ export async function getData(query = {}, options = {})
         url: `/nest/{srl}/`,
         params: {
           srl: nest_srl,
-          fields: 'srl,code,description,json',
+          field: 'srl,code,description,json',
         },
       },
       all && {

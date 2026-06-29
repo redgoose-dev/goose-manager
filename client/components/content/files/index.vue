@@ -97,7 +97,7 @@ onMounted(async () => {
       query: {
         module: props.module,
         module_srl: props.moduleSrl,
-        unlimited: '1',
+        page: 0,
       },
     })
     if (!res?.data) throw new Error('파일 데이터가 없습니다.')

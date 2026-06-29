@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "3.1.3",
+  "version": "3.2.0",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -12,30 +12,32 @@
     "build": "bun run --bun ./server/build.js && bunx --bun vite build",
     "build:client": "rm -rf ./dist && bunx --bun vite build",
     "build:server": "rm -rf ./dist && bun run --bun ./server/build.js",
-    "preview": "NODE_ENV=production bun run --bun dist/main.js"
+    "preview": "NODE_ENV=production bun run --bun dist/main.js",
+    "test": "bun test",
+    "test:watch": "bun test --watch"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions"
   ],
   "dependencies": {
-    "@types/bun": "^1.3.11"
+    "@types/bun": "^1.3.14"
   },
   "devDependencies": {
-    "@redgoose/json-editor": "^1.2.3",
-    "@vitejs/plugin-vue": "^6.0.5",
-    "concurrently": "^9.2.1",
+    "@redgoose/json-editor": "^1.2.6",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "concurrently": "^10.0.3",
     "image-resize": "^1.4.1",
     "lucide-vue-next": "^1.0.0",
-    "marked": "^17.0.5",
+    "marked": "^18.0.5",
     "ofetch": "^1.5.1",
     "pinia": "^3.0.4",
-    "sass": "^1.98.0",
-    "terser": "^5.46.1",
-    "vite": "^8.0.3",
-    "vue": "^3.5.31",
+    "sass": "^1.101.0",
+    "terser": "^5.48.0",
+    "vite": "^8.1.0",
+    "vue": "^3.5.39",
     "vue-advanced-cropper": "^2.8.9",
     "vue-draggable-plus": "^0.6.1",
-    "vue-router": "^5.0.4"
+    "vue-router": "^5.1.0"
   }
 }

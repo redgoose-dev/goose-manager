@@ -1,7 +1,7 @@
-import { request } from '../../libs/api.js'
-import { articleModeLabel } from '../../libs/assets.js'
-import { getFilePath } from '../../libs/file.js'
-import { dateFormat } from '../../libs/date.js'
+import { request } from '@/libs/api.js'
+import { articleModeLabel } from '@/libs/assets.js'
+import { getFilePath } from '@/libs/file.js'
+import { dateFormat } from '@/libs/date.js'
 
 const apiUrl = {
   article: '/article/',
@@ -11,18 +11,18 @@ const apiUrl = {
 }
 const apiParams = {
   article: {
-    fields: 'srl,category_srl,title,hit,star,mode,json,regdate',
+    field: 'srl,category_srl,title,hit,star,mode,json,regdate',
   },
   nest: {
-    fields: 'srl,code,name,created_at,json',
+    field: 'srl,code,name,created_at,json',
     mod: 'count-article',
   },
   app: {
-    fields: 'srl,code,name,created_at',
+    field: 'srl,code,name,created_at',
     mod: 'count-nest,count-article',
   },
   json: {
-    fields: 'srl,name,created_at',
+    field: 'srl,name,created_at',
   },
 }
 
@@ -102,7 +102,7 @@ function filteringJSON(src)
 export async function getData(contents)
 {
   if (!(contents.length > 0)) return null
-  const body = contents.map(o => {
+  const requestBody = contents.map((o,k) => {
     if (!apiUrl[o.module]) return false
     return {
       key: o.module,
@@ -115,25 +115,33 @@ export async function getData(contents)
   }).filter(Boolean)
   const res = await request('/mix/', {
     method: 'post',
-    body,
+    body: requestBody,
   })
-  let result = {}
+  let map = new Map()
+  let order = []
   Object.entries(res).forEach(([key, value]) => {
     switch (key)
     {
       case 'article':
-        result[key] = filteringArticle(value.data)
+        map.set(key, filteringArticle(value))
+        order.push((key))
         break
       case 'nest':
-        result[key] = filteringNest(value.data)
+        map.set(key, filteringNest(value))
+        order.push((key))
         break
       case 'app':
-        result[key] = filteringApp(value.data)
+        map.set(key, filteringApp(value))
+        order.push((key))
         break
       case 'json':
-        result[key] = filteringJSON(value.data)
+        map.set(key, filteringJSON(value))
+        order.push((key))
         break
     }
   })
-  return result
+  return {
+    map: map,
+    order,
+  }
 }

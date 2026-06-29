@@ -5,8 +5,11 @@
     :title="preference.dashboard.title"
     :description="preference.dashboard.description"/>
   <Loading v-if="state.loading"/>
-  <div v-else-if="_emptyContent" class="contents">
-    <section v-if="state.contents.article" class="section">
+  <div v-else-if="_existContent" class="contents">
+    <section
+      v-if="state.map.get('article')"
+      class="section"
+      :style="{ '--order': state.order.indexOf('article') }">
       <header>
         <h1>Article</h1>
         <nav>
@@ -16,7 +19,7 @@
       <div class="items-wrap">
         <Items theme="thumbnail" class="items-image">
           <Thumbnail
-            v-for="o in state.contents.article"
+            v-for="o in state.map.get('article')"
             :title="o.title"
             :href="o.href"
             :image="o.image"
@@ -35,7 +38,10 @@
         </Items>
       </div>
     </section>
-    <section v-if="state.contents.nest" class="section">
+    <section
+      v-if="state.map.get('nest')"
+      class="section"
+      :style="{ '--order': state.order.indexOf('nest') }">
       <header>
         <h1>Nest</h1>
         <nav>
@@ -45,7 +51,7 @@
       <div class="items-wrap">
         <Items theme="card" class="items-card">
           <Card
-            v-for="o in state.contents.nest"
+            v-for="o in state.map.get('nest')"
             :href="o.href"
             :title="o.title"
             :meta="o.meta"
@@ -58,7 +64,10 @@
         </Items>
       </div>
     </section>
-    <section v-if="state.contents.app" class="section">
+    <section
+      v-if="state.map.get('app')"
+      class="section"
+      :style="{ '--order': state.order.indexOf('app') }">
       <header>
         <h1>APP</h1>
         <nav>
@@ -68,7 +77,7 @@
       <div class="items-wrap">
         <Items theme="card" class="items-card">
           <Card
-            v-for="o in state.contents.app"
+            v-for="o in state.map.get('app')"
             :title="o.title"
             :meta="o.meta"
             :nav="[
@@ -79,7 +88,10 @@
         </Items>
       </div>
     </section>
-    <section v-if="state.contents.json" class="section">
+    <section
+      v-if="state.map.get('json')"
+      class="section"
+      :style="{ '--order': state.order.indexOf('json') }">
       <header>
         <h1>JSON</h1>
         <nav>
@@ -89,7 +101,7 @@
       <div class="items-wrap">
         <Items theme="card" class="items-card">
           <Card
-            v-for="o in state.contents.json"
+            v-for="o in state.map.get('json')"
             :href="o.href"
             :title="o.title"
             :meta="o.meta"
@@ -107,13 +119,13 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
-import { getData } from '../../structure/dashboard/index.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty } from '../../components/content/index.js'
-import { ButtonIcon } from '../../components/button/index.js'
-import { Items, Mark } from '../../components/item/index.js'
-import Thumbnail from '../../components/item/thumbnail.vue'
-import Card from '../../components/item/card.vue'
+import { getData } from '@/structure/dashboard/index.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty } from '@/components/content/index.js'
+import { ButtonIcon } from '@/components/button/index.js'
+import { Items, Mark } from '@/components/item/index.js'
+import Thumbnail from '@/components/item/thumbnail.vue'
+import Card from '@/components/item/card.vue'
 
 const auth = inject('auth')
 const preference = inject('preference')
@@ -121,19 +133,34 @@ const error = inject('error')
 const errorPath = [ 'pages', 'dashboard.vue' ]
 const state = reactive({
   loading: true,
-  contents: null,
+  map: new Map(),
+  order: [],
 })
 
-const _emptyContent = computed(() => {
-  if (!state.contents) return false
-  for (const o of Object.values(state.contents)) if (!!o) return true
+const _existContent = computed(() => {
+  if (state.map.size <= 0) return false
+  for (const key of state.order) if (!!state.map.get(key))
+  {
+    return true
+  }
   return false
+})
+const _index = computed(() => {
+  return state.order.map((key, idx) => {
+    if (!state.map.get(key)) return false
+    return {
+      idx,
+      item: state.map.get(key),
+    }
+  }).filter(Boolean)
 })
 
 onMounted(async () => {
   try
   {
-    state.contents = await getData(preference.dashboard.contents)
+    const { map, order } = await getData(preference.dashboard.contents)
+    state.map = map
+    state.order = order
   }
   catch (e)
   {

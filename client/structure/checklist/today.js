@@ -1,6 +1,6 @@
-import { request, formData } from '../../libs/api.js'
+import { request, formData } from '@/libs/api.js'
 import { defaultContent, checkTime, filteringData } from './libs.js'
-import { preferenceStore } from '../../store/app.js'
+import { preferenceStore } from '@/store/app.js'
 
 export async function getLastData()
 {

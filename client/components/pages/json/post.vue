@@ -100,14 +100,14 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { getData, submit } from '../../../structure/json/post.js'
-import { Fieldset, Field, Help } from '../../forms/fieldset/index.js'
-import { FormSelect, FormInput, FormTag } from '../../forms/index.js'
-import { Controller } from '../../navigation/index.js'
-import { ButtonBasic } from '../../button/index.js'
+import { getData, submit } from '@/structure/json/post.js'
+import { Fieldset, Field, Help } from '@/components/forms/fieldset/index.js'
+import { FormSelect, FormInput, FormTag } from '@/components/forms/index.js'
+import { Controller } from '@/components/navigation/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
 import Editor from './editor.vue'
-import { Modal, ModalHeader } from '../../modal/index.js'
-import { FileManager } from '../../file-manager/index.js'
+import { Modal, ModalHeader } from '@/components/modal/index.js'
+import { FileManager } from '@/components/file-manager/index.js'
 
 const router = useRouter()
 const preference = inject('preference')

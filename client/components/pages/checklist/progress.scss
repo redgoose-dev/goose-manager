@@ -8,7 +8,7 @@
   height: var(--progress-height, 48px);
   padding: 0 24px;
   border-radius: calc(var(--progress-height, 48px) / 2);
-  background-color: mixins.mix-alpha(var(--color-bg), 30%);
+  background-color: mixins.mix-alpha(var(--color-bg), 25%);
   user-select: none;
   box-sizing: border-box;
   box-shadow:

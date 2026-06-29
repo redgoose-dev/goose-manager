@@ -1,5 +1,5 @@
 import { preferenceStore } from '@/store/app.js'
-import { request, formData } from '@/libs/api.js'
+import { request } from '@/libs/api.js'
 
 function filteringApp(src)
 {
@@ -41,8 +41,8 @@ export async function getData(mode, srl)
         key: 'app',
         url: '/app/',
         params: {
-          fields: 'srl,code,name',
-          unlimited: '1',
+          field: 'srl,code,name',
+          page: 0,
         },
       },
       mode === 'edit' && {
@@ -53,8 +53,8 @@ export async function getData(mode, srl)
     ].filter(Boolean),
   })
   return {
-    app: filteringApp(app?.data),
-    nest: nest?.data,
+    app: filteringApp(app),
+    nest,
   }
 }
 
@@ -63,6 +63,6 @@ export async function submit(srl, data)
   const url = srl ? `/nest/${srl}/` : '/nest/'
   await request(url, {
     method: srl ? 'patch' : 'put',
-    body: formData(data),
+    body: data,
   })
 }

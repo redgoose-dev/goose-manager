@@ -18,14 +18,15 @@
         <FormSelect
           v-model="forms.nestSrl"
           :options="data.nest"
-          placeholder="둥지를 선택해주세요."
+          placeholder=""
           @update:modelValue="onChangeNest"/>
       </Field>
       <Field v-if="data.category?.length > 0" label="분류">
         <FormSelect
           v-model="forms.categorySrl"
           :options="data.category"
-          placeholder="분류를 선택해주세요."/>
+          placeholder="분류를 선택해주세요."
+          :disabled="_currentCategory"/>
       </Field>
     </Fieldset>
     <Controller>
@@ -54,16 +55,16 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, inject } from 'vue'
+import { computed, reactive, onMounted, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getData, changeNest, submit } from '../../../structure/article/change-nest.js'
-import PageHeader from '../../../components/header/page.vue'
-import { Loading, Empty } from '../../../components/content/index.js'
-import Card from '../../../components/item/card.vue'
-import { FormSelect } from '../../../components/forms/index.js'
-import { Fieldset, Field } from '../../../components/forms/fieldset/index.js'
-import { Controller } from '../../../components/navigation/index.js'
-import { ButtonBasic } from '../../../components/button/index.js'
+import { getData, changeNest, submit } from '@/structure/article/change-nest.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty } from '@/components/content/index.js'
+import Card from '@/components/item/card.vue'
+import { FormSelect } from '@/components/forms/index.js'
+import { Fieldset, Field } from '@/components/forms/fieldset/index.js'
+import { Controller } from '@/components/navigation/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
 
 const router = useRouter()
 const route = useRoute()
@@ -84,6 +85,12 @@ const forms = reactive({
   categorySrl: '',
 })
 
+const _currentCategory = computed(() => {
+  if (!forms.nestSrl) return false
+  if (String(data.article?.nestSrl) !== String(forms.nestSrl)) return false
+  return true
+})
+
 onMounted(async () => {
   try
   {
@@ -93,7 +100,6 @@ onMounted(async () => {
     data.category = res.category || []
     forms.nestSrl = data.article.nestSrl
     forms.categorySrl = data.article.categorySrl || ''
-    console.log(forms.categorySrl)
   }
   catch (e)
   {
@@ -151,7 +157,7 @@ async function onSubmit()
     state.processing = true
     await submit(Number(route.params.article), forms.nestSrl, forms.categorySrl)
     toast.add('둥지를 변경했습니다.', 'success').then()
-    router.push('../').then()
+    router.push(`/nest/${forms.nestSrl}/article/${data.article.srl}/`).then()
   }
   catch (e)
   {

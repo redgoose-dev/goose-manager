@@ -1,12 +1,12 @@
-import { request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
+import { request } from '@/libs/api.js'
+import { getDate } from '@/libs/date.js'
 
 const defaultOptions = {
   url: '/app/',
   query: {
+    page: 0,
     order: 'srl',
     sort: 'desc',
-    unlimited: '1',
     mod: 'count-nest,count-article',
   },
 }

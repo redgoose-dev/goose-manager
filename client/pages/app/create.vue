@@ -11,8 +11,8 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import PageHeader from '../../components/header/page.vue'
-import Post from '../../components/pages/app/post.vue'
+import PageHeader from '@/components/header/page.vue'
+import Post from '@/components/pages/app/post.vue'
 
 const router = useRouter()
 const $post = ref()

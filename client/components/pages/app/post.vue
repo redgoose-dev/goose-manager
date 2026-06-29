@@ -10,9 +10,8 @@
         placeholder="코드를 입력해주세요."
         :required="true"
         class="fields__code"/>
-      <Help>
-        {{forms.code.error || '"a-z, 0-9, `-`, `_`" 형식으로 입력해주세요.'}}
-      </Help>
+      <Help v-if="forms.code.error" color="error">{{forms.code.error}}</Help>
+      <Help v-else>"a-z, 0-9, `-`, `_`" 형식으로 입력해주세요.</Help>
     </Field>
     <Field label="이름" for="post-name">
       <FormInput

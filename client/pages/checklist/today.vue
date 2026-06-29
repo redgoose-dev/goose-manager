@@ -27,14 +27,14 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
-import { getData, editData } from '../../structure/checklist/today.js'
-import { checkTime, countingCheckbox } from '../../structure/checklist/libs.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading } from '../../components/content/index.js'
-import { Controller } from '../../components/navigation/index.js'
-import { ButtonBasic } from '../../components/button/index.js'
-import ChecklistBody from '../../components/pages/checklist/body.vue'
-import ChecklistProgress from '../../components/pages/checklist/progress.vue'
+import { getData, editData } from '@/structure/checklist/today.js'
+import { checkTime, countingCheckbox } from '@/structure/checklist/libs.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading } from '@/components/content/index.js'
+import { Controller } from '@/components/navigation/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
+import ChecklistBody from '@/components/pages/checklist/body.vue'
+import ChecklistProgress from '@/components/pages/checklist/progress.vue'
 
 const preference = inject('preference')
 const error = inject('error')

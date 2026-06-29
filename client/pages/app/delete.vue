@@ -18,9 +18,9 @@
 <script setup>
 import { reactive, onMounted, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getData, submit } from '../../structure/app/delete.js'
-import PageHeader from '../../components/header/page.vue'
-import { DeleteConfirm, Loading, Empty } from '../../components/content/index.js'
+import { getData, submit } from '@/structure/app/delete.js'
+import PageHeader from '@/components/header/page.vue'
+import { DeleteConfirm, Loading, Empty } from '@/components/content/index.js'
 
 const router = useRouter()
 const route = useRoute()

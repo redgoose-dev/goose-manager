@@ -65,11 +65,11 @@
 import { ref, reactive, computed, onMounted, watch, inject } from 'vue'
 import { Cropper } from 'vue-advanced-cropper'
 import imageResize from 'image-resize'
-import { addQueryParams } from '../../../libs/object.js'
-import { createRandomText } from '../../../libs/strings.js'
-import { blobToFile } from '../../../libs/file.js'
-import { ButtonGroup, ButtonBasic, ButtonIcon } from '../../button/index.js'
-import Icon from '../../icon/index.vue'
+import { addQueryParams } from '@/libs/object.js'
+import { createRandomText } from '@/libs/strings.js'
+import { blobToFile } from '@/libs/file.js'
+import { ButtonGroup, ButtonBasic, ButtonIcon } from '@/components/button/index.js'
+import Icon from '@/components/icon/index.vue'
 import 'vue-advanced-cropper/dist/style.css'
 
 const props = defineProps({

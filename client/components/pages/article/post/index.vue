@@ -4,12 +4,14 @@
   <Fieldset>
     <Field v-if="_useCategory" label="분류" for="post-category">
       <FormSelect
+        v-if="data.category.length > 0"
         name="post-category"
         id="post-category"
         v-model="forms.category_srl"
         :options="data.category"
         placeholder="분류를 선택하세요."
         class="category"/>
+      <Help v-else color="weak">등록된 분류가 없습니다.</Help>
     </Field>
     <Field label="제목" for="post-title">
       <FormInput
@@ -162,7 +164,7 @@ import { computed, inject, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getData, submit } from '@/structure/article/post.js'
 import { dateFormat } from '@/libs/date.js'
-import { Fieldset, Fields, Field } from '@/components/forms/fieldset/index.js'
+import { Fieldset, Fields, Field, Help } from '@/components/forms/fieldset/index.js'
 import { FormSelect, FormInput, FormTag, FormTextarea, FormRadio } from '@/components/forms/index.js'
 import { Controller, PostToolbar } from '@/components/navigation/index.js'
 import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'

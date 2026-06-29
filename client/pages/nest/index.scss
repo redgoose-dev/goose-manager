@@ -18,6 +18,7 @@
       em {
         font-style: normal;
         &:nth-child(1) {
+          color: var(--color-weak);
           &:before { content: '['; }
           &:after { content: '] '; }
         }
