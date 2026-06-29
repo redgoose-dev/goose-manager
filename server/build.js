@@ -2,6 +2,8 @@
  * Build server with Bun's built-in bundler
  */
 
+const { SOURCE_MAP } = Bun.env
+
 console.log('🪴 Start build BACKEND...')
 
 // run build
@@ -12,6 +14,7 @@ await Bun.build({
   target: 'bun',
   format: 'esm',
   splitting: true,
+  sourcemap: SOURCE_MAP?.toLowerCase() === 'true',
   minify: {
     whitespace: true,
     identifiers: true,

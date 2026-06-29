@@ -15,5 +15,4 @@ scripts/
 bun.lock
 Dockerfile
 docker-compose.yml
-podman-compose.yml
 cmd.sh
