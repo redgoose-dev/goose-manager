@@ -13,8 +13,8 @@
 <script setup>
 import { ref, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import PageHeader from '../../../components/header/page.vue'
-import Post from '../../../components/pages/article/post/index.vue'
+import PageHeader from '@/components/header/page.vue'
+import Post from '@/components/pages/article/post/index.vue'
 
 const route = useRoute()
 const router = useRouter()

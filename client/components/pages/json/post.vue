@@ -80,7 +80,7 @@
         module="json"
         :module-srl="props.srl"
         :shortcut="true"
-        :use-thumbnail="false"
+        :thumbnail="{ use: false }"
         :private="false"
         :multiple-selection="state.fileManager.mode !== 'editor'"
         class="file-manager"

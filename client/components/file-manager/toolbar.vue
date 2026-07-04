@@ -111,7 +111,7 @@ const _useInsert = computed(() => {
   return fileManager._existSelected
 })
 const _useThumbnail = computed(() => {
-  if (!fileManager.preference.useThumbnail) return false
+  if (!fileManager.preference.thumbnail?.use) return false
   return !!fileManager.thumbnail?.srl
 })
 

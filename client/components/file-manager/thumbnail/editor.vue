@@ -174,12 +174,12 @@ async function onSubmit()
   const { coordinates, canvas } = result
   const blob = await imageResize(canvas, {
     format: 'webp',
-    quality: .70,
+    quality: .78,
     width: props.cropSize[0],
     height: props.cropSize[1],
     outputType: 'blob',
     reSample: 2,
-    sharpen: .75,
+    sharpen: .35,
     bgColor: '#ffffff',
   })
   const file = blobToFile(blob, `${Date.now()}-${createRandomText(4)}.webp`, {

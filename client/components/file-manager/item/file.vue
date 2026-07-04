@@ -110,7 +110,7 @@ function checkUseNewWindow()
 }
 function checkUseEditThumbnail()
 {
-  if (!fileManager.preference.useThumbnail) return false
+  if (!fileManager.preference.thumbnail?.use) return false
   if (!/^image\//.test(props.mime) && !props.badge.includes('thumbnail')) return false
   return true
 }

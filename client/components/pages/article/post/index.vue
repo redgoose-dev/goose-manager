@@ -136,7 +136,10 @@
         :private="true"
         :multiple-selection="true"
         file-key="code"
-        :use-thumbnail="true"
+        :thumbnail="{
+          use: true,
+          ...data.nest.json.thumbnail,
+        }"
         :limit-count="data.nest?.json?.files?.count"
         :limit-size="data.nest?.json?.files?.sizeSingle"
         @insert="onInsertFileManager"

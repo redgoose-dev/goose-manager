@@ -99,7 +99,7 @@
         module="article"
         :module-srl="310"
         :shortcut="true"
-        :use-thumbnail="true"
+        :thumbnail="{ use: true }"
         :private="true"
         class="example--file-manager"
         @insert="onInsertFromFileManager">

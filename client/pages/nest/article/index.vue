@@ -80,17 +80,17 @@
 <script setup>
 import { reactive, computed, onMounted, watch, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../../structure/article/index.js'
-import { serialize } from '../../../libs/strings.js'
-import { scrollTo } from '../../../libs/util.js'
-import PageHeader from '../../../components/header/page.vue'
-import { Loading, Empty, IndexWithFilter } from '../../../components/content/index.js'
-import { Items, Mark } from '../../../components/item/index.js'
-import Card from '../../../components/item/card.vue'
-import Thumbnail from '../../../components/item/thumbnail.vue'
-import { Controller, CategoryTab, Paginate } from '../../../components/navigation/index.js'
-import { ButtonGroup, ButtonBasic } from '../../../components/button/index.js'
-import Filter from '../../../components/pages/article/filter.vue'
+import { getData } from '@/structure/article/index.js'
+import { serialize } from '@/libs/strings.js'
+import { scrollTo } from '@/libs/util.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty, IndexWithFilter } from '@/components/content/index.js'
+import { Items, Mark } from '@/components/item/index.js'
+import Card from '@/components/item/card.vue'
+import Thumbnail from '@/components/item/thumbnail.vue'
+import { Controller, CategoryTab, Paginate } from '@/components/navigation/index.js'
+import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'
+import Filter from '@/components/pages/article/filter.vue'
 
 const router = useRouter()
 const route = useRoute()

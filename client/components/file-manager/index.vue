@@ -12,7 +12,10 @@
         <ThumbnailEditor
           :src="modal.thumbnailEditor.src"
           :options="modal.thumbnailEditor.options"
-          :crop-size="[ 640, 480 ]"
+          :crop-size="[
+            fileManager.preference.thumbnail?.width ?? 640,
+            fileManager.preference.thumbnail?.height ?? 480,
+          ]"
           :private="fileManager.preference.private"
           @close="onCloseThumbnailEditor"
           @submit="onSubmitThumbnailEditor"/>
@@ -60,7 +63,7 @@ const props = defineProps({
   module: String,
   moduleSrl: Number,
   shortcut: Boolean,
-  useThumbnail: Boolean,
+  thumbnail: Object,
   private: Boolean,
   multipleSelection: Boolean,
   fileKey: { type: String, default: 'code' },
@@ -153,7 +156,7 @@ function onSetup()
     module: props.module,
     moduleSrl: props.moduleSrl,
     shortcut: Boolean(props.shortcut),
-    useThumbnail: props.useThumbnail,
+    thumbnail: props.thumbnail,
     private: props.private,
     multipleSelection: props.multipleSelection,
     limitCount: props.limitCount,
