@@ -38,8 +38,7 @@ export async function getData(module, moduleSrl)
               module: 'nest',
               module_srl: moduleSrl,
               page: 0,
-              order: 'turn',
-              sort: 'asc',
+              order: 'turn ASC',
               mod: 'count',
             },
           },
@@ -62,8 +61,7 @@ export async function getData(module, moduleSrl)
         query: {
           module: 'json',
           page: 0,
-          order: 'turn',
-          sort: 'asc',
+          order: 'turn ASC',
           mod: 'count',
         },
       })

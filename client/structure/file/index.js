@@ -1,6 +1,6 @@
 import { useRoute } from 'vue-router'
-import { preferenceStore } from '../../store/app.js'
-import { request } from '../../libs/api.js'
+import { preferenceStore } from '@/store/app.js'
+import { request } from '@/libs/api.js'
 
 let _route
 
@@ -12,8 +12,7 @@ export async function getData(module, moduleSrl)
     query: {
       module,
       module_srl: moduleSrl,
-      order: 'srl',
-      sort: 'desc',
+      order: 'srl DESC',
       size: preference.file.pagePerSize,
       page: Number(_route.query.page) > 1 ? Number(_route.query.page) : undefined,
     }

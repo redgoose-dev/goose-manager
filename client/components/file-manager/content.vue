@@ -102,8 +102,6 @@ onMounted(async () => {
           module,
           module_srl: moduleSrl,
           page: 0,
-          order: 'srl',
-          sort: 'asc',
         },
       })
       if (res?.data?.index?.length > 0)

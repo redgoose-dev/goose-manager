@@ -34,8 +34,7 @@ export async function getData(mode, srl)
           module: 'json',
           field: 'srl,name',
           page: 0,
-          order: 'turn',
-          sort: 'asc',
+          order: 'turn ASC',
         },
       },
       ...(mode === 'edit' ? [

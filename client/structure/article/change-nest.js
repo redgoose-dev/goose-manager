@@ -89,8 +89,7 @@ export async function getData(srl)
           module: 'nest',
           module_srl: '{{article.nest_srl}}',
           page: 0,
-          order: 'turn',
-          sort: 'asc',
+          order: 'turn ASC',
         },
       },
     ],
@@ -110,8 +109,7 @@ export async function changeNest(srl)
       module: 'nest',
       module_srl: srl,
       page: 0,
-      order: 'turn',
-      sort: 'asc',
+      order: 'turn ASC',
     },
   })
   return {

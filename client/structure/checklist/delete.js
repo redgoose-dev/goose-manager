@@ -1,5 +1,5 @@
-import { request } from '../../libs/api.js'
-import { dateFormat } from '../../libs/date.js'
+import { request } from '@/libs/api.js'
+import { dateFormat } from '@/libs/date.js'
 
 function filtering(src)
 {

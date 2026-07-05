@@ -47,6 +47,7 @@ export async function getData()
         params: {
           field: 'srl,code,name,description',
           page: 0,
+          order: 'srl DESC',
           mod: 'count-nest',
         },
       },
@@ -55,6 +56,7 @@ export async function getData()
         url: '/nest/',
         params: {
           page: 0,
+          order: 'srl DESC',
           mod: 'count-article',
         },
       },

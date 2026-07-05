@@ -5,8 +5,7 @@ const defaultOptions = {
   url: '/app/',
   query: {
     page: 0,
-    order: 'srl',
-    sort: 'desc',
+    order: 'srl DESC',
     mod: 'count-nest,count-article',
   },
 }

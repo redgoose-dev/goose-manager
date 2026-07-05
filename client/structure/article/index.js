@@ -82,6 +82,7 @@ export async function getData(query = {}, options = {})
   const nest_srl = nestSrl === undefined ? undefined : Number(nestSrl)
   const category_srl = query.category === undefined ? undefined : (Number(query.category) || 0)
   const fromNest = nest_srl !== undefined
+  const _order = `${query.order || 'srl'} ${query.sort ? query.sort.toUpperCase() : 'DESC'}`
   const { article, category, nest, tag } = await request('/mix/', {
     method: 'post',
     body: [
@@ -95,8 +96,7 @@ export async function getData(query = {}, options = {})
           mode: query.mode,
           page: query.page > 1 ? query.page : undefined,
           size: size || 24,
-          order: query.order || 'srl',
-          sort: query.sort || 'desc',
+          order: _order,
           tag: query.tag,
           q: query.q,
           mod: fromNest ? (!query.category ? 'category' : '') : 'nest',
@@ -109,8 +109,7 @@ export async function getData(query = {}, options = {})
           module: 'nest',
           module_srl: nest_srl,
           page: 0,
-          order: 'turn',
-          sort: 'asc',
+          order: 'turn ASC',
           tag: query.tag,
           q: query.q,
           mod: 'count,none,all',
@@ -127,7 +126,9 @@ export async function getData(query = {}, options = {})
       all && {
         key: 'tag',
         url: '/tag/',
-        params: { module: 'article' },
+        params: {
+          module: 'article',
+        },
       },
     ].filter(Boolean),
   })

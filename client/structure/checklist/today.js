@@ -6,8 +6,12 @@ export async function getLastData()
 {
   const preference = preferenceStore()
   let result, postDate
-  const query = { order: 'srl', sort: 'desc', size: 1 }
-  let res = await request('/checklist/', { query })
+  let res = await request('/checklist/', {
+    query: {
+      order: 'srl DESC',
+      size: 1,
+    },
+  })
   let lastItem = res?.data?.index[0]
   if (lastItem)
   {

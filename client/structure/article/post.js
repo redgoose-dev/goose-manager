@@ -54,8 +54,7 @@ export async function getData(nestSrl, articleSrl)
           module_srl: nestSrl,
           field: 'srl,name',
           page: 0,
-          order: 'turn',
-          sort: 'asc',
+          order: 'turn ASC',
         },
       },
       articleSrl && {

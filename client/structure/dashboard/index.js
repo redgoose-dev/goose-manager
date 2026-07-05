@@ -12,17 +12,21 @@ const apiUrl = {
 const apiParams = {
   article: {
     field: 'srl,category_srl,title,hit,star,mode,json,regdate',
+    order: 'regdate DESC, srl DESC'
   },
   nest: {
     field: 'srl,code,name,created_at,json',
+    order: 'srl DESC',
     mod: 'count-article',
   },
   app: {
     field: 'srl,code,name,created_at',
+    order: 'srl DESC',
     mod: 'count-nest,count-article',
   },
   json: {
     field: 'srl,name,created_at',
+    order: 'srl DESC',
   },
 }
 

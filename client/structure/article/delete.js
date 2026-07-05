@@ -1,4 +1,4 @@
-import { request } from '../../libs/api.js'
+import { request } from '@/libs/api.js'
 
 export async function getData(srl)
 {

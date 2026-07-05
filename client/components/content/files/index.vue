@@ -28,15 +28,15 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
-import { request } from '../../../libs/api.js'
-import { getFilePath } from '../../../libs/file.js'
-import { dateFormat } from '../../../libs/date.js'
-import { getByte } from '../../../libs/strings.js'
-import { addQueryParams } from '../../../libs/object.js'
-import { Loading, Empty } from '../index.js'
-import { Items } from '../../item/index.js'
-import Thumbnail from '../../item/thumbnail.vue'
-import { ModalHeader } from '../../modal/index.js'
+import { request } from '@/libs/api.js'
+import { getFilePath } from '@/libs/file.js'
+import { dateFormat } from '@/libs/date.js'
+import { getByte } from '@/libs/strings.js'
+import { addQueryParams } from '@/libs/object.js'
+import { Items } from '@/components/item/index.js'
+import Thumbnail from '@/components/item/thumbnail.vue'
+import { ModalHeader } from '@/components/modal/index.js'
+import { Loading, Empty } from '@/components/content/index.js'
 
 const props = defineProps({
   title: { type: String, default: '첨부파일' },

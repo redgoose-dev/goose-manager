@@ -18,6 +18,7 @@ export async function getData(module, moduleSrl)
       module,
       module_srl: moduleSrl,
       page: 0,
+      order: 'srl DESC',
     },
   })
   if (!(res?.data?.index?.length > 0)) return { total: 0, index: [] }
