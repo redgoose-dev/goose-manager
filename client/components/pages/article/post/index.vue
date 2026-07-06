@@ -165,8 +165,8 @@
 <script setup>
 import { computed, inject, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { dateStore } from '@/store/app.js'
 import { getData, submit } from '@/structure/article/post.js'
-import { dateFormat } from '@/libs/date.js'
 import { Fieldset, Fields, Field, Help } from '@/components/forms/fieldset/index.js'
 import { FormSelect, FormInput, FormTag, FormTextarea, FormRadio } from '@/components/forms/index.js'
 import { Controller, PostToolbar } from '@/components/navigation/index.js'
@@ -180,6 +180,7 @@ const router = useRouter()
 const preference = inject('preference')
 const toast = inject('toast')
 const error = inject('error')
+const date = dateStore()
 const errorPath = [ 'components', 'pages', 'article', 'post', 'index.vue' ]
 const $root = ref()
 const $content = ref()
@@ -235,7 +236,7 @@ onMounted(async () => {
     data.category = category
     forms.category_srl = article.category_srl || ''
     forms.title = article.title || ''
-    forms.regdate = article.regdate || dateFormat(new Date(), '{yyyy}-{MM}-{dd}')
+    forms.regdate = date.format((article.regdate || new Date()), 'date-dash')
     forms.mode = article.mode || 'ready'
     forms.content = article.content || ''
     let _json = (typeof article.json === 'string') ? JSON.parse(article.json) : (article.json || {})

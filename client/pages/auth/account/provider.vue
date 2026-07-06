@@ -39,12 +39,12 @@
 <script setup>
 import { reactive, onMounted, inject } from 'vue'
 import { useRoute } from 'vue-router'
-import { getIndex, disconnect } from '../../../structure/auth/provider.js'
-import { webSocketAuth } from '../../../libs/api.js'
-import { Loading, Empty } from '../../../components/content/index.js'
-import Provider from '../../../components/pages/auth/provider.vue'
-import { Modal, ModalWindow } from '../../../components/modal/index.js'
-import PostProvider from '../../../components/pages/auth/post-provider.vue'
+import { getIndex, disconnect } from '@/structure/auth/provider.js'
+import { webSocketAuth } from '@/libs/api.js'
+import { Loading, Empty } from '@/components/content/index.js'
+import Provider from '@/components/pages/auth/provider.vue'
+import { Modal, ModalWindow } from '@/components/modal/index.js'
+import PostProvider from '@/components/pages/auth/post-provider.vue'
 
 const route = useRoute()
 const toast = inject('toast')

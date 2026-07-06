@@ -1,12 +1,11 @@
+import { dateStore } from '@/store/app.js'
 import { request } from '@/libs/api.js'
-import { getDate } from '@/libs/date.js'
 import { serialize } from '@/libs/strings.js'
-import { preferenceStore } from '@/store/app.js'
 
 function filteringArticle(src)
 {
   if (!src) return { total: 0, index: [] }
-  const preference = preferenceStore()
+  const date = new dateStore()
   return {
     total: src.total,
     index: src.index?.map(o => {
@@ -19,7 +18,7 @@ function filteringArticle(src)
         nestSrl: o.nest_srl,
         title,
         meta: [
-          getDate(o[preference.article?.displayDateField] || o.created_at),
+          date.format(o.created_at, 'date'),
           `조회수:${o.hit || 0}`,
           `좋아요:${o.star || 0}`,
         ],

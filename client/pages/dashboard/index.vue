@@ -119,6 +119,7 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
+import { preferenceStore } from '@/store/app.js'
 import { getData } from '@/structure/dashboard/index.js'
 import PageHeader from '@/components/header/page.vue'
 import { Loading, Empty } from '@/components/content/index.js'

@@ -1,7 +1,7 @@
+import { dateStore } from '@/store/app.js'
 import { request } from '@/libs/api.js'
 import { articleModeLabel } from '@/libs/assets.js'
 import { getFilePath } from '@/libs/file.js'
-import { dateFormat } from '@/libs/date.js'
 
 const apiUrl = {
   article: '/article/',
@@ -11,11 +11,11 @@ const apiUrl = {
 }
 const apiParams = {
   article: {
-    field: 'srl,category_srl,title,hit,star,mode,json,regdate',
-    order: 'regdate DESC, srl DESC'
+    field: 'srl,category_srl,title,hit,star,mode,json,created_at',
+    order: 'srl DESC'
   },
   nest: {
-    field: 'srl,code,name,created_at,json',
+    field: 'srl,code,name,json,created_at',
     order: 'srl DESC',
     mod: 'count-article',
   },
@@ -33,6 +33,7 @@ const apiParams = {
 function filteringArticle(src)
 {
   if (!(src?.index?.length > 0)) return null
+  const date = dateStore()
   return src.index.map(o => {
     return {
       srl: o.srl,
@@ -42,7 +43,7 @@ function filteringArticle(src)
       private: o.mode === 'private',
       meta: [
         articleModeLabel[o.mode] || false,
-        o.regdate,
+        date.format(o.created_at, 'date'),
         `조회수: ${o.hit}`,
         `좋아요: ${o.star}`,
       ].filter(Boolean),
@@ -52,6 +53,7 @@ function filteringArticle(src)
 function filteringNest(src)
 {
   if (!(src?.index?.length > 0)) return null
+  const date = dateStore()
   return src.index.map(o => {
     return {
       srl: o.srl,
@@ -60,7 +62,7 @@ function filteringNest(src)
       meta: [
         `번호: ${o.srl}`,
         `코드: ${o.code}`,
-        dateFormat(new Date(o.created_at), '{yyyy}-{MM}-{dd}'),
+        date.format(o.created_at, 'date'),
       ].filter(Boolean),
       status: [
         { label: '아티클', value: o.count_article },
@@ -72,6 +74,7 @@ function filteringNest(src)
 function filteringApp(src)
 {
   if (!(src?.index?.length > 0)) return null
+  const date = dateStore()
   return src.index.map(o => {
     return {
       srl: o.srl,
@@ -79,7 +82,7 @@ function filteringApp(src)
       meta: [
         `번호: ${o.srl}`,
         `코드: ${o.code}`,
-        dateFormat(new Date(o.created_at), '{yyyy}-{MM}-{dd}'),
+        date.format(o.created_at, 'date'),
       ].filter(Boolean),
       status: [
         { label: '아티클', value: o.count_article },
@@ -90,6 +93,7 @@ function filteringApp(src)
 function filteringJSON(src)
 {
   if (!(src?.index?.length > 0)) return null
+  const date = dateStore()
   return src.index.map(o => {
     return {
       srl: o.srl,
@@ -97,7 +101,7 @@ function filteringJSON(src)
       href: `/json/${o.srl}/`,
       meta: [
         `번호: ${o.srl}`,
-        dateFormat(new Date(o.created_at), '{yyyy}-{MM}-{dd}'),
+        date.format(o.created_at, 'date'),
       ].filter(Boolean),
     }
   })

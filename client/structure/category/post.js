@@ -1,4 +1,4 @@
-import { request, checkForms, formData } from '../../libs/api.js'
+import { request, checkForms, formData } from '@/libs/api.js'
 
 function filteringData(src)
 {

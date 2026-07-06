@@ -1,5 +1,5 @@
+import { dateStore } from '@/store/app.js'
 import { request } from '@/libs/api.js'
-import { getDate } from '@/libs/date.js'
 
 function filteringNest(nest)
 {
@@ -13,11 +13,12 @@ function filteringNest(nest)
 function filteringCategories(src)
 {
   if (!(src?.index?.length > 0)) return []
+  const date = dateStore()
   return src.index.map(o => {
     return {
       srl: o.srl,
       title: o.name,
-      meta: [ getDate(o.created_at) ],
+      meta: [ date.format(o.created_at, 'date') ],
       status: [ { label: '데이터', value: o.count } ],
     }
   })

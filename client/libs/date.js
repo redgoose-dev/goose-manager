@@ -7,6 +7,7 @@ const weekShortNames = [ '일', '월', '화', '수', '목', '금', '토' ]
 /**
  * get date
  * convert `yyyy-mm-dd hh:mm:ss` to `yyyy-mm-dd`
+ * TODO: 이건 빼야할듯하다. (dateFormat 함수로 사용해도 될법하다.)
  */
 export function getDate(date)
 {

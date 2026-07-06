@@ -34,23 +34,24 @@
 <script setup>
 import { reactive, computed, onMounted, watch, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getByte, serialize } from '../../libs/strings.js'
-import { scrollTo } from '../../libs/util.js'
-import { getFilePath } from '../../libs/file.js'
-import { dateFormat } from '../../libs/date.js'
-import { addQueryParams } from '../../libs/object.js'
-import { getData } from '../../structure/file/index.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty } from '../../components/content/index.js'
-import { Paginate } from '../../components/navigation/index.js'
-import { Items } from '../../components/item/index.js'
-import Thumbnail from '../../components/item/thumbnail.vue'
+import { dateStore } from '@/store/app.js'
+import { getByte, serialize } from '@/libs/strings.js'
+import { scrollTo } from '@/libs/util.js'
+import { getFilePath } from '@/libs/file.js'
+import { addQueryParams } from '@/libs/object.js'
+import { getData } from '@/structure/file/index.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty } from '@/components/content/index.js'
+import { Paginate } from '@/components/navigation/index.js'
+import { Items } from '@/components/item/index.js'
+import Thumbnail from '@/components/item/thumbnail.vue'
 
 const route = useRoute()
 const router = useRouter()
 const auth = inject('auth')
 const preference = inject('preference')
 const error = inject('error')
+const date = dateStore()
 const errorPath = [ 'pages', 'file', 'index.vue' ]
 const state = reactive({
   loading: true,
@@ -91,7 +92,7 @@ const _index = computed(() => {
       thumbnail,
       icon,
       meta: [
-        dateFormat(new Date(o.created_at), '{yyyy}-{MM}-{dd}'),
+        date.format(o.created_at, 'date'),
         o.mime.split('/')[0],
         getByte(o.size),
       ],

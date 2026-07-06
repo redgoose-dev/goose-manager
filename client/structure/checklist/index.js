@@ -1,24 +1,6 @@
+import { dateStore, preferenceStore } from '@/store/app.js'
 import { request } from '@/libs/api.js'
-import { dateFormat } from '@/libs/date.js'
 import { checkTime } from './libs.js'
-import { preferenceStore } from '@/store/app.js'
-
-function filtering(src)
-{
-  if (!src?.index?.length > 0) return { total: 0, index: [] }
-  const preference = preferenceStore()
-  return {
-    total: src.total,
-    index: src.index.map(o => {
-      return {
-        srl: o.srl,
-        title: dateFormat(new Date(o.created_at), preference.checklist.dateFormat),
-        percent: o.percent,
-        today: !checkTime(o.created_at, preference.checklist.resetTime),
-      }
-    }),
-  }
-}
 
 export async function getData(query = {}, options = {})
 {
@@ -34,5 +16,19 @@ export async function getData(query = {}, options = {})
       content: query.q,
     },
   })
-  return filtering(res?.data)
+  if (!res?.data?.index?.length > 0) return { total: 0, index: [] }
+  const preference = preferenceStore()
+  const date = dateStore()
+  const now = new Date()
+  return {
+    total: res.data.total,
+    index: res.data.index.map(o => {
+      return {
+        srl: o.srl,
+        title: `${date.format(o.created_at, 'date')} ${date.format(o.created_at, 'week')}`,
+        percent: o.percent,
+        today: !checkTime(o.created_at, preference.checklist.resetTime, now),
+      }
+    }),
+  }
 }

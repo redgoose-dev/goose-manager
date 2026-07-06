@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { localRequest } from '../libs/api.js'
 import { pureObject } from '../libs/object.js'
-import { preferenceStore } from './app.js'
+import {dateStore, preferenceStore} from './app.js'
 
 export const authStore = defineStore('auth', {
   state: () => ({
@@ -27,6 +27,10 @@ export const authStore = defineStore('auth', {
       {
         const preference = preferenceStore()
         preference.setup(data.preference)
+        // setup date store
+        const date = dateStore()
+        date.locale = preference._locale
+        date.timezone = preference._timezone
       }
     },
     destroy()

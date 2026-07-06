@@ -1,9 +1,10 @@
+import { dateStore } from '@/store/app.js'
 import { request } from '@/libs/api.js'
-import { getDate } from '@/libs/date.js'
 import { serialize } from '@/libs/strings.js'
 
 function filteringJSON(src)
 {
+  const date = dateStore()
   return {
     total: src?.total || 0,
     index: src?.index?.map(o => {
@@ -16,8 +17,8 @@ function filteringJSON(src)
         meta: [
           `번호: ${o.srl}`,
           o.category ? `분류: ${o.category.name}` : '',
-          `날짜: ${getDate(o.created_at)}`,
-        ],
+          `날짜: ${date.format(o.created_at, 'date')}`,
+        ].filter(Boolean),
       }
     })
   }

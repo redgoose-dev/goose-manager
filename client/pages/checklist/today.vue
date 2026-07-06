@@ -27,6 +27,7 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
+import { dateStore } from '@/store/app.js'
 import { getData, editData } from '@/structure/checklist/today.js'
 import { checkTime, countingCheckbox } from '@/structure/checklist/libs.js'
 import PageHeader from '@/components/header/page.vue'
@@ -38,6 +39,7 @@ import ChecklistProgress from '@/components/pages/checklist/progress.vue'
 
 const preference = inject('preference')
 const error = inject('error')
+const date = dateStore()
 const errorPath = [ 'pages', 'checklist', 'today.vue' ]
 const state = reactive({
   loading: true,

@@ -1,10 +1,12 @@
+import { preferenceStore, dateStore } from '@/store/app.js'
 import { request, formData } from '@/libs/api.js'
 import { defaultContent, checkTime, filteringData } from './libs.js'
-import { preferenceStore } from '@/store/app.js'
 
 export async function getLastData()
 {
   const preference = preferenceStore()
+  const date = dateStore()
+  const now = new Date()
   let result, postDate
   let res = await request('/checklist/', {
     query: {
@@ -15,7 +17,7 @@ export async function getLastData()
   let lastItem = res?.data?.index[0]
   if (lastItem)
   {
-    postDate = checkTime(lastItem?.created_at, preference.checklist.resetTime)
+    postDate = checkTime(lastItem?.created_at, preference.checklist.resetTime, now)
     if (postDate)
     {
       // add data
@@ -23,7 +25,7 @@ export async function getLastData()
         method: 'put',
         body: formData({
           content: (lastItem?.content) ? lastItem?.content.replace(/\- \[x\]/g, '- [ ]') : defaultContent,
-          regdate: postDate,
+          regdate: date.toUTC(postDate),
         })
       })
       if (!res?.data) throw new Error('Not found add data.')
@@ -53,9 +55,10 @@ export async function getLastData()
   return result
 }
 
-export async function getData(srl)
+export async function getData()
 {
-  const result = await getLastData()
+  let result = await getLastData()
+  if (!result) return null
   return filteringData(result)
 }
 

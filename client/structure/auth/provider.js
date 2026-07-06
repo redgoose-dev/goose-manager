@@ -1,8 +1,10 @@
+import { dateStore } from '@/store/app.js'
 import { request, formData } from '@/libs/api.js'
 
 function filtering(src)
 {
   if (!src) return null
+  const date = dateStore()
   let result = {
     code: src.code,
   }
@@ -14,7 +16,7 @@ function filtering(src)
     result.id = user_id
     result.email = user_email
     result.avatar = user_avatar
-    result.regdate = created_at
+    result.regdate = date.format(created_at, 'full')
   }
   return result
 }

@@ -1,5 +1,6 @@
-import { dateFormat, compareDate } from '../../libs/date.js'
-import { filteringContent } from '../../libs/strings.js'
+import { dateStore } from '@/store/app.js'
+import { compareDate } from '@/libs/date.js'
+import { filteringContent } from '@/libs/strings.js'
 
 export const defaultContent = `- [ ] content body\n- [ ] content body\n\n`
 
@@ -7,7 +8,7 @@ export const defaultContent = `- [ ] content body\n- [ ] content body\n\n`
  * check reset time
  * @param {string} resetTime
  * @param {Date} now
- * @return {boolean} 리셋시간이 넘어갔다면 ture
+ * @return {boolean} 현재 시간이 리셋시간을 넘었으면 ture
  */
 function checkResetTime(resetTime, now = undefined)
 {
@@ -20,11 +21,51 @@ function checkResetTime(resetTime, now = undefined)
   return current.getTime() > reset.getTime()
 }
 
-function getDateFormat(date, yesterday)
+function parseDateTime(value)
 {
-  date = new Date(date)
-  if (yesterday) date.setDate(date.getDate() - 1)
-  return dateFormat(date, '{yyyy}-{MM}-{dd} {hh}:{mm}:{ss}')
+  if (!value) return null
+  if (value instanceof Date) return new Date(value)
+  if (typeof value !== 'string')
+  {
+    const result = new Date(value)
+    return isNaN(result.getTime()) ? null : result
+  }
+  const src = value.trim()
+  const match = src.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/)
+  if (match)
+  {
+    const [ , year, month, day, hour = '0', minute = '0', second = '0' ] = match
+    const result = new Date(Number(year), Number(month) - 1, Number(day), 0, Number(minute), Number(second))
+    if (Number(hour) === 24)
+    {
+      result.setDate(result.getDate() + 1)
+    }
+    else
+    {
+      result.setHours(Number(hour))
+    }
+    return result
+  }
+  const result = new Date(src)
+  return isNaN(result.getTime()) ? null : result
+}
+
+function getLogicalDate(date, resetTime)
+{
+  const result = parseDateTime(date)
+  if (!result) return null
+  const [ hour = '0', minute = '0' ] = resetTime.split(':')
+  result.setMinutes(result.getMinutes() - ((Number(hour) * 60) + Number(minute)))
+  result.setHours(0, 0, 0, 0)
+  return result
+}
+
+function getDateFormat(_date, yesterday)
+{
+  const date = dateStore()
+  _date = new Date(_date)
+  if (yesterday) _date.setDate(_date.getDate() - 1)
+  return `${date.format(_date, 'date-dash')} ${date.format(_date, 'time')}`
 }
 
 /**
@@ -32,38 +73,35 @@ function getDateFormat(date, yesterday)
  * 시간을 검사하여 아이템을 새로 추가할건지 마지막 데이터를 사용할건지 결정한다.
  * @param {string} regdate `0000-00-00 00:00:00`
  * @param {string} resetTime `00:00`
+ * @param {string|Date} now
  * @return {string|null} 새로 만들 날짜를 리턴한다. 새로 만들 필요가 없다면 null을 리턴한다.
  */
-export function checkTime(regdate, resetTime)
+export function checkTime(regdate, resetTime, now = new Date())
 {
   if (!regdate) return null
-  const now = new Date()
-  const regdateArray = regdate.split(' ')[0].split('-')
-  const srcDate = new Date(Number(regdateArray[0]), Number(regdateArray[1])-1, Number(regdateArray[2]))
-  // 마지막 데이터의 날짜가 같은지 이후인지 검사한다.
-  if (compareDate(srcDate, now, '='))
+  const sourceDate = parseDateTime(regdate)
+  const currentDate = parseDateTime(now)
+  if (!(sourceDate && currentDate)) return null
+  const sourceLogicalDate = getLogicalDate(sourceDate, resetTime)
+  const currentLogicalDate = getLogicalDate(currentDate, resetTime)
+  if (!(sourceLogicalDate && currentLogicalDate)) return null
+  getDateFormat(currentDate) // TODO
+  // 마지막 데이터의 논리 날짜가 현재와 같으면 그대로 사용한다.
+  if (compareDate(sourceLogicalDate, currentLogicalDate, '='))
   {
-    // 같은 날짜일때..
-    // 리셋시간을 넘겼으면 현재 시간을 리턴으로 넘기고, 넘기지 못했으면 마지막 데이터로 쓰게한다.
-    return checkResetTime(resetTime, now) ? null: getDateFormat(now)
+    return null
   }
-  else if (compareDate(srcDate, now, '<'))
+  else if (compareDate(sourceLogicalDate, currentLogicalDate, '<'))
   {
-    // 현재가 마지막 데이터보다 미래라면..
-    // 더 이전의 날짜까지 데이터가 있기 때문에 현재 날짜로 바로 만든다.
-    // 이 상황이 왔을때 24시가 넘어간 상태에서 리셋타임이 넘지 않았으면 어제날짜로 데이터를 만들어야 할것이다.
-    if (checkResetTime(resetTime, now))
+    // 현재가 마지막 데이터보다 미래라면 새 데이터를 만든다.
+    // 리셋시간 전이면 아직 전날 체크리스트 구간이므로 날짜만 하루 당겨서 생성한다.
+    if (checkResetTime(resetTime, currentDate))
     {
-      // 리셋시간 이후
-      return getDateFormat(now)
+      return getDateFormat(currentDate)
     }
     else
     {
-      // 리셋시간 이전
-      // `어제=마지막데이터` 날짜조사하고 날짜가 같으면 그대로 쓰고 아니면 어제날짜로 데이터 만든다.
-      let yesterday = new Date(now)
-      yesterday.setDate(yesterday.getDate() - 1)
-      return compareDate(srcDate, yesterday, '=') ? null : getDateFormat(now, true)
+      return getDateFormat(currentDate, true)
     }
   }
   else
@@ -107,7 +145,6 @@ export function countingCheckbox(str)
  */
 export function filteringData(src)
 {
-  if (!src) return null
   return {
     srl: src.srl,
     content: filteringContent(src.content),

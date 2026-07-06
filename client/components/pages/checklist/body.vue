@@ -17,10 +17,10 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject, nextTick } from 'vue'
 import { marked } from 'marked'
-import { defaultOptions, baseRenderer, checklistRenderer, renderContent } from '../../../modules/marked.js'
-import { replaceCheck } from '../../../structure/checklist/libs.js'
-import { dateFormat } from '../../../libs/date.js'
-import { Lightbox } from '../../content/index.js'
+import { dateStore } from '@/store/app.js'
+import { defaultOptions, baseRenderer, checklistRenderer, renderContent } from '@/modules/marked.js'
+import { replaceCheck } from '@/structure/checklist/libs.js'
+import { Lightbox } from '@/components/content/index.js'
 
 const props = defineProps({
   content: { type: String, required: true },
@@ -31,6 +31,7 @@ const props = defineProps({
 })
 const emits = defineEmits([ 'update:content', 'update:checkbox' ])
 const preference = inject('preference')
+const date = dateStore()
 const $body = ref()
 const state = reactive({
   previewImage: '',
@@ -38,8 +39,7 @@ const state = reactive({
 
 const _title = computed(() => {
   if (!props.date) return ''
-  const date = props.date.split(' ')[0].split('-').map(o => Number(o))
-  return dateFormat(new Date(date[0], date[1]-1, date[2]), preference.checklist.dateFormat)
+  return `${date.format(props.date, 'date')} ${date.format(props.date, 'week')}`
 })
 const _showPercentage = computed(() => (!isNaN(props.percent)))
 
