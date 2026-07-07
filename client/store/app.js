@@ -95,8 +95,8 @@ const dateFormatPreset = {
   week: { weekday: 'long' },
 }
 export const dateStore = defineStore('dater', () => {
-  const locale = ref(navigator.language)
-  const timezone = ref(Intl.DateTimeFormat().resolvedOptions().timeZone)
+  let locale = ref(navigator.language)
+  let timezone = ref(Intl.DateTimeFormat().resolvedOptions().timeZone)
   // 외부에 노출되지 않는 Formatter 캐시
   const cache = new Map()
   // watch locale,timezone

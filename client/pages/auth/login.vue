@@ -23,6 +23,7 @@
 
 <script setup>
 import { reactive, computed, onMounted, onBeforeUnmount, inject } from 'vue'
+import ServiceError from '@/libs/ServiceError.js'
 import { localRequest } from '@/libs/api.js'
 import { randomNumber } from '@/libs/strings.js'
 import { modalRootClassName } from '@/libs/assets.js'
@@ -69,9 +70,22 @@ onMounted(async () => {
     }
     state.providers = data.providers || []
   }
-  catch (e)
+  catch (_e)
   {
-    toast.add('로그인을 위한 데이터를 가져오지 못했습니다.', 'error').then()
+    let _message = ''
+    switch (_e.status)
+    {
+      case 503:
+        _message = 'Service Unavailable'
+        break
+      default:
+        _message = 'Failed to login'
+        break
+    }
+    throw new ServiceError(_message, {
+      error: _e,
+      status: _e.status || 500,
+    })
   }
   finally
   {

@@ -47,7 +47,15 @@ async function ready(req, ctx)
   catch (e)
   {
     if (dev) printMessage('error', `[${e.status || 500}] ${e.message}`)
-    response = new Response('Failed get login ready data.', { status: e.status || 500 })
+    switch (e.code)
+    {
+      case 'ConnectionRefused':
+        response = new Response('Service Unavailable', { status: 503 })
+        break
+      default:
+        response = new Response('Failed get login ready data.', { status: e.status || 500 })
+        break
+    }
   }
 
   // trigger response event
