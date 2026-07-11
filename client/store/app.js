@@ -29,7 +29,7 @@ export const preferenceStore = defineStore('preference', {
   getters: {
     _pure: (data) => toPureObject(data, preferenceKeys),
     _timezone: (data) => (data.general.timezone || 'UTC'),
-    _locale: (data) => (data.general.locale || 'ko_KR'),
+    _locale: (data) => (data.general.locale || 'ko-KR'),
   },
   actions: {
     setup(pref)
