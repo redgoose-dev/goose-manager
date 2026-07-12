@@ -1,4 +1,4 @@
-const { COOKIE_PREFIX, COOKIE_DOMAIN, COOKIE_HTTPONLY, COOKIE_PATH } = Bun.env
+const { COOKIE_PREFIX, COOKIE_DOMAIN, COOKIE_HTTPONLY, COOKIE_SECURE, COOKIE_PATH } = Bun.env
 
 /**
  * get key name
@@ -28,7 +28,7 @@ export function save(req, key, value, expires = undefined)
     path: COOKIE_PATH,
     maxAge,
     httpOnly: COOKIE_HTTPONLY.toLowerCase() === 'true',
-    secure: _url.protocol === 'https:',
+    secure: COOKIE_SECURE.toLowerCase() === 'true',
   })
 }
 
