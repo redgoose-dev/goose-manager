@@ -201,6 +201,7 @@ function initContentEvents()
   if (!$content.value) return
   $content.value.querySelectorAll('img').forEach(el => {
     el.addEventListener('click', e => {
+      if (e.currentTarget.closest('a,button')) return
       state.previewImage = e.currentTarget.src
     })
   })
