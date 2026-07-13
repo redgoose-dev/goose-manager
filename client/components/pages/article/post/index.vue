@@ -315,7 +315,7 @@ function onInsertFileManager(str)
 }
 function onUpdateThumbnail(o)
 {
-  forms.json.thumbnail = o.code
+  forms.json.thumbnail = o?.code ?? null
 }
 
 /**
