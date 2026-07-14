@@ -302,7 +302,7 @@ async function onSubmit()
       app: forms.app.value,
       code: forms.code.value,
       name: forms.name.value,
-      description: forms.description.value,
+      description: forms.description.value ?? '',
       json,
     })
     const message = props.mode === 'edit' ? '둥지를 수정했습니다.' : '둥지를 만들었습니다.'
