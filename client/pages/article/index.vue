@@ -16,7 +16,7 @@
             :image="o.thumbnail"
             :meta="o.meta"
             :nav="[
-              o.nestSrl && { label: '둥지', href: `/nest/${o.nestSrl}/article/`, },
+              o.nestSrl && { label: '둥지', href: `/nest/${o.nestSrl}/article/` },
               { label: '수정', href: `./${o.srl}/edit/` },
               { label: '삭제', href: `./${o.srl}/delete/` },
             ].filter(Boolean)"

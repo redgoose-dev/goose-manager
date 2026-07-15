@@ -365,7 +365,7 @@ function openThumbnailEditor(idx)
     }
     modal.thumbnailEditor.options.srl = item.srl
   }
-  else if (fileManager.thumbnail)
+  else if (fileManager.thumbnail?.originSrl)
   {
     modal.thumbnailEditor.src = `/file/${fileManager.thumbnail.originSrl}/`
     modal.thumbnailEditor.options.srl = fileManager.thumbnail.originSrl
