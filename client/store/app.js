@@ -1,7 +1,9 @@
-import { ref, watch } from 'vue'
+import { ref, toRefs, reactive, watch } from 'vue'
 import { defineStore } from 'pinia'
-import { pureObject, deepUpdate } from '../libs/object.js'
-import { localRequest } from '../libs/api.js'
+import { STORAGE_KEY } from '@/libs/assets.js'
+import { pureObject, deepUpdate } from '@/libs/object.js'
+import { localRequest } from '@/libs/api.js'
+import * as storage from '@/libs/storage.js'
 
 function toPureObject(data, keys)
 {
@@ -13,12 +15,43 @@ function toPureObject(data, keys)
   return pureObject(result)
 }
 
-export const currentStore = defineStore('current', {
-  state: () => ({
+/**
+ * Current Store
+ */
+export const currentStore = defineStore('current', () => {
+  const defaultCurrentState = {
     blink: false,
-  }),
+    'article.thumbnail.ratio': null,
+    'article.thumbnail.size': 0,
+  }
+  function getCurrentState()
+  {
+    const stored = storage.get(STORAGE_KEY)
+    if (!stored || typeof stored !== 'object' || Array.isArray(stored))
+    {
+      return {
+        ...defaultCurrentState,
+      }
+    }
+    return {
+      ...defaultCurrentState,
+      ...stored,
+    }
+  }
+  const state = reactive(getCurrentState())
+  watch(state, value => {
+    let _value = { ...value }
+    delete _value.blink
+    storage.set(STORAGE_KEY, pureObject(_value))
+  }, {
+    deep: true,
+  })
+  return toRefs(state)
 })
 
+/**
+ * Preference Store
+ */
 const preferenceKeys = [ 'general', 'dashboard', 'nest', 'article', 'file', 'checklist', 'navigation' ]
 export const preferenceStore = defineStore('preference', {
   state: () => {
@@ -77,6 +110,9 @@ export const preferenceStore = defineStore('preference', {
   },
 })
 
+/**
+ * Date Store
+ */
 const dateFormatPreset = {
   // 0000. 00. 00.
   date: { year: 'numeric', month: '2-digit', day: '2-digit' },

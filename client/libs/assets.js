@@ -19,3 +19,5 @@ export const authProviderLabel = {
   google: '구글',
   github: '깃허브',
 }
+
+export const STORAGE_KEY = 'goose-manager'

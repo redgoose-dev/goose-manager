@@ -90,39 +90,6 @@
         </Label>
       </Labels>
     </Field>
-    <Field label="썸네일 이미지 타입" for="post-thumbnail-type">
-      <Labels>
-        <Label>
-          <FormRadio
-            id="post-thumbnail-type"
-            name="post-thumbnail-type"
-            v-model="forms.json.thumbnail.type"
-            value="crop"/>
-          <span>자르기</span>
-        </Label>
-        <Label>
-          <FormRadio
-            name="thumbnailType"
-            v-model="forms.json.thumbnail.type"
-            value="resize"/>
-          <span>리사이즈</span>
-        </Label>
-        <Label>
-          <FormRadio
-            name="thumbnailType"
-            v-model="forms.json.thumbnail.type"
-            value="resizeWidth"/>
-          <span>리사이즈(가로)</span>
-        </Label>
-        <Label>
-          <FormRadio
-            name="thumbnailType"
-            v-model="forms.json.thumbnail.type"
-            value="resizeHeight"/>
-          <span>리사이즈(세로)</span>
-        </Label>
-      </Labels>
-    </Field>
     <Field label="업로드 파일갯수" for="post-files-count">
       <FormInput
         type="number"
