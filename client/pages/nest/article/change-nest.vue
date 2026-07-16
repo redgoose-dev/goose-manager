@@ -14,6 +14,9 @@
         :private="data.article.private"/>
     </section>
     <Fieldset legend="변경할 둥지 선택하기" class="change-nest">
+      <FieldHeader>
+        <template #title>변경할 둥지 선택하기</template>
+      </FieldHeader>
       <Field label="둥지">
         <FormSelect
           v-model="forms.nestSrl"
@@ -62,7 +65,7 @@ import PageHeader from '@/components/header/page.vue'
 import { Loading, Empty } from '@/components/content/index.js'
 import Card from '@/components/item/card.vue'
 import { FormSelect } from '@/components/forms/index.js'
-import { Fieldset, Field } from '@/components/forms/fieldset/index.js'
+import { Fieldset, FieldHeader, Field } from '@/components/forms/fieldset/index.js'
 import { Controller } from '@/components/navigation/index.js'
 import { ButtonBasic } from '@/components/button/index.js'
 

@@ -1,6 +1,8 @@
 import { preferenceStore } from '@/store/app.js'
 import { request } from '@/libs/api.js'
 
+export const EXTRA_TARGET_NEST_KEY = '__nest__'
+
 function filteringApp(src)
 {
   if (!(src?.index?.length > 0)) throw new Error('Not found App data')
@@ -16,6 +18,7 @@ export function getJSON(src = {})
 {
   const preference = preferenceStore()
   return {
+    [EXTRA_TARGET_NEST_KEY]: src[EXTRA_TARGET_NEST_KEY] ?? 0,
     useCategory: src.useCategory || '0',
     useComment: src.useComment || '0',
     thumbnail: {
@@ -34,7 +37,7 @@ export function getJSON(src = {})
 export async function getData(mode, srl)
 {
   if (!mode) return { app: [], nest: undefined }
-  const { app, nest } = await request('/mix/', {
+  const { app, nests, nest } = await request('/mix/', {
     method: 'post',
     body: [
       {
@@ -43,6 +46,13 @@ export async function getData(mode, srl)
         params: {
           field: 'srl,code,name',
           page: 0,
+        },
+      },
+      {
+        key: 'nests',
+        url: '/nest/',
+        params: {
+          field: 'srl,code,name,description',
         },
       },
       mode === 'edit' && {
@@ -54,6 +64,7 @@ export async function getData(mode, srl)
   })
   return {
     app: filteringApp(app),
+    nests: nests.index?.length > 0 ? nests.index : [],
     nest,
   }
 }

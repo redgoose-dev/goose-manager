@@ -12,6 +12,9 @@
     </header>
     <div class="example">
       <Fieldset legend="Basic fields">
+        <FieldHeader>
+          <template #title>Basic fields</template>
+        </FieldHeader>
         <Field label="Text" for="text">
           <FormInput v-model="text" id="text"/>
           <Help>
@@ -31,6 +34,9 @@
         </Field>
       </Fieldset>
       <Fieldset legend="Optional fields" class="optional-fieldset">
+        <FieldHeader>
+          <template #title>Optional fields</template>
+        </FieldHeader>
         <Field label="Radio buttons" for="radios">
           <Labels>
             <Label>
@@ -145,7 +151,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { Fieldset, Field, FieldCheck, Columns, Labels, Label, Help } from '../../components/forms/fieldset/index.js'
+import { Fieldset, FieldHeader, Field, FieldCheck, Columns, Labels, Label, Help } from '../../components/forms/fieldset/index.js'
 import { Controller } from '../../components/navigation/index.js'
 import { FormInput, FormSelect, FormCheckbox, FormRadio, FormSwitch } from '../../components/forms/index.js'
 import { ButtonBasic } from '../../components/button/index.js'
