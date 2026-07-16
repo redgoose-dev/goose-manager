@@ -48,7 +48,7 @@ function onSubmit()
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/mixins';
+@use '../../../scss/mixins';
 .extra-source {
   --modal-window-width: calc(100dvw - (var(--size-side-padding) * 2));
   --modal-window-max-width: var(--size-content-body);
