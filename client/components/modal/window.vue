@@ -20,10 +20,10 @@ const props = defineProps({
   position: relative;
   cursor: auto;
   width: var(--modal-window-width, auto);
-  min-width: var(--modal-window-min-width, auto);
+  min-width: var(--modal-window-min-width, 0);
   max-width: var(--modal-window-max-width, none);
   height: var(--modal-window-height, auto);
-  min-height: var(--modal-window-min-width, none);
+  min-height: var(--modal-window-min-width, 0);
   max-height: var(--modal-window-max-height, none);
   box-sizing: border-box;
   border-radius: mixins.radius(160px);

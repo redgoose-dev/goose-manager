@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-import { ButtonIcon } from '../button/index.js'
-import Icon from '../icon/index.vue'
+import { ButtonIcon } from '@/components/button/index.js'
+import Icon from '@/components/icon/index.vue'
 
 const props = defineProps({
   title: { type: String, required: true },

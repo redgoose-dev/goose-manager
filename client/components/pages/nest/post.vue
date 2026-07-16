@@ -49,99 +49,93 @@
     <FieldHeader>
       <template #title>엑스트라 데이터</template>
       <template #nav>
-        <p class="target">
-          <small class="label-off">직접입력</small>
-          <FormSwitch v-model="state.useLocalExtra"/>
-          <small class="label-on">참조</small>
-        </p>
+        <ButtonBasic
+          icon-left="code"
+          size="small"
+          color="code"
+          @click="onExtraSource('open')">
+          소스코드
+        </ButtonBasic>
       </template>
     </FieldHeader>
-    <template v-if="!state.useLocalExtra">
-      <Field label="분류 사용하기" for="post-use-category">
-        <FormSwitch
-          id="post-use-category"
-          name="post-use-category"
-          v-model="forms.json.useCategory"
-          :values="[ '0', '1' ]"/>
-      </Field>
-      <Field label="댓글 사용하기" for="post-use-comment">
-        <FormSwitch
-          id="post-use-comment"
-          name="post-use-comment"
-          v-model="forms.json.useComment"
-          :values="[ '0', '1' ]"/>
-      </Field>
-      <Field label="썸네일 이미지 사이즈" for="post-thumbnail-width">
-        <Labels>
-          <Label>
-            <span>너비:</span>
-            <FormInput
-              type="number"
-              id="post-thumbnail-width"
-              name="post-thumbnail-width"
-              v-model="forms.json.thumbnail.width"
-              placeholder="640"
-              :min="100"
-              :max="9999"
-              size="small"
-              class="input-thumbnail-size"/>
-            <span>px</span>
-          </Label>
-          <Label>
-            <span>높이:</span>
-            <FormInput
-              type="number"
-              name="post-thumbnail-height"
-              v-model="forms.json.thumbnail.height"
-              placeholder="480"
-              :min="100"
-              :max="9999"
-              size="small"
-              class="input-thumbnail-size"/>
-            <span>px</span>
-          </Label>
-        </Labels>
-      </Field>
-      <Field label="업로드 파일갯수" for="post-files-count">
-        <FormInput
-          type="number"
-          id="post-files-count"
-          name="post-files-count"
-          v-model="forms.json.files.count"
-          placeholder="5"
-          :min="1"
-          :max="999"
-          size="small"
-          style="--input-width: 70px"/>
-        <Help>업로드 할 수 있는 파일의 갯수를 설정합니다.</Help>
-      </Field>
-      <Field label="업로드 파일사이즈" for="post-files-size">
-        <Labels>
-          <Label>
-            <FormInput
-              type="number"
-              id="post-files-size"
-              name="post-files-size"
-              v-model="forms.json.files.sizeSingle"
-              placeholder="5242880"
-              :min="100"
-              :max="99999999"
-              size="small"
-              class="input-file-size"/>
-            <small>({{_limitUploadFileSize}})</small>
-          </Label>
-        </Labels>
-      </Field>
-      <Field label="아티클 데이터">
-        <ArticleData v-model="forms.json.articleExtra"/>
-      </Field>
-    </template>
-    <template v-else>
-      <ExtraNestSelector
-        v-model="forms.json[EXTRA_TARGET_NEST_KEY]"
-        :nest-srl="props.srl"
-        :items="data.nests"/>
-    </template>
+    <Field label="분류 사용하기" for="post-use-category">
+      <FormSwitch
+        id="post-use-category"
+        name="post-use-category"
+        v-model="forms.json.useCategory"
+        :values="[ '0', '1' ]"/>
+    </Field>
+    <Field label="댓글 사용하기" for="post-use-comment">
+      <FormSwitch
+        id="post-use-comment"
+        name="post-use-comment"
+        v-model="forms.json.useComment"
+        :values="[ '0', '1' ]"/>
+    </Field>
+    <Field label="썸네일 이미지 사이즈" for="post-thumbnail-width">
+      <Labels>
+        <Label>
+          <span>너비:</span>
+          <FormInput
+            type="number"
+            id="post-thumbnail-width"
+            name="post-thumbnail-width"
+            v-model="forms.json.thumbnail.width"
+            placeholder="640"
+            :min="100"
+            :max="9999"
+            size="small"
+            class="input-thumbnail-size"/>
+          <span>px</span>
+        </Label>
+        <Label>
+          <span>높이:</span>
+          <FormInput
+            type="number"
+            name="post-thumbnail-height"
+            v-model="forms.json.thumbnail.height"
+            placeholder="480"
+            :min="100"
+            :max="9999"
+            size="small"
+            class="input-thumbnail-size"/>
+          <span>px</span>
+        </Label>
+      </Labels>
+    </Field>
+    <Field label="업로드 파일갯수" for="post-files-count">
+      <FormInput
+        type="number"
+        id="post-files-count"
+        name="post-files-count"
+        v-model="forms.json.files.count"
+        placeholder="5"
+        :min="1"
+        :max="999"
+        size="small"
+        style="--input-width: 70px"/>
+      <Help>업로드 할 수 있는 파일의 갯수를 설정합니다.</Help>
+    </Field>
+    <Field label="업로드 파일사이즈" for="post-files-size">
+      <Labels>
+        <Label>
+          <FormInput
+            type="number"
+            id="post-files-size"
+            name="post-files-size"
+            v-model="forms.json.files.sizeSingle"
+            placeholder="5242880"
+            :min="100"
+            :max="99999999"
+            size="small"
+            class="input-file-size"/>
+          <small>({{_limitUploadFileSize}})</small>
+        </Label>
+      </Labels>
+    </Field>
+    <Field label="아티클 데이터">
+      <ArticleData v-model="forms.json.articleExtra"/>
+    </Field>
   </Fieldset>
   <Controller>
     <template #left>
@@ -160,6 +154,13 @@
       </ButtonBasic>
     </template>
   </Controller>
+  <teleport to="#modals">
+    <ExtraSource
+      v-model:open="state.extraSource.open"
+      v-model:src="state.extraSource.src"
+      @update="onExtraSource('update', $event)"
+      @close="onExtraSource('close')"/>
+  </teleport>
 </form>
 <Empty
   v-else
@@ -170,7 +171,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { EXTRA_TARGET_NEST_KEY, getData, getJSON, submit } from '@/structure/nest/post.js'
+import { getData, getJSON, submit } from '@/structure/nest/post.js'
 import { getByte, validateCode } from '@/libs/strings.js'
 import { pureObject } from '@/libs/object.js'
 import { Fieldset, Field, Help, Labels, Label, FieldHeader } from '@/components/forms/fieldset'
@@ -179,7 +180,7 @@ import { Controller } from '@/components/navigation'
 import { ButtonBasic } from '@/components/button'
 import { Loading, Empty } from '@/components/content'
 import ArticleData from './article-data/index.vue'
-import ExtraNestSelector from './extra-nest-selector/index.vue'
+import ExtraSource from './extra-source.vue'
 
 const router = useRouter()
 const error = inject('error')
@@ -197,7 +198,10 @@ const data = reactive({
 const state = reactive({
   loading: true,
   processing: false,
-  useLocalExtra: false,
+  extraSource: {
+    open: false,
+    src: '',
+  },
 })
 const forms = reactive({
   app: { value: '', error: null },
@@ -205,7 +209,6 @@ const forms = reactive({
   name: { value: '', error: null },
   description: { value: '', error: null },
   json: {
-    [EXTRA_TARGET_NEST_KEY]: 0,
     thumbnail: {},
     files: {},
     articleExtra: [],
@@ -236,7 +239,6 @@ onMounted(async () => {
       forms.description.value = nest.description
     }
     forms.json = getJSON(nest?.json)
-    state.useLocalExtra = forms.json[EXTRA_TARGET_NEST_KEY] > 0
   }
   catch (e)
   {
@@ -277,15 +279,28 @@ function checkingJson(src)
     }, [])
     _json.articleExtra = [...new Map(_json.articleExtra.map(item => [item.name, item])).values()]
   }
-  if (state.useLocalExtra)
-  {
-    if (!(_json[EXTRA_TARGET_NEST_KEY] > 0)) throw new Error('참조할 둥지 srl 값이 없습니다.')
-  }
-  else
-  {
-    _json[EXTRA_TARGET_NEST_KEY] = 0
-  }
   return JSON.stringify(_json)
+}
+
+function onExtraSource(mode, value)
+{
+  switch (mode)
+  {
+    case 'open':
+      state.extraSource.src = JSON.stringify(forms.json, null, 4)
+      state.extraSource.open = true
+      break
+    case 'close':
+      state.extraSource.src = ''
+      state.extraSource.open = false
+      break
+    case 'update':
+      checkingJson(value)
+      forms.json = value
+      state.extraSource.src = ''
+      state.extraSource.open = false
+      break
+  }
 }
 
 async function onSubmit()

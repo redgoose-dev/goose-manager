@@ -37,6 +37,10 @@ html, body {
 }
 html {
   touch-action: manipulation;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-base) transparent;
+  -webkit-tap-highlight-color: transparent;
+  //scrollbar-gutter: stable;
 }
 body {
   margin: 0;
@@ -45,6 +49,8 @@ body {
   background: var(--color-bg);
   color: var(--color-base);
   min-width: 768px;
+  -webkit-touch-callout: none; // for ios
+  box-sizing: border-box;
   @include mixins.responsive(tablet) {
     overflow-x: clip;
   }

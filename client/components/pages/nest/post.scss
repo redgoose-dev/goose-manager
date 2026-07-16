@@ -11,21 +11,3 @@
 .input-file-size {
   --input-width: 110px;
 }
-
-.target {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0 8px;
-  small {
-    display: block;
-    font-size: 11px;
-    letter-spacing: -.5px;
-    line-height: 1.15;
-    user-select: none;
-    font-weight: 600;
-    &.label-on {
-      color: var(--color-sub);
-    }
-  }
-}

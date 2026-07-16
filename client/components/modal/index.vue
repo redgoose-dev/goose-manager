@@ -21,7 +21,7 @@
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
-import { modalRootClassName } from '../../libs/assets.js'
+import { modalRootClassName } from '@/libs/assets.js'
 
 const $modal = ref()
 const props = defineProps({
