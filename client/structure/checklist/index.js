@@ -10,7 +10,7 @@ export async function getData(query = {}, options = {})
       field: 'srl,percent,created_at',
       page: query.page > 1 ? query.page : undefined,
       size: size || 24,
-      order: `${query.order || 'srl'} ${query.sort ? query.sort.toUpperCase() : 'DESC'}`,
+      order: `c.${query.order || 'srl'} ${query.sort ? query.sort.toUpperCase() : 'DESC'}`,
       start: query.start,
       end: query.end,
       content: query.q,

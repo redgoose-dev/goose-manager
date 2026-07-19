@@ -81,7 +81,18 @@ export async function getData(query = {}, options = {})
   const nest_srl = nestSrl === undefined ? undefined : Number(nestSrl)
   const category_srl = query.category === undefined ? undefined : (Number(query.category) || 0)
   const fromNest = nest_srl !== undefined
-  const _order = `${query.order || 'srl'} ${query.sort ? query.sort.toUpperCase() : 'DESC'}`
+  const _sort = query.sort ? query.sort.toUpperCase() : 'DESC'
+  let _order
+  switch (query.order)
+  {
+    case 'regdate':
+    case 'created_at':
+      _order = `a.${query.order} ${_sort}, a.srl ${_sort}`
+      break
+    default:
+      _order = `a.srl ${_sort}`
+      break
+  }
   const { article, category, nest, tag } = await request('/mix/', {
     method: 'post',
     body: [
