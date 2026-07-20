@@ -70,9 +70,9 @@
 
 <script setup>
 import { computed } from 'vue'
-import { authProviderLabel } from '../../../libs/assets.js'
-import Icon from '../../icon/index.vue'
-import { ButtonBasic, ButtonGroup } from '../../button/index.js'
+import { authProviderLabel } from '@/libs/assets.js'
+import Icon from '@/components/icon/index.vue'
+import { ButtonBasic, ButtonGroup } from '@/components/button/index.js'
 
 const props = defineProps({
   srl: Number,

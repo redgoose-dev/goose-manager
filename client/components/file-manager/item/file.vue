@@ -35,12 +35,12 @@
 
 <script setup>
 import { computed, inject } from 'vue'
-import { getFilePath } from '../../../libs/file.js'
+import { getFilePath } from '@/libs/file.js'
 import { fileContextKey } from '../assets.js'
-import { Image } from '../../content/index.js'
-import { Dropdown, Context } from '../../navigation/dropdown/index.js'
-import { ButtonIcon } from '../../button/index.js'
-import Icon from '../../icon/index.vue'
+import { Image } from '@/components/content/index.js'
+import { Dropdown, Context } from '@/components/navigation/dropdown/index.js'
+import { ButtonIcon } from '@/components/button/index.js'
+import Icon from '@/components/icon/index.vue'
 
 const props = defineProps({
   idx: Number,
@@ -110,7 +110,7 @@ function checkUseNewWindow()
 }
 function checkUseEditThumbnail()
 {
-  if (!fileManager.preference.useThumbnail) return false
+  if (!fileManager.preference.thumbnail?.use) return false
   if (!/^image\//.test(props.mime) && !props.badge.includes('thumbnail')) return false
   return true
 }

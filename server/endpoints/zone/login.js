@@ -48,7 +48,7 @@ export default async function login(req, ctx)
     const { access, expires, refresh } = content.data
 
     // checking
-    const checkingResponse = await api.request('/auth/checking/', {
+    const checkingResponse = await api.request('/auth/checkin/', {
       headers: { 'Authorization': access },
       method: 'post',
     })

@@ -7,7 +7,11 @@ const defaultPreference = {
   module: null, // 모듈 데이터 이름
   moduleSrl: null, // 모듈 데이터 번호
   acceptFileType: 'image/*',
-  useThumbnail: false,
+  thumbnail: {
+    use: false,
+    width: 640,
+    height: 480,
+  },
   limitCount: 10, // 업로드 가능한 파일 수
   limitSize: 3 * 1024 * 1024, // 업로드 가능한 파일용량 (3MB)
   private: false,

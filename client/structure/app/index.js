@@ -1,12 +1,11 @@
-import { request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
+import { dateStore } from '@/store/app.js'
+import { request } from '@/libs/api.js'
 
 const defaultOptions = {
   url: '/app/',
   query: {
-    order: 'srl',
-    sort: 'desc',
-    unlimited: '1',
+    page: 0,
+    order: 'srl DESC',
     mod: 'count-nest,count-article',
   },
 }
@@ -14,6 +13,7 @@ const defaultOptions = {
 function filtering(src)
 {
   if (!(src?.index?.length > 0)) return { total: 0, index: [] }
+  const date = dateStore()
   return {
     total: src.total,
     index: src.index.map(item => {
@@ -24,7 +24,7 @@ function filtering(src)
         meta: [
           `번호: ${item.srl}`,
           `코드: ${item.code}`,
-          `날짜: ${getDate(item.created_at)}`,
+          `날짜: ${date.format(item.created_at, 'date-time')}`,
         ],
         count: {
           article: item.count_article,

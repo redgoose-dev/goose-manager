@@ -18,12 +18,14 @@
 <script setup>
 import { reactive, onMounted, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getData, submit } from '../../structure/checklist/delete.js'
-import PageHeader from '../../components/header/page.vue'
-import { DeleteConfirm, Loading, Empty } from '../../components/content/index.js'
+import { dateStore } from '@/store/app.js'
+import { getData, submit } from '@/structure/checklist/delete.js'
+import PageHeader from '@/components/header/page.vue'
+import { DeleteConfirm, Loading, Empty } from '@/components/content/index.js'
 
 const router = useRouter()
 const route = useRoute()
+const date = dateStore()
 const toast = inject('toast')
 const error = inject('error')
 const errorPath = [ 'pages', 'checklist', 'delete.vue' ]
@@ -37,8 +39,9 @@ const state = reactive({
 onMounted(async () => {
   try
   {
-    const { srl, name } = await getData(state.srl)
-    state.name = `[${srl}] ${name}`
+    const { srl, created_at } = await getData(state.srl)
+    const _name = `${date.format(created_at, 'date')} ${date.format(created_at, 'week')}`
+    state.name = `[${srl}] ${_name}`
   }
   catch (e)
   {

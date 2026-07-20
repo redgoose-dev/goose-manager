@@ -10,6 +10,7 @@
 }
 
 .section {
+  order: var(--order);
   > header {
     display: grid;
     grid-template-columns: 1fr auto;

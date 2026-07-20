@@ -1,36 +1,50 @@
+@use '../../../scss/mixins';
+
 .thumbnail-editor {
   position: relative;
   user-select: none;
   height: 100%;
   box-sizing: border-box;
   padding: 40px;
-  &__header {
-    h1 {
-      margin: 0;
-      line-height: 1.05;
-      font-weight: 800;
-      font-size: 24px;
-      letter-spacing: -.5px;
-    }
-    p {
-      margin: 4px 0 0;
-      line-height: 1.05;
-      color: var(--color-weak);
-      font-size: 12px;
-    }
+}
+
+header {
+  display: grid;
+  grid-template-areas: 'title controller' 'description controller';
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  h1 {
+    grid-area: title;
+    margin: 0;
+    line-height: 1.05;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: -.5px;
   }
-  &__body {
-    margin: 20px 0;
+  p {
+    grid-area: description;
+    margin: 4px 0 0;
+    line-height: 1.05;
+    color: var(--color-weak);
+    font-size: 12px;
   }
-  &__bottom {
+  nav {
+    grid-area: controller;
+  }
+}
+
+.body {
+  margin: 20px 0;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .submit {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-  }
-  .button-icon {
-    position: absolute;
-    right: 16px;
-    top: 16px;
+    gap: 0 6px;
   }
 }
 
@@ -40,6 +54,36 @@
   max-width: 960px;
   max-height: 640px;
   background: var(--color-blur);
+}
+
+.preference {
+  display: flex;
+  align-items: center;
+  gap: 0 16px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  .column {
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+    > label {
+      display: block;
+      font-size: 13px;
+      white-space: nowrap;
+      letter-spacing: -.5px;
+      &:after {
+        content: ':';
+      }
+    }
+    > span {
+      font-size: 13px;
+      letter-spacing: -.5px;
+    }
+  }
+  .size {
+    width: 78px;
+  }
 }
 
 .zoom {
@@ -58,13 +102,7 @@
     line-height: 1;
     input {
       display: block;
-      width: 200px;
+      width: 160px;
     }
   }
-}
-
-.submit {
-  display: flex;
-  align-items: center;
-  gap: 0 6px;
 }

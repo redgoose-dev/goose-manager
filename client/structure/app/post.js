@@ -1,4 +1,4 @@
-import { request, checkForms, formData } from '../../libs/api.js'
+import { request, checkForms } from '@/libs/api.js'
 
 function filteringData(src)
 {
@@ -23,10 +23,10 @@ export async function submit(srl, forms)
   const url = srl ? `/app/${srl}/` : '/app/'
   await request(url, {
     method: srl ? 'patch' : 'put',
-    body: formData({
+    body: {
       code: forms.code.value,
       name: forms.name.value,
       description: forms.description.value,
-    }),
+    },
   })
 }

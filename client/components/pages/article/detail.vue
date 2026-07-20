@@ -113,8 +113,8 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { dateStore } from '@/store/app.js'
 import { getData } from '@/structure/article/detail.js'
-import { dateFormat } from '@/libs/date.js'
 import { Controller } from '@/components/navigation'
 import { ButtonGroup, ButtonBasic } from '@/components/button'
 import { Loading, Empty, Lightbox } from '@/components/content'
@@ -130,6 +130,7 @@ const props = defineProps({
 const router = useRouter()
 const auth = inject('auth')
 const error = inject('error')
+const date = dateStore()
 const errorPath = [ 'components', 'pages', 'article', 'detail.vue' ]
 const $content = ref()
 const data = reactive({
@@ -157,11 +158,11 @@ const _mode = computed(() => {
 })
 const _date = computed(() => {
   if (!data.article?.createdAt) return null
-  return dateFormat(new Date(data.article.createdAt), '{yyyy}-{MM}-{dd}')
+  return date.format(data.article.createdAt, 'date')
 })
 const _regdate = computed(() => {
   if (!data.article?.regdate) return null
-  return dateFormat(new Date(data.article.regdate), '{yyyy}-{MM}-{dd}')
+  return date.format(data.article.regdate, 'date')
 })
 const _useComment = computed(() => (Number(data.nest?.json?.useComment) === 1))
 const _private = computed(() => (data.article?.mode === 'private'))
@@ -197,8 +198,10 @@ onMounted(async () => {
 
 function initContentEvents()
 {
+  if (!$content.value) return
   $content.value.querySelectorAll('img').forEach(el => {
     el.addEventListener('click', e => {
+      if (e.currentTarget.closest('a,button')) return
       state.previewImage = e.currentTarget.src
     })
   })

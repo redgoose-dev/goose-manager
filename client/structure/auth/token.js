@@ -1,26 +1,27 @@
-import { request, formData } from '../../libs/api.js'
-import { authProviderLabel } from '../../libs/assets.js'
-import { dateFormat } from '../../libs/date.js'
-
-function filtering(src)
-{
-  return {
-    srl: src.srl,
-    providerSrl: src.provider_srl,
-    accessToken: src.access,
-    description: src.description,
-    provider: authProviderLabel[src.provider?.code],
-    regdate: dateFormat(new Date(src.created_at), '{yyyy}-{MM}-{dd}'),
-  }
-}
+import { dateStore } from '@/store/app.js'
+import { request, formData } from '@/libs/api.js'
+import { authProviderLabel } from '@/libs/assets.js'
 
 export async function getIndex()
 {
   const res = await request('/auth/token/', {
-    query: { mod: 'provider' },
+    query: {
+      order: 'srl DESC',
+      mod: 'provider',
+    },
   })
   if (!(res?.data?.index?.length > 0)) return []
-  return res.data.index.map(o => filtering(o))
+  const date = dateStore()
+  return res.data.index.map(o => {
+    return {
+      srl: o.srl,
+      providerSrl: o.provider_srl,
+      accessToken: o.access,
+      description: o.description,
+      provider: authProviderLabel[o.provider?.code],
+      regdate: date.format(o.created_at, 'full'),
+    }
+  })
 }
 
 export async function createToken(data)

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-const { HOST, PORT, PORT_CLIENT } = Bun.env
+const { HOST, PORT, PORT_CLIENT, SOURCE_MAP } = Bun.env
 
 const config = defineConfig(() => {
   return {
@@ -30,6 +30,7 @@ const config = defineConfig(() => {
     build: {
       outDir: '../dist/client',
       emptyOutDir: true,
+      sourcemap: SOURCE_MAP?.toLowerCase() === 'true',
       rolldownOptions: {
         output: {
           assetFileNames: assetInfo => {

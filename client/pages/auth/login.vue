@@ -23,12 +23,13 @@
 
 <script setup>
 import { reactive, computed, onMounted, onBeforeUnmount, inject } from 'vue'
-import { localRequest } from '../../libs/api.js'
-import { randomNumber } from '../../libs/strings.js'
-import { modalRootClassName } from '../../libs/assets.js'
-import LoginForm from '../../components/pages/auth/login-form.vue'
-import LoginQuick from '../../components/pages/auth/login-quick.vue'
-import { Loading } from '../../components/content/index.js'
+import ServiceError from '@/libs/ServiceError.js'
+import { localRequest } from '@/libs/api.js'
+import { randomNumber } from '@/libs/strings.js'
+import { modalRootClassName } from '@/libs/assets.js'
+import LoginForm from '@/components/pages/auth/login-form.vue'
+import LoginQuick from '@/components/pages/auth/login-quick.vue'
+import { Loading } from '@/components/content/index.js'
 
 const toast = inject('toast')
 const state = reactive({
@@ -48,7 +49,7 @@ const _usePasswordForm = computed(() => {
   return state.providers.some(o => o.name === 'password')
 })
 const _useQuickLogin = computed(() => {
-  return state.providers.length > 0
+  return state.providers.filter(o => o.type === 'oauth')?.length > 0
 })
 
 onMounted(async () => {
@@ -69,9 +70,22 @@ onMounted(async () => {
     }
     state.providers = data.providers || []
   }
-  catch (e)
+  catch (_e)
   {
-    toast.add('로그인을 위한 데이터를 가져오지 못했습니다.', 'error').then()
+    let _message = ''
+    switch (_e.status)
+    {
+      case 503:
+        _message = 'Service Unavailable'
+        break
+      default:
+        _message = 'Failed to login'
+        break
+    }
+    throw new ServiceError(_message, {
+      error: _e,
+      status: _e.status || 500,
+    })
   }
   finally
   {

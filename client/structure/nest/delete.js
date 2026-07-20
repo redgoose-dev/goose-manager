@@ -1,9 +1,9 @@
-import { request } from '../../libs/api.js'
+import { request } from '@/libs/api.js'
 
 export async function getData(srl)
 {
   const { data, message } = await request(`/nest/${srl}/`, {
-    query: { fields: 'srl,name' },
+    query: { field: 'srl,name' },
   })
   if (!data) throw new Error(message)
   return data

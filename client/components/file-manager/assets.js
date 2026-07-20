@@ -17,7 +17,7 @@ export const insertMode = {
 export const thumbnailContextKey = {
   EDIT: 'edit',
   PREVIEW: 'preview',
-  RESET: 'reset',
+  DELETE: 'delete',
 }
 
 export const windowKey = {

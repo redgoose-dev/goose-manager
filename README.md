@@ -59,6 +59,7 @@ bun run preview
 - `COOKIE_PREFIX`: 쿠키이름 접두사
 - `COOKIE_DOMAIN`: 쿠키 도메인
 - `COOKIE_HTTPONLY`: 쿠키 HttpOnly 설정
+- `COOKIE_SECURE`: 쿠키 보안
 - `COOKIE_PATH`: 쿠키 경로
 - `API_URL`: API 서버 URL
 - `API_CLIENT_URL`: 클라이언트에서 사용되는 API 서버 URL (값이 없으면 API_URL 값으로 사용합니다.)

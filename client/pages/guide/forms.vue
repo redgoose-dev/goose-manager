@@ -240,9 +240,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import { sleep } from '../../libs/util.js'
-import { ButtonBasic } from '../../components/button/index.js'
-import { FormInput, FormTextarea, FormSelect, FormCheckbox, FormRadio, FormSwitch, FormKeyword, FormTag } from '../../components/forms/index.js'
+import { sleep } from '@/libs/util.js'
+import { ButtonBasic } from '@/components/button/index.js'
+import { FormInput, FormTextarea, FormSelect, FormCheckbox, FormRadio, FormSwitch, FormKeyword, FormTag } from '@/components/forms/index.js'
 
 const text = ref('')
 const textarea = ref('')

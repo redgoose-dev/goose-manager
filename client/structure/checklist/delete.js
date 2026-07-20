@@ -1,19 +1,15 @@
-import { request } from '../../libs/api.js'
-import { dateFormat } from '../../libs/date.js'
-
-function filtering(src)
-{
-  return {
-    srl: src.srl,
-    name: dateFormat(new Date(src.created_at), '{yyyy}-{MM}-{dd} ({week})'),
-  }
-}
+import { request } from '@/libs/api.js'
+import { dateStore } from '@/store/app.js'
 
 export async function getData(srl)
 {
+  const date = dateStore()
   const { data, message } = await request(`/checklist/${srl}/`)
   if (!data) throw new Error(message)
-  return filtering(data)
+  return {
+    srl: data.srl,
+    created_at: data.created_at,
+  }
 }
 
 export async function submit(srl)

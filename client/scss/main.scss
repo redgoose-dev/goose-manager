@@ -37,6 +37,10 @@ html, body {
 }
 html {
   touch-action: manipulation;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-base) transparent;
+  -webkit-tap-highlight-color: transparent;
+  //scrollbar-gutter: stable;
 }
 body {
   margin: 0;
@@ -45,6 +49,8 @@ body {
   background: var(--color-bg);
   color: var(--color-base);
   min-width: 768px;
+  -webkit-touch-callout: none; // for ios
+  box-sizing: border-box;
   @include mixins.responsive(tablet) {
     overflow-x: clip;
   }
@@ -102,4 +108,18 @@ html.mode-not-scroll {
     max-width: var(--size-content-large);
     transform: translateX(-50%);
   }
+}
+
+// for accessibility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }

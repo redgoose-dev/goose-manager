@@ -28,16 +28,17 @@
 
 <script setup>
 import { reactive, computed, onMounted, inject } from 'vue'
-import { request } from '../../../libs/api.js'
-import { getFilePath } from '../../../libs/file.js'
-import { dateFormat } from '../../../libs/date.js'
-import { getByte } from '../../../libs/strings.js'
-import { addQueryParams } from '../../../libs/object.js'
-import { Loading, Empty } from '../index.js'
-import { Items } from '../../item/index.js'
-import Thumbnail from '../../item/thumbnail.vue'
-import { ModalHeader } from '../../modal/index.js'
+import { dateStore } from '@/store/app.js'
+import { request } from '@/libs/api.js'
+import { getFilePath } from '@/libs/file.js'
+import { getByte } from '@/libs/strings.js'
+import { addQueryParams } from '@/libs/object.js'
+import { Items } from '@/components/item/index.js'
+import Thumbnail from '@/components/item/thumbnail.vue'
+import { ModalHeader } from '@/components/modal/index.js'
+import { Loading, Empty } from '@/components/content/index.js'
 
+const date = dateStore()
 const props = defineProps({
   title: { type: String, default: '첨부파일' },
   module: String,
@@ -78,7 +79,7 @@ const _items = computed(() => {
       image,
       icon,
       meta: [
-        dateFormat(new Date(o.created_at), '{yyyy}-{MM}-{dd}'),
+        date.format(o.created_at, 'date'),
         o.mime.split('/')[0],
         getByte(o.size),
       ],
@@ -97,7 +98,7 @@ onMounted(async () => {
       query: {
         module: props.module,
         module_srl: props.moduleSrl,
-        unlimited: '1',
+        page: 0,
       },
     })
     if (!res?.data) throw new Error('파일 데이터가 없습니다.')

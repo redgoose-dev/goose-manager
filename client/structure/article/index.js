@@ -1,15 +1,14 @@
-import { request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
-import { serialize } from '../../libs/strings.js'
-import { preferenceStore } from '../../store/app.js'
+import { dateStore } from '@/store/app.js'
+import { request } from '@/libs/api.js'
+import { serialize } from '@/libs/strings.js'
 
 function filteringArticle(src)
 {
-  if (!src?.data) return { total: 0, index: [] }
-  const preference = preferenceStore()
+  if (!src) return { total: 0, index: [] }
+  const date = new dateStore()
   return {
-    total: src.data.total,
-    index: src.data.index.map(o => {
+    total: src.total,
+    index: src.index?.map(o => {
       let title = o.title
       if (o.nest?.code) title = `[${o.nest.code}] ${title}`
       else if (o.category?.name) title = `[${o.category.name}] ${title}`
@@ -19,7 +18,7 @@ function filteringArticle(src)
         nestSrl: o.nest_srl,
         title,
         meta: [
-          getDate(o[preference.article?.displayDateField] || o.created_at),
+          date.format(o.created_at, 'date'),
           `조회수:${o.hit || 0}`,
           `좋아요:${o.star || 0}`,
         ],
@@ -31,8 +30,8 @@ function filteringArticle(src)
 }
 function filteringCategory(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     let category
     switch (o.name)
     {
@@ -57,8 +56,8 @@ function filteringCategory(src)
 }
 function filteringTag(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     return {
       srl: o.srl,
       name: o.name,
@@ -67,12 +66,12 @@ function filteringTag(src)
 }
 function filteringNest(src)
 {
-  if (!src?.data) return null
+  if (!src) return null
   return {
-    srl: src.data.srl,
-    code: src.data.code,
-    description: src.data.description,
-    useCategory: Number(src.data.json?.useCategory) === 1,
+    srl: src.srl,
+    code: src.code,
+    description: src.description,
+    useCategory: Number(src.json?.useCategory) === 1,
   }
 }
 
@@ -82,6 +81,18 @@ export async function getData(query = {}, options = {})
   const nest_srl = nestSrl === undefined ? undefined : Number(nestSrl)
   const category_srl = query.category === undefined ? undefined : (Number(query.category) || 0)
   const fromNest = nest_srl !== undefined
+  const _sort = query.sort ? query.sort.toUpperCase() : 'DESC'
+  let _order
+  switch (query.order)
+  {
+    case 'regdate':
+    case 'created_at':
+      _order = `a.${query.order} ${_sort}, a.srl ${_sort}`
+      break
+    default:
+      _order = `a.srl ${_sort}`
+      break
+  }
   const { article, category, nest, tag } = await request('/mix/', {
     method: 'post',
     body: [
@@ -89,17 +100,16 @@ export async function getData(query = {}, options = {})
         key: 'article',
         url: '/article/',
         params: {
-          fields: 'srl,nest_srl,category_srl,title,hit,star,json,mode,regdate,created_at',
-          nest_srl,
-          category_srl,
+          field: 'srl,nest_srl,category_srl,title,hit,star,json,mode,regdate,created_at',
+          nest: nest_srl,
+          category: category_srl,
           mode: query.mode,
           page: query.page > 1 ? query.page : undefined,
           size: size || 24,
-          order: query.order,
-          sort: query.sort,
+          order: _order,
           tag: query.tag,
           q: query.q,
-          mod: fromNest ? (all ? 'category' : '') : 'nest',
+          mod: fromNest ? (!query.category ? 'category' : '') : 'nest',
         },
       },
       fromNest && {
@@ -108,11 +118,10 @@ export async function getData(query = {}, options = {})
         params: {
           module: 'nest',
           module_srl: nest_srl,
-          order: 'turn',
-          sort: 'asc',
+          page: 0,
+          order: 'turn ASC',
           tag: query.tag,
           q: query.q,
-          unlimited: '1',
           mod: 'count,none,all',
         },
       },
@@ -121,13 +130,15 @@ export async function getData(query = {}, options = {})
         url: `/nest/{srl}/`,
         params: {
           srl: nest_srl,
-          fields: 'srl,code,description,json',
+          field: 'srl,code,description,json',
         },
       },
       all && {
         key: 'tag',
         url: '/tag/',
-        params: { module: 'article' },
+        params: {
+          module: 'article',
+        },
       },
     ].filter(Boolean),
   })

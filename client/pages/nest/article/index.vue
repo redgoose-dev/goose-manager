@@ -1,6 +1,7 @@
 <template>
 <article class="container-over">
   <PageHeader
+    v-if="state.nest"
     module="article"
     :title="_header.title"
     :description="_header.description"/>
@@ -80,17 +81,17 @@
 <script setup>
 import { reactive, computed, onMounted, watch, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../../structure/article/index.js'
-import { serialize } from '../../../libs/strings.js'
-import { scrollTo } from '../../../libs/util.js'
-import PageHeader from '../../../components/header/page.vue'
-import { Loading, Empty, IndexWithFilter } from '../../../components/content/index.js'
-import { Items, Mark } from '../../../components/item/index.js'
-import Card from '../../../components/item/card.vue'
-import Thumbnail from '../../../components/item/thumbnail.vue'
-import { Controller, CategoryTab, Paginate } from '../../../components/navigation/index.js'
-import { ButtonGroup, ButtonBasic } from '../../../components/button/index.js'
-import Filter from '../../../components/pages/article/filter.vue'
+import { getData } from '@/structure/article/index.js'
+import { serialize } from '@/libs/strings.js'
+import { scrollTo } from '@/libs/util.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty, IndexWithFilter } from '@/components/content/index.js'
+import { Items, Mark } from '@/components/item/index.js'
+import Card from '@/components/item/card.vue'
+import Thumbnail from '@/components/item/thumbnail.vue'
+import { Controller, CategoryTab, Paginate } from '@/components/navigation/index.js'
+import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'
+import Filter from '@/components/pages/article/filter.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -108,16 +109,18 @@ const state = reactive({
 const _header = computed(() => {
   if (!!state.nest)
   {
+    let title = state.nest.code ? `[${state.nest.code}] `: ''
+    title += 'Article'
     return {
-      title: `[${state.nest.code}] Article`,
-      description: state.nest.description || undefined,
+      title,
+      description: state.nest?.description ?? '',
     }
   }
   else
   {
     return {
       title: 'Nest / Article',
-      description: undefined,
+      description: '',
     }
   }
 })
@@ -132,10 +135,19 @@ const _itemComponent = computed(() => {
   }
 })
 
-onMounted(async () => {
+onMounted(_fetch)
+watch(() => route.params, _fetch)
+watch(() => route.query, _fetchContent)
+
+async function _fetch()
+{
   try
   {
     state.loading = true
+    state.article = null
+    state.nest = null
+    state.category = []
+    state.tag = []
     const { article, category, nest, tag } = await getData(route.query, {
       nestSrl: Number(route.params.nest),
       size: preference.article.pageCount,
@@ -159,8 +171,7 @@ onMounted(async () => {
   {
     state.loading = false
   }
-})
-watch(() => route.query, _fetchContent)
+}
 
 async function _fetchContent()
 {
@@ -168,6 +179,8 @@ async function _fetchContent()
   {
     scrollTo()
     state.loading = true
+    state.article = null
+    state.category = []
     const { article, category } = await getData(route.query, {
       nestSrl: Number(route.params.nest),
       size: preference.article.pageCount,

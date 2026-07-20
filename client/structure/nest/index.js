@@ -1,5 +1,5 @@
-import { request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
+import { dateStore } from '@/store/app.js'
+import { request } from '@/libs/api.js'
 
 function filteringApp(src)
 {
@@ -18,6 +18,7 @@ function filteringApp(src)
 function filteringNest(src)
 {
   if (!(src?.index?.length > 0)) return []
+  const date = dateStore()
   return src.index.map(o => {
     return {
       srl: o.srl,
@@ -26,7 +27,7 @@ function filteringNest(src)
       description: o.description,
       meta: [
         `번호:${o.srl}`,
-        getDate(o.created_at),
+        date.format(o.created_at, 'date'),
       ],
       status: [
         { label: '아티클', value: o.count_article || 0 },
@@ -45,24 +46,26 @@ export async function getData()
         key: 'apps',
         url: '/app/',
         params: {
-          fields: 'srl,code,name,description',
+          field: 'srl,code,name,description',
+          page: 0,
+          order: 'srl DESC',
           mod: 'count-nest',
-          unlimited: '1',
         },
       },
       {
         key: 'nests',
         url: '/nest/',
         params: {
+          page: 0,
+          order: 'srl DESC',
           mod: 'count-article',
-          unlimited: '1',
         },
       },
     ],
   })
   // filtering data
-  apps = filteringApp(apps.data)
-  nests = filteringNest(nests.data)
+  apps = filteringApp(apps)
+  nests = filteringNest(nests)
   // combine data
   return apps.map(app => ({
     ...app,

@@ -11,8 +11,9 @@
         <Context
           :items="[
             { key: 'element-space', label: '공백', iconLeft: 'space' },
-            { key: 'element-iframe', label: '아이프레임', iconLeft: 'tv' },
+            { key: 'element-anchor', label: '링크', iconLeft: 'link' },
             { key: 'element-image', label: '이미지', iconLeft: 'image' },
+            { key: 'element-iframe', label: '아이프레임', iconLeft: 'tv' },
           ]"
           @select="onClickItem($event.key)"/>
       </Dropdown>
@@ -66,8 +67,8 @@
 </template>
 
 <script setup>
-import { contentCode } from '../../modules/marked.js'
-import { ButtonGroup, ButtonBasic } from '../button/index.js'
+import { contentCode } from '@/modules/marked.js'
+import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'
 import { Dropdown, Context } from './dropdown/index.js'
 
 const props = defineProps({
@@ -86,16 +87,22 @@ function onClickItem(code)
         cursor: contentCode.space.cursor,
       })
       break
-    case 'element-iframe':
+    case 'element-anchor':
       emits('select', 'insert', {
-        code: contentCode.iframe.code,
-        cursor: contentCode.iframe.cursor,
+        code: contentCode.anchor.code,
+        cursor: contentCode.anchor.cursor,
       })
       break
     case 'element-image':
       emits('select', 'insert', {
         code: contentCode.image.code,
         cursor: contentCode.image.cursor,
+      })
+      break
+    case 'element-iframe':
+      emits('select', 'insert', {
+        code: contentCode.iframe.code,
+        cursor: contentCode.iframe.cursor,
       })
       break
     case 'layout-group':

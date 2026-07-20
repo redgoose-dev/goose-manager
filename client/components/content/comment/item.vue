@@ -97,17 +97,18 @@
 <script setup>
 import { ref, reactive, computed, inject } from 'vue'
 import { marked } from 'marked'
-import { defaultOptions, baseRenderer, renderContent } from '../../../modules/marked.js'
-import { editComment, deleteComment } from '../../../structure/comment/item.js'
-import { dateFormat } from '../../../libs/date.js'
-import { Preview } from '../../content/index.js'
-import Icon from '../../icon/index.vue'
-import { FormTextarea } from '../../forms/index.js'
-import { ButtonGroup, ButtonBasic } from '../../button/index.js'
-import { PostToolbar } from '../../navigation/index.js'
-import { Modal, ModalHeader } from '../../modal/index.js'
-import { FileManager } from '../../file-manager/index.js'
+import { defaultOptions, baseRenderer, renderContent } from '@/modules/marked.js'
+import { dateStore } from '@/store/app.js'
+import { editComment, deleteComment } from '@/structure/comment/item.js'
+import { Preview } from '@/components/content/index.js'
+import Icon from '@/components/icon/index.vue'
+import { FormTextarea } from '@/components/forms/index.js'
+import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'
+import { PostToolbar } from '@/components/navigation/index.js'
+import { Modal, ModalHeader } from '@/components/modal/index.js'
+import { FileManager } from '@/components/file-manager/index.js'
 
+const date = dateStore()
 const props = defineProps({
   srl: Number,
   content: String,
@@ -143,7 +144,7 @@ const _content = computed(() => {
   })
 })
 const _regdate = computed(() => {
-  return dateFormat(new Date(props.regdate), '{yyyy}-{MM}-{dd} ({week}) {hh}:{mm}')
+  return date.format(props.regdate, 'full')
 })
 
 function toggleEditMode()

@@ -74,21 +74,22 @@
 <script setup>
 import { ref, reactive, computed, onMounted, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../structure/json/detail.js'
-import { dateFormat } from '../../libs/date.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty } from '../../components/content/index.js'
-import Files from '../../components/content/files/index.vue'
-import { Fieldset, Field } from '../../components/forms/fieldset/index.js'
-import { Controller } from '../../components/navigation/index.js'
-import { ButtonBasic, ButtonGroup } from '../../components/button/index.js'
-import { Tag } from '../../components/item/index.js'
-import Editor from '../../components/pages/json/editor.vue'
-import { Modal } from '../../components/modal/index.js'
+import { dateStore } from '@/store/app.js'
+import { getData } from '@/structure/json/detail.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty } from '@/components/content/index.js'
+import Files from '@/components/content/files/index.vue'
+import { Fieldset, Field } from '@/components/forms/fieldset/index.js'
+import { Controller } from '@/components/navigation/index.js'
+import { ButtonBasic, ButtonGroup } from '@/components/button/index.js'
+import { Tag } from '@/components/item/index.js'
+import Editor from '@/components/pages/json/editor.vue'
+import { Modal } from '@/components/modal/index.js'
 
 const router = useRouter()
 const route = useRoute()
 const error = inject('error')
+const date = dateStore()
 const errorPath = [ 'pages', 'json', 'detail.vue' ]
 const $jsonEditor = ref()
 const state = reactive({
@@ -106,7 +107,7 @@ const _item = computed(() => {
     description: state.data.description,
     category: state.data.category,
     categorySrl: state.data.categorySrl,
-    date: dateFormat(new Date(state.data.date), '{yyyy}년 {month} {dd}일 ({weekShort}), {hh}시 {mm}분'),
+    date: date.format(state.data.date, 'full'),
     tag: state.data.tag,
   }
 })

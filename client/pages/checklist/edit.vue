@@ -71,21 +71,22 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, inject, nextTick } from 'vue'
+import { ref, reactive, computed, onMounted, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData, submit } from '../../structure/checklist/edit.js'
-import { dateFormat } from '../../libs/date.js'
-import PageHeader from '../../components/header/page.vue'
-import { FormTextarea } from '../../components/forms/index.js'
-import { PostToolbar, Controller } from '../../components/navigation/index.js'
-import { ButtonBasic } from '../../components/button/index.js'
-import { Loading, Preview } from '../../components/content/index.js'
-import { FileManager } from '../../components/file-manager/index.js'
-import { Modal, ModalHeader } from '../../components/modal/index.js'
+import { dateStore } from '@/store/app.js'
+import { getData, submit } from '@/structure/checklist/edit.js'
+import PageHeader from '@/components/header/page.vue'
+import { FormTextarea } from '@/components/forms/index.js'
+import { PostToolbar, Controller } from '@/components/navigation/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
+import { Loading, Preview } from '@/components/content/index.js'
+import { FileManager } from '@/components/file-manager/index.js'
+import { Modal, ModalHeader } from '@/components/modal/index.js'
 
 const router = useRouter()
 const route = useRoute()
 const toast = inject('toast')
+const date = dateStore()
 const preference = inject('preference')
 const error = inject('error')
 const errorPath = [ 'pages', 'checklist', 'edit.vue' ]
@@ -105,7 +106,7 @@ const forms = reactive({
 
 const _date = computed(() => {
   if (!state.date) return ''
-  return dateFormat(new Date(state.date), preference.checklist.dateFormat)
+  return `${date.format(state.date, 'date')} ${date.format(state.date, 'week')}`
 })
 
 onMounted(async () => {

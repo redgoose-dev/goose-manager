@@ -1,22 +1,21 @@
-import { request, formData, checkForms } from '../../libs/api.js'
+import { request, formData } from '@/libs/api.js'
 
 function filteringNest(src)
 {
-  if (!src?.data) return null
-  return src.data
+  return src ?? null
 }
 function filteringArticle(src)
 {
-  if (!src?.data) return null
+  if (!src) return null
   return {
-    ...src.data,
-    json: src.data.json || {},
+    ...src,
+    json: src.json || {},
   }
 }
 function filteringCategory(src)
 {
-  if (!(src.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     return {
       value: o.srl,
       label: o.name,
@@ -25,12 +24,11 @@ function filteringCategory(src)
 }
 function filteringTag(src)
 {
-  return src?.data?.index?.length > 0 ? src.data.index.map(o => o.name).join(',') : ''
+  return src?.index?.length > 0 ? src.index.map(o => o.name).join(',') : ''
 }
 
 export async function getData(nestSrl, articleSrl)
 {
-  let article
   const res = await request('/mix/', {
     method: 'post',
     body: [
@@ -46,7 +44,7 @@ export async function getData(nestSrl, articleSrl)
       {
         key: 'nest',
         url: '/nest/{srl}/',
-        params: { srl: nestSrl || '{{article.data.nest_srl}}' },
+        params: { srl: nestSrl || '{{article.nest_srl}}' },
       },
       {
         key: 'category',
@@ -54,10 +52,9 @@ export async function getData(nestSrl, articleSrl)
         params: {
           module: 'nest',
           module_srl: nestSrl,
-          fields: 'srl,name',
-          order: 'turn',
-          sort: 'asc',
-          unlimited: '1',
+          field: 'srl,name',
+          page: 0,
+          order: 'turn ASC',
         },
       },
       articleSrl && {
@@ -72,7 +69,7 @@ export async function getData(nestSrl, articleSrl)
   })
   return {
     nest: filteringNest(res.nest),
-    article: filteringArticle(article || res.article),
+    article: filteringArticle(res.article),
     category: filteringCategory(res.category),
     tag: filteringTag(res.article_tag),
   }
@@ -81,18 +78,18 @@ export async function getData(nestSrl, articleSrl)
 export async function submit(srl, forms)
 {
   const body = {
-    app: forms.app_srl || null,
-    nest: forms.nest_srl || null,
+    app: forms.app_srl || undefined,
+    nest: forms.nest_srl || undefined,
     category: forms.category_srl || 0,
-    title: forms.title?.trim() || null,
-    content: forms.content || null,
+    title: forms.title?.trim() || undefined,
+    content: forms.content || undefined,
     json: JSON.stringify(forms.json),
     mode: (!forms.mode || forms.mode === 'ready') ? 'public' : forms.mode,
-    regdate: forms.regdate || null,
-    tag: forms.tag || null,
+    regdate: forms.regdate || undefined,
+    tag: forms.tag || undefined,
   }
   await request(`/article/${srl}/`, {
     method: 'patch',
-    body: formData(body),
+    body,
   })
 }

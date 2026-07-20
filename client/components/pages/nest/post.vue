@@ -1,13 +1,14 @@
 <template>
 <Loading v-if="state.loading"/>
-<form v-else-if="state.app?.length > 0" ref="$root" @submit.prevent="onSubmit">
+<form v-else-if="data.app?.length > 0" ref="$root" @submit.prevent="onSubmit">
   <Fieldset legend="기본 필드" class="basic">
     <Field label="* 앱 선택하기" for="post-app">
       <FormSelect
         id="post-app"
         name="post-app"
         v-model="forms.app.value"
-        :options="state.app"
+        :options="data.app"
+        :required="true"
         placeholder="앱을 선택해주세요."
         style="--select-width:400px"/>
     </Field>
@@ -44,7 +45,19 @@
       <Help>이 "둥지"에 대한 설명을 입력합니다.</Help>
     </Field>
   </Fieldset>
-  <Fieldset legend="엑스트라 필드" class="extra">
+  <Fieldset legend="엑스트라 데이터" class="extra">
+    <FieldHeader>
+      <template #title>엑스트라 데이터</template>
+      <template #nav>
+        <ButtonBasic
+          icon-left="code"
+          size="small"
+          color="code"
+          @click="onExtraSource('open')">
+          소스코드
+        </ButtonBasic>
+      </template>
+    </FieldHeader>
     <Field label="분류 사용하기" for="post-use-category">
       <FormSwitch
         id="post-use-category"
@@ -62,7 +75,7 @@
     <Field label="썸네일 이미지 사이즈" for="post-thumbnail-width">
       <Labels>
         <Label>
-          <span>가로:</span>
+          <span>너비:</span>
           <FormInput
             type="number"
             id="post-thumbnail-width"
@@ -76,7 +89,7 @@
           <span>px</span>
         </Label>
         <Label>
-          <span>세로:</span>
+          <span>높이:</span>
           <FormInput
             type="number"
             name="post-thumbnail-height"
@@ -87,39 +100,6 @@
             size="small"
             class="input-thumbnail-size"/>
           <span>px</span>
-        </Label>
-      </Labels>
-    </Field>
-    <Field label="썸네일 이미지 타입" for="post-thumbnail-type">
-      <Labels>
-        <Label>
-          <FormRadio
-            id="post-thumbnail-type"
-            name="post-thumbnail-type"
-            v-model="forms.json.thumbnail.type"
-            value="crop"/>
-          <span>자르기</span>
-        </Label>
-        <Label>
-          <FormRadio
-            name="thumbnailType"
-            v-model="forms.json.thumbnail.type"
-            value="resize"/>
-          <span>리사이즈</span>
-        </Label>
-        <Label>
-          <FormRadio
-            name="thumbnailType"
-            v-model="forms.json.thumbnail.type"
-            value="resizeWidth"/>
-          <span>리사이즈(가로)</span>
-        </Label>
-        <Label>
-          <FormRadio
-            name="thumbnailType"
-            v-model="forms.json.thumbnail.type"
-            value="resizeHeight"/>
-          <span>리사이즈(세로)</span>
         </Label>
       </Labels>
     </Field>
@@ -174,6 +154,13 @@
       </ButtonBasic>
     </template>
   </Controller>
+  <teleport to="#modals">
+    <ExtraSource
+      v-model:open="state.extraSource.open"
+      v-model:src="state.extraSource.src"
+      @update="onExtraSource('update', $event)"
+      @close="onExtraSource('close')"/>
+  </teleport>
 </form>
 <Empty
   v-else
@@ -187,12 +174,13 @@ import { useRouter } from 'vue-router'
 import { getData, getJSON, submit } from '@/structure/nest/post.js'
 import { getByte, validateCode } from '@/libs/strings.js'
 import { pureObject } from '@/libs/object.js'
-import { Fieldset, Field, Help, Labels, Label } from '@/components/forms/fieldset'
-import { FormSelect, FormInput, FormSwitch, FormRadio } from '@/components/forms'
+import { Fieldset, Field, Help, Labels, Label, FieldHeader } from '@/components/forms/fieldset'
+import { FormSelect, FormInput, FormSwitch } from '@/components/forms'
 import { Controller } from '@/components/navigation'
 import { ButtonBasic } from '@/components/button'
 import { Loading, Empty } from '@/components/content'
 import ArticleData from './article-data/index.vue'
+import ExtraSource from './extra-source.vue'
 
 const router = useRouter()
 const error = inject('error')
@@ -203,10 +191,17 @@ const props = defineProps({
   srl: Number,
 })
 const emits = defineEmits( [ 'submit' ])
+const data = reactive({
+  app: [],
+  nests: [],
+})
 const state = reactive({
   loading: true,
   processing: false,
-  app: [],
+  extraSource: {
+    open: false,
+    src: '',
+  },
 })
 const forms = reactive({
   app: { value: '', error: null },
@@ -233,7 +228,9 @@ const _submitLabel = computed(() => {
 onMounted(async () => {
   try
   {
-    const { app, nest } = await getData(props.mode, props.srl)
+    const { app, nests, nest } = await getData(props.mode, props.srl)
+    data.app = app
+    data.nests = nests
     if (props.mode === 'edit' && nest)
     {
       forms.app.value = nest.app_srl
@@ -242,7 +239,6 @@ onMounted(async () => {
       forms.description.value = nest.description
     }
     forms.json = getJSON(nest?.json)
-    state.app = app
   }
   catch (e)
   {
@@ -286,6 +282,27 @@ function checkingJson(src)
   return JSON.stringify(_json)
 }
 
+function onExtraSource(mode, value)
+{
+  switch (mode)
+  {
+    case 'open':
+      state.extraSource.src = JSON.stringify(forms.json, null, 4)
+      state.extraSource.open = true
+      break
+    case 'close':
+      state.extraSource.src = ''
+      state.extraSource.open = false
+      break
+    case 'update':
+      checkingJson(value)
+      forms.json = value
+      state.extraSource.src = ''
+      state.extraSource.open = false
+      break
+  }
+}
+
 async function onSubmit()
 {
   forms.code.error = null
@@ -302,7 +319,7 @@ async function onSubmit()
       app: forms.app.value,
       code: forms.code.value,
       name: forms.name.value,
-      description: forms.description.value,
+      description: forms.description.value ?? '',
       json,
     })
     const message = props.mode === 'edit' ? '둥지를 수정했습니다.' : '둥지를 만들었습니다.'

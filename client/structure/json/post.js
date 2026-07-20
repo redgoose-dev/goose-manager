@@ -1,20 +1,19 @@
-import { request, formData, checkForms } from '../../libs/api.js'
-import { checkingJSON } from '../../libs/object.js'
+import { request, checkForms } from '@/libs/api.js'
+import { checkingJSON } from '@/libs/object.js'
 
 function filteringJSON(src, tag)
 {
-  if (!src?.data) return null
-  const { data } = src
+  if (!src) return null
   return {
-    ...data,
-    json: JSON.stringify(data.json),
-    tag: tag?.data?.index?.length > 0 ? tag.data.index.map(o => (o.name)).join(',') : '',
+    ...src,
+    json: JSON.stringify(src.json),
+    tag: tag?.index?.length > 0 ? tag.index.map(o => (o.name)).join(',') : '',
   }
 }
 function filteringCategory(src)
 {
-  if (!(src.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     return {
       value: o.srl,
       label: o.name,
@@ -33,10 +32,9 @@ export async function getData(mode, srl)
         url: '/category/',
         params: {
           module: 'json',
-          fields: 'srl,name',
-          order: 'turn',
-          sort: 'asc',
-          unlimited: '1',
+          field: 'srl,name',
+          page: 0,
+          order: 'turn ASC',
         },
       },
       ...(mode === 'edit' ? [
@@ -50,7 +48,6 @@ export async function getData(mode, srl)
           url: '/tag/',
           params: {
             module: 'json',
-            module_srl: '{{json.data.srl}}',
           }
         },
       ] : []),
@@ -69,13 +66,13 @@ export async function submit(srl, forms)
   const url = srl ? `/json/${srl}/` : '/json/'
   const { data } = await request(url, {
     method: srl ? 'patch' : 'put',
-    body: formData({
+    body: {
       name: forms.name.value,
       description: forms.description.value,
       json: forms.json.value,
       category: forms.category.value || '0',
       tag: forms.tag.value || '',
-    }),
+    },
   })
   return data || srl
 }

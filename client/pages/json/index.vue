@@ -64,16 +64,16 @@
 <script setup>
 import { reactive, onMounted, watch, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../structure/json/index.js'
-import { serialize } from '../../libs/strings.js'
-import { scrollTo } from '../../libs/util.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
-import { Items } from '../../components/item/index.js'
-import Card from '../../components/item/card.vue'
-import { Controller, CategoryTab, Paginate } from '../../components/navigation/index.js'
-import { ButtonGroup, ButtonBasic } from '../../components/button/index.js'
-import Filter from '../../components/pages/json/filter.vue'
+import { getData } from '@/structure/json/index.js'
+import { serialize } from '@/libs/strings.js'
+import { scrollTo } from '@/libs/util.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty, IndexWithFilter } from '@/components/content/index.js'
+import { Items } from '@/components/item/index.js'
+import Card from '@/components/item/card.vue'
+import { Controller, CategoryTab, Paginate } from '@/components/navigation/index.js'
+import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'
+import Filter from '@/components/pages/json/filter.vue'
 
 const router = useRouter()
 const route = useRoute()

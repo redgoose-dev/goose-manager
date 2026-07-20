@@ -12,7 +12,10 @@
         <ThumbnailEditor
           :src="modal.thumbnailEditor.src"
           :options="modal.thumbnailEditor.options"
-          :crop-size="[ 640, 480 ]"
+          :crop-size="[
+            fileManager.preference.thumbnail?.width ?? 640,
+            fileManager.preference.thumbnail?.height ?? 480,
+          ]"
           :private="fileManager.preference.private"
           @close="onCloseThumbnailEditor"
           @submit="onSubmitThumbnailEditor"/>
@@ -60,7 +63,7 @@ const props = defineProps({
   module: String,
   moduleSrl: Number,
   shortcut: Boolean,
-  useThumbnail: Boolean,
+  thumbnail: Object,
   private: Boolean,
   multipleSelection: Boolean,
   fileKey: { type: String, default: 'code' },
@@ -153,7 +156,7 @@ function onSetup()
     module: props.module,
     moduleSrl: props.moduleSrl,
     shortcut: Boolean(props.shortcut),
-    useThumbnail: props.useThumbnail,
+    thumbnail: props.thumbnail,
     private: props.private,
     multipleSelection: props.multipleSelection,
     limitCount: props.limitCount,
@@ -341,8 +344,8 @@ function onRouteThumbnail(key, idx)
     case thumbnailContextKey.PREVIEW:
       onControlThumbnailPreview(true)
       break
-    case thumbnailContextKey.RESET:
-      onResetThumbnail().then()
+    case thumbnailContextKey.DELETE:
+      onDeleteThumbnail().then()
       break
   }
 }
@@ -362,7 +365,7 @@ function openThumbnailEditor(idx)
     }
     modal.thumbnailEditor.options.srl = item.srl
   }
-  else if (fileManager.thumbnail)
+  else if (fileManager.thumbnail?.originSrl)
   {
     modal.thumbnailEditor.src = `/file/${fileManager.thumbnail.originSrl}/`
     modal.thumbnailEditor.options.srl = fileManager.thumbnail.originSrl
@@ -458,20 +461,21 @@ function onControlThumbnailPreview(sw)
     modal.thumbnailPreview = ''
   }
 }
-async function onResetThumbnail()
+async function onDeleteThumbnail()
 {
   if (!fileManager.thumbnail?.srl) return
-  if (!confirm('재설정하면 썸네일 이미지와 설정 정보가 전부 삭제됩니다.\n재설정 하시겠습니까?')) return
+  if (!confirm('정말로 썸네일 이미지를 삭제하시겠습니까?')) return
   try
   {
     await request(`/file/${fileManager.thumbnail.srl}/`, { method: 'delete' })
     fileManager.thumbnail = undefined
+    emits('update-thumbnail', undefined)
   }
   catch (e)
   {
     error.catch({
-      path: [ ...errorPath, 'onResetThumbnail()' ],
-      message: '썸네일 이미지 초기화 실패',
+      path: [ ...errorPath, 'onDeleteThumbnail()' ],
+      message: '썸네일 이미지 삭제 실패',
       error: e,
     })
   }

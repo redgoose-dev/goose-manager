@@ -1,4 +1,4 @@
-import { request, formData } from '../../libs/api.js'
+import { request, formData } from '@/libs/api.js'
 import { getLastData } from './today.js'
 import { filteringData } from './libs.js'
 
@@ -14,6 +14,7 @@ export async function getData(srl = NaN)
     res = await request(`/checklist/${srl}/`)
     res = res?.data || null
   }
+  if (!res) return null
   return filteringData(res)
 }
 

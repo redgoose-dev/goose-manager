@@ -30,6 +30,6 @@
   min-height: 320px;
   max-height: 520px;
   &:read-only {
-    background: inherit;
+    background: var(--color-edge);
   }
 }

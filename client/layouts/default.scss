@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   margin: 0;
-  background: mixins.mix-alpha(var(--color-edge), 30%);
+  background: var(--color-edge);
   height: var(--size-header-height, 42px);
   padding: 0 var(--size-side-padding);
   box-shadow: 0 1px 12px mixins.mix-alpha(var(--color-base), 30%);
@@ -148,7 +148,7 @@
     }
     &:hover, &:has(:focus-visible) {
       > a:not(.active), > span {
-        background-color: mixins.mix-alpha(var(--color-base), 10%);
+        background-color: mixins.mix-alpha(var(--color-base), 5%);
         .ico-arrow {
           rotate: x 0deg;
         }

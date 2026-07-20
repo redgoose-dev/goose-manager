@@ -8,6 +8,10 @@ export const contentCode = {
     code: `<p><br/></p>\n`,
     cursor: 13,
   },
+  anchor: {
+    code: `[CONTENT](https://foo.bar)`,
+    cursor: 10,
+  },
   iframe: {
     code: `<div class="iframe"></div>\n`,
     cursor: 20,

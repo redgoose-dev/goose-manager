@@ -3,6 +3,12 @@ export const defaultPreference = {
     nickname: 'GOOSE',
     title: 'Goose Manager',
     description: 'dev goose-manager',
+    // 언어 및 지역
+    // https://simplelocalize.io/data/locales/
+    locale: 'ko-KR',
+    // 타임존
+    // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: 'UTC',
   },
   dashboard: {
     title: 'Dashboard',
@@ -34,7 +40,6 @@ export const defaultPreference = {
   article: {
     pageCount: 24,
     pageRange: 10,
-    displayDateField: 'created_at',
     indexTheme: 'card',
   },
   json: {

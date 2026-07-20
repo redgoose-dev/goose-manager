@@ -16,7 +16,7 @@
             :image="o.thumbnail"
             :meta="o.meta"
             :nav="[
-              o.nestSrl && { label: '둥지', href: `/nest/${o.nestSrl}/article/`, },
+              o.nestSrl && { label: '둥지', href: `/nest/${o.nestSrl}/article/` },
               { label: '수정', href: `./${o.srl}/edit/` },
               { label: '삭제', href: `./${o.srl}/delete/` },
             ].filter(Boolean)"
@@ -59,17 +59,17 @@
 <script setup>
 import { reactive, computed, onMounted, watch, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getData } from '../../structure/article/index.js'
-import { serialize } from '../../libs/strings.js'
-import { scrollTo } from '../../libs/util.js'
-import PageHeader from '../../components/header/page.vue'
-import { Loading, Empty, IndexWithFilter } from '../../components/content/index.js'
-import { Items, Mark } from '../../components/item/index.js'
-import Card from '../../components/item/card.vue'
-import Thumbnail from '../../components/item/thumbnail.vue'
-import { Paginate, Controller } from '../../components/navigation/index.js'
-import { ButtonBasic } from '../../components/button/index.js'
-import Filter from '../../components/pages/article/filter.vue'
+import { getData } from '@/structure/article/index.js'
+import { serialize } from '@/libs/strings.js'
+import { scrollTo } from '@/libs/util.js'
+import PageHeader from '@/components/header/page.vue'
+import { Loading, Empty, IndexWithFilter } from '@/components/content/index.js'
+import { Items, Mark } from '@/components/item/index.js'
+import Card from '@/components/item/card.vue'
+import Thumbnail from '@/components/item/thumbnail.vue'
+import { Paginate, Controller } from '@/components/navigation/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
+import Filter from '@/components/pages/article/filter.vue'
 
 const router = useRouter()
 const route = useRoute()

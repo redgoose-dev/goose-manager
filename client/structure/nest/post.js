@@ -1,5 +1,5 @@
 import { preferenceStore } from '@/store/app.js'
-import { request, formData } from '@/libs/api.js'
+import { request } from '@/libs/api.js'
 
 function filteringApp(src)
 {
@@ -34,15 +34,22 @@ export function getJSON(src = {})
 export async function getData(mode, srl)
 {
   if (!mode) return { app: [], nest: undefined }
-  const { app, nest } = await request('/mix/', {
+  const { app, nests, nest } = await request('/mix/', {
     method: 'post',
     body: [
       {
         key: 'app',
         url: '/app/',
         params: {
-          fields: 'srl,code,name',
-          unlimited: '1',
+          field: 'srl,code,name',
+          page: 0,
+        },
+      },
+      {
+        key: 'nests',
+        url: '/nest/',
+        params: {
+          field: 'srl,code,name,description',
         },
       },
       mode === 'edit' && {
@@ -53,8 +60,9 @@ export async function getData(mode, srl)
     ].filter(Boolean),
   })
   return {
-    app: filteringApp(app?.data),
-    nest: nest?.data,
+    app: filteringApp(app),
+    nests: nests.index?.length > 0 ? nests.index : [],
+    nest,
   }
 }
 
@@ -63,6 +71,6 @@ export async function submit(srl, data)
   const url = srl ? `/nest/${srl}/` : '/nest/'
   await request(url, {
     method: srl ? 'patch' : 'put',
-    body: formData(data),
+    body: data,
   })
 }

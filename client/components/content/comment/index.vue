@@ -25,7 +25,7 @@
 
 <script setup>
 import { reactive, onMounted, inject } from 'vue'
-import { getData } from '../../../structure/comment/index.js'
+import { getData } from '@/structure/comment/index.js'
 import { Loading } from '../index.js'
 import Item from './item.vue'
 import Create from './create.vue'
@@ -66,7 +66,7 @@ onMounted(async () => {
 
 function onSubmitCreate(newData)
 {
-  state.index.unshift(newData)
+  state.index.push(newData)
 }
 
 function onEditComment(idx, content)

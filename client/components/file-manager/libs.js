@@ -1,5 +1,5 @@
-import { request } from '../../libs/api.js'
-import { contentCodes } from '../../libs/assets.js'
+import { request } from '@/libs/api.js'
+import { contentCodes } from '@/libs/assets.js'
 import { insertMode } from './assets.js'
 
 /**

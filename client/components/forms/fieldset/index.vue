@@ -3,12 +3,7 @@
   :is="props.tag"
   :disabled="props.disabled"
   class="fieldset">
-  <component
-    v-if="props.legend"
-    :is="props.tag === 'fieldset' ? 'legend' : 'h1'"
-    class="fieldset__legend">
-    {{props.legend}}
-  </component>
+  <legend v-if="props.legend" class="sr-only">{{props.legend}}</legend>
   <div class="fieldset__body">
     <slot/>
   </div>
@@ -29,22 +24,11 @@ const props = defineProps({
   margin: 0;
   padding: 0;
   border: none;
-  &__legend {
-    display: block;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    line-height: 1.05;
-    font-weight: 700;
-    letter-spacing: -.25px;
-    user-select: none;
-  }
   &__body {
     display: grid;
     margin: 0;
-    border-top: 1px solid var(--color-blur);
-    &:not(:first-child) {
-      margin-top: 10px;
+    :slotted(> .field:first-child) {
+      border-top: 1px solid var(--color-blur);
     }
     :slotted(> *) {
       border-bottom: 1px solid var(--color-blur);

@@ -54,10 +54,10 @@
         </template>
         <Context
           :items="[
-            { key: thumbnailContextKey.EDIT, label: '편집하기', iconRight: 'crop' },
+            _useThumbnailEdit && { key: thumbnailContextKey.EDIT, label: '편집하기', iconRight: 'crop' },
             { key: thumbnailContextKey.PREVIEW, label: '이미지 프리뷰', iconRight: 'scan-search' },
-            { key: thumbnailContextKey.RESET, label: '설정 재설정', iconRight: 'rotate-ccw' },
-          ]"
+            { key: thumbnailContextKey.DELETE, label: '삭제', iconRight: 'trash-2', color: 'error' },
+          ].filter(Boolean)"
           @select="(e) => onSelectContextFromThumbnail(e.key)"/>
       </Dropdown>
     </ButtonGroup>
@@ -111,8 +111,11 @@ const _useInsert = computed(() => {
   return fileManager._existSelected
 })
 const _useThumbnail = computed(() => {
-  if (!fileManager.preference.useThumbnail) return false
+  if (!fileManager.preference.thumbnail?.use) return false
   return !!fileManager.thumbnail?.srl
+})
+const _useThumbnailEdit = computed(() => {
+  return !!fileManager.thumbnail?.originSrl
 })
 
 function onClickSelectAll()

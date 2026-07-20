@@ -1,10 +1,12 @@
-import { request, formData } from '../../libs/api.js'
+import { request } from '@/libs/api.js'
 
 export async function editComment(srl, content)
 {
   await request(`/comment/${srl}/`, {
     method: 'patch',
-    body: formData({ content }),
+    body: {
+      content,
+    },
   })
 }
 

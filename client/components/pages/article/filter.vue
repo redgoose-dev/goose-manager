@@ -82,10 +82,10 @@
 <script setup>
 import { reactive, watch, inject } from 'vue'
 import { useRoute } from 'vue-router'
-import { FilterTotal, FilterField, FilterSort, FilterTag } from '../../forms/filter/index.js'
-import { Tag } from '../../item/index.js'
-import { ButtonBasic } from '../../button/index.js'
-import { FormKeyword, FormSelect } from '../../forms/index.js'
+import { FilterTotal, FilterField, FilterSort, FilterTag } from '@/components/forms/filter/index.js'
+import { Tag } from '@/components/item/index.js'
+import { ButtonBasic } from '@/components/button/index.js'
+import { FormKeyword, FormSelect } from '@/components/forms/index.js'
 
 const route = useRoute()
 const preference = inject('preference')

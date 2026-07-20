@@ -4,7 +4,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import Detail from '../../components/pages/article/detail.vue'
+import Detail from '@/components/pages/article/detail.vue'
 
 const route = useRoute()
 </script>

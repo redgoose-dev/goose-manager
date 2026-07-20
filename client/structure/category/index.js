@@ -1,23 +1,24 @@
-import { formData, request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
+import { dateStore } from '@/store/app.js'
+import { request } from '@/libs/api.js'
 
 function filteringNest(nest)
 {
-  if (!nest.data) throw new Error(nest.message)
+  if (!nest) throw new Error(nest.message)
   return {
-    srl: nest.data.srl,
-    code: nest.data.code,
-    name: nest.data.name,
+    srl: nest.srl,
+    code: nest.code,
+    name: nest.name,
   }
 }
 function filteringCategories(src)
 {
-  if (!(src.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  const date = dateStore()
+  return src.index.map(o => {
     return {
       srl: o.srl,
       title: o.name,
-      meta: [ getDate(o.created_at) ],
+      meta: [ date.format(o.created_at, 'date') ],
       status: [ { label: '데이터', value: o.count } ],
     }
   })
@@ -37,9 +38,8 @@ export async function getData(module, moduleSrl)
             params: {
               module: 'nest',
               module_srl: moduleSrl,
-              order: 'turn',
-              sort: 'asc',
-              unlimited: '1',
+              page: 0,
+              order: 'turn ASC',
               mod: 'count',
             },
           },
@@ -48,7 +48,7 @@ export async function getData(module, moduleSrl)
             url: '/nest/{srl}/',
             params: {
               srl: moduleSrl,
-              fields: 'srl,code,name',
+              field: 'srl,code,name',
             },
           },
         ],
@@ -61,14 +61,13 @@ export async function getData(module, moduleSrl)
       const res = await request('/category/', {
         query: {
           module: 'json',
-          order: 'turn',
-          sort: 'asc',
-          unlimited: '1',
+          page: 0,
+          order: 'turn ASC',
           mod: 'count',
         },
       })
       return {
-        category: filteringCategories(res),
+        category: filteringCategories(res?.data),
       }
   }
 }
@@ -82,6 +81,6 @@ export async function changeOrder(module, moduleSrl, srls)
   if (moduleSrl) data['module_srl'] = moduleSrl
   await request('/category/change-order/', {
     method: 'patch',
-    body: formData(data),
+    body: data,
   })
 }

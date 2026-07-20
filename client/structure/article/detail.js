@@ -1,44 +1,44 @@
 import { marked } from 'marked'
-import { request, formData } from '../../libs/api.js'
-import { defaultOptions, baseRenderer, renderContent } from '../../modules/marked.js'
+import { request } from '@/libs/api.js'
+import { defaultOptions, baseRenderer, renderContent } from '@/modules/marked.js'
 
 function filteringArticle(src)
 {
-  if (!src?.data) return null
+  if (!src) return null
   const renderer = baseRenderer()
-  let content = renderContent(src.data.content, src.data.mode === 'private')
+  let content = renderContent(src.content, src.mode === 'private')
   content = marked.parse(content, {
     ...defaultOptions,
     renderer,
   })
   return {
-    srl: src.data.srl,
-    nestSrl: src.data.nest_srl,
-    title: src.data.title,
+    srl: src.srl,
+    nestSrl: src.nest_srl,
+    title: src.title,
     content,
-    mode: src.data.mode,
-    hit: src.data.hit,
-    star: src.data.star,
-    json: src.data.json,
-    regdate: src.data.regdate,
-    createdAt: src.data.created_at,
-    countFile: src.data.count_file || 0,
+    mode: src.mode,
+    hit: src.hit,
+    star: src.star,
+    json: src.json,
+    regdate: src.regdate,
+    createdAt: src.created_at,
+    countFile: src.count_file || 0,
   }
 }
 
 function filteringNest(src)
 {
-  return src?.data || null
+  return src.srl ? src : null
 }
 
 function filteringTag(src)
 {
-  return src?.data?.index?.length > 0 ? src.data.index : []
+  return src?.index?.length > 0 ? src.index : []
 }
 
 function filteringCategory(src)
 {
-  return src?.data || null
+  return src?.srl ? src : null
 }
 
 export async function getData(srl, withNest)
@@ -59,7 +59,7 @@ export async function getData(srl, withNest)
         key: 'nest',
         url: '/nest/{srl}/',
         params: {
-          srl: '{{article.data.nest_srl}}',
+          srl: '{{article.nest_srl}}',
         },
       },
       {
@@ -67,14 +67,14 @@ export async function getData(srl, withNest)
         url: '/tag/',
         params: {
           module: 'article',
-          module_srl: '{{article.data.srl}}',
+          module_srl: '{{article.srl}}',
         },
       },
       withNest && {
         key: 'category',
         url: '/category/{srl}/',
         params: {
-          srl: '{{article.data.category_srl}}',
+          srl: '{{article.category_srl}}',
         },
       },
     ].filter(Boolean),

@@ -39,6 +39,7 @@
 <script setup>
 import { ref, reactive, inject } from 'vue'
 import pkg from '../../../package.json'
+import { dateStore } from '@/store/app.js'
 import Editor from '../../components/pages/json/editor.vue'
 import { Fieldset, Field } from '../../components/forms/fieldset/index.js'
 import { Controller } from '../../components/navigation/index.js'
@@ -57,6 +58,8 @@ const state = reactive({
 const forms = reactive({
   json: JSON.stringify(preference._pure[keyName]),
 })
+
+const date = dateStore()
 
 async function onSubmit()
 {

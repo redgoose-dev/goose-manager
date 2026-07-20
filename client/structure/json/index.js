@@ -1,30 +1,32 @@
-import { request } from '../../libs/api.js'
-import { getDate } from '../../libs/date.js'
-import { serialize } from '../../libs/strings.js'
+import { dateStore } from '@/store/app.js'
+import { request } from '@/libs/api.js'
+import { serialize } from '@/libs/strings.js'
 
 function filteringJSON(src)
 {
-  if (!src?.data) return { total: 0, index: [] }
+  const date = dateStore()
   return {
-    total: src.data.total,
-    index: src.data.index.map(o => {
+    total: src?.total || 0,
+    index: src?.index?.map(o => {
+      let title = o.name
+      if (o.category?.name) title = `[${o.category.name}] ${o.name}`
       return {
         srl: o.srl,
-        title: o.name,
+        title,
         description: o.description,
         meta: [
           `번호: ${o.srl}`,
           o.category ? `분류: ${o.category.name}` : '',
-          `날짜: ${getDate(o.created_at)}`,
-        ],
+          `날짜: ${date.format(o.created_at, 'date')}`,
+        ].filter(Boolean),
       }
     })
   }
 }
-function filteringCategory(src, query)
+function filteringCategory(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     let category
     switch (o.name)
     {
@@ -49,8 +51,8 @@ function filteringCategory(src, query)
 }
 function filteringTag(src)
 {
-  if (!(src?.data?.index?.length > 0)) return []
-  return src.data.index.map(o => {
+  if (!(src?.index?.length > 0)) return []
+  return src.index.map(o => {
     return {
       srl: o.srl,
       name: o.name,
@@ -69,14 +71,13 @@ export async function getData(query = {}, options = {})
         key: 'json',
         url: '/json/',
         params: {
-          fields: 'srl,name,description,category_srl,created_at',
-          category_srl,
+          field: 'srl,name,description,category_srl,created_at',
+          category: category_srl,
           page: query.page > 1 ? query.page : undefined,
-          size: size || 24,
-          order: query.order,
-          sort: query.sort,
+          size: size,
+          order: `${query.order || 'srl'} ${query.sort || 'DESC'}`,
           tag: query.tag,
-          mod: query.category === undefined ? undefined : 'category',
+          mod: query.category === undefined ? 'category' : undefined,
         },
       },
       {
@@ -84,9 +85,8 @@ export async function getData(query = {}, options = {})
         url: '/category/',
         params: {
           module: 'json',
-          unlimited: '1',
-          order: 'turn',
-          sort: 'asc',
+          order: 'turn ASC',
+          page: 0,
           tag: query.tag,
           mod: 'count,none,all',
         },
@@ -96,13 +96,14 @@ export async function getData(query = {}, options = {})
         url: '/tag/',
         params: {
           module: 'json',
+          page: 0,
         },
       },
     ].filter(Boolean),
   })
   return {
     json: filteringJSON(json),
-    category: filteringCategory(category, query),
+    category: filteringCategory(category),
     tag: filteringTag(tag),
   }
 }

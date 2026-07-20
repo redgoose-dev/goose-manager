@@ -4,12 +4,14 @@
   <Fieldset>
     <Field v-if="_useCategory" label="분류" for="post-category">
       <FormSelect
+        v-if="data.category.length > 0"
         name="post-category"
         id="post-category"
         v-model="forms.category_srl"
         :options="data.category"
         placeholder="분류를 선택하세요."
         class="category"/>
+      <Help v-else color="weak">등록된 분류가 없습니다.</Help>
     </Field>
     <Field label="제목" for="post-title">
       <FormInput
@@ -134,7 +136,10 @@
         :private="true"
         :multiple-selection="true"
         file-key="code"
-        :use-thumbnail="true"
+        :thumbnail="{
+          use: true,
+          ...data.nest.json.thumbnail,
+        }"
         :limit-count="data.nest?.json?.files?.count"
         :limit-size="data.nest?.json?.files?.sizeSingle"
         @insert="onInsertFileManager"
@@ -160,9 +165,9 @@
 <script setup>
 import { computed, inject, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { dateStore } from '@/store/app.js'
 import { getData, submit } from '@/structure/article/post.js'
-import { dateFormat } from '@/libs/date.js'
-import { Fieldset, Fields, Field } from '@/components/forms/fieldset/index.js'
+import { Fieldset, Fields, Field, Help } from '@/components/forms/fieldset/index.js'
 import { FormSelect, FormInput, FormTag, FormTextarea, FormRadio } from '@/components/forms/index.js'
 import { Controller, PostToolbar } from '@/components/navigation/index.js'
 import { ButtonGroup, ButtonBasic } from '@/components/button/index.js'
@@ -175,6 +180,7 @@ const router = useRouter()
 const preference = inject('preference')
 const toast = inject('toast')
 const error = inject('error')
+const date = dateStore()
 const errorPath = [ 'components', 'pages', 'article', 'post', 'index.vue' ]
 const $root = ref()
 const $content = ref()
@@ -230,7 +236,7 @@ onMounted(async () => {
     data.category = category
     forms.category_srl = article.category_srl || ''
     forms.title = article.title || ''
-    forms.regdate = article.regdate || dateFormat(new Date(), '{yyyy}-{MM}-{dd}')
+    forms.regdate = date.format((article.regdate || new Date()), 'date-dash')
     forms.mode = article.mode || 'ready'
     forms.content = article.content || ''
     let _json = (typeof article.json === 'string') ? JSON.parse(article.json) : (article.json || {})
@@ -309,7 +315,7 @@ function onInsertFileManager(str)
 }
 function onUpdateThumbnail(o)
 {
-  forms.json.thumbnail = o.code
+  forms.json.thumbnail = o?.code ?? null
 }
 
 /**
