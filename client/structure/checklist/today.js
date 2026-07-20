@@ -17,7 +17,7 @@ export async function getLastData()
   let lastItem = res?.data?.index[0]
   if (lastItem)
   {
-    postDate = checkTime(lastItem?.created_at, preference.checklist.resetTime, now)
+    postDate = checkTime(lastItem?.created_at, preference.checklist.resetTime, now, preference._timezone)
     if (postDate)
     {
       // add data

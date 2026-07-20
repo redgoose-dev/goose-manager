@@ -82,7 +82,7 @@ const state = reactive({
 
 const _today = computed(() => {
   if (!state.data?.date) return false
-  return !checkTime(state.data?.date, preference.checklist.resetTime)
+  return !checkTime(state.data?.date, preference.checklist.resetTime, new Date(), preference._timezone)
 })
 
 onMounted(async () => {

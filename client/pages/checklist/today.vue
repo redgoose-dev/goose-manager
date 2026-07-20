@@ -51,7 +51,7 @@ const state = reactive({
 })
 
 const _today = computed(() => {
-  return !checkTime(state.date, preference.checklist.resetTime)
+  return !checkTime(state.date, preference.checklist.resetTime, new Date(), preference._timezone)
 })
 const _percent = computed(() => {
   if (!state.content) return NaN

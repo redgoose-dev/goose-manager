@@ -27,7 +27,7 @@ export async function getData(query = {}, options = {})
         srl: o.srl,
         title: `${date.format(o.created_at, 'date')} ${date.format(o.created_at, 'week')}`,
         percent: o.percent,
-        today: !checkTime(o.created_at, preference.checklist.resetTime, now),
+        today: !checkTime(o.created_at, preference.checklist.resetTime, now, preference._timezone),
       }
     }),
   }
