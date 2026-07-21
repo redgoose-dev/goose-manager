@@ -1,15 +1,22 @@
+# syntax=docker/dockerfile:1
+
 ARG IMAGE_TAG=alpine
 
 # Build stage
 FROM oven/bun:${IMAGE_TAG} AS builder
 WORKDIR /app
 
+COPY package.json bun.lock ./
+
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+    bun install --frozen-lockfile
+
 COPY . .
 
-RUN bun install --frozen-lockfile --verbose
 RUN bun run build
 RUN rm -rf node_modules
-RUN bun install --production
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+    bun install --production --frozen-lockfile
 RUN rm -rf /tmp/* /root/.bun/cache
 
 

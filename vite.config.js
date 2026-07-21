@@ -44,12 +44,6 @@ const config = defineConfig(() => {
           },
         },
       },
-      minify: 'terser',
-      terserOptions: {
-        format: {
-          comments: false,
-        },
-      },
     },
     resolve: {
       alias: {

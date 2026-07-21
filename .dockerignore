@@ -12,7 +12,6 @@ scripts/
 .gitignore
 *.md
 .env.*
-bun.lock
 Dockerfile
 docker-compose.yml
 cmd.sh

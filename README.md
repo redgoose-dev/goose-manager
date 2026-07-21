@@ -71,10 +71,17 @@ bun run preview
 
 ### 빌드
 
-다음 명령어를 실행하여 이미지를 빌드합니다.
+로컬에서 현재 호스트 아키텍처에 맞는 이미지를 빌드합니다.
 
 ```shell
-docker build -t redgoose/goose-manager .
+./cmd.sh build
+```
+
+Docker Hub에 배포할 때는 `linux/amd64`와 `linux/arm64` 이미지를 함께 빌드합니다.
+
+```shell
+docker login
+./cmd.sh publish
 ```
 
 ### docker-compose.yml 파일
