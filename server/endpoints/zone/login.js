@@ -59,7 +59,7 @@ export default async function login(req, ctx)
     }
 
     // save cookie
-    const _expires = data.save ? Number(expires || 7 * 24 * 60 * 60 * 1000) : undefined
+    const _expires = data.save ? Number(expires ?? 7 * 24 * 60 * 60) : undefined
     cookie.save(req, 'access', access, _expires)
     if (refresh && data.save)
     {

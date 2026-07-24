@@ -1,1 +1,3 @@
-export const defaultCookieExpires = 14 * 24 * 60 * 60 * 1000 // 14 days
+const { COOKIE_REFRESH_EXPIRES } = Bun.env
+
+export const defaultCookieExpires = 60 * 60 * 24 * Number(COOKIE_REFRESH_EXPIRES)
