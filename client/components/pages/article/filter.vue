@@ -1,8 +1,6 @@
 <template>
 <form class="filter" @submit.prevent>
-  <FilterTotal
-    :total="props.total"
-    class="filter__total"/>
+  <FilterTotal :total="props.total" class="filter__total"/>
   <fieldset :disabled="props.loading" class="filter__fields">
     <legend>아티클 필터링 필드</legend>
     <FilterField label="모드" for="mode">
