@@ -99,6 +99,12 @@ export const defaultPreference = {
           icon: 'check-square',
           active: 'checklist',
         },
+        {
+          name: 'LOG',
+          link: '/log/',
+          icon: 'scroll-text',
+          active: 'log',
+        },
       ],
     },
     {
