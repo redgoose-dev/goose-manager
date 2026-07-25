@@ -26,7 +26,7 @@ const props = defineProps({
   min-height: var(--modal-window-min-width, 0);
   max-height: var(--modal-window-max-height, none);
   box-sizing: border-box;
-  border-radius: mixins.radius(160px);
+  border-radius: mixins.radius(42px);
   background: var(--modal-window-bg, var(--color-bg));
   box-shadow:
     0 8px 48px mixins.mix-alpha(var(--color-base), 20%),

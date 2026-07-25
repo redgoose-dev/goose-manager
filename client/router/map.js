@@ -342,12 +342,6 @@ const log = [
     component: () => import('../pages/log/index.vue'),
     meta: { active: 'log' },
   },
-  {
-    path: '/log/:id/',
-    name: 'LogDetail',
-    component: () => import('../pages/log/detail.vue'),
-    meta: { active: 'log' },
-  },
 ]
 const guide = [
   {

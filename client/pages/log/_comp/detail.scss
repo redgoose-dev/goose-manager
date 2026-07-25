@@ -1,0 +1,59 @@
+@use '../../../scss/mixins';
+
+.detail {
+  min-height: 260px;
+  padding: 36px 36px 64px;
+  box-sizing: border-box;
+  overflow: auto;
+  @include mixins.custom-scrollbar();
+}
+.body {
+  display: grid;
+  gap: 42px 0;
+  min-width: 540px;
+}
+
+.status {
+  font-weight: 800;
+  &--success {
+    color: var(--color-success);
+  }
+  &--warning {
+    color: var(--color-sub);
+  }
+  &--error {
+    color: var(--color-error);
+  }
+}
+
+.field {
+  --field-label-width: 140px;
+  code {
+    color: var(--color-base);
+    font-family: var(--font-console);
+    font-size: 12px;
+    word-break: break-all;
+  }
+  .tags {
+    display: flex;
+  }
+  pre {
+    margin: 0;
+    padding: 12px 14px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: auto;
+    border-radius: mixins.radius(64px);
+    background: var(--color-code);
+    color: var(--color-edge);
+    font-family: var(--font-console);
+    font-size: 12px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    @include mixins.custom-scrollbar();
+  }
+  .is-empty {
+    color: var(--color-blur);
+  }
+}

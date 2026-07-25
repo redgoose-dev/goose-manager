@@ -4,6 +4,7 @@
     <ButtonBasic
       size="small"
       icon-left="refresh-cw"
+      color="key"
       :rotate-icon="state.loading"
       :disabled="state.loading || state.loadingMore"
       @click="_fetchContent()">
@@ -29,7 +30,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in state.logs.index" :key="item.id">
+                  <tr
+                    v-for="item in state.logs.index"
+                    :key="item.id"
+                    class="is-clickable"
+                    tabindex="0"
+                    role="button"
+                    :aria-label="`로그 ${item.id} 상세 보기`"
+                    @click="onClickLog(item)"
+                    @keydown.enter.prevent="onClickLog(item)"
+                    @keydown.space.prevent="onClickLog(item)">
                     <td class="timestamp" :title="item.timestamp">
                       {{formatTimestamp(item.timestamp)}}
                     </td>
@@ -87,6 +97,24 @@
         @update="onUpdateFilter"/>
     </template>
   </IndexWithFilter>
+  <teleport to="#modals">
+    <Modal
+      :open="state.detail.open"
+      mode="window"
+      :shortcut="true"
+      class="detail-modal"
+      @close="state.detail.open = false">
+      <ModalWindow tag="article" :scroll="false" class="detail-window">
+        <ModalHeader
+          title="로그 상세데이터"
+          icon="scroll-text"
+          @close="state.detail.open = false"/>
+        <LogDetail
+          :id="state.detail.id"
+          @close="state.detail.open = false"/>
+      </ModalWindow>
+    </Modal>
+  </teleport>
 </article>
 </template>
 
@@ -101,8 +129,10 @@ import PageHeader from '@/components/header/page.vue'
 import { Loading, Empty, IndexWithFilter } from '@/components/content/index.js'
 import { Controller } from '@/components/navigation/index.js'
 import { ButtonBasic } from '@/components/button/index.js'
+import { Modal, ModalWindow, ModalHeader } from '@/components/modal/index.js'
 import { Tag } from '@/components/item/index.js'
 import Filter from './_comp/filter.vue'
+import LogDetail from './_comp/detail.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -113,6 +143,10 @@ const state = reactive({
   loading: true,
   loadingMore: false,
   logs: null,
+  detail: {
+    open: false,
+    id: null,
+  },
 })
 let fetchId = 0
 
@@ -198,6 +232,14 @@ function onUpdateFilter(query)
     return
   }
   router.push(`/log/${serialize(query, true)}`).then()
+}
+
+function onClickLog(item)
+{
+  const id = Number(item?.id)
+  if (!Number.isSafeInteger(id) || id < 1) return
+  state.detail.id = id
+  state.detail.open = true
 }
 
 function getRouteQuery(query)
