@@ -2,7 +2,7 @@
 
 .detail {
   min-height: 260px;
-  padding: 36px 36px 64px;
+  padding: 36px 36px 52px;
   box-sizing: border-box;
   overflow: auto;
   @include mixins.custom-scrollbar();
