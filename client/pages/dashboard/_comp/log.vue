@@ -28,7 +28,7 @@
         <Icon :name="_state.icon"/>
       </figure>
       <div>
-        <router-link to="/log/?level=ERROR">{{_state.message}}</router-link>
+        <router-link :to="`/log/?level=${_state.mode.toUpperCase()}`">{{_state.message}}</router-link>
         <small v-if="props.data.latestErrorAt">최근 오류 / {{props.data.latestErrorAt}}</small>
       </div>
     </div>
@@ -46,6 +46,7 @@ import Icon from '@/components/icon/index.vue'
 const props = defineProps({
   data: { type: Object, required: true },
 })
+console.log(props.data)
 
 const _state = computed(() => {
   if (props.data.error > 0)
