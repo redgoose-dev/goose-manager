@@ -27,44 +27,62 @@ export default async function checkIn(req, ctx)
     // get request data
     const data = await getRequestData(req)
 
-    // get access token
+    // get access and refresh token
     const accessToken = data?.access || cookie.get(req, 'access')
-    if (!accessToken)
-    {
-      throw new ServiceError('Not found access token.', {
-        status: 401,
-      })
-    }
+    const refreshToken = data?.refresh || cookie.get(req, 'refresh')
+    let currentAccessToken = accessToken
+    let renewed = false
 
     // confirm goose-api
     let res
-    try
+    if (currentAccessToken)
     {
-      res = await api.request('/auth/checkin/', {
-        method: 'post',
-        headers: { 'Authorization': accessToken },
-      })
-    }
-    catch (err)
-    {
-      if (err.status === 401)
+      try
       {
-        const refreshToken = cookie.get(req, 'refresh')
-        if (refreshToken)
-        {
-          res = await api.request('/auth/renew/', {
-            method: 'post',
-            headers: { 'Authorization': accessToken },
-            body: { refresh: refreshToken },
-          })
-        }
-      }
-      else
-      {
-        throw new ServiceError(err.message, {
-          status: err.status,
+        res = await api.request('/auth/checkin/', {
+          method: 'post',
+          headers: { 'Authorization': currentAccessToken },
         })
       }
+      catch (err)
+      {
+        if (err.status !== 401)
+        {
+          throw new ServiceError(err.message, { status: err.status })
+        }
+      }
+    }
+
+    // access token이 없거나 만료된 경우 refresh token만으로 재발급
+    if (!res)
+    {
+      if (!refreshToken)
+      {
+        throw new ServiceError('Not found refresh token.', { status: 401 })
+      }
+      const renewedResponse = await api.request('/auth/renew/', {
+        method: 'post',
+        body: { refresh: refreshToken },
+      })
+      const renewedData = renewedResponse?.content?.data
+      if (!renewedData?.access)
+      {
+        throw new ServiceError('Not found renewed access token.', {
+          status: renewedResponse.status || 500,
+        })
+      }
+      currentAccessToken = renewedData.access
+      renewed = true
+      const _expires = Number(renewedData.expires || defaultCookieExpires)
+      cookie.save(req, 'access', currentAccessToken, _expires)
+      if (renewedData.refresh)
+      {
+        cookie.save(req, 'refresh', renewedData.refresh, defaultCookieExpires)
+      }
+      res = await api.request('/auth/checkin/', {
+        method: 'post',
+        headers: { 'Authorization': currentAccessToken },
+      })
     }
     if (!res)
     {
@@ -81,7 +99,7 @@ export default async function checkIn(req, ctx)
     }
 
     // save cookie
-    if (data && data.access)
+    if (data?.access && !renewed)
     {
       const _expires = Number(data.expires || defaultCookieExpires)
       cookie.save(req, 'access', data.access, _expires)
@@ -97,7 +115,7 @@ export default async function checkIn(req, ctx)
     // set response
     response = Response.json({
       message: 'Complete check in.',
-      token: !data?.access ? accessToken : undefined,
+      token: !data?.access ? currentAccessToken : undefined,
       url: URL_PATH,
       apiUrl: API_CLIENT_URL || API_URL,
       provider: content.data.provider,

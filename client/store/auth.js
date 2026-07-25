@@ -96,7 +96,6 @@ export const authStore = defineStore('auth', {
       const res = await localRequest({
         method: 'post',
         url: '/zone/renew/',
-        headers: { Authorization: this.token },
       })
       if (!res.token) throw new Error('Failed renew token')
       this.token = res.token

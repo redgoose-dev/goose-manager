@@ -16,18 +16,6 @@ export default async function renew(req, ctx)
 
   try
   {
-    // get access token and checking
-    const accessToken = api.getAuthorization(req)
-    if (!accessToken)
-    {
-      throw new ServiceError('Not found access token.', { status: 401 })
-    }
-    const accessTokenInCookie = cookie.get(req, 'access')
-    if (accessTokenInCookie && accessToken !== accessTokenInCookie)
-    {
-      throw new ServiceError('Mismatch access token and access token in cookie.', { status: 401 })
-    }
-
     // get refresh token
     const refreshToken = cookie.get(req, 'refresh')
     if (!refreshToken)
@@ -38,7 +26,6 @@ export default async function renew(req, ctx)
     // request api
     const res = await api.request('/auth/renew/', {
       method: 'post',
-      headers: { 'Authorization': accessToken },
       body: { 'refresh': refreshToken },
     })
     if (!res?.content?.data?.access)
