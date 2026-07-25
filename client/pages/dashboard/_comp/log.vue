@@ -46,7 +46,6 @@ import Icon from '@/components/icon/index.vue'
 const props = defineProps({
   data: { type: Object, required: true },
 })
-console.log(props.data)
 
 const _state = computed(() => {
   if (props.data.error > 0)
