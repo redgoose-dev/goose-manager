@@ -335,6 +335,20 @@ const preference = [
     ],
   },
 ]
+const log = [
+  {
+    path: '/log/',
+    name: 'Log',
+    component: () => import('../pages/log/index.vue'),
+    meta: { active: 'log' },
+  },
+  {
+    path: '/log/:id/',
+    name: 'LogDetail',
+    component: () => import('../pages/log/detail.vue'),
+    meta: { active: 'log' },
+  },
+]
 const guide = [
   {
     path: '/guide/',
@@ -410,6 +424,7 @@ export default [
   ...checklist,
   ...tag,
   ...preference,
+  ...log,
   ...(DEV ? guide : []),
   {
     path: '/:pathMatch(.*)*',
