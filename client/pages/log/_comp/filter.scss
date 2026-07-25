@@ -19,12 +19,34 @@
     }
   }
   &__submit {
+    display: grid;
+    gap: 6px;
     margin: 24px 0 0;
   }
-  &__line {
-    margin: 30px 0;
-    border: none;
-    height: .5px;
-    background: var(--color-base);
+  &__error {
+    margin: 12px 0 0;
+    color: var(--color-error);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+}
+
+.levels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 6px;
+}
+
+.level {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  > label {
+    font-family: var(--font-eng);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
   }
 }

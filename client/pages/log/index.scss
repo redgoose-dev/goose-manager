@@ -1,3 +1,180 @@
 @use '../../scss/mixins';
 
-div {}
+.index-wrap {
+  margin-top: 24px;
+  min-height: 360px;
+}
+
+.content {
+  min-width: 0;
+}
+
+.table-wrap {
+  min-width: 0;
+  overflow-x: auto;
+  box-shadow:
+    0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%),
+    0 2px 24px mixins.mix-alpha(var(--color-base), 15%);
+  border-radius: mixins.radius(72px);
+  @include mixins.custom-scrollbar();
+  --scroll-size: 12px;
+  --scroll-padding: 3px;
+}
+
+.table {
+  width: 100%;
+  min-width: 940px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+  line-height: 1.35;
+  th, td {
+    box-sizing: border-box;
+    padding-block: 12px;
+    padding-inline: 16px;
+    vertical-align: middle;
+  }
+  thead {
+    th {
+      padding-block: 16px;
+      background: var(--color-weak);
+      color: var(--color-edge);
+      font-size: 13px;
+      font-weight: 800;
+      user-select: none;
+      text-align: left;
+    }
+    .timestamp {
+      width: 160px;
+    }
+    .level {
+      width: 88px;
+      text-align: center;
+    }
+    .message {
+      width: auto;
+    }
+    .status {
+      width: 64px;
+      text-align: center;
+    }
+    .request {
+      width: 300px;
+    }
+    .duration {
+      width: 86px;
+      text-align: right;
+    }
+  }
+  tbody {
+    background-color: var(--color-edge);
+    tr {
+      transition: background-color 120ms ease-out;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          background: mixins.mix-alpha(var(--color-base), 5%);
+        }
+      }
+      &:not(:last-child) td {
+        border-bottom: .5px solid var(--color-blur);
+      }
+    }
+    td {
+    }
+    .timestamp,
+    .duration,
+    .status {
+      font-family: var(--font-console);
+      font-size: 11px;
+      white-space: nowrap;
+      letter-spacing: -.5px;
+    }
+    .level {
+      text-align: center;
+      .tag {
+        display: inline-flex;
+        justify-self: center;
+        --tag-height: 20px;
+        --tag-padding: 0 8px;
+        --tag-text-size: 9px;
+      }
+    }
+    .message {
+      min-width: 0;
+      > strong {
+        display: block;
+        @include mixins.text-single-line();
+      }
+      > strong {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      &.is-empty > strong {
+        user-select: none;
+        color: var(--color-blur);
+        font-weight: 400;
+      }
+    }
+    .status {
+      font-weight: 700;
+      text-align: center;
+      &--success {
+        color: var(--color-success);
+      }
+      &--warning {
+        color: var(--color-sub);
+      }
+      &--error {
+        color: var(--color-error);
+      }
+    }
+    .request {
+      min-width: 0;
+      > p {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin: 0;
+        min-width: 0;
+      }
+      em {
+        flex: 0 0 auto;
+        color: var(--color-sub);
+        font-family: var(--font-eng);
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 800;
+      }
+      code,
+      small {
+        @include mixins.text-single-line();
+      }
+      code {
+        display: block;
+        color: var(--color-base);
+        font-size: 11px;
+      }
+      small {
+        display: block;
+        margin-top: 2px;
+        color: var(--color-weak);
+        font-family: var(--font-console);
+        font-size: 9px;
+      }
+      > span {
+        color: var(--color-weak);
+      }
+    }
+    .duration {
+      text-align: right;
+    }
+    .controller {
+      --controller-gap: 8px;
+      margin-top: 36px;
+      :deep(.button) {
+        --button-width: auto;
+        min-width: 124px;
+      }
+    }
+  }
+}
