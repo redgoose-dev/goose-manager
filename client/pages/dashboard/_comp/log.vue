@@ -28,7 +28,7 @@
         <Icon :name="_state.icon"/>
       </figure>
       <div>
-        <router-link :to="`/log/?level=${_state.mode.toUpperCase()}`">{{_state.message}}</router-link>
+        <router-link :to="_state.link">{{_state.message}}</router-link>
         <small v-if="props.data.latestErrorAt">최근 오류 / {{props.data.latestErrorAt}}</small>
       </div>
     </div>
@@ -52,6 +52,7 @@ const _state = computed(() => {
   {
     return {
       mode: 'error',
+      link: `/log/?level=ERROR`,
       icon: 'server-crash',
       message: `최근 오류 ${props.data.error}건 발생`,
     }
@@ -60,12 +61,14 @@ const _state = computed(() => {
   {
     return {
       mode: 'warning',
+      link: `/log/?level=WARNING`,
       icon: 'bug',
       message: `최근 경고 ${props.data.warning}건 발생`,
     }
   }
   return {
     mode: 'success',
+    link: `/log/`,
     icon: 'check',
     message: '최근 오류가 없습니다.',
   }
