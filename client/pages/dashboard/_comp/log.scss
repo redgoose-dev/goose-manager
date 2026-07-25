@@ -1,0 +1,155 @@
+@use '../../../scss/mixins';
+
+.log-summary {
+  --size-col-height: 72px;
+  --size-col-gap: 0;
+  overflow: clip;
+  background: var(--color-edge);
+  border-radius: mixins.radius(72px);
+  box-shadow:
+    0 0 0 .5px mixins.mix-alpha(var(--color-base), 20%),
+    0 2px 24px mixins.mix-alpha(var(--color-base), 15%);
+  @include mixins.responsive(desktop) {
+    --size-col-gap: 48px;
+    --size-col-height: 100px;
+  }
+  @include mixins.responsive(max) {
+    --size-col-gap: 68px;
+  }
+}
+
+.body {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0;
+  gap: 0 var(--size-col-gap);
+  @include mixins.responsive(desktop) {
+    grid-template-columns: repeat(3, auto) auto 1fr;
+    padding-inline: 48px;
+  }
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: var(--size-col-height);
+  box-sizing: border-box;
+  text-align: center;
+  &__label {
+    color: var(--color-weak);
+    font-size: 10px;
+    line-height: 1.05;
+  }
+  &__value {
+    display: block;
+    margin: 7px 0 0;
+    font-family: var(--font-eng);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    color: currentColor;
+    &:is(a) {
+      text-decoration: none;
+    }
+    small {
+      margin-left: 2px;
+      font-family: var(--font-base);
+      font-size: 11px;
+      font-weight: 600;
+    }
+  }
+  &--error .metric__value {
+    color: var(--color-error);
+  }
+  &--warning .metric__value {
+    color: var(--color-sub);
+  }
+  @include mixins.responsive(desktop) {
+    text-align: left;
+  }
+}
+
+.performance {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column: 1 / -1;
+  gap: 0 var(--size-col-gap);
+  border-top: .5px solid var(--color-blur);
+  @include mixins.responsive(desktop) {
+    border-top: none;
+    grid-column: 4;
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+.state {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
+  min-height: var(--size-col-height);
+  grid-column: 1 / -1;
+  border-top: .5px solid var(--color-blur);
+  box-sizing: border-box;
+  figure {
+    display: grid;
+    flex: 0 0 auto;
+    place-content: center;
+    margin: 0;
+    width: 42px;
+    height: 42px;
+    background: currentColor;
+    border-radius: 50%;
+    --icon-size: 20px;
+    --icon-color: var(--color-edge);
+  }
+  > div {
+    min-width: 0;
+    flex: 1;
+  }
+  a {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: currentColor;
+    text-decoration: none;
+  }
+  small {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--font-console);
+    font-size: 11px;
+    line-height: 1.25;
+    color: var(--color-base);
+    letter-spacing: -.5px;
+  }
+  &--success & {
+    color: var(--color-success);
+  }
+  &--warning & {
+    color: var(--color-sub);
+  }
+  &--error & {
+    color: var(--color-error);
+  }
+  @include mixins.responsive(desktop) {
+    border-top: none;
+    grid-column: 5;
+    padding: 0;
+  }
+}
+
+.period {
+  margin: 0;
+  padding: 10px 16px;
+  background: var(--color-weak);
+  color: var(--color-edge);
+  font-family: var(--font-console);
+  font-size: 11px;
+  line-height: 1.15;
+  letter-spacing: -.5px;
+}
