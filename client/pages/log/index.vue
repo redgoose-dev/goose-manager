@@ -59,7 +59,11 @@
                         <em v-if="item.request.method">{{item.request.method}}</em>
                         <code :title="item.request.path">{{item.request.path || '-'}}</code>
                       </p>
-                      <small v-if="item.request?.id" :title="item.request.id">{{item.request.id}}</small>
+                      <small
+                        v-if="getRequestMeta(item.request)"
+                        :title="getRequestMeta(item.request)">
+                        {{getRequestMeta(item.request)}}
+                      </small>
                       <span v-if="!item.request">-</span>
                     </td>
                     <td class="duration">
@@ -279,6 +283,15 @@ function formatDuration(value)
 function getMessage(item)
 {
   return item.message || item.error?.message || '메시지 없음'
+}
+
+function getRequestMeta(request)
+{
+  if (!request) return ''
+  return [
+    request.client_ip && request.client_ip,
+    request.id && request.id,
+  ].filter(Boolean).join(' · ')
 }
 
 function hasMessage(item)

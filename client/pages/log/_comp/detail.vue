@@ -29,14 +29,12 @@
         <code>{{formatDuration(state.data.duration_ms)}}</code>
       </Field>
     </Fieldset>
-    <Fieldset>
+    <Fieldset v-if="hasMessage(state.data)">
       <FieldHeader>
         <template #title>메시지</template>
       </FieldHeader>
       <Field label="내용">
-        <span :class="[ !hasMessage(state.data) && 'is-empty' ]">
-          {{getMessage(state.data)}}
-        </span>
+        <span>{{getMessage(state.data)}}</span>
       </Field>
     </Fieldset>
     <Fieldset v-if="state.data.request">
@@ -51,6 +49,18 @@
       </Field>
       <Field label="리퀘스트 아이디">
         <code>{{state.data.request.id || '-'}}</code>
+      </Field>
+      <Field v-if="state.data.request.client_ip" label="클라이언트 IP">
+        <code>{{state.data.request.client_ip}}</code>
+      </Field>
+      <Field v-if="state.data.request.origin" label="Origin">
+        <code>{{state.data.request.origin}}</code>
+      </Field>
+      <Field v-if="state.data.request.referer" label="Referer">
+        <code>{{state.data.request.referer}}</code>
+      </Field>
+      <Field v-if="state.data.request.user_agent" label="User-Agent">
+        <code>{{state.data.request.user_agent}}</code>
       </Field>
     </Fieldset>
     <Fieldset v-if="state.data.error">
