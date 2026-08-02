@@ -40,6 +40,7 @@ export default async function checkIn(req, ctx)
       try
       {
         res = await api.request('/auth/checkin/', {
+          request: req,
           method: 'post',
           headers: { 'Authorization': currentAccessToken },
         })
@@ -61,6 +62,7 @@ export default async function checkIn(req, ctx)
         throw new ServiceError('Not found refresh token.', { status: 401 })
       }
       const renewedResponse = await api.request('/auth/renew/', {
+        request: req,
         method: 'post',
         body: { refresh: refreshToken },
       })
@@ -80,6 +82,7 @@ export default async function checkIn(req, ctx)
         cookie.save(req, 'refresh', renewedData.refresh, defaultCookieExpires)
       }
       res = await api.request('/auth/checkin/', {
+        request: req,
         method: 'post',
         headers: { 'Authorization': currentAccessToken },
       })

@@ -25,6 +25,7 @@ export default async function renew(req, ctx)
 
     // request api
     const res = await api.request('/auth/renew/', {
+      request: req,
       method: 'post',
       body: { 'refresh': refreshToken },
     })

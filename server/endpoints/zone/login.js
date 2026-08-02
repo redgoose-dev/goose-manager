@@ -34,6 +34,7 @@ export default async function login(req, ctx)
 
     // request to goose-api
     const res = await api.request('/auth/login/', {
+      request: req,
       method: 'post',
       body: {
         id: data.id,
@@ -49,6 +50,7 @@ export default async function login(req, ctx)
 
     // checking
     const checkingResponse = await api.request('/auth/checkin/', {
+      request: req,
       headers: { 'Authorization': access },
       method: 'post',
     })

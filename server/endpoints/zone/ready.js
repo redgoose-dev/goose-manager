@@ -24,6 +24,7 @@ async function ready(req, ctx)
   {
     let _data = {}
     const res = await api.request('/auth/ready-login/', {
+      request: req,
       method: 'post',
       body: { redirect_uri: URL_PATH + '/zone/checkin/' },
     })

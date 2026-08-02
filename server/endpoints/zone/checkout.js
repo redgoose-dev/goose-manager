@@ -39,6 +39,7 @@ export default async function checkOut(req, ctx)
 
     // call logout api
     api.request('/auth/logout/', {
+      request: req,
       method: 'post',
       headers: { 'Authorization': accessToken },
     }).catch(() => {})
