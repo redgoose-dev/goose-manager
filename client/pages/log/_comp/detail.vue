@@ -28,12 +28,7 @@
       <Field label="처리시간">
         <code>{{formatDuration(state.data.duration_ms)}}</code>
       </Field>
-    </Fieldset>
-    <Fieldset v-if="hasMessage(state.data)">
-      <FieldHeader>
-        <template #title>메시지</template>
-      </FieldHeader>
-      <Field label="내용">
+      <Field v-if="hasMessage(state.data)" label="메시지">
         <span>{{getMessage(state.data)}}</span>
       </Field>
     </Fieldset>
