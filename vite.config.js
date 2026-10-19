@@ -1,9 +1,11 @@
-import { defineConfig } from 'vite'
+import { fileURLToPath } from 'node:url'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-const { HOST, PORT, PORT_CLIENT, SOURCE_MAP } = Bun.env
+const config = defineConfig(({ mode }) => {
+  const envDir = fileURLToPath(new URL('.', import.meta.url))
+  const { HOST, PORT, PORT_CLIENT, SOURCE_MAP } = loadEnv(mode, envDir, '')
 
-const config = defineConfig(() => {
   return {
     root: 'client',
     publicDir: './public',
