@@ -1,4 +1,4 @@
-import * as lucide from 'lucide-vue-next'
+import * as lucide from '@lucide/vue'
 
 const icons = {
   'box': lucide.Box,
