@@ -10,12 +10,12 @@ function filtering(src)
   }
   if (src.account?.srl)
   {
-    const { srl, user_name, user_id, user_email, user_avatar, created_at } = src.account
+    const { srl, name, uid, email, avatar, created_at } = src.account
     result.srl = srl
-    result.name = user_name
-    result.id = user_id
-    result.email = user_email
-    result.avatar = user_avatar
+    result.name = name
+    result.id = uid
+    result.email = email
+    result.avatar = avatar
     result.regdate = date.format(created_at, 'full')
   }
   return result

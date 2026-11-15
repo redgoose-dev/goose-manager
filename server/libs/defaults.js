@@ -30,6 +30,10 @@ export const defaultPreference = {
         module: 'json',
         params: { size: 4 },
       },
+      {
+        module: 'log',
+        params: { interval: 'day' },
+      },
     ],
   },
   nest: {

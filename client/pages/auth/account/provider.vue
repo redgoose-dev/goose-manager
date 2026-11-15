@@ -104,10 +104,10 @@ function onPostProvider(mode, data)
       break
     case 'edit':
       // update store
-      if (data.id) auth.provider.user_id = data.id
-      auth.provider.user_avatar = data.avatar || ''
-      auth.provider.user_name = data.name || ''
-      auth.provider.user_email = data.email || ''
+      if (data.id) auth.provider.uid = data.id
+      auth.provider.avatar = data.avatar || ''
+      auth.provider.name = data.name || ''
+      auth.provider.email = data.email || ''
       // print message
       toast.add('계정을 업데이트 완료했습니다.', 'success').then()
       break

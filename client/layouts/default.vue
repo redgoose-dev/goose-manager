@@ -129,12 +129,12 @@ const _mainNav = computed(() => {
   return navigation
 })
 const _profile = computed(() => {
-  const { user_avatar, user_email, user_id, user_name } = auth.provider
+  const { avatar, email, uid, name } = auth.provider
   return {
-    id: user_id,
-    name: user_name,
-    avatar: user_avatar,
-    email: user_email,
+    id: uid,
+    name,
+    avatar,
+    email,
   }
 })
 const _nickname = computed(() => {
