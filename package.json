@@ -1,6 +1,6 @@
 {
   "name": "goose-manager",
-  "version": "3.2.12",
+  "version": "3.2.13",
   "private": false,
   "license": "MIT",
   "type": "module",
